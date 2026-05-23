@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Megaphone,
     Plus,
@@ -75,10 +75,10 @@ export const Announcements = () => {
 
             if (editingAnnouncement) {
                 await api.put(`/announcements/${editingAnnouncement.id}`, payload);
-                showNotification('ุชู… ุชุญุฏูุซ ุงูุฅุนูุงู ุจูุฌุงุญ', 'success');
+                showNotification('สใ สอฯํห วแลฺแวไ ศไฬวอ', 'success');
             } else {
                 await api.post('/announcements', payload);
-                showNotification('ุชู… ูุดุฑ ุงูุฅุนูุงู ุจูุฌุงุญ', 'success');
+                showNotification('สใ ไิั วแลฺแวไ ศไฬวอ', 'success');
             }
 
             setIsModalOpen(false);
@@ -86,18 +86,18 @@ export const Announcements = () => {
             setFormData({ title: '', content: '', type: 'general', isActive: true });
             fetchAnnouncements();
         } catch {
-            showNotification('ูุดู ุญูุธ ุงูุฅุนูุงู', 'error');
+            showNotification('Ýิแ อÝู วแลฺแวไ', 'error');
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('ูู ุฃูุช ู…ุชุฃูุฏ ู…ู ุญุฐู ูุฐุง ุงูุฅุนูุงูุ')) return;
+        if (!window.confirm('ๅแ รไส ใสร฿ฯ ใไ อะÝ ๅะว วแลฺแวไฟ')) return;
         try {
             await api.delete(`/announcements/${id}`);
-            showNotification('ุชู… ุญุฐู ุงูุฅุนูุงู', 'success');
+            showNotification('สใ อะÝ วแลฺแวไ', 'success');
             fetchAnnouncements();
         } catch {
-            showNotification('ูุดู ุญุฐู ุงูุฅุนูุงู', 'error');
+            showNotification('Ýิแ อะÝ วแลฺแวไ', 'error');
         }
     };
 
@@ -117,32 +117,32 @@ export const Announcements = () => {
             case 'urgent': return { 
                 icon: AlertTriangle, 
                 color: 'text-rose-600', 
-                label: 'ุชูุจูู€ู ุนุงุฌู€ู' 
+                label: 'สไศํÜๅ ฺวฬÜแ' 
             };
             case 'holiday': return { 
                 icon: Calendar, 
                 color: 'text-amber-600', 
-                label: 'ุฅุฌู€ุงุฒุฉ ุฑุณู…ูู€ุฉ' 
+                label: 'ลฬÜวาษ ัำใํÜษ' 
             };
             case 'event': return { 
                 icon: Megaphone, 
                 color: 'text-indigo-600', 
-                label: 'ูุนุงููู€ุฉ ุฌุฏูู€ุฏุฉ' 
+                label: 'ÝฺวแํÜษ ฬฯํÜฯษ' 
             };
             default: return { 
                 icon: Info, 
                 color: 'text-primary-600', 
-                label: 'ุฅุนู€ูุงู ุนู€ุงู…' 
+                label: 'ลฺÜแวไ ฺÜวใ' 
             };
         }
     };
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-dash" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
             
-            {/* โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• PREMIUM ANNOUNCEMENTS HEADER โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• */}
+            {/* ??????????????? PREMIUM ANNOUNCEMENTS HEADER ??????????????? */}
             <div className="relative overflow-hidden bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 dark:from-slate-950 dark:via-sky-950 dark:to-slate-950 rounded-none shadow-sm shadow-sky-500/15 border border-white/5 px-6 md:px-8 py-6">
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
@@ -157,19 +157,19 @@ export const Announcements = () => {
                         </div>
                         <div>
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="px-2 py-0.5 bg-white/10  text-white text-[8px] font-normal uppercase tracking-widest border border-white/10 italic leading-none">ูุญุฏุฉ ุงูุชุญูู… ุงูู…ุฑูุฒูุฉ</span>
+                                <span className="px-2 py-0.5 bg-white/10  text-white text-[8px] font-normal uppercase tracking-widest border border-white/10 italic leading-none">ๆอฯษ วแสอ฿ใ วแใั฿าํษ</span>
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-emerald-500 animate-pulse" style={{ animationDelay: `${i*0.2}s` }} />)}
                                 </div>
                             </div>
-                            <h1 className="text-base md:text-2xl font-medium text-white italic tracking-tight uppercase leading-none">ุงููุดุฑุฉ ูุงูุชุนู…ูู…ุงุช</h1>
+                            <h1 className="text-base md:text-2xl font-medium text-white italic tracking-tight uppercase leading-none">วแไิัษ ๆวแสฺใํใวส</h1>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
                         <div className="bg-white/5 border border-white/10 px-3 py-2 flex items-center gap-2  shrink-0">
                             <span className="text-lg md:text-xl font-medium text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
-                            <span className="text-[6px] md:text-[7px] font-medium text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-2 md:pr-3">ูุดุทุฉ<br/>ุจุงูู…ูุตู€ุฉ</span>
+                            <span className="text-[6px] md:text-[7px] font-medium text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-2 md:pr-3">ไิุษ<br/>ศวแใไีÜษ</span>
                         </div>
                         <button
                             onClick={() => {
@@ -180,13 +180,13 @@ export const Announcements = () => {
                             className="bg-primary-600 text-white h-10 md:h-12 px-2 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-medium shadow-sm group"
                         >
                             <Plus size={16} className="md:size-[18px] group-hover:rotate-90 transition-transform" />
-                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-medium">ุฅุตุฏุงุฑ ุชุนู…ูู…</span>
+                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-medium">ลีฯวั สฺใํใ</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• ANNOUNCEMENTS GRID โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• */}
+            {/* ??????????????? ANNOUNCEMENTS GRID ??????????????? */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {announcements.map((ann) => {
                     const styles = getTypeStyles(ann.type);
@@ -239,7 +239,7 @@ export const Announcements = () => {
                             {!ann.isActive && (
                                 <div className="mt-5 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800">
                                     <span className="text-[7px] font-medium text-amber-600 dark:text-amber-500 uppercase italic flex items-center gap-1.5">
-                                        <Info size={10} /> ู…ุณูุฏุฉ ููุฏ ุงูู…ุฑุงุฌุนุฉ
+                                        <Info size={10} /> ใำๆฯษ Þํฯ วแใัวฬฺษ
                                     </span>
                                 </div>
                             )}
@@ -250,12 +250,12 @@ export const Announcements = () => {
                 {announcements.length === 0 && !isLoading && (
                     <div className="col-span-full py-20 bg-slate-50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center opacity-30 text-center">
                         <ArrowLeftRight size={40} className="mb-4 text-slate-400" />
-                        <h3 className="text-lg font-medium uppercase italic tracking-widest text-slate-500">ุณุฌู ุงูุฅุนูุงูุงุช ูุงุฑุบ</h3>
+                        <h3 className="text-lg font-medium uppercase italic tracking-widest text-slate-500">ำฬแ วแลฺแวไวส ÝวัÛ</h3>
                     </div>
                 )}
             </div>
 
-            {/* โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• PREMIUM EDIT MODAL โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ• */}
+            {/* ??????????????? PREMIUM EDIT MODAL ??????????????? */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-slate-950/60 md:animate-in md:fade-in md:duration-300">
                     <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-sm overflow-hidden rounded-none">
@@ -263,7 +263,7 @@ export const Announcements = () => {
                             <div className="flex items-center gap-3">
                                 <Megaphone className="text-primary-500" size={18} />
                                 <h3 className="font-medium text-xs uppercase italic tracking-tight">
-                                    {editingAnnouncement ? 'ุชุญุฏูุซ ุงูุจูุงูุงุช ุงูู…ุฑูุฒูุฉ' : 'ุฅุตุฏุงุฑ ุชุนู…ูู… ุฅุฏุงุฑู ุฌุฏูุฏ'}
+                                    {editingAnnouncement ? 'สอฯํห วแศํวไวส วแใั฿าํษ' : 'ลีฯวั สฺใํใ ลฯวัํ ฬฯํฯ'}
                                 </h3>
                             </div>
                             <button onClick={() => setIsModalOpen(false)} className="w-7 h-7 flex items-center justify-center bg-white/5 hover:bg-rose-500 transition-all"><X size={16} /></button>
@@ -271,33 +271,33 @@ export const Announcements = () => {
 
                         <form onSubmit={handleSave} className="p-6 md:p-8 space-y-6">
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">ุงุณู… ุงูุชุนู…ูู… / ุงูุนููุงู</label>
+                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">วำใ วแสฺใํใ / วแฺไๆวไ</label>
                                 <input
                                     required
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                     className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all"
-                                    placeholder="ุฃุฏุฎู ุนููุงู ุงูุฅุนูุงู..."
+                                    placeholder="รฯฮแ ฺไๆวไ วแลฺแวไ..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-5">
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">ุชุตููู ุงูุจูุงูุงุช</label>
+                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">สีไํÝ วแศํวไวส</label>
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
                                         className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all cursor-pointer"
                                     >
-                                        <option value="general">ุฅุนู€ูุงู ุนู€ุงู…</option>
-                                        <option value="urgent">ุชูุจูู€ู ุนู€ุงุฌู</option>
-                                        <option value="holiday">ุฅุฌู€ุงุฒุฉ ุฑุณู…ูู€ุฉ</option>
-                                        <option value="event">ูุนุงููู€ุฉ ุฌุฏูู€ุฏุฉ</option>
+                                        <option value="general">ลฺÜแวไ ฺÜวใ</option>
+                                        <option value="urgent">สไศํÜๅ ฺÜวฬแ</option>
+                                        <option value="holiday">ลฬÜวาษ ัำใํÜษ</option>
+                                        <option value="event">ÝฺวแํÜษ ฬฯํÜฯษ</option>
                                     </select>
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">ุญุงูุฉ ุงููุดุฑ</label>
+                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">อวแษ วแไิั</label>
                                     <div className="flex gap-1 h-11">
                                         <button 
                                             type="button"
@@ -307,7 +307,7 @@ export const Announcements = () => {
                                                 formData.isActive ? "bg-emerald-600 text-white shadow-sm shadow-emerald-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
-                                            ูุดุฑ
+                                            ไิั
                                         </button>
                                         <button 
                                             type="button"
@@ -317,21 +317,21 @@ export const Announcements = () => {
                                                 !formData.isActive ? "bg-amber-600 text-white shadow-sm shadow-amber-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
-                                            ู…ุณูุฏุฉ
+                                            ใำๆฯษ
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">ู…ุญุชูู ุงูุชุนู…ูู…</label>
+                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">ใอสๆ์ วแสฺใํใ</label>
                                 <textarea
                                     required
                                     rows={4}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                                     className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all leading-relaxed italic"
-                                    placeholder="ุงูุชุจ ุชูุงุตูู ุงูุฅุนูุงู ููุง..."
+                                    placeholder="ว฿สศ สÝวีํแ วแลฺแวไ ๅไว..."
                                 />
                             </div>
 
@@ -340,7 +340,7 @@ export const Announcements = () => {
                                 className="w-full py-4 bg-slate-900 dark:bg-primary-600 text-white font-medium text-[10px] uppercase tracking-[0.2em] hover:bg-black dark:hover:bg-primary-500 transition-all shadow-sm flex items-center justify-center gap-3"
                             >
                                 <CheckCircle2 size={18} />
-                                {editingAnnouncement ? 'ุชุญุฏูุซ ุงูุณุฌูุงุช' : 'ุจุซ ุงูุฅุนูุงู'}
+                                {editingAnnouncement ? 'สอฯํห วแำฬแวส' : 'ศห วแลฺแวไ'}
                             </button>
                         </form>
                     </div>

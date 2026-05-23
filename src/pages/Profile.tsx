@@ -1,4 +1,4 @@
-๏ปฟimport { useState } from 'react';
+import { useState } from 'react';
 import { 
     User, Lock, Palette, CheckCircle2, Save, Sparkles, 
     ShieldCheck, UserCog
@@ -9,20 +9,20 @@ import { cn } from '../lib/utils';
 import { triggerHaptic } from '../lib/haptics';
 
 const THEME_COLORS = [
-    { id: 'indigo', label: 'ูููู', class: 'bg-indigo-500' },
-    { id: 'blue', label: 'ุฃุฒุฑู', class: 'bg-blue-500' },
-    { id: 'emerald', label: 'ุฒู…ุฑุฏู', class: 'bg-emerald-500' },
-    { id: 'rose', label: 'ูุฑุฏู', class: 'bg-rose-500' },
-    { id: 'amber', label: 'ููุฑู…ุงูู', class: 'bg-amber-500' },
-    { id: 'purple', label: 'ุฃุฑุฌูุงูู', class: 'bg-purple-500' },
-    { id: 'cyan', label: 'ุณูุงู', class: 'bg-cyan-500' },
-    { id: 'teal', label: 'ุชุฑููุงุฒ', class: 'bg-teal-500' },
-    { id: 'orange', label: 'ุจุฑุชูุงูู', class: 'bg-orange-500' },
-    { id: 'pink', label: 'ุฒูุฑู', class: 'bg-pink-500' },
-    { id: 'lava', label: 'ุญู…ู…', class: 'bg-orange-600' },
-    { id: 'midnight', label: 'ูููู', class: 'bg-slate-900' },
-    { id: 'gold', label: 'ุฐูุจู', class: 'bg-amber-400' },
-    { id: 'crimson', label: 'ูุฑู…ุฒู', class: 'bg-rose-600' },
+    { id: 'indigo', label: 'ไํแํ', class: 'bg-indigo-500' },
+    { id: 'blue', label: 'ราัÞ', class: 'bg-blue-500' },
+    { id: 'emerald', label: 'าใัฯํ', class: 'bg-emerald-500' },
+    { id: 'rose', label: 'ๆัฯํ', class: 'bg-rose-500' },
+    { id: 'amber', label: '฿ๅัใวไํ', class: 'bg-amber-500' },
+    { id: 'purple', label: 'รัฬๆวไํ', class: 'bg-purple-500' },
+    { id: 'cyan', label: 'ำํวไ', class: 'bg-cyan-500' },
+    { id: 'teal', label: 'สั฿ๆวา', class: 'bg-teal-500' },
+    { id: 'orange', label: 'ศัสÞวแํ', class: 'bg-orange-500' },
+    { id: 'pink', label: 'าๅัํ', class: 'bg-pink-500' },
+    { id: 'lava', label: 'อใใ', class: 'bg-orange-600' },
+    { id: 'midnight', label: 'แํแํ', class: 'bg-slate-900' },
+    { id: 'gold', label: 'ะๅศํ', class: 'bg-amber-400' },
+    { id: 'crimson', label: 'Þัใาํ', class: 'bg-rose-600' },
 ];
 
 export const Profile = () => {
@@ -39,12 +39,12 @@ export const Profile = () => {
 
     const handleSaveProfile = async () => {
         if (!name.trim()) {
-            showNotification('ูุฑุฌู ุฅุฏุฎุงู ุงูุงุณู…', 'error');
+            showNotification('ํัฬ์ ลฯฮวแ วแวำใ', 'error');
             return;
         }
 
         if (password && password !== confirmPassword) {
-            showNotification('ููู…ุงุช ุงูุณุฑ ุบูุฑ ู…ุชุทุงุจูุฉ', 'error');
+            showNotification('฿แใวส วแำั Ûํั ใสุวศÞษ', 'error');
             return;
         }
 
@@ -61,18 +61,18 @@ export const Profile = () => {
             }
 
             await updateCurrentUser(updates);
-            showNotification('ุชู… ุชุญุฏูุซ ุงูู…ูู ุงูุดุฎุตู ุจูุฌุงุญ', 'success');
+            showNotification('สใ สอฯํห วแใแÝ วแิฮีํ ศไฬวอ', 'success');
             setPassword('');
             setConfirmPassword('');
         } catch {
-            showNotification('ูุดู ุชุญุฏูุซ ุงูุจูุงูุงุช', 'error');
+            showNotification('Ýิแ สอฯํห วแศํวไวส', 'error');
         } finally {
             setIsSaving(false);
         }
     };
 
     return (
-        <div className="min-h-full bg-slate-50 dark:bg-slate-950 pb-20 font-sans" dir="rtl">
+        <div className="min-h-full bg-slate-50 dark:bg-slate-950 pb-20 font-dash" dir="rtl">
             {/* Header Area */}
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-6 py-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
@@ -94,9 +94,9 @@ export const Profile = () => {
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 font-normal text-sm flex items-center justify-center md:justify-start gap-2">
                             <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-3 py-0.5 rounded-full text-[10px] uppercase tracking-widest">
-                                {currentUser?.role === 'admin' ? 'ู…ุฏูุฑ ุงููุธุงู…' : 
-                                 currentUser?.role === 'student' ? 'ุทุงูุจ' : 
-                                 currentUser?.role === 'parent' ? 'ููู ุฃู…ุฑ' : 'ู…ุนูู…'}
+                                {currentUser?.role === 'admin' ? 'ใฯํั วแไูวใ' : 
+                                 currentUser?.role === 'student' ? 'ุวแศ' : 
+                                 currentUser?.role === 'parent' ? 'ๆแํ รใั' : 'ใฺแใ'}
                             </span>
                             <span className="opacity-40">/</span>
                             <span className="font-mono">@{currentUser?.username}</span>
@@ -105,8 +105,8 @@ export const Profile = () => {
 
                     <div className="flex gap-2">
                          <div className="flex flex-col items-center px-4 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-slate-100 dark:border-slate-800">
-                            <span className="text-[10px] text-slate-400 font-normal uppercase mb-1">ุชุงุฑูุฎ ุงูุงูุถู…ุงู…</span>
-                            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">ุณุจุชู…ุจุฑ 2023</span>
+                            <span className="text-[10px] text-slate-400 font-normal uppercase mb-1">สวัํฮ วแวไึใวใ</span>
+                            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">ำศสใศั 2023</span>
                          </div>
                     </div>
                 </div>
@@ -122,22 +122,22 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-none flex items-center justify-center text-blue-600">
                                 <UserCog size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ุงูู…ุนููู…ุงุช ุงูุฃุณุงุณูุฉ</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">วแใฺแๆใวส วแรำวำํษ</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ุงูุงุณู… ุงููุงู…ู</label>
+                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">วแวำใ วแ฿วใแ</label>
                                 <input 
                                     type="text" 
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-primary-500/20 transition-all"
-                                    placeholder="ุฃุฏุฎู ุงุณู…ู ููุง..."
+                                    placeholder="รฯฮแ วำใ฿ ๅไว..."
                                 />
                             </div>
                             <div>
-                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ุงุณู… ุงูู…ุณุชุฎุฏู… (ูุง ูู…ูู ุชุบููุฑู)</label>
+                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">วำใ วแใำสฮฯใ (แว ํใ฿ไ สÛํํัๅ)</label>
                                 <input 
                                     type="text" 
                                     value={currentUser?.username}
@@ -154,40 +154,40 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-none flex items-center justify-center text-rose-600">
                                 <ShieldCheck size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ุฃู…ุงู ุงูุญุณุงุจ</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">รใวไ วแอำวศ</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ููู…ุฉ ุงูุณุฑ ุงูุฌุฏูุฏุฉ</label>
+                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">฿แใษ วแำั วแฬฯํฯษ</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-rose-500/20 transition-all"
-                                            placeholder="โ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ข"
+                                            placeholder="••••••••"
                                         />
                                         <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ุชุฃููุฏ ููู…ุฉ ุงูุณุฑ</label>
+                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">สร฿ํฯ ฿แใษ วแำั</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-rose-500/20 transition-all"
-                                            placeholder="โ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ข"
+                                            placeholder="••••••••"
                                         />
                                         <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     </div>
                                 </div>
                             </div>
                             <p className="text-[10px] text-slate-400 font-medium leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-                                ูุตูุญุฉ: ุงุณุชุฎุฏู… ููู…ุฉ ุณุฑ ูููุฉ ุชุญุชูู ุนูู ุญุฑูู ูุฃุฑูุงู…. ุณูุชู…ูู ู…ุฏูุฑ ุงููุธุงู… ู…ู ู…ุณุงุนุฏุชู ูู ุญุงู ูุณูุงููุง.
+                                ไีํอษ: วำสฮฯใ ฿แใษ ำั Þๆํษ สอสๆํ ฺแ์ อัๆÝ ๆรัÞวใ. ำํสใ฿ไ ใฯํั วแไูวใ ใไ ใำวฺฯส฿ Ýํ อวแ ไำํวไๅว.
                             </p>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ export const Profile = () => {
                         ) : (
                             <>
                                 <Save size={20} />
-                                <span className="uppercase tracking-widest text-sm">ุญูุธ ุงูุชุบููุฑุงุช</span>
+                                <span className="uppercase tracking-widest text-sm">อÝู วแสÛํํัวส</span>
                             </>
                         )}
                     </button>
@@ -218,10 +218,10 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-none flex items-center justify-center text-amber-600">
                                 <Palette size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ุณู…ุงุช ุงูุฃููุงู</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ำใวส วแรแๆวไ</h2>
                         </div>
 
-                        <p className="text-[11px] text-slate-400 mb-4 font-normal uppercase tracking-tighter">ุงุฎุชุฑ ุงูููู ุงูุฐู ุชูุถูู ููุงุฌูุฉ ุงูู…ูุตุฉ</p>
+                        <p className="text-[11px] text-slate-400 mb-4 font-normal uppercase tracking-tighter">วฮสั วแแๆไ วแะํ สÝึแๅ แๆวฬๅษ วแใไีษ</p>
                         
                         <div className="grid grid-cols-4 gap-3">
                             {THEME_COLORS.map(c => (
@@ -251,13 +251,13 @@ export const Profile = () => {
                     <div className="bg-gradient-to-br from-indigo-600 to-primary-700 rounded-none p-6 text-white shadow-sm relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
                         <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-                             ู…ุฑูุฒ ุงูู…ุณุงุนุฏุฉ
+                             ใั฿า วแใำวฺฯษ
                         </h3>
                         <p className="text-xs text-white/80 leading-relaxed mb-6 font-medium">
-                            ุฅุฐุง ูุงุฌูุช ุฃู ู…ุดููุฉ ูู ุญุณุงุจู ุฃู ุฃู…ุงู ุงูุจูุงูุงุชุ ูู…ููู ุงูุชูุงุตู ู…ุน ุงูุฏุนู… ุงูููู ู…ุจุงุดุฑุฉ.
+                            ละว ๆวฬๅส รํ ใิ฿แษ Ýํ อำวศ฿ รๆ รใวไ วแศํวไวสก ํใ฿ไ฿ วแสๆวีแ ใฺ วแฯฺใ วแÝไํ ใศวิัษ.
                         </p>
                         <button className="w-full bg-white/20 hover:bg-white/30  text-white border border-white/20 py-2.5 rounded-lg text-xs font-medium uppercase tracking-widest transition-all">
-                            ุชูุงุตู ู…ุนูุง
+                            สๆวีแ ใฺไว
                         </button>
                     </div>
                 </div>

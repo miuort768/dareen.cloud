@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen } from 'lucide-react';
 import { api } from '../lib/api';
@@ -14,7 +14,7 @@ interface BlogPost {
     keywords: string;
     author: string;
     date: string;
-    // ูุธุงู… ุงูุชุตููู ุงูุฌุฏูุฏ
+    // ไูวใ วแสีไํÝ วแฬฯํฯ
     contentType: string;   // notes | solutions | summaries | foundation
     curriculum: string;    // kuwait | qatar | uae | saudi
     level: string;         // primary | middle | secondary | basic | preparatory
@@ -38,7 +38,7 @@ export const AdminBlog = () => {
             const data = await api.get<BlogPost[]>('/blog');
             setPosts(data);
             } catch {
-                setError('ุญุฏุซ ุฎุทุฃ ุฃุซูุงุก ุฌูุจ ุงูุจูุงูุงุช');
+                setError('อฯห ฮุร รหไวม ฬแศ วแศํวไวส');
                 setLoading(false);
         }
     }, []);
@@ -57,9 +57,9 @@ export const AdminBlog = () => {
                 excerpt: '',
                 content: '',
                 coverImage: '',
-                category: 'ุนุงู…',
+                category: 'ฺวใ',
                 keywords: '',
-                author: 'ุฅุฏุงุฑุฉ ุฏุงุฑูู',
+                author: 'ลฯวัษ ฯวัํไ',
                 date: new Date().toISOString().split('T')[0],
                 contentType: 'notes',
                 curriculum: 'kuwait',
@@ -73,20 +73,20 @@ export const AdminBlog = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('ูู ุฃูุช ู…ุชุฃูุฏ ู…ู ุญุฐู ูุฐุง ุงูู…ูุงูุ')) return;
+        if (!window.confirm('ๅแ รไส ใสร฿ฯ ใไ อะÝ ๅะว วแใÞวแฟ')) return;
         try {
             await api.delete(`/blog/${id}`);
-            showNotification('ุชู… ุญุฐู ุงูู…ูุงู ุจูุฌุงุญ', 'success');
+            showNotification('สใ อะÝ วแใÞวแ ศไฬวอ', 'success');
             setPosts(posts.filter(p => p.id !== id));
         } catch {
-            showNotification('ูุดู ุญุฐู ุงูู…ูุงู', 'error');
+            showNotification('Ýิแ อะÝ วแใÞวแ', 'error');
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!currentPost?.title || !currentPost?.slug) {
-            showNotification('ูุฑุฌู ู…ูุก ุงูุญููู ุงูุฃุณุงุณูุฉ', 'warning');
+            showNotification('ํัฬ์ ใแม วแอÞๆแ วแรำวำํษ', 'warning');
             return;
         }
 
@@ -94,15 +94,15 @@ export const AdminBlog = () => {
             setSubmitting(true);
             if (currentPost.id) {
                 await api.put(`/blog/${currentPost.id}`, currentPost);
-                showNotification('ุชู… ุชุญุฏูุซ ุงูู…ูุงู ุจูุฌุงุญ', 'success');
+                showNotification('สใ สอฯํห วแใÞวแ ศไฬวอ', 'success');
             } else {
                 await api.post('/blog', currentPost);
-                showNotification('ุชู… ุฅุถุงูุฉ ุงูู…ูุงู ุจูุฌุงุญ', 'success');
+                showNotification('สใ ลึวÝษ วแใÞวแ ศไฬวอ', 'success');
             }
             setIsModalOpen(false);
             fetchPosts();
         } catch (err) {
-            showNotification(err.message || 'ูุดู ุญูุธ ุงูู…ูุงู', 'error');
+            showNotification(err.message || 'Ýิแ อÝู วแใÞวแ', 'error');
         } finally {
             setSubmitting(false);
         }
@@ -114,20 +114,20 @@ export const AdminBlog = () => {
     );
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-dash" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-6 animate-fade-in">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-medium text-slate-900 dark:text-white">ุฅุฏุงุฑุฉ ุงูู…ุฏููุฉ ุงูุชุนููู…ูุฉ</h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm">ุฃุถู ูุญุฑุฑ ุงูู…ูุงูุงุช ูุฒูุงุฏุฉ ุธููุฑ ุงูู…ูุตุฉ ูู ู…ุญุฑูุงุช ุงูุจุญุซ.</p>
+                    <h1 className="text-2xl font-medium text-slate-900 dark:text-white">ลฯวัษ วแใฯๆไษ วแสฺแํใํษ</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">รึÝ ๆอัั วแใÞวแวส แาํวฯษ ูๅๆั วแใไีษ Ýํ ใอั฿วส วแศอห.</p>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
                     className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-700 text-white font-medium rounded-none hover:from-red-700 hover:to-rose-800 transition-all shadow-sm shadow-red-600/20"
                 >
                     <Plus size={20} />
-                    <span>ู…ูุงู ุฌุฏูุฏ</span>
+                    <span>ใÞวแ ฬฯํฯ</span>
                 </button>
             </div>
 
@@ -137,7 +137,7 @@ export const AdminBlog = () => {
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                     <input
                         type="text"
-                        placeholder="ุจุญุซ ูู ุงูุนูุงููู ุฃู ุงูุชุตูููุงุช..."
+                        placeholder="ศอห Ýํ วแฺไวๆํไ รๆ วแสีไํÝวส..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-12 py-3 focus:ring-2 focus:ring-red-500 transition-all font-normal text-sm"
@@ -153,7 +153,7 @@ export const AdminBlog = () => {
             ) : filteredPosts.length === 0 ? (
                 <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800">
                     <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
-                    <p className="text-slate-500 dark:text-slate-400 font-normal">ูุง ููุฌุฏ ู…ูุงูุงุช ุญุงููุงูุ ุงุจุฏุฃ ุจุฅุถุงูุฉ ุฃูู ู…ูุงู!</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-normal">แว ํๆฬฯ ใÞวแวส อวแํว๐ก วศฯร ศลึวÝษ รๆแ ใÞวแ!</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -189,25 +189,25 @@ export const AdminBlog = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60   animate-fade-in">
                     <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-200 dark:border-slate-800">
                         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                            <h2 className="text-xl font-medium">{currentPost.id ? 'ุชุนุฏูู ู…ูุงู' : 'ุฅุถุงูุฉ ู…ูุงู ุฌุฏูุฏ'}</h2>
+                            <h2 className="text-xl font-medium">{currentPost.id ? 'สฺฯํแ ใÞวแ' : 'ลึวÝษ ใÞวแ ฬฯํฯ'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><X size={20} /></button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุนููุงู ุงูู…ูุงู</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ฺไๆวไ วแใÞวแ</label>
                                     <input
                                         required
                                         type="text"
                                         value={currentPost.title}
                                         onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
                                         className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                        placeholder="ู…ุซุงู: ุฃูุถู ุทุฑู ุงูู…ุฐุงูุฑุฉ..."
+                                        placeholder="ใหวแ: รÝึแ ุัÞ วแใะว฿ัษ..."
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุงูุฑุงุจุท ุงูู…ุฎุชุตุฑ (Slug)</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">วแัวศุ วแใฮสีั (Slug)</label>
                                     <div className="relative">
                                         <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                         <input
@@ -225,7 +225,7 @@ export const AdminBlog = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุงูุชุตููู</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">วแสีไํÝ</label>
                                     <div className="relative">
                                         <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                         <input
@@ -233,12 +233,12 @@ export const AdminBlog = () => {
                                             value={currentPost.category}
                                             onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-10 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                            placeholder="ู…ุซุงู: ูุตุงุฆุญ ุชุนููู…ูุฉ"
+                                            placeholder="ใหวแ: ไีวฦอ สฺแํใํษ"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุงููุงุชุจ</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">วแ฿วสศ</label>
                                     <input
                                         type="text"
                                         value={currentPost.author}
@@ -247,7 +247,7 @@ export const AdminBlog = () => {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุงูุชุงุฑูุฎ</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">วแสวัํฮ</label>
                                     <input
                                         type="date"
                                         value={currentPost.date?.split('T')[0]}
@@ -257,75 +257,75 @@ export const AdminBlog = () => {
                                 </div>
                             </div>
 
-                            {/* โ”€โ”€ Classification Fields โ”€โ”€ */}
+                            {/* ?? Classification Fields ?? */}
                             <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-800 p-4">
-                                <p className="text-[10px] font-medium text-indigo-600 uppercase tracking-widest mb-4">ุชุตููู ุงูู…ุญุชูู โ€” ูุธูุฑ ูู ูุธุงู… ุงูุชุตูุญ</p>
+                                <p className="text-[10px] font-medium text-indigo-600 uppercase tracking-widest mb-4">สีไํÝ วแใอสๆ์ — ํูๅั Ýํ ไูวใ วแสีÝอ</p>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ููุน ุงูู…ุญุชูู</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ไๆฺ วแใอสๆ์</label>
                                         <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="notes">ู…ุฐูุฑุงุช</option>
-                                            <option value="solutions">ุญู ูุชุจ</option>
-                                            <option value="summaries">ู…ูุฎุตุงุช</option>
-                                            <option value="foundation">ุชุฃุณูุณ</option>
+                                            <option value="notes">ใะ฿ัวส</option>
+                                            <option value="solutions">อแ ฿สศ</option>
+                                            <option value="summaries">ใแฮีวส</option>
+                                            <option value="foundation">สรำํำ</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ุงูู…ููุฌ</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">วแใไๅฬ</label>
                                         <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="kuwait">ูููุชู</option>
-                                            <option value="qatar">ูุทุฑู</option>
-                                            <option value="uae">ุฅู…ุงุฑุงุชู</option>
-                                            <option value="saudi">ุณุนูุฏู</option>
+                                            <option value="kuwait">฿ๆํสํ</option>
+                                            <option value="qatar">Þุัํ</option>
+                                            <option value="uae">ลใวัวสํ</option>
+                                            <option value="saudi">ำฺๆฯํ</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ุงูู…ุฑุญูุฉ</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">วแใัอแษ</label>
                                         <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="primary">ุงุจุชุฏุงุฆู</option>
-                                            <option value="middle">ู…ุชูุณุท</option>
-                                            <option value="secondary">ุซุงููู</option>
-                                            <option value="basic">ุฃุณุงุณู (ูุทุฑ)</option>
-                                            <option value="preparatory">ุฅุนุฏุงุฏู (ุฅู…ุงุฑุงุช)</option>
+                                            <option value="primary">วศสฯวฦํ</option>
+                                            <option value="middle">ใสๆำุ</option>
+                                            <option value="secondary">หวไๆํ</option>
+                                            <option value="basic">รำวำํ (Þุั)</option>
+                                            <option value="preparatory">ลฺฯวฯํ (ลใวัวส)</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ุงูุตู</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">วแีÝ</label>
                                         <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>ุงูุตู {g}</option>)}
+                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>วแีÝ {g}</option>)}
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ุงูุชุฑู…</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">วแสัใ</label>
                                         <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="1">ุชุฑู… ุฃูู</option>
-                                            <option value="2">ุชุฑู… ุซุงูู</option>
-                                            <option value="">ุงููู</option>
+                                            <option value="1">สัใ รๆแ</option>
+                                            <option value="2">สัใ หวไํ</option>
+                                            <option value="">วแ฿แ</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ุงูู…ุงุฏุฉ</label>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">วแใวฯษ</label>
                                         <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="arabic">ุนุฑุจู</option>
-                                            <option value="math">ุฑูุงุถูุงุช</option>
-                                            <option value="islamic">ุฅุณูุงู…ูุฉ</option>
-                                            <option value="english">ุฅูุฌููุฒู</option>
-                                            <option value="science">ุนููู…</option>
-                                            <option value="physics">ููุฒูุงุก</option>
-                                            <option value="chemistry">ููู…ูุงุก</option>
-                                            <option value="biology">ุฃุญูุงุก</option>
-                                            <option value="history">ุชุงุฑูุฎ</option>
-                                            <option value="geography">ุฌุบุฑุงููุง</option>
-                                            <option value="social">ุงุฌุชู…ุงุนูุงุช</option>
-                                            <option value="computer">ุญุงุณุจ ุขูู</option>
-                                            <option value="stats">ุฅุญุตุงุก</option>
+                                            <option value="arabic">ฺัศํ</option>
+                                            <option value="math">ัํวึํวส</option>
+                                            <option value="islamic">ลำแวใํษ</option>
+                                            <option value="english">ลไฬแําํ</option>
+                                            <option value="science">ฺแๆใ</option>
+                                            <option value="physics">Ýําํวม</option>
+                                            <option value="chemistry">฿ํใํวม</option>
+                                            <option value="biology">รอํวม</option>
+                                            <option value="history">สวัํฮ</option>
+                                            <option value="geography">ฬÛัวÝํว</option>
+                                            <option value="social">วฬสใวฺํวส</option>
+                                            <option value="computer">อวำศ ยแํ</option>
+                                            <option value="stats">ลอีวม</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุฑุงุจุท ุตูุฑุฉ ุงูุบูุงู</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ัวศุ ีๆัษ วแÛแวÝ</label>
                                 <div className="relative">
                                     <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
@@ -352,36 +352,36 @@ export const AdminBlog = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ุงูููู…ุงุช ุงูุฏูุงููุฉ (Keywords) - ู…ูุตููุฉ ุจูุงุตูุฉ</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">วแ฿แใวส วแฯแวแํษ (Keywords) - ใÝีๆแษ ศÝวีแษ</label>
                                 <input
                                     type="text"
                                     value={currentPost.keywords}
                                     onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
                                     className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                    placeholder="ุณููุ ุชุนููู…ุ ุงููููุชุ ุงูุณุนูุฏูุฉ"
+                                    placeholder="ำํๆก สฺแํใก วแ฿ๆํสก วแำฺๆฯํษ"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ู…ูุชุทู ุงูู…ูุงู (ุงูุธุงูุฑ ูู ุงูุฎุงุฑุฌ)</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ใÞสุÝ วแใÞวแ (วแูวๅั Ýํ วแฮวัฬ)</label>
                                 <textarea
                                     rows={2}
                                     value={currentPost.excerpt}
                                     onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
                                     className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none"
-                                    placeholder="ูุตู ู…ุฎุชุตุฑ ููู…ูุงู ูุฌุฐุจ ุงููุฑุงุก..."
+                                    placeholder="ๆีÝ ใฮสีั แแใÞวแ แฬะศ วแÞัวม..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ู…ุญุชูู ุงูู…ูุงู (ูุฏุนู… HTML)</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ใอสๆ์ วแใÞวแ (ํฯฺใ HTML)</label>
                                 <textarea
                                     rows={10}
                                     required
                                     value={currentPost.content}
                                     onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
                                     className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none font-mono"
-                                    placeholder="ุงูุชุจ ู…ุญุชูู ุงูู…ูุงู ููุง..."
+                                    placeholder="ว฿สศ ใอสๆ์ วแใÞวแ ๅไว..."
                                 />
                             </div>
                         </form>
@@ -392,7 +392,7 @@ export const AdminBlog = () => {
                                 onClick={() => setIsModalOpen(false)}
                                 className="px-6 py-3 font-normal text-slate-500 hover:text-slate-800 transition-colors"
                             >
-                                ุฅูุบุงุก
+                                ลแÛวม
                             </button>
                             <button
                                 type="submit"
@@ -401,7 +401,7 @@ export const AdminBlog = () => {
                                 className="flex items-center gap-2 px-10 py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:bg-slate-400 shadow-sm shadow-red-600/20"
                             >
                                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save size={20} />}
-                                <span>ุญูุธ ุงูู…ูุงู ุงูุขู</span>
+                                <span>อÝู วแใÞวแ วแยไ</span>
                             </button>
                         </div>
                     </div>

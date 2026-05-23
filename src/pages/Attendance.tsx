@@ -1,4 +1,4 @@
-Ôªøimport { useState } from 'react';
+import { useState } from 'react';
 import { Users, Search, BookOpen, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -16,7 +16,7 @@ import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 
-// ‚îÄ‚îÄ Reusable Styled Components ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// ?? Reusable Styled Components ??????????????????????????????????????????????
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -56,7 +56,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
     </button>
 );
 
-// ‚îÄ‚îÄ Main Component ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ
+// ?? Main Component ????????????????????????????????????????????????????????????
 
 export const Attendance = () => {
     const currentUser = useCurrentUser();
@@ -94,8 +94,8 @@ export const Attendance = () => {
     const getGradeDisplay = (studentName: string, grade?: string) => {
         if (!grade) return studentName.charAt(0);
         const mapping: Record<string, string> = {
-            'ÿßŸÑÿ£ŸàŸÑ': '1', 'ÿßŸÑÿ´ÿßŸÜŸä': '2', 'ÿßŸÑÿ´ÿßŸÑÿ´': '3', 'ÿßŸÑÿ±ÿßÿ®ÿπ': '4', 'ÿßŸÑÿÆÿßŸÖÿ≥': '5', 'ÿßŸÑÿ≥ÿßÿØÿ≥': '6',
-            'ÿ≥ÿßÿ®ÿπ': '7', 'ÿ´ÿßŸÖŸÜ': '8', 'ÿ™ÿßÿ≥ÿπ': '9', 'ÿπÿßÿ¥ÿ±': '10'
+            '«·√Ê·': '1', '«·À«‰Ì': '2', '«·À«·À': '3', '«·—«»⁄': '4', '«·Œ«„”': '5', '«·”«œ”': '6',
+            '”«»⁄': '7', 'À«„‰': '8', ' «”⁄': '9', '⁄«‘—': '10'
         };
         const numMatch = grade.match(/\d+/);
         if (numMatch) return numMatch[0];
@@ -136,7 +136,7 @@ export const Attendance = () => {
         });
 
         if (success) {
-            showNotification(`ÿ™ŸÖ ÿ™ÿ≥ÿ¨ŸäŸÑ ${student.name} (${status === 'completed' ? 'ÿ≠ÿ∂Ÿàÿ±' : 'ÿ∫Ÿäÿßÿ®'})`, 'success');
+            showNotification(` „  ”ÃÌ· ${student.name} (${status === 'completed' ? 'Õ÷Ê—' : '€Ì«»'})`, 'success');
             
             if (whatsappAutoNotify && status === 'completed' && student.parentPhone) {
                 const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
@@ -151,16 +151,16 @@ export const Attendance = () => {
             
             setSecureModalData(null);
         } else {
-            showNotification('ŸÅÿ¥ŸÑ ÿ™ÿ≥ÿ¨ŸäŸÑ ÿßŸÑÿ≠ÿ∂Ÿàÿ±', 'error');
+            showNotification('›‘·  ”ÃÌ· «·Õ÷Ê—', 'error');
         }
     };
 
     const handleUpdateStatus = async (id: string, status: Session['status']) => {
         const success = await updateStatus(id, status);
         if (success) {
-            showNotification('ÿ™ŸÖ ÿ™ÿ≠ÿØŸäÿ´ ÿ≠ÿßŸÑÿ© ÿßŸÑÿ≠ÿµÿ© ÿ®ŸÜÿ¨ÿßÿ≠', 'success');
+            showNotification(' „  ÕœÌÀ Õ«·… «·Õ’… »‰Ã«Õ', 'success');
         } else {
-            showNotification('ŸÅÿ¥ŸÑ ŸÅŸä ÿ™ÿ≠ÿØŸäÿ´ ÿßŸÑÿ≠ÿßŸÑÿ©', 'error');
+            showNotification('›‘· ›Ì  ÕœÌÀ «·Õ«·…', 'error');
         }
     };
 
@@ -182,7 +182,7 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-dash" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
             
@@ -224,11 +224,11 @@ export const Attendance = () => {
                             });
 
                             if (todayStudents.length === 0) {
-                                showNotification('ŸÑÿß ŸäŸàÿ¨ÿØ ÿ∑ŸÑÿßÿ® ÿ∫Ÿäÿ± ŸÖÿ≠ÿ∂ÿ±ŸäŸÜ ŸÑŸáÿ∞ÿß ÿßŸÑŸäŸàŸÖ', 'info');
+                                showNotification('·« ÌÊÃœ ÿ·«» €Ì— „Õ÷—Ì‰ ·Â–« «·ÌÊ„', 'info');
                                 return;
                             }
 
-                            if (!window.confirm(`ŸáŸÑ ÿ£ŸÜÿ™ ŸÖÿ™ÿ£ŸÉÿØ ŸÖŸÜ ÿ™ÿ≠ÿ∂Ÿäÿ± (${todayStudents.length}) ÿ∑ŸÑÿßÿ® ŸÉÿ≠ÿ∂Ÿàÿ± ŸÑŸÑŸäŸàŸÖÿü`)) return;
+                            if (!window.confirm(`Â· √‰  „ √ﬂœ „‰  Õ÷Ì— (${todayStudents.length}) ÿ·«» ﬂÕ÷Ê— ··ÌÊ„ø`)) return;
                             
                             const now = new Date();
                             const currentTime = now.toLocaleTimeString('ar-EG', {
@@ -254,11 +254,11 @@ export const Attendance = () => {
                                 });
                                 if (success) successCount++;
                             }
-                            showNotification(`ÿ™ŸÖ ÿ™ÿ≥ÿ¨ŸäŸÑ ÿ≠ÿ∂Ÿàÿ± ${successCount} ÿ∑ŸÑÿßÿ® ÿ®ŸÜÿ¨ÿßÿ≠`, 'success');
+                            showNotification(` „  ”ÃÌ· Õ÷Ê— ${successCount} ÿ·«» »‰Ã«Õ`, 'success');
                         }}
                         className="w-full bg-emerald-600 hover:bg-emerald-700 py-3.5"
                     >
-                        ÿ™ÿ≠ÿ∂Ÿäÿ± ÿ¨ŸÖÿßÿπŸä Ÿàÿ≥ÿ±Ÿäÿπ ŸÑÿ∑ŸÑÿßÿ® ÿßŸÑŸäŸàŸÖ <Users size={16} />
+                         Õ÷Ì— Ã„«⁄Ì Ê”—Ì⁄ ·ÿ·«» «·ÌÊ„ <Users size={16} />
                     </PrimaryBtn>
                 </div>
             )}
@@ -280,14 +280,14 @@ export const Attendance = () => {
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden rounded-none">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
-                                <SectionTitle icon={Activity} label="ÿ•ÿØÿßÿ±ÿ© ÿßŸÑŸÜÿ¥ÿßÿ∑ÿßÿ™ ÿßŸÑŸÖÿ®ÿßÿ¥ÿ±ÿ©" />
+                                <SectionTitle icon={Activity} label="≈œ«—… «·‰‘«ÿ«  «·„»«‘—…" />
                                 <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
                                         type="text"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        placeholder="ÿßÿ®ÿ≠ÿ´ ÿπŸÜ ÿ∑ÿßŸÑÿ® ÿ£Ÿà ŸÖÿßÿØÿ©..."
+                                        placeholder="«»ÕÀ ⁄‰ ÿ«·» √Ê „«œ…..."
                                         className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
                                     />
                                 </div>
@@ -318,7 +318,7 @@ export const Attendance = () => {
                                     )) : (
                                         <div className="col-span-full py-16 text-center">
                                             <Users className="mx-auto mb-2 text-slate-200" size={32} />
-                                            <p className="text-xs font-normal text-slate-400">ŸÑÿß ÿ™Ÿàÿ¨ÿØ ÿ®ŸäÿßŸÜÿßÿ™ ŸÖÿ∑ÿßÿ®ŸÇÿ©</p>
+                                            <p className="text-xs font-normal text-slate-400">·«  ÊÃœ »Ì«‰«  „ÿ«»ﬁ…</p>
                                         </div>
                                     )}
                             </div>
@@ -343,12 +343,12 @@ export const Attendance = () => {
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-normal text-xs text-white">ÿ•ÿ¥ÿ±ÿßŸÅ ÿßŸÑŸÖÿπŸÑŸÖÿ©: {teacher}</h3>
-                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">ŸÉÿßÿØÿ± ÿ™ÿπŸÑŸäŸÖŸä ŸÖÿπÿ™ŸÖÿØ</p>
+                                                <h3 className="font-normal text-xs text-white">≈‘—«› «·„⁄·„…: {teacher}</h3>
+                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">ﬂ«œ—  ⁄·Ì„Ì „⁄ „œ</p>
                                             </div>
                                         </div>
                                         <div className="text-[9px] font-normal bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
-                                            {filteredTStudents.length} ÿ∑ŸÑÿßÿ®
+                                            {filteredTStudents.length} ÿ·«»
                                         </div>
                                     </div>
 
@@ -393,13 +393,13 @@ export const Attendance = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="text-[8px] font-medium bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
-                                                                ÿßŸÜÿ™ÿ∏ÿßÿ±
+                                                                «‰ Ÿ«—
                                                             </div>
                                                         </div>
 
                                                         <div className="space-y-1.5">
                                                             <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
-                                                                <span>ÿßŸÑÿ±ÿµŸäÿØ ÿßŸÑŸÖÿ™ÿßÿ≠</span>
+                                                                <span>«·—’Ìœ «·„ «Õ</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
                                                             <div className="h-1 bg-white dark:bg-slate-900 rounded-full overflow-hidden">
@@ -418,13 +418,13 @@ export const Attendance = () => {
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
-                                                                ÿ≠ÿ∂Ÿàÿ±
+                                                                Õ÷Ê—
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
-                                                                ÿ∫Ÿäÿßÿ®
+                                                                €Ì«»
                                                             </button>
                                                         </div>
                                                     </div>
@@ -449,8 +449,8 @@ export const Attendance = () => {
 
             <ConfirmModal
                 isOpen={!!deletingSlot}
-                title="ÿ™ÿ£ŸÉŸäÿØ ÿ≠ÿ∞ŸÅ ÿßŸÑŸÖŸàÿπÿØ"
-                message="ÿ≥Ÿäÿ™ŸÖ ÿ•ÿ≤ÿßŸÑÿ© Ÿáÿ∞ÿß ÿßŸÑŸÖŸàÿπÿØ ŸÜŸáÿßÿ¶ŸäÿßŸã ŸÖŸÜ ÿ≥ÿ¨ŸÑÿßÿ™ ÿßŸÑÿ∑ÿßŸÑÿ® ÿßŸÑŸÖÿ≠ÿØÿØÿ©ÿå ŸáŸÑ ÿ£ŸÜÿ™ ŸÖÿ™ÿ£ŸÉÿØÿü"
+                title=" √ﬂÌœ Õ–› «·„Ê⁄œ"
+                message="”Ì „ ≈“«·… Â–« «·„Ê⁄œ ‰Â«∆Ì« „‰ ”Ã·«  «·ÿ«·» «·„Õœœ…° Â· √‰  „ √ﬂœø"
                 onConfirm={() => {
                     if (deletingSlot) {
                         const { student, enrollment, slotIndex } = deletingSlot;

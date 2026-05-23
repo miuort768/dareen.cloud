@@ -1,4 +1,4 @@
-ï»¿import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles, GraduationCap } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
@@ -75,7 +75,7 @@ export const TeacherInvoices = () => {
             setTeachers(Array.isArray(teaData) ? teaData : (teaData as Record<string, unknown>).data as Record<string, unknown>[] || []);
         } catch (error) {
             console.error('Error fetching data:', error);
-            showNotification('ÙØ´Ù„ ÙÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.', 'error');
+            showNotification('İÔá İí ÊÍãíá ÇáÈíÇäÇÊ. íÑÌì ÇáãÍÇæáÉ ãÑÉ ÃÎÑì.', 'error');
         } finally {
             setLoading(false);
         }
@@ -185,10 +185,10 @@ export const TeacherInvoices = () => {
             }
             await fetchInvoices();
             handleCancel();
-            showNotification(editingId ? 'ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„ÙØ§ØªÙˆØ±Ø© Ø¨Ù†Ø¬Ø§Ø­' : 'ØªÙ… Ø¥Ø¶Ø§ÙØ© Ø§Ù„ÙØ§ØªÙˆØ±Ø© Ø¨Ù†Ø¬Ø§Ø­', 'success');
+            showNotification(editingId ? 'Êã ÊÍÏíË ÇáİÇÊæÑÉ ÈäÌÇÍ' : 'Êã ÅÖÇİÉ ÇáİÇÊæÑÉ ÈäÌÇÍ', 'success');
         } catch (error) {
             console.error('Error saving invoice:', error);
-            showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø­ÙØ¸ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª', 'error');
+            showNotification('ÍÏË ÎØÃ ÃËäÇÁ ÍİÙ ÇáÈíÇäÇÊ', 'error');
         } finally {
             setIsSaving(false);
         }
@@ -197,17 +197,17 @@ export const TeacherInvoices = () => {
     const handleDelete = useCallback((id: string) => {
         setConfirmModal({
             isOpen: true,
-            title: 'Ø­Ø°Ù Ø§Ù„ÙØ§ØªÙˆØ±Ø©',
-            message: 'Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ù‡ Ø§Ù„ÙØ§ØªÙˆØ±Ø©ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ø§ Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡.',
+            title: 'ÍĞİ ÇáİÇÊæÑÉ',
+            message: 'åá ÃäÊ ãÊÃßÏ ãä ÍĞİ åĞå ÇáİÇÊæÑÉ¿ áÇ íãßä ÇáÊÑÇÌÚ Úä åĞÇ ÇáÅÌÑÇÁ.',
             isDestructive: true,
             onConfirm: async () => {
                 try {
                     await api.delete(`/invoices/teacher/${id}`);
                     fetchInvoices();
-                    showNotification('ØªÙ… Ø­Ø°Ù Ø§Ù„ÙØ§ØªÙˆØ±Ø© Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                    showNotification('Êã ÍĞİ ÇáİÇÊæÑÉ ÈäÌÇÍ', 'success');
                 } catch (error) {
                     console.error('Error deleting invoice:', error);
-                    showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø­Ø°Ù Ø§Ù„ÙØ§ØªÙˆØ±Ø©', 'error');
+                    showNotification('ÍÏË ÎØÃ ÃËäÇÁ ÍĞİ ÇáİÇÊæÑÉ', 'error');
                 }
             }
         });
@@ -218,8 +218,8 @@ export const TeacherInvoices = () => {
 
         setConfirmModal({
             isOpen: true,
-            title: 'Ø­Ø°Ù Ø¬Ù…ÙŠØ¹ Ø§Ù„ÙÙˆØ§ØªÙŠØ±',
-            message: `Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ø¬Ù…ÙŠØ¹ Ø§Ù„ÙÙˆØ§ØªÙŠØ± (${invoices.length})ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ø§ Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡.`,
+            title: 'ÍĞİ ÌãíÚ ÇáİæÇÊíÑ',
+            message: `åá ÃäÊ ãÊÃßÏ ãä ÍĞİ ÌãíÚ ÇáİæÇÊíÑ (${invoices.length})¿ áÇ íãßä ÇáÊÑÇÌÚ Úä åĞÇ ÇáÅÌÑÇÁ.`,
             isDestructive: true,
             onConfirm: async () => {
                 try {
@@ -229,10 +229,10 @@ export const TeacherInvoices = () => {
                     );
                     await Promise.all(deletePromises);
                     await fetchInvoices();
-                    showNotification('ØªÙ… Ø­Ø°Ù Ø¬Ù…ÙŠØ¹ Ø§Ù„ÙÙˆØ§ØªÙŠØ± Ø¨Ù†Ø¬Ø§Ø­', 'success');
+                    showNotification('Êã ÍĞİ ÌãíÚ ÇáİæÇÊíÑ ÈäÌÇÍ', 'success');
                 } catch (error) {
                     console.error('Error deleting all invoices:', error);
-                    showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø­Ø°Ù Ø§Ù„ÙÙˆØ§ØªÙŠØ±', 'error');
+                    showNotification('ÍÏË ÎØÃ ÃËäÇÁ ÍĞİ ÇáİæÇÊíÑ', 'error');
                 } finally {
                     setLoading(false);
                 }
@@ -254,8 +254,8 @@ export const TeacherInvoices = () => {
             if (teachersToImport.length === 0) {
                 setConfirmModal({
                     isOpen: true,
-                    title: 'Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ø¬Ø¯ÙŠØ¯Ø©',
-                    message: 'Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª Ø§Ù„Ù…Ø³Ø¬Ù„ÙŠÙ† Ù…Ø¶Ø§ÙÙˆÙ† Ø¨Ø§Ù„ÙØ¹Ù„ ÙÙŠ Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„ÙÙˆØ§ØªÙŠØ±.',
+                    title: 'áÇ ÊæÌÏ ÈíÇäÇÊ ÌÏíÏÉ',
+                    message: 'ÌãíÚ ÇáãÚáãÇÊ ÇáãÓÌáíä ãÖÇİæä ÈÇáİÚá İí ŞÇÆãÉ ÇáİæÇÊíÑ.',
                     isDestructive: false,
                     onConfirm: () => { }
                 });
@@ -266,8 +266,8 @@ export const TeacherInvoices = () => {
             setLoading(false);
             setConfirmModal({
                 isOpen: true,
-                title: 'Ø§Ø³ØªÙŠØ±Ø§Ø¯ Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª',
-                message: `Ø³ÙŠØªÙ… Ø§Ø³ØªÙŠØ±Ø§Ø¯ ${teachersToImport.length} Ù…Ø¹Ù„Ù…Ø© Ø¬Ø¯ÙŠØ¯Ø© ÙˆØ§Ø­ØªØ³Ø§Ø¨ Ù…Ø³ØªØ­Ù‚Ø§ØªÙ‡Ù… Ù…Ù† Ø³Ø¬Ù„ Ø§Ù„Ø­ØµØµ. Ù‡Ù„ ØªØ±ÙŠØ¯ Ø§Ù„Ø§Ø³ØªÙ…Ø±Ø§Ø±ØŸ`,
+                title: 'ÇÓÊíÑÇÏ ÇáãÚáãÇÊ',
+                message: `ÓíÊã ÇÓÊíÑÇÏ ${teachersToImport.length} ãÚáãÉ ÌÏíÏÉ æÇÍÊÓÇÈ ãÓÊÍŞÇÊåã ãä ÓÌá ÇáÍÕÕ. åá ÊÑíÏ ÇáÇÓÊãÑÇÑ¿`,
                 isDestructive: false,
                 onConfirm: async () => {
                     try {
@@ -284,7 +284,7 @@ export const TeacherInvoices = () => {
                                 teacher: t.name,
                                 specialization: t.subject || '',
                                 amount: totalAmount,
-                                paymentMethod: 'Ù†Ù‚Ø¯ÙŠ',
+                                paymentMethod: 'äŞÏí',
                                 status: INVOICE_STATUS.PROCESSING,
                                 personalExpenses: 0,
                                 date: new Date().toISOString().split('T')[0]
@@ -293,10 +293,10 @@ export const TeacherInvoices = () => {
 
                         await Promise.all(importPromises);
                         await fetchInvoices();
-                        showNotification(`ØªÙ… Ø§Ø³ØªÙŠØ±Ø§Ø¯ ${teachersToImport.length} Ù…Ø¹Ù„Ù…Ø© Ø¨Ù†Ø¬Ø§Ø­`, 'success');
+                        showNotification(`Êã ÇÓÊíÑÇÏ ${teachersToImport.length} ãÚáãÉ ÈäÌÇÍ`, 'success');
                     } catch (error) {
                         console.error('Error importing teachers:', error);
-                        showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø§Ø³ØªÙŠØ±Ø§Ø¯ Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª', 'error');
+                        showNotification('ÍÏË ÎØÃ ÃËäÇÁ ÇÓÊíÑÇÏ ÇáãÚáãÇÊ', 'error');
                     } finally {
                         setLoading(false);
                     }
@@ -304,7 +304,7 @@ export const TeacherInvoices = () => {
             });
         } catch (error) {
             console.error('Error during import process:', error);
-            showNotification('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø¬Ù„Ø¨ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª', 'error');
+            showNotification('ÍÏË ÎØÃ ÃËäÇÁ ÌáÈ ÈíÇäÇÊ ÇáãÚáãÇÊ', 'error');
             setLoading(false);
         }
     }, [invoices, fetchInvoices, showNotification]);
@@ -312,7 +312,7 @@ export const TeacherInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-dash" dir="rtl">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 blur-3xl pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
@@ -323,13 +323,13 @@ export const TeacherInvoices = () => {
                         <GraduationCap size={22} />
                     </div>
                     <div>
-                        <h1 className="text-lg font-bold text-white leading-tight">ÙÙˆØ§ØªÙŠØ± Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª</h1>
-                        <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">Ø¥Ø¯Ø§Ø±Ø© Ø±ÙˆØ§ØªØ¨ ÙˆÙ…Ø³ØªØ­Ù‚Ø§Øª Ø§Ù„ÙƒØ§Ø¯Ø± Ø§Ù„ØªØ¹Ù„ÙŠÙ…ÙŠ</p>
+                        <h1 className="text-lg font-bold text-white leading-tight">İæÇÊíÑ ÇáãÚáãÇÊ</h1>
+                        <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">ÅÏÇÑÉ ÑæÇÊÈ æãÓÊÍŞÇÊ ÇáßÇÏÑ ÇáÊÚáíãí</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap">
                     <Sparkles size={13} className="text-emerald-300" />
-                    {stats.totalAmount.toLocaleString()} Ø¬.Ù… Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø±ÙˆØ§ØªØ¨
+                    {stats.totalAmount.toLocaleString()} Ì.ã ÅÌãÇáí ÇáÑæÇÊÈ
                 </div>
             </div>
 
@@ -341,7 +341,7 @@ export const TeacherInvoices = () => {
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
                                 <InputField
-                                    placeholder="Ø¨Ø­Ø« Ø¨Ø§Ø³Ù… Ø§Ù„Ù…Ø¹Ù„Ù…Ø©..."
+                                    placeholder="ÈÍË ÈÇÓã ÇáãÚáãÉ..."
                                     className="pr-9 py-2 text-xs"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -356,7 +356,7 @@ export const TeacherInvoices = () => {
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
-                                    <span className="text-[10px] text-slate-400">â†’</span>
+                                    <span className="text-[10px] text-slate-400">?</span>
                                     <input 
                                         type="date" 
                                         className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
@@ -372,7 +372,7 @@ export const TeacherInvoices = () => {
                                 onChange={e => setFilterStatus(e.target.value)}
                                 className="w-auto min-w-[140px] py-2 text-xs font-normal"
                             >
-                                <option value="all">Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ø§Ù„Ø§Øª</option>
+                                <option value="all">ÌãíÚ ÇáÍÇáÇÊ</option>
                                 {Object.values(INVOICE_STATUS).map(status => (
                                     <option key={status} value={status}>{status}</option>
                                 ))}
@@ -384,17 +384,17 @@ export const TeacherInvoices = () => {
                                 <>
                         <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
                             {showForm ? <X size={14} /> : <Plus size={14} />}
-                            {showForm ? 'Ø¥Ù„ØºØ§Ø¡' : 'Ø¥Ø¶Ø§ÙØ© ÙØ§ØªÙˆØ±Ø©'}
+                            {showForm ? 'ÅáÛÇÁ' : 'ÅÖÇİÉ İÇÊæÑÉ'}
                         </PrimaryBtn>
-                        <SecondaryBtn onClick={handleImportTeachers} title="Ø§Ø³ØªÙŠØ±Ø§Ø¯ Ù…Ù† Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª">
-                            <UserPlus size={14} /> Ø§Ø³ØªÙŠØ±Ø§Ø¯
+                        <SecondaryBtn onClick={handleImportTeachers} title="ÇÓÊíÑÇÏ ãä ÇáãÚáãÇÊ">
+                            <UserPlus size={14} /> ÇÓÊíÑÇÏ
                         </SecondaryBtn>
-                        <DangerBtn onClick={handleDeleteAll} title="Ø­Ø°Ù Ø§Ù„ÙƒÙ„">
+                        <DangerBtn onClick={handleDeleteAll} title="ÍĞİ Çáßá">
                             <Trash2 size={14} />
                         </DangerBtn>
                                 </>
                             )}
-                            <SecondaryBtn onClick={() => window.print()} title="Ø·Ø¨Ø§Ø¹Ø© Ø§Ù„Ø³Ø¬Ù„">
+                            <SecondaryBtn onClick={() => window.print()} title="ØÈÇÚÉ ÇáÓÌá">
                                 <Printer size={14} />
                             </SecondaryBtn>
                         </div>

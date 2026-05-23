@@ -1,4 +1,4 @@
-ï»¿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -40,10 +40,10 @@ export const Agenda = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['sessions'] });
             queryClient.invalidateQueries({ queryKey: ['students'] });
-            showNotification('ØªÙ… ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø­ØµØ© Ø¨Ù†Ø¬Ø§Ø­', 'success');
+            showNotification('Êã ÊÓÌíá ÇáÍÕÉ ÈäÌÇÍ', 'success');
         },
         onError: () => {
-            showNotification('ÙØ´Ù„ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø­ØµØ©', 'error');
+            showNotification('ÝÔá ÊÓÌíá ÇáÍÕÉ', 'error');
         }
     });
 
@@ -74,7 +74,7 @@ export const Agenda = () => {
                             studentGrade: student.grade,
                             teacherName: enrollment.teacher,
                             subject: enrollment.subject,
-                            time: `${slot.hour} ${slot.period === 'am' ? 'ØµØ¨Ø§Ø­Ø§Ù‹' : 'Ù…Ø³Ø§Ø¡Ù‹'}`,
+                            time: `${slot.hour} ${slot.period === 'am' ? 'ÕÈÇÍÇð' : 'ãÓÇÁð'}`,
                             hour: slot.hour,
                             period: slot.period,
                             isDone,
@@ -116,24 +116,24 @@ export const Agenda = () => {
         });
     };
 
-    const DAYS = ['Ø§Ù„Ø³Ø¨Øª', 'Ø§Ù„Ø£Ø­Ø¯', 'Ø§Ù„Ø§Ø«Ù†ÙŠÙ†', 'Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡', 'Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡', 'Ø§Ù„Ø®Ù…ÙŠØ³', 'Ø§Ù„Ø¬Ù…Ø¹Ø©'];
+    const DAYS = ['ÇáÓÈÊ', 'ÇáÃÍÏ', 'ÇáÇËäíä', 'ÇáËáÇËÇÁ', 'ÇáÃÑÈÚÇÁ', 'ÇáÎãíÓ', 'ÇáÌãÚÉ'];
 
     if (loadingStudents || loadingSessions) {
-        return <div className="p-12 text-center">Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø£Ø¬Ù†Ø¯Ø©...</div>;
+        return <div className="p-12 text-center">ÌÇÑí ÊÍãíá ÇáÃÌäÏÉ...</div>;
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-dash" dir="rtl">
     <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
     <div className="relative z-10 max-w-[1600px] mx-auto px-2">
             <PageHeader
-                title="Ø£Ø¬Ù†Ø¯Ø© Ø§Ù„Ø­ØµØµ Ø§Ù„ÙŠÙˆÙ…ÙŠØ©"
-                subtitle="Ù…ØªØ§Ø¨Ø¹Ø© ÙˆØªÙ†ÙÙŠØ° Ø§Ù„Ø­ØµØµ Ø§Ù„Ù…Ø¬Ø¯ÙˆÙ„Ø© Ù„Ù„ÙŠÙˆÙ…"
+                title="ÃÌäÏÉ ÇáÍÕÕ ÇáíæãíÉ"
+                subtitle="ãÊÇÈÚÉ æÊäÝíÐ ÇáÍÕÕ ÇáãÌÏæáÉ ááíæã"
                 icon={CalendarCheck}
                 color="amber"
                 stats={[
-                    { label: 'Ø­ØµØµ Ø§Ù„ÙŠÙˆÙ…', value: scheduledAppointments.length },
-                    { label: 'ØªÙ… Ø§Ù„ØªÙ†ÙÙŠØ°', value: scheduledAppointments.filter(a => a.isDone).length }
+                    { label: 'ÍÕÕ Çáíæã', value: scheduledAppointments.length },
+                    { label: 'Êã ÇáÊäÝíÐ', value: scheduledAppointments.filter(a => a.isDone).length }
                 ]}
             />
 
@@ -160,7 +160,7 @@ export const Agenda = () => {
                     <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                     <input
                         type="text"
-                        placeholder="Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø£Ø¬Ù†Ø¯Ø©..."
+                        placeholder="ÈÍË Ýí ÇáÃÌäÏÉ..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-normal focus:ring-2 ring-amber-500 rounded-none dark:text-white"
@@ -211,7 +211,7 @@ export const Agenda = () => {
                                     {!isTeacher && (
                                         <div className="flex items-center gap-2 text-xs font-normal text-gray-500">
                                             <User size={14} className="text-blue-500" />
-                                            <span>Ø£. {app.teacherName}</span>
+                                            <span>Ã. {app.teacherName}</span>
                                         </div>
                                     )}
                                 </div>
@@ -219,7 +219,7 @@ export const Agenda = () => {
                                 {/* Progress for that enrollment */}
                                 <div className="pt-2">
                                     <div className="flex justify-between items-center mb-1 text-[9px] font-medium uppercase tracking-widest text-gray-400">
-                                        <span>ØªÙ‚Ø¯Ù… Ø§Ù„Ø·Ø§Ù„Ø¨</span>
+                                        <span>ÊÞÏã ÇáØÇáÈ</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
                                     <div className="h-1.5 bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -237,7 +237,7 @@ export const Agenda = () => {
                                     {app.isDone ? (
                                         <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
                                             <CheckCircle2 size={16} />
-                                            ØªÙ… Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²
+                                            Êã ÇáÅäÌÇÒ
                                         </div>
                                     ) : (
                                         <button
@@ -245,10 +245,10 @@ export const Agenda = () => {
                                             disabled={logAttendanceMutation.isPending}
                                             className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-amber-500/10 active:scale-95 disabled:opacity-50"
                                         >
-                                            {logAttendanceMutation.isPending ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ³Ø¬ÙŠÙ„...' : (
+                                            {logAttendanceMutation.isPending ? 'ÌÇÑí ÇáÊÓÌíá...' : (
                                                 <>
                                                     <CheckCircle2 size={16} />
-                                                    ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²
+                                                    ÊÃßíÏ ÇáÅäÌÇÒ
                                                 </>
                                             )}
                                         </button>
@@ -260,8 +260,8 @@ export const Agenda = () => {
                 ) : (
                     <div className="col-span-full py-24 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
                         <Calendar size={48} className="mx-auto mb-4 text-gray-200" />
-                        <h3 className="text-lg font-medium text-gray-400">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø­ØµØµ Ù…Ø¬Ø¯ÙˆÙ„Ø© Ù„Ù‡Ø°Ø§ Ø§Ù„ÙŠÙˆÙ…</h3>
-                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">ÙŠØ±Ø¬Ù‰ Ø§Ù„ØªØ£ÙƒØ¯ Ù…Ù† Ø§Ù„Ø¬Ø¯Ø§ÙˆÙ„ Ø§Ù„Ø¯Ø±Ø§Ø³ÙŠØ©</p>
+                        <h3 className="text-lg font-medium text-gray-400">áÇ ÊæÌÏ ÍÕÕ ãÌÏæáÉ áåÐÇ Çáíæã</h3>
+                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">íÑÌì ÇáÊÃßÏ ãä ÇáÌÏÇæá ÇáÏÑÇÓíÉ</p>
                     </div>
                 )}
             </div>
