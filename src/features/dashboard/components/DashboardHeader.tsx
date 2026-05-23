@@ -19,44 +19,44 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     return (
         <div className={cn(
             "hidden md:flex relative overflow-hidden rounded-2xl",
-            "bg-gradient-to-br from-amber-50 via-amber-100/40 to-orange-50",
-            "dark:from-amber-900/40 dark:via-amber-950/30 dark:to-orange-950/30",
-            "border border-amber-200/60 dark:border-amber-700/40",
-            "shadow-lg shadow-amber-100/50 dark:shadow-amber-950/30",
+            "bg-gradient-to-br from-amber-200 via-amber-300/50 to-orange-200",
+            "dark:from-amber-900/70 dark:via-amber-950/60 dark:to-orange-950/60",
+            "border border-amber-300/60 dark:border-amber-700/50",
+            "shadow-lg shadow-amber-200/60 dark:shadow-amber-950/40",
             "px-8 py-8 flex-col md:flex-row md:items-center justify-between gap-6"
         )} dir="rtl">
             {/* Blur orbs */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-amber-300/30 dark:bg-amber-500/10 rounded-full blur-[60px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-300/20 dark:bg-orange-500/8 rounded-full blur-[50px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-amber-400/40 dark:bg-amber-500/20 rounded-full blur-[60px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-400/30 dark:bg-orange-500/15 rounded-full blur-[50px] pointer-events-none" />
 
             {/* Identity & Welcome */}
             <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
-                <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-amber-500 to-orange-600 dark:from-amber-600 dark:to-orange-700 rounded-xl shadow-lg shadow-amber-200 dark:shadow-amber-950 shrink-0">
+                <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-amber-600 to-orange-700 dark:from-amber-700 dark:to-orange-800 rounded-xl shadow-lg shadow-amber-300 dark:shadow-amber-950 shrink-0">
                     <span className="text-xl font-black text-white">د</span>
                 </div>
 
                 <div className="text-right">
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 bg-amber-100/80 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-[9px] font-bold px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-700">
+                        <span className="inline-flex items-center gap-1.5 bg-amber-200/80 dark:bg-amber-800/50 text-amber-800 dark:text-amber-200 text-[9px] font-bold px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-600">
                             <ShieldCheck size={10} />
                             {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
                         </span>
-                        <span className="inline-flex items-center gap-1 bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[8px] font-bold px-2 py-0.5 rounded-lg">
+                        <span className="inline-flex items-center gap-1 bg-emerald-200/80 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-400 text-[8px] font-bold px-2 py-0.5 rounded-lg">
                             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
                             نشط
                         </span>
                     </div>
-                    <h1 className="text-2xl font-black text-amber-900 dark:text-amber-100 leading-tight">
+                    <h1 className="text-2xl font-black text-amber-950 dark:text-amber-100 leading-tight">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
                     </h1>
                     <div className="flex items-center gap-3 mt-2">
-                        <span className="inline-flex items-center gap-1.5 text-xs text-amber-700/70 dark:text-amber-300/70">
-                            <Calendar size={12} className="text-amber-500 dark:text-amber-400" />
+                        <span className="inline-flex items-center gap-1.5 text-xs text-amber-800/80 dark:text-amber-300/80">
+                            <Calendar size={12} className="text-amber-600 dark:text-amber-400" />
                             {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
                         </span>
-                        <span className="w-0.5 h-3 bg-amber-200 dark:bg-amber-700" />
-                        <span className="inline-flex items-center gap-1 text-[9px] text-amber-600/60 dark:text-amber-400/60">
-                            <TrendingUp size={10} className="text-amber-500 dark:text-amber-400" />
+                        <span className="w-0.5 h-3 bg-amber-300 dark:bg-amber-700" />
+                        <span className="inline-flex items-center gap-1 text-[9px] text-amber-700/70 dark:text-amber-400/70">
+                            <TrendingUp size={10} className="text-amber-600 dark:text-amber-400" />
                             النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%
                         </span>
                     </div>
@@ -65,16 +65,16 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
             {/* Widgets & Support */}
             <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
-                <div className="flex items-center gap-2 px-4 h-10 bg-white/70 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-xl shadow-sm">
-                    <Clock size={14} className="text-amber-500 dark:text-amber-400" />
-                    <span className="text-xs font-medium text-amber-800 dark:text-amber-200 tabular-nums">
+                <div className="flex items-center gap-2 px-4 h-10 bg-white/80 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 rounded-xl shadow-sm">
+                    <Clock size={14} className="text-amber-600 dark:text-amber-400" />
+                    <span className="text-xs font-medium text-amber-900 dark:text-amber-200 tabular-nums">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
 
                 <button
                     onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
-                    className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold uppercase tracking-widest bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl shadow-lg shadow-amber-200 dark:shadow-amber-950 active:scale-[0.97] transition-all"
+                    className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold uppercase tracking-widest bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-700 hover:to-orange-800 text-white rounded-xl shadow-lg shadow-amber-300 dark:shadow-amber-950 active:scale-[0.97] transition-all"
                 >
                     <Headphones size={14} />
                     الدعم
