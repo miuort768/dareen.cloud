@@ -116,7 +116,7 @@ export const Leads: React.FC = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-rose-500 to-red-500 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-rose-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-rose-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="bg-gradient-to-br from-amber-500 to-orange-600 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-amber-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-amber-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 flex items-center justify-center bg-black/10 dark:bg-blue-600 text-white">
                             <Users size={22} />
