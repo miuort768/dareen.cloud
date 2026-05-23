@@ -100,16 +100,16 @@ export const TeacherAvailability = () => {
     <PageContainer title="جدول المعلمات المتاحات" subtitle="إدارة أوقات فراغ المعلمات" icon={CalendarDays}>
       {/* Available Now */}
       {availableNow && availableNow.length > 0 && (
-        <div className="bg-gradient-to-l from-emerald-500 to-emerald-600 rounded-none p-4 shadow-sm text-white mb-6">
+        <div className="bg-gradient-to-l from-emerald-500 to-emerald-600 p-4 shadow-sm text-white mb-6">
           <div className="flex items-center gap-2 mb-1">
             <CheckCircle2 size={16} />
             <p className="text-[11px] font-medium uppercase tracking-widest text-white/80">المتاحات الآن</p>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
             {availableNow.slice(0, 6).map((t: { id: string; name: string; subject: string; avatar?: string }) => (
-              <span key={t.teacherId} className="text-xs font-normal bg-white/10  px-3 py-1 rounded-full">{t.teacherName} ({t.subject})</span>
+              <span key={t.teacherId} className="text-xs font-normal bg-white/10 px-3 py-1">{t.teacherName} ({t.subject})</span>
             ))}
-            {availableNow.length > 6 && <span className="text-xs font-normal bg-white/10  px-3 py-1 rounded-full">+{availableNow.length - 6}</span>}
+            {availableNow.length > 6 && <span className="text-xs font-normal bg-white/10 px-3 py-1">+{availableNow.length - 6}</span>}
           </div>
         </div>
       )}
@@ -133,9 +133,9 @@ export const TeacherAvailability = () => {
           <div className="mt-4 p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none">
             <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mb-2">الوسوم</p>
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 rounded bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-300 dark:border-emerald-700" />متاحة</div>
-              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 rounded bg-rose-100 dark:bg-rose-900/40 border border-rose-300 dark:border-rose-700" />غير متاحة</div>
-              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />بدون تحديد</div>
+              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-300 dark:border-emerald-700" />متاحة</div>
+              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 bg-rose-100 dark:bg-rose-900/40 border border-rose-300 dark:border-rose-700" />غير متاحة</div>
+              <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-4 h-4 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />بدون تحديد</div>
             </div>
           </div>
         </div>
