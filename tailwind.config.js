@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Cairo', 'sans-serif'],
-        heading: ['IBM Plex Sans Arabic', 'sans-serif'],
+        heading: ['Tajawal', 'sans-serif'],
+        dash: ['Cairo', 'IBM Plex Sans Arabic', 'sans-serif'],
       },
       fontSize: {
         xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
