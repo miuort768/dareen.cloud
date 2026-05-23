@@ -97,22 +97,39 @@ export const TeacherAvailability = () => {
   const getSlotsForDay = (day: number) => editingSlots.find(s => s.dayOfWeek === day);
 
   return (
-    <PageContainer title="جدول المعلمات المتاحات" subtitle="إدارة أوقات فراغ المعلمات" icon={CalendarDays}>
-      {/* Available Now */}
-      {availableNow && availableNow.length > 0 && (
-        <div className="bg-gradient-to-l from-emerald-500 to-emerald-600 p-4 shadow-sm text-white mb-6">
-          <div className="flex items-center gap-2 mb-1">
-            <CheckCircle2 size={16} />
-            <p className="text-[11px] font-medium uppercase tracking-widest text-white/80">المتاحات الآن</p>
+    <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20" dir="rtl">
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-teal-400/10 dark:bg-teal-500/5 blur-3xl pointer-events-none" />
+      <div className="relative z-10 mx-auto px-2 space-y-4">
+
+        <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-teal-500 to-emerald-600 text-white">
+              <CalendarDays size={22} />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-white leading-tight">جدول المعلمات المتاحات</h1>
+              <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">إدارة أوقات فراغ المعلمات</p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {availableNow.slice(0, 6).map((t: { id: string; name: string; subject: string; avatar?: string }) => (
-              <span key={t.teacherId} className="text-xs font-normal bg-white/10 px-3 py-1">{t.teacherName} ({t.subject})</span>
-            ))}
-            {availableNow.length > 6 && <span className="text-xs font-normal bg-white/10 px-3 py-1">+{availableNow.length - 6}</span>}
-          </div>
+          {availableNow && availableNow.length > 0 && (
+            <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap">
+              <CheckCircle2 size={13} className="text-emerald-300" />
+              {availableNow.length} متاحة الآن
+            </div>
+          )}
         </div>
-      )}
+
+        {availableNow && availableNow.length > 0 && (
+          <div className="border border-teal-200 dark:border-teal-800/50 bg-teal-50 dark:bg-teal-900/10 p-3 flex flex-wrap items-center gap-2">
+            {availableNow.slice(0, 8).map((t: { teacherId: string; teacherName: string; subject: string }) => (
+              <span key={t.teacherId} className="text-[10px] font-bold text-teal-700 dark:text-teal-300 bg-white dark:bg-teal-900/30 px-2 py-1 border border-teal-200 dark:border-teal-700">
+                {t.teacherName} ({t.subject})
+              </span>
+            ))}
+            {availableNow.length > 8 && <span className="text-[10px] font-bold text-teal-600 bg-white dark:bg-teal-900/30 px-2 py-1 border border-teal-200 dark:border-teal-700">+{availableNow.length - 8}</span>}
+          </div>
+        )}
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Teacher List */}
@@ -177,6 +194,7 @@ export const TeacherAvailability = () => {
           </>}
         </div>
       </div>
-    </PageContainer>
+      </div>
+    </div>
   );
 };
