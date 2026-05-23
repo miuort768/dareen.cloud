@@ -54,7 +54,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         required
                         value={form.teacher}
                         onChange={e => setForm({ ...form, teacher: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     >
                         <option value="">المعلمة</option>
                         {teachers.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
@@ -64,7 +64,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="المادة"
                         value={form.subject}
                         onChange={e => setForm({ ...form, subject: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -73,7 +73,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="المنهج"
                         value={form.curr}
                         onChange={e => setForm({ ...form, curr: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     />
                     <input
                         required
@@ -81,7 +81,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="عدد الحصص"
                         value={form.totalSessions}
                         onChange={e => setForm({ ...form, totalSessions: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs font-normal dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     />
                 </div>
 
@@ -91,7 +91,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         <select
                             value={slotInput.day}
                             onChange={e => setSlotInput({ ...slotInput, day: e.target.value })}
-                            className="flex-1 px-2 py-1 text-[10px] font-normal border border-gray-200 rounded-none bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="flex-1 px-2 py-1 text-[10px] font-normal border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         >
                             <option value="">اليوم</option>
                             {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
@@ -100,9 +100,9 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                             placeholder="الساعة"
                             value={slotInput.hour}
                             onChange={e => setSlotInput({ ...slotInput, hour: e.target.value })}
-                            className="w-20 px-2 py-1 text-[10px] font-normal border border-gray-200 rounded-none bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="w-20 px-2 py-1 text-[10px] font-normal border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         />
-                        <button type="button" onClick={handleAddSlot} className="bg-primary-600 text-white px-2 rounded-none"><Plus size={14} /></button>
+                        <button type="button" onClick={handleAddSlot} className="bg-primary-600 text-white px-2"><Plus size={14} /></button>
                     </div>
                     <div className="flex flex-wrap gap-1">
                         {schedule.map((s, idx) => (
@@ -114,7 +114,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                     </div>
                 </div>
 
-                <button type="submit" className="w-full bg-primary-600 text-white py-3 text-xs font-medium uppercase tracking-widest hover:bg-primary-700 transition-all rounded-none mt-2 shadow-sm shadow-primary-600/20">
+                <button type="submit" className="w-full bg-primary-600 text-white py-3 text-xs font-medium uppercase tracking-widest hover:bg-primary-700 transition-all mt-2 shadow-sm shadow-primary-600/20">
                     تأكيد وحفظ الاشتراك
                 </button>
             </form>

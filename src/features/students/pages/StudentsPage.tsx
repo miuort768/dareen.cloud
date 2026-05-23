@@ -4,14 +4,12 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { AlertCircle, Search, TrendingUp } from 'lucide-react';
+import { AlertCircle, Plus, TrendingUp, Download, Upload, Trash2 } from 'lucide-react';
 
 // Shared Components
 import { PageLoader } from '../../../components/ui/PageLoader';
 // Feature Components
-import { StudentHeader } from '../components/StudentHeader';
 import { StudentStats } from '../components/StudentStats';
-import { StudentToolbar } from '../components/StudentToolbar';
 import { StudentForm } from '../components/StudentForm';
 import { StudentTable } from '../components/StudentTable';
 import { StudentDetails } from '../components/StudentDetails';
@@ -139,11 +137,12 @@ export const Students = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 dark:bg-blue-500/5 blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-400/10 dark:bg-cyan-500/5 blur-3xl pointer-events-none" />
+            <div className="relative z-10 mx-auto px-2 space-y-4">
 
                 {showAddForm && (
-                    <div className="mb-6 bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6 animate-in slide-in-from-top-4 duration-300">
+                    <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm p-5 md:p-6">
                         <StudentForm
                             initialData={editId ? allStudents.find(s => s.id === editId) : null}
                             teachers={teachers}
@@ -153,67 +152,99 @@ export const Students = () => {
                     </div>
                 )}
 
-                <div className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 rounded-none shadow-sm shadow-blue-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
-                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
-                    <div className="relative z-10 w-full">
-                        <StudentHeader
-                            onAdd={() => { setEditId(null); setShowAddForm(true); }}
-                            onDeleteAll={() => setIsDeletingAll(true)}
-                            onImport={() => fileInputRef.current?.click()}
-                        />
+                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-600 to-cyan-600 text-white">
+                            <TrendingUp size={22} />
+                        </div>
+                        <div>
+                            <h1 className="text-lg font-bold text-white leading-tight">إدارة الطلاب</h1>
+                            <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
+                        </div>
                     </div>
-                    <div className="relative z-10 flex items-center gap-3 w-full md:w-auto">
-                        <div className="relative flex-1 md:flex-none">
-                            <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <div className="flex items-center gap-2">
+                        <div className="relative">
+                            <Search size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-indigo-300" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full md:w-64 h-10 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-xs font-normal rounded-none px-9 focus:outline-none focus:border-indigo-500 transition-all"
+                                className="w-full md:w-52 bg-indigo-500/10 border border-indigo-500/20 text-white placeholder:text-indigo-300/50 text-[10px] font-bold px-8 py-1.5 outline-none focus:border-indigo-400 transition-all"
                             />
                         </div>
+                        <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-3 py-1.5 transition-all active:scale-[0.97]"><Plus size={13} /> إضافة</button>
                     </div>
                 </div>
 
                 {isDeletingAll && (
-                    <div className="mb-6 bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-800/50 rounded-none p-5 flex items-center justify-between">
+                    <div className="border border-rose-200 dark:border-rose-800/50 bg-rose-50 dark:bg-rose-950/30 p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <AlertCircle size={20} className="text-rose-500" />
-                            <span className="text-sm font-normal text-rose-700 dark:text-rose-300">هل أنت متأكد من حذف جميع الطلاب؟</span>
+                            <AlertCircle size={18} className="text-rose-500" />
+                            <span className="text-xs font-bold text-rose-700 dark:text-rose-300">هل أنت متأكد من حذف جميع الطلاب؟</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-9 px-4 bg-rose-600 text-white text-xs font-medium rounded-none hover:bg-rose-700 transition-all">تأكيد الحذف</button>
-                            <button onClick={() => setIsDeletingAll(false)} className="h-9 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-medium rounded-none border border-slate-200 dark:border-slate-700 transition-all">إلغاء</button>
+                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-rose-600 text-white text-[10px] font-bold hover:bg-rose-700 transition-all">تأكيد الحذف</button>
+                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 transition-all">إلغاء</button>
                         </div>
                     </div>
                 )}
 
-                <div className="py-6 space-y-6">
-                    <div className="bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-none flex items-center justify-center shadow-sm shadow-emerald-500/20">
-                                <TrendingUp size={16} />
-                            </div>
-                            <h2 className="text-sm font-medium text-slate-800 dark:text-white uppercase tracking-tight">إحصائيات الطلاب</h2>
+                <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm p-5 md:p-6">
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-sm">
+                            <TrendingUp size={16} />
                         </div>
-                        <StudentStats
-                            totalStudents={allStudents.length}
-                            activeEnrollments={activeEnrollments}
-                            uniqueGrades={uniqueGrades}
-                            averageSessions={averageSessions}
-                        />
+                        <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-tight">إحصائيات الطلاب</h2>
                     </div>
-
-                    <StudentToolbar
-                        searchTerm={searchTerm}
-                        onSearchChange={setSearchTerm}
-                        studentsCount={students.length}
-                        totalCount={allStudents.length}
+                    <StudentStats
+                        totalStudents={allStudents.length}
+                        activeEnrollments={activeEnrollments}
+                        uniqueGrades={uniqueGrades}
+                        averageSessionsPerStudent={averageSessions}
                     />
+                </div>
 
-
+                <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3">
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400">
+                            <span>{students.length} / {allStudents.length} طالب</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                accept=".csv,.xlsx"
+                                className="hidden"
+                                onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    try {
+                                        const text = await file.text();
+                                        const lines = text.split('\n').filter(Boolean);
+                                        for (let i = 1; i < lines.length; i++) {
+                                            const cols = lines[i].split(',');
+                                            if (cols.length >= 2) {
+                                                await api.post('/students', {
+                                                    name: cols[0].trim(),
+                                                    grade: cols[1].trim(),
+                                                    parentPhone: cols[2]?.trim() || '',
+                                                });
+                                            }
+                                        }
+                                        queryClient.invalidateQueries({ queryKey: ['students'] });
+                                        showNotification('تم استيراد الطلاب بنجاح', 'success');
+                                    } catch {
+                                        showNotification('فشل استيراد الملف', 'error');
+                                    }
+                                    e.target.value = '';
+                                }}
+                            />
+                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 transition-all shadow-sm active:scale-[0.97]"><Upload size={12} /> استيراد</button>
+                            <button onClick={() => { /* export */ }} className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 transition-all shadow-sm active:scale-[0.97]"><Download size={12} /> تصدير</button>
+                            <button onClick={() => setIsDeletingAll(true)} className="flex items-center gap-1.5 bg-white dark:bg-rose-900/10 border border-rose-200 dark:border-rose-800 hover:bg-rose-600 hover:border-rose-600 hover:text-white text-rose-600 text-[10px] font-bold px-2.5 py-1.5 transition-all shadow-sm active:scale-[0.97]"><Trash2 size={12} /></button>
+                        </div>
+                    </div>
                 </div>
 
                 {!showDetails ? (

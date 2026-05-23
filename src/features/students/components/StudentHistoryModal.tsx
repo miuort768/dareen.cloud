@@ -64,7 +64,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                 <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-gray-900/50 custom-scrollbar">
                     {loading ? (
                         <div className="space-y-4">
-                            {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 w-full rounded-none" />)}
+                            {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 w-full" />)}
                         </div>
                     ) : sessions.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-64 text-gray-400">
@@ -94,7 +94,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                                             <td className="p-4 font-mono">{session.time}</td>
                                             <td className="p-4">
                                                 <span className={cn(
-                                                    "px-2 py-1 rounded-sm text-[10px] font-medium uppercase tracking-widest",
+                                                    "px-2 py-1 text-[10px] font-medium uppercase tracking-widest",
                                                     session.status === 'completed' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
                                                         "bg-rose-50 text-rose-600 border border-rose-100"
                                                 )}>
