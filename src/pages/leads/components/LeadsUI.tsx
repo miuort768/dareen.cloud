@@ -42,12 +42,12 @@ export const StatItem = ({ title, value, icon: Icon, bg }: { title: string, valu
         statBgMap[title] || 'from-indigo-500 to-violet-600'
     )}>
         <div className="absolute left-2 bottom-0 opacity-15">
-            <Icon size={72} />
+            <Icon size={56} className="md:size-[72px]" />
         </div>
-        <div className="relative z-10 w-full px-4 py-5 flex flex-col items-center gap-1.5">
-            <Icon size={20} className="text-white/90" />
-            <p className="text-[10px] font-bold uppercase tracking-widest text-white/80">{title}</p>
-            <p className="text-xl md:text-2xl font-black tabular-nums">{value}</p>
+        <div className="relative z-10 w-full px-3 py-4 md:px-4 md:py-5 flex flex-col items-center gap-1 md:gap-1.5">
+            <Icon size={18} className="md:w-5 md:h-5 text-white/90" />
+            <p className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-white/80">{title}</p>
+            <p className="text-base md:text-2xl font-black tabular-nums">{value}</p>
         </div>
     </div>
 );

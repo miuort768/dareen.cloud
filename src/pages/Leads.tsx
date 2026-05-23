@@ -144,7 +144,7 @@ export const Leads: React.FC = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                     <StatItem title="إجمالي المهتمين" value={stats?.total || 0} icon={Users} />
                     <StatItem title="عملاء جدد" value={stats?.new || 0} icon={Clock} />
                     <StatItem title="تم التحويل" value={stats?.converted || 0} icon={CheckCircle2} />
