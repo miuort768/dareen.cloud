@@ -24,9 +24,9 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         </div>
                         <div>
                             <h3 className="font-medium text-xs md:text-sm text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
-                                {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
+                                إنجازاتك التعليمية
                             </h3>
-                            <p className="text-[9px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-tight">مؤشرات الأداء المهني</p>
+                            <p className="text-[9px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-tight">{isTeacher ? 'مؤشرات الأداء المهني' : 'ملخص الأداء والإنجاز'}</p>
                         </div>
                     </div>
                     {isTeacher && (
@@ -41,7 +41,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     <div className="flex items-center gap-2 mb-3">
                         <Award size={14} className="text-indigo-600 dark:text-indigo-400" />
                         <span className="text-[9px] font-medium text-indigo-600 dark:text-indigo-400 uppercase">
-                            {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
+                            {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي الإنجاز المالي'}
                         </span>
                     </div>
                     <div className="flex items-baseline gap-2 relative z-10">
