@@ -116,22 +116,22 @@ export const Leads: React.FC = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-rose-500 to-red-500 border border-rose-400/40 shadow-lg shadow-rose-200/30 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="bg-gradient-to-br from-rose-500 to-red-500 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-rose-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-rose-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/20 text-white">
+                        <div className="w-12 h-12 flex items-center justify-center bg-black/10 dark:bg-blue-600 text-white">
                             <Users size={22} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">العملاء المحتملين</h1>
-                            <p className="text-[10px] text-rose-100/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
+                            <h1 className="text-lg font-bold text-black dark:text-white leading-tight">العملاء المحتملين</h1>
+                            <p className="text-[10px] text-black/50 dark:text-blue-200/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
                             "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border",
                             showLost
-                                ? "bg-white text-rose-600 border-white"
-                                : "bg-white/10 text-white/70 border-white/20 hover:bg-white/20"
+                                ? "bg-white text-rose-600 border-white dark:bg-slate-800 dark:text-white dark:border-slate-700"
+                                : "bg-white/20 text-black/70 border-white/30 hover:bg-white/30 dark:bg-white/10 dark:text-white/70 dark:border-white/20 dark:hover:bg-white/20"
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                             <span>{showLost ? 'الكل' : 'المرفوضون'}</span>
