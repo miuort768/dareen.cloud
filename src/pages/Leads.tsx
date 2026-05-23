@@ -114,7 +114,7 @@ export const Leads: React.FC = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
-            <div className="relative z-10 mx-auto px-2">
+            <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
                 <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-4">
