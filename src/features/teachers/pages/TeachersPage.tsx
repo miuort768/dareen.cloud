@@ -281,25 +281,25 @@ export const Teachers = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-violet-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-violet-950/20" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* Header Section */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
-                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
+                <div className="relative overflow-hidden bg-gradient-to-br from-violet-900 via-violet-800 to-slate-900 dark:from-slate-950 dark:via-violet-950 dark:to-slate-950 shadow-sm shadow-violet-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-violet-500/20 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-fuchsia-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-none overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10  flex items-center justify-center">
+                        <div className="w-12 h-12 overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(139,92,246,0.3)] shrink-0 bg-white/10 flex items-center justify-center">
                             <Presentation size={24} className="text-white" />
                         </div>
                         <div>
                             <h1 className="text-xl md:text-2xl font-medium text-white leading-tight tracking-tighter">إدارة المعلمات</h1>
-                            <p className="text-xs md:text-sm text-slate-300/80 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <p className="text-xs md:text-sm text-violet-200/80 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
                                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</span>
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                                <span className="text-[9px] font-medium text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5 rounded-lg">مزامنة نشطة</span>
+                                <span className="text-[9px] font-medium text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5">مزامنة نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -308,10 +308,10 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-widest rounded-none transition-all shadow-sm active:scale-95",
+                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-widest transition-all shadow-sm active:scale-95",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
-                                : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 shadow-indigo-500/20"
+                                : "bg-gradient-to-r from-violet-500 to-violet-600 text-white hover:from-violet-600 hover:to-violet-700 shadow-violet-500/20"
                             )}
                         >
                             {showAddForm ? <X size={16} /> : <Plus size={16} />}
