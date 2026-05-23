@@ -37,18 +37,17 @@ const statBgMap: Record<string, string> = {
 
 export const StatItem = ({ title, value, icon: Icon, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, bg?: string }) => (
     <div className={cn(
-        "relative flex items-center gap-3 p-4 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm",
-        "transition-all duration-200 hover:shadow-md"
+        "relative flex flex-col items-center text-center text-white overflow-hidden",
+        "bg-gradient-to-br shadow-sm border border-white/10",
+        statBgMap[title] || 'from-indigo-500 to-violet-600'
     )}>
-        <div className={cn(
-            "w-10 h-10 flex items-center justify-center bg-gradient-to-br text-white shrink-0",
-            statBgMap[title] || 'from-indigo-500 to-violet-600'
-        )}>
-            <Icon size={18} />
+        <div className="absolute left-2 bottom-0 opacity-15">
+            <Icon size={72} />
         </div>
-        <div className="min-w-0">
-            <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none mb-1">{title}</p>
-            <p className="text-lg font-black text-slate-900 dark:text-white tabular-nums leading-none">{value}</p>
+        <div className="relative z-10 w-full px-4 py-5 flex flex-col items-center gap-1.5">
+            <Icon size={20} className="text-white/90" />
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white/80">{title}</p>
+            <p className="text-xl md:text-2xl font-black tabular-nums">{value}</p>
         </div>
     </div>
 );
