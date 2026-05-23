@@ -13,7 +13,7 @@ interface AttendanceHeaderProps {
 
 export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, isTeacher }) => {
     return (
-        <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-800 shadow-sm shadow-indigo-500/20 px-4 md:px-6 py-8 md:py-10 border-y md:border-none border-indigo-400/30 print:hidden mb-2">
+        <div className="relative overflow-hidden bg-gradient-to-br from-amber-900 via-amber-800 to-slate-900 shadow-sm shadow-amber-500/15 px-4 md:px-6 py-8 md:py-10 border-y md:border-none border-indigo-400/30 print:hidden mb-2">
             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
             <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">

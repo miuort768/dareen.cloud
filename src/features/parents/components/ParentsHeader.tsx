@@ -65,7 +65,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "flex items-center gap-2 h-10 px-5 text-white text-[10px] font-medium rounded-none transition-all uppercase tracking-widest shadow-sm shadow-indigo-500/20 border",
+                        "flex items-center gap-2 h-10 px-5 text-white text-[10px] font-medium rounded-none transition-all uppercase tracking-widest shadow-sm shadow-teal-500/15 border",
                         showAddForm 
                             ? "bg-rose-500 border-rose-400/50 hover:bg-rose-600 shadow-rose-500/20" 
                             : "bg-indigo-600 border-indigo-400/50 hover:bg-indigo-700"

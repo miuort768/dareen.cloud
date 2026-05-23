@@ -221,12 +221,12 @@ export const Forum = () => {
     };
 
     return (
-        <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-purple-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-purple-950/20 pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #6366f1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10">
 
             {/* ── Header ── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-700 dark:to-indigo-900 rounded-none md:rounded-none shadow-sm border border-white/5 px-6 md:px-8 py-6 mx-0 md:mx-6 mt-0 md:mt-6 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-purple-800 to-slate-900 dark:from-slate-950 dark:via-purple-950 dark:to-slate-950 rounded-none md:rounded-none shadow-sm shadow-purple-500/15 border border-white/5 px-6 md:px-8 py-6 mx-0 md:mx-6 mt-0 md:mt-6 mb-6">
                 <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-400/20 rounded-full blur-[100px] pointer-events-none" />
                 <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                     <div className="w-12 h-12 bg-white/10  rounded-none flex items-center justify-center mb-4 border border-white/10 shadow-sm">

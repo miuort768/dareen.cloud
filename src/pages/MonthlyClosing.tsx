@@ -149,10 +149,10 @@ export const MonthlyClosing: React.FC = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #4f46e5 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 dark:from-slate-950 dark:via-emerald-950 dark:to-slate-950 rounded-none shadow-sm shadow-emerald-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-none">
                             <ActivityIcon size={18} className="text-rose-500" />

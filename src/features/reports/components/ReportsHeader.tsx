@@ -34,7 +34,7 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
                     onClick={onExport}
                     className={cn(
                         'flex items-center justify-center gap-2',
-                        'bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-medium px-4 py-2 rounded-none transition-all shadow-sm shadow-indigo-500/20 uppercase tracking-widest'
+                        'bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-medium px-4 py-2 rounded-none transition-all shadow-sm shadow-slate-500/15 uppercase tracking-widest'
                     )}
                 >
                     <Download size={14} />
