@@ -13,18 +13,18 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
     if (!isAddModalOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
-                <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl w-full max-w-lg animate-in fade-in zoom-in-95 duration-200">
+                <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
-                            <UserPlus size={18} className="text-white" />
+                        <div className="w-8 h-8 bg-emerald-600 flex items-center justify-center">
+                            <UserPlus size={16} className="text-white" />
                         </div>
-                        <h2 className="text-xs md:text-sm font-bold text-white dark:text-white">إضافة عميل محتمل جديد</h2>
+                        <h2 className="text-sm font-bold text-white">إضافة عميل محتمل</h2>
                     </div>
-                    <button onClick={() => setIsAddModalOpen(false)} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg text-white"><X size={18} /></button>
+                    <button onClick={() => setIsAddModalOpen(false)} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70"><X size={16} /></button>
                 </div>
-                <form ref={formRef} className="p-6 space-y-4" onSubmit={(e) => {
+                <form ref={formRef} className="p-5 space-y-4" onSubmit={(e) => {
                     e.preventDefault();
                     const formData = new FormData(e.currentTarget);
                     addMutation.mutate({
@@ -37,40 +37,40 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                         notes: formData.get('notes') as string
                     });
                 }}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <div className="space-y-1 md:space-y-1.5">
-                            <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل (اختياري)</label>
-                            <input name="name" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" placeholder="مثال: أم أحمد (أو اتركه فارغاً)" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                            <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">اسم الطالب (اختياري)</label>
+                            <input name="name" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" placeholder="مثال: أم أحمد" />
                         </div>
-                        <div className="space-y-1 md:space-y-1.5">
-                            <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">المنهج</label>
-                            <input name="curriculum" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <div className="space-y-1 md:space-y-1.5">
-                            <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">رقم الهاتف</label>
-                            <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
-                        </div>
-                        <div className="space-y-1 md:space-y-1.5">
-                            <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">المادة المهتم بها</label>
-                            <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                        <div className="space-y-1">
+                            <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">المنهج</label>
+                            <input name="curriculum" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                         </div>
                     </div>
-                    <div className="space-y-1 md:space-y-1.5">
-                        <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">الأولوية</label>
-                        <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                            <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">رقم الهاتف</label>
+                            <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">المادة المهتم بها</label>
+                            <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                        </div>
+                    </div>
+                    <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">الأولوية</label>
+                        <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white">
                             <option value="low">منخفضة</option>
                             <option value="medium">متوسطة</option>
-                            <option value="high">عالية جداً 🔥</option>
+                            <option value="high">عالية</option>
                         </select>
                     </div>
-                    <div className="space-y-1 md:space-y-1.5">
-                        <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">ملاحظات</label>
-                        <textarea name="notes" rows={2} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white resize-none" placeholder="اكتب أي تفاصيل أو ملاحظات عن العميل هنا..." />
+                    <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-slate-400 uppercase mr-1">ملاحظات</label>
+                        <textarea name="notes" rows={2} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white resize-none" placeholder="اكتب أي تفاصيل..." />
                     </div>
-                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-2 md:py-3 mt-4 text-[11px] md:text-xs rounded-xl bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10 disabled:opacity-60 disabled:cursor-not-allowed">
-                        {addMutation.isPending ? '⏳ جاري الحفظ...' : 'حفظ العميل وبدء المتابعة'}
+                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-2.5 mt-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-not-allowed">
+                        {addMutation.isPending ? 'جاري الحفظ...' : 'حفظ العميل'}
                     </PrimaryBtn>
                 </form>
             </div>

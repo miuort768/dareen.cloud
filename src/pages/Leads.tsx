@@ -1,5 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle } from 'lucide-react';
+import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -12,23 +12,28 @@ import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
 
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50  p-4" dir="rtl">
-        <div className="bg-white dark:bg-slate-900 rounded-none shadow-sm w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
-            <div className="bg-rose-600 px-5 py-4 flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/10 flex items-center justify-center rounded-lg">
-                    <AlertTriangle size={20} className="text-white" />
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-200 dark:border-slate-700 shadow-xl">
+            <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-rose-500/20 flex items-center justify-center">
+                        <AlertTriangle size={18} className="text-rose-300" />
+                    </div>
+                    <h3 className="text-sm font-bold text-white">حذف العميل</h3>
                 </div>
-                <h3 className="text-sm font-medium text-white uppercase tracking-widest">حذف العميل نهائياً</h3>
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70">
+                    <X size={16} />
+                </button>
             </div>
-            <div className="p-6">
-                <p className="text-sm font-normal text-slate-700 dark:text-slate-300 mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
-                <p className="text-xs text-slate-400 font-medium leading-relaxed">
-                    سيتم حذف هذا العميل <span className="text-rose-500 font-normal">بشكل نهائي وكامل من قاعدة البيانات</span>، ولا يمكن التراجع عن هذا الإجراء.
+            <div className="p-5">
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                    سيتم حذف العميل <span className="text-rose-500 font-bold">نهائياً</span> من قاعدة البيانات ولا يمكن التراجع.
                 </p>
             </div>
             <div className="flex border-t border-slate-100 dark:border-slate-800">
-                <button onClick={onCancel} className="flex-1 py-3 text-xs font-normal text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all uppercase tracking-widest">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-medium text-white bg-rose-600 hover:bg-rose-700 transition-all uppercase tracking-widest">نعم، احذف نهائياً</button>
+                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">إلغاء</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all">تأكيد الحذف</button>
             </div>
         </div>
     </div>
@@ -101,63 +106,70 @@ export const Leads: React.FC = () => {
         contacted: { label: 'تم التواصل', color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20' },
         interested: { label: 'مهتم', color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
         trial: { label: 'حصة تجريبية', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-        converted: { label: 'مشترك', color: 'text-[#5c59f2]', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+        converted: { label: 'مشترك', color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
         lost: { label: 'ملغي', color: 'text-rose-600', bg: 'bg-rose-50 dark:bg-rose-900/20' }
     };
 
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                {/* Header */}
+                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
-                            <Users size={32} className="md:w-6 md:h-6" />
+                        <div className="w-12 h-12 flex items-center justify-center bg-blue-600 text-white">
+                            <Users size={22} />
                         </div>
                         <div>
-                            <h1 className="text-xl font-medium text-white uppercase tracking-tighter">إدارة العملاء والمهتمين - تحديث v5</h1>
-                            <p className="text-[10px] text-teal-200/70 font-normal uppercase tracking-widest mt-1">تتبع مسار تحويل الطلاب والمشتركين الجدد</p>
+                            <h1 className="text-lg font-bold text-white leading-tight">العملاء المحتملين</h1>
+                            <p className="text-[10px] text-blue-200/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 no-print w-full md:w-auto mt-2 md:mt-0">
-                        <button onClick={() => setShowLost(!showLost)} className={cn("h-10 px-4 rounded-none flex items-center gap-2 text-xs font-medium uppercase tracking-widest transition-all border", showLost ? "bg-white text-rose-600 border-white" : "bg-white/10 text-white border-white/20 hover:bg-white/20")}>
-                            {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
-                            <span className="hidden sm:inline">{showLost ? 'الكل' : 'المرفوضون'}</span>
-                            {!showLost && <span className="bg-rose-500 text-white text-[9px] font-medium w-5 h-5 rounded-full flex items-center justify-center">{leads.filter(l => l.status === 'lost').length}</span>}
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <button onClick={() => setShowLost(!showLost)} className={cn(
+                            "h-9 px-3 flex items-center gap-1.5 text-[10px] font-bold transition-all border",
+                            showLost
+                                ? "bg-white text-rose-600 border-white"
+                                : "bg-white/10 text-white/70 border-white/20 hover:bg-white/20"
+                        )}>
+                            {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
+                            <span>{showLost ? 'الكل' : 'المرفوضون'}</span>
+                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center">{leads.filter(l => l.status === 'lost').length}</span>}
                         </button>
-                        <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50 w-full md:w-auto">
-                            <Plus size={16} /> إضافة عميل محتمل
+                        <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 bg-emerald-600 hover:bg-emerald-500 border-0">
+                            <Plus size={14} /> إضافة عميل
                         </PrimaryBtn>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 py-6">
-                    <StatItem title="إجمالي المهتمين" value={stats?.total || 0} icon={Users} bg="bg-slate-800" />
-                    <StatItem title="عملاء جدد" value={stats?.new || 0} icon={Clock} bg="bg-blue-600" />
-                    <StatItem title="تم التحويل" value={stats?.converted || 0} icon={CheckCircle2} bg="bg-emerald-600" />
-                    <StatItem title="معدل التحويل" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} bg="bg-indigo-600" />
+                {/* Stats */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                    <StatItem title="إجمالي المهتمين" value={stats?.total || 0} icon={Users} />
+                    <StatItem title="عملاء جدد" value={stats?.new || 0} icon={Clock} />
+                    <StatItem title="تم التحويل" value={stats?.converted || 0} icon={CheckCircle2} />
+                    <StatItem title="معدل التحويل" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} />
                 </div>
 
-                <div className="px-0 mb-6">
-                    <SectionCard className="p-3 flex flex-col md:flex-row gap-3 items-center">
-                        <div className="relative flex-1 w-full">
+                {/* Search & Filter */}
+                <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm mb-6">
+                    <div className="flex flex-col md:flex-row gap-3 p-3">
+                        <div className="relative flex-1">
                             <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
-                            <input type="text" placeholder="ابحث بالاسم أو رقم الهاتف..." className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-9 py-2 outline-none text-xs font-normal focus:border-emerald-500" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="ابحث بالاسم أو رقم الهاتف..." className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-9 py-2 outline-none text-xs font-medium focus:border-emerald-500 text-slate-900 dark:text-white" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
-                        <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
-                            <div className="flex items-center gap-2 w-full md:w-auto">
-                                <Filter size={14} className="text-emerald-600 hidden md:block" />
-                                <select className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-none text-[11px] font-normal outline-none cursor-pointer focus:border-emerald-500" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
-                                    <option value="all">كل الحالات</option>
-                                    {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
-                                </select>
-                            </div>
+                        <div className="flex items-center gap-2 w-full md:w-auto">
+                            <Filter size={14} className="text-emerald-600 hidden md:block shrink-0" />
+                            <select className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-medium outline-none cursor-pointer focus:border-emerald-500 text-slate-900 dark:text-white" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                <option value="all">كل الحالات</option>
+                                {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
+                            </select>
                         </div>
-                    </SectionCard>
+                    </div>
                 </div>
 
-                <div className="px-0">
+                {/* Table (desktop) / Cards (mobile) */}
+                <div>
                     <LeadTable filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
                     <LeadCards filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
                 </div>
