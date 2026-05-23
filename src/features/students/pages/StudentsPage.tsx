@@ -140,7 +140,7 @@ export const Students = () => {
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
+            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {showAddForm && (
                     <div className="mb-6 bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6 animate-in slide-in-from-top-4 duration-300">

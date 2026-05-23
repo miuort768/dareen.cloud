@@ -342,7 +342,7 @@ export const Forum = () => {
                                     </div>
 
                                     {/* Post Body */}
-                                    <div className="px-4 md:px-6 pb-6">
+                                    <div className="px-2 pb-6">
                                         <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base font-medium leading-[1.8] whitespace-pre-wrap">
                                             {post.content}
                                         </p>

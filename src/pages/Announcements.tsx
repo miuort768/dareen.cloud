@@ -140,7 +140,7 @@ export const Announcements = () => {
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
+            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6">
@@ -177,7 +177,7 @@ export const Announcements = () => {
                                 setFormData({ title: '', content: '', type: 'general', isActive: true });
                                 setIsModalOpen(true);
                             }}
-                            className="bg-primary-600 text-white h-10 md:h-12 px-4 md:px-6 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-medium shadow-sm group"
+                            className="bg-primary-600 text-white h-10 md:h-12 px-2 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-medium shadow-sm group"
                         >
                             <Plus size={16} className="md:size-[18px] group-hover:rotate-90 transition-transform" />
                             <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-medium">إصدار تعميم</span>

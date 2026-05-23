@@ -14,7 +14,7 @@ export const PageContainer = ({ children, className }: PageContainerProps) => (
         className
     )} dir="rtl">
         <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-        <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-2">
             {children}
         </div>
     </div>

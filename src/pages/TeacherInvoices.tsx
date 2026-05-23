@@ -315,7 +315,7 @@ export const TeacherInvoices = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
+            <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
 
             <div className="relative rounded-2xl bg-gradient-to-br from-white/80 via-emerald-50/50 to-white/80 dark:from-slate-900/80 dark:via-emerald-950/30 dark:to-slate-900/80 border border-emerald-100/50 dark:border-emerald-900/30 shadow-lg shadow-emerald-100/30 dark:shadow-emerald-950/20 px-6 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-200/10 dark:via-emerald-500/5 to-transparent" />
