@@ -4,7 +4,7 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { AlertCircle, Plus, TrendingUp, Download, Upload, Trash2 } from 'lucide-react';
+import { Search, AlertCircle, Plus, TrendingUp, Download, Upload, Trash2 } from 'lucide-react';
 
 // Shared Components
 import { PageLoader } from '../../../components/ui/PageLoader';
