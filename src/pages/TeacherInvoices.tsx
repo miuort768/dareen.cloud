@@ -313,32 +313,30 @@ export const TeacherInvoices = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 blur-3xl pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
 
-            <div className="relative rounded-2xl bg-gradient-to-br from-white/80 via-emerald-50/50 to-white/80 dark:from-slate-900/80 dark:via-emerald-950/30 dark:to-slate-900/80 border border-emerald-100/50 dark:border-emerald-900/30 shadow-lg shadow-emerald-100/30 dark:shadow-emerald-950/20 px-6 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-200/10 dark:via-emerald-500/5 to-transparent" />
-                <div className="flex items-center gap-3 relative">
-                    <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-violet-500 to-emerald-500 rounded-xl shadow-lg shadow-emerald-200 dark:shadow-emerald-950">
-                        <GraduationCap size={18} className="text-white" />
+            <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-violet-600 to-emerald-600 text-white">
+                        <GraduationCap size={22} />
                     </div>
                     <div>
-                        <h1 className="text-base font-black text-slate-800 dark:text-white">فواتير المعلمات</h1>
-                        <p className="text-[11px] font-medium text-slate-400">إدارة رواتب ومستحقات الكادر التعليمي</p>
+                        <h1 className="text-lg font-bold text-white leading-tight">فواتير المعلمات</h1>
+                        <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">إدارة رواتب ومستحقات الكادر التعليمي</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/50 px-3 py-2 rounded-xl border border-emerald-100 dark:border-emerald-900/50 relative whitespace-nowrap">
-                    <Sparkles size={13} className="text-amber-400" />
+                <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap">
+                    <Sparkles size={13} className="text-emerald-300" />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي الرواتب
                 </div>
             </div>
 
             <InvoiceStats stats={stats} />
 
-            <div className="px-0">
-                <SectionCard className="p-3 md:p-3">
-                    <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
+            <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm">
+                <div className="flex flex-col lg:flex-row gap-3 items-center justify-between p-3">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
@@ -349,7 +347,7 @@ export const TeacherInvoices = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
-                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-none border border-slate-200 dark:border-slate-700">
+                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700">
                                 <Calendar size={14} className="text-slate-400" />
                                 <div className="flex items-center gap-1">
                                     <input 
@@ -384,24 +382,23 @@ export const TeacherInvoices = () => {
                         <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto no-scrollbar pb-1 lg:pb-0">
                             {!isTeacher && (
                                 <>
-                                    <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
-                                        {showForm ? <X size={14} /> : <Plus size={14} />}
-                                        {showForm ? 'إلغاء' : 'إضافة فاتورة'}
-                                    </PrimaryBtn>
-                                    <SecondaryBtn onClick={handleImportTeachers} title="استيراد من المعلمات">
-                                        <UserPlus size={14} /> استيراد
-                                    </SecondaryBtn>
-                                    <DangerBtn onClick={handleDeleteAll} title="حذف الكل">
-                                        <Trash2 size={14} />
-                                    </DangerBtn>
+                        <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
+                            {showForm ? <X size={14} /> : <Plus size={14} />}
+                            {showForm ? 'إلغاء' : 'إضافة فاتورة'}
+                        </PrimaryBtn>
+                        <SecondaryBtn onClick={handleImportTeachers} title="استيراد من المعلمات">
+                            <UserPlus size={14} /> استيراد
+                        </SecondaryBtn>
+                        <DangerBtn onClick={handleDeleteAll} title="حذف الكل">
+                            <Trash2 size={14} />
+                        </DangerBtn>
                                 </>
                             )}
                             <SecondaryBtn onClick={() => window.print()} title="طباعة السجل">
                                 <Printer size={14} />
                             </SecondaryBtn>
                         </div>
-                    </div>
-                </SectionCard>
+            </div>
             </div>
 
                 <InvoiceForm
