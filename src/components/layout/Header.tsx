@@ -110,8 +110,8 @@ export const Header = () => {
         )}>
             <div className="flex items-center gap-3 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 flex items-center justify-center border border-[#3b5b8c] bg-white overflow-hidden rounded-lg shadow-sm shadow-black/20">
-                        <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
+                    <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(96,165,250,0.45)] hover:shadow-[0_0_22px_rgba(96,165,250,0.7)] transition-shadow duration-300">
+                        <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                 </Link>
 
