@@ -9,7 +9,6 @@ import { AnalyticsDashboard } from '../components/AnalyticsDashboard';
 import { HonorRoll } from '../components/HonorRoll';
 import { ModernAnnouncements } from '../components/ModernAnnouncements';
 import { QuickActionsHub } from '../components/QuickActionsHub';
-import { TeacherAchievements } from '../components/TeacherAchievements';
 import { RecentActivityFeed } from '../components/RecentActivityFeed';
 import { PageLoader } from '../../../components/ui/PageLoader';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
@@ -65,10 +64,6 @@ export const Dashboard = () => {
 
                 <Section>
                     <QuickActionsHub />
-                </Section>
-
-                <Section>
-                    <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={false} />
                 </Section>
 
                 <Section>
