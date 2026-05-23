@@ -67,15 +67,7 @@ export const Dashboard = () => {
                 </Section>
 
                 <Section>
-                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-emerald-950">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                            </div>
-                            <h2 className="text-sm font-bold text-slate-800 dark:text-white">مؤشرات الأداء الرئيسية</h2>
-                        </div>
-                        <DashboardStats stats={stats} isTeacher={false} />
-                    </div>
+                    <DashboardStats stats={stats} isTeacher={false} />
                 </Section>
 
                 <div className="space-y-8">

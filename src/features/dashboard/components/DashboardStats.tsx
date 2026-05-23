@@ -57,7 +57,7 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
       ref={ref}
       className={cn(
         "relative bg-white dark:bg-slate-900/90",
-        "border border-slate-200 dark:border-slate-700/50 rounded-xl p-4",
+        "border border-slate-200 dark:border-slate-700/50 p-4",
         "shadow-sm shadow-slate-100 dark:shadow-slate-950/20",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3",
@@ -68,7 +68,7 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div className={cn(
-        "w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br shadow-sm shrink-0",
+        "w-10 h-10 flex items-center justify-center bg-gradient-to-br shadow-sm shrink-0",
         gradients[title] || 'from-indigo-500 to-violet-600'
       )}>
         <Icon size={18} className="text-white" />
@@ -91,10 +91,10 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
 
         {trendData && (
           <div className="flex items-center gap-2 mt-1.5">
-            <div className="flex-1 h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div className="flex-1 h-1 bg-slate-100 dark:bg-slate-800 overflow-hidden">
               <div
                 className={cn(
-                  "h-full rounded-full transition-all duration-700",
+                  "h-full transition-all duration-700",
                   trendData.isPositive ? "bg-emerald-400" : "bg-rose-400"
                 )}
                 style={{ width: visible ? `${barWidth}%` : '0%' }}
