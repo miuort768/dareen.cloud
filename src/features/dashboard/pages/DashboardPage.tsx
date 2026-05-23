@@ -63,15 +63,7 @@ export const Dashboard = () => {
                 <Section><DashboardHeader isTeacher={false} currentUser={currentUser} /></Section>
 
                 <Section>
-                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-indigo-950">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            </div>
-                            <h2 className="text-sm font-bold text-slate-800 dark:text-white">الإجراءات السريعة</h2>
-                        </div>
-                        <QuickActionsHub />
-                    </div>
+                    <QuickActionsHub />
                 </Section>
 
                 <Section>
