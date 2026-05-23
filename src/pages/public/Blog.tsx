@@ -255,8 +255,12 @@ export const Blog = () => {
                   <div className="absolute inset-4 border border-dashed border-indigo-500/15 rounded-full" />
                   <div className="absolute inset-12 border border-dashed border-purple-500/8 rounded-full" />
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/8 to-purple-600/8 rounded-full blur-3xl" />
-                  <img src="/dareen_books_portal_v3.png" alt="بوابة دارين التعليمية" loading="lazy"
-                    className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.15)]" />
+                  <picture>
+                    <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
+                    <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
+                    <img src="/dareen_books_portal_v3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
+                      className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.15)]" />
+                  </picture>
                 </div>
               </div>
             </div>

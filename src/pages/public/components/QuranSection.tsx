@@ -63,10 +63,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="flex -space-x-3 space-x-reverse">
                                 {[1, 2, 3].map(i => (
                                     <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
-                                        <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Student" />
+                                        <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" />
                                     </div>
                                 ))}
-                                <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm">+5k</div>
+                                <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700 shadow-sm">+5k</div>
                             </div>
                             <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
                             <div className="text-right">

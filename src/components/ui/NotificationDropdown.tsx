@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotificationsEnabled, useCurrentUser, useShowNotification } from '../../context/AppContext';
 import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { ar } from 'date-fns/locale';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 
@@ -146,12 +148,12 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-white transition-none"
+                className="relative w-10 h-10 flex items-center justify-center text-white hover:bg-white/15 hover:scale-110 active:scale-95 transition-all duration-200"
             >
-                <Bell size={24} className={cn(unreadCount > 0 ? "text-white animate-pulse" : "text-white")} />
+                <Bell size={24} className={cn(unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "")} />
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-medium flex items-center justify-center border-2 border-white dark:border-rose-600">
-                        {unreadCount > 9 ? '9+' : unreadCount}
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 bg-red-600 rounded-full text-white text-[10px] font-bold flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-lg">
+                        {unreadCount}
                     </span>
                 )}
             </button>
@@ -263,7 +265,7 @@ export const NotificationDropdown = () => {
                                             </p>
                                             <div className="flex items-center justify-between mt-2">
                                                 <span className="text-[9px] sm:text-xs text-gray-400 dark:text-gray-500">
-                                                    {notification.time}
+                                                    {formatDistanceToNow(new Date(notification.time), { addSuffix: true, locale: ar })}
                                                 </span>
                                                 <button
                                                     onClick={(e) => {

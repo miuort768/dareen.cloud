@@ -187,6 +187,7 @@ function App() {
         <SocketInitLayer />
       </Suspense>
       <Suspense fallback={<PageLoader />}>
+        <main>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
@@ -251,6 +252,7 @@ function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </main>
       </Suspense>
     </>
   );

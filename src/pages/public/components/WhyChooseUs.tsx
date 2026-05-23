@@ -45,7 +45,7 @@ export const WhyChooseUs = () => {
                         <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
                         <div className="absolute top-0 right-0 w-8 h-8 bg-indigo-50 dark:bg-indigo-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
                         <div className="absolute bottom-2 left-10 opacity-[0.08] dark:opacity-[0.15] rotate-12 transition-transform group-hover/card:-translate-y-2">
-                            <img src="/dareen_logo_new.jpg" alt="Logo" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
+                            <img src="/dareen_logo_new.jpg" alt="Logo" width="48" height="48" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
                         </div>
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
                             <BookOpen size={64} className="text-black dark:text-white" />

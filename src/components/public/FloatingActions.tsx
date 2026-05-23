@@ -68,6 +68,7 @@ export const FloatingActions = () => {
                                     href={action.href}
                                     target={action.isExternal ? "_blank" : "_self"}
                                     rel={action.isExternal ? "noopener noreferrer" : ""}
+                                    aria-label={action.label}
                                     className={cn(
                                         "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
@@ -83,6 +84,7 @@ export const FloatingActions = () => {
                             ) : (
                                 <button
                                     onClick={action.onClick}
+                                    aria-label={action.label}
                                     className={cn(
                                         "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color

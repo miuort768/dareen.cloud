@@ -68,12 +68,14 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                         <img
                                             key={i}
                                             src={`https://i.pravatar.cc/100?img=${i + 10}`}
+                                            width="40"
+                                            height="40"
                                             className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
-                                            alt="User"
+                                            alt=""
                                             loading="lazy"
                                         />
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                                    <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700">
                                         +2k
                                     </div>
                                 </div>
@@ -92,16 +94,22 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 <div className="absolute inset-[4%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
                                 
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
-                                    <img
-                                        src="/hero-child.png"
-                                        alt="Hero"
-                                        className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
-                                        fetchPriority="high"
-                                        decoding="sync"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
-                                        }}
-                                    />
+                                    <picture>
+                                        <source srcSet="/hero-child.webp" type="image/webp" />
+                                        <source srcSet="/hero-child.avif" type="image/avif" />
+                                        <img
+                                            src="/hero-child.png"
+                                            alt="Hero"
+                                            width="490"
+                                            height="490"
+                                            className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
+                                            fetchPriority="high"
+                                            decoding="sync"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
+                                            }}
+                                        />
+                                    </picture>
                             </div>
                         </div>
                     </div>
@@ -118,6 +126,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label={`سجل الآن: ${text}`}
                                 className="shrink-0 px-2.5 py-1 bg-amber-500 text-indigo-950 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-amber-400 transition-colors shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن

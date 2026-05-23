@@ -45,7 +45,7 @@ export const FAQSection = () => {
                             a: "نعم، نقدم حصة تجريبية مجانية لتقييم مستوى الطالب والتعرف على طريقة التدريس قبل الاشتراك الفعلي."
                         }
                     ].map((item, idx) => {
-                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" className="w-20 h-20 object-contain opacity-20" />];
+                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" alt="" className="w-20 h-20 object-contain opacity-20" />];
                         return (
                             <div key={idx} className="relative bg-white border border-gray-100 rounded-xl overflow-hidden group hover:border-indigo-100 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5">
                                 <div className="absolute -bottom-4 -left-4 text-gray-400 opacity-[0.03] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
