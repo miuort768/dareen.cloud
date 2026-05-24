@@ -45,12 +45,11 @@ export const Layout = () => {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className="min-h-screen flex font-sans dark:text-slate-100 transition-colors duration-300 relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20"
+        dir="rtl"
         >
             <Helmet>
                 <meta name="robots" content="noindex, nofollow" />
             </Helmet>
-            dir="rtl"
-        >
             {!isChatOnly && (
                 <div className={cn(
                     "hidden lg:block shrink-0 transition-all duration-300",
