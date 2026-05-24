@@ -9,8 +9,9 @@ export const PrivacyPolicy = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
-                title="سياسة الخصوصية"
-                description="سياسة الخصوصية الخاصة بدارين السابعة - تعرف على كيفية حماية بياناتك الشخصية وضمان خصوصيتك عند استخدام منصتنا التعليمية."
+                title="سياسة الخصوصية والأمان | دارين السابعة"
+                description="سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد. نضمن حماية بيانات الطلاب وأولياء الأمور والمعلمين وفق أعلى معايير الأمان والخصوصية."
+                url="https://dareen.cloud/privacy-policy"
             />
             <PublicNavbar />
 

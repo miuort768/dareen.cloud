@@ -165,10 +165,10 @@ export const Blog = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
-      <SEO title="المدونة التعليمية | دارين السابعة"
-        description="استكشف أحدث المقالات التعليمية، نصائح المذاكرة، وتحديثات المناهج في السعودية، الكويت، ودول الخليج."
+      <SEO title="المدونة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
+        description="مدونة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مدونة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
-        url="https://dareen-edu.com/books"
+        url="https://dareen.cloud/books"
         breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المدونة', item: '/books' }]} />
       <PublicNavbar />
 

@@ -9,8 +9,9 @@ export const TermsOfService = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
-                title="الشروط والأحكام"
-                description="اتفاقية شروط وأحكام استخدام منصة دارين السابعة - تعرف على حقوقك والتزاماتك عند استخدام خدماتنا التعليمية."
+                title="شروط الاستخدام والأحكام | دارين السابعة"
+                description="شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا."
+                url="https://dareen.cloud/terms-of-service"
             />
             <PublicNavbar />
 

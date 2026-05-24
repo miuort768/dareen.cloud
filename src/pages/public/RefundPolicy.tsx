@@ -11,8 +11,9 @@ export const RefundPolicy = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
-                title="سياسة الاسترجاع والإلغاء"
-                description="تعرف على سياسة الاسترجاع والإلغاء الخاصة بمنصة دارين السابعة - نضمن حقوقكم ونوضح إجراءات استرداد الرسوم."
+                title="سياسة الاسترداد والاسترجاع | دارين السابعة"
+                description="سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة. تعرف على شروط الاسترجاع، إلغاء الحصص، وآلية استرداد المبالغ المدفوعة."
+                url="https://dareen.cloud/refund-policy"
             />
             <PublicNavbar />
 

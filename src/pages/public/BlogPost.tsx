@@ -57,7 +57,7 @@ export const BlogPost = () => {
                 description={post.excerpt}
                 keywords={post.keywords}
                 image={post.coverImage}
-                url={`https://dareen-edu.com/books/${post.slug}`}
+                url={`https://dareen.cloud/books/${post.slug}`}
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
                     { name: 'المدونة', item: '/books' },
