@@ -73,7 +73,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                             width="40"
                                             height="40"
                                             className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
-                                            alt=""
+                                            alt={`صورة طالب ${i}`}
                                             loading="lazy"
                                         />
                                     ))}
@@ -101,7 +101,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                         <source srcSet="/hero-child.avif" type="image/avif" />
                                         <img
                                             src="/hero-child.png"
-                                            alt="Hero"
+                                            alt="طفل يدرس على منصة دارين السابعة"
                                             width="490"
                                             height="490"
                                             className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
