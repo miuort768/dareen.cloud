@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { AlertCircle, X, Trash2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -13,6 +13,8 @@ interface ConfirmModalProps {
     isDestructive?: boolean;
 }
 
+const FOCUSABLE = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     isOpen,
     onClose,
@@ -23,29 +25,52 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     cancelText = 'تراجع',
     isDestructive = true
 }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const previousFocus = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (isOpen) {
+            previousFocus.current = document.activeElement as HTMLElement;
+            setTimeout(() => {
+                containerRef.current?.querySelector<HTMLElement>('button')?.focus();
+            }, 50);
+        } else {
+            previousFocus.current?.focus();
+        }
+    }, [isOpen]);
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') { onClose(); return; }
+        if (e.key === 'Tab' && containerRef.current) {
+            const f = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE);
+            if (f.length < 2) return;
+            if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+            else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+        }
+    }, [onClose]);
+
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl">
+        <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
             <div
                 className="fixed inset-0 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-300"
                 onClick={onClose}
             ></div>
 
             <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
-                {/* Visual Header Accent */}
                 <div className={cn(
                     "h-1.5 w-full",
                     isDestructive ? "bg-rose-600 shadow-[0_0_15px_rgba(225,29,72,0.4)]" : "bg-[var(--primary-color,#5c59f2)] shadow-[0_0_15px_rgba(92,89,242,0.4)]"
                 )}></div>
 
-                {/* Decorative Geometric Background */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
                 <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
                         className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        aria-label="إغلاق"
                     >
                         <X size={18} />
                     </button>

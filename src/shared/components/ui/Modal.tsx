@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
@@ -12,6 +12,8 @@ export interface ModalProps {
   className?: string;
 }
 
+const FOCUSABLE_SELECTOR = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
@@ -19,16 +21,46 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   className,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const previousFocus = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      previousFocus.current = document.activeElement as HTMLElement;
+      setTimeout(() => {
+        const first = containerRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+        first?.focus();
+      }, 50);
     } else {
       document.body.style.overflow = '';
+      previousFocus.current?.focus();
     }
     return () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      triggerHaptic('light');
+      onClose();
+      return;
+    }
+    if (e.key === 'Tab' && containerRef.current) {
+      const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }, [onClose]);
 
   const handleClose = () => {
     triggerHaptic('light');
@@ -38,8 +70,15 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4" dir="rtl">
-          {/* Backdrop with elegant glass blur */}
+        <div
+          ref={containerRef}
+          className="fixed inset-0 z-[300] flex items-center justify-center p-4"
+          dir="rtl"
+          onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title || 'نافذة منبثقة'}
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -48,7 +87,6 @@ export const Modal: React.FC<ModalProps> = ({
             className="absolute inset-0 bg-slate-950/40 dark:bg-slate-950/60 backdrop-blur-sm"
           />
 
-          {/* Modal Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -59,7 +97,6 @@ export const Modal: React.FC<ModalProps> = ({
               className
             )}
           >
-            {/* Header */}
             <div className="flex items-center justify-between mb-5">
               {title && (
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
@@ -69,12 +106,12 @@ export const Modal: React.FC<ModalProps> = ({
               <button
                 onClick={handleClose}
                 className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 mr-auto"
+                aria-label="إغلاق"
               >
                 <X size={18} />
               </button>
             </div>
 
-            {/* Content */}
             <div className="text-right">
               {children}
             </div>
