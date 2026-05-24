@@ -98,12 +98,24 @@ export const Home = () => {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
             <PublicNavbar />
             <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
-            <WhyChooseUs />
-            <QuranSection whatsappNumber={whatsappNumber} />
-            <HowItWorks whatsappNumber={whatsappNumber} />
-            <Testimonials reviews={reviews} currentIndex={currentIndex} />
-            <MasarSection />
-            <FAQSection />
+            <div style={{ contentVisibility: 'auto' }}>
+                <WhyChooseUs />
+            </div>
+            <div style={{ contentVisibility: 'auto' }}>
+                <QuranSection whatsappNumber={whatsappNumber} />
+            </div>
+            <div style={{ contentVisibility: 'auto' }}>
+                <HowItWorks whatsappNumber={whatsappNumber} />
+            </div>
+            <div style={{ contentVisibility: 'auto' }}>
+                <Testimonials reviews={reviews} currentIndex={currentIndex} />
+            </div>
+            <div style={{ contentVisibility: 'auto' }}>
+                <MasarSection />
+            </div>
+            <div style={{ contentVisibility: 'auto' }}>
+                <FAQSection />
+            </div>
             <PublicFooter />
         </div>
     );
