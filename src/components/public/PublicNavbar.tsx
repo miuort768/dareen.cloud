@@ -100,6 +100,7 @@ export const PublicNavbar = () => {
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     className="flex items-center gap-3 text-gray-700 dark:text-slate-200 hover:text-indigo-600 transition-all px-2 md:px-4 py-2 group"
+                                    aria-label={isDropdownOpen ? 'إغلاق القائمة' : 'فتح قائمة المستخدم'}
                                 >
                                     <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-indigo-100 dark:border-indigo-900 shadow-sm group-hover:border-indigo-500 transition-all">
                                         {currentUser?.avatar ? (
@@ -129,6 +130,7 @@ export const PublicNavbar = () => {
                                     <button
                                         onClick={() => { logout(); setIsDropdownOpen(false); }}
                                         className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                                        aria-label="تسجيل الخروج"
                                     >
                                         <LogOut className="w-5 h-5" />
                                         تسجيل الخروج
@@ -148,6 +150,7 @@ export const PublicNavbar = () => {
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="md:hidden p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition-all active:scale-90"
+                            aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>

@@ -48,6 +48,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-indigo-950 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-black transition-all flex items-center justify-center gap-2 group"
+                                    aria-label="تصفح الدورات التعليمية"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
@@ -55,6 +56,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 <button
                                     onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
+                                    aria-label="شاهد دليل الاستخدام"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-indigo-600 fill-indigo-600" />
