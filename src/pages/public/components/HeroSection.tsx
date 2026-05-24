@@ -104,7 +104,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                             height="490"
                                             className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
                                             fetchPriority="high"
-                                            decoding="sync"
+                                            decoding="async"
                                             onError={(e) => {
                                                 (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
                                             }}

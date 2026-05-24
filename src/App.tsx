@@ -1,5 +1,4 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
-import { Chat } from './pages/Chat';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 
@@ -8,6 +7,7 @@ import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading,
 import { InstallPWA } from './components/ui/InstallPWA';
 
 // Lazy load pages for high performance
+const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
 const SocketInitLayer = lazy(() => import('./components/ui/SocketInitLayer').then(m => ({ default: m.SocketInitLayer })));
 const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
