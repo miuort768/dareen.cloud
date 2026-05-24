@@ -293,6 +293,8 @@ html, body {
 }
 
 @layer utilities {
+  .font-dash { font-weight: 500; }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
