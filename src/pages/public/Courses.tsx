@@ -6,22 +6,6 @@ import { Search, Users, Sparkles, LayoutGrid, BookOpen, Globe, Languages, Target
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
-import foundationNewImg from '../../assets/courses/foundation-new.jpg';
-import foundationV2Img from '../../assets/courses/foundation-v2.jpg';
-import kuwaitiImg from '../../assets/courses/kuwaiti-curriculum.jpg';
-import qatariImg from '../../assets/courses/qatari-curriculum.jpg';
-import saudiImg from '../../assets/courses/saudi-curriculum.jpg';
-import uaeImg from '../../assets/courses/uae-curriculum.jpg';
-import omanImg from '../../assets/courses/oman-curriculum.jpg';
-import egyptImg from '../../assets/courses/egypt-curriculum.jpg';
-import jordanImg from '../../assets/courses/jordan-curriculum.jpg';
-import arabicImg from '../../assets/courses/arabic-course.jpg';
-import frenchImg from '../../assets/courses/french-course.jpg';
-import skillsImg from '../../assets/courses/skills-course.jpg';
-import tajweedImg from '../../assets/courses/tajweed-course.jpg';
-import englishImg from '../../assets/courses/english-course.jpg';
-import memorizeImg from '../../assets/courses/memorize-curriculum.jpg';
-
 const COURSES = [
   { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'تأسيس شامل في اللغة العربية والإنجليزية والرياضيات بأساليب تفاعلية حديثة.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img, color: 'from-emerald-500 to-teal-600' },
   { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationNewImg, color: 'from-amber-500 to-orange-600' },
@@ -48,6 +32,25 @@ const CATEGORIES = [
   { label: 'اللغات', value: 'english', icon: Languages, color: 'text-violet-500' },
   { label: 'القدرات', value: 'skills', icon: Target, color: 'text-rose-500' },
 ];
+
+const parseStudentCount = (s: string) => {
+  const n = parseFloat(s.replace(/[kK]/, ''));
+  return s.includes('k') || s.includes('K') ? Math.round(n * 1000) : Math.round(n);
+};
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: COURSES.map((c, i) => ({
+    '@type': 'Course',
+    position: i + 1,
+    name: c.title,
+    description: c.desc,
+    provider: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
+    offers: { '@type': 'Offer', priceCurrency: 'KWD', price: '0', availability: 'https://schema.org/InStock' },
+  })),
+};
 
 const containerVariants = {
   hidden: {},
@@ -98,7 +101,8 @@ export const Courses = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
-      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية. تأسيس لغة عربية، تحفيظ قرآن، مراجعات نهائية، وقدرات. دروس خصوصية مع نخبة المعلمين في الخليج." url="https://dareen.cloud/courses" />
+      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية. تأسيس لغة عربية، تحفيظ قرآن، مراجعات نهائية، وقدرات. دروس خصوصية مع نخبة المعلمين في الخليج." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <PublicNavbar />
 
       <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden">
@@ -200,17 +204,14 @@ export const Courses = () => {
                       className="w-full h-full object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    {/* Gradient fade at bottom */}
                     <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
 
-                    {/* Category badge */}
                     <div className="absolute top-3 right-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg bg-gradient-to-br ${course.color}`}>
                         {CATEGORIES.find(c => c.value === course.category)?.label || course.category}
                       </div>
                     </div>
 
-                    {/* Rating badge */}
                     <div className="absolute bottom-3 left-3 z-10">
                       <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />

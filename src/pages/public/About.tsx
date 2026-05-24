@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
-            <SEO title="من نحن | دارين السابعة - منصة تعليمية رائدة في الخليج" description="منصة تعليمية خليجية رائدة. تعرف على مهمتنا في تقديم تعليم عن بعد متميز للطلاب في الكويت والسعودية وقطر والإمارات وعمان بأفضل المعلمين والتقنيات الحديثة." url="https://dareen.cloud/about" />
+            <SEO title="من نحن | دارين السابعة - منصة تعليمية رائدة في الخليج" description="منصة تعليمية خليجية رائدة. تعرف على مهمتنا في تقديم تعليم عن بعد متميز للطلاب في الكويت والسعودية وقطر والإمارات وعمان بأفضل المعلمين والتقنيات الحديثة." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" />
             <PublicNavbar />
 
             {/* Hero Section */}
