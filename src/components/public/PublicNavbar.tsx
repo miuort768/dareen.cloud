@@ -104,7 +104,7 @@ export const PublicNavbar = () => {
                                 >
                                     <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-indigo-100 dark:border-indigo-900 shadow-sm group-hover:border-indigo-500 transition-all">
                                         {currentUser?.avatar ? (
-                                            <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                                            <img src={currentUser.avatar} alt={currentUser.name} width="32" height="32" className="w-full h-full object-cover" />
                                         ) : (
                                             <div className="w-full h-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center">
                                                 <User className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />

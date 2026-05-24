@@ -314,7 +314,7 @@ export const Blog = () => {
                       <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                         className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
                         <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
-                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
                           <div className="absolute top-3 right-3 z-10">
                             <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{post.subject || post.category}</span>

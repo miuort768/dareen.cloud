@@ -199,6 +199,8 @@ export const Courses = () => {
                     <img
                       src={course.image}
                       alt={course.title}
+                      width="400"
+                      height="300"
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
