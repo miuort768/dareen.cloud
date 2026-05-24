@@ -1,6 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
+const BASE = 'https://dareen.cloud';
+
+const toAbs = (src: string) => src.startsWith('http') ? src : `${BASE}${src}`;
+
 interface SEOProps {
     title?: string;
     description?: string;
@@ -20,7 +24,9 @@ export const SEO: React.FC<SEOProps> = ({
     preloadImages = [],
     breadcrumbs
 }) => {
-    const siteTitle = "دارين السابعة | دارين السابعة لتعليم والتدريب";
+    const absUrl = url.startsWith('http') ? url : `${BASE}${url}`;
+    const absImage = toAbs(image);
+    const siteTitle = 'دارين السابعة للتعليم والتدريب';
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
     const siteDescription = description || "دارين السابعة لتعليم والتدريب - المنصة الأولى المعتمدة للتعليم عن بعد في الكويت، قطر، السعودية، الإمارات، وسلطنة عمان. نوفر أفضل المدرسين الخصوصيين، تحفيظ قرآن، وتأسيس ومراجعات للمناهج الخليجية والإنترناشونال.";
     const siteKeywords = keywords || "تعليم عن بعد, دارين السابعة, مدرس خصوصي الكويت, دروس خصوصية قطر, افضل منصة تعليمية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, تحفيظ قرآن عن بعد, منهج كويتي, منهج سعودي, قدرات وتحصيلي, تأسيس لغة عربية, مراجعات نهائية, اكاديمية تعليمية";
@@ -36,21 +42,25 @@ export const SEO: React.FC<SEOProps> = ({
 
             {/* Open Graph / Facebook */}
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={url} />
+            <meta property="og:url" content={absUrl} />
             <meta property="og:title" content={fullTitle} />
             <meta property="og:description" content={siteDescription} />
-            <meta property="og:image" content={image} />
+            <meta property="og:image" content={absImage} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:locale" content="ar_AR" />
+            <meta property="og:site_name" content="دارين السابعة" />
 
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
-            <meta property="twitter:url" content={url} />
+            <meta property="twitter:url" content={absUrl} />
             <meta property="twitter:title" content={fullTitle} />
             <meta property="twitter:description" content={siteDescription} />
-            <meta property="twitter:image" content={image} />
+            <meta property="twitter:image" content={absImage} />
 
             {/* Preload Critical Assets */}
             {preloadImages.map((src, idx) => (
-                <link key={idx} rel="preload" href={src} as="image" />
+                <link key={idx} rel="preload" href={toAbs(src)} as="image" />
             ))}
 
             {/* Geographic & Regional Domination Meta Tags */}
@@ -59,11 +69,11 @@ export const SEO: React.FC<SEOProps> = ({
             <meta name="geo.position" content="24.7136;46.6753" />
             <meta name="ICBM" content="24.7136, 46.6753" />
 
-            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar" />
-            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-sa" />
-            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-kw" />
-            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-ae" />
-            <link rel="alternate" href="https://dareen.cloud/" hrefLang="x-default" />
+            <link rel="alternate" href={absUrl} hrefLang="ar" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-sa" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-kw" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-ae" />
+            <link rel="alternate" href={absUrl} hrefLang="x-default" />
 
             {/* Advanced Multi-Schema for Rich Snippets (Sitelinks, Star Ratings, FAQs, Courses) */}
             <script type="application/ld+json">
@@ -153,7 +163,7 @@ export const SEO: React.FC<SEOProps> = ({
             )}
 
             {/* Canonical URL */}
-            <link rel="canonical" href={url} />
+            <link rel="canonical" href={absUrl} />
         </Helmet>
     );
 };

@@ -64,6 +64,25 @@ export const BlogPost = () => {
                     { name: post.title, item: `/books/${post.slug}` }
                 ]}
             />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'Article',
+                    headline: post.title,
+                    description: post.excerpt,
+                    image: post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`,
+                    datePublished: post.date,
+                    dateModified: post.date,
+                    author: { '@type': 'Person', name: post.author },
+                    publisher: {
+                        '@type': 'EducationalOrganization',
+                        name: 'دارين السابعة',
+                        url: 'https://dareen.cloud',
+                        logo: { '@type': 'ImageObject', url: 'https://dareen.cloud/logo.png' }
+                    },
+                    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://dareen.cloud/books/${post.slug}` }
+                })}
+            </script>
             <PublicNavbar />
 
             <main className="flex-grow pt-24 md:pt-32 pb-20 relative">

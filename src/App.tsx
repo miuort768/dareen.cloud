@@ -46,6 +46,7 @@ const Blog = lazy(() => import('./pages/public/Blog').then(m => ({ default: m.Bl
 const BlogPost = lazy(() => import('./pages/public/BlogPost').then(m => ({ default: m.BlogPost })));
 const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const RefundPolicy = lazy(() => import('./pages/public/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
+const TermsOfService = lazy(() => import('./pages/public/TermsOfService').then(m => ({ default: m.TermsOfService })));
 const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m.AdminBlog })));
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
@@ -207,7 +208,7 @@ function App() {
           <Route path="/login-q8" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/terms-of-service" element={<RefundPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
 
           {/* Protected App Routes */}
           {/* Protected App Routes */}
