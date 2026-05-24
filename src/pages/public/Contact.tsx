@@ -53,16 +53,7 @@ export const Contact = () => {
 
     return (
         <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
-            <SEO
-                title="تواصل مع دارين السابعة | مدرسين خصوصي في السعودية، الكويت، قطر، الامارات، وعمان"
-                description="تواصل مع دارين السابعة واحجز أفضل المدرسين الخصوصيين أونلاين في دول الخليج."
-                keywords="ارقام مدرسين السعودية, مدرس خصوصي قطر, منصة تعليم الكويت, تواصل مع دارين السابعة"
-                url="https://dareen-edu.com/contact"
-                breadcrumbs={[
-                    { name: 'الرئيسية', item: '/' },
-                    { name: 'تواصل معنا', item: '/contact' }
-                ]}
-            />
+            <SEO title="اتصل بنا | دارين السابعة" description="تواصل مع فريق دارين السابعة. استفسر عن خدماتنا التعليمية، اشتراكات الطلاب، أو الدعم الفني. نحن هنا لخدمتك." url="https://dareen.cloud/contact" />
             <PublicNavbar />
 
             <main className="flex-grow pt-24 md:pt-28 pb-6 relative overflow-hidden">

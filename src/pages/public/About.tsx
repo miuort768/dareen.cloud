@@ -7,16 +7,7 @@ import { SEO } from '../../components/SEO';
 export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
-            <SEO
-                title="عن دارين السابعة | المنصة التعليمية الأفضل في السعودية والكويت وقطر والامارات وعمان"
-                description="تعرف على دارين السابعة، المؤسسة الرائدة للتعليم عن بعد في دول الخليج (السعودية، الكويت، قطر، الامارات، عمان). نقدم أفضل المدرسين الخصوصيين ومراجعات المناهج الخليجية."
-                keywords="دارين السابعة, اكاديمية دارين الخليج, دروس خصوصية اونلاين الكويت, معلمين قطر, مدرس قدرات السعودية, منصة الامارات, معهد تعليمي عمان"
-                url="https://dareen-edu.com/about"
-                breadcrumbs={[
-                    { name: 'الرئيسية', item: '/' },
-                    { name: 'من نحن', item: '/about' }
-                ]}
-            />
+            <SEO title="من نحن | دارين السابعة" description="تعرف على دارين السابعة، المنصة التعليمية الرائدة في الخليج. مهمتنا تقديم تعليم متميز عن بعد بأحدث التقنيات وأفضل الكوادر التعليمية." url="https://dareen.cloud/about" />
             <PublicNavbar />
 
             {/* Hero Section */}

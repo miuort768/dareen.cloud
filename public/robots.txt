@@ -4,21 +4,7 @@ Disallow: /admin
 Disallow: /dashboard
 Disallow: /api/
 Disallow: /teacher/
+Disallow: /settings
+Disallow: /chat
 
-# Advanced SEO Optimization for Middle East & Gulf
-Sitemap: https://dareen-edu.com/sitemap.xml
-
-# Industry-specific Directives
-User-agent: Googlebot
-Allow: /
-User-agent: Bingbot
-Allow: /
-User-agent: Applebot
-Allow: /
-User-agent: DuckDuckBot
-Allow: /
-
-# Core Educational Keywords for Gulf Market Search Domination:
-# [تعليم عن بعد، حصص اون لاين، دروس خصوصية، السعودية، الكويت، الإمارات، قطر، البحرين، عمان]
-# [قدرات وتحصيلي، المنهج السعودي، المنهج الكويتي، مدرس خصوصي الرياض، مدرس خصوصي الكويت، مدرس خصوصي دبي]
-# [تأسيس لغة عربية، تحفيظ قرآن عن بعد، منصة تعليمية الخليج، تدريس مناهج انترناشونال]
+Sitemap: https://dareen.cloud/sitemap.xml

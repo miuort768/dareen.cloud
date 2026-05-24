@@ -98,16 +98,7 @@ export const Courses = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
-      <SEO
-        title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | دارين السابعة"
-        description="استكشف أفضل الدورات التعليمية والدروس الخصوصية الأونلاين في الخليج. تأسيس شامل، مناهج خليجية، وتحفيظ قرآن."
-        keywords="دورات الكويت, دروس خصوصية قطر, معلمين السعودية, منصة الامارات التعليمية, منهج سلطنة عمان, قدرات وتحصيلي السعودية, دارين السابعة, تحفيظ قرآن الخليج"
-        url="https://dareen-edu.com/courses"
-        breadcrumbs={[
-          { name: 'الرئيسية', item: '/' },
-          { name: 'الدورات التعليمية', item: '/courses' }
-        ]}
-      />
+      <SEO title="الدورات التعليمية | دارين السابعة" description="تصفح دوراتنا التعليمية المتخصصة في المناهج الخليجية، تأسيس اللغة العربية، تحفيظ القرآن، والمراجعات النهائية. دروس أونلاين بأفضل المعلمين." url="https://dareen.cloud/courses" />
       <PublicNavbar />
 
       <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden">

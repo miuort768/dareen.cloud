@@ -81,10 +81,7 @@ export const Login = () => {
 
     return (
         <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
-            <SEO
-                title="تسجيل الدخول"
-                description="تسجيل الدخول إلى بوابة دارين السابعة - طموح لا يعرف الحدود."
-            />
+            <SEO title="تسجيل الدخول | دارين السابعة" description="تسجيل الدخول إلى منصة دارين السابعة للتعليم عن بعد. دخول الطلاب، المعلمين، وأولياء الأمور." url="https://dareen.cloud/login" />
 
             {/* Static Background Layer */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[rgb(var(--bg-surface))]">

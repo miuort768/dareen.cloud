@@ -16,7 +16,7 @@ export const SEO: React.FC<SEOProps> = ({
     description,
     keywords,
     image = '/logo.png',
-    url = 'https://dareen-edu.com/',
+    url = 'https://dareen.cloud/',
     preloadImages = [],
     breadcrumbs
 }) => {
@@ -59,21 +59,48 @@ export const SEO: React.FC<SEOProps> = ({
             <meta name="geo.position" content="24.7136;46.6753" />
             <meta name="ICBM" content="24.7136, 46.6753" />
 
-            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar" />
-            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-sa" />
-            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-kw" />
-            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-ae" />
-            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="x-default" />
+            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar" />
+            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-sa" />
+            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-kw" />
+            <link rel="alternate" href="https://dareen.cloud/" hrefLang="ar-ae" />
+            <link rel="alternate" href="https://dareen.cloud/" hrefLang="x-default" />
 
-            {/* Advanced Multi-Schema for Rich Snippets (Google Star Ratings, FAQs, and Courses) */}
+            {/* Advanced Multi-Schema for Rich Snippets (Sitelinks, Star Ratings, FAQs, Courses) */}
             <script type="application/ld+json">
                 {JSON.stringify([
                     {
                         "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "name": "دارين السابعة للتعليم والتدريب",
+                        "url": "https://dareen.cloud/",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": {
+                                "@type": "EntryPoint",
+                                "urlTemplate": "https://dareen.cloud/search?q={search_term_string}"
+                            },
+                            "query-input": "required name=search_term_string"
+                        }
+                    },
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "SiteNavigationElement",
+                        "name": ["الرئيسية", "الدورات", "من نحن", "اتصل بنا", "تسجيل الدخول", "المدونة"],
+                        "url": [
+                            "https://dareen.cloud/",
+                            "https://dareen.cloud/courses",
+                            "https://dareen.cloud/about",
+                            "https://dareen.cloud/contact",
+                            "https://dareen.cloud/login",
+                            "https://dareen.cloud/books"
+                        ]
+                    },
+                    {
+                        "@context": "https://schema.org",
                         "@type": "EducationalOrganization",
                         "name": "دارين السابعة للتعليم والتدريب",
-                        "url": "https://dareen-edu.com/",
-                        "logo": "https://dareen-edu.com/logo.png",
+                        "url": "https://dareen.cloud/",
+                        "logo": "https://dareen.cloud/logo.png",
                         "description": siteDescription,
                         "telephone": "+965XXXXXXXX",
                         "areaServed": ["Saudi Arabia", "Kuwait", "United Arab Emirates", "Qatar", "Oman", "Bahrain"],
@@ -119,7 +146,7 @@ export const SEO: React.FC<SEOProps> = ({
                             "@type": "ListItem",
                             "position": index + 1,
                             "name": crumb.name,
-                            "item": crumb.item.startsWith('http') ? crumb.item : `https://dareen-edu.com${crumb.item}`
+                            "item": crumb.item.startsWith('http') ? crumb.item : `https://dareen.cloud${crumb.item}`
                         }))
                     })}
                 </script>
