@@ -11,6 +11,7 @@ import { InstallPWA } from './components/ui/InstallPWA';
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
 const SocketInitLayer = lazy(() => import('./components/ui/SocketInitLayer').then(m => ({ default: m.SocketInitLayer })));
 const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
+const NotFound = lazy(() => import('./pages/public/NotFound').then(m => ({ default: m.NotFound })));
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const Settings = lazy(() => import('./pages/Settings'));
 const ParentDashboard = lazy(() => import('./pages/ParentDashboard').then(m => ({ default: m.ParentDashboard })));
@@ -250,7 +251,7 @@ function App() {
 
           <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         </main>
       </Suspense>
