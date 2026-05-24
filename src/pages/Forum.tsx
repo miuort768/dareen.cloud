@@ -221,7 +221,7 @@ export const Forum = () => {
     };
 
     return (
-        <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-purple-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-purple-950/20 pb-20 md:animate-in md:fade-in md:duration-700 font-dash" dir="rtl">
+        <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-purple-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-purple-950/20 pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #6366f1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10">
 

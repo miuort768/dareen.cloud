@@ -375,7 +375,7 @@ export const Settings = () => {
     };
 
     return (
-        <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 md:animate-in md:fade-in md:duration-700 font-dash" dir="rtl">
+        <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5">

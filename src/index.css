@@ -95,7 +95,7 @@ html, body {
   }
 
   html {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Readex Pro', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
@@ -293,8 +293,6 @@ html, body {
 }
 
 @layer utilities {
-  .font-dash { font-weight: 500; }
-
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;

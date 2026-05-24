@@ -72,7 +72,7 @@ export const Profile = () => {
     };
 
     return (
-        <div className="min-h-full bg-slate-50 dark:bg-slate-950 pb-20 font-dash" dir="rtl">
+        <div className="min-h-full bg-slate-50 dark:bg-slate-950 pb-20 font-sans" dir="rtl">
             {/* Header Area */}
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-6 py-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
