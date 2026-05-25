@@ -246,20 +246,23 @@ export const Home = () => {
           {/* Course Cards */}
           <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
             {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
-              <motion.div
+              <motion.a
                 key={c.id}
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${c.title}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                className="min-w-[180px] w-[180px] bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden shrink-0"
+                className="min-w-[180px] w-[180px] bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden shrink-0 block"
               >
-                <div className="relative h-24 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+                <div className="relative h-24 bg-white overflow-hidden">
                   <img
                     src={c.image}
                     alt={c.title}
                     width="180"
                     height="96"
-                    className="w-full h-full object-contain p-2"
+                    className="w-full h-full object-cover"
                   />
                   <span className={`absolute top-2 right-2 text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-sm ${
                     c.category === 'foundation' ? 'bg-emerald-500' :
@@ -284,7 +287,7 @@ export const Home = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </section>
