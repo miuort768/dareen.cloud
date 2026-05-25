@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
@@ -171,9 +171,198 @@ export const Blog = () => {
         url="https://dareen.cloud/books"
         image="/dareen_books_banner.png"
         breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المدونة', item: '/books' }]} />
-      <PublicNavbar />
+      <MobileHeader />
 
-      <main className="flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden">
+      {/* ─── Mobile Layout ─── */}
+      <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative min-h-screen">
+        {isHeroView ? (
+          <div>
+            <div className="mb-4 mt-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 rounded-full mb-3">
+                <BookOpen size={10} className="text-indigo-600" />
+                <span className="text-[9px] font-black text-indigo-600">
+                  {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
+                </span>
+              </div>
+              <h1 className="text-[17px] font-black text-slate-900 leading-tight">
+                {view === 'types' ? (
+                  <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">دارين</span> التعليمية</>
+                ) : view === 'curriculums' ? (
+                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
+                ) : (
+                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
+                )}
+              </h1>
+              <p className="text-[10px] text-slate-500 font-medium mt-1 leading-relaxed">
+                {view === 'types'
+                  ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في الخليج'
+                  : view === 'curriculums'
+                    ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              {gridItems.map((item: GridItem, i: number) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
+                    else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
+                    else { setSelectedLevel(item.id); setView('classrooms'); }
+                  }}
+                  className={cn(
+                    "relative flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl text-white overflow-hidden shadow-sm active:scale-[0.97] transition-all",
+                    "bg-gradient-to-br", item.gradient
+                  )}
+                >
+                  <item.icon size={18} />
+                  <span className="text-[10px] font-black text-center leading-tight">{item.name}</span>
+                  {item.sub && <span className="text-[8px] text-white/70 font-bold">{item.sub}</span>}
+                </button>
+              ))}
+
+              {view !== 'types' && (
+                <button onClick={goBack}
+                  className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all">
+                  <ArrowLeft size={16} />
+                  <span className="text-[10px] font-black">العودة</span>
+                </button>
+              )}
+
+              <Link to="/courses"
+                className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-sm">
+                <Sparkles size={16} />
+                <span className="text-[10px] font-black">الدورات</span>
+              </Link>
+            </div>
+          </div>
+        ) : view === 'results' ? (
+          <div>
+            <div className="flex items-center gap-1.5 mb-4 text-[9px] font-bold text-slate-400 flex-wrap mt-2">
+              {[
+                { label: 'الرئيسية', onClick: () => setView('types') },
+                ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
+                ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
+                ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
+                ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
+              ].map((crumb, i, arr) => (
+                <span key={i} className="flex items-center gap-1">
+                  {i > 0 && <ChevronLeft size={9} className="text-slate-300" />}
+                  <button onClick={crumb.onClick}
+                    className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}
+                  >{crumb.label}</button>
+                </span>
+              ))}
+              {selectedSubject && <><ChevronLeft size={9} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
+            </div>
+
+            <div className="flex gap-2 mb-4">
+              <button onClick={goBack} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 text-white text-[9px] font-black rounded-xl transition-all">
+                <ArrowLeft size={12} /><span>تغيير المادة</span>
+              </button>
+              <button onClick={() => setView('types')} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-950 text-white text-[9px] font-black rounded-xl transition-all">
+                <Library size={12} /><span>الرئيسية</span>
+              </button>
+            </div>
+
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-16">
+                <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mb-3" />
+                <span className="text-[10px] font-black text-slate-400">جاري التحميل...</span>
+              </div>
+            ) : filteredPosts.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto mb-3 border border-slate-200">
+                  <BookOpen size={20} className="text-slate-300" />
+                </div>
+                <p className="text-slate-500 font-black text-sm mb-1">لا يوجد محتوى بعد</p>
+                <p className="text-slate-400 text-[10px] font-medium">سيتم إضافة المحتوى قريباً لهذا التصنيف</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredPosts.map((post, i) => (
+                  <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
+                    className="flex items-start gap-3 bg-white rounded-2xl border border-slate-100 p-3 shadow-sm active:scale-[0.98] transition-all">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-50 shrink-0">
+                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="64" height="64" loading="lazy" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[8px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">{post.subject || post.category}</span>
+                      <h2 className="text-[11px] font-black text-slate-900 leading-snug mt-1 line-clamp-2">{post.title}</h2>
+                      <p className="text-[8px] text-slate-400 mt-0.5">{post.date?.split('T')[0]}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <div className="text-center mb-5 mt-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 rounded-full mb-3">
+                <BookOpen size={10} className="text-indigo-600" />
+                <span className="text-[9px] font-black text-indigo-600">
+                  {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
+                    : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
+                      : `المواد — ${termLabel}`}
+                </span>
+              </div>
+              <h1 className="text-[17px] font-black text-slate-900">
+                {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الصف الدراسي</span></>)
+                  : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الترم</span></>)
+                    : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المادة</span></>)}
+              </h1>
+              <p className="text-[10px] text-slate-500 font-medium mt-1">
+                {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
+                  : view === 'terms' ? 'اختر الترم الدراسي'
+                    : `${filteredPosts.length} نتيجة متاحة`}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              {view === 'classrooms' && currentClassrooms.map((cls, i) => (
+                <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }}
+                  className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-sm active:scale-[0.97] transition-all">
+                  <GraduationCap size={18} />
+                  <span className="text-[10px] font-black text-center">الصف {gradeNames[cls] || cls}</span>
+                </button>
+              ))}
+
+              {view === 'terms' && (
+                <>
+                  <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
+                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm active:scale-[0.97] transition-all">
+                    <BookOpen size={18} />
+                    <span className="text-[10px] font-black">ترم أول</span>
+                  </button>
+                  <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
+                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-sm active:scale-[0.97] transition-all">
+                    <BookOpen size={18} />
+                    <span className="text-[10px] font-black">ترم ثاني</span>
+                  </button>
+                </>
+              )}
+
+              {view === 'subjects' && currentSubjects.map((subj, i) => (
+                <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }}
+                  className={cn("flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br text-white shadow-sm active:scale-[0.97] transition-all", subj.gradient)}>
+                  <span className="text-[10px] font-black text-center">{subj.name}</span>
+                </button>
+              ))}
+
+              <button onClick={goBack}
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all">
+                <ArrowLeft size={16} />
+                <span className="text-[10px] font-black">العودة</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* ─── Desktop Layout ─── */}
+      <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
@@ -230,27 +419,8 @@ export const Blog = () => {
                       </button>
                     </div>
                   ))}
-
-                  {view !== 'types' && (
-                    <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${gridItems.length * 80}ms` }}>
-                      <button onClick={goBack}
-                        className="w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all duration-300 active:scale-[0.97]">
-                        <ArrowLeft size={18} />
-                        <span className="text-xs font-black">العودة</span>
-                      </button>
-                    </div>
-                  )}
-
-                  <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${(gridItems.length + (view !== 'types' ? 1 : 0)) * 80}ms` }}>
-                    <Link to="/courses"
-                      className="w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white transition-all duration-300 active:scale-[0.97] block shadow-lg">
-                      <Sparkles size={18} />
-                      <span className="text-xs font-black">الدورات</span>
-                    </Link>
-                  </div>
                 </div>
               </div>
-
               <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-left-8 duration-700 delay-300">
                 <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center">
                   <div className="absolute inset-4 border border-dashed border-indigo-500/15 rounded-full" />
