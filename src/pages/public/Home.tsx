@@ -125,7 +125,7 @@ export const Home = () => {
       <MobileHeader />
 
       {/* ─── Mobile App Content ─── */}
-      <main className="md:hidden pt-4 pb-8 px-4 max-w-lg mx-auto relative">
+      <main className="md:hidden pt-4 pb-8 px-2 max-w-lg mx-auto relative">
 
         {/* Hero Carousel */}
         <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 shadow-sm border border-violet-100/50">
