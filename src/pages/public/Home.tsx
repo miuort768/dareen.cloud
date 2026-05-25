@@ -13,7 +13,7 @@ import { Testimonials } from './components/Testimonials';
 import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import {
-  Bell, Search, Play, BookOpen, Award, Trophy,
+  Bell, Play, BookOpen, Award, Trophy,
   Video, MessageCircle, Star, Home as HomeIcon, Library, User, MoreHorizontal,
   GraduationCap, ChevronLeft, Monitor, Users
 } from 'lucide-react';
@@ -152,15 +152,6 @@ export const Home = () => {
           </button>
         </header>
 
-        {/* Search Bar */}
-        <div className="relative mb-5">
-          <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="ابحث عن دورة أو درس..."
-            className="w-full bg-white rounded-full py-3.5 pr-11 pl-5 text-[13px] text-slate-700 placeholder:text-slate-400 border border-slate-200/80 shadow-sm outline-none focus:border-indigo-300 transition-colors"
-          />
-        </div>
 
         {/* Hero Banner */}
         <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 p-5 shadow-sm border border-violet-100/50">
