@@ -19,7 +19,7 @@ export const MobileHeader = () => {
       <div className="hidden md:block">
         <PublicNavbar />
       </div>
-      <header className="md:hidden flex items-center justify-between mb-4">
+      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
             <GraduationCap className="w-6 h-6 text-white" />

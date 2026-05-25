@@ -56,7 +56,7 @@ export const Contact = () => {
             <SEO title="اتصل بنا | دارين السابعة للتعليم عن بعد" description="تواصل مع فريق دارين السابعة للاستفسار عن دوراتنا التعليمية، اشتراكات الطلاب، أو الدعم الفني. اتصل بنا عبر واتساب أو نموذج التواصل لدعم فوري." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" />
             <MobileHeader />
 
-            <main className="flex-grow pt-24 md:pt-28 pb-6 relative overflow-hidden">
+            <main className="flex-grow md:pt-28 pb-6 relative overflow-hidden">
                 {/* Subtle background glows */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
