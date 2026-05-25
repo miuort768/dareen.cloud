@@ -208,7 +208,7 @@ export const Home = () => {
                 </div>
                 <div className="min-w-0">
                   <span className="text-[11px] font-black text-slate-800 block leading-tight">{f.label}</span>
-                  <span className="text-[8px] text-slate-500 font-medium leading-tight">{f.desc}</span>
+                  <span className="text-[6px] text-slate-400 font-medium leading-tight">{f.desc}</span>
                 </div>
               </div>
             ))}
