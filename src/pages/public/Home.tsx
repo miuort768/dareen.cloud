@@ -6,6 +6,7 @@ import { SEO } from '../../components/SEO';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { MasarSection } from '../../components/public/MasarSection';
+import { COURSES } from '../../data/courses';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { QuranSection } from './components/QuranSection';
 import { HowItWorks } from './components/HowItWorks';
@@ -26,23 +27,7 @@ const quickFeatures = [
   { icon: MessageCircle, label: 'الاستشارات', desc: 'اسأل وتعلم', color: 'text-emerald-500', bg: 'bg-emerald-50' },
 ];
 
-const latestCourses = [
-  {
-    title: 'الرياضيات المتقدمة', stage: 'المرحلة الثانوية',
-    badge: 'الأكثر مبيعًا', badgeColor: 'bg-emerald-500',
-    students: '2.5K', rating: 4.8, image: '/teacher-foundation.png',
-  },
-  {
-    title: 'اللغة الإنجليزية', stage: 'المرحلة المتوسطة',
-    badge: 'جديد', badgeColor: 'bg-violet-500',
-    students: '1.8K', rating: 4.7, image: '/dareen_books_portal_v3.png',
-  },
-  {
-    title: 'العلوم المتكاملة', stage: 'المرحلة المتوسطة',
-    badge: 'الأكثر مبيعًا', badgeColor: 'bg-emerald-500',
-    students: '1.6K', rating: 4.6, image: '/hero-child.png',
-  },
-];
+const latestCourses = COURSES.slice(0, 6);
 
 const stages = ['الكل', 'المرحلة الابتدائية', 'المرحلة المتوسطة', 'المرحلة الثانوية', 'مهارات عامة'];
 
@@ -258,7 +243,7 @@ export const Home = () => {
           <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
             {latestCourses.map((c, i) => (
               <motion.div
-                key={i}
+                key={c.id}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
@@ -272,13 +257,18 @@ export const Home = () => {
                     height="96"
                     className="w-full h-full object-contain p-2"
                   />
-                  <span className={`absolute top-2 right-2 ${c.badgeColor} text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-sm`}>
-                    {c.badge}
+                  <span className={`absolute top-2 right-2 text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-sm ${
+                    c.category === 'foundation' ? 'bg-emerald-500' :
+                    c.category === 'quran' ? 'bg-amber-500' :
+                    c.category === 'gulf' ? 'bg-sky-500' :
+                    c.category === 'english' ? 'bg-violet-500' : 'bg-rose-500'
+                  }`}>
+                    {c.category === 'foundation' ? 'تأسيس' : c.category === 'quran' ? 'قرآن' : c.category === 'gulf' ? 'منهج' : c.category === 'english' ? 'لغات' : 'قدرات'}
                   </span>
                 </div>
                 <div className="p-3">
                   <h4 className="text-[12px] font-black text-slate-900 mb-0.5">{c.title}</h4>
-                  <p className="text-[9px] text-slate-400 font-medium mb-2">{c.stage}</p>
+                  <p className="text-[9px] text-slate-400 font-medium mb-2 line-clamp-1">{c.desc}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">
                       <Users className="w-3 h-3 text-slate-400" />
