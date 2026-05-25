@@ -29,6 +29,12 @@ const quickFeatures = [
 
 const latestCourses = COURSES.slice(0, 6);
 
+const heroSlides = [
+  { title: 'منصة دارين', subtitle: 'للتعليم والتدريب عن بعد', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين' },
+  { title: 'دورات تفاعلية', subtitle: 'تعلم بأحدث الأساليب', desc: 'محتوى تعليمي مبتكر ينمي مهارات الطالب.', image: '/teacher-foundation.png', alt: 'معلم يشرح الدرس' },
+  { title: 'مستقبل مشرق', subtitle: 'مع نخبة المعلمين', desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج.', image: '/dareen_books_portal_v3.png', alt: 'كتب ومواد تعليمية' },
+];
+
 const stages = ['الكل', 'المرحلة الابتدائية', 'المرحلة المتوسطة', 'المرحلة الثانوية', 'مهارات عامة'];
 
 export const Home = () => {
@@ -38,6 +44,7 @@ export const Home = () => {
   const [activeStage, setActiveStage] = useState('الكل');
   const [typewriterText, setTypewriterText] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
 
   let bannersArray = ["", "", "", ""];
   try {
@@ -152,56 +159,39 @@ export const Home = () => {
           )}
         </div>
 
-        {/* Hero Banner */}
-        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 p-5 shadow-sm border border-violet-100/50">
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="text-[22px] font-black text-indigo-950 leading-tight mb-1"
-              >
-                منصة دارين
-              </motion.h2>
-              <p className="text-[13px] font-bold text-violet-600 mb-2">للتعليم والتدريب عن بعد</p>
-              <p className="text-[10px] text-slate-500 leading-relaxed mb-4">
-                منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.
-              </p>
-              <div className="flex gap-2">
-                <Link
-                  to="/courses"
-                  className="bg-indigo-600 text-white text-[11px] font-bold px-5 py-2.5 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center gap-1.5"
-                >
-                  <Play className="w-3.5 h-3.5 fill-white" />
-                  ابدأ الآن
-                </Link>
-                <button
-                  onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-white text-slate-700 text-[11px] font-bold px-5 py-2.5 rounded-full border border-slate-200 hover:border-indigo-200 transition-all"
-                >
-                  استكشف الدورات
-                </button>
+        {/* Hero Carousel */}
+        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 shadow-sm border border-violet-100/50">
+          {heroSlides.map((slide, i) => (
+            <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <h2 className="text-[18px] font-black text-indigo-950 leading-tight mb-1">{slide.title}</h2>
+                  <p className="text-[12px] font-bold text-violet-600 mb-2">{slide.subtitle}</p>
+                  <p className="text-[9px] text-slate-500 leading-relaxed mb-3">{slide.desc}</p>
+                  <div className="flex gap-2">
+                    <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center gap-1">
+                      <Play className="w-3 h-3 fill-white" />
+                      ابدأ الآن
+                    </Link>
+                    <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 transition-all">
+                      استكشف الدورات
+                    </button>
+                  </div>
+                </div>
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-violet-200/50 rounded-full blur-xl" />
+                  <div className="relative w-[90px]">
+                    <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" />
+                  </div>
+                  <div className="flex justify-center gap-1 -mt-1">
+                    {[0, 1, 2].map((d) => (
+                      <button key={d} onClick={() => setHeroIndex(d)} className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-indigo-600 w-3' : 'bg-slate-300'}`} />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="relative shrink-0">
-              <div className="absolute inset-0 bg-violet-200/50 rounded-full blur-xl" />
-              <div className="relative w-[110px]">
-                <img
-                  src="/hero-child.png"
-                  alt="طفل يدرس على منصة دارين السابعة"
-                  width="110"
-                  height="110"
-                  className="w-full h-auto object-contain drop-shadow-lg"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center gap-1.5 mt-3">
-            <span className="w-2 h-2 rounded-full bg-indigo-600" />
-            <span className="w-2 h-2 rounded-full bg-slate-300" />
-            <span className="w-2 h-2 rounded-full bg-slate-300" />
-          </div>
+          ))}
         </section>
 
         {/* Quick Features */}
