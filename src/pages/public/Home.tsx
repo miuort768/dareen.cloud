@@ -16,7 +16,7 @@ import { HeroSection } from './components/HeroSection';
 import {
   Play, BookOpen, Award, Trophy,
   Video, MessageCircle, Star,
-  Menu, X, ChevronLeft, Users
+  Bell, GraduationCap, ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
@@ -43,7 +43,6 @@ export const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeStage, setActiveStage] = useState('الكل');
   const [typewriterText, setTypewriterText] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
 
   let bannersArray = ["", "", "", ""];
@@ -127,37 +126,23 @@ export const Home = () => {
 
       {/* ─── Mobile App Content ─── */}
       <main className="md:hidden pt-4 pb-8 px-4 max-w-lg mx-auto relative">
-        {/* Menu Button */}
-        <div className="flex justify-end mb-4 relative">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center"
-            aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-          >
-            {menuOpen ? <X className="w-5 h-5 text-slate-600" /> : <Menu className="w-5 h-5 text-slate-600" />}
-          </button>
-
-          {menuOpen && (
-            <div className="absolute top-12 left-0 right-0 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden z-50">
-              {[
-                { label: 'الرئيسية', path: '/' },
-                { label: 'الدورات', path: '/courses' },
-                { label: 'المدونة', path: '/books' },
-                { label: 'من نحن', path: '/about' },
-                { label: 'اتصل بنا', path: '/contact' },
-              ].map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center px-5 py-3.5 text-[13px] font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors border-b border-slate-50 last:border-0"
-                >
-                  {item.label}
-                </Link>
-              ))}
+        {/* Header */}
+        <header className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+              <GraduationCap className="w-6 h-6 text-white" />
             </div>
-          )}
-        </div>
+            <div>
+              <h1 className="text-[15px] font-black text-indigo-950 leading-tight">دارين</h1>
+              <p className="text-[9px] font-bold text-slate-500 leading-tight">للتعليم والتدريب</p>
+              <p className="text-[7px] text-slate-400 leading-tight">Darren of Education and Online Learning</p>
+            </div>
+          </div>
+          <button aria-label="الإشعارات" className="relative w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+            <Bell className="w-5 h-5 text-slate-600" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
+          </button>
+        </header>
 
         {/* Hero Carousel */}
         <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 shadow-sm border border-violet-100/50">
