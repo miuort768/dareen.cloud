@@ -136,9 +136,9 @@ export const Home = () => {
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-[15px] font-black text-indigo-950 leading-tight">دارين</h1>
+              <h1 className="text-[15px] font-black text-indigo-950 leading-tight">دارين السابعة</h1>
               <p className="text-[9px] font-bold text-slate-500 leading-tight">للتعليم والتدريب</p>
-              <p className="text-[7px] text-slate-400 leading-tight">Darren of Education and Online Learning</p>
+              <p className="text-[7px] text-slate-400 leading-tight">Dareen of Education and Online Learning</p>
             </div>
           </div>
           <div className="relative">
