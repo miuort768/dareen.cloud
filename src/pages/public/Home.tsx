@@ -15,7 +15,7 @@ import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import {
   Play, BookOpen, Award, Trophy,
-  Video, MessageCircle, Star, Home as HomeIcon, Library, User, MoreHorizontal,
+  Video, MessageCircle, Star,
   Menu, X, ChevronLeft, Users
 } from 'lucide-react';
 
@@ -126,7 +126,7 @@ export const Home = () => {
       <PublicNavbar />
 
       {/* ─── Mobile App Content ─── */}
-      <main className="md:hidden pt-4 pb-28 px-4 max-w-lg mx-auto relative">
+      <main className="md:hidden pt-4 pb-8 px-4 max-w-lg mx-auto relative">
         {/* Menu Button */}
         <div className="flex justify-end mb-4 relative">
           <button
@@ -342,38 +342,7 @@ export const Home = () => {
         </div>
       </footer>
 
-      {/* ─── Bottom Navigation (mobile only) ─── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 pb-[env(safe-area-inset-bottom)]">
-        <div className="bg-white/95 backdrop-blur-2xl mx-3 mb-3 rounded-[28px] shadow-2xl shadow-slate-900/10 border border-slate-100/80 px-2 py-2">
-          <div className="flex items-center justify-around">
-            {[
-              { icon: HomeIcon, label: 'الرئيسية', active: true },
-              { icon: Library, label: 'مكتبة الدورات', active: false, isCenter: true },
-              { icon: User, label: 'الملف الشخصي', active: false },
-              { icon: MoreHorizontal, label: 'المزيد', active: false },
-            ].map((item, i) => (
-              <button
-                key={i}
-                className={`flex flex-col items-center gap-0.5 transition-all ${item.active ? '-mt-6' : ''}`}
-                aria-label={item.label}
-              >
-                {item.active ? (
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-xl shadow-indigo-600/30">
-                    <item.icon className="w-5 h-5 text-white" />
-                  </div>
-                ) : (
-                  <>
-                    <div className="w-8 h-8 flex items-center justify-center">
-                      <item.icon className="w-5 h-5 text-slate-400" />
-                    </div>
-                    <span className="text-[8px] font-medium text-slate-400">{item.label}</span>
-                  </>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
+      {/* Bottom Nav removed */}
     </div>
   );
 };
