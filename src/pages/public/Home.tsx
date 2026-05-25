@@ -15,7 +15,7 @@ import { HeroSection } from './components/HeroSection';
 import {
   Bell, Play, BookOpen, Award, Trophy,
   Video, MessageCircle, Star, Home as HomeIcon, Library, User, MoreHorizontal,
-  GraduationCap, ChevronLeft, Monitor, Users
+  GraduationCap, ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
@@ -295,30 +295,6 @@ export const Home = () => {
           </div>
         </section>
 
-        {/* Continue Learning */}
-        <section className="mb-6">
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-3xl overflow-hidden p-5 shadow-xl shadow-indigo-600/20">
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h3 className="text-[15px] font-black text-white mb-1">تابع تعلمك</h3>
-                <p className="text-[13px] font-bold text-indigo-200">أساسيات البرمجة</p>
-                <p className="text-[9px] text-indigo-300 font-medium mb-3">المستوى المبتدئ</p>
-                <div className="w-full bg-white/20 rounded-full h-2 mb-2">
-                  <div className="bg-white rounded-full h-2 w-[60%]" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-white">60%</span>
-                  <span className="bg-white/20 text-white text-[9px] font-bold px-3 py-1 rounded-full">متابعة</span>
-                </div>
-              </div>
-              <div className="relative shrink-0 mr-3">
-                <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center">
-                  <Monitor className="w-10 h-10 text-white/80" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Existing Sections (restyled layout) */}
         <div className="space-y-6">
