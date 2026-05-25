@@ -1,0 +1,50 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X, GraduationCap } from 'lucide-react';
+import { PublicNavbar } from './PublicNavbar';
+
+export const MobileHeader = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = [
+    { label: 'الرئيسية', path: '/' },
+    { label: 'الدورات', path: '/courses' },
+    { label: 'المدونة', path: '/books' },
+    { label: 'من نحن', path: '/about' },
+    { label: 'اتصل بنا', path: '/contact' },
+  ];
+
+  return (
+    <>
+      <div className="hidden md:block">
+        <PublicNavbar />
+      </div>
+      <header className="md:hidden flex items-center justify-between mb-4">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+            <GraduationCap className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-[15px] font-black text-indigo-950 dark:text-indigo-100 leading-tight">دارين السابعة</h1>
+            <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 leading-tight">للتعليم والتدريب</p>
+            <p className="text-[7px] text-slate-400 dark:text-slate-500 leading-tight">Dareen of Education and Online Learning</p>
+          </div>
+        </Link>
+        <div className="relative">
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center">
+            {menuOpen ? <X className="w-5 h-5 text-slate-600 dark:text-slate-300" /> : <Menu className="w-5 h-5 text-slate-600 dark:text-slate-300" />}
+          </button>
+          {menuOpen && (
+            <div className="absolute top-12 left-0 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden z-50 min-w-[160px]">
+              {navItems.map((item) => (
+                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[12px] font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0 whitespace-nowrap">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+    </>
+  );
+};

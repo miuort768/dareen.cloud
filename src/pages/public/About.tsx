@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart, ArrowLeft } from 'lucide-react';
 import { SEO } from '../../components/SEO';
@@ -8,7 +8,7 @@ export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO title="من نحن | دارين السابعة - منصة تعليمية رائدة في الخليج" description="منصة تعليمية خليجية رائدة. تعرف على مهمتنا في تقديم تعليم عن بعد متميز للطلاب في الكويت والسعودية وقطر والإمارات وعمان بأفضل المعلمين والتقنيات الحديثة." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" />
-            <PublicNavbar />
+            <MobileHeader />
 
             {/* Hero Section */}
             <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-white dark:bg-slate-950">

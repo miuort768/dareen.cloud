@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -77,7 +77,7 @@ export const Courses = () => {
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
       <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية. تأسيس لغة عربية، تحفيظ قرآن، مراجعات نهائية، وقدرات. دروس خصوصية مع نخبة المعلمين في الخليج." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
-      <PublicNavbar />
+      <MobileHeader />
 
       <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">

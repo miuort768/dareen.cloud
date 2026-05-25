@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { MasarSection } from '../../components/public/MasarSection';
 import { COURSES, CATEGORIES } from '../../data/courses';
@@ -16,7 +16,7 @@ import { HeroSection } from './components/HeroSection';
 import {
   Play, BookOpen, Trophy,
   Video, Star,
-  Menu, X, GraduationCap, ChevronLeft, Users
+  ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
@@ -43,7 +43,6 @@ export const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [typewriterText, setTypewriterText] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
 
   let bannersArray = ["", "", "", ""];
@@ -123,45 +122,10 @@ export const Home = () => {
     <div className="min-h-full bg-[#F8F8FC] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-500">
       <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
-      <div className="hidden md:block">
-        <PublicNavbar />
-      </div>
+      <MobileHeader />
 
       {/* ─── Mobile App Content ─── */}
       <main className="md:hidden pt-4 pb-8 px-4 max-w-lg mx-auto relative">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
-              <GraduationCap className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-[15px] font-black text-indigo-950 leading-tight">دارين السابعة</h1>
-              <p className="text-[9px] font-bold text-slate-500 leading-tight">للتعليم والتدريب</p>
-              <p className="text-[7px] text-slate-400 leading-tight">Dareen of Education and Online Learning</p>
-            </div>
-          </div>
-          <div className="relative">
-            <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
-              {menuOpen ? <X className="w-5 h-5 text-slate-600" /> : <Menu className="w-5 h-5 text-slate-600" />}
-            </button>
-            {menuOpen && (
-              <div className="absolute top-12 left-0 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 min-w-[160px]">
-                {[
-                  { label: 'الرئيسية', path: '/' },
-                  { label: 'الدورات', path: '/courses' },
-                  { label: 'المدونة', path: '/books' },
-                  { label: 'من نحن', path: '/about' },
-                  { label: 'اتصل بنا', path: '/contact' },
-                ].map((item) => (
-                  <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[12px] font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors border-b border-slate-50 last:border-0 whitespace-nowrap">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        </header>
 
         {/* Hero Carousel */}
         <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 shadow-sm border border-violet-100/50">
