@@ -172,12 +172,12 @@ export const Home = () => {
                   <h2 className="text-[18px] font-black text-indigo-950 leading-tight mb-1">{slide.title}</h2>
                   <p className="text-[12px] font-bold text-violet-600 mb-2">{slide.subtitle}</p>
                   <p className="text-[9px] text-slate-500 leading-relaxed mb-3">{slide.desc}</p>
-                  <div className="flex gap-2">
-                    <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center gap-1">
+                  <div className="flex flex-col gap-1.5">
+                    <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
                       <Play className="w-3 h-3 fill-white" />
                       ابدأ الآن
                     </Link>
-                    <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 transition-all">
+                    <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 transition-all w-full">
                       استكشف الدورات
                     </button>
                   </div>
