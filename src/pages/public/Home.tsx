@@ -16,7 +16,7 @@ import { HeroSection } from './components/HeroSection';
 import {
   Play, BookOpen, Award, Trophy,
   Video, MessageCircle, Star,
-  Bell, GraduationCap, ChevronLeft, Users
+  Menu, X, GraduationCap, ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
@@ -43,6 +43,7 @@ export const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeStage, setActiveStage] = useState('الكل');
   const [typewriterText, setTypewriterText] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
 
   let bannersArray = ["", "", "", ""];
@@ -140,10 +141,26 @@ export const Home = () => {
               <p className="text-[7px] text-slate-400 leading-tight">Darren of Education and Online Learning</p>
             </div>
           </div>
-          <button aria-label="الإشعارات" className="relative w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
-            <Bell className="w-5 h-5 text-slate-600" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
-          </button>
+          <div className="relative">
+            <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+              {menuOpen ? <X className="w-5 h-5 text-slate-600" /> : <Menu className="w-5 h-5 text-slate-600" />}
+            </button>
+            {menuOpen && (
+              <div className="absolute top-12 left-0 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 min-w-[160px]">
+                {[
+                  { label: 'الرئيسية', path: '/' },
+                  { label: 'الدورات', path: '/courses' },
+                  { label: 'المدونة', path: '/books' },
+                  { label: 'من نحن', path: '/about' },
+                  { label: 'اتصل بنا', path: '/contact' },
+                ].map((item) => (
+                  <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[12px] font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors border-b border-slate-50 last:border-0 whitespace-nowrap">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </header>
 
         {/* Hero Carousel */}
