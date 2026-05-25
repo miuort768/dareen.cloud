@@ -61,11 +61,11 @@ export const Layout = () => {
             {!isChatOnly && <Sidebar />}
 
             <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full">
-                {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
+                {(!isChatOnly && !location.pathname.includes('/chat') && !location.pathname.includes('/student-dashboard')) && <Header />}
 
                 <main className={cn(
                     "flex-1 overflow-x-hidden custom-scrollbar relative max-w-full w-full",
-                    (isChatOnly || location.pathname.includes('/chat'))
+                    (isChatOnly || location.pathname.includes('/chat') || location.pathname.includes('/student-dashboard'))
                         ? "p-0"
                         : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 z-10"
                 )}>

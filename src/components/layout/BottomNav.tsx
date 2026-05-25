@@ -14,9 +14,11 @@ export const BottomNav = () => {
   const activeConversationId = useUnreadStore(s => s.activeConversationId);
 
   const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;
-  const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/student-dashboard') || location.pathname.includes('/parent-dashboard');
+  const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
+  // student-dashboard has its own embedded mobile nav
+  const isStudentDash = location.pathname.includes('/student-dashboard');
 
-  if (isChatActive || isDashboard) return null;
+  if (isChatActive || isDashboard || isStudentDash) return null;
 
   const handleNav = (path: string) => {
     triggerHaptic('light');
