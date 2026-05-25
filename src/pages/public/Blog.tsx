@@ -4,9 +4,10 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, Send, Moon, ShieldCheck } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
+import { useSettingsStore } from '../../store/settingsStore';
 
 const gradeNames: Record<string, string> = {
   '1': 'الأول', '2': 'الثاني', '3': 'الثالث', '4': 'الرابع', '5': 'الخامس',
@@ -108,6 +109,8 @@ const classroomsMap: Record<string, Record<string, string[]>> = {
 };
 
 export const Blog = () => {
+  const { adminPhone } = useSettingsStore();
+  const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<ViewType>('types');
@@ -177,64 +180,223 @@ export const Blog = () => {
       <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative min-h-screen bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div>
-            <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3 shadow-sm">
-                <BookOpen size={10} className="text-violet-600" />
-                <span className="text-[9px] font-black text-violet-600">
-                  {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
-                </span>
+            {/* Top header bar */}
+            <div className="flex items-center justify-between mb-4 mt-1">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+                  <div className="w-4 h-0.5 bg-slate-600 rounded-full" />
+                </div>
+                <div className="relative">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full shadow-sm border border-slate-100">
+                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center">
+                      <BookOpen size={8} className="text-white" />
+                    </div>
+                    <span className="text-[9px] font-black text-slate-700">dar.net</span>
+                  </div>
+                </div>
               </div>
-              <h1 className="text-[17px] font-black text-indigo-950 leading-tight">
-                {view === 'types' ? (
-                  <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">دارين</span> التعليمية</>
-                ) : view === 'curriculums' ? (
-                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
-                ) : (
-                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
-                )}
-              </h1>
-              <p className="text-[10px] text-slate-500 font-medium mt-1 leading-relaxed">
-                {view === 'types'
-                  ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في الخليج'
-                  : view === 'curriculums'
-                    ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-              </p>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+                  <div className="w-3.5 h-3.5 rounded-full border-2 border-slate-400 flex items-center justify-center">
+                    <div className="w-1 h-1 bg-slate-400 rounded-full" />
+                  </div>
+                </div>
+                <div className="w-9 h-9 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center relative">
+                  <div className="w-3 h-3 rounded-full bg-amber-400 absolute -top-0.5 -right-0.5 border-2 border-white" />
+                  <Bell size={14} className="text-slate-600" />
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
-              {gridItems.map((item: GridItem, i: number) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
-                    else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
-                    else { setSelectedLevel(item.id); setView('classrooms'); }
-                  }}
-                  className={cn(
-                    "relative flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl text-white overflow-hidden shadow-sm active:scale-[0.97] transition-all",
-                    "bg-gradient-to-br", item.gradient
-                  )}
-                >
-                  <item.icon size={18} />
-                  <span className="text-[10px] font-black text-center leading-tight">{item.name}</span>
-                  {item.sub && <span className="text-[8px] text-white/70 font-bold">{item.sub}</span>}
-                </button>
+            {/* Hero Banner */}
+            <div className="relative rounded-[32px] overflow-hidden mb-6 bg-gradient-to-br from-indigo-900 via-violet-800 to-purple-900 shadow-lg border border-violet-500/20">
+              {/* Decorative elements */}
+              <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-yellow-300/60 shadow-lg shadow-yellow-300/30" />
+              <div className="absolute top-8 left-8 w-2 h-2 rounded-full bg-sky-300/60" />
+              <div className="absolute bottom-12 right-10 w-2.5 h-2.5 rounded-full bg-pink-300/60" />
+              <div className="absolute top-1/3 left-3 w-1.5 h-1.5 rounded-full bg-white/40" />
+              <div className="absolute top-1/4 right-12 w-1.5 h-1.5 rounded-full bg-white/30" />
+              <div className="absolute -top-6 -left-6 w-20 h-20 bg-violet-500/20 rounded-full blur-xl" />
+              <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-indigo-500/20 rounded-full blur-xl" />
+              {/* Stars */}
+              {[0,1,2,3,4].map((s) => (
+                <div key={s} className="absolute w-1 h-1 bg-white/60 rounded-full" style={{ top: `${15 + s * 15}%`, left: `${10 + s * 20}%` }} />
               ))}
 
-              {view !== 'types' && (
-                <button onClick={goBack}
-                  className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all shadow-sm">
-                  <ArrowLeft size={16} />
-                  <span className="text-[10px] font-black">العودة</span>
-                </button>
-              )}
+              <div className="relative z-10 p-5 flex flex-col items-center text-center">
+                {/* Logo badge */}
+                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3 shadow-lg">
+                  <GraduationCap size={24} className="text-yellow-300" />
+                </div>
 
-              <Link to="/courses"
-                className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-sm">
-                <Sparkles size={16} />
-                <span className="text-[10px] font-black">الدورات</span>
-              </Link>
+                <h1 className="text-[22px] font-black text-white font-heading leading-tight mb-1">
+                  دارين
+                </h1>
+                <p className="text-[10px] text-violet-200 font-bold mb-3">منصة تعليم إلكتروني</p>
+
+                {/* Anime-style children */}
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-200 to-sky-300 flex items-center justify-center shadow-inner relative">
+                    <div className="text-[18px]">👧</div>
+                    <div className="absolute -top-1 -left-1 w-3 h-3">
+                      <Star size={8} className="text-yellow-300 fill-yellow-300" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center shadow-inner relative">
+                      <div className="text-[22px]">🧑‍🎓</div>
+                      <div className="absolute -top-1 -right-1 w-3 h-3">
+                        <Star size={8} className="text-yellow-300 fill-yellow-300" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-200 to-pink-300 flex items-center justify-center shadow-inner relative">
+                    <div className="text-[18px]">👦</div>
+                    <div className="absolute -top-1 -left-1 w-3 h-3">
+                      <Star size={8} className="text-yellow-300 fill-yellow-300" />
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[8px] text-violet-200/80 font-medium">معاً نصنع جيلاً مبدعاً</p>
+
+                {/* Floating books decoration */}
+                <div className="flex justify-center gap-1.5 mt-3">
+                  {['📘','📗','📕','📙'].map((book, i) => (
+                    <span key={i} className="text-sm opacity-70">{book}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Portal Card */}
+            {view === 'types' && (
+              <div className="bg-white rounded-[24px] p-4 mb-6 shadow-sm border border-slate-100">
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-[13px] font-black text-slate-900">بوابة الكتب والملخصات</h2>
+                  <div className="w-8 h-8 rounded-full bg-violet-50 flex items-center justify-center">
+                    <Bell size={12} className="text-violet-600" />
+                  </div>
+                </div>
+
+                {/* Dark purple section */}
+                <div className="bg-gradient-to-br from-[#1a1040] via-[#2a1a60] to-[#3a2080] rounded-[20px] p-5 shadow-lg mb-4">
+                  {/* Tabs */}
+                  <div className="flex gap-2 mb-4">
+                    <div className="px-3 py-1.5 rounded-full bg-white/15 text-white text-[9px] font-black text-center flex-1 backdrop-blur-sm border border-white/10">مركز دارين</div>
+                    <div className="px-3 py-1.5 rounded-full bg-white/10 text-white/60 text-[9px] font-black text-center flex-1 backdrop-blur-sm border border-white/5">المذكرات التعليمية</div>
+                  </div>
+
+                  <p className="text-[10px] text-violet-200/80 leading-relaxed mb-4 font-medium">
+                    نوفر لك أحدث المذكرات والملخصات الدراسية لجميع المراحل التعليمية في الخليج. حمل ما يناسبك الآن.
+                  </p>
+
+                  <div className="flex gap-2.5">
+                    <button
+                      onClick={() => setView('curriculums')}
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB] text-white text-[10px] font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-[#6C4BFF]/30 active:scale-[0.97] transition-all"
+                    >
+                      <FileText size={12} />
+                      تحميل مذكرة
+                    </button>
+                    <a
+                      href={`https://wa.me/${whatsappNumber}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-bold px-4 py-2.5 rounded-xl active:scale-[0.97] transition-all"
+                    >
+                      <MessageCircle size={12} />
+                      تواصل معنا
+                    </a>
+                  </div>
+                </div>
+
+                {/* Features */}
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: 'جودة مضمونة', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+                    { label: 'محتوى موثوق', icon: BookCheck, color: 'text-indigo-500', bg: 'bg-indigo-50' },
+                    { label: 'دعم مستمر', icon: Headset, color: 'text-violet-500', bg: 'bg-violet-50' },
+                  ].map((f) => (
+                    <div key={f.label} className="flex flex-col items-center gap-1.5 p-2.5 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                      <div className={`w-7 h-7 rounded-xl ${f.bg} flex items-center justify-center`}>
+                        <f.icon size={12} className={f.color} />
+                      </div>
+                      <span className="text-[7px] font-black text-slate-700 text-center leading-tight">{f.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Selection Grid for sub-views */}
+            {view !== 'types' && (
+              <>
+                <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3 shadow-sm">
+                    <BookOpen size={10} className="text-violet-600" />
+                    <span className="text-[9px] font-black text-violet-600">
+                      {view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
+                    </span>
+                  </div>
+                  <h1 className="text-[17px] font-black text-indigo-950 leading-tight">
+                    {view === 'curriculums' ? (
+                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
+                    ) : (
+                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
+                    )}
+                  </h1>
+                  <p className="text-[10px] text-slate-500 font-medium mt-1 leading-relaxed">
+                    {view === 'curriculums'
+                      ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                      : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  {gridItems.map((item: GridItem, i: number) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
+                        else { setSelectedLevel(item.id); setView('classrooms'); }
+                      }}
+                      className={cn(
+                        "relative flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl text-white overflow-hidden shadow-sm active:scale-[0.97] transition-all",
+                        "bg-gradient-to-br", item.gradient
+                      )}
+                    >
+                      <item.icon size={18} />
+                      <span className="text-[10px] font-black text-center leading-tight">{item.name}</span>
+                      {item.sub && <span className="text-[8px] text-white/70 font-bold">{item.sub}</span>}
+                    </button>
+                  ))}
+
+                  <button onClick={goBack}
+                    className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all shadow-sm">
+                    <ArrowLeft size={16} />
+                    <span className="text-[10px] font-black">العودة</span>
+                  </button>
+
+                  <Link to="/courses"
+                    className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-sm">
+                    <Sparkles size={16} />
+                    <span className="text-[10px] font-black">الدورات</span>
+                  </Link>
+                </div>
+              </>
+            )}
+
+            {/* Floating Actions */}
+            <div className="fixed left-4 bottom-24 flex flex-col gap-3 z-30">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20 cursor-pointer hover:scale-110 transition-transform">
+                <MessageCircle size={16} className="text-white" />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 cursor-pointer hover:scale-110 transition-transform">
+                <Send size={16} className="text-white" />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/20 cursor-pointer hover:scale-110 transition-transform">
+                <Moon size={16} className="text-white" />
+              </div>
             </div>
           </div>
         ) : view === 'results' ? (
