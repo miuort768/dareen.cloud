@@ -2,19 +2,10 @@ import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Search, Users, Sparkles, LayoutGrid, BookOpen, Globe, Languages, Target, Star, MessageCircle, GraduationCap } from 'lucide-react';
+import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
-import { COURSES } from '../../data/courses';
-
-const CATEGORIES = [
-  { label: 'الكل', value: 'all', icon: LayoutGrid, color: 'text-slate-900 dark:text-slate-100' },
-  { label: 'التأسيس', value: 'foundation', icon: GraduationCap, color: 'text-emerald-500' },
-  { label: 'القرآن الكريم', value: 'quran', icon: BookOpen, color: 'text-amber-500' },
-  { label: 'مناهج الخليج', value: 'gulf', icon: Globe, color: 'text-sky-500' },
-  { label: 'اللغات', value: 'english', icon: Languages, color: 'text-violet-500' },
-  { label: 'القدرات', value: 'skills', icon: Target, color: 'text-rose-500' },
-];
+import { COURSES, CATEGORIES } from '../../data/courses';
 
 const parseStudentCount = (s: string) => {
   const n = parseFloat(s.replace(/[kK]/, ''));

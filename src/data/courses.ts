@@ -13,6 +13,7 @@ import englishImg from '../assets/courses/english-course.jpg';
 import arabicImg from '../assets/courses/arabic-course.jpg';
 import frenchImg from '../assets/courses/french-course.jpg';
 import skillsImg from '../assets/courses/skills-course.jpg';
+import { LayoutGrid, GraduationCap, BookOpen, Globe, Languages, Target } from 'lucide-react';
 
 export interface Course {
   id: number;
@@ -25,6 +26,15 @@ export interface Course {
   image: string;
   color: string;
 }
+
+export const CATEGORIES = [
+  { label: 'الكل', value: 'all', icon: LayoutGrid, color: 'text-slate-900 dark:text-slate-100' },
+  { label: 'التأسيس', value: 'foundation', icon: GraduationCap, color: 'text-emerald-500' },
+  { label: 'القرآن الكريم', value: 'quran', icon: BookOpen, color: 'text-amber-500' },
+  { label: 'مناهج الخليج', value: 'gulf', icon: Globe, color: 'text-sky-500' },
+  { label: 'اللغات', value: 'english', icon: Languages, color: 'text-violet-500' },
+  { label: 'القدرات', value: 'skills', icon: Target, color: 'text-rose-500' },
+];
 
 export const COURSES: Course[] = [
   { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'تأسيس شامل في اللغة العربية والإنجليزية والرياضيات بأساليب تفاعلية حديثة.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img, color: 'from-emerald-500 to-teal-600' },

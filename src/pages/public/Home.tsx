@@ -6,7 +6,7 @@ import { SEO } from '../../components/SEO';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { MasarSection } from '../../components/public/MasarSection';
-import { COURSES } from '../../data/courses';
+import { COURSES, CATEGORIES } from '../../data/courses';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { QuranSection } from './components/QuranSection';
 import { HowItWorks } from './components/HowItWorks';
@@ -26,7 +26,8 @@ const quickFeatures = [
   { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية للإنجاز', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
 ];
 
-const latestCourses = COURSES.slice(0, 6);
+const getFilteredCourses = (category: string) =>
+  category === 'all' ? COURSES : COURSES.filter(c => c.category === category);
 
 const heroSlides = [
   { title: 'منصة دارين', subtitle: 'دروس خصوصية أونلاين', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين' },
@@ -34,13 +35,13 @@ const heroSlides = [
   { title: 'مستقبل مشرق', subtitle: 'مع نخبة المعلمين', desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج.', image: '/dareen_books_portal_v3.png', alt: 'كتب ومواد تعليمية' },
 ];
 
-const stages = ['الكل', 'المرحلة الابتدائية', 'المرحلة المتوسطة', 'المرحلة الثانوية', 'مهارات عامة'];
+const stages = CATEGORIES;
 
 export const Home = () => {
   const { adminPhone, heroBanners } = useSettingsStore();
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeStage, setActiveStage] = useState('الكل');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [typewriterText, setTypewriterText] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
@@ -226,24 +227,25 @@ export const Home = () => {
 
           {/* Stage Filters */}
           <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-            {stages.map((s) => (
+            {stages.map((cat) => (
               <button
-                key={s}
-                onClick={() => setActiveStage(s)}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[10px] font-bold transition-all ${
-                  activeStage === s
+                key={cat.value}
+                onClick={() => setActiveCategory(cat.value)}
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 ${
+                  activeCategory === cat.value
                     ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
                     : 'bg-white text-slate-500 border border-slate-200'
                 }`}
               >
-                {s}
+                <cat.icon size={12} className={activeCategory === cat.value ? 'text-white' : cat.color} />
+                {cat.label}
               </button>
             ))}
           </div>
 
           {/* Course Cards */}
           <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
-            {latestCourses.map((c, i) => (
+            {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
               <motion.div
                 key={c.id}
                 initial={{ opacity: 0, y: 16 }}
@@ -265,7 +267,7 @@ export const Home = () => {
                     c.category === 'gulf' ? 'bg-sky-500' :
                     c.category === 'english' ? 'bg-violet-500' : 'bg-rose-500'
                   }`}>
-                    {c.category === 'foundation' ? 'تأسيس' : c.category === 'quran' ? 'قرآن' : c.category === 'gulf' ? 'منهج' : c.category === 'english' ? 'لغات' : 'قدرات'}
+                    {CATEGORIES.find(cat => cat.value === c.category)?.label || c.category}
                   </span>
                 </div>
                 <div className="p-3">
