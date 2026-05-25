@@ -14,17 +14,16 @@ import { Testimonials } from './components/Testimonials';
 import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import {
-  Play, BookOpen, Award, Trophy,
-  Video, MessageCircle, Star,
+  Play, BookOpen, Trophy,
+  Video, Star,
   Menu, X, GraduationCap, ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
-  { icon: BookOpen, label: 'دوراتي', desc: 'تعلم واستمر', color: 'text-emerald-500', bg: 'bg-emerald-50' },
-  { icon: Award, label: 'الشهادات', desc: 'إنجازاتك', color: 'text-blue-500', bg: 'bg-blue-50' },
-  { icon: Trophy, label: 'التحديات', desc: 'نافس وتفوق', color: 'text-violet-500', bg: 'bg-violet-50' },
-  { icon: Video, label: 'بث مباشر', desc: 'حصص مباشرة', color: 'text-orange-500', bg: 'bg-orange-50' },
-  { icon: MessageCircle, label: 'الاستشارات', desc: 'اسأل وتعلم', color: 'text-emerald-500', bg: 'bg-emerald-50' },
+  { icon: BookOpen, label: 'دروس خصوصية', desc: 'مع نخبة من أفضل المعلمين', color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100' },
+  { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي وأكثر', color: 'text-sky-600', bg: 'bg-sky-50', border: 'border-sky-100' },
+  { icon: Video, label: 'تحفيظ قرآن', desc: 'برامج تجويد وإتقان للحفظ', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
+  { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية للإنجاز', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
 ];
 
 const latestCourses = COURSES.slice(0, 6);
@@ -200,22 +199,17 @@ export const Home = () => {
 
         {/* Quick Features */}
         <section className="mb-6">
-          <div className="flex gap-2.5 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar">
+          <div className="grid grid-cols-2 gap-2.5">
             {quickFeatures.map((f, i) => (
-              <motion.button
-                key={i}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="flex flex-col items-center gap-1.5 min-w-[68px] p-3 bg-white rounded-2xl shadow-sm border border-slate-100/50 shrink-0 hover:shadow-md transition-all"
-                aria-label={f.label}
-              >
-                <div className={`w-9 h-9 rounded-xl ${f.bg} flex items-center justify-center`}>
-                  <f.icon className={f.color} size={18} />
+              <div key={i} className={`flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border ${f.border} transition-all`}>
+                <div className={`w-10 h-10 rounded-xl ${f.bg} flex items-center justify-center shrink-0`}>
+                  <f.icon className={f.color} size={20} />
                 </div>
-                <span className="text-[10px] font-black text-slate-800">{f.label}</span>
-                <span className="text-[8px] text-slate-400 font-medium -mt-0.5">{f.desc}</span>
-              </motion.button>
+                <div className="min-w-0">
+                  <span className="text-[11px] font-black text-slate-800 block leading-tight">{f.label}</span>
+                  <span className="text-[8px] text-slate-500 font-medium leading-tight">{f.desc}</span>
+                </div>
+              </div>
             ))}
           </div>
         </section>
