@@ -174,17 +174,17 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
-      <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative min-h-screen">
+      <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative min-h-screen bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div>
-            <div className="mb-4 mt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 rounded-full mb-3">
-                <BookOpen size={10} className="text-indigo-600" />
-                <span className="text-[9px] font-black text-indigo-600">
+            <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3 shadow-sm">
+                <BookOpen size={10} className="text-violet-600" />
+                <span className="text-[9px] font-black text-violet-600">
                   {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
               </div>
-              <h1 className="text-[17px] font-black text-slate-900 leading-tight">
+              <h1 className="text-[17px] font-black text-indigo-950 leading-tight">
                 {view === 'types' ? (
                   <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">دارين</span> التعليمية</>
                 ) : view === 'curriculums' ? (
@@ -224,7 +224,7 @@ export const Blog = () => {
 
               {view !== 'types' && (
                 <button onClick={goBack}
-                  className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all">
+                  className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all shadow-sm">
                   <ArrowLeft size={16} />
                   <span className="text-[10px] font-black">العودة</span>
                 </button>
@@ -239,31 +239,33 @@ export const Blog = () => {
           </div>
         ) : view === 'results' ? (
           <div>
-            <div className="flex items-center gap-1.5 mb-4 text-[9px] font-bold text-slate-400 flex-wrap mt-2">
-              {[
-                { label: 'الرئيسية', onClick: () => setView('types') },
-                ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
-                ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
-                ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
-                ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
-              ].map((crumb, i, arr) => (
-                <span key={i} className="flex items-center gap-1">
-                  {i > 0 && <ChevronLeft size={9} className="text-slate-300" />}
-                  <button onClick={crumb.onClick}
-                    className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}
-                  >{crumb.label}</button>
-                </span>
-              ))}
-              {selectedSubject && <><ChevronLeft size={9} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
-            </div>
+            <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-4 shadow-sm border border-violet-100/50 mt-2">
+              <div className="flex items-center gap-1.5 mb-3 text-[9px] font-bold text-slate-400 flex-wrap">
+                {[
+                  { label: 'الرئيسية', onClick: () => setView('types') },
+                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
+                  ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
+                  ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
+                  ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
+                ].map((crumb, i, arr) => (
+                  <span key={i} className="flex items-center gap-1">
+                    {i > 0 && <ChevronLeft size={9} className="text-slate-300" />}
+                    <button onClick={crumb.onClick}
+                      className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}
+                    >{crumb.label}</button>
+                  </span>
+                ))}
+                {selectedSubject && <><ChevronLeft size={9} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
+              </div>
 
-            <div className="flex gap-2 mb-4">
-              <button onClick={goBack} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 text-white text-[9px] font-black rounded-xl transition-all">
-                <ArrowLeft size={12} /><span>تغيير المادة</span>
-              </button>
-              <button onClick={() => setView('types')} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-950 text-white text-[9px] font-black rounded-xl transition-all">
-                <Library size={12} /><span>الرئيسية</span>
-              </button>
+              <div className="flex gap-2">
+                <button onClick={goBack} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 text-white text-[9px] font-black rounded-xl transition-all shadow-sm">
+                  <ArrowLeft size={12} /><span>تغيير المادة</span>
+                </button>
+                <button onClick={() => setView('types')} className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-950 text-white text-[9px] font-black rounded-xl transition-all shadow-sm">
+                  <Library size={12} /><span>الرئيسية</span>
+                </button>
+              </div>
             </div>
 
             {loading ? (
@@ -299,16 +301,16 @@ export const Blog = () => {
           </div>
         ) : (
           <div>
-            <div className="text-center mb-5 mt-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 rounded-full mb-3">
-                <BookOpen size={10} className="text-indigo-600" />
-                <span className="text-[9px] font-black text-indigo-600">
+            <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2 text-center">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full shadow-sm mb-3">
+                <BookOpen size={10} className="text-violet-600" />
+                <span className="text-[9px] font-black text-violet-600">
                   {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
                     : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
                       : `المواد — ${termLabel}`}
                 </span>
               </div>
-              <h1 className="text-[17px] font-black text-slate-900">
+              <h1 className="text-[17px] font-black text-indigo-950">
                 {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الصف الدراسي</span></>)
                   : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الترم</span></>)
                     : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المادة</span></>)}
@@ -352,7 +354,7 @@ export const Blog = () => {
               ))}
 
               <button onClick={goBack}
-                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all">
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 shadow-sm active:scale-[0.97] transition-all">
                 <ArrowLeft size={16} />
                 <span className="text-[10px] font-black">العودة</span>
               </button>
