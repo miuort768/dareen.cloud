@@ -122,7 +122,9 @@ export const Home = () => {
     <div className="min-h-full bg-[#F8F8FC] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-500">
       <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
-      <PublicNavbar />
+      <div className="hidden md:block">
+        <PublicNavbar />
+      </div>
 
       {/* ─── Mobile App Content ─── */}
       <main className="md:hidden pt-4 pb-8 px-4 max-w-lg mx-auto relative">
