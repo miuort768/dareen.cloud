@@ -304,9 +304,7 @@ export const Home = () => {
       </div>
 
       <footer>
-        <div className="hidden md:block">
-          <PublicFooter />
-        </div>
+        <PublicFooter />
       </footer>
 
       {/* Bottom Nav removed */}
