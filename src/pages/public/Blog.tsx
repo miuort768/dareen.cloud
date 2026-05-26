@@ -347,7 +347,7 @@ export const Blog = () => {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2 mb-4">
                   {gridItems.map((item: GridItem, i: number) => (
                     <button
                       key={item.id}
