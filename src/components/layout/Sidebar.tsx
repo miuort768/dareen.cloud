@@ -24,7 +24,8 @@ import {
     Megaphone,
     MessageSquare,
     BookOpen,
-    Clock
+    Clock,
+    Briefcase
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
@@ -87,6 +88,7 @@ export const Sidebar = () => {
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
+        { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
     ];
 
     // Filter navigation based on permissions

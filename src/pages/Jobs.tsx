@@ -47,7 +47,9 @@ export const Jobs = () => {
                         التوظيف
                     </h1>
                     <p className="text-sm text-slate-500 dark:text-slate-400 font-normal max-w-md mx-auto leading-relaxed">
-                        انضمي إلى فريق دارين السابعة التعليمي — نبحث عن معلمات متميزات للتدريس أون لاين
+                        انضمي إلى فريق دارين السابعة التعليمي
+                        <br />
+                        نبحث عن معلمات متميزات للتدريس أون لاين
                     </p>
                 </div>
 
