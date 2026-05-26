@@ -177,7 +177,7 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
-      <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative min-h-screen bg-[#F8F8FC] dark:bg-slate-950">
+      <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative min-h-screen bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div>
             {/* Top header bar */}
@@ -526,7 +526,7 @@ export const Blog = () => {
       </main>
 
       {/* ─── Desktop Layout ─── */}
-      <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden">
+      <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />

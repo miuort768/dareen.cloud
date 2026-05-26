@@ -203,7 +203,7 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Redesigned with Creative Touches */}
-            <section className="py-8 md:py-10 bg-white dark:bg-slate-950 relative overflow-hidden">
+            <section className="py-4 md:py-6 bg-white dark:bg-slate-950 relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                     <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-600/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>

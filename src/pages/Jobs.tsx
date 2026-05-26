@@ -139,14 +139,14 @@ export const Jobs = () => {
                                 transition={{ delay: 0.2 }}
                                 className="text-white/80 text-sm md:text-base max-w-lg leading-relaxed font-medium"
                             >
-                                نبحث عن معلمات متميزات للتدريس أون لاين. انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
+                                نبحث عن معلمات متميزات للتدريس أون لاين.<br className="md:hidden" /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
                             </motion.p>
                         </div>
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.3, duration: 0.6 }}
-                            className="shrink-0"
+                            className="hidden md:block shrink-0"
                         >
                             <div className="w-40 h-40 md:w-52 md:h-52 bg-white/10 rounded-[2rem] flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-2xl">
                                 <div className="text-center">
@@ -189,7 +189,7 @@ export const Jobs = () => {
                             </div>
                         </div>
 
-                        <form onSubmit={(e) => { e.preventDefault(); step === totalSteps ? handleSubmit(e) : nextStep(); }}>
+                        <form onSubmit={(e) => { e.preventDefault(); if (step < totalSteps) nextStep(); }}>
                             <div className="p-6 md:p-8">
                                 <AnimatePresence mode="wait">
                                     <motion.div
@@ -285,7 +285,8 @@ export const Jobs = () => {
                                         </button>
                                     ) : (
                                         <button
-                                            type="submit"
+                                            type="button"
+                                            onClick={handleSubmit}
                                             disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
                                             className="flex-1 md:flex-none px-8 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-black text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
                                         >

@@ -16,7 +16,7 @@ export const TermsOfWork = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-6 md:pt-36 md:pb-10 overflow-hidden bg-[#FDFCF8]">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
@@ -66,7 +66,7 @@ export const TermsOfWork = () => {
                                 <div className="space-y-2 text-gray-600">
                                     <ul className="list-disc list-inside space-y-2 mr-4">
                                         <li>يشترط حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
-                                        <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو面对面</li>
+                                        <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو حضوري</li>
                                         <li>اجتياز المقابلة الشخصية والتقييم العملي</li>
                                         <li>تقديم وثائق ومستندات رسمية تثبت المؤهلات والخبرات</li>
                                         <li>اجتياز دورة تدريبية في استخدام منصة دارين السابعة</li>
