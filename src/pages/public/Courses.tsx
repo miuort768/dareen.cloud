@@ -79,7 +79,7 @@ export const Courses = () => {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 
-      <main className="flex-grow md:pt-32 pb-24 relative overflow-hidden">
+      <main className="flex-grow md:pt-32 pb-8 md:pb-12 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
@@ -87,7 +87,7 @@ export const Courses = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-          <div className="text-center mb-10 md:mb-14">
+          <div className="text-center mb-6 md:mb-8">
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export const Courses = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium"
+              className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed font-medium"
             >
               برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
             </motion.p>
