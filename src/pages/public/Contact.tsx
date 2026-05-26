@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
@@ -65,9 +65,9 @@ export const Contact = () => {
 
                     {/* ── Hero Header ── */}
                     <div className="text-center mb-6">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-none mb-5">
-                            <span className="w-2 h-2 rounded-none bg-indigo-500 animate-pulse" />
-                            <span className="text-[10px] font-black  text-indigo-600 dark:text-indigo-400">نحن في خدمتك</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
+                            <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
+                            <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">نحن في خدمتك</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-3">
                             تواصل مع{' '}
@@ -81,7 +81,7 @@ export const Contact = () => {
                     </div>
 
                     {/* ── Contact Info Cards ── */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {contactCards.map((card) => (
                             <a
                                 key={card.title}
