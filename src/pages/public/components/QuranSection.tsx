@@ -1,118 +1,382 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Clock, ClipboardCheck, Mic, Zap } from 'lucide-react';
+import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star, MessageCircle, Moon } from 'lucide-react';
 
 interface QuranSectionProps {
     whatsappNumber: string;
 }
 
-export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
-    return (
-        <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
-            <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-emerald-500/30 z-20"></div>
-            <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-emerald-500/30 z-20"></div>
+const LeafDecoration = () => (
+    <div className="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none overflow-hidden opacity-60">
+        <svg viewBox="0 0 200 200" className="w-full h-full text-emerald-400/30">
+            <defs>
+                <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#08B26A" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#6C4BFF" stopOpacity="0.15" />
+                </linearGradient>
+            </defs>
+            <path d="M180 20 Q140 40 120 80 Q100 120 130 150 Q160 130 170 90 Q180 50 180 20Z" fill="url(#leafGrad)" transform="rotate(15, 100, 100)" />
+            <path d="M160 60 Q120 70 100 100 Q80 130 110 155 Q140 140 150 110 Q160 80 160 60Z" fill="url(#leafGrad)" transform="rotate(30, 100, 100)" />
+            <path d="M200 40 Q170 50 150 80 Q130 110 150 135 Q170 120 180 90 Q190 60 200 40Z" fill="url(#leafGrad)" transform="rotate(-10, 100, 100)" />
+            <circle cx="170" cy="30" r="8" fill="#08B26A" opacity="0.15" />
+            <circle cx="150" cy="70" r="5" fill="#6C4BFF" opacity="0.1" />
+            <circle cx="190" cy="60" r="6" fill="#08B26A" opacity="0.12" />
+        </svg>
+    </div>
+);
 
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
-                    filter: 'blur(70px)'
-                }}>
-            </div>
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                style={{
-                    backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                    backgroundSize: '200px 200px'
-                }}>
-            </div>
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
-                    <div className="w-full lg:w-1/2 text-center">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span className="text-emerald-900 font-bold text-xs ">برامج تحفيظ متميزة</span>
+const FloatingButtons = ({ whatsappNumber }: { whatsappNumber: string }) => (
+    <div className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 flex-col gap-3 z-50">
+        <a
+            href={`https://wa.me/${whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center"
+            title="واتساب"
+        >
+            <MessageCircle size={22} />
+        </a>
+        <a
+            href="https://t.me/daren_school"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-[#0088CC] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center"
+            title="تيليجرام"
+        >
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+            </svg>
+        </a>
+        <button
+            onClick={() => document.documentElement.classList.toggle('dark')}
+            className="w-12 h-12 rounded-full bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center"
+            title="الوضع الليلي"
+        >
+            <Moon size={22} />
+        </button>
+    </div>
+);
+
+export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => { setMounted(true); }, []);
+
+    const stats = {
+        totalStudents: 0,
+        activeSubs: 0,
+        todayClasses: 0,
+        completedClasses: 0,
+        totalTeachers: 0,
+        totalRevenue: 0,
+        totalExpenses: 0,
+        netProfit: 0,
+    };
+
+    return (
+        <>
+            {/* Desktop version */}
+            <section className="hidden md:block pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
+                <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-emerald-500/30 z-20"></div>
+                <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-emerald-500/30 z-20"></div>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
+                        filter: 'blur(70px)'
+                    }}>
+                </div>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+                    style={{
+                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                        backgroundSize: '200px 200px'
+                    }}>
+                </div>
+                <div className="container mx-auto px-6 relative z-10">
+                    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
+                        <div className="w-full lg:w-1/2 text-center">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span className="text-emerald-900 font-bold text-xs">برامج تحفيظ متميزة</span>
+                            </div>
+                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
+                                رحلتك مع <span className="text-emerald-600 relative inline-block">
+                                    كتاب الله
+                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
+                                    </svg>
+                                </span> تبدأ بخطوة
+                            </h2>
+                            <p className="text-gray-600 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
+                                منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
+                                <a
+                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                >
+                                    <span>ابدأ الحفظ الآن</span>
+                                    <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                                </a>
+                                <Link
+                                    to="/courses"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center rounded-xl"
+                                >
+                                    <Sparkles size={20} className="ml-2" />
+                                    تصفح المزيد
+                                </Link>
+                            </div>
+                            <div className="items-center justify-center gap-4 inline-flex">
+                                <div className="flex -space-x-3 space-x-reverse">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
+                                            <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt={`صورة طالب ${i}`} width="40" height="40" />
+                                        </div>
+                                    ))}
+                                    <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700 shadow-sm">+5k</div>
+                                </div>
+                                <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
+                                <div className="text-right">
+                                    <div className="text-sm font-bold text-black">4.9/5 تقييم ممتاز</div>
+                                    <div className="text-xs text-gray-500">من قبل آلاف الطلاب</div>
+                                </div>
+                            </div>
                         </div>
-                        <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
-                            رحلتك مع <span className="text-emerald-600 relative inline-block">
-                                كتاب الله
-                                <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
-                                </svg>
-                            </span> تبدأ بخطوة
-                        </h2>
-                        <p className="text-gray-600 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
-                            منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
-                            <a
-                                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
-                            >
-                                <span>ابدأ الحفظ الآن</span>
-                                <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                            </a>
-                            <Link
-                                to="/courses"
-                                onClick={() => window.scrollTo(0, 0)}
-                                className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center"
-                            >
-                                تصفح المزيد
-                            </Link>
-                        </div>
-                        <div className="items-center justify-center gap-4 inline-flex">
-                            <div className="flex -space-x-3 space-x-reverse">
-                                {[1, 2, 3].map(i => (
-                                    <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
-                                        <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt={`صورة طالب ${i}`} width="40" height="40" />
+                        <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
+                            <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12 rounded-xl">
+                                        <Clock className="w-6 h-6" />
                                     </div>
-                                ))}
-                                <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700 shadow-sm">+5k</div>
-                            </div>
-                            <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
-                            <div className="text-right">
-                                <div className="text-sm font-bold text-black">4.9/5 تقييم ممتاز</div>
-                                <div className="text-xs text-gray-500">من قبل آلاف الطلاب</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
-                            <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                <div className="w-12 h-12 bg-gray-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12">
-                                    <Clock className="w-6 h-6" />
+                                    <h3 className="font-black text-black text-xs mb-1">أوقات مرنة</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">اختر مواعيدك المفضلة</p>
                                 </div>
-                                <h3 className="font-black text-black text-xs mb-1">أوقات مرنة</h3>
-                                <p className="text-[10px] text-gray-500 leading-tight">اختر مواعيدك المفضلة</p>
-                            </div>
-                            <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                <div className="w-12 h-12 bg-gray-50 text-amber-600 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12">
-                                    <ClipboardCheck className="w-6 h-6" />
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-amber-600 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12 rounded-xl">
+                                        <ClipboardCheck className="w-6 h-6" />
+                                    </div>
+                                    <h3 className="font-black text-black text-xs mb-1">متابعة دقيقة</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
                                 </div>
-                                <h3 className="font-black text-black text-xs mb-1">متابعة دقيقة</h3>
-                                <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
-                            </div>
-                            <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                <div className="w-12 h-12 bg-gray-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110">
-                                    <Mic className="w-6 h-6" />
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110 rounded-xl">
+                                        <Mic className="w-6 h-6" />
+                                    </div>
+                                    <h3 className="font-black text-black text-xs mb-1">معلمون مجازون</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
-                                <h3 className="font-black text-black text-xs mb-1">معلمون مجازون</h3>
-                                <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
-                            </div>
-                            <div className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 border border-transparent rounded-none shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
-                                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
-                                <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform">
-                                    <Zap className="w-6 h-6" />
+                                <div className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
+                                    <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform rounded-xl">
+                                        <Sparkles className="w-6 h-6" />
+                                    </div>
+                                    <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
+                                    <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
                                 </div>
-                                <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
-                                <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            {/* Mobile version */}
+            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] transition-colors duration-500 pt-2 pb-8">
+                <LeafDecoration />
+
+                {/* Decorative background blobs */}
+                <div className="absolute top-40 -left-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-purple-400/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+                <div className="relative z-10 px-5">
+                    {/* Badge */}
+                    <div className="flex items-center justify-center mb-5 mt-2">
+                        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-emerald-100/80 rounded-full shadow-sm">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span className="text-emerald-700 font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
+                        </div>
+                    </div>
+
+                    {/* Hero Title */}
+                    <div className="text-center mb-5">
+                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] font-heading">
+                            رحلتك مع{" "}
+                            <span className="text-[#08B26A] relative inline-block">
+                                كتاب الله
+                                <svg className="absolute -bottom-1.5 left-0 w-full h-3 text-emerald-300" viewBox="0 0 120 12" preserveAspectRatio="none">
+                                    <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+                                </svg>
+                            </span>
+                        </h2>
+                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] font-heading mt-0.5">
+                            تبدأ بخطوة
+                        </h2>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-[#7D8597] text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
+                        منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
+                    </p>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col gap-3 items-center mb-7">
+                        <a
+                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full max-w-[320px] py-4 bg-gradient-to-r from-[#08B26A] to-[#00A86B] text-white font-black text-base shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
+                        >
+                            <span>ابدأ الحفظ الآن</span>
+                            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                        </a>
+                        <Link
+                            to="/courses"
+                            onClick={() => window.scrollTo(0, 0)}
+                            className="w-full max-w-[320px] py-3.5 bg-white text-[#08B26A] border border-gray-100 font-bold text-sm hover:border-emerald-200 hover:bg-emerald-50/50 transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
+                        >
+                            <Sparkles size={16} />
+                            تصفح المزيد
+                        </Link>
+                    </div>
+
+                    {/* Rating + Users */}
+                    <div className="flex items-center justify-center gap-4 mb-8">
+                        <div className="text-left">
+                            <div className="flex items-center gap-1.5">
+                                <span className="text-lg font-black text-[#1B1B1F]">4.9</span>
+                                <span className="text-sm font-bold text-[#7D8597]">/5</span>
+                                <Star size={14} className="text-amber-400 fill-amber-400" />
+                            </div>
+                            <div className="text-[11px] text-[#7D8597] font-medium mt-0.5">من قبل آلاف الطلاب</div>
+                        </div>
+                        <div className="h-10 w-px bg-emerald-200/60"></div>
+                        <div className="flex -space-x-2.5 space-x-reverse">
+                            {[1, 2, 3].map(i => (
+                                <div key={i} className="w-9 h-9 rounded-full border-2 border-white bg-gray-100 overflow-hidden shadow-sm">
+                                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="36" height="36" className="w-full h-full object-cover" />
+                                </div>
+                            ))}
+                            <div className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-br from-[#08B26A] to-[#00A86B] flex items-center justify-center text-[10px] font-black text-white shadow-sm">5K+</div>
+                        </div>
+                    </div>
+
+                    {/* Feature Cards 2x2 */}
+                    <div className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
+                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-amber-50 rounded-2xl flex items-center justify-center mb-3">
+                                <ClipboardCheck size={22} className="text-[#F5A623]" />
+                            </div>
+                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">متابعة دقيقة</h3>
+                            <p className="text-[#7D8597] text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
+                        </div>
+                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-purple-50 rounded-2xl flex items-center justify-center mb-3">
+                                <Clock size={22} className="text-[#6C4BFF]" />
+                            </div>
+                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">أوقات مرنة</h3>
+                            <p className="text-[#7D8597] text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
+                        </div>
+                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl flex items-center justify-center mb-3">
+                                <Sparkles size={22} className="text-[#6C4BFF]" />
+                            </div>
+                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">جرب مجانًا</h3>
+                            <p className="text-[#7D8597] text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
+                        </div>
+                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-emerald-50 rounded-2xl flex items-center justify-center mb-3">
+                                <Mic size={22} className="text-[#08B26A]" />
+                            </div>
+                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">معلمون مجازون</h3>
+                            <p className="text-[#7D8597] text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
+                        </div>
+                    </div>
+
+                    {/* Statistics Dashboard */}
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4 max-w-[360px] mx-auto">
+                        <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">إجمالي الطلاب</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalStudents}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-blue-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">اشتراكات نشطة</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.activeSubs}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-purple-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-[#6C4BFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">حصص اليوم</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.todayClasses}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">حصص منفذة</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.completedClasses}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-amber-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M19 21v-2a4 4 0 00-4-4H9a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">إجمالي المعلمين</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalTeachers}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">الإيرادات</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalRevenue}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-rose-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">المصروفات</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalExpenses}</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                </div>
+                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">صافي الربح</div>
+                                <div className="text-[#1B1B1F] text-base font-black">{stats.netProfit}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Floating Buttons - desktop only */}
+            <FloatingButtons whatsappNumber={whatsappNumber} />
+        </>
     );
 };
