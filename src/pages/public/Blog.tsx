@@ -179,7 +179,7 @@ export const Blog = () => {
       {/* ─── Mobile Layout ─── */}
       <main className="md:hidden pb-0 px-2 relative flex-1 bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
-          <div>
+          <div className="pb-4">
             {/* Top header bar */}
             <div className="flex items-center justify-between mb-4 mt-1">
               <div className="flex items-center gap-2.5">
@@ -384,7 +384,7 @@ export const Blog = () => {
             )}
           </div>
         ) : view === 'results' ? (
-          <div>
+          <div className="pb-4">
             <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-4 shadow-sm border border-violet-100/50 mt-2">
               <div className="flex items-center gap-1.5 mb-3 text-[9px] font-bold text-slate-400 flex-wrap">
                 {[
