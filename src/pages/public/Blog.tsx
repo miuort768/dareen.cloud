@@ -177,7 +177,7 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
-      <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative min-h-screen bg-[#F8F8FC] dark:bg-slate-950">
+      <main className="md:hidden pb-0 px-2 max-w-lg mx-auto relative bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div>
             {/* Top header bar */}
