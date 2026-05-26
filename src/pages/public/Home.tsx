@@ -181,7 +181,7 @@ export const Home = () => {
         </section>
 
         {/* How to Subscribe */}
-        <div className="mb-4">
+        <div className="hidden md:block mb-4">
             <HowToSubscribe />
         </div>
 
