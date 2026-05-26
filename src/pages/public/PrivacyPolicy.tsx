@@ -1,6 +1,6 @@
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Shield, Lock, Eye, Database, UserCheck, FileText, Headphones } from 'lucide-react';
+import { Shield, Lock, Eye, Database, UserCheck, FileText, Headphones, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
@@ -13,17 +13,17 @@ export const PrivacyPolicy = () => {
                 description="سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد. نضمن حماية بيانات الطلاب وأولياء الأمور والمعلمين وفق أعلى معايير الأمان والخصوصية."
                 url="https://dareen.cloud/privacy-policy"
             />
-            <PublicNavbar />
+            <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-white dark:bg-slate-950">
+            <section className="relative pt-16 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-white dark:bg-slate-950">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-4">
-                        <Shield size={14} className="text-blue-600" />
-                        <span className="text-xs font-black tracking-[0.2em] uppercase">سياسة الخصوصية</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
+                        <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
+                        <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">سياسة الخصوصية</span>
                     </div>
 
                     <h1 className="text-2xl md:text-5xl font-black text-gray-900 dark:text-white mb-3 leading-tight font-heading">
