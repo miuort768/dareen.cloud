@@ -44,7 +44,7 @@ export const HowToSubscribe = () => {
     ];
 
     return (
-        <section className="relative overflow-hidden bg-[#F8F9FC] rounded-3xl shadow-inner">
+        <section className="relative overflow-hidden bg-[#F8F9FC] dark:bg-slate-900 rounded-3xl shadow-inner dark:shadow-slate-800/50">
             {/* Soft glow background */}
             <div className="absolute top-20 -right-20 w-60 h-60 bg-purple-300/20 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-40 -left-20 w-72 h-72 bg-indigo-300/10 rounded-full blur-[120px] pointer-events-none" />
@@ -52,11 +52,11 @@ export const HowToSubscribe = () => {
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
                 <div className="flex items-center justify-between mb-6 px-1">
-                    <span className="text-[13px] font-bold text-slate-900">{formatTime(time)}</span>
+                    <span className="text-[13px] font-bold text-slate-900 dark:text-white">{formatTime(time)}</span>
                     <div className="flex items-center gap-1.5">
-                        <Signal size={14} className="text-slate-700" />
-                        <Wifi size={14} className="text-slate-700" />
-                        <Battery size={16} className="text-slate-700" />
+                        <Signal size={14} className="text-slate-700 dark:text-slate-300" />
+                        <Wifi size={14} className="text-slate-700 dark:text-slate-300" />
+                        <Battery size={16} className="text-slate-700 dark:text-slate-300" />
                     </div>
                 </div>
 
@@ -67,19 +67,19 @@ export const HowToSubscribe = () => {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-[22px] font-black text-slate-900 leading-tight mb-1">
+                <h2 className="text-[22px] font-black text-slate-900 dark:text-white leading-tight mb-1">
                     كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المعهد؟</span>
                 </h2>
-                <p className="text-[11px] text-slate-500 font-medium mb-5 leading-relaxed">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
                 </p>
 
                 {/* Steps Cards */}
                 <div className="grid grid-cols-3 gap-2.5 mb-6">
                     {steps.map((s, i) => (
-                        <div key={i} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3.5 flex flex-col items-center text-center relative">
+                        <div key={i} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-3.5 flex flex-col items-center text-center relative">
                             {/* Number Badge */}
-                            <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center shadow-md">
+                            <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-slate-800 dark:bg-slate-600 flex items-center justify-center shadow-md">
                                 <span className="text-[7px] font-black text-white">{s.num}</span>
                             </div>
                             {/* Icon Box */}
@@ -87,9 +87,9 @@ export const HowToSubscribe = () => {
                                 <s.icon size={18} className="text-white" />
                             </div>
                             {/* Title */}
-                            <h3 className="text-[11px] font-black text-slate-900 mb-0.5">{s.title}</h3>
+                            <h3 className="text-[11px] font-black text-slate-900 dark:text-white mb-0.5">{s.title}</h3>
                             {/* Desc */}
-                            <p className="text-[7px] text-slate-400 font-medium leading-tight">{s.desc}</p>
+                            <p className="text-[7px] text-slate-400 dark:text-slate-500 font-medium leading-tight">{s.desc}</p>
                         </div>
                     ))}
                 </div>
