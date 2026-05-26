@@ -103,7 +103,7 @@ export const Forum = () => {
             setPosts(data);
         } catch (error) {
             console.error('Error fetching forum posts:', error);
-            showNotification('Ё‘б  Ќгнб «бгд‘ж—« ', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ', 'error');
         } finally {
             setLoading(false);
         }
@@ -126,12 +126,12 @@ export const Forum = () => {
         if (!newPostContent.trim()) return;
         try {
             const data = await api.post<Record<string, unknown>>('/forum', { content: newPostContent });
-            showNotification(data.message || ' г д‘— «бгд‘ж— »дћ«Ќ', 'success');
+            showNotification(data.message || 'пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ', 'success');
             setNewPostContent('');
             fetchPosts();
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б д‘— «бгд‘ж—', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
 
@@ -141,30 +141,30 @@ export const Forum = () => {
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б «б Ё«Џб «бг—ћж «бгЌ«жб… б«Ќё«р', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
 
     const handleUpdateStatus = async (postId: string, status: 'approved' | 'rejected') => {
         try {
             await api.patch(`/forum/${postId}/status`, { status });
-            showNotification(' г  ЌѕнЋ Ќ«б… «бгд‘ж—', 'success');
+            showNotification('пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ', 'success');
             fetchPosts();
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б  ЌѕнЋ «бЌ«б…', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
 
     const handleDeletePost = async (postId: string) => {
-        if (!window.confirm('еб √д  г √яѕ гд Ќ–Ё е–« «бгд‘ж—њ')) return;
+        if (!window.confirm('пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ—њ')) return;
         try {
             await api.delete(`/forum/${postId}`);
-            showNotification(' г Ќ–Ё «бгд‘ж— »дћ«Ќ', 'success');
+            showNotification('пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ', 'success');
             fetchPosts();
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б «бЌ–Ё', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљ', 'error');
         }
     };
 
@@ -175,7 +175,7 @@ export const Forum = () => {
                 setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
             } catch (error) {
                 console.error(error);
-                showNotification('Ё‘б  Ќгнб «б Џбнё« ', 'error');
+            showNotification('ўБЎіўД Ў™Ў≠ўЕўКўД ЎІўДўЕўЖЎіўИЎ±ЎІЎ™', 'error');
             }
         }
         setViewingComments((prev: Record<string, boolean>) => ({ ...prev, [postId]: !prev[postId] }));
@@ -188,35 +188,35 @@ export const Forum = () => {
         try {
             await api.post(`/forum/${postId}/comments`, { content: text });
             setCommentTexts((prev: Record<string, string>) => ({ ...prev, [postId]: '' }));
-            showNotification(' г ≈÷«Ё… «б Џбнё »дћ«Ќ', 'success');
+            showNotification('пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б ≈÷«Ё… «б Џбнё', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
     
     const handleDeleteComment = async (postId: string, commentId: string) => {
-        if(!window.confirm('еб √д  г √яѕ гд Ќ–Ё е–« «б Џбнёњ')) return;
+        if(!window.confirm('пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљёњ')) return;
         try {
             await api.delete(`/forum/comments/${commentId}`);
-            showNotification(' г Ќ–Ё «б Џбнё »дћ«Ќ', 'success');
+            showNotification('пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
         } catch (err) {
             console.error(err);
-            showNotification('Ё‘б Ќ–Ё «б Џбнё', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
 
     const handleReport = async (postId: string) => {
         try {
             await api.post(`/forum/${postId}/report`);
-            showNotification(' г ≈—”«б «б »бнџ бб≈ѕ«—… ббг—«ћЏ…', 'info');
+            showNotification('пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ', 'info');
         } catch (error) {
             console.error(error);
-            showNotification('Ё‘б ≈—”«б «б »бнџ', 'error');
+            showNotification('пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ', 'error');
         }
     };
 
@@ -232,9 +232,9 @@ export const Forum = () => {
                     <div className="w-12 h-12 bg-white/10  rounded-none flex items-center justify-center mb-4 border border-white/10 shadow-sm">
                         <Sparkles size={24} className="text-white" />
                     </div>
-                    <h1 className="text-2xl font-medium text-white uppercase tracking-tighter mb-2">гд ѕм ѕ«—нд</h1>
+                    <h1 className="text-2xl font-medium text-white uppercase tracking-tighter mb-2">пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ</h1>
                     <p className="text-xs text-white/80 font-normal uppercase tracking-widest leading-relaxed max-w-md">
-                        г”«Ќ я «бќ«’… ббдё«‘° «б Џбг° жг‘«—я… «бгЏ—Ё… гЏ “гб«∆я жгЏбгня Ён »н∆…  Џбнгн… ¬гд….
+                        пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ‘° пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ.
                     </p>
                 </div>
             </div>
@@ -252,18 +252,18 @@ export const Forum = () => {
                                 value={newPostContent}
                                 onChange={(e) => setNewPostContent(e.target.value)}
                                 className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 min-h-[100px] text-sm font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                                placeholder="г«–« нѕж— Ён –едя «бнжгњ"
+                                placeholder="пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ"
                             />
                             <div className="flex justify-between items-center">
                                 <p className="text-[10px] text-slate-400 font-medium flex items-center gap-1.5 uppercase">
-                                    <ShieldCheck size={12} /> гЌ жм г—«ё» гд ё»б «б≈ѕ«—…
+                                    <ShieldCheck size={12} /> пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ
                                 </p>
                                 <button
                                     onClick={handleCreatePost}
                                     disabled={!newPostContent.trim()}
                                     className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 text-[11px] font-medium uppercase tracking-widest disabled:opacity-30 transition-all flex items-center gap-2"
                                 >
-                                    <Send size={14} /> д‘— «бгд‘ж—
+                                    <Send size={14} /> пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ
                                 </button>
                             </div>
                         </div>
@@ -282,7 +282,7 @@ export const Forum = () => {
                         <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700">
                             <MessageSquare size={24} className="text-slate-300" />
                         </div>
-                        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">б«  жћѕ гд‘ж—«  Ќ м «б¬д</p>
+                        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљ</p>
                     </div>
                 ) : (
                     <div className="space-y-6">
@@ -316,7 +316,7 @@ export const Forum = () => {
                                                         post.authorRole === 'teacher' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
                                                         "bg-blue-50 text-blue-600 border border-blue-100"
                                                     )}>
-                                                        {post.authorRole === 'admin' ? '«б≈ѕ«—…' : post.authorRole === 'teacher' ? 'гЏбг' : 'Ў«б»'}
+                                                        {post.authorRole === 'admin' ? 'Ў•ЎѓЎІЎ±Ў©' : post.authorRole === 'teacher' ? 'ўЕЎєўДўЕ' : 'ЎЈЎІўДЎ®'}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-2 text-[10px] text-slate-400 font-medium uppercase tracking-widest">
@@ -330,7 +330,7 @@ export const Forum = () => {
                                                 <button 
                                                     onClick={() => handleDeletePost(post.id)}
                                                     className="p-2 text-slate-400 hover:text-rose-500 transition-colors"
-                                                    title="Ќ–Ё «бгд‘ж—"
+                                                    title="пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -358,21 +358,21 @@ export const Forum = () => {
                                             )}
                                         >
                                             <ThumbsUp size={16} className={cn(isLiked && "fill-current")} />
-                                            <span>√Џћ»дн</span>
+                                            <span>пњљпњљпњљпњљпњљпњљ</span>
                                         </button>
                                         <button 
                                             onClick={() => toggleComments(post.id)}
                                             className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-slate-400 hover:text-slate-600 transition-all uppercase tracking-widest active:scale-95 border-x border-slate-100 dark:border-slate-800"
                                         >
                                             <MessageSquare size={16} />
-                                            <span>{post.commentCount || 0}  Џбнё</span>
+                                            <span>{post.commentCount || 0} пњљпњљпњљпњљпњљ</span>
                                         </button>
                                         <button 
                                             onClick={() => handleReport(post.id)}
                                             className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-rose-400 hover:text-rose-600 transition-all uppercase tracking-widest active:scale-95"
                                         >
                                             <AlertTriangle size={16} />
-                                            <span>≈»б«џ</span>
+                                            <span>пњљпњљпњљпњљпњљ</span>
                                         </button>
                                     </div>
 
@@ -404,9 +404,9 @@ export const Forum = () => {
                                                                                 document.getElementById(`comment-input-${post.id}`)?.focus();
                                                                             }}
                                                                             className="text-[10px] font-medium text-indigo-500 uppercase tracking-widest hover:underline"
-                                                                        >—ѕ</button>
+                                                                        >пњљпњљ</button>
                                                                         {(isAdmin || currentUser?.id === node.comment.authorId) && (
-                                                                            <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-medium text-rose-500 uppercase tracking-widest hover:underline">Ќ–Ё</button>
+                                                                            <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-medium text-rose-500 uppercase tracking-widest hover:underline">пњљпњљпњљ</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -428,7 +428,7 @@ export const Forum = () => {
                                                                             </div>
                                                                             <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">{replyNode.comment.content}</p>
                                                                             {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
-                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-2 text-[9px] font-medium text-rose-500 uppercase hover:underline">Ќ–Ё</button>
+                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-2 text-[9px] font-medium text-rose-500 uppercase hover:underline">пњљпњљпњљ</button>
                                                                             )}
                                                                         </div>
                                                                     </div>
@@ -450,7 +450,7 @@ export const Forum = () => {
                                                         type="text"
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
-                                                        placeholder="‘«—я »—√ня Ён е–« «бгж÷жЏ..."
+                                                        placeholder="пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ..."
                                                         className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-12 pr-4 py-3 text-xs font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
@@ -471,11 +471,11 @@ export const Forum = () => {
                                         <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border-t border-amber-200 flex justify-between items-center">
                                             <div className="flex items-center gap-2 text-amber-700">
                                                 <AlertTriangle size={14} />
-                                                <span className="text-[10px] font-medium uppercase tracking-widest">е–« «бгд‘ж— »«д ў«— «бг—«ћЏ… «б≈ѕ«—н…</span>
+                                                <span className="text-[10px] font-medium uppercase tracking-widest">пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ</span>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">гж«Ёё…</button>
-                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">—Ё÷</button>
+                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">пњљпњљпњљпњљпњљпњљ</button>
+                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">пњљпњљпњљ</button>
                                             </div>
                                         </div>
                                     )}
@@ -491,11 +491,11 @@ export const Forum = () => {
                 <div className="bg-indigo-600 p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-y-16 translate-x-16 rotate-45 pointer-events-none"></div>
                     <div className="relative z-10 text-center md:text-right">
-                        <h4 className="text-white font-medium text-lg mb-1 uppercase tracking-tighter">еб бѕня ”ƒ«б  Џбнгнњ</h4>
-                        <p className="text-indigo-100 text-[11px] font-medium uppercase tracking-widest">«Ў—Ќ ”ƒ«бя ед« ж”н г «б≈ћ«»… Џбне гд ё»б «бгЏбгнд ж«б“гб«Ѕ</p>
+                        <h4 className="text-white font-medium text-lg mb-1 uppercase tracking-tighter">пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</h4>
+                        <p className="text-indigo-100 text-[11px] font-medium uppercase tracking-widest">пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ</p>
                     </div>
                     <button className="relative z-10 bg-white text-indigo-600 px-8 py-3 text-[11px] font-medium uppercase tracking-widest hover:bg-indigo-50 transition-all shadow-sm shadow-indigo-900/20">
-                        ёж«Џѕ «бгд ѕм
+                        пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ
                     </button>
                 </div>
             </div>

@@ -16,7 +16,7 @@ import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 
-// ?? Reusable Styled Components ??????????????????????????????????????????????
+// â”€â”€ Reusable Styled Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -56,7 +56,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
     </button>
 );
 
-// ?? Main Component ????????????????????????????????????????????????????????????
+// â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const Attendance = () => {
     const currentUser = useCurrentUser();
@@ -94,8 +94,8 @@ export const Attendance = () => {
     const getGradeDisplay = (studentName: string, grade?: string) => {
         if (!grade) return studentName.charAt(0);
         const mapping: Record<string, string> = {
-            'ÇáÃæá': '1', 'ÇáËÇäí': '2', 'ÇáËÇáË': '3', 'ÇáÑÇÈÚ': '4', 'ÇáÎÇãÓ': '5', 'ÇáÓÇÏÓ': '6',
-            'ÓÇÈÚ': '7', 'ËÇãä': '8', 'ÊÇÓÚ': '9', 'ÚÇÔÑ': '10'
+            'Ø§Ù„Ø£ÙˆÙ„': '1', 'Ø§Ù„Ø«Ø§Ù†ÙŠ': '2', 'Ø§Ù„Ø«Ø§Ù„Ø«': '3', 'Ø§Ù„Ø±Ø§Ø¨Ø¹': '4', 'Ø§Ù„Ø®Ø§Ù…Ø³': '5', 'Ø§Ù„Ø³Ø§Ø¯Ø³': '6',
+            'Ø§Ù„Ø³Ø§Ø¨Ø¹': '7', 'Ø§Ù„Ø«Ø§Ù…Ù†': '8', 'Ø§Ù„ØªØ§Ø³Ø¹': '9', 'Ø§Ù„Ø¹Ø§Ø´Ø±': '10'
         };
         const numMatch = grade.match(/\d+/);
         if (numMatch) return numMatch[0];
@@ -136,7 +136,7 @@ export const Attendance = () => {
         });
 
         if (success) {
-            showNotification(`Êã ÊÓÌíá ${student.name} (${status === 'completed' ? 'ÍÖæÑ' : 'ÛíÇÈ'})`, 'success');
+            showNotification(`ØªÙ… ØªØ³Ø¬ÙŠÙ„ ${student.name} (${status === 'completed' ? 'Ø­Ø¶ÙˆØ±' : 'ØºÙŠØ§Ø¨'})`, 'success');
             
             if (whatsappAutoNotify && status === 'completed' && student.parentPhone) {
                 const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
@@ -151,16 +151,16 @@ export const Attendance = () => {
             
             setSecureModalData(null);
         } else {
-            showNotification('ÝÔá ÊÓÌíá ÇáÍÖæÑ', 'error');
+            showNotification('ÙØ´Ù„ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø­ØµØ©', 'error');
         }
     };
 
     const handleUpdateStatus = async (id: string, status: Session['status']) => {
         const success = await updateStatus(id, status);
         if (success) {
-            showNotification('Êã ÊÍÏíË ÍÇáÉ ÇáÍÕÉ ÈäÌÇÍ', 'success');
+            showNotification('ØªÙ… ØªØ­Ø¯ÙŠØ« Ø­Ø§Ù„Ø© Ø§Ù„Ø¬Ù„Ø³Ø©', 'success');
         } else {
-            showNotification('ÝÔá Ýí ÊÍÏíË ÇáÍÇáÉ', 'error');
+            showNotification('Ù„Ù… ÙŠØªÙ… Ø§Ù„ØªØ­Ø¯ÙŠØ«', 'error');
         }
     };
 
@@ -224,11 +224,11 @@ export const Attendance = () => {
                             });
 
                             if (todayStudents.length === 0) {
-                                showNotification('áÇ íæÌÏ ØáÇÈ ÛíÑ ãÍÖÑíä áåÐÇ Çáíæã', 'info');
+                                showNotification('Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ø·Ù„Ø§Ø¨ Ù…ØªØ§Ø­ÙˆÙ† Ù„Ù„ØªØ³Ø¬ÙŠÙ„', 'info');
                                 return;
                             }
 
-                            if (!window.confirm(`åá ÃäÊ ãÊÃßÏ ãä ÊÍÖíÑ (${todayStudents.length}) ØáÇÈ ßÍÖæÑ ááíæã¿`)) return;
+                            if (!window.confirm(`Ø³ÙŠØªÙ… ØªØ³Ø¬ÙŠÙ„ (${todayStudents.length}) Ø·Ø§Ù„Ø¨ ÙƒØ­Ø¶ÙˆØ± ØªÙ„Ù‚Ø§Ø¦ÙŠ`)) return;
                             
                             const now = new Date();
                             const currentTime = now.toLocaleTimeString('ar-EG', {
@@ -254,11 +254,11 @@ export const Attendance = () => {
                                 });
                                 if (success) successCount++;
                             }
-                            showNotification(`Êã ÊÓÌíá ÍÖæÑ ${successCount} ØáÇÈ ÈäÌÇÍ`, 'success');
+                            showNotification(`ØªÙ… ØªØ³Ø¬ÙŠÙ„ ${successCount} Ø·Ø§Ù„Ø¨ Ø¨Ù†Ø¬Ø§Ø­`, 'success');
                         }}
                         className="w-full bg-emerald-600 hover:bg-emerald-700 py-3.5"
                     >
-                        ÊÍÖíÑ ÌãÇÚí æÓÑíÚ áØáÇÈ Çáíæã <Users size={16} />
+                        ØªØ³Ø¬ÙŠÙ„ Ø­Ø¶ÙˆØ± Ø§Ù„ÙŠÙˆÙ… Ø¨Ø§Ù„ÙƒØ§Ù…Ù„ <Users size={16} />
                     </PrimaryBtn>
                 </div>
             )}
@@ -280,14 +280,14 @@ export const Attendance = () => {
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden rounded-none">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
-                                <SectionTitle icon={Activity} label="ÅÏÇÑÉ ÇáäÔÇØÇÊ ÇáãÈÇÔÑÉ" />
+                                <SectionTitle icon={Activity} label="Ø­ØµØµ Ø§Ù„Ø·Ù„Ø§Ø¨ Ø§Ù„Ù…Ù‚Ø±Ø±Ø©" />
                                 <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
                                         type="text"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        placeholder="ÇÈÍË Úä ØÇáÈ Ãæ ãÇÏÉ..."
+                                        placeholder="Ø§Ø¨Ø­Ø« Ø¨Ø§Ø³Ù… Ø§Ù„Ø·Ø§Ù„Ø¨ Ø£Ùˆ Ø§Ù„Ù…Ø§Ø¯Ø©..."
                                         className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
                                     />
                                 </div>
@@ -318,7 +318,7 @@ export const Attendance = () => {
                                     )) : (
                                         <div className="col-span-full py-16 text-center">
                                             <Users className="mx-auto mb-2 text-slate-200" size={32} />
-                                            <p className="text-xs font-normal text-slate-400">áÇ ÊæÌÏ ÈíÇäÇÊ ãØÇÈÞÉ</p>
+                                            <p className="text-xs font-normal text-slate-400">Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ø·Ù„Ø§Ø¨ Ù…ØªØ§Ø­ÙˆÙ†</p>
                                         </div>
                                     )}
                             </div>
@@ -343,12 +343,12 @@ export const Attendance = () => {
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-normal text-xs text-white">ÅÔÑÇÝ ÇáãÚáãÉ: {teacher}</h3>
-                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">ßÇÏÑ ÊÚáíãí ãÚÊãÏ</p>
+                                                <h3 className="font-normal text-xs text-white">Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„Ø·Ù„Ø§Ø¨: {teacher}</h3>
+                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø­ØµØµ ÙˆØ§Ù„ØªØ­Ø¶ÙŠØ±</p>
                                             </div>
                                         </div>
                                         <div className="text-[9px] font-normal bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
-                                            {filteredTStudents.length} ØáÇÈ
+                                            {filteredTStudents.length} Ø·Ø§Ù„Ø¨
                                         </div>
                                     </div>
 
@@ -393,13 +393,13 @@ export const Attendance = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="text-[8px] font-medium bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
-                                                                ÇäÊÙÇÑ
+                                                                Ø§Ù†ØªØ¸Ø§Ø±
                                                             </div>
                                                         </div>
 
                                                         <div className="space-y-1.5">
                                                             <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
-                                                                <span>ÇáÑÕíÏ ÇáãÊÇÍ</span>
+                                                                <span>ØªØºØ·ÙŠØ© Ø§Ù„Ø­ØµØµ</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
                                                             <div className="h-1 bg-white dark:bg-slate-900 rounded-full overflow-hidden">
@@ -418,13 +418,13 @@ export const Attendance = () => {
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
-                                                                ÍÖæÑ
+                                                                Ø­Ø¶ÙˆØ±
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
-                                                                ÛíÇÈ
+                                                                ØºÙŠØ§Ø¨
                                                             </button>
                                                         </div>
                                                     </div>
@@ -449,8 +449,8 @@ export const Attendance = () => {
 
             <ConfirmModal
                 isOpen={!!deletingSlot}
-                title="ÊÃßíÏ ÍÐÝ ÇáãæÚÏ"
-                message="ÓíÊã ÅÒÇáÉ åÐÇ ÇáãæÚÏ äåÇÆíÇð ãä ÓÌáÇÊ ÇáØÇáÈ ÇáãÍÏÏÉ¡ åá ÃäÊ ãÊÃßÏ¿"
+                title="Ø­Ø°Ù Ù…ÙˆØ¹Ø¯ Ø§Ù„Ø­ØµØ©"
+                message="Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„Ù…ÙˆØ¹Ø¯ØŸ Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„Ø±Ø¬ÙˆØ¹ Ø¹Ù† Ù‡Ø°Ø§ Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡"
                 onConfirm={() => {
                     if (deletingSlot) {
                         const { student, enrollment, slotIndex } = deletingSlot;

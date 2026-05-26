@@ -99,7 +99,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         <input
                             placeholder="الساعة"
                             value={slotInput.hour}
-                            onChange={e => setSlotInput({ ...slotInput, hour: e.target.value })}
+                            onChange={e => setSlotInput({ ...slotInput, hour: e.target.value.replace(/^0+/, '') })}
                             className="w-20 px-2 py-1 text-[10px] font-normal border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         />
                         <button type="button" onClick={handleAddSlot} className="bg-primary-600 text-white px-2"><Plus size={14} /></button>

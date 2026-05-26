@@ -62,6 +62,8 @@ export const Sidebar = () => {
 
     const navigation = [
         { name: 'لوحة التحكم', href: getDashboardLink(), id: 'dashboard', icon: LayoutDashboard },
+        { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
+        { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'العملاء والمهتمين', href: '/leads', id: 'leads', icon: UserPlus },
         { name: 'جلسات المراجعة', href: '/trial-sessions', id: 'trial_sessions', icon: BookOpen },
@@ -82,8 +84,6 @@ export const Sidebar = () => {
         { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
         { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
-        { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
-        { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },

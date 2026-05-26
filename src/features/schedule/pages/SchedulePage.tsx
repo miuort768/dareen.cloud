@@ -125,7 +125,7 @@ export const Schedule = () => {
     const allEvents: ScheduleEvent[] = useMemo(() => {
         return students.flatMap(student =>
             (student.enrollments || [])
-                .filter(enrollment => currentUser?.role !== 'teacher' || enrollment.teacher === teacherToMatch)
+                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch)
                 .flatMap(enrollment =>
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
@@ -140,9 +140,9 @@ export const Schedule = () => {
                             subject: enrollment.subject,
                             curriculum: enrollment.curr,
                             day: (slot.day || '').trim(),
-                            hour: String(slot.hour).trim(),
+                            hour: String(parseInt(String(slot.hour).trim(), 10) || ''),
                             period: isAM ? 'am' : 'pm',
-                            time: `${slot.hour}:00 ${isAM ? 'ص' : 'م'}`,
+                            time: `${String(parseInt(String(slot.hour).trim(), 10) || '')}:00 ${isAM ? 'ص' : 'م'}`,
                             studentPoints: student.totalPoints || 0
                         };
                     })
@@ -251,7 +251,7 @@ export const Schedule = () => {
 
                             {/* Grid Body: Time Slots */}
                             {TIME_SLOTS.map((slot, slotIdx) => {
-                                const currentTimeSlots = filteredEvents.filter(e => e.hour === slot.hour && e.period === slot.period);
+                                const currentTimeSlots = filteredEvents.filter(e => e.hour === String(slot.hour) && e.period === slot.period);
                                 const isEmpty = currentTimeSlots.length === 0;
 
                                 return (

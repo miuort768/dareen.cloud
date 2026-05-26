@@ -279,7 +279,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 </div>
                                 <div>
                                     <p className="text-[8px] font-normal text-slate-400 mb-1 uppercase">الساعة</p>
-                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value })} placeholder="مثال: 4" className="w-full text-[10px] font-normal p-1.5 bg-slate-800 border-none rounded-lg outline-none" />
+                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value.replace(/^0+/, '') })} placeholder="مثال: 4" className="w-full text-[10px] font-normal p-1.5 bg-slate-800 border-none rounded-lg outline-none" />
                                 </div>
                             </div>
                             <button onClick={handleSaveSlot} className="w-full bg-[#5c59f2] text-white font-normal text-[10px] py-2 rounded-lg hover:bg-indigo-700 transition-colors">

@@ -75,7 +75,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2 text-[#54656f] dark:text-[#aebac1]">
-                    {(currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
+                    {currentUser?.role === 'admin' && (
                         <>
                             <button 
                                 onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}

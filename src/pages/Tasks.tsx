@@ -62,8 +62,8 @@ export const Tasks = () => {
         description: '',
         priority: 'medium',
         dueDate: new Date().toISOString().split('T')[0],
-        category: '┼╧╟╤э'
-    });
+                category: '╪╣╪з┘Е'
+            });
 
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,7 +76,7 @@ export const Tasks = () => {
                 description: '',
                 priority: 'medium',
                 dueDate: new Date().toISOString().split('T')[0],
-                category: '┼╧╟╤э'
+        category: '╪╣╪з┘Е'
             });
         } catch (error) {
             console.error("Error adding task:", error);
@@ -93,7 +93,7 @@ export const Tasks = () => {
     };
 
     const deleteTask = async (id: string) => {
-        if (!window.confirm('хс ╩╤э╧ ═╨▌ х╨х ╟суху╔ фх╟╞э╟Ё┐')) return;
+        if (!window.confirm('┘З┘Д ╪г┘Ж╪к ┘Е╪к╪г┘Г╪п ┘Е┘Ж ╪н╪░┘Б ┘З╪░┘З ╪з┘Д┘Е┘З┘Е╪й╪Я')) return;
         try {
             await api.delete(`/tasks/${id}`);
             setTasks(tasks.filter(t => t.id !== id));
@@ -142,10 +142,10 @@ export const Tasks = () => {
                     </div>
                     
                     <h1 className="text-3xl md:text-5xl font-medium text-white uppercase tracking-tighter mb-4 drop-shadow-sm">
-                        █╤▌╔ ╟с┌усэ╟╩ ╟су╤▀╥э╔
+                        ┘Е╪▒┘Г╪▓ ╪з┘Д╪к╪н┘Г┘Е ╪и╪з┘Д┘Е┘З╪з┘Е
                     </h1>
                     <p className="text-[11px] md:text-sm font-normal text-slate-400 uppercase tracking-widest mb-10 max-w-lg leading-relaxed">
-                        ╩═сэс у╩▐╧у ц┼╧╟╤╔ ╨▀э╔ с▀╟▌╔ ух╟у <span className="text-indigo-500">╧╟╤эф ╟с╙╟╚┌╔</span>
+                        ╪к╪к╪и╪╣ ┘И╪е╪п╪з╪▒╪й ╪м┘Е┘К╪╣ ╪з┘Д┘Е┘З╪з┘Е ╪з┘Д╪о╪з╪╡╪й ╪и┘Г <span className="text-indigo-500">┘Б┘К ┘Е┘Г╪з┘Ж ┘И╪з╪н╪п</span>
                     </p>
 
                     <button
@@ -153,7 +153,7 @@ export const Tasks = () => {
                         className="group relative inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-4 font-medium text-[11px] md:text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
                     >
                         <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />
-                        ╩╙╠эс уху╔ ╠╧э╧╔
+                        ╪е╪╢╪з┘Б╪й ┘Е┘З┘Е╪й ╪м╪п┘К╪п╪й
                         <div className="absolute inset-0 border border-white/20 translate-x-1 translate-y-1 -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     </button>
                 </div>
@@ -162,10 +162,10 @@ export const Tasks = () => {
             {/* ?? Analytics Grid (Glassmorphism Style) ?? */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
                 {[
-                    { label: 'ух╟у у┌с▐╔', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', border: 'border-amber-500/20' },
-                    { label: '▐э╧ ╟с╩ф▌э╨', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-500', bg: 'bg-indigo-500/5', border: 'border-indigo-500/20' },
-                    { label: 'у┌╧с ╟с┼ф╠╟╥', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', border: 'border-emerald-500/20' },
-                    { label: 'ух╟у у▀╩ус╔', value: stats.completed, icon: CheckCircle2, color: 'text-purple-500', bg: 'bg-purple-500/5', border: 'border-purple-500/20' }
+                    { label: '┘Е┘З╪з┘Е ┘Е╪╣┘Д┘В╪й', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', border: 'border-amber-500/20' },
+                    { label: '┘В┘К╪п ╪з┘Д╪к┘Ж┘Б┘К╪░', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-500', bg: 'bg-indigo-500/5', border: 'border-indigo-500/20' },
+                    { label: '┘Ж╪│╪и╪й ╪з┘Д╪е┘Ж╪м╪з╪▓', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', border: 'border-emerald-500/20' },
+                    { label: '╪к┘Е ╪з┘Д╪е┘Ж╪м╪з╪▓', value: stats.completed, icon: CheckCircle2, color: 'text-purple-500', bg: 'bg-purple-500/5', border: 'border-purple-500/20' }
                 ].map((stat, i) => (
                     <div key={i} className={cn(
                         "relative bg-white dark:bg-slate-900 border p-6 overflow-hidden transition-all hover:-translate-y-1",
@@ -191,7 +191,7 @@ export const Tasks = () => {
                     <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-indigo-500" size={18} />
                     <input 
                         type="text" 
-                        placeholder="╟╚═╦ ▌э ├╤╘э▌ ╟с┌усэ╟╩..." 
+                        placeholder="╪и╪н╪л ╪╣┘Ж ┘Е┘З┘Е╪й ┘Е╪н╪п╪п╪й..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                         className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 py-4 px-6 pr-14 text-xs font-normal text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-widest"
@@ -210,7 +210,7 @@ export const Tasks = () => {
                                     : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-indigo-200 dark:hover:border-indigo-900"
                             )}
                         >
-                            {p === 'all' ? '╟с▀с' : p === 'high' ? '┌╟╠с ╠╧╟Ё' : p === 'medium' ? 'у╩ц╙╪' : 'х╟╧╞'}
+                            {p === 'all' ? '╪з┘Д┘Г┘Д' : p === 'high' ? '╪╣╪з┘Д┘К╪й' : p === 'medium' ? '┘Е╪к┘И╪│╪╖╪й' : '┘Е┘Ж╪о┘Б╪╢╪й'}
                         </button>
                     ))}
                 </div>
@@ -266,7 +266,7 @@ export const Tasks = () => {
                                 </div>
 
                                 <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-loose mb-10 line-clamp-3">
-                                    {task.description || "с╟ ╩ц╠╧ ╩▌╟╒эс ┼╓╟▌э╔ сх╨╟ ╟с╙╠с ╟с┌усэ╟╩э..."}
+                                    {task.description || "┘Д╪з ┘К┘И╪м╪п ┘И╪╡┘Б ╪е╪╢╪з┘Б┘К ┘Д┘З╪░┘З ╪з┘Д┘Е┘З┘Е╪й..."}
                                 </p>
 
                                 {/* Action Console */}
@@ -281,7 +281,7 @@ export const Tasks = () => {
                                                 )}
                                             >
                                                 {task.status === 'pending' ? <Rocket size={16} /> : <CheckCircle2 size={16} />}
-                                                {task.status === 'pending' ? '┼╪с╟▐ ╟с┌ус' : '┼█с╟▐ ╟сус▌'}
+                                                {task.status === 'pending' ? '╪и╪п╪б ╪з┘Д╪к┘Ж┘Б┘К╪░' : '╪з┘Г╪к┘Е┘Д╪к ╪з┘Д┘Е┘З┘Е╪й'}
                                                 <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                                             </button>
                                         ) : (
@@ -289,7 +289,7 @@ export const Tasks = () => {
                                                 onClick={() => updateTaskStatus(task.id, 'pending')}
                                                 className="text-[10px] font-medium text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors"
                                             >
-                                                ┼┌╟╧╔ ▌╩═ ╟с╙╠с
+                                                ╪е╪╣╪з╪п╪й ╪е┘Д┘Й ╪з┘Д┘Е╪╣┘Д┘В╪й
                                             </button>
                                         )}
                                     </div>
@@ -308,8 +308,8 @@ export const Tasks = () => {
                             <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
                             <ClipboardList size={32} className="text-indigo-500" />
                         </div>
-                        <h2 className="text-xl font-medium text-slate-800 dark:text-white uppercase tracking-tighter mb-2">╟с╙╠с╟╩ ▌╟╤█╔</h2>
-                        <p className="text-[10px] text-slate-400 font-normal uppercase tracking-widest">█╤▌╔ ╟с┌усэ╟╩ ╠╟х╥╔ с╟╙╩▐╚╟с ух╟у ╠╧э╧╔</p>
+                        <h2 className="text-xl font-medium text-slate-800 dark:text-white uppercase tracking-tighter mb-2">┘В╪з╪ж┘Е╪й ╪з┘Д┘Е┘З╪з┘Е</h2>
+                        <p className="text-[10px] text-slate-400 font-normal uppercase tracking-widest">┘Д┘Е ┘К╪к┘Е ╪з┘Д╪╣╪л┘И╪▒ ╪╣┘Д┘Й ┘Е┘З╪з┘Е ╪к╪╖╪з╪и┘В ┘Е╪╣╪з┘К┘К╪▒ ╪з┘Д╪и╪н╪л</p>
                     </div>
                 )}
             </div>
@@ -324,12 +324,12 @@ export const Tasks = () => {
                                     <Plus size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-medium text-slate-800 dark:text-white uppercase tracking-tighter">┼ф╘╟┴ ┌усэ╔ ╠╧э╧╔</h3>
+                                    <h3 className="text-lg font-medium text-slate-800 dark:text-white uppercase tracking-tighter">╪е┘Ж╪┤╪з╪б ┘Е┘З┘Е╪й ╪м╪п┘К╪п╪й</h3>
                                     <p className="text-[9px] text-slate-400 font-normal uppercase tracking-[0.2em]">New Operation Protocol</p>
                                 </div>
                             </div>
                             <button onClick={() => setShowAddForm(false)} className="text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
-                                <span className="text-2xl font-light">╫</span>
+                                <span className="text-2xl font-light">├Ч</span>
                             </button>
                         </div>
                         
@@ -337,7 +337,7 @@ export const Tasks = () => {
                             <div className="space-y-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                        <Sparkles size={12} className="text-indigo-500" /> у╙уь ╟с┌усэ╔
+                                        <Sparkles size={12} className="text-indigo-500" /> ╪╣┘Ж┘И╪з┘Ж ╪з┘Д┘Е┘З┘Е╪й
                                     </label>
                                     <input 
                                         required
@@ -350,19 +350,19 @@ export const Tasks = () => {
 
                                 <div className="grid grid-cols-2 gap-8">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">у╙╩ць ╟с╬╪ц╤╔</label>
+                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">╪п╪▒╪м╪й ╪з┘Д╪г┘И┘Д┘И┘К╪й</label>
                                         <select 
                                             className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white cursor-pointer"
                                             value={newTask.priority}
                                             onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                         >
-                                            <option value="low">х╟╧╞ (Low)</option>
-                                            <option value="medium">у╩ц╙╪ (Medium)</option>
-                                            <option value="high">┌╟╠с (Critical)</option>
+                                            <option value="low">┘Е┘Ж╪о┘Б╪╢╪й (Low)</option>
+                                            <option value="medium">┘Е╪к┘И╪│╪╖╪й (Medium)</option>
+                                            <option value="high">╪╣╪з┘Д┘К╪й (Critical)</option>
                                         </select>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">╩╟╤э╬ ╟с╟╙╩═▐╟▐</label>
+                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">╪к╪з╪▒┘К╪о ╪з┘Д╪к╪│┘Д┘К┘Е</label>
                                         <input 
                                             type="date" 
                                             className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white"
@@ -374,7 +374,7 @@ export const Tasks = () => {
 
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                        <ShieldCheck size={12} className="text-indigo-500" /> ╩▌╟╒эс ╟с╚╤ц╩ц▀цс
+                                        <ShieldCheck size={12} className="text-indigo-500" /> ┘И╪╡┘Б ╪з┘Д┘Е┘З┘Е╪й
                                     </label>
                                     <textarea 
                                         className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white h-32 resize-none"
@@ -385,7 +385,7 @@ export const Tasks = () => {
                             </div>
 
                             <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 font-medium text-xs uppercase tracking-[0.3em] transition-all shadow-sm shadow-indigo-500/20 active:scale-95">
-                                ╩├▀э╧ ┼╪с╟▐ ╟с┌усэ╔
+                                ╪е┘Ж╪┤╪з╪б ┘Е┘З┘Е╪й ╪м╪п┘К╪п╪й
                             </button>
                         </form>
                     </div>

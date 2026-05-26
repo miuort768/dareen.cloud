@@ -45,9 +45,10 @@ interface AppointmentEvent {
     hour: string;
     period: string;
     time: string;
+    isPM: boolean;
 }
 
-const DAYS_OF_WEEK = ['วแำศส', 'วแรอฯ', 'วแวหไํไ', 'วแหแวหวม', 'วแรัศฺวม', 'วแฮใํำ', 'วแฬใฺษ'];
+const DAYS_OF_WEEK = ['ุงูุณุจุช', 'ุงูุฃุญุฏ', 'ุงูุงุซููู', 'ุงูุซูุงุซุงุก', 'ุงูุฃุฑุจุนุงุก', 'ุงูุฎู…ูุณ', 'ุงูุฌู…ุนุฉ'];
 
 export const Appointments = () => {
     const currentUser = useCurrentUser();
@@ -110,24 +111,27 @@ export const Appointments = () => {
 
     useEffect(() => { fetchData(); }, []);
 
-    const teacherToMatch = currentUser?.teacherName || currentUser?.name;
+    const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>
         (student.enrollments || [])
-            .filter(enrollment => currentUser?.role !== 'teacher' || enrollment.teacher === teacherToMatch)
+            .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch)
             .flatMap(enrollment =>
                 (enrollment.schedule || []).map(slot => {
-                    const normalizedPeriod = (slot.period === 'am' || slot.period === 'ีศวอว๐' || slot.period === 'ีศวอว' || slot.period === 'ี') ? 'ี' : 'ใ';
+                    const normalizedPeriod = (slot.period === 'am' || slot.period === 'ุตุจุงุญุงู' || slot.period === 'ุตุจุงุญุง' || slot.period === 'ุต') ? 'ุต' : 'ู…';
+                    const isPM = !(slot.period === 'am' || slot.period === 'ุตุจุงุญุงู' || slot.period === 'ุตุจุงุญุง' || slot.period === 'ุต');
+                    const normHour = String(parseInt(String(slot.hour).trim(), 10) || '');
                     return {
                         id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
                         studentName: student.name,
                         studentGrade: student.grade,
-                        teacherName: enrollment.teacher,
+                        teacherName: (enrollment.teacher || '').trim(),
                         subject: enrollment.subject,
                         curriculum: enrollment.curr,
-                        day: slot.day,
-                        hour: slot.hour,
+                        day: (slot.day || '').trim(),
+                        hour: normHour,
                         period: slot.period,
-                        time: `${slot.hour} ${normalizedPeriod}`
+                        time: `${normHour} ${normalizedPeriod}`,
+                        isPM
                     };
                 })
             )
@@ -153,8 +157,8 @@ export const Appointments = () => {
         appointments: filteredAppointments
             .filter(a => a.day === day)
             .sort((a, b) => {
-                const timeA = Number(a.hour) + (a.period === 'pm' && Number(a.hour) !== 12 ? 12 : 0);
-                const timeB = Number(b.hour) + (b.period === 'pm' && Number(b.hour) !== 12 ? 12 : 0);
+                const timeA = Number(a.hour) + (a.isPM && Number(a.hour) !== 12 ? 12 : 0);
+                const timeB = Number(b.hour) + (b.isPM && Number(b.hour) !== 12 ? 12 : 0);
                 return timeA - timeB;
             })
     })).filter(dayObj => filterDay === 'all' || dayObj.day === filterDay);
@@ -191,30 +195,30 @@ export const Appointments = () => {
                         </div>
                         <div>
                             <div className="flex items-center gap-2 mb-0.5">
-                                <span className="bg-white/20 text-white text-[8px] font-medium px-2 py-0.5 uppercase tracking-widest">ฬฯๆแ วแใๆวฺํฯ</span>
+                                <span className="bg-white/20 text-white text-[8px] font-medium px-2 py-0.5 uppercase tracking-widest">ุฌุฏูู ุงูู…ูุงุนูุฏ</span>
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-400 animate-pulse" />)}
                                 </div>
                             </div>
-                            <h1 className="text-lg md:text-2xl font-medium tracking-tight leading-none">ลฯวัษ วแใๆวฺํฯ ๆวแฬแำวส</h1>
+                            <h1 className="text-lg md:text-2xl font-medium tracking-tight leading-none">ูุงุฆู…ุฉ ุงูู…ูุงุนูุฏ ุงูุฏุฑุงุณูุฉ</h1>
                             <p className="text-white/60 text-[9px] md:text-[11px] font-normal flex items-center gap-1.5 mt-1">
                                 <Activity size={10} className="shrink-0" />
-                                ใัวÞศษ ๆสๆฬํๅ วแฬแำวส วแสฺแํใํษ แิั฿วม วแไฬวอ
+                                ุฌุฏููุฉ ูู…ุชุงุจุนุฉ ุงูุญุตุต ุงูุฃูุงุฏูู…ูุฉ ููุทูุงุจ
                             </p>
                         </div>
                     </div>
                     {/* Quick stats inline */}
                     <div className="flex items-center gap-2 shrink-0">
                         <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
-                            <p className="text-[8px] opacity-60 font-medium uppercase">วแํๆใ</p>
+                            <p className="text-[8px] opacity-60 font-medium uppercase">ุงูููู…</p>
                             <p className="text-xl font-medium tabular-nums leading-none">{todayAppointments}</p>
                         </div>
                         <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
-                            <p className="text-[8px] opacity-60 font-medium uppercase">ใสศÞํ</p>
+                            <p className="text-[8px] opacity-60 font-medium uppercase">ุงูู…ุชุจูู</p>
                             <p className="text-xl font-medium tabular-nums leading-none text-emerald-300">{remainingToday}</p>
                         </div>
                         <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
-                            <p className="text-[8px] opacity-60 font-medium uppercase">ลฬใวแํ</p>
+                            <p className="text-[8px] opacity-60 font-medium uppercase">ุงูุฅุฌู…ุงูู</p>
                             <p className="text-xl font-medium tabular-nums leading-none">{totalAppointments}</p>
                         </div>
                     </div>
@@ -228,9 +232,9 @@ export const Appointments = () => {
                         <div className="w-6 h-6 bg-indigo-600 flex items-center justify-center">
                             <SlidersHorizontal size={12} className="text-white" />
                         </div>
-                        <span className="text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-widest">Ýแสัษ วแไสวฦฬ</span>
+                        <span className="text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-widest">ุชุตููุฉ ุงููุชุงุฆุฌ</span>
                         {hasActiveFilters && (
-                            <span className="bg-indigo-100 text-indigo-700 text-[7px] font-medium px-1.5 py-0.5 uppercase">Ýแสั ไิุ</span>
+                            <span className="bg-indigo-100 text-indigo-700 text-[7px] font-medium px-1.5 py-0.5 uppercase">ูุดุท</span>
                         )}
                     </div>
                     {hasActiveFilters && (
@@ -238,7 +242,7 @@ export const Appointments = () => {
                             onClick={() => { setSearchTerm(''); setFilterDay('all'); setFilterTeacher('all'); }}
                             className="flex items-center gap-1 border border-rose-200 dark:border-rose-900/50 px-2 py-1 bg-white dark:bg-slate-900 text-[10px] font-medium text-rose-500 hover:text-rose-700 transition-colors"
                         >
-                            <X size={12} /> ลฺวฯษ ึศุ
+                            <X size={12} /> ุฅุนุงุฏุฉ ุชุนููู
                         </button>
                     )}
                 </div>
@@ -248,7 +252,7 @@ export const Appointments = () => {
                         <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <input
                             type="text"
-                            placeholder="ศอห ฺไ ุวแศ รๆ ใวฯษ..."
+                            placeholder="ุงุจุญุซ ุจุงุณู… ุงูุทุงูุจ ุฃู ุงูู…ุงุฏุฉ..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-normal focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 transition-all placeholder:text-slate-300 text-slate-700 dark:text-white"
@@ -267,7 +271,7 @@ export const Appointments = () => {
                             onChange={(e) => setFilterDay(e.target.value)}
                             className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-[10px] font-normal focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
-                            <option value="all">฿แ วแรํวใ</option>
+                            <option value="all">ูู ุงูุฃูุงู…</option>
                             {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
                         </select>
                     </div>
@@ -279,7 +283,7 @@ export const Appointments = () => {
                             onChange={(e) => setFilterTeacher(e.target.value)}
                             className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-[10px] font-normal focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
-                            <option value="all">ฬใํฺ วแใฺแใวส</option>
+                            <option value="all">ูู ุงูู…ุนูู…ุงุช</option>
                             {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
                         </select>
                     </div>
@@ -304,7 +308,7 @@ export const Appointments = () => {
                                         ? "bg-indigo-600 text-white"
                                         : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                 )}>
-                                    {appointments.length} ฬแำษ
+                                    {appointments.length} ู…ูุนุฏ
                                 </span>
                             </div>
 
@@ -323,7 +327,7 @@ export const Appointments = () => {
                                                     <Clock size={12} className="text-indigo-500" />
                                                     <span className="font-medium text-indigo-600 text-sm tabular-nums">{nextSession.time}</span>
                                                 </div>
-                                                <span className="bg-indigo-50 text-indigo-600 text-[8px] font-medium px-1.5 py-0.5">วแสวแํ</span>
+                                                <span className="bg-indigo-50 text-indigo-600 text-[8px] font-medium px-1.5 py-0.5">ุงูุชุงูู</span>
                                             </div>
 
                                             {/* Student */}
@@ -342,14 +346,14 @@ export const Appointments = () => {
                                                 onClick={(e) => handleCompleteSession(nextSession.id, e)}
                                                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 font-medium text-xs transition-all flex items-center justify-center gap-1.5"
                                             >
-                                                <CheckCircle2 size={14} /> สร฿ํฯ วแลไฬวา
+                                                <CheckCircle2 size={14} /> ุฅุชู…ุงู… ุงูุญุตุฉ
                                             </button>
                                         </div>
                                     );
                                 })() : (
                                     <div className="flex-1 flex flex-col items-center justify-center py-6 opacity-30">
                                         <Calendar size={24} className="mb-2" />
-                                        <p className="text-[9px] font-medium uppercase tracking-widest">แว ํๆฬฯ ฬแำวส</p>
+                                        <p className="text-[9px] font-medium uppercase tracking-widest">ูุง ุชูุฌุฏ ู…ูุงุนูุฏ</p>
                                     </div>
                                 )}
                             </div>
@@ -360,8 +364,8 @@ export const Appointments = () => {
                     {appointmentsByDay.length === 0 && (
                         <div className="col-span-full py-20 flex flex-col items-center text-center bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800">
                             <Calendar size={36} className="text-slate-200 mb-3" />
-                            <h3 className="font-medium text-slate-600 dark:text-white text-base mb-1">แว สๆฬฯ ใๆวฺํฯ</h3>
-                            <p className="text-slate-400 text-xs max-w-xs">แว สๆฬฯ ไสวฦฬ สุวศÞ วแÝแวสั วแใอฯฯษ อวแํว๐</p>
+                            <h3 className="font-medium text-slate-600 dark:text-white text-base mb-1">ูุง ุชูุฌุฏ ู…ูุงุนูุฏ</h3>
+                            <p className="text-slate-400 text-xs max-w-xs">ูุง ุชูุฌุฏ ู…ูุงุนูุฏ ู…ุชุทุงุจูุฉ ู…ุน ู…ุนุงููุฑ ุงูุจุญุซ</p>
                         </div>
                     )}
                 </div>
@@ -378,7 +382,7 @@ export const Appointments = () => {
                             {/* Panel Header */}
                             <div className="px-4 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white flex items-center justify-between">
                                 <div>
-                                    <p className="text-[8px] font-medium opacity-60 uppercase tracking-widest">สÝวีํแ วแใๆฺฯ</p>
+                                    <p className="text-[8px] font-medium opacity-60 uppercase tracking-widest">ุชูุงุตูู ุงูู…ูุนุฏ</p>
                                     <h3 className="font-medium text-base">{selectedAppointment.day}</h3>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -398,17 +402,17 @@ export const Appointments = () => {
                                 {/* Student */}
                                 <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-indigo-500">
                                     <div>
-                                        <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">วแุวแศ</label>
-                                        <h4 className="text-sm font-medium text-slate-900 dark:text-white">{selectedAppointment.studentName}</h4>
-                                        <span className="text-[9px] font-normal text-indigo-600">{selectedAppointment.studentGrade}</span>
+                                            <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">ุงูุทุงูุจ</label>
+                                            <h4 className="text-sm font-medium text-slate-900 dark:text-white">{selectedAppointment.studentName}</h4>
+                                            <span className="text-[9px] font-normal text-indigo-600">{selectedAppointment.studentGrade}</span>
+                                        </div>
+                                        <User size={20} className="text-slate-200" />
                                     </div>
-                                    <User size={20} className="text-slate-200" />
-                                </div>
 
-                                {/* Teacher */}
-                                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-emerald-500">
-                                    <div>
-                                        <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">วแใฺแใษ</label>
+                                    {/* Teacher */}
+                                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-emerald-500">
+                                        <div>
+                                            <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">ุงูู…ุนูู…ุฉ</label>
                                         <h4 className="text-sm font-medium text-slate-900 dark:text-white">{selectedAppointment.teacherName}</h4>
                                     </div>
                                     <ShieldCheck size={20} className="text-slate-200" />
@@ -417,7 +421,7 @@ export const Appointments = () => {
                                 {/* Subject */}
                                 <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-amber-500">
                                     <div>
-                                        <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">วแใวฯษ</label>
+                                        <label className="block text-[8px] font-medium text-slate-400 uppercase mb-0.5">ุงูู…ุงุฏุฉ</label>
                                         <h4 className="text-sm font-medium text-slate-900 dark:text-white">{selectedAppointment.subject}</h4>
                                         <span className="text-[8px] font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 mt-1 inline-block">{selectedAppointment.curriculum}</span>
                                     </div>
@@ -428,7 +432,7 @@ export const Appointments = () => {
                                     onClick={() => setShowDetails(false)}
                                     className="w-full flex items-center justify-center gap-2 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium text-xs transition-all hover:opacity-90"
                                 >
-                                    ลÛแวÞ <ArrowRight size={13} />
+                                    ุนูุฏุฉ <ArrowRight size={13} />
                                 </button>
                             </div>
                         </motion.div>
