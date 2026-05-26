@@ -263,58 +263,58 @@ export const Blog = () => {
 
             {/* Portal Card */}
             {view === 'types' && (
-              <div className="bg-white rounded-[24px] p-3 mb-4 shadow-sm border border-slate-100">
+              <div className="bg-white rounded-[24px] p-4 mb-4 shadow-sm border border-slate-100">
                 <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-[13px] font-black text-slate-900">بوابة الكتب والملخصات</h2>
+                  <h2 className="text-base font-black text-slate-900">بوابة الكتب والملخصات</h2>
                   <div className="w-8 h-8 rounded-full bg-violet-50 flex items-center justify-center">
                     <Bell size={12} className="text-violet-600" />
                   </div>
                 </div>
 
                 {/* Dark purple section */}
-                <div className="bg-gradient-to-br from-[#1a1040] via-[#2a1a60] to-[#3a2080] rounded-[20px] p-5 shadow-lg mb-4">
+                <div className="bg-gradient-to-br from-[#1a1040] via-[#2a1a60] to-[#3a2080] rounded-[20px] p-5 shadow-lg mb-3">
                   {/* Tabs */}
                   <div className="flex gap-2 mb-4">
-                    <div className="px-3 py-1.5 rounded-full bg-white/15 text-white text-[9px] font-black text-center flex-1 backdrop-blur-sm border border-white/10">مركز دارين</div>
-                    <div className="px-3 py-1.5 rounded-full bg-white/10 text-white/60 text-[9px] font-black text-center flex-1 backdrop-blur-sm border border-white/5">المذكرات التعليمية</div>
+                    <div className="px-3 py-1.5 rounded-full bg-white/15 text-white text-[11px] font-black text-center flex-1 backdrop-blur-sm border border-white/10">مركز دارين</div>
+                    <div className="px-3 py-1.5 rounded-full bg-white/10 text-white/60 text-[11px] font-black text-center flex-1 backdrop-blur-sm border border-white/5">المذكرات التعليمية</div>
                   </div>
 
-                  <p className="text-[10px] text-violet-200/80 leading-relaxed mb-4 font-medium">
+                  <p className="text-xs text-violet-200/80 leading-relaxed mb-4 font-medium">
                     نوفر لك أحدث المذكرات والملخصات الدراسية لجميع المراحل التعليمية في الخليج. حمل ما يناسبك الآن.
                   </p>
 
                   <div className="flex gap-2.5">
                     <button
                       onClick={() => setView('curriculums')}
-                      className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB] text-white text-[10px] font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-[#6C4BFF]/30 active:scale-[0.97] transition-all"
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB] text-white text-[11px] font-bold px-4 py-3 rounded-xl shadow-lg shadow-[#6C4BFF]/30 active:scale-[0.97] transition-all"
                     >
-                      <FileText size={12} />
+                      <FileText size={14} />
                       تحميل مذكرة
                     </button>
                     <a
                       href={`https://wa.me/${whatsappNumber}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-bold px-4 py-2.5 rounded-xl active:scale-[0.97] transition-all"
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[11px] font-bold px-4 py-3 rounded-xl active:scale-[0.97] transition-all"
                     >
-                      <MessageCircle size={12} />
+                      <MessageCircle size={14} />
                       تواصل معنا
                     </a>
                   </div>
                 </div>
 
                 {/* Features */}
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-3 gap-2">
                   {[
                     { label: 'جودة مضمونة', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-50' },
                     { label: 'محتوى موثوق', icon: BookCheck, color: 'text-indigo-500', bg: 'bg-indigo-50' },
                     { label: 'دعم مستمر', icon: Headset, color: 'text-violet-500', bg: 'bg-violet-50' },
                   ].map((f) => (
-                    <div key={f.label} className="flex flex-col items-center gap-1 p-2 rounded-2xl bg-white border border-slate-100 shadow-sm">
-                      <div className={`w-7 h-7 rounded-xl ${f.bg} flex items-center justify-center`}>
-                        <f.icon size={12} className={f.color} />
+                    <div key={f.label} className="flex flex-col items-center gap-1.5 p-3 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                      <div className={`w-9 h-9 rounded-xl ${f.bg} flex items-center justify-center`}>
+                        <f.icon size={16} className={f.color} />
                       </div>
-                      <span className="text-[7px] font-black text-slate-700 text-center leading-tight">{f.label}</span>
+                      <span className="text-[9px] font-black text-slate-700 text-center leading-tight">{f.label}</span>
                     </div>
                   ))}
                 </div>
