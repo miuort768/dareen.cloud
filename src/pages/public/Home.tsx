@@ -13,6 +13,7 @@ import { HowItWorks } from './components/HowItWorks';
 import { Testimonials } from './components/Testimonials';
 import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
+import { HowToSubscribe } from './components/HowToSubscribe';
 import {
   Play, BookOpen, Trophy,
   Video, Star,
@@ -178,6 +179,11 @@ export const Home = () => {
             ))}
           </div>
         </section>
+
+        {/* How to Subscribe */}
+        <div className="mb-4">
+            <HowToSubscribe />
+        </div>
 
         {/* Latest Courses */}
         <section className="mb-4">
