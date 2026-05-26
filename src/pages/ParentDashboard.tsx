@@ -33,6 +33,14 @@ export const ParentDashboard = () => {
     const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);
     const [allPointLogs, setAllPointLogs] = useState<{ id: string; date: string; status: string; points?: number }[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('home');
+
+    const tabs = [
+        { id: 'home', label: 'الرئيسية', icon: LayoutDashboard },
+        { id: 'children', label: 'الأبناء', icon: Users },
+        { id: 'schedule', label: 'الجدول', icon: Calendar },
+        { id: 'activity', label: 'النشاط', icon: Star },
+    ];
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
@@ -394,12 +402,12 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ─── Mobile version (app-style) ─── */}
+            {/* ─── Mobile version (app-style with tabs) ─── */}
             <div className="block md:hidden min-h-full pb-28 overflow-x-hidden relative bg-[#F7F8FC] font-sans overscroll-contain" dir="rtl">
                 {/* Sticky app bar */}
                 <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
-                    <div className="relative z-10 px-4 pt-12 pb-3">
+                    <div className="relative z-10 px-4 pt-12 pb-2">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2.5">
                                 <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
@@ -417,23 +425,23 @@ export const ParentDashboard = () => {
                             </button>
                         </div>
                         {/* Stats pills */}
-                        <div className="flex items-center gap-2 mt-3">
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
-                                <Users size={12} className="text-purple-200 shrink-0" />
+                        <div className="flex items-center gap-2 mt-2.5">
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                                <Users size={11} className="text-purple-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-sm">{stats.childCount}</span>
                                     <span className="text-white/50 text-[7px] font-medium">أبناء</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
-                                <CalendarDays size={12} className="text-blue-200 shrink-0" />
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                                <CalendarDays size={11} className="text-blue-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-sm">{stats.upcomingSessions}</span>
                                     <span className="text-white/50 text-[7px] font-medium">قادمة</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
-                                <Star size={12} className="text-amber-200 shrink-0" />
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                                <Star size={11} className="text-amber-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-sm">{stats.attendanceRate}%</span>
                                     <span className="text-white/50 text-[7px] font-medium">انضباط</span>
@@ -441,216 +449,235 @@ export const ParentDashboard = () => {
                             </div>
                         </div>
                     </div>
+                    {/* Tab bar */}
+                    <div className="relative z-10 px-4 pb-0.5">
+                        <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-2xl p-1">
+                            {tabs.map(tab => (
+                                <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-[10px] font-bold transition-all ${
+                                        activeTab === tab.id
+                                            ? 'bg-white text-[#6C4BFF] shadow-sm'
+                                            : 'text-white/70'
+                                    }`}>
+                                    <tab.icon size={14} />
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
-                {/* Content sections */}
+                {/* Tab Content */}
                 <div className="px-3 pt-3 space-y-3.5">
-                    {/* Active session timers */}
-                    {activeTimers.length > 0 && (
-                        <div className="space-y-2">
-                            {activeTimers.map((session: { id: string; studentName: string; teacherName: string; subject: string; studentId?: string; startedAt?: string }) => {
-                                const child = children.find(c => c.id === session.studentId);
-                                return (
-                                    <div key={session.id} className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white p-3.5 rounded-2xl shadow-lg shadow-purple-200/40 flex items-center justify-between active:scale-[0.99] transition-transform">
-                                        <div className="flex items-center gap-2.5">
-                                            <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
-                                                <Clock size={18} />
+                    {activeTab === 'home' && (
+                        <>
+                            {/* Active session timers */}
+                            {activeTimers.length > 0 && (
+                                <div className="space-y-2">
+                                    {activeTimers.map((session: { id: string; studentName: string; teacherName: string; subject: string; studentId?: string; startedAt?: string }) => {
+                                        const child = children.find(c => c.id === session.studentId);
+                                        return (
+                                            <div key={session.id} className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white p-3.5 rounded-2xl shadow-lg shadow-purple-200/40 flex items-center justify-between active:scale-[0.99] transition-transform">
+                                                <div className="flex items-center gap-2.5">
+                                                    <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
+                                                        <Clock size={18} />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-bold text-xs">حصة جارية الآن!</h3>
+                                                        <p className="text-[9px] font-medium text-white/80">{child?.name || session.studentId} — {session.subject}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="text-xl font-bold font-mono tracking-widest">{formatTime(session.startedAt)}</div>
                                             </div>
-                                            <div>
-                                                <h3 className="font-bold text-xs">حصة جارية الآن!</h3>
-                                                <p className="text-[9px] font-medium text-white/80">{child?.name || session.studentId} — {session.subject}</p>
-                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
+                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">البث المباشر</h2>
+                                </div>
+                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                    <div className="p-3.5"><LiveClasses /></div>
+                                </div>
+                            </section>
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
+                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">التنقل السريع</h2>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2.5">
+                                    <button onClick={() => navigate('/parent-students')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                        <div className="w-11 h-11 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
+                                            <Users size={20} />
                                         </div>
-                                        <div className="text-xl font-bold font-mono tracking-widest">{formatTime(session.startedAt)}</div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                        <span className="text-[#1E1E2F] text-[11px] font-bold">ملفات الأبناء</span>
+                                    </button>
+                                    <button onClick={() => navigate('/forum')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                        <div className="w-11 h-11 bg-gradient-to-br from-[#3478F6] to-[#5B9DFF] rounded-2xl flex items-center justify-center text-white shadow-sm">
+                                            <LayoutDashboard size={20} />
+                                        </div>
+                                        <span className="text-[#1E1E2F] text-[11px] font-bold">المنتدى</span>
+                                    </button>
+                                </div>
+                            </section>
+                        </>
                     )}
 
-                    {/* Live Classes */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">البث المباشر</h2>
-                        </div>
-                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-                            <div className="p-3.5">
-                                <LiveClasses />
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Quick Navigation */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">التنقل السريع</h2>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2.5">
-                            <button onClick={() => navigate('/parent-students')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
-                                <div className="w-11 h-11 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
-                                    <Users size={20} />
-                                </div>
-                                <span className="text-[#1E1E2F] text-[11px] font-bold">ملفات الأبناء</span>
-                            </button>
-                            <button onClick={() => navigate('/forum')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
-                                <div className="w-11 h-11 bg-gradient-to-br from-[#3478F6] to-[#5B9DFF] rounded-2xl flex items-center justify-center text-white shadow-sm">
-                                    <LayoutDashboard size={20} />
-                                </div>
-                                <span className="text-[#1E1E2F] text-[11px] font-bold">المنتدى</span>
-                            </button>
-                        </div>
-                    </section>
-
-                    {/* Homework & Notes */}
-                    {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
-                        <section>
-                            <div className="flex items-center gap-2 mb-2 px-1">
-                                <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
-                                <h2 className="text-[#1E1E2F] text-[13px] font-black">الواجبات والملاحظات</h2>
-                            </div>
-                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5 space-y-3">
-                                {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
-                                    <div key={child.id}>
-                                        <div className="flex items-center gap-2 mb-1.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-[#6C4BFF]" />
-                                            <span className="text-[11px] font-bold text-slate-500">{child.name}</span>
-                                        </div>
-                                        <div className="space-y-2 mr-4">
-                                            {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
-                                                <div key={idx} className="bg-purple-50 p-3 rounded-xl border border-purple-100">
-                                                    <div className="flex justify-between items-center mb-1">
-                                                        <span className="text-[11px] font-bold text-[#6C4BFF]">{en.subject}</span>
-                                                        <span className="text-[9px] text-slate-400">{en.teacher}</span>
-                                                    </div>
-                                                    <p className="text-[10px] text-slate-700 leading-relaxed">{en.nextSessionNotes}</p>
+                    {activeTab === 'children' && (
+                        <>
+                            {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
+                                <section>
+                                    <div className="flex items-center gap-2 mb-2 px-1">
+                                        <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
+                                        <h2 className="text-[#1E1E2F] text-[13px] font-black">الواجبات والملاحظات</h2>
+                                    </div>
+                                    <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5 space-y-3">
+                                        {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
+                                            <div key={child.id}>
+                                                <div className="flex items-center gap-2 mb-1.5">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-[#6C4BFF]" />
+                                                    <span className="text-[11px] font-bold text-slate-500">{child.name}</span>
                                                 </div>
-                                            ))}
+                                                <div className="space-y-2 mr-4">
+                                                    {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
+                                                        <div key={idx} className="bg-purple-50 p-3 rounded-xl border border-purple-100">
+                                                            <div className="flex justify-between items-center mb-1">
+                                                                <span className="text-[11px] font-bold text-[#6C4BFF]">{en.subject}</span>
+                                                                <span className="text-[9px] text-slate-400">{en.teacher}</span>
+                                                            </div>
+                                                            <p className="text-[10px] text-slate-700 leading-relaxed">{en.nextSessionNotes}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
+                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">التقدم الأكاديمي</h2>
+                                </div>
+                                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
+                                    <div className="relative z-10">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <h3 className="text-xs font-black">التقدم الأكاديمي العام</h3>
+                                            <Award size={18} className="text-purple-200" />
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <div className="flex justify-between text-[9px] text-white/70">
+                                                <span>الهدف: 100</span>
+                                                <span>{stats.academicProgress}%</span>
+                                            </div>
+                                            <div className="w-full h-2 bg-white/15 rounded-full overflow-hidden">
+                                                <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
+                            </section>
+                        </>
+                    )}
+
+                    {activeTab === 'schedule' && (
+                        <section>
+                            <div className="flex items-center gap-2 mb-2 px-1">
+                                <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
+                                <h2 className="text-[#1E1E2F] text-[13px] font-black">جدول حصص اليوم</h2>
+                            </div>
+                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
+                                <div className="space-y-2">
+                                    {todayTasks.map((task, idx) => (
+                                        <div key={idx} className="bg-[#F7F8FC] rounded-xl p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-9 h-9 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-xl flex items-center justify-center text-white shadow-sm">
+                                                    <BookOpen size={16} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-[11px] font-bold text-[#1E1E2F]">{task.subject}</h4>
+                                                    <p className="text-[9px] text-slate-400">{task.studentName}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-left font-bold text-[10px] text-slate-500">{task.time}</div>
+                                        </div>
+                                    ))}
+                                    {todayTasks.length === 0 && (
+                                        <div className="py-8 text-center">
+                                            <Calendar size={36} className="mx-auto text-slate-200 mb-3" />
+                                            <p className="text-slate-400 font-bold text-[13px]">لا توجد حصص اليوم</p>
+                                            <p className="text-slate-300 text-[10px] mt-1">يوم هادئ بلا حصص!</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </section>
                     )}
 
-                    {/* Academic Progress */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">التقدم الأكاديمي</h2>
-                        </div>
-                        <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
-                            <div className="relative z-10">
-                                <div className="flex justify-between items-center mb-3">
-                                    <h3 className="text-xs font-black">التقدم الأكاديمي العام</h3>
-                                    <Award size={18} className="text-purple-200" />
+                    {activeTab === 'activity' && (
+                        <>
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-amber-400 rounded-full" />
+                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">آخر النشاطات</h2>
                                 </div>
-                                <div className="space-y-1.5">
-                                    <div className="flex justify-between text-[9px] text-white/70">
-                                        <span>الهدف: 100</span>
-                                        <span>{stats.academicProgress}%</span>
-                                    </div>
-                                    <div className="w-full h-2 bg-white/15 rounded-full overflow-hidden">
-                                        <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Today's Schedule */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">جدول حصص اليوم</h2>
-                        </div>
-                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
-                            <div className="space-y-2">
-                                {todayTasks.map((task, idx) => (
-                                    <div key={idx} className="bg-[#F7F8FC] rounded-xl p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
-                                        <div className="flex items-center gap-2.5">
-                                            <div className="w-9 h-9 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-xl flex items-center justify-center text-white shadow-sm">
-                                                <BookOpen size={16} />
+                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
+                                    <div className="space-y-2">
+                                        {allPointLogs.slice(0, 4).map((log, i) => (
+                                            <div key={i} className="bg-[#F7F8FC] rounded-xl p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
+                                                <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0">
+                                                    <Star size={13} fill="currentColor" />
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-[10px] font-bold text-amber-600 mb-0.5 truncate">{log.studentName}</p>
+                                                    <p className="text-[10px] text-slate-700 leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
+                                                    <p className="text-[9px] text-slate-400 mt-1 flex items-center gap-1">
+                                                        <Clock size={7} />
+                                                        {log.timestamp ? (() => {
+                                                            try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
+                                                            catch { return ''; }
+                                                        })() : ''}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h4 className="text-[11px] font-bold text-[#1E1E2F]">{task.subject}</h4>
-                                                <p className="text-[9px] text-slate-400">{task.studentName}</p>
+                                        ))}
+                                        {allPointLogs.length === 0 && (
+                                            <div className="py-5 text-center bg-[#F7F8FC] border-2 border-dashed border-slate-200 rounded-xl">
+                                                <p className="text-slate-400 font-medium text-[10px]">لا توجد نشاطات حديثة</p>
                                             </div>
-                                        </div>
-                                        <div className="text-left font-bold text-[10px] text-slate-500">{task.time}</div>
+                                        )}
                                     </div>
-                                ))}
-                                {todayTasks.length === 0 && (
-                                    <div className="py-5 text-center bg-[#F7F8FC] border-2 border-dashed border-slate-200 rounded-xl">
-                                        <p className="text-slate-400 font-medium text-[10px]">لا توجد مهام اليوم</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Recent Activity */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-amber-400 rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">آخر النشاطات</h2>
-                        </div>
-                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
-                            <div className="space-y-2">
-                                {allPointLogs.slice(0, 4).map((log, i) => (
-                                    <div key={i} className="bg-[#F7F8FC] rounded-xl p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0">
-                                            <Star size={13} fill="currentColor" />
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-[10px] font-bold text-amber-600 mb-0.5 truncate">{log.studentName}</p>
-                                            <p className="text-[10px] text-slate-700 leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
-                                            <p className="text-[9px] text-slate-400 mt-1 flex items-center gap-1">
-                                                <Clock size={7} />
-                                                {log.timestamp ? (() => {
-                                                    try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
-                                                    catch { return ''; }
-                                                })() : ''}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                                {allPointLogs.length === 0 && (
-                                    <div className="py-5 text-center bg-[#F7F8FC] border-2 border-dashed border-slate-200 rounded-xl">
-                                        <p className="text-slate-400 font-medium text-[10px]">لا توجد نشاطات حديثة</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Support */}
-                    <section>
-                        <div className="flex items-center gap-2 mb-2 px-1">
-                            <div className="w-1 h-4 bg-rose-400 rounded-full" />
-                            <h2 className="text-[#1E1E2F] text-[13px] font-black">الدعم الفني</h2>
-                        </div>
-                        <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
-                            <div className="relative z-10 flex items-center justify-between">
-                                <div>
-                                    <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
-                                    <p className="text-[9px] text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                 </div>
-                                <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`} target="_blank" rel="noopener noreferrer"
-                                    className="bg-white text-[#6C4BFF] px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
-                                    <MessageSquare size={13} />
-                                    تواصل
-                                </a>
-                            </div>
-                        </div>
-                    </section>
+                            </section>
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-rose-400 rounded-full" />
+                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">الدعم الفني</h2>
+                                </div>
+                                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
+                                    <div className="relative z-10 flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
+                                            <p className="text-[9px] text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
+                                        </div>
+                                        <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`} target="_blank" rel="noopener noreferrer"
+                                            className="bg-white text-[#6C4BFF] px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
+                                            <MessageSquare size={13} />
+                                            تواصل
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        </>
+                    )}
 
-                    {/* Spacer for bottom nav */}
                     <div className="h-4" />
                 </div>
+            </div>
         </>
     );
 };
