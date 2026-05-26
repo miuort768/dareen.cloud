@@ -130,7 +130,7 @@ export const Jobs = () => {
                                 transition={{ delay: 0.1 }}
                                 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight"
                             >
-                                فرصة للانضمام<br />
+                                فرصة للانضمام{' '}
                                 <span className="text-amber-300">إلى دارين السابعة</span>
                             </motion.h1>
                             <motion.p
