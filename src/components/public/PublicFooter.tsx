@@ -30,7 +30,7 @@ export const PublicFooter = () => {
                                 دارين السابعة
                             </span>
                         </div>
-                        <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-indigo-600/30 pr-4">
+                        <p className="text-gray-400 dark:text-gray-300 text-sm leading-relaxed border-r-2 border-indigo-600/30 pr-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعلم.
                         </p>
                     </div>
@@ -50,7 +50,7 @@ export const PublicFooter = () => {
                                 <li key={idx}>
                                     <Link
                                         to={link.path}
-                                        className="text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2 text-sm"
+                                        className="text-gray-400 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors flex items-center gap-2 text-sm"
                                     >
                                         <span className="text-amber-500">›</span> {link.name}
                                     </Link>
@@ -66,11 +66,11 @@ export const PublicFooter = () => {
                             تواصل معنا
                         </h3>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3 text-sm text-gray-400">
+                            <li className="flex items-start gap-3 text-sm text-gray-400 dark:text-gray-300">
                                 <MapPin className="w-5 h-5 text-amber-500 shrink-0" />
                                 <span>بني سويف - مصر</span>
                             </li>
-                            <li className="flex items-center gap-3 text-sm text-gray-400">
+                            <li className="flex items-center gap-3 text-sm text-gray-400 dark:text-gray-300">
                                 <Phone className="w-5 h-5 text-amber-500 shrink-0" />
                                 <a
                                     href={`https://wa.me/${adminPhone.replace(/\D/g, '')}`}
@@ -82,7 +82,7 @@ export const PublicFooter = () => {
                                     +{adminPhone.replace(/\D/g, '')}
                                 </a>
                             </li>
-                            <li className="flex items-center gap-3 text-sm text-gray-400">
+                            <li className="flex items-center gap-3 text-sm text-gray-400 dark:text-gray-300">
                                 <Instagram className="w-5 h-5 text-amber-500 shrink-0" />
                                 <a
                                     href="https://www.instagram.com/daren_school/?hl=ar"
@@ -122,7 +122,7 @@ export const PublicFooter = () => {
                 {/* Bottom */}
                 <div className="border-t border-white/10 pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="text-center md:text-right">
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
                             &copy; {new Date().getFullYear()} <span className="text-white font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
                         </p>
                     </div>
@@ -133,15 +133,15 @@ export const PublicFooter = () => {
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
                             
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                            <span className="relative z-10 text-[10px] font-bold text-gray-300 tracking-wide">تصميم وتطوير</span>
-                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-amber-300 group-hover:from-indigo-200 group-hover:to-amber-200 transition-colors">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-[10px] font-bold text-gray-300 dark:text-gray-400 tracking-wide">تصميم وتطوير</span>
+                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-amber-300 dark:from-indigo-400 dark:to-amber-400 group-hover:from-indigo-200 dark:group-hover:from-indigo-300 group-hover:to-amber-200 dark:group-hover:to-amber-300 transition-colors">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-6 justify-center md:justify-end">
-                        <Link to="/privacy-policy" className="text-gray-400 hover:text-amber-500 text-sm transition-colors">سياسة الخصوصية</Link>
-                        <Link to="/refund-policy" className="text-gray-400 hover:text-amber-500 text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
+                        <Link to="/privacy-policy" className="text-gray-400 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 text-sm transition-colors">سياسة الخصوصية</Link>
+                        <Link to="/refund-policy" className="text-gray-400 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
                     </div>
                 </div>
             </div>

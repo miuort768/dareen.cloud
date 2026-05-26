@@ -16,12 +16,12 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 dark:bg-slate-800 text-white rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-amber-400" />
                         <span className="text-[10px] font-black ">ابدأ رحلتك</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
-                        كيف تشترك في <span className="text-indigo-600">المعهد؟</span>
+                        كيف تشترك في <span className="text-indigo-600 dark:text-indigo-400">المعهد؟</span>
                     </h2>
                 </div>
                 
@@ -87,7 +87,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                 </div>
 
                                 <div className="text-center px-1 md:px-4 w-full">
-                                    <div className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
+                                    <div className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                                         {step.title}
                                     </div>
                                     <p className="hidden sm:block text-[8px] md:text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-bold">
@@ -105,7 +105,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative px-8 py-3.5 bg-slate-900 text-white font-black text-sm rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
+                            className="group relative px-8 py-3.5 bg-slate-900 dark:bg-slate-800 text-white font-black text-sm rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">

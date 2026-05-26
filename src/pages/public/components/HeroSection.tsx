@@ -29,9 +29,9 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6">
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                                <span className="text-indigo-900 font-bold text-[10px] sm:text-xs">منصة تعليمية بتصميم عصري</span>
+                                <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليمية بتصميم عصري</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
@@ -58,13 +58,13 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                     aria-label="شاهد دليل الاستخدام"
                                 >
-                                    <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center group-hover:scale-110 transition">
-                                        <Play className="w-4 h-4 text-indigo-600 fill-indigo-600" />
+                                    <div className="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center group-hover:scale-110 transition">
+                                        <Play className="w-4 h-4 text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400" />
                                     </div>
                                     <span>دليل الاستخدام؟</span>
                                 </button>
                             </div>
-                            <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center gap-6">
+                            <div className="mt-4 pt-4 border-t border-gray-100 dark:border-slate-800 flex items-center justify-center gap-6">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map((i) => (
                                         <img
@@ -72,12 +72,10 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                             src={`https://i.pravatar.cc/100?img=${i + 10}`}
                                             width="40"
                                             height="40"
-                                            className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
-                                            alt={`صورة طالب ${i}`}
-                                            loading="lazy"
+                                            className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 shadow-sm"
                                         />
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700">
+                                    <div className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300">
                                         +2k
                                     </div>
                                 </div>

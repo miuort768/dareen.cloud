@@ -5,24 +5,33 @@ const features = [
     title: 'نتائج مضمونة',
     desc: 'متابعة دقيقة لضمان تحقيق أفضل النتائج التعليمية.',
     color: 'text-emerald-500',
+    colorDark: 'dark:text-emerald-400',
     bg: 'bg-emerald-50',
+    bgDark: 'dark:bg-emerald-900/30',
     border: 'border-emerald-100',
+    borderDark: 'dark:border-emerald-900/50',
     glow: 'shadow-emerald-500/10',
   },
   {
     title: 'طرق تعليم مبتكرة',
     desc: 'طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.',
     color: 'text-indigo-500',
+    colorDark: 'dark:text-indigo-400',
     bg: 'bg-indigo-50',
+    bgDark: 'dark:bg-indigo-900/30',
     border: 'border-indigo-100',
+    borderDark: 'dark:border-indigo-900/50',
     glow: 'shadow-indigo-500/10',
   },
   {
     title: 'بيئة آمنة ومحفزة',
     desc: 'بيئة تعليمية افتراضية آمنة تشجع الطلاب على التفاعل والمشاركة بحرية.',
     color: 'text-violet-500',
+    colorDark: 'dark:text-violet-400',
     bg: 'bg-violet-50',
+    bgDark: 'dark:bg-violet-900/30',
     border: 'border-violet-100',
+    borderDark: 'dark:border-violet-900/50',
     glow: 'shadow-violet-500/10',
     ribbon: true,
   },
@@ -57,18 +66,18 @@ export const WhyChooseUs = () => {
           {features.map((f, i) => {
             const Icon = featureIcons[i];
             return (
-              <div key={f.title} className={`relative flex items-center gap-4 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border ${f.border} shadow-sm ${f.glow}`}>
+              <div key={f.title} className={`relative flex items-center gap-4 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border ${f.border} ${f.borderDark} shadow-sm ${f.glow}`}>
                 {f.ribbon && (
                   <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[#6C4BFF] to-[#4A2DDB] text-white text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-yellow-300 text-yellow-300" />
                     الأكثر تميزاً
                   </div>
                 )}
-                <div className={`w-12 h-12 rounded-2xl ${f.bg} flex items-center justify-center shrink-0`}>
-                  <Icon className={f.color} size={22} />
+                <div className={`w-12 h-12 rounded-2xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
+                  <Icon className={`${f.color} ${f.colorDark}`} size={22} />
                 </div>
                 <div>
-                  <h3 className={`text-sm font-black ${f.color}`}>{f.title}</h3>
+                  <h3 className={`text-sm font-black ${f.color} ${f.colorDark}`}>{f.title}</h3>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">{f.desc}</p>
                 </div>
               </div>
@@ -145,7 +154,7 @@ export const WhyChooseUs = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
               <BookOpen size={64} className="text-black dark:text-white" />
             </div>
-            <div className="relative z-10 w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
+            <div className="relative z-10 w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
               <CheckCircle className="w-7 h-7" />
             </div>
             <div className="relative z-10 text-right">

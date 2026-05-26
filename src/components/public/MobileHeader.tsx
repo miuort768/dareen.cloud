@@ -41,7 +41,7 @@ export const MobileHeader = () => {
                   {item.label}
                 </Link>
               ))}
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-[12px] font-bold text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors border-t border-slate-100 dark:border-slate-700">
+              <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-[12px] font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors border-t border-slate-100 dark:border-slate-700">
                 <LogIn size={14} />
                 تسجيل الدخول
               </Link>

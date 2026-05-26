@@ -25,9 +25,9 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-indigo-600" />
-                        <span className="text-[9px] font-black  text-indigo-700">آراء يعتز بها</span>
+                        <span className="text-[9px] font-black  text-indigo-700 dark:text-indigo-300">آراء يعتز بها</span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading leading-tight">
+                    <h2 className="text-2xl md:text-3xl font-black text-black dark:text-white mb-3 font-heading leading-tight">
                         ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
                     </h2>
                 </div>

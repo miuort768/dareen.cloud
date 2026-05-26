@@ -78,7 +78,7 @@ export const MasarSection = () => {
             </section>
 
             {/* ─── Mobile version ─── */}
-            <section className="block md:hidden relative overflow-hidden bg-[#F7F8FC] pt-3 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-[#F7F8FC] dark:bg-slate-950 pt-3 pb-4">
                 {/* Decorative blobs */}
                 <div className="absolute top-20 -right-20 w-60 h-60 bg-purple-400/15 rounded-full blur-[100px] pointer-events-none"></div>
                 <div className="absolute bottom-40 -left-20 w-72 h-72 bg-blue-400/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -95,13 +95,13 @@ export const MasarSection = () => {
                     </div>
 
                     {/* Title Card */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 p-5 mb-5 flex items-center justify-between">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-5 mb-5 flex items-center justify-between">
                         <div>
-                            <h2 className="text-[#1E1E2F] text-lg font-black">بوابة الكتب والملخصات</h2>
-                            <p className="text-[#7D8597] text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
+                            <h2 className="text-[#1E1E2F] dark:text-white text-lg font-black">بوابة الكتب والملخصات</h2>
+                            <p className="text-[#7D8597] dark:text-slate-400 text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center">
-                            <Download size={20} className="text-[#6C4BFF]" />
+                        <div className="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
+                            <Download size={20} className="text-[#6C4BFF] dark:text-purple-400" />
                         </div>
                     </div>
 
@@ -145,23 +145,23 @@ export const MasarSection = () => {
 
                     {/* Trust Indicators */}
                     <div className="grid grid-cols-3 gap-4">
-                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
-                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-purple-50 flex items-center justify-center">
-                                <Shield size={20} className="text-[#6C4BFF]" />
+                        <div className="text-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
+                                <Shield size={20} className="text-[#6C4BFF] dark:text-purple-400" />
                             </div>
-                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">جودة مضمونة</span>
+                            <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold leading-tight block">جودة مضمونة</span>
                         </div>
-                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
-                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-emerald-50 flex items-center justify-center">
-                                <BadgeCheck size={20} className="text-[#18C76F]" />
+                        <div className="text-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center">
+                                <BadgeCheck size={20} className="text-[#18C76F] dark:text-emerald-400" />
                             </div>
-                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">محتوى موثوق</span>
+                            <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold leading-tight block">محتوى موثوق</span>
                         </div>
-                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
-                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-amber-50 flex items-center justify-center">
-                                <Headphones size={20} className="text-[#F5A623]" />
+                        <div className="text-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
+                                <Headphones size={20} className="text-[#F5A623] dark:text-amber-400" />
                             </div>
-                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">دعم مستمر</span>
+                            <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold leading-tight block">دعم مستمر</span>
                         </div>
                     </div>
                 </div>

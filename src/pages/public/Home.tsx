@@ -21,10 +21,10 @@ import {
 } from 'lucide-react';
 
 const quickFeatures = [
-  { icon: BookOpen, label: 'دروس خصوصية', desc: 'مع نخبة من أفضل المعلمين', color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100' },
-  { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي وأكثر', color: 'text-sky-600', bg: 'bg-sky-50', border: 'border-sky-100' },
-  { icon: Video, label: 'تحفيظ قرآن', desc: 'برامج تجويد وإتقان للحفظ', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
-  { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية للإنجاز', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
+  { icon: BookOpen, label: 'دروس خصوصية', desc: 'مع نخبة من أفضل المعلمين', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
+  { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي وأكثر', color: 'text-sky-600', colorDark: 'dark:text-sky-400', bg: 'bg-sky-50', bgDark: 'dark:bg-sky-900/30', border: 'border-sky-100', borderDark: 'dark:border-sky-900/50' },
+  { icon: Video, label: 'تحفيظ قرآن', desc: 'برامج تجويد وإتقان للحفظ', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
+  { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية للإنجاز', color: 'text-amber-600', colorDark: 'dark:text-amber-400', bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', border: 'border-amber-100', borderDark: 'dark:border-amber-900/50' },
 ];
 
 const getFilteredCourses = (category: string) =>
@@ -129,32 +129,32 @@ export const Home = () => {
       <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
 
         {/* Hero Carousel */}
-        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-2xl overflow-hidden mb-4 shadow-sm border border-violet-100/50">
+        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl overflow-hidden mb-4 shadow-sm border border-violet-100/50 dark:border-slate-800">
           {heroSlides.map((slide, i) => (
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                  <h2 className="text-[18px] font-black text-indigo-950 leading-tight mb-1">{slide.title}{heroIndex === 0 && <span className="text-blue-600"> السابعة</span>}</h2>
-                  <p className="text-[12px] font-bold text-violet-600 mb-2">{slide.subtitle}</p>
-                  <p className="text-[9px] text-slate-500 leading-relaxed mb-3">{slide.desc}</p>
+                  <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h2>
+                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">{slide.subtitle}</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
                     <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
                       <Play className="w-3 h-3 fill-white" />
                       تصفح الدورات
                     </Link>
-                    <Link to="/login" className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 hover:text-indigo-600 transition-all w-full text-center">
+                    <Link to="/login" className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center">
                       تسجيل الدخول
                     </Link>
                   </div>
                 </div>
                 <div className="relative shrink-0">
-                  <div className="absolute inset-0 bg-violet-200/50 rounded-full blur-xl" />
+                  <div className="absolute inset-0 bg-violet-200/50 dark:bg-violet-800/30 rounded-full blur-xl" />
                   <div className="relative w-[90px]">
                     <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" />
                   </div>
                   <div className="flex justify-center gap-1 -mt-1">
                     {[0, 1, 2].map((d) => (
-                      <button key={d} onClick={() => setHeroIndex(d)} className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-indigo-600 w-3' : 'bg-slate-300'}`} />
+                      <button key={d} onClick={() => setHeroIndex(d)} className={`w-1.5 h-1.5 rounded-full transition-all $                    {heroIndex === d ? 'bg-indigo-600 w-3' : 'bg-slate-300 dark:bg-slate-600'}`} />
                     ))}
                   </div>
                 </div>
@@ -167,12 +167,12 @@ export const Home = () => {
         <section className="mb-4">
           <div className="grid grid-cols-2 gap-2">
             {quickFeatures.map((f, i) => (
-              <div key={i} className={`flex items-center gap-2 p-3 bg-white rounded-xl shadow-sm border ${f.border} transition-all`}>
-                <div className={`w-10 h-10 rounded-xl ${f.bg} flex items-center justify-center shrink-0`}>
-                  <f.icon className={f.color} size={20} />
+              <div key={i} className={`flex items-center gap-2 p-3 bg-white dark:bg-slate-900 rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}>
+                <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
+                  <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[11px] font-black text-slate-800 block leading-tight">{f.label}</span>
+                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight">{f.label}</span>
                   <span className="text-[6px] text-slate-400 font-medium leading-tight">{f.desc}</span>
                 </div>
               </div>
@@ -188,8 +188,8 @@ export const Home = () => {
         {/* Latest Courses */}
         <section className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-[15px] font-black text-slate-900">أحدث الدورات</h3>
-            <Link to="/courses" className="text-[11px] font-bold text-indigo-600 flex items-center gap-1">
+            <h3 className="text-[15px] font-black text-slate-900 dark:text-white">أحدث الدورات</h3>
+            <Link to="/courses" className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
               عرض الكل
               <ChevronLeft className="w-3.5 h-3.5" />
             </Link>
@@ -203,8 +203,8 @@ export const Home = () => {
                 onClick={() => setActiveCategory(cat.value)}
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 ${
                   activeCategory === cat.value
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                    : 'bg-white text-slate-500 border border-slate-200'
+                    ? 'bg-indigo-600 dark:bg-indigo-500 text-white shadow-md shadow-indigo-600/20'
+                    : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
                 }`}
               >
                 <cat.icon size={12} className={activeCategory === cat.value ? 'text-white' : cat.color} />
@@ -224,9 +224,9 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                className="min-w-[180px] w-[180px] bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden shrink-0 block"
+                className="min-w-[180px] w-[180px] bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden shrink-0 block"
               >
-                <div className="relative h-24 bg-white overflow-hidden">
+                <div className="relative h-24 bg-white dark:bg-slate-800 overflow-hidden">
                   <img
                     src={c.image}
                     alt={c.title}
@@ -244,16 +244,16 @@ export const Home = () => {
                   </span>
                 </div>
                 <div className="p-3">
-                  <h4 className="text-[12px] font-black text-slate-900 mb-0.5">{c.title}</h4>
-                  <p className="text-[9px] text-slate-400 font-medium mb-2 line-clamp-1">{c.desc}</p>
+                  <h4 className="text-[12px] font-black text-slate-900 dark:text-white mb-0.5">{c.title}</h4>
+                  <p className="text-[9px] text-slate-400 font-medium mb-2 line-clamp-1 dark:text-slate-400">{c.desc}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">
                       <Users className="w-3 h-3 text-slate-400" />
-                      <span className="text-[9px] font-bold text-slate-500">{c.students}</span>
+                      <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400">{c.students}</span>
                     </div>
                     <div className="flex items-center gap-0.5">
                       <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                      <span className="text-[9px] font-bold text-slate-600">{c.rating}</span>
+                      <span className="text-[9px] font-bold text-slate-600 dark:text-slate-300">{c.rating}</span>
                     </div>
                   </div>
                 </div>

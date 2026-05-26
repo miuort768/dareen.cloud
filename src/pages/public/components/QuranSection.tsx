@@ -46,11 +46,11 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
                         <div className="w-full lg:w-1/2 text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 rounded-full mb-6 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span className="text-emerald-900 font-bold text-xs">برامج تحفيظ متميزة</span>
+                                <span className="text-emerald-900 dark:text-emerald-300 font-bold text-xs">برامج تحفيظ متميزة</span>
                             </div>
-                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
+                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black dark:text-white leading-tight font-heading">
                                 رحلتك مع <span className="text-emerald-600 relative inline-block">
                                     كتاب الله
                                     <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -58,7 +58,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     </svg>
                                 </span> تبدأ بخطوة
                             </h2>
-                            <p className="text-gray-600 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
+                            <p className="text-gray-600 dark:text-slate-400 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
                                 منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
@@ -74,7 +74,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center rounded-xl"
+                                    className="px-10 py-4 bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 font-bold text-lg hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center rounded-xl"
                                 >
                                     <Sparkles size={20} className="ml-2" />
                                     تصفح المزيد
@@ -83,44 +83,44 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="items-center justify-center gap-4 inline-flex">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden shadow-sm">
                                             <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt={`صورة طالب ${i}`} width="40" height="40" />
                                         </div>
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-700 shadow-sm">+5k</div>
+                                    <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300 shadow-sm">+5k</div>
                                 </div>
-                                <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
+                                <div className="h-8 w-px bg-emerald-200/50 dark:bg-emerald-800/50 mx-2"></div>
                                 <div className="text-right">
-                                    <div className="text-sm font-bold text-black">4.9/5 تقييم ممتاز</div>
-                                    <div className="text-xs text-gray-500">من قبل آلاف الطلاب</div>
+                                    <div className="text-sm font-bold text-black dark:text-white">4.9/5 تقييم ممتاز</div>
+                                    <div className="text-xs text-gray-500 dark:text-slate-400">من قبل آلاف الطلاب</div>
                                 </div>
                             </div>
                         </div>
                         <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
                             <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
-                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12 rounded-xl">
+                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12 rounded-xl">
                                         <Clock className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-black text-black text-xs mb-1">أوقات مرنة</h3>
-                                    <p className="text-[10px] text-gray-500 leading-tight">اختر مواعيدك المفضلة</p>
+                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">أوقات مرنة</h3>
+                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">اختر مواعيدك المفضلة</p>
                                 </div>
-                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 text-amber-600 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12 rounded-xl">
+                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12 rounded-xl">
                                         <ClipboardCheck className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-black text-black text-xs mb-1">متابعة دقيقة</h3>
-                                    <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
+                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">متابعة دقيقة</h3>
+                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">تقارير إنجاز أسبوعية</p>
                                 </div>
-                                <div className="relative p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110 rounded-xl">
+                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110 rounded-xl">
                                         <Mic className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-black text-black text-xs mb-1">معلمون مجازون</h3>
-                                    <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
+                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
+                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
                                 <div className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
@@ -137,7 +137,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] transition-colors duration-500 pt-2 pb-8">
+            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] dark:bg-slate-950 transition-colors duration-500 pt-2 pb-8">
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
@@ -147,30 +147,30 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 <div className="relative z-10 px-5">
                     {/* Badge */}
                     <div className="flex items-center justify-center mb-5 mt-2">
-                        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-emerald-100/80 rounded-full shadow-sm">
+                        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 border border-emerald-100/80 dark:border-emerald-800/60 rounded-full shadow-sm">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span className="text-emerald-700 font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
+                            <span className="text-emerald-700 dark:text-emerald-300 font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
                         </div>
                     </div>
 
                     {/* Hero Title */}
                     <div className="text-center mb-5">
-                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] font-heading">
+                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] dark:text-white font-heading">
                             رحلتك مع{" "}
-                            <span className="text-[#08B26A] relative inline-block">
+                            <span className="text-[#08B26A] dark:text-emerald-400 relative inline-block">
                                 كتاب الله
                                 <svg className="absolute -bottom-1.5 left-0 w-full h-3 text-emerald-300" viewBox="0 0 120 12" preserveAspectRatio="none">
                                     <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
                                 </svg>
                             </span>
                         </h2>
-                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] font-heading mt-0.5">
+                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] dark:text-white font-heading mt-0.5">
                             تبدأ بخطوة
                         </h2>
                     </div>
 
                     {/* Description */}
-                    <p className="text-[#7D8597] text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
+                    <p className="text-[#7D8597] dark:text-slate-400 text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
                         منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                     </p>
 
@@ -188,7 +188,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <Link
                             to="/courses"
                             onClick={() => window.scrollTo(0, 0)}
-                            className="w-full max-w-[320px] py-3.5 bg-white text-[#08B26A] border border-gray-100 font-bold text-sm hover:border-emerald-200 hover:bg-emerald-50/50 transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
+                            className="w-full max-w-[320px] py-3.5 bg-white dark:bg-slate-900 text-[#08B26A] dark:text-emerald-400 border border-gray-100 dark:border-slate-700 font-bold text-sm hover:border-emerald-200 dark:hover:border-emerald-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
                         >
                             <Sparkles size={16} />
                             تصفح المزيد
@@ -199,38 +199,38 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="flex items-center justify-center gap-4 mb-8">
                         <div className="text-left">
                             <div className="flex items-center gap-1.5">
-                                <span className="text-lg font-black text-[#1B1B1F]">4.9</span>
-                                <span className="text-sm font-bold text-[#7D8597]">/5</span>
+                                <span className="text-lg font-black text-[#1B1B1F] dark:text-white">4.9</span>
+                                <span className="text-sm font-bold text-[#7D8597] dark:text-slate-400">/5</span>
                                 <Star size={14} className="text-amber-400 fill-amber-400" />
                             </div>
-                            <div className="text-[11px] text-[#7D8597] font-medium mt-0.5">من قبل آلاف الطلاب</div>
+                            <div className="text-[11px] text-[#7D8597] dark:text-slate-400 font-medium mt-0.5">من قبل آلاف الطلاب</div>
                         </div>
-                        <div className="h-10 w-px bg-emerald-200/60"></div>
+                        <div className="h-10 w-px bg-emerald-200/60 dark:bg-emerald-800/60"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="w-9 h-9 rounded-full border-2 border-white bg-gray-100 overflow-hidden shadow-sm">
+                                <div key={i} className="w-9 h-9 rounded-full border-2 border-white dark:border-slate-800 bg-gray-100 dark:bg-slate-800 overflow-hidden shadow-sm">
                                     <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="36" height="36" className="w-full h-full object-cover" />
                                 </div>
                             ))}
-                            <div className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-br from-[#08B26A] to-[#00A86B] flex items-center justify-center text-[10px] font-black text-white shadow-sm">5K+</div>
+                            <div className="w-9 h-9 rounded-full border-2 border-white dark:border-slate-800 bg-gradient-to-br from-[#08B26A] to-[#00A86B] flex items-center justify-center text-[10px] font-black text-white shadow-sm">5K+</div>
                         </div>
                     </div>
 
                     {/* Feature Cards 2x2 */}
                     <div className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
-                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-amber-50 rounded-2xl flex items-center justify-center mb-3">
-                                <ClipboardCheck size={22} className="text-[#F5A623]" />
+                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-amber-50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-3">
+                                <ClipboardCheck size={22} className="text-[#F5A623] dark:text-amber-400" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">متابعة دقيقة</h3>
-                            <p className="text-[#7D8597] text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
+                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">متابعة دقيقة</h3>
+                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </div>
-                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-purple-50 rounded-2xl flex items-center justify-center mb-3">
-                                <Clock size={22} className="text-[#6C4BFF]" />
+                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-3">
+                                <Clock size={22} className="text-[#6C4BFF] dark:text-purple-400" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">أوقات مرنة</h3>
-                            <p className="text-[#7D8597] text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
+                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">أوقات مرنة</h3>
+                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
                         </div>
                         <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
@@ -239,12 +239,12 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <h3 className="font-black text-white text-[13px] mb-1">جرب مجانًا</h3>
                             <p className="text-white/80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
                         </div>
-                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-emerald-50 rounded-2xl flex items-center justify-center mb-3">
-                                <Mic size={22} className="text-[#08B26A]" />
+                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mb-3">
+                                <Mic size={22} className="text-[#08B26A] dark:text-emerald-400" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">معلمون مجازون</h3>
-                            <p className="text-[#7D8597] text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
+                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">معلمون مجازون</h3>
+                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
                         </div>
                     </div>
 
