@@ -263,7 +263,7 @@ export const Blog = () => {
 
             {/* Portal Card */}
             {view === 'types' && (
-              <div className="bg-white rounded-[24px] p-4 mb-6 shadow-sm border border-slate-100">
+              <div className="bg-white rounded-[24px] p-3 mb-4 shadow-sm border border-slate-100">
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="text-[13px] font-black text-slate-900">بوابة الكتب والملخصات</h2>
                   <div className="w-8 h-8 rounded-full bg-violet-50 flex items-center justify-center">
@@ -304,13 +304,13 @@ export const Blog = () => {
                 </div>
 
                 {/* Features */}
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1.5">
                   {[
                     { label: 'جودة مضمونة', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-50' },
                     { label: 'محتوى موثوق', icon: BookCheck, color: 'text-indigo-500', bg: 'bg-indigo-50' },
                     { label: 'دعم مستمر', icon: Headset, color: 'text-violet-500', bg: 'bg-violet-50' },
                   ].map((f) => (
-                    <div key={f.label} className="flex flex-col items-center gap-1.5 p-2.5 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                    <div key={f.label} className="flex flex-col items-center gap-1 p-2 rounded-2xl bg-white border border-slate-100 shadow-sm">
                       <div className={`w-7 h-7 rounded-xl ${f.bg} flex items-center justify-center`}>
                         <f.icon size={12} className={f.color} />
                       </div>
