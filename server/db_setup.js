@@ -374,6 +374,8 @@ async function setupDatabase() {
         CREATE TABLE IF NOT EXISTS job_applications (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            whatsapp TEXT,
             position TEXT NOT NULL,
             qualification TEXT NOT NULL,
             grade TEXT,

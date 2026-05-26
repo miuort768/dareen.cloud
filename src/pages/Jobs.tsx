@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles } from 'lucide-react';
+import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle } from 'lucide-react';
 import { api } from '../lib/api';
 
 export const Jobs = () => {
     const [form, setForm] = useState({
         name: '',
+        phone: '',
+        whatsapp: '',
         position: '',
         qualification: '',
         grade: '',
@@ -78,6 +80,27 @@ export const Jobs = () => {
                             />
 
                             <InputField
+                                icon={Phone}
+                                label="رقم الهاتف"
+                                name="phone"
+                                value={form.phone}
+                                onChange={handleChange}
+                                placeholder="مثال: 96512345678"
+                                type="tel"
+                                required
+                            />
+
+                            <InputField
+                                icon={MessageCircle}
+                                label="رقم واتساب"
+                                name="whatsapp"
+                                value={form.whatsapp}
+                                onChange={handleChange}
+                                placeholder="نفس الرقم أو رقم آخر"
+                                type="tel"
+                            />
+
+                            <InputField
                                 icon={Briefcase}
                                 label="الوظيفة المطلوبة"
                                 name="position"
@@ -143,7 +166,7 @@ export const Jobs = () => {
                         <div className="p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
                             <button
                                 type="submit"
-                                disabled={loading || !form.name || !form.position || !form.qualification}
+                                disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
                                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 px-6 text-sm font-medium uppercase tracking-widest transition-all disabled:opacity-30 flex items-center justify-center gap-3 active:scale-[0.99]"
                             >
                                 {loading ? (
