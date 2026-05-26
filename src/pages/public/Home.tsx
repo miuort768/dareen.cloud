@@ -141,9 +141,9 @@ export const Home = () => {
                       <Play className="w-3 h-3 fill-white" />
                       تصفح الدورات
                     </Link>
-                    <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 transition-all w-full">
-                      دليل الاستخدام
-                    </button>
+                    <Link to="/login" className="bg-white text-slate-700 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 hover:border-indigo-200 hover:text-indigo-600 transition-all w-full text-center">
+                      تسجيل الدخول
+                    </Link>
                   </div>
                 </div>
                 <div className="relative shrink-0">
