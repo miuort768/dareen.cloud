@@ -324,7 +324,7 @@ export const Blog = () => {
             {/* Selection Grid for sub-views */}
             {view !== 'types' && (
               <>
-                <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2">
+                <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-4 mb-4 shadow-sm border border-violet-100/50 mt-0">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3 shadow-sm">
                     <BookOpen size={10} className="text-violet-600" />
                     <span className="text-[9px] font-black text-violet-600">
@@ -338,14 +338,14 @@ export const Blog = () => {
                       <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
                     )}
                   </h1>
-                  <p className="text-[10px] text-slate-500 font-medium mt-1 leading-relaxed">
+                  <p className="text-[11px] text-slate-500 font-medium mt-1 leading-relaxed">
                     {view === 'curriculums'
                       ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                       : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
                   {gridItems.map((item: GridItem, i: number) => (
                     <button
                       key={item.id}
@@ -354,26 +354,26 @@ export const Blog = () => {
                         else { setSelectedLevel(item.id); setView('classrooms'); }
                       }}
                       className={cn(
-                        "relative flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl text-white overflow-hidden shadow-sm active:scale-[0.97] transition-all",
+                        "relative flex flex-col items-center justify-center gap-1 p-3 rounded-2xl text-white overflow-hidden shadow-sm active:scale-[0.97] transition-all",
                         "bg-gradient-to-br", item.gradient
                       )}
                     >
-                      <item.icon size={18} />
-                      <span className="text-[10px] font-black text-center leading-tight">{item.name}</span>
-                      {item.sub && <span className="text-[8px] text-white/70 font-bold">{item.sub}</span>}
+                      <item.icon size={16} />
+                      <span className="text-[11px] font-black text-center leading-tight">{item.name}</span>
+                      {item.sub && <span className="text-[9px] text-white/70 font-bold">{item.sub}</span>}
                     </button>
                   ))}
 
                   <button onClick={goBack}
-                    className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all shadow-sm">
+                    className="flex flex-col items-center justify-center gap-1 p-3 rounded-2xl bg-white border border-slate-200 text-slate-500 active:scale-[0.97] transition-all shadow-sm">
                     <ArrowLeft size={16} />
-                    <span className="text-[10px] font-black">العودة</span>
+                    <span className="text-[11px] font-black">العودة</span>
                   </button>
 
                   <Link to="/courses"
-                    className="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-sm">
+                    className="flex flex-col items-center justify-center gap-1 p-3 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-sm">
                     <Sparkles size={16} />
-                    <span className="text-[10px] font-black">الدورات</span>
+                    <span className="text-[11px] font-black">الدورات</span>
                   </Link>
                 </div>
               </>
