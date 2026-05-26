@@ -167,7 +167,7 @@ export const Blog = () => {
   }, []);
 
   return (
-    <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
@@ -177,7 +177,7 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
-      <main className="md:hidden pb-0 px-2 relative bg-[#F8F8FC] dark:bg-slate-950">
+      <main className="md:hidden pb-0 px-2 relative flex-1 bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div>
             {/* Top header bar */}
