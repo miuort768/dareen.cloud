@@ -62,7 +62,18 @@ export const PublicNavbar = () => {
                             <h1 className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-900">
                                 دارين السابعة
                             </h1>
-                            <span className="text-[9px] md:text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 bg-indigo-50/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md italic">
+                            <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 italic">
+                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-indigo-300 dark:text-indigo-600" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M2 10 C10 2 18 2 20 10 C22 18 30 18 38 10" />
+                                    <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
+                                </svg>
+                                أفضل مدرسة افتراضية
+                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-indigo-300 dark:text-indigo-600" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M2 10 C10 18 18 18 20 10 C22 2 30 2 38 10" />
+                                    <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
+                                </svg>
+                            </span>
+                            <span className="md:hidden text-[9px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 bg-indigo-50/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md italic">
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
