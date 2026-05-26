@@ -165,9 +165,9 @@ export const Home = () => {
 
         {/* Quick Features */}
         <section className="mb-4">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1.5">
             {quickFeatures.map((f, i) => (
-              <div key={i} className={`flex items-center gap-2 p-3 bg-white dark:bg-slate-900 rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}>
+              <div key={i} className={`flex items-center gap-2 p-2 bg-white dark:bg-slate-900 rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}>
                 <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
                   <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
                 </div>
