@@ -116,9 +116,9 @@ export const Login = () => {
                                 <span className="text-[18px] font-black uppercase text-slate-800 tracking-[0.2em]">منصة دارين السابعة</span>
                             </div>
                             
-                            <h2 className="text-4xl lg:text-5xl font-black text-[rgb(var(--text-main))] mb-8 leading-tight border-r-8 border-emerald-600 pr-8 min-h-[6rem]">
+                            <h2 className="text-2xl lg:text-4xl font-black text-[rgb(var(--text-main))] mb-8 leading-tight border-r-8 border-emerald-600 pr-8 min-h-[4.5rem]">
                                 {typedText}
-                                <span className="inline-block w-[6px] h-10 bg-emerald-600 ml-3 animate-pulse align-middle"></span>
+                                <span className="inline-block w-[5px] h-7 bg-emerald-600 mr-2 animate-pulse align-middle"></span>
                             </h2>
                             <p className="text-[rgb(var(--text-muted))] text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
                         </div>
