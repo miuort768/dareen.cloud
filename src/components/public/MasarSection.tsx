@@ -78,7 +78,7 @@ export const MasarSection = () => {
             </section>
 
             {/* ─── Mobile version ─── */}
-            <section className="block md:hidden relative overflow-hidden bg-[#F7F8FC] pt-6 pb-8">
+            <section className="block md:hidden relative overflow-hidden bg-[#F7F8FC] pt-3 pb-4">
                 {/* Decorative blobs */}
                 <div className="absolute top-20 -right-20 w-60 h-60 bg-purple-400/15 rounded-full blur-[100px] pointer-events-none"></div>
                 <div className="absolute bottom-40 -left-20 w-72 h-72 bg-blue-400/10 rounded-full blur-[120px] pointer-events-none"></div>
