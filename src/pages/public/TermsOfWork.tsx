@@ -1,4 +1,4 @@
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Briefcase, FileCheck, Clock, Shield, Award, UserCheck, AlertCircle, Headphones } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -13,10 +13,10 @@ export const TermsOfWork = () => {
                 description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
                 url="https://dareen.cloud/terms-of-work"
             />
-            <PublicNavbar />
+            <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-36 md:pb-10 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-16 pb-6 md:pt-36 md:pb-10 overflow-hidden bg-[#FDFCF8]">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
@@ -62,7 +62,7 @@ export const TermsOfWork = () => {
                                 <Award className="w-6 h-6 text-emerald-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">مؤهلات المعلمين</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">مؤهلات المعلمين</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <ul className="list-disc list-inside space-y-2 mr-4">
                                         <li>يشترط حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
@@ -83,7 +83,7 @@ export const TermsOfWork = () => {
                                 <Shield className="w-6 h-6 text-violet-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">قواعد السلوك المهني</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">قواعد السلوك المهني</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <p>يلتزم جميع المعلمين والموظفين بـ:</p>
                                     <ul className="list-disc list-inside space-y-2 mr-4">
@@ -107,7 +107,7 @@ export const TermsOfWork = () => {
                                 <Clock className="w-6 h-6 text-amber-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">الحضور والمواعيد</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">الحضور والمواعيد</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <ul className="list-disc list-inside space-y-2 mr-4">
                                         <li>تسجيل الدخول قبل موعد الحصة بـ 5 دقائق لضمان جاهزية التقنية</li>
@@ -129,7 +129,7 @@ export const TermsOfWork = () => {
                                 <Award className="w-6 h-6 text-blue-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">نظام المكافآت والخصومات</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">نظام المكافآت والخصومات</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <div>
                                         <h3 className="font-bold text-gray-900 mb-2">المكافآت:</h3>
@@ -160,7 +160,7 @@ export const TermsOfWork = () => {
                                 <AlertCircle className="w-6 h-6 text-red-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">إنهاء التعاقد</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">إنهاء التعاقد</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <p>يحق لدارين السابعة إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-2 mr-4">
@@ -183,7 +183,7 @@ export const TermsOfWork = () => {
                                 <UserCheck className="w-6 h-6 text-cyan-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">التطوير المهني</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">التطوير المهني</h2>
                                 <div className="space-y-2 text-gray-600">
                                     <ul className="list-disc list-inside space-y-2 mr-4">
                                         <li>يُشترط حضور ورش التطوير المهني الدورية التي ينظمها المعهد</li>
@@ -199,7 +199,7 @@ export const TermsOfWork = () => {
 
                     {/* Commitment */}
                     <div className="bg-gray-50 border border-gray-100 p-8 rounded-none mb-4">
-                        <h2 className="text-2xl font-black text-gray-900 mb-4">التعهد والالتزام</h2>
+                        <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-4">التعهد والالتزام</h2>
                         <div className="space-y-2 text-gray-600">
                             <p>بتوقيعك على هذه القوانين، فإنك تتعهد بـ:</p>
                             <ul className="list-disc list-inside space-y-2 mr-4">
@@ -224,7 +224,7 @@ export const TermsOfWork = () => {
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-600/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات؟</h2>
+                            <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات؟</h2>
                             <p className="text-gray-500 mb-8 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
