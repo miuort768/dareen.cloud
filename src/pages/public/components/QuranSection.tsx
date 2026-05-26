@@ -137,7 +137,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] dark:bg-slate-950 transition-colors duration-500 pt-2 pb-8">
+            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] dark:bg-slate-950 transition-colors duration-500 pt-2 pb-4">
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
