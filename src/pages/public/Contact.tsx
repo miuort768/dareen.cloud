@@ -56,7 +56,7 @@ export const Contact = () => {
             <SEO title="اتصل بنا | دارين السابعة للتعليم عن بعد" description="تواصل مع فريق دارين السابعة للاستفسار عن دوراتنا التعليمية، اشتراكات الطلاب، أو الدعم الفني. اتصل بنا عبر واتساب أو نموذج التواصل لدعم فوري." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" />
             <MobileHeader />
 
-            <main className="flex-grow md:pt-28 pb-6 relative overflow-hidden">
+            <main className="flex-grow md:pt-28 pb-4 relative overflow-hidden">
                 {/* Subtle background glows */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
@@ -64,7 +64,7 @@ export const Contact = () => {
                 <div className="container mx-auto px-4 relative z-10 max-w-5xl">
 
                     {/* ── Hero Header ── */}
-                    <div className="text-center mb-10">
+                    <div className="text-center mb-6">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-none mb-5">
                             <span className="w-2 h-2 rounded-none bg-indigo-500 animate-pulse" />
                             <span className="text-[10px] font-black  text-indigo-600 dark:text-indigo-400">نحن في خدمتك</span>
@@ -81,7 +81,7 @@ export const Contact = () => {
                     </div>
 
                     {/* ── Contact Info Cards ── */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {contactCards.map((card) => (
                             <a
                                 key={card.title}
@@ -124,15 +124,15 @@ export const Contact = () => {
                                 </button>
                             </div>
                         ) : (
-                            <div className="p-6 md:p-10">
-                                <div className="mb-8">
+                            <div className="p-6 md:p-8">
+                                <div className="mb-4">
                                     <h2 className="text-xl font-black text-gray-900 dark:text-white mb-1">أرسل لنا رسالة</h2>
                                     <p className="text-gray-400 text-sm">سنتواصل معك خلال 24 ساعة.</p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-5">
+                                <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Row: Name + Phone */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
                                             <label className="text-[10px] font-black text-gray-400  block">الاسم الكامل</label>
                                             <input
@@ -188,7 +188,7 @@ export const Contact = () => {
                                     </div>
 
                                     {/* Action Buttons */}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                                         {/* Submit */}
                                         <button
                                             type="submit"
