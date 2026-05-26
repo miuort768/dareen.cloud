@@ -191,7 +191,7 @@ export const Blog = () => {
                     <div className="w-4 h-4 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center">
                       <BookOpen size={8} className="text-white" />
                     </div>
-                    <span className="text-[9px] font-black text-slate-700">dar.net</span>
+                    <span className="text-[9px] font-black text-slate-700">dareen - 7</span>
                   </div>
                 </div>
               </div>
