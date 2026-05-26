@@ -371,6 +371,18 @@ async function setupDatabase() {
             FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
         );
 
+        CREATE TABLE IF NOT EXISTS job_applications (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            position TEXT NOT NULL,
+            qualification TEXT NOT NULL,
+            grade TEXT,
+            graduationYear TEXT,
+            onlineYears TEXT,
+            curriculums TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         CREATE TABLE IF NOT EXISTS teacher_availability (
             id TEXT PRIMARY KEY,
             teacherId TEXT NOT NULL,

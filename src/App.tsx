@@ -52,6 +52,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
+const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 
 
 
@@ -209,6 +210,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/jobs" element={<Jobs />} />
 
           {/* Protected App Routes */}
           {/* Protected App Routes */}

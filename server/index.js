@@ -224,6 +224,10 @@ async function startServer() {
         // Public Chat (Guest accessible)
         apiRouter.use('/public-chat', publicChatRouter);
 
+        // Public Job Applications
+        const jobsRouter = require('./routes/jobs');
+        apiRouter.use('/jobs', jobsRouter);
+
         // Apply authentication to ALL other API routes
         apiRouter.use(authMiddleware);
 
