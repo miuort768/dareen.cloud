@@ -30,7 +30,7 @@ export const PrivacyPolicy = () => {
                         حماية <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 inline-block py-1">بياناتك</span> أولويتنا
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium mb-12 md:mb-16">
+                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
                         نلتزم في دارين السابعة بحماية خصوصيتك وأمان معلوماتك الشخصية
                     </p>
                 </div>

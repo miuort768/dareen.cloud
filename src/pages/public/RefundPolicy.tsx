@@ -32,7 +32,7 @@ export const RefundPolicy = () => {
                         سياسة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-900 inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-12 md:mb-16">
+                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
