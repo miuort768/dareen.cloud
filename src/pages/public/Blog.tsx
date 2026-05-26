@@ -209,7 +209,7 @@ export const Blog = () => {
             </div>
 
             {/* Hero Banner */}
-            <div className="relative rounded-[32px] overflow-hidden mb-6 bg-gradient-to-br from-indigo-900 via-violet-800 to-purple-900 shadow-lg border border-violet-500/20">
+            <div className="relative rounded-[20px] overflow-hidden mb-6 bg-gradient-to-br from-indigo-900 via-violet-800 to-purple-900 shadow-lg border border-violet-500/20">
               {/* Decorative elements */}
               <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-yellow-300/60 shadow-lg shadow-yellow-300/30" />
               <div className="absolute top-8 left-8 w-2 h-2 rounded-full bg-sky-300/60" />
@@ -223,21 +223,23 @@ export const Blog = () => {
                 <div key={s} className="absolute w-1 h-1 bg-white/60 rounded-full" style={{ top: `${15 + s * 15}%`, left: `${10 + s * 20}%` }} />
               ))}
 
-              <div className="relative z-10 px-5 py-5 flex items-center justify-center gap-3">
-                {/* Logo badge */}
-                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg shrink-0">
-                  <GraduationCap size={24} className="text-yellow-300" />
-                </div>
-
-                <div className="text-right">
-                  <h1 className="text-[22px] font-black text-white font-heading leading-tight">
-                    دارين
-                  </h1>
-                  <p className="text-[10px] text-violet-200 font-bold">منصة تعليم إلكتروني</p>
+              <div className="relative z-10 px-5 py-5 flex flex-col items-center gap-4">
+                {/* Top row: icon + text */}
+                <div className="flex items-center gap-3">
+                  {/* Logo badge */}
+                  <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg shrink-0">
+                    <GraduationCap size={24} className="text-yellow-300" />
+                  </div>
+                  <div className="text-right">
+                    <h1 className="text-[22px] font-black text-white font-heading leading-tight">
+                      دارين
+                    </h1>
+                    <p className="text-[10px] text-violet-200 font-bold">منصة تعليم إلكتروني</p>
+                  </div>
                 </div>
 
                 {/* Anime-style children */}
-                <div className="flex items-center justify-center gap-3 mb-2">
+                <div className="flex items-center justify-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-200 to-sky-300 flex items-center justify-center shadow-inner relative">
                     <div className="text-[18px]">👧</div>
                     <div className="absolute -top-1 -left-1 w-3 h-3">
