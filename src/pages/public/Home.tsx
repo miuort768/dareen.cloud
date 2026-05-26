@@ -94,7 +94,7 @@ export const Home = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 5000);
+    }, 10000);
     return () => clearInterval(timer);
   }, [reviews.length]);
 

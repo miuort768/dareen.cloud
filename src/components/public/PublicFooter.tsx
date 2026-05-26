@@ -100,25 +100,21 @@ export const PublicFooter = () => {
                     <div>
                         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                             <span className="w-8 h-0.5 bg-amber-500"></span>
-                            عروض المنصة
+                            انضم الينا الان
                         </h3>
                         <div className="space-y-3">
-                            <a
-                                href={`https://wa.me/${adminPhone}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                to="/jobs"
                                 className="block w-full text-center bg-white/5 border border-white/10 px-4 py-3 text-sm text-white hover:bg-white/10 hover:border-amber-500 transition-all"
                             >
-                                تواصل معنا
-                            </a>
-                            <a
-                                href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين السابعة')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                التقديم للوظائف
+                            </Link>
+                            <Link
+                                to="/terms-of-work"
                                 className="block w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 text-indigo-950 font-black py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
                             >
-                                اشترك الآن
-                            </a>
+                                قوانين العمل
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -132,7 +128,7 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 overflow-hidden group cursor-default">
+                        <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 overflow-hidden group cursor-default">
                             {/* Continuous Shine Effect */}
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
                             

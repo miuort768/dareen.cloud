@@ -47,6 +47,7 @@ const BlogPost = lazy(() => import('./pages/public/BlogPost').then(m => ({ defau
 const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const RefundPolicy = lazy(() => import('./pages/public/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
 const TermsOfService = lazy(() => import('./pages/public/TermsOfService').then(m => ({ default: m.TermsOfService })));
+const TermsOfWork = lazy(() => import('./pages/public/TermsOfWork').then(m => ({ default: m.TermsOfWork })));
 const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m.AdminBlog })));
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
@@ -211,6 +212,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/terms-of-work" element={<TermsOfWork />} />
           <Route path="/jobs" element={<Jobs />} />
 
           {/* Protected App Routes */}

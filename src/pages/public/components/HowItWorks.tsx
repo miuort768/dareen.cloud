@@ -7,7 +7,7 @@ interface HowItWorksProps {
 
 export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
     return (
-        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
+        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-[#F7F8FC] dark:bg-slate-950 scroll-mt-32">
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-500/[0.05] dark:bg-indigo-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
                 <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-emerald-500/[0.03] dark:bg-emerald-500/[0.06] blur-[100px] rounded-full"></div>

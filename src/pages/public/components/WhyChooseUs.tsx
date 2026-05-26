@@ -32,7 +32,7 @@ const featureIcons = [ShieldCheck, Lightbulb, Heart];
 
 export const WhyChooseUs = () => {
   return (
-    <section className="relative overflow-hidden bg-[#F7F7FA] dark:bg-slate-950 py-12 md:py-20">
+    <section className="relative overflow-hidden bg-[#F7F7FA] dark:bg-slate-950 py-6 md:py-10">
       {/* Background decorative blobs */}
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-300/20 dark:bg-violet-500/5 rounded-full blur-[100px]" />
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300/20 dark:bg-indigo-500/5 rounded-full blur-[100px]" />
@@ -40,14 +40,14 @@ export const WhyChooseUs = () => {
 
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="text-center mb-8 md:mb-14">
+        <div className="text-center mb-4 md:mb-6">
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4">
             لماذا{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">
               تختارنا؟
             </span>
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-medium">
+          <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-4xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
           </p>
         </div>
@@ -113,7 +113,7 @@ export const WhyChooseUs = () => {
         </div>
 
         {/* ─── Desktop Layout (old design) ─── */}
-        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-2 pb-8 md:pb-12">
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-0 pb-4 md:pb-6">
           <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-indigo-600 to-indigo-950 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
             <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
