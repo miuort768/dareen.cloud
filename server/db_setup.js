@@ -746,6 +746,10 @@ async function setupDatabase() {
     try { await db.run('ALTER TABLE live_sessions ADD COLUMN subject TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE live_sessions ADD COLUMN title TEXT'); } catch(e) {}
 
+    // Migration: job_applications table
+    try { await db.run('ALTER TABLE job_applications ADD COLUMN phone TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE job_applications ADD COLUMN whatsapp TEXT'); } catch(e) {}
+
     // Auto-populate ALL user credentials (Students, Teachers, Parents) in one safe block
     console.log('Verifying all user credentials...');
     try {
