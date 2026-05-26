@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star, MessageCircle, Moon } from 'lucide-react';
 
@@ -58,20 +57,6 @@ const FloatingButtons = ({ whatsappNumber }: { whatsappNumber: string }) => (
 );
 
 export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => { setMounted(true); }, []);
-
-    const stats = {
-        totalStudents: 0,
-        activeSubs: 0,
-        todayClasses: 0,
-        completedClasses: 0,
-        totalTeachers: 0,
-        totalRevenue: 0,
-        totalExpenses: 0,
-        netProfit: 0,
-    };
-
     return (
         <>
             {/* Desktop version */}
@@ -295,83 +280,6 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         </div>
                     </div>
 
-                    {/* Statistics Dashboard */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4 max-w-[360px] mx-auto">
-                        <div className="grid grid-cols-4 gap-x-2 gap-y-4">
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">إجمالي الطلاب</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalStudents}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-blue-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">اشتراكات نشطة</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.activeSubs}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-purple-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[#6C4BFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">حصص اليوم</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.todayClasses}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">حصص منفذة</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.completedClasses}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-amber-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M19 21v-2a4 4 0 00-4-4H9a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">إجمالي المعلمين</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalTeachers}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-[#08B26A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">الإيرادات</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalRevenue}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-rose-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">المصروفات</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.totalExpenses}</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="w-7 h-7 mx-auto mb-1.5 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                    <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                    </svg>
-                                </div>
-                                <div className="text-[#7D8597] text-[8px] font-medium mb-0.5 leading-tight">صافي الربح</div>
-                                <div className="text-[#1B1B1F] text-base font-black">{stats.netProfit}</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
