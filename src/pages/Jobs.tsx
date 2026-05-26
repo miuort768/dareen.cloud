@@ -139,7 +139,7 @@ export const Jobs = () => {
                                 transition={{ delay: 0.2 }}
                                 className="text-white/80 text-sm md:text-base max-w-lg leading-relaxed font-medium"
                             >
-                                نبحث عن معلمات متميزات للتدريس أون لاين.<br className="md:hidden" /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
+                                نبحث عن معلمات متميزات للتدريس أون لاين.<br /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
                             </motion.p>
                         </div>
                         <motion.div

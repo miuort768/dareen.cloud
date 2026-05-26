@@ -232,12 +232,12 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">أوقات مرنة</h3>
                             <p className="text-[#7D8597] text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
                         </div>
-                        <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl flex items-center justify-center mb-3">
-                                <Sparkles size={22} className="text-[#6C4BFF]" />
+                        <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
+                                <Sparkles size={22} className="text-white" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] text-[13px] mb-1">جرب مجانًا</h3>
-                            <p className="text-[#7D8597] text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
+                            <h3 className="font-black text-white text-[13px] mb-1">جرب مجانًا</h3>
+                            <p className="text-white/80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
                         </div>
                         <div className="bg-white border border-gray-100/80 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-emerald-50 rounded-2xl flex items-center justify-center mb-3">

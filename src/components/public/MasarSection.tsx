@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Bell, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones, Menu, Calendar, Plus, Sparkles, Moon } from 'lucide-react';
+import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones, Moon } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 
 const FloatingBtns = ({ phone }: { phone: string }) => (
@@ -50,7 +50,7 @@ export const MasarSection = () => {
                             <div className="w-full lg:w-[60%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
                                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
-                                        <Bell className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                                        <Download className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
                                         <span className="text-xs font-black text-white uppercase tracking-widest">بوابة الكتب والملخصات</span>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@ export const MasarSection = () => {
                             <p className="text-[#7D8597] text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
                         <div className="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center">
-                            <Bell size={20} className="text-[#6C4BFF]" />
+                            <Download size={20} className="text-[#6C4BFF]" />
                         </div>
                     </div>
 
@@ -144,31 +144,24 @@ export const MasarSection = () => {
                     </div>
 
                     {/* Trust Indicators */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 p-5">
-                        <div className="flex items-center gap-2 mb-5">
-                            <Sparkles size={18} className="text-[#6C4BFF]" />
-                            <h3 className="text-[#1E1E2F] font-black text-base">لديك استفسار؟</h3>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-purple-50 flex items-center justify-center">
+                                <Shield size={20} className="text-[#6C4BFF]" />
+                            </div>
+                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">جودة مضمونة</span>
                         </div>
-
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="text-center">
-                                <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-purple-50 flex items-center justify-center">
-                                    <Shield size={20} className="text-[#6C4BFF]" />
-                                </div>
-                                <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">جودة مضمونة</span>
+                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-emerald-50 flex items-center justify-center">
+                                <BadgeCheck size={20} className="text-[#18C76F]" />
                             </div>
-                            <div className="text-center">
-                                <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-emerald-50 flex items-center justify-center">
-                                    <BadgeCheck size={20} className="text-[#18C76F]" />
-                                </div>
-                                <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">محتوى موثوق</span>
+                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">محتوى موثوق</span>
+                        </div>
+                        <div className="text-center bg-white rounded-2xl shadow-sm border border-gray-100/80 p-4">
+                            <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-amber-50 flex items-center justify-center">
+                                <Headphones size={20} className="text-[#F5A623]" />
                             </div>
-                            <div className="text-center">
-                                <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-amber-50 flex items-center justify-center">
-                                    <Headphones size={20} className="text-[#F5A623]" />
-                                </div>
-                                <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">دعم مستمر</span>
-                            </div>
+                            <span className="text-[#1E1E2F] text-[11px] font-bold leading-tight block">دعم مستمر</span>
                         </div>
                     </div>
                 </div>

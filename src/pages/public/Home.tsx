@@ -125,10 +125,10 @@ export const Home = () => {
       <MobileHeader />
 
       {/* ─── Mobile App Content ─── */}
-      <main className="md:hidden pb-8 px-2 max-w-lg mx-auto relative">
+      <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
 
         {/* Hero Carousel */}
-        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] overflow-hidden mb-6 shadow-sm border border-violet-100/50">
+        <section className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-2xl overflow-hidden mb-4 shadow-sm border border-violet-100/50">
           {heroSlides.map((slide, i) => (
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
@@ -163,10 +163,10 @@ export const Home = () => {
         </section>
 
         {/* Quick Features */}
-        <section className="mb-6">
-          <div className="grid grid-cols-2 gap-2.5">
+        <section className="mb-4">
+          <div className="grid grid-cols-2 gap-2">
             {quickFeatures.map((f, i) => (
-              <div key={i} className={`flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border ${f.border} transition-all`}>
+              <div key={i} className={`flex items-center gap-2 p-3 bg-white rounded-xl shadow-sm border ${f.border} transition-all`}>
                 <div className={`w-10 h-10 rounded-xl ${f.bg} flex items-center justify-center shrink-0`}>
                   <f.icon className={f.color} size={20} />
                 </div>
@@ -180,8 +180,8 @@ export const Home = () => {
         </section>
 
         {/* Latest Courses */}
-        <section className="mb-6">
-          <div className="flex items-center justify-between mb-3">
+        <section className="mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-[15px] font-black text-slate-900">أحدث الدورات</h3>
             <Link to="/courses" className="text-[11px] font-bold text-indigo-600 flex items-center gap-1">
               عرض الكل
@@ -218,7 +218,7 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                className="min-w-[180px] w-[180px] bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden shrink-0 block"
+                className="min-w-[180px] w-[180px] bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden shrink-0 block"
               >
                 <div className="relative h-24 bg-white overflow-hidden">
                   <img
@@ -258,7 +258,7 @@ export const Home = () => {
 
 
         {/* Existing Sections (restyled layout) */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div style={{ contentVisibility: 'auto' }}>
             <WhyChooseUs />
           </div>
