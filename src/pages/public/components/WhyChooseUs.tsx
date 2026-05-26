@@ -41,7 +41,7 @@ const featureIcons = [ShieldCheck, Lightbulb, Heart];
 
 export const WhyChooseUs = () => {
   return (
-    <section className="relative overflow-hidden bg-[#F7F7FA] dark:bg-slate-950 py-6 md:py-10">
+    <section className="relative overflow-hidden bg-[#F7F7FA] dark:bg-slate-950 py-4 md:py-10">
       {/* Background decorative blobs */}
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-300/20 dark:bg-violet-500/5 rounded-full blur-[100px]" />
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300/20 dark:bg-indigo-500/5 rounded-full blur-[100px]" />

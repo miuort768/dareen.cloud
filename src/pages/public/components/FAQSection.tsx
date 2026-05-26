@@ -16,7 +16,7 @@ export const FAQSection = () => {
                 }}>
             </div>
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-8">
+                <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-100 dark:border-slate-700 rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-indigo-600" />
                         <span className="text-[9px] font-black  text-gray-400 dark:text-slate-300">لديك استفسار؟</span>
