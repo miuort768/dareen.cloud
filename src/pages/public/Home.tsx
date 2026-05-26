@@ -181,7 +181,7 @@ export const Home = () => {
         </section>
 
         {/* How to Subscribe */}
-        <div className="hidden md:block mb-4">
+        <div className="mb-4">
             <HowToSubscribe />
         </div>
 
@@ -271,7 +271,7 @@ export const Home = () => {
           <div style={{ contentVisibility: 'auto' }}>
             <QuranSection whatsappNumber={whatsappNumber} />
           </div>
-          <div style={{ contentVisibility: 'auto' }}>
+          <div className="hidden" style={{ contentVisibility: 'auto' }}>
             <HowItWorks whatsappNumber={whatsappNumber} />
           </div>
           <div style={{ contentVisibility: 'auto' }}>
