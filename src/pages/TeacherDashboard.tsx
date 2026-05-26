@@ -12,7 +12,7 @@ import { StudentQuickBrief } from '../features/dashboard/components/StudentQuick
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
-import { Calendar, Clock, Users, BookOpen, Award, User, LogOut, Bell, ChevronLeft, TrendingUp, Sparkles } from 'lucide-react';
+import { Clock, Users, Award, User, Bell } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
@@ -98,100 +98,142 @@ export const TeacherDashboard = () => {
                 </div>
             </div>
 
-            {/* ─── Mobile version ─── */}
-            <div className="block md:hidden min-h-full pb-24 overflow-x-hidden relative bg-[#F7F8FC] font-sans" dir="rtl">
-                {/* Purple gradient header */}
-                <div className="bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] px-5 pt-12 pb-8 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-400/20 rounded-full blur-[80px] pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/15 rounded-full blur-[60px] pointer-events-none"></div>
-                    
-                    <div className="relative z-10">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-11 h-11 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                                    <User size={22} className="text-white" />
+            {/* ─── Mobile version (app-style) ─── */}
+            <div className="block md:hidden min-h-full pb-28 overflow-x-hidden relative bg-[#F7F8FC] font-sans overscroll-contain" dir="rtl">
+                {/* Sticky app bar */}
+                <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
+                    <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
+                    <div className="relative z-10 px-4 pt-12 pb-3">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                                    <User size={18} className="text-white" />
                                 </div>
                                 <div>
-                                    <h1 className="text-white font-black text-base">
+                                    <h1 className="text-white font-black text-sm leading-tight">
                                         {(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}
                                     </h1>
-                                    <p className="text-white/60 text-[10px] font-medium">معلم • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                                    <p className="text-white/50 text-[8px] font-medium">معلم</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => {/* logout */}}
-                                className="w-9 h-9 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70 hover:text-white transition-all"
-                            >
-                                <LogOut size={16} />
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center relative">
+                                    <Bell size={15} className="text-white/80" />
+                                    <span className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-rose-400 rounded-full border border-[#5A3BFF]" />
+                                </div>
+                            </div>
                         </div>
-
-                        {/* Quick stats row */}
-                        <div className="grid grid-cols-3 gap-2.5">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl py-3 px-2 text-center border border-white/10">
-                                <Clock size={16} className="mx-auto mb-1 text-purple-200" />
-                                <span className="text-white font-black text-base block">{stats.todaySessions || 0}</span>
-                                <span className="text-white/60 text-[8px] font-medium">حصص اليوم</span>
+                        {/* Stats pills */}
+                        <div className="flex items-center gap-2 mt-3">
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
+                                <Clock size={12} className="text-purple-200 shrink-0" />
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-white font-black text-sm">{stats.todaySessions || 0}</span>
+                                    <span className="text-white/50 text-[7px] font-medium">حصص</span>
+                                </div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl py-3 px-2 text-center border border-white/10">
-                                <Users size={16} className="mx-auto mb-1 text-blue-200" />
-                                <span className="text-white font-black text-base block">{stats.totalStudents || 0}</span>
-                                <span className="text-white/60 text-[8px] font-medium">الطلاب</span>
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
+                                <Users size={12} className="text-blue-200 shrink-0" />
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-white font-black text-sm">{stats.totalStudents || 0}</span>
+                                    <span className="text-white/50 text-[7px] font-medium">طلاب</span>
+                                </div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl py-3 px-2 text-center border border-white/10">
-                                <Award size={16} className="mx-auto mb-1 text-amber-200" />
-                                <span className="text-white font-black text-base block">{(stats.attendanceRate || 0)}%</span>
-                                <span className="text-white/60 text-[8px] font-medium">حضور</span>
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-2.5 flex items-center gap-2 border border-white/10">
+                                <Award size={12} className="text-amber-200 shrink-0" />
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-white font-black text-sm">{(stats.attendanceRate || 0)}%</span>
+                                    <span className="text-white/50 text-[7px] font-medium">حضور</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Content cards */}
-                <div className="px-4 -mt-4 space-y-4 relative z-20">
+                {/* Content sections */}
+                <div className="px-3 pt-3 space-y-3.5">
                     {/* Live Classes */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                        <div className="p-4">
-                            <LiveClasses />
+                    <section>
+                        <div className="flex items-center gap-2 mb-2 px-1">
+                            <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
+                            <h2 className="text-[#1E1E2F] text-[13px] font-black">البث المباشر</h2>
                         </div>
-                    </div>
+                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                            <div className="p-3.5">
+                                <LiveClasses />
+                            </div>
+                        </div>
+                    </section>
 
                     {/* Announcements */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                        <div className="p-4">
-                            <ModernAnnouncements />
+                    <section>
+                        <div className="flex items-center gap-2 mb-2 px-1">
+                            <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
+                            <h2 className="text-[#1E1E2F] text-[13px] font-black">الإعلانات</h2>
                         </div>
-                    </div>
+                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                            <div className="p-3.5">
+                                <ModernAnnouncements />
+                            </div>
+                        </div>
+                    </section>
 
                     {/* Sessions Timeline */}
                     {(stats.todayTimeline || []).length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                            <div className="p-4">
-                                <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} />
+                        <section>
+                            <div className="flex items-center gap-2 mb-2 px-1">
+                                <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
+                                <h2 className="text-[#1E1E2F] text-[13px] font-black">حصص اليوم</h2>
                             </div>
-                        </div>
+                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="p-3.5">
+                                    <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} />
+                                </div>
+                            </div>
+                        </section>
                     )}
 
-                    {/* Stats + Tasks grid */}
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                            <div className="p-4">
-                                <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
+                    {/* Achievements + Tasks */}
+                    <div className="grid grid-cols-1 gap-3.5">
+                        <section>
+                            <div className="flex items-center gap-2 mb-2 px-1">
+                                <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
+                                <h2 className="text-[#1E1E2F] text-[13px] font-black">الإنجازات</h2>
                             </div>
-                        </div>
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                            <div className="p-4">
-                                <TasksAndRequests tasks={tasks} />
+                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="p-3.5">
+                                    <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
+                                </div>
                             </div>
-                        </div>
+                        </section>
+                        <section>
+                            <div className="flex items-center gap-2 mb-2 px-1">
+                                <div className="w-1 h-4 bg-rose-400 rounded-full" />
+                                <h2 className="text-[#1E1E2F] text-[13px] font-black">المهام والطلبات</h2>
+                            </div>
+                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="p-3.5">
+                                    <TasksAndRequests tasks={tasks} />
+                                </div>
+                            </div>
+                        </section>
                     </div>
 
                     {/* Top Attendance */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
-                        <div className="p-4">
-                            <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+                    <section>
+                        <div className="flex items-center gap-2 mb-2 px-1">
+                            <div className="w-1 h-4 bg-amber-400 rounded-full" />
+                            <h2 className="text-[#1E1E2F] text-[13px] font-black">أعلى حضور</h2>
                         </div>
-                    </div>
+                        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                            <div className="p-3.5">
+                                <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Spacer for bottom nav */}
+                    <div className="h-4" />
                 </div>
 
                 {briefingStudent && (
