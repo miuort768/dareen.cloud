@@ -18,9 +18,9 @@ export const About = () => {
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-4 animate-fade-in group hover:border-indigo-500 transition-all duration-500">
-                        <Sparkles size={16} className="text-indigo-600 group-hover:rotate-12 transition-transform" />
-                        <span className="text-xs font-black text-gray-900 dark:text-white">دارين السابعة | ريادة تعليمية</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
+                        <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
+                        <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">دارين السابعة | ريادة تعليمية</span>
                     </div>
 
                     <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-[1.6] md:leading-tight relative">
@@ -154,7 +154,7 @@ export const About = () => {
                         {/* Value 1 - Honesty */}
                         <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-600/30 transition-all duration-500 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-0 bg-indigo-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                            <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Shield className="w-8 h-8" />
                             </div>
                             <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الأمانة</h3>
@@ -164,9 +164,9 @@ export const About = () => {
                         </div>
 
                         {/* Value 2 - Innovation */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-600/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-indigo-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-amber-500/30 transition-all duration-500 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-1 h-0 bg-amber-500 group-hover:h-full transition-all duration-500"></div>
+                            <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Lightbulb className="w-8 h-8" />
                             </div>
                             <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الابتكار</h3>
@@ -176,9 +176,9 @@ export const About = () => {
                         </div>
 
                         {/* Value 3 - Excellence */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-600/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-indigo-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-emerald-500/30 transition-all duration-500 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-1 h-0 bg-emerald-500 group-hover:h-full transition-all duration-500"></div>
+                            <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mb-8 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Award className="w-8 h-8" />
                             </div>
                             <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">التميز</h3>
@@ -188,9 +188,9 @@ export const About = () => {
                         </div>
 
                         {/* Value 4 - Building Generations */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-600/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-indigo-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-rose-500/30 transition-all duration-500 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-1 h-0 bg-rose-500 group-hover:h-full transition-all duration-500"></div>
+                            <div className="w-16 h-16 bg-rose-50 dark:bg-rose-900/30 text-rose-600 flex items-center justify-center mb-8 group-hover:bg-rose-500 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Compass className="w-8 h-8" />
                             </div>
                             <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">بناء الجيل</h3>
