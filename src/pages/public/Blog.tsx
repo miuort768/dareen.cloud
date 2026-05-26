@@ -223,16 +223,18 @@ export const Blog = () => {
                 <div key={s} className="absolute w-1 h-1 bg-white/60 rounded-full" style={{ top: `${15 + s * 15}%`, left: `${10 + s * 20}%` }} />
               ))}
 
-              <div className="relative z-10 p-5 flex flex-col items-center text-center">
+              <div className="relative z-10 px-5 py-5 flex items-center justify-center gap-3">
                 {/* Logo badge */}
-                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3 shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg shrink-0">
                   <GraduationCap size={24} className="text-yellow-300" />
                 </div>
 
-                <h1 className="text-[22px] font-black text-white font-heading leading-tight mb-1">
-                  دارين
-                </h1>
-                <p className="text-[10px] text-violet-200 font-bold mb-3">منصة تعليم إلكتروني</p>
+                <div className="text-right">
+                  <h1 className="text-[22px] font-black text-white font-heading leading-tight">
+                    دارين
+                  </h1>
+                  <p className="text-[10px] text-violet-200 font-bold">منصة تعليم إلكتروني</p>
+                </div>
 
                 {/* Anime-style children */}
                 <div className="flex items-center justify-center gap-3 mb-2">
