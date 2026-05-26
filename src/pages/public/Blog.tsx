@@ -258,13 +258,6 @@ export const Blog = () => {
                   </div>
                 </div>
                 <p className="text-[8px] text-violet-200/80 font-medium">معاً نصنع جيلاً مبدعاً</p>
-
-                {/* Floating books decoration */}
-                <div className="flex justify-center gap-1.5 mt-3">
-                  {['📘','📗','📕','📙'].map((book, i) => (
-                    <span key={i} className="text-sm opacity-70">{book}</span>
-                  ))}
-                </div>
               </div>
             </div>
 
