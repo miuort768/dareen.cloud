@@ -95,7 +95,7 @@ export const SEO: React.FC<SEOProps> = ({
                     {
                         "@context": "https://schema.org",
                         "@type": "SiteNavigationElement",
-                        "name": ["الرئيسية", "الدورات", "من نحن", "اتصل بنا", "تسجيل الدخول", "المدونة"],
+                        "name": ["الرئيسية", "الدورات", "من نحن", "اتصل بنا", "تسجيل الدخول", "المكتبة"],
                         "url": [
                             "https://dareen.cloud/",
                             "https://dareen.cloud/courses",

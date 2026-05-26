@@ -17,7 +17,7 @@ export const PublicNavbar = () => {
     const navItems = [
         { name: 'الرئيسية', path: '/' },
         { name: 'الدورات', path: '/courses' },
-        { name: 'المدونة', path: '/books' },
+        { name: 'المكتبة', path: '/books' },
         { name: 'من نحن', path: '/about' },
         { name: 'اتصل بنا', path: '/contact' },
     ];

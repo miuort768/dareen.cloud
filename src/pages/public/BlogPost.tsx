@@ -60,7 +60,7 @@ export const BlogPost = () => {
                 url={`https://dareen.cloud/books/${post.slug}`}
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
-                    { name: 'المدونة', item: '/books' },
+                    { name: 'المكتبة', item: '/books' },
                     { name: post.title, item: `/books/${post.slug}` }
                 ]}
             />

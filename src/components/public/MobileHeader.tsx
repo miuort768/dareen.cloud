@@ -9,7 +9,7 @@ export const MobileHeader = () => {
   const navItems = [
     { label: 'الرئيسية', path: '/' },
     { label: 'الدورات', path: '/courses' },
-    { label: 'المدونة', path: '/books' },
+    { label: 'المكتبة', path: '/books' },
     { label: 'من نحن', path: '/about' },
     { label: 'اتصل بنا', path: '/contact' },
   ];

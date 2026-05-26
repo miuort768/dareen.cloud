@@ -30,14 +30,14 @@ export const PrivacyPolicy = () => {
                         حماية <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 inline-block py-1">بياناتك</span> أولويتنا
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium mb-12 md:mb-16">
                         نلتزم في دارين السابعة بحماية خصوصيتك وأمان معلوماتك الشخصية
                     </p>
                 </div>
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:py-20 bg-white dark:bg-slate-950">
+            <section className="py-8 md:py-10 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
@@ -193,7 +193,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-8 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
@@ -205,7 +205,7 @@ export const PrivacyPolicy = () => {
                                 href={`https://wa.me/2${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-[#f46464] text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-[#e35555] transition-all group relative overflow-hidden shadow-lg border border-white/20"
+                                className="inline-flex items-center justify-center gap-4 bg-indigo-600 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-indigo-700 transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>

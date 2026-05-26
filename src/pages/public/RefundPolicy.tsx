@@ -32,14 +32,14 @@ export const RefundPolicy = () => {
                         سياسة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-900 inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-12 md:mb-16">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:py-20 bg-white">
+            <section className="py-8 md:py-10 bg-white">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* General Principles */}
@@ -118,25 +118,30 @@ export const RefundPolicy = () => {
                     </div>
 
                     {/* Technical Issues */}
-                    <div className="mb-12">
-                        <div className="bg-gray-900 p-8 rounded-none text-white relative overflow-hidden">
+                    <div className="mb-4 md:mb-6">
+                        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 md:p-8 border border-slate-700/50 relative overflow-hidden">
                             <AlertCircle className="absolute -bottom-6 -left-6 text-white/5 w-48 h-48" />
-                            <h2 className="text-2xl font-black mb-4 relative z-10">المشاكل التقنية</h2>
-                            <p className="text-gray-400 font-medium leading-relaxed relative z-10">
+                            <div className="flex items-center gap-3 mb-4 relative z-10 border-b border-slate-700/50 pb-3">
+                                <div className="w-8 h-8 bg-amber-500/20 flex items-center justify-center">
+                                    <AlertCircle className="w-4 h-4 text-amber-400" />
+                                </div>
+                                <h2 className="text-lg md:text-xl font-black text-white">المشاكل التقنية</h2>
+                            </div>
+                            <p className="text-white/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
                                 في حال عدم إمكانية تقديم الحصة بسبب مشاكل تقنية من طرف المعهد، يتم تعويض الطالب بحصة بديلة. أما إذا كان الخلل من طرف الطالب (انقطاع الإنترنت أو تعطل الجهاز)، فالمعهد غير مسؤول عن تعويض الحصة، ومع ذلك نحاول دائماً المساعدة في حال كان هناك وقت متاح.
                             </p>
                         </div>
                     </div>
 
                     {/* Last Update */}
-                    <div className="mb-12 text-center border-t border-gray-100 pt-8">
+                    <div className="mb-4 md:mb-6 text-center border-t border-gray-100 pt-6">
                         <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">
                             آخر تحديث للسياسة: فبراير 2026
                         </p>
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-10 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-8 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
@@ -148,7 +153,7 @@ export const RefundPolicy = () => {
                                 href={`https://wa.me/${whatsappNumber}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-[#f46464] text-white px-10 py-4 w-full sm:w-auto rounded-xl font-bold hover:bg-[#e35555] transition-all group relative overflow-hidden shadow-lg border border-white/20"
+                                className="inline-flex items-center justify-center gap-4 bg-blue-600 text-white px-10 py-4 w-full sm:w-auto rounded-xl font-bold hover:bg-blue-700 transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع قسم الحسابات</span>

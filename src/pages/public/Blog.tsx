@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, Send, Moon, ShieldCheck } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, Send, Moon, ShieldCheck, Star } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -168,12 +168,12 @@ export const Blog = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
-      <SEO title="المدونة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
-        description="مدونة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
-        keywords="مدونة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
+      <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
+        description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
+        keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
         url="https://dareen.cloud/books"
         image="/dareen_books_banner.png"
-        breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المدونة', item: '/books' }]} />
+        breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المكتبة', item: '/books' }]} />
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
