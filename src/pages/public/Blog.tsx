@@ -680,7 +680,7 @@ export const Blog = () => {
               </div>
 
               <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
                   {view === 'classrooms' && currentClassrooms.map((cls, i) => (
                     <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <button onClick={() => { setSelectedGrade(cls); setView('terms'); }}
