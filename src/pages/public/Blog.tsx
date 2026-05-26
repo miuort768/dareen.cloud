@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, Send, Moon, ShieldCheck, Star } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -378,19 +378,6 @@ export const Blog = () => {
                 </div>
               </>
             )}
-
-            {/* Floating Actions */}
-            <div className="fixed left-4 bottom-24 flex flex-col gap-3 z-30">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20 cursor-pointer hover:scale-110 transition-transform">
-                <MessageCircle size={16} className="text-white" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 cursor-pointer hover:scale-110 transition-transform">
-                <Send size={16} className="text-white" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/20 cursor-pointer hover:scale-110 transition-transform">
-                <Moon size={16} className="text-white" />
-              </div>
-            </div>
           </div>
         ) : view === 'results' ? (
           <div>
