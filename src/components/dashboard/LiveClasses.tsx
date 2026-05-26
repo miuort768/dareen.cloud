@@ -107,7 +107,7 @@ export const LiveClasses = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {sessions.map(session => (
                         <div key={session.id} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 p-5 flex flex-col justify-between group hover:border-red-400/50 transition-all rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 relative">
-                            <div className="absolute top-4 left-4">
+                            <div className="absolute top-4 right-4">
                                 <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-500 to-rose-600 text-white px-2.5 py-1 rounded-lg shadow-lg shadow-red-200 dark:shadow-red-950">
                                     <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                     <span className="text-[8px] font-bold uppercase">مباشر</span>

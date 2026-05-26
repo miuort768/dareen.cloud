@@ -40,9 +40,9 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                                 <div className="flex-1 min-w-0">
                                     <h4 className="font-medium text-[11px] text-slate-900 dark:text-white leading-tight truncate group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{task.title}</h4>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                        <span className="text-[9px] font-normal text-slate-450 dark:text-slate-400 tabular-nums uppercase">{task.dueDate}</span>
+                                        <span className="text-[9px] font-normal text-slate-500 dark:text-slate-400 tabular-nums uppercase">{task.dueDate}</span>
                                         {task.priority === 'high' && (
-                                            <span className="text-[8px] font-medium text-rose-600 bg-rose-50 px-1.5 border border-rose-250 uppercase dark:bg-rose-500/10 dark:border-rose-500/20">عاجل جداً</span>
+                                            <span className="text-[8px] font-medium text-rose-600 bg-rose-50 px-1.5 border border-rose-300 uppercase dark:bg-rose-500/10 dark:border-rose-500/20">عاجل جداً</span>
                                         )}
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                     ))
                 ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-40 py-10">
-                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-850 border border-slate-200/60 dark:border-slate-750/60 rounded-none flex items-center justify-center mb-4">
+                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 rounded-none flex items-center justify-center mb-4">
                             <ListTodo size={24} className="text-slate-300" />
                         </div>
                         <p className="text-[9px] font-medium text-slate-400 uppercase">لا توجد مهام نشطة حالياً</p>

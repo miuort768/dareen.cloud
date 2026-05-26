@@ -32,7 +32,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                         <p className="text-[9px] text-slate-400 dark:text-slate-500 font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500 text-white border border-emerald-450 rounded-none shadow-sm">
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500 text-white border border-emerald-500 rounded-none shadow-sm">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     <span className="text-[9px] font-medium uppercase">LIVE NOW</span>
                 </div>
@@ -104,7 +104,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
 
                             {/* Hover play overlay */}
                             {isOngoing && (
-                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-750/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
+                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-700/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
                                     <div className="w-9 h-9 bg-white text-indigo-600 rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>

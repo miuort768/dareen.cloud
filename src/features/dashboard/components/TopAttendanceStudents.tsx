@@ -82,7 +82,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                         {i + 1}
                                     </div>
                                 </div>
-                                <div>
+                                <div className="min-w-0">
                                     <h4 className="font-medium text-xs text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
                                     <p className="text-[8px] font-normal text-slate-400 uppercase mt-0.5">أداء متميز</p>
                                 </div>
@@ -106,7 +106,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
 
             {/* Footer Summary */}
             <div className="mt-6">
-                <div className="bg-indigo-600 dark:bg-indigo-750 border border-indigo-500 rounded-none p-4 text-white flex items-center justify-between shadow-sm transition-transform hover:translate-y-[-2px]">
+                <div className="bg-indigo-600 dark:bg-indigo-700 border border-indigo-500 rounded-none p-4 text-white flex items-center justify-between shadow-sm transition-transform hover:translate-y-[-2px]">
                     <div>
                         <h4 className="text-[9px] font-medium uppercase opacity-80 mb-0.5">إجمالي حصص الشهر</h4>
                         <p className="text-xl font-medium tabular-nums leading-none">{totalMonthSessions}</p>
