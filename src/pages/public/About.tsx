@@ -11,7 +11,7 @@ export const About = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pb-12 md:pt-32 md:pb-16 overflow-hidden bg-white dark:bg-slate-950">
+            <section className="relative pb-8 md:pt-32 md:pb-12 overflow-hidden bg-white dark:bg-slate-950">
                 {/* Creative Background Elements - Premium Royal Theme */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
@@ -25,7 +25,7 @@ export const About = () => {
 
                     <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-[1.6] md:leading-tight relative">
                         <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
-                        <span aria-hidden="true">نحن لا نُدرّس فقط،<br /></span>
+                        <span aria-hidden="true">نحن لا نُدرّس فقط،<br className="md:hidden" /><span className="hidden md:inline"> </span></span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
                     </h1>
 
@@ -76,14 +76,14 @@ export const About = () => {
                                             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Collaborative learning" width="400" height="320" loading="lazy" decoding="async" />
                                         </div>
                                         <div className="h-48 bg-amber-500 rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
-                                            <Sparkles size={24} className="mb-4" />
-                                            <h4 className="font-black text-lg">إبداع مستمر</h4>
+                                            <Sparkles size={24} className="mb-4 text-white/90" />
+                                            <h4 className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">إبداع مستمر</h4>
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <div className="h-48 bg-indigo-700 rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
-                                            <Target size={24} className="mb-4" />
-                                            <h4 className="font-black text-lg">أهداف محققة</h4>
+                                            <Target size={24} className="mb-4 text-white/90" />
+                                            <h4 className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                             <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Effective teaching" width="400" height="320" loading="lazy" decoding="async" />
@@ -132,7 +132,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-10 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
+            <section className="py-8 md:py-10 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
                 {/* Visual Separator */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
@@ -203,7 +203,7 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Redesigned with Creative Touches */}
-            <section className="py-12 bg-white dark:bg-slate-950 relative overflow-hidden">
+            <section className="py-8 md:py-10 bg-white dark:bg-slate-950 relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                     <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-600/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>
@@ -225,9 +225,9 @@ export const About = () => {
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
                                 </div>
 
-                                <div className="relative z-20 flex flex-col lg:flex-row items-center gap-12">
+                                <div className="relative z-20 flex flex-col lg:flex-row items-stretch gap-12">
                                     {/* Content Side */}
-                                    <div className="w-full lg:w-[60%] text-center lg:text-right">
+                                    <div className="w-full lg:w-[60%] text-center lg:text-right flex flex-col justify-center">
                                         <div className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-600/10 border border-indigo-500/20 mb-8 backdrop-blur-xl">
                                             <Sparkles className="w-4 h-4 text-indigo-500 animate-pulse" />
                                             <span className="text-xs font-black text-indigo-50">انضم إلى عائلتنا</span>
@@ -263,41 +263,36 @@ export const About = () => {
                                     </div>
 
                                     {/* Stats/Graphic Side */}
-                                    <div className="w-full lg:w-[40%] relative">
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="relative p-10 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-3 hover:rotate-2 transition-all duration-700 group/card overflow-hidden">
-                                                {/* Creative Corner Decor */}
+                                    <div className="w-full lg:w-[40%] relative flex items-center">
+                                        <div className="grid grid-cols-2 gap-3 w-full">
+                                            <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-2 transition-all duration-700 group/card overflow-hidden min-h-[200px]">
                                                 <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
-                                                    <div className="w-14 h-14 bg-indigo-600/20 text-indigo-500 mb-6 flex items-center justify-center group-hover/card:scale-110 group-hover/card:rotate-12 transition-transform duration-500">
-                                                        <Users size={28} />
+                                                    <div className="w-12 h-12 bg-indigo-600/20 text-indigo-500 mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">
+                                                        <Users size={24} />
                                                     </div>
-                                                    <span className="text-4xl font-black text-white mb-2 block tracking-tight">5k+</span>
-                                                    <span className="text-[11px] text-indigo-500/80 font-black ">طالب فعال</span>
+                                                    <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">5k+</span>
+                                                    <span className="text-[10px] md:text-[11px] text-indigo-500/80 font-black">طالب فعال</span>
                                                 </div>
                                                 
-                                                {/* Artistic Glow */}
                                                 <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-indigo-600/10 rounded-full blur-2xl group-hover/card:bg-indigo-600/20 transition-all"></div>
                                             </div>
 
-                                            <div className="relative p-10 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center translate-y-12 transform hover:translate-y-8 hover:-rotate-2 transition-all duration-700 group/card overflow-hidden">
-                                                {/* Creative Corner Decor */}
+                                            <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transition-all duration-700 group/card overflow-hidden min-h-[200px]">
                                                 <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
-                                                    <div className="w-14 h-14 bg-amber-600/20 text-amber-500 mb-6 flex items-center justify-center group-hover/card:scale-110 group-hover/card:-rotate-12 transition-transform duration-500">
-                                                        <Target size={28} />
+                                                    <div className="w-12 h-12 bg-amber-600/20 text-amber-500 mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">
+                                                        <Target size={24} />
                                                     </div>
-                                                    <span className="text-4xl font-black text-white mb-2 block tracking-tight">100%</span>
-                                                    <span className="text-[11px] text-amber-500/80 font-black ">نسبة نجاح</span>
+                                                    <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">100%</span>
+                                                    <span className="text-[10px] md:text-[11px] text-amber-500/80 font-black">نسبة نجاح</span>
                                                 </div>
 
-                                                {/* Artistic Glow */}
                                                 <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-amber-600/10 rounded-full blur-2xl group-hover/card:bg-amber-600/20 transition-all"></div>
                                             </div>
                                         </div>
-                                        {/* Background Glow for Stats */}
                                         <div className="absolute inset-0 bg-indigo-600/10 blur-[80px] -z-10"></div>
                                     </div>
                                 </div>
