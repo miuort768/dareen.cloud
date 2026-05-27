@@ -470,7 +470,7 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ─── Mobile version (app-style with tabs) ─── */}
-            <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] font-sans" dir="rtl">
+            <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] dark:bg-slate-950 font-sans" dir="rtl">
                 {/* Sticky app bar */}
                 <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
@@ -543,12 +543,12 @@ export const ParentDashboard = () => {
                                 <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
                                 <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
                                 <div className="z-10 space-y-2">
-                                    <h2 className="text-2xl font-black leading-tight text-[#0C4A6E]">
+                                    <h2 className="text-2xl font-black leading-tight text-[#0C4A6E] dark:text-white">
                                         تعلّم بلا حدود{' '}
                                         <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
                                     </h2>
-                                    <p className="text-sm font-bold text-[#0C4A6E] opacity-80">من أي مكان في العالم</p>
-                                    <p className="text-xs leading-relaxed text-[#0C4A6E] opacity-70 max-w-none">
+                                    <p className="text-sm font-bold text-[#0C4A6E] dark:text-slate-200 opacity-80">من أي مكان في العالم</p>
+                                    <p className="text-xs leading-relaxed text-[#0C4A6E] dark:text-slate-300 opacity-70 max-w-none">
                                         حصص تفاعلية مباشرة مع أفضل المعلمين، متابعة دورية، وتقارير مفصلة لأولياء الأمور.
                                     </p>
                                     <div className="flex flex-row gap-2 pt-2">
@@ -582,7 +582,7 @@ export const ParentDashboard = () => {
                                         return (
                                             <div
                                                 key={idx}
-                                                className="flex-1 bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
+className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col items-center text-center gap-1"
                                             >
                                                 <div
                                                     className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -623,29 +623,29 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">البث المباشر</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">البث المباشر</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
                                 </div>
                             </section>
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">التنقل السريع</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التنقل السريع</h2>
                                 </div>
                                 <div className="grid grid-cols-2 gap-2.5">
-                                    <button onClick={() => navigate('/parent-students')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
                                         <div className="w-11 h-11 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
                                             <Users size={20} />
                                         </div>
-                                        <span className="text-[#1E1E2F] text-[11px] font-bold">ملفات الأبناء</span>
+                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">ملفات الأبناء</span>
                                     </button>
-                                    <button onClick={() => navigate('/forum')} className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
                                         <div className="w-11 h-11 bg-gradient-to-br from-[#3478F6] to-[#5B9DFF] rounded-2xl flex items-center justify-center text-white shadow-sm">
                                             <LayoutDashboard size={20} />
                                         </div>
-                                        <span className="text-[#1E1E2F] text-[11px] font-bold">المنتدى</span>
+                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">المنتدى</span>
                                     </button>
                                 </div>
                             </section>
@@ -658,23 +658,23 @@ export const ParentDashboard = () => {
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
                                         <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
-                                        <h2 className="text-[#1E1E2F] text-[13px] font-black">الواجبات والملاحظات</h2>
+                                        <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الواجبات والملاحظات</h2>
                                     </div>
-                                    <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5 space-y-3">
+                                    <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5 space-y-3">
                                         {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
                                             <div key={child.id}>
                                                 <div className="flex items-center gap-2 mb-1.5">
                                                     <div className="w-1.5 h-1.5 rounded-full bg-[#6C4BFF]" />
-                                                    <span className="text-[11px] font-bold text-slate-500">{child.name}</span>
+                                                    <span className="text-[11px] font-bold text-slate-500 dark:text-slate-300">{child.name}</span>
                                                 </div>
                                                 <div className="space-y-2 mr-4">
                                                     {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
-                                                        <div key={idx} className="bg-purple-50 p-3 rounded-xl border border-purple-100">
+                                                        <div key={idx} className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-xl border border-purple-100 dark:border-purple-800/30">
                                                             <div className="flex justify-between items-center mb-1">
-                                                                <span className="text-[11px] font-bold text-[#6C4BFF]">{en.subject}</span>
-                                                                <span className="text-[9px] text-slate-400">{en.teacher}</span>
+                                                                <span className="text-[11px] font-bold text-[#6C4BFF] dark:text-purple-300">{en.subject}</span>
+                                                                <span className="text-[9px] text-slate-400 dark:text-slate-400">{en.teacher}</span>
                                                             </div>
-                                                            <p className="text-[10px] text-slate-700 leading-relaxed">{en.nextSessionNotes}</p>
+                                                            <p className="text-[10px] text-slate-700 dark:text-slate-300 leading-relaxed">{en.nextSessionNotes}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -686,7 +686,7 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">التقدم الأكاديمي</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التقدم الأكاديمي</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
@@ -714,29 +714,29 @@ export const ParentDashboard = () => {
                         <section>
                             <div className="flex items-center gap-2 mb-2 px-1">
                                 <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                <h2 className="text-[#1E1E2F] text-[13px] font-black">جدول حصص اليوم</h2>
+                                <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">جدول حصص اليوم</h2>
                             </div>
-                            <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
+                            <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5">
                                 <div className="space-y-2">
                                     {todayTasks.map((task, idx) => (
-                                        <div key={idx} className="bg-[#F7F8FC] rounded-xl p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
+                                        <div key={idx} className="bg-[#F7F8FC] dark:bg-slate-700/50 rounded-xl p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
                                             <div className="flex items-center gap-2.5">
                                                 <div className="w-9 h-9 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-xl flex items-center justify-center text-white shadow-sm">
                                                     <BookOpen size={16} />
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-[11px] font-bold text-[#1E1E2F]">{task.subject}</h4>
-                                                    <p className="text-[9px] text-slate-400">{task.studentName}</p>
+                                                    <h4 className="text-[11px] font-bold text-[#1E1E2F] dark:text-white">{task.subject}</h4>
+                                                    <p className="text-[9px] text-slate-400 dark:text-slate-400">{task.studentName}</p>
                                                 </div>
                                             </div>
-                                            <div className="text-left font-bold text-[10px] text-slate-500">{task.time}</div>
+                                            <div className="text-left font-bold text-[10px] text-slate-500 dark:text-slate-400">{task.time}</div>
                                         </div>
                                     ))}
                                     {todayTasks.length === 0 && (
                                         <div className="py-8 text-center">
-                                            <Calendar size={36} className="mx-auto text-slate-200 mb-3" />
-                                            <p className="text-slate-400 font-bold text-[13px]">لا توجد حصص اليوم</p>
-                                            <p className="text-slate-300 text-[10px] mt-1">يوم هادئ بلا حصص!</p>
+                                            <Calendar size={36} className="mx-auto text-slate-200 dark:text-slate-600 mb-3" />
+                                            <p className="text-slate-400 dark:text-slate-400 font-bold text-[13px]">لا توجد حصص اليوم</p>
+                                            <p className="text-slate-300 dark:text-slate-500 text-[10px] mt-1">يوم هادئ بلا حصص!</p>
                                         </div>
                                     )}
                                 </div>
@@ -749,19 +749,19 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-amber-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">آخر النشاطات</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">آخر النشاطات</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-3.5">
+                                <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5">
                                     <div className="space-y-2">
                                         {allPointLogs.slice(0, 4).map((log, i) => (
-                                            <div key={i} className="bg-[#F7F8FC] rounded-xl p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
+                                            <div key={i} className="bg-[#F7F8FC] dark:bg-slate-700/50 rounded-xl p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
                                                 <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0">
                                                     <Star size={13} fill="currentColor" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="text-[10px] font-bold text-amber-600 mb-0.5 truncate">{log.studentName}</p>
-                                                    <p className="text-[10px] text-slate-700 leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
-                                                    <p className="text-[9px] text-slate-400 mt-1 flex items-center gap-1">
+                                                    <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-0.5 truncate">{log.studentName}</p>
+                                                    <p className="text-[10px] text-slate-700 dark:text-slate-300 leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
+                                                    <p className="text-[9px] text-slate-400 dark:text-slate-400 mt-1 flex items-center gap-1">
                                                         <Clock size={7} />
                                                         {log.timestamp ? (() => {
                                                             try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
@@ -772,8 +772,8 @@ export const ParentDashboard = () => {
                                             </div>
                                         ))}
                                         {allPointLogs.length === 0 && (
-                                            <div className="py-5 text-center bg-[#F7F8FC] border-2 border-dashed border-slate-200 rounded-xl">
-                                                <p className="text-slate-400 font-medium text-[10px]">لا توجد نشاطات حديثة</p>
+                                            <div className="py-5 text-center bg-[#F7F8FC] dark:bg-slate-700/50 border-2 border-dashed border-slate-200 dark:border-slate-600 rounded-xl">
+                                                <p className="text-slate-400 dark:text-slate-400 font-medium text-[10px]">لا توجد نشاطات حديثة</p>
                                             </div>
                                         )}
                                     </div>
@@ -782,7 +782,7 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-rose-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">الدعم الفني</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الدعم الفني</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
@@ -792,7 +792,7 @@ export const ParentDashboard = () => {
                                             <p className="text-[9px] text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                         </div>
                                         <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`} target="_blank" rel="noopener noreferrer"
-                                            className="bg-white text-[#6C4BFF] px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
+                                            className="bg-white dark:bg-slate-800 text-[#6C4BFF] dark:text-purple-300 px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
                                             <MessageSquare size={13} />
                                             تواصل
                                         </a>
@@ -807,7 +807,7 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
-            <div className="block md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40">
+            <div className="block md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-700 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40 dark:shadow-slate-900/40">
                 <div className="flex items-center justify-around h-[68px] px-2">
                     {[
                         { id: 'profile', label: 'حسابي', icon: User },
@@ -839,10 +839,10 @@ export const ParentDashboard = () => {
                                     <>
                                         <Icon
                                             size={22}
-                                            className={`transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400'}`}
+                                            className={`transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400 dark:text-slate-400'}`}
                                             strokeWidth={isActive ? 2.5 : 1.5}
                                         />
-                                        <span className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400'}`}>
+                                        <span className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400 dark:text-slate-400'}`}>
                                             {item.label}
                                         </span>
                                     </>
