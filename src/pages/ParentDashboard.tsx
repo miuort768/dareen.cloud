@@ -539,10 +539,10 @@ export const ParentDashboard = () => {
                     {activeTab === 'home' && (
                         <>
                             {/* ══════════ HERO SECTION ══════════ */}
-                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl flex items-center justify-between gap-4 relative overflow-hidden">
+                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl relative overflow-hidden">
                                 <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
                                 <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
-                                <div className="flex-1 z-10 space-y-2">
+                                <div className="z-10 space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-[#0C4A6E]">
                                         تعلّم بلا حدود{' '}
                                         <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
@@ -566,19 +566,6 @@ export const ParentDashboard = () => {
                                             استكشف الدورات
                                             <ChevronLeft size={12} />
                                         </button>
-                                    </div>
-                                </div>
-                                <div className="shrink-0 relative z-10">
-                                    <div className="w-[100px] h-[110px] relative">
-                                        <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 backdrop-blur-sm flex items-center justify-center shadow-xl">
-                                            <div className="flex flex-col items-center gap-0.5">
-                                                <span className="text-5xl">🌍</span>
-                                                <div className="flex gap-1">
-                                                    <span className="text-lg">📚</span>
-                                                    <span className="text-lg">📖</span>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
