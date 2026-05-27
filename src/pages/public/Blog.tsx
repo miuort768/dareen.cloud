@@ -213,7 +213,7 @@ export const Blog = () => {
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
                   <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
-                    منصة دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
+                    برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
                   </h2>
                   <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">دروس خصوصية أونلاين</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
