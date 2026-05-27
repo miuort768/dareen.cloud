@@ -517,16 +517,16 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                     {/* Tab bar */}
-                    <div className="relative z-10 px-4 pb-2">
-                        <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-2xl p-0.5">
+                    <div className="relative z-10 px-4 pb-4 pt-1">
+                        <div className="flex gap-1.5 bg-white/10 backdrop-blur-sm rounded-2xl p-1">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded-xl text-[10px] font-bold transition-all ${
+                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                                         activeTab === tab.id
                                             ? 'bg-white text-[#6C4BFF] shadow-sm'
                                             : 'text-white/70'
                                     }`}>
-                                    <tab.icon size={12} />
+                                    <tab.icon size={14} />
                                     {tab.label}
                                 </button>
                             ))}
