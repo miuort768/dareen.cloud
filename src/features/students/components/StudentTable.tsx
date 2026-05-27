@@ -16,7 +16,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
     return (
         <div className="w-full">
             {/* Desktop View */}
-            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden">
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-[var(--primary-color,#2563EB)]">
@@ -48,7 +48,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-normal text-sm shadow-sm rounded-xl">
+                                                <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -90,8 +90,8 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
-                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-emerald-500 transition-all" title="تعديل"><Edit size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 transition-all" title="حذف"><Trash size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-500 transition-all rounded-xl" title="تعديل"><Edit size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-500 transition-all rounded-xl" title="حذف"><Trash size={14} /></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -115,13 +115,13 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                             key={student.id} 
                             onClick={() => onSelect(student)} 
                             className={cn(
-                                "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 shadow-sm active:scale-[0.98] transition-all relative overflow-hidden rounded-2xl",
-                                hasLowBalance ? "border-rose-100" : ""
+                                "bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 shadow-sm active:scale-[0.98] transition-all relative overflow-hidden rounded-2xl",
+                                hasLowBalance ? "border-rose-200 dark:border-rose-800" : ""
                             )}
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-normal text-sm rounded-xl">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                         {student.name.charAt(0)}
                                     </div>
                                     <div>
@@ -130,23 +130,23 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                     </div>
                                 </div>
                                 <div className="flex gap-1">
-                                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-slate-50 text-slate-400 flex items-center justify-center rounded-lg"><Edit size={14} /></button>
-                                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 bg-rose-50 text-rose-500 flex items-center justify-center rounded-lg"><Trash size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 flex items-center justify-center rounded-xl shadow-sm transition-all"><Edit size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 bg-rose-50 dark:bg-rose-900/20 text-rose-500 hover:bg-rose-500 hover:text-white flex items-center justify-center rounded-xl shadow-sm transition-all"><Trash size={14} /></button>
                                 </div>
                             </div>
                             
                             <div className="grid grid-cols-3 gap-3 mb-4">
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 text-center rounded-xl">
-                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">العقود</span>
-                                    <span className="text-xs font-normal text-blue-500">{student.enrollments?.length || 0}</span>
+                                <div className="bg-[#2563EB08] border border-[#2563EB]15 p-2 text-center rounded-xl">
+                                    <span className="text-[8px] font-bold text-[#64748B] block mb-1">العقود</span>
+                                    <span className="text-xs font-black text-[#2563EB]">{student.enrollments?.length || 0}</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 text-center rounded-xl">
-                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">المستخدم</span>
-                                    <span className="text-xs font-normal text-emerald-500">{totalUsed}</span>
+                                <div className="bg-[#22C55E08] border border-[#22C55E]15 p-2 text-center rounded-xl">
+                                    <span className="text-[8px] font-bold text-[#64748B] block mb-1">المستخدم</span>
+                                    <span className="text-xs font-black text-[#22C55E]">{totalUsed}</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 text-center rounded-xl">
-                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">الرصيد</span>
-                                    <span className={cn("text-xs font-normal", hasLowBalance ? "text-rose-500" : "text-slate-600")}>{totalExpected - totalUsed}</span>
+                                <div className="bg-[#F59E0B08] border border-[#F59E0B]15 p-2 text-center rounded-xl">
+                                    <span className="text-[8px] font-bold text-[#64748B] block mb-1">الرصيد</span>
+                                    <span className={cn("text-xs font-black", hasLowBalance ? "text-rose-500" : "text-[#F59E0B]")}>{totalExpected - totalUsed}</span>
                                 </div>
                             </div>
 

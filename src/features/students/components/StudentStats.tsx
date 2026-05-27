@@ -8,58 +8,35 @@ interface StudentStatsProps {
     averageSessionsPerStudent: number;
 }
 
-const StatItem = ({ label, value, icon: Icon, color, symbol, bg, borderAccent }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, symbol: string, bg: string, borderAccent: string }) => (
-    <div className={cn("bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex flex-col items-center text-center hover:shadow-sm transition-shadow relative overflow-hidden", borderAccent)}>
-        <div className={cn("absolute -right-2 -bottom-4 text-5xl font-medium opacity-[0.03] dark:opacity-[0.05] pointer-events-none select-none italic", color)}>
-            {value}
+const statSettings: Record<string, { color: string }> = {
+  'إجمالي القوة الطلابية': { color: '#2563EB' },
+  'التراخيص النشطة': { color: '#22C55E' },
+  'التنوع الأكاديمي': { color: '#8B5CF6' },
+  'الكثافة التشغيلية': { color: '#F59E0B' },
+};
+
+const StatItem = ({ label, value, icon: Icon }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
+    const { color } = statSettings[label] || { color: '#2563EB' };
+    return (
+        <div className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-4 transition-all hover:shadow-md">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+                <Icon size={20} />
+            </div>
+            <div className="min-w-0">
+                <p className="text-[10px] font-bold text-[#64748B] leading-none">{label}</p>
+                <p className="text-xl font-black text-[#0F172A] dark:text-white tabular-nums mt-1" style={{ color }}>{value}</p>
+            </div>
         </div>
-        <div className={cn("w-6 h-6 rounded-xl flex items-center justify-center mb-1.5 relative z-10", bg)}>
-            <Icon size={12} className={color} />
-        </div>
-        <p className="text-[8px] font-medium text-slate-400 uppercase tracking-widest relative z-10">{label}</p>
-        <p className={cn("text-sm font-medium mt-0.5 relative z-10", color)}>{value} <span className="text-[8px] font-normal text-slate-400">{symbol}</span></p>
-    </div>
-);
+    );
+};
 
 export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, averageSessionsPerStudent }: StudentStatsProps) => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-6">
-            <StatItem 
-                label="إجمالي القوة الطلابية" 
-                value={totalStudents} 
-                icon={Users} 
-                color="text-blue-600 dark:text-blue-400" 
-                bg="bg-blue-50 dark:bg-blue-900/20"
-                borderAccent="border-t-2 border-t-indigo-500"
-                symbol="طالب"
-            />
-            <StatItem 
-                label="التراخيص النشطة" 
-                value={activeEnrollments} 
-                icon={UserCheck} 
-                color="text-emerald-600 dark:text-emerald-400" 
-                bg="bg-emerald-50 dark:bg-emerald-900/20"
-                borderAccent="border-t-2 border-t-emerald-500"
-                symbol="عقد"
-            />
-            <StatItem 
-                label="التنوع الأكاديمي" 
-                value={uniqueGrades} 
-                icon={GraduationCap} 
-                color="text-fuchsia-600 dark:text-fuchsia-400" 
-                bg="bg-fuchsia-50 dark:bg-fuchsia-900/20"
-                borderAccent="border-t-2 border-t-fuchsia-500"
-                symbol="مرحلة"
-            />
-            <StatItem 
-                label="الكثافة التشغيلية" 
-                value={averageSessionsPerStudent} 
-                icon={BookOpen} 
-                color="text-amber-600 dark:text-amber-400" 
-                bg="bg-amber-50 dark:bg-amber-900/20"
-                borderAccent="border-t-2 border-t-amber-500"
-                symbol="ساعة"
-            />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2">
+            <StatItem label="إجمالي القوة الطلابية" value={totalStudents} icon={Users} />
+            <StatItem label="التراخيص النشطة" value={activeEnrollments} icon={UserCheck} />
+            <StatItem label="التنوع الأكاديمي" value={uniqueGrades} icon={GraduationCap} />
+            <StatItem label="الكثافة التشغيلية" value={averageSessionsPerStudent} icon={BookOpen} />
         </div>
     );
 };
