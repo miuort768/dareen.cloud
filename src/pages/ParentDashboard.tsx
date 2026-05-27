@@ -548,7 +548,7 @@ export const ParentDashboard = () => {
                                         <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
                                     </h2>
                                     <p className="text-sm font-bold text-[#0C4A6E] opacity-80">من أي مكان في العالم</p>
-                                    <p className="text-xs leading-relaxed text-[#0C4A6E] opacity-70 max-w-[180px]">
+                                    <p className="text-xs leading-relaxed text-[#0C4A6E] opacity-70 max-w-none">
                                         حصص تفاعلية مباشرة مع أفضل المعلمين، متابعة دورية، وتقارير مفصلة لأولياء الأمور.
                                     </p>
                                     <div className="flex flex-row gap-2 pt-2">
