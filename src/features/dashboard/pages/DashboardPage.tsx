@@ -73,7 +73,7 @@ export const Dashboard = () => {
                 <div className="space-y-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Section className="h-full"><LiveClasses /></Section>
-                        <Section className="h-full"><ModernAnnouncements /></Section>
+                        <Section className="h-full"><OperationsDashboard tasks={tasks} lowBalanceStudents={lowBalanceStudents} stats={stats} /></Section>
                     </div>
 
                     <Section>
@@ -100,7 +100,7 @@ export const Dashboard = () => {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Section>
-                            <OperationsDashboard tasks={tasks} lowBalanceStudents={lowBalanceStudents} stats={stats} />
+                            <ModernAnnouncements />
                         </Section>
                         <Section>
                             <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
