@@ -484,6 +484,7 @@ export const ParentDashboard = () => {
                                     <h1 className="text-[#1E1E2F] dark:text-white font-black text-base leading-tight">
                                         أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                     </h1>
+                                    <p className="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                                     <div className="flex items-center gap-1.5 mt-0.5">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                         <p className="text-slate-400 dark:text-slate-400 text-[11px] font-bold">
