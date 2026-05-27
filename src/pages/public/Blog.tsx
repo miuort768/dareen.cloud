@@ -241,64 +241,60 @@ export const Blog = () => {
               </div>
             </div>
 
-            {/* Selection Grid for sub-views */}
-            {view !== 'curriculums' && view !== 'grades' && (
-              <>
-                <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800">
-                  <h1 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
-                    {view === 'types' ? (
-                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
-                    ) : view === 'curriculums' ? (
-                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
-                    ) : (
-                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
-                    )}
-                  </h1>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5 leading-relaxed">
-                    {view === 'types'
-                      ? 'اختر ما تريد من كتب او مذكرات مجانا'
-                      : view === 'curriculums'
-                      ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                      : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-                  </p>
-                </div>
+            {/* Selection Grid */}
+            <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800">
+              <h1 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
+                {view === 'types' ? (
+                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
+                ) : view === 'curriculums' ? (
+                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
+                ) : (
+                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
+                )}
+              </h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5 leading-relaxed">
+                {view === 'types'
+                  ? 'اختر ما تريد من كتب او مذكرات مجانا'
+                  : view === 'curriculums'
+                  ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+              </p>
+            </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {gridItems.map((item: GridItem, i: number) => (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
-                        else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
-                        else { setSelectedLevel(item.id); setView('classrooms'); }
-                      }}
-                      className={cn(
-                        "relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl text-white overflow-hidden shadow-lg active:scale-[0.97] transition-all",
-                        "bg-gradient-to-br", item.gradient
-                      )}
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                        <item.icon size={20} />
-                      </div>
-                      <span className="text-sm font-black text-center leading-tight">{item.name}</span>
-                      {item.sub && <span className="text-[11px] text-white/70 font-bold">{item.sub}</span>}
-                    </button>
-                  ))}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              {gridItems.map((item: GridItem, i: number) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
+                    else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
+                    else { setSelectedLevel(item.id); setView('classrooms'); }
+                  }}
+                  className={cn(
+                    "relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl text-white overflow-hidden shadow-lg active:scale-[0.97] transition-all",
+                    "bg-gradient-to-br", item.gradient
+                  )}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                    <item.icon size={20} />
+                  </div>
+                  <span className="text-sm font-black text-center leading-tight">{item.name}</span>
+                  {item.sub && <span className="text-[11px] text-white/70 font-bold">{item.sub}</span>}
+                </button>
+              ))}
 
-                  <button onClick={goBack}
-                    className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 active:scale-[0.97] transition-all shadow-sm">
-                    <ArrowLeft size={20} />
-                    <span className="text-sm font-black">العودة</span>
-                  </button>
+              <button onClick={goBack}
+                className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 active:scale-[0.97] transition-all shadow-sm">
+                <ArrowLeft size={20} />
+                <span className="text-sm font-black">العودة</span>
+              </button>
 
-                  <Link to="/courses"
-                    className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-lg">
-                    <Sparkles size={20} />
-                    <span className="text-sm font-black">الدورات</span>
-                  </Link>
-                </div>
-              </>
-            )}
+              <Link to="/courses"
+                className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-lg">
+                <Sparkles size={20} />
+                <span className="text-sm font-black">الدورات</span>
+              </Link>
+            </div>
           </div>
         ) : view === 'results' ? (
           <div className="pb-6">
