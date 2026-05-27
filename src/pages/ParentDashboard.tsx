@@ -597,7 +597,7 @@ export const ParentDashboard = () => {
                                     <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
                                     <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">التنقل السريع</h2>
                                 </div>
-                                <div className="grid grid-cols-2 gap-2">
+                                <div className="grid grid-cols-3 gap-2">
                                     <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
                                         <div className="w-10 h-10 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
                                             <Users size={18} />
@@ -609,6 +609,12 @@ export const ParentDashboard = () => {
                                             <LayoutDashboard size={18} />
                                         </div>
                                         <span className="text-[#1E1E2F] dark:text-white text-[10px] font-bold">المنتدى</span>
+                                    </button>
+                                    <button onClick={() => navigate('/chat')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-400 rounded-2xl flex items-center justify-center text-white shadow-sm">
+                                            <MessageSquare size={18} />
+                                        </div>
+                                        <span className="text-[#1E1E2F] dark:text-white text-[10px] font-bold">الدردشة</span>
                                     </button>
                                 </div>
                             </section>
