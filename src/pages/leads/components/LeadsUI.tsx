@@ -28,26 +28,24 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
     </button>
 );
 
-const statBgMap: Record<string, string> = {
-  'إجمالي المهتمين': 'from-blue-500 to-blue-600',
-  'عملاء جدد': 'from-blue-500 to-cyan-500',
-  'تم التحويل': 'from-emerald-500 to-green-600',
-  'معدل التحويل': 'from-amber-400 to-orange-500',
+const statStyleMap: Record<string, { color: string }> = {
+  'إجمالي المهتمين': { color: '#2563EB' },
+  'عملاء جدد': { color: '#38BDF8' },
+  'تم التحويل': { color: '#22C55E' },
+  'معدل التحويل': { color: '#F59E0B' },
 };
 
-export const StatItem = ({ title, value, icon: Icon, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, bg?: string }) => (
-    <div className={cn(
-        "relative flex flex-col items-center text-center text-white overflow-hidden rounded-2xl",
-        "bg-gradient-to-br shadow-sm border border-white/10",
-        statBgMap[title] || 'from-blue-500 to-blue-600'
-    )}>
-        <div className="absolute left-2 bottom-0 opacity-15">
-            <Icon size={56} className="md:size-[72px]" />
+export const StatItem = ({ title, value, icon: Icon }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
+    const { color } = statStyleMap[title] || { color: '#2563EB' };
+    return (
+        <div className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-4 transition-all hover:shadow-md">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+                <Icon size={20} />
+            </div>
+            <div className="min-w-0">
+                <p className="text-[10px] font-bold text-[#64748B] leading-none">{title}</p>
+                <p className="text-xl font-black text-[#0F172A] dark:text-white tabular-nums mt-1">{value}</p>
+            </div>
         </div>
-        <div className="relative z-10 w-full px-3 py-4 md:px-4 md:py-5 flex flex-col items-center gap-1 md:gap-1.5">
-            <Icon size={18} className="md:w-5 md:h-5 text-white/90" />
-            <p className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-white/80">{title}</p>
-            <p className="text-base md:text-2xl font-black tabular-nums">{value}</p>
-        </div>
-    </div>
-);
+    );
+};

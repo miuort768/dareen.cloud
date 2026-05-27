@@ -12,7 +12,7 @@ interface LeadTableProps {
 
 export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost }: LeadTableProps) => {
     return (
-        <div className="hidden lg:block overflow-x-auto border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm rounded-2xl">
+        <div className="hidden lg:block overflow-x-auto border border-slate-100/50 dark:border-slate-800/50 bg-white dark:bg-slate-900 shadow-sm rounded-2xl">
             <table className="w-full text-right border-collapse">
                 <thead className="bg-[#172554]">
                     <tr>
@@ -30,7 +30,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <tr onDoubleClick={() => handleMarkLost(lead.id)} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
                                 <td className="px-5 py-3.5">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-[#172554] text-white flex items-center justify-center font-bold text-xs rounded-xl">
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                             {lead.studentName?.charAt(0) || 'ع'}
                                         </div>
                                         <div>

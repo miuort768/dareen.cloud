@@ -21,13 +21,13 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                 <div
                     key={lead.id}
                     onDoubleClick={() => handleMarkLost(lead.id)}
-                    className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm active:scale-[0.98] transition-all cursor-pointer rounded-2xl"
+                    className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm active:scale-[0.98] transition-all cursor-pointer rounded-2xl"
                     title="اضغط مرتين للإخفاء"
                 >
                     {/* Card header */}
                     <div className="flex items-center justify-between px-4 pt-4 pb-2">
                         <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                            <div className="w-9 h-9 bg-[#172554] text-white flex items-center justify-center font-bold text-sm shrink-0 rounded-xl">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                 {lead.studentName?.charAt(0) || 'ع'}
                             </div>
                             <div className="min-w-0">

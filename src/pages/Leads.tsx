@@ -116,26 +116,26 @@ export const Leads: React.FC = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-amber-500 to-orange-600 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-amber-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-amber-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
+                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-black/10 dark:bg-blue-600 text-white rounded-xl">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
                             <Users size={22} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-black dark:text-white leading-tight">العملاء المحتملين</h1>
-                            <p className="text-[10px] text-black/50 dark:text-blue-200/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
+                            <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">العملاء المحتملين</h1>
+                            <p className="text-[10px] font-medium text-[#64748B] mt-0.5">إدارة طلبات التسجيل والمهتمين</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
                             "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-xl",
                             showLost
-                                ? "bg-white text-rose-600 border-white dark:bg-slate-800 dark:text-white dark:border-slate-700"
-                                : "bg-white/20 text-black/70 border-white/30 hover:bg-white/30 dark:bg-white/10 dark:text-white/70 dark:border-white/20 dark:hover:bg-white/20"
+                                ? "bg-white text-rose-600 border-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-700"
+                                : "bg-white text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                             <span>{showLost ? 'الكل' : 'المرفوضون'}</span>
-                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center">{leads.filter(l => l.status === 'lost').length}</span>}
+                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
                         </button>
                         <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 bg-emerald-600 hover:bg-emerald-500 border-0">
                             <Plus size={14} /> إضافة عميل
