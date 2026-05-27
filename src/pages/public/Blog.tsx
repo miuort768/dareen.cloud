@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
@@ -109,6 +109,7 @@ const classroomsMap: Record<string, Record<string, string[]>> = {
 };
 
 export const Blog = () => {
+  const navigate = useNavigate();
   const { adminPhone } = useSettingsStore();
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
@@ -167,6 +168,7 @@ export const Blog = () => {
     else if (view === 'classrooms') setView('grades');
     else if (view === 'grades') setView('curriculums');
     else if (view === 'curriculums') setView('types');
+    else navigate('/');
   };
 
   const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades';
