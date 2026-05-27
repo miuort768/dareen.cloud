@@ -267,7 +267,7 @@ export const ParentDashboard = () => {
                     <QuickStatCard icon={Star} label="الانضباط" value={`${stats.attendanceRate}%`} color="rose" />
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 md:gap-4">
+                <div className="flex flex-row gap-2 md:gap-4">
                     {[
                         { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
                         { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
@@ -277,7 +277,7 @@ export const ParentDashboard = () => {
                         return (
                             <div
                                 key={idx}
-                                className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
+                                className="flex-1 bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
                             >
                                 <div
                                     className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -584,7 +584,7 @@ export const ParentDashboard = () => {
 
                             {/* ══════════ STATS STRIP (like student dashboard) ══════════ */}
                             <div className="px-1 py-2">
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="flex flex-row gap-3">
                                     {[
                                         { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
                                         { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
@@ -594,7 +594,7 @@ export const ParentDashboard = () => {
                                         return (
                                             <div
                                                 key={idx}
-                                                className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
+                                                className="flex-1 bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
                                             >
                                                 <div
                                                     className="w-9 h-9 rounded-xl flex items-center justify-center"
