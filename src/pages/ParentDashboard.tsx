@@ -497,7 +497,7 @@ export const ParentDashboard = () => {
                                 <TrendingUp size={11} className="text-emerald-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-sm">{stats.academicProgress}%</span>
-                                    <span className="text-white/50 text-[7px] font-medium">نسبة النشاط</span>
+                                    <span className="text-white/50 text-[7px] font-medium">الالتزام</span>
                                 </div>
                             </div>
                             <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
