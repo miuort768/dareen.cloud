@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   Search, Plus, X, Phone, Clock, Trash, AlertTriangle, ArrowLeftRight, GraduationCap, Calendar, BookOpen
 } from 'lucide-react';
@@ -34,6 +34,18 @@ const statusLabels: Record<string, string> = {
   cancelled: 'ملغية',
   converted: 'تم التسجيل'
 };
+
+const StatCard = ({ title, value, color, icon: Icon }: { title: string; value: string | number; color: string; icon: React.ComponentType<{ size?: number }> }) => (
+  <div className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-4 transition-all hover:shadow-md">
+    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+      <Icon size={20} />
+    </div>
+    <div className="min-w-0">
+      <p className="text-[10px] font-bold text-[#64748B] leading-none">{title}</p>
+      <p className="text-xl font-black text-[#0F172A] dark:text-white tabular-nums mt-1">{value}</p>
+    </div>
+  </div>
+);
 
 export const TrialSessions = () => {
   const [search, setSearch] = useState('');
@@ -91,45 +103,35 @@ export const TrialSessions = () => {
     <PageContainer title="جلسات المراجعة" subtitle="تسجيل ومتابعة جلسات الطلاب الغير مقيدين" icon={BookOpen}>
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl shadow-sm text-white">
-          <p className="text-[10px] font-medium uppercase tracking-widest text-white/70">الإجمالي</p>
-          <p className="text-2xl font-medium mt-1">{stats?.total || 0}</p>
-        </div>
-        <div className="p-4 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl shadow-sm text-white">
-          <p className="text-[10px] font-medium uppercase tracking-widest text-white/70">تمت</p>
-          <p className="text-2xl font-medium mt-1">{stats?.completed || 0}</p>
-        </div>
-        <div className="p-4 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl shadow-sm text-white">
-          <p className="text-[10px] font-medium uppercase tracking-widest text-white/70">قيد الانتظار</p>
-          <p className="text-2xl font-medium mt-1">{stats?.pending || 0}</p>
-        </div>
-        <div className="p-4 bg-gradient-to-br from-rose-500 to-rose-700 rounded-2xl shadow-sm text-white">
-          <p className="text-[10px] font-medium uppercase tracking-widest text-white/70">ملغية</p>
-          <p className="text-2xl font-medium mt-1">{stats?.cancelled || 0}</p>
-        </div>
+        <StatCard title="الإجمالي" value={stats?.total || 0} color="#2563EB" icon={BookOpen} />
+        <StatCard title="تمت" value={stats?.completed || 0} color="#22C55E" icon={Calendar} />
+        <StatCard title="قيد الانتظار" value={stats?.pending || 0} color="#F59E0B" icon={Clock} />
+        <StatCard title="ملغية" value={stats?.cancelled || 0} color="#F43F5E" icon={X} />
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="بحث باسم الطالب أو رقم ولي الأمر..." className="w-full pr-10 pl-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-normal placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all" />
+      <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-3 mb-6">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم ولي الأمر..." className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-[11px] font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-400 transition-all" />
+          </div>
+          <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-[11px] font-medium text-slate-900 dark:text-white focus:outline-none focus:border-blue-400 transition-all">
+            <option value="">جميع الحالات</option>
+            <option value="pending">قيد الانتظار</option>
+            <option value="completed">تمت</option>
+            <option value="cancelled">ملغية</option>
+            <option value="converted">تم التسجيل</option>
+          </select>
+          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2 bg-[#2563EB] hover:bg-blue-700 text-white text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95">
+            <Plus size={14} /> جلسة مراجعة
+          </button>
         </div>
-        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-normal focus:outline-none focus:ring-2 focus:ring-blue-500/30">
-          <option value="">جميع الحالات</option>
-          <option value="pending">قيد الانتظار</option>
-          <option value="completed">تمت</option>
-          <option value="cancelled">ملغية</option>
-          <option value="converted">تم التسجيل</option>
-        </select>
-        <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center gap-2 px-5 py-2.5 bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-normal rounded-xl transition-all shadow-sm active:scale-95">
-          <Plus size={16} /> جلسة مراجعة
-        </button>
       </div>
 
       {/* List */}
-      {isLoading ? <div className="text-center py-12 text-slate-400 text-sm font-normal">جاري التحميل...</div> :
-      filtered.length === 0 ? <div className="text-center py-12 text-slate-400 text-sm font-normal">لا توجد جلسات مراجعة</div> :
+      {isLoading ? <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50"><Clock size={32} className="mx-auto mb-3 text-slate-200 dark:text-slate-700" /><p className="text-xs font-medium text-slate-400">جاري التحميل...</p></div> :
+      filtered.length === 0 ? <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50"><BookOpen size={32} className="mx-auto mb-3 text-slate-200 dark:text-slate-700" /><p className="text-xs font-medium text-slate-400">لا توجد جلسات مراجعة</p></div> :
       <div className="space-y-3">
         {filtered.map((t: TrialSession) => (
           <div key={t.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
@@ -163,7 +165,7 @@ export const TrialSessions = () => {
       {/* Add/Edit Modal */}
       {showModal && <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50  p-4" dir="rtl">
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm w-full max-w-lg border border-slate-100 dark:border-slate-800 max-h-[90vh] overflow-y-auto">
-          <div className="bg-gradient-to-l from-blue-600 to-blue-500 px-5 py-4 flex items-center justify-between">
+          <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
             <h3 className="text-sm font-medium text-white">{editingId ? 'تعديل جلسة مراجعة' : 'إضافة جلسة مراجعة'}</h3>
             <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="text-white/80 hover:text-white"><X size={18} /></button>
           </div>
