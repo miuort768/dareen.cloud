@@ -222,36 +222,6 @@ export const ParentDashboard = () => {
                     </button>
                 </div>
 
-                {activeTimers.length > 0 && (
-                    <div className="space-y-3">
-                        {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string; studentId?: string; startedAt?: string }) => {
-                            const child = children.find(c => c.id === session.studentId);
-                            return (
-                                <div key={session.id} className="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-4 rounded-2xl shadow-lg shadow-amber-200 dark:shadow-amber-950 flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
-                                            <Clock size={20} />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-sm">حصة جارية الآن!</h3>
-                                            <p className="text-[10px] font-medium opacity-90">
-                                                {child?.name || session.studentId} — {session.subject}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="text-2xl font-bold font-mono tracking-widest">
-                                        {formatTime(session.startedAt)}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-
-                <div className="mb-6">
-                    <LiveClasses />
-                </div>
-
                 {/* ══════════ HERO SECTION (desktop) ══════════ */}
                 <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-6 md:p-8 rounded-3xl flex items-center justify-between gap-6 relative overflow-hidden">
                     <div className="absolute top-[-40px] left-[-40px] w-40 h-40 bg-white/20 rounded-full blur-3xl" />
@@ -325,6 +295,36 @@ export const ParentDashboard = () => {
                 <div className="grid grid-cols-2 gap-2">
                     <NavButton label="ملفات الأبناء" icon={Users} onClick={() => navigate('/parent-students')} />
                     <NavButton label="المنتدى" icon={LayoutDashboard} onClick={() => navigate('/forum')} />
+                </div>
+
+                {activeTimers.length > 0 && (
+                    <div className="space-y-3">
+                        {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string; studentId?: string; startedAt?: string }) => {
+                            const child = children.find(c => c.id === session.studentId);
+                            return (
+                                <div key={session.id} className="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-4 rounded-2xl shadow-lg shadow-amber-200 dark:shadow-amber-950 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
+                                            <Clock size={20} />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-sm">حصة جارية الآن!</h3>
+                                            <p className="text-[10px] font-medium opacity-90">
+                                                {child?.name || session.studentId} — {session.subject}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="text-2xl font-bold font-mono tracking-widest">
+                                        {formatTime(session.startedAt)}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+
+                <div className="mb-6">
+                    <LiveClasses />
                 </div>
 
                 {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
