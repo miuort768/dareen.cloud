@@ -12,16 +12,16 @@ import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
 
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4" dir="rtl">
-        <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-200 dark:border-slate-700 shadow-xl">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-200 dark:border-slate-700 shadow-xl rounded-2xl">
             <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-rose-500/20 flex items-center justify-center">
+                    <div className="w-8 h-8 bg-rose-500/20 flex items-center justify-center rounded-xl">
                         <AlertTriangle size={18} className="text-rose-300" />
                     </div>
                     <h3 className="text-sm font-bold text-white">حذف العميل</h3>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70">
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-xl">
                     <X size={16} />
                 </button>
             </div>
@@ -32,8 +32,8 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                 </p>
             </div>
             <div className="flex border-t border-slate-100 dark:border-slate-800">
-                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all">تأكيد الحذف</button>
+                    <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all rounded-bl-xl">إلغاء</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all rounded-br-xl">تأكيد الحذف</button>
             </div>
         </div>
     </div>
@@ -106,19 +106,19 @@ export const Leads: React.FC = () => {
         contacted: { label: 'تم التواصل', color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20' },
         interested: { label: 'مهتم', color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
         trial: { label: 'حصة تجريبية', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-        converted: { label: 'مشترك', color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+        converted: { label: 'مشترك', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
         lost: { label: 'ملغي', color: 'text-rose-600', bg: 'bg-rose-50 dark:bg-rose-900/20' }
     };
 
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-amber-500 to-orange-600 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-amber-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-amber-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="bg-gradient-to-br from-amber-500 to-orange-600 dark:bg-[#172554] dark:border-[#1e3a5f]/60 border border-amber-400/40 dark:border-[#1e3a5f]/60 shadow-lg shadow-amber-200/30 dark:shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-black/10 dark:bg-blue-600 text-white">
+                        <div className="w-12 h-12 flex items-center justify-center bg-black/10 dark:bg-blue-600 text-white rounded-xl">
                             <Users size={22} />
                         </div>
                         <div>
@@ -128,7 +128,7 @@ export const Leads: React.FC = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
-                            "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border",
+                            "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-xl",
                             showLost
                                 ? "bg-white text-rose-600 border-white dark:bg-slate-800 dark:text-white dark:border-slate-700"
                                 : "bg-white/20 text-black/70 border-white/30 hover:bg-white/30 dark:bg-white/10 dark:text-white/70 dark:border-white/20 dark:hover:bg-white/20"
@@ -152,7 +152,7 @@ export const Leads: React.FC = () => {
                 </div>
 
                 {/* Search & Filter */}
-                <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm mb-6">
+                <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm mb-6 rounded-2xl">
                     <div className="flex flex-col md:flex-row gap-3 p-3">
                         <div className="relative flex-1">
                             <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />

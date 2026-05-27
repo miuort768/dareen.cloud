@@ -222,14 +222,14 @@ export const Forum = () => {
 
     return (
         <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-purple-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-purple-950/20 pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #6366f1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #2563EB 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10">
 
             {/* ════════ HEADER ════════ */}
             <div className="relative overflow-hidden bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] rounded-3xl shadow-xl shadow-purple-200/30 border border-white/10 px-6 py-8 mx-4 mt-4 mb-6">
                 {/* Decorative blobs */}
                 <div className="absolute -top-16 -right-16 w-64 h-64 bg-purple-300/20 rounded-full blur-[80px] pointer-events-none" />
-                <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-indigo-300/15 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-blue-300/15 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-white/30 rounded-full" />
                 <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-300/40 rounded-full" />
                 <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white/20 rounded-full" />

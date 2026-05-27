@@ -20,7 +20,7 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
@@ -29,8 +29,8 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
 
 const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none">
-            <Icon size={16} className="text-[#5c59f2]" />
+        <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
+            <Icon size={16} className="text-blue-600" />
         </div>
         <div>
             <p className="text-sm font-normal text-slate-800 dark:text-white leading-none">{label}</p>
@@ -46,8 +46,8 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
-            'text-white text-xs font-normal px-4 py-2.5 rounded-none transition-all shadow-sm',
+            'flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700',
+            'text-white text-xs font-normal px-4 py-2.5 rounded-xl transition-all shadow-sm',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -278,7 +278,7 @@ export const Attendance = () => {
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden rounded-none">
+                        <SectionCard className="p-0 overflow-hidden rounded-2xl">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
                                 <SectionTitle icon={Activity} label="حصص الطلاب المقررة" />
                                 <div className="relative w-full md:w-[400px]">
@@ -288,7 +288,7 @@ export const Attendance = () => {
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         placeholder="ابحث باسم الطالب أو المادة..."
-                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-blue-600 transition-all"
                                     />
                                 </div>
                             </div>
@@ -339,7 +339,7 @@ export const Attendance = () => {
                                 <SectionCard key={teacher} className="p-0 overflow-hidden">
                                     <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-[#5c59f2] flex items-center justify-center text-white font-normal rounded-lg text-xs">
+                                            <div className="w-8 h-8 bg-blue-600 flex items-center justify-center text-white font-normal rounded-lg text-xs">
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
@@ -373,10 +373,10 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-none p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-normal rounded-none text-sm">
+                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-normal rounded-xl text-sm">
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
@@ -386,7 +386,7 @@ export const Attendance = () => {
                                                                             {student.grade}
                                                                         </span>
                                                                         <p className="text-[9px] font-normal text-slate-400 flex items-center gap-1">
-                                                                            <BookOpen size={10} className="text-[#5c59f2]" />
+                                                                            <BookOpen size={10} className="text-blue-600" />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
@@ -416,13 +416,13 @@ export const Attendance = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
+                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-xl flex items-center justify-center transition-all"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
+                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-xl flex items-center justify-center transition-all"
                                                             >
                                                                 غياب
                                                             </button>

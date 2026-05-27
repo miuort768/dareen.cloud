@@ -13,13 +13,13 @@ export const Parents = () => {
     if (state.loading) {
         return (
             <div className="space-y-4 p-4 md:p-8 animate-pulse">
-                <div className="h-24 bg-white dark:bg-slate-900 rounded-none shadow-sm" />
+                <div className="h-24 bg-white dark:bg-slate-900 rounded-2xl shadow-sm" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
-                        <div key={i} className="h-28 bg-white dark:bg-slate-900 rounded-none shadow-sm" />
+                        <div key={i} className="h-28 bg-white dark:bg-slate-900 rounded-2xl shadow-sm" />
                     ))}
                 </div>
-                <div className="h-96 bg-white dark:bg-slate-900 rounded-none shadow-sm" />
+                <div className="h-96 bg-white dark:bg-slate-900 rounded-2xl shadow-sm" />
             </div>
         );
     }
@@ -66,14 +66,14 @@ export const Parents = () => {
                     {!state.showDetails ? (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             {/* Toolbar - Only visible when not in details mode */}
-                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 overflow-hidden">
+                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 overflow-hidden">
                                 <div className="flex-1 relative group">
                                     <div className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center bg-slate-950 text-white z-10">
                                         <Search size={16} />
                                     </div>
                                     <input
                                         type="text"
-                                        placeholder="ÇáÈÍË Ýí ÓÌáÇÊ ÃæáíÇÁ ÇáÃãæÑ (ÇáÇÓã¡ ÇáÌæÇá¡ ÇáÈÑíÏ)..."
+                                        placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)..."
                                         value={state.searchTerm}
                                         onChange={(e) => actions.setSearchTerm(e.target.value)}
                                         className="w-full pl-6 pr-16 py-4 bg-transparent outline-none text-xs font-medium uppercase tracking-tight placeholder:text-slate-400 dark:text-white"
@@ -81,12 +81,12 @@ export const Parents = () => {
                                 </div>
                                 <div className="hidden lg:flex items-center gap-6 px-8 border-r border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none shadow-sm shadow-indigo-600/20">
+                                        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl shadow-sm shadow-blue-600/20">
                                             <Users size={14} className="text-white" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest leading-none">ÅÌãÇáí ÇáÓÌáÇÊ</p>
-                                            <p className="text-[10px] font-normal text-slate-400 mt-1 uppercase">{state.filteredParents.length} ãä {state.totalParents}</p>
+                                            <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest leading-none">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
+                                            <p className="text-[10px] font-normal text-slate-400 mt-1 uppercase">{state.filteredParents.length} ï¿½ï¿½ {state.totalParents}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -122,12 +122,12 @@ export const Parents = () => {
             {/* ?? Confirm Modal ?? */}
             {state.confirmModal.show && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60  p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
                         <div className="p-8">
-                            <div className="w-16 h-16 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-none border border-rose-100 dark:border-rose-800 flex items-center justify-center mb-6 mx-auto">
+                            <div className="w-16 h-16 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-xl border border-rose-100 dark:border-rose-800 flex items-center justify-center mb-6 mx-auto">
                                 <AlertCircle size={32} />
                             </div>
-                            <h3 className="font-medium text-lg text-slate-800 dark:text-white mb-3 text-center uppercase tracking-tighter">ÊÃßíÏ ÇáÅÌÑÇÁ ÇáãÇáí</h3>
+                            <h3 className="font-medium text-lg text-slate-800 dark:text-white mb-3 text-center uppercase tracking-tighter">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h3>
                             <p className="text-[11px] font-normal text-slate-500 leading-relaxed mb-8 text-center uppercase tracking-widest">{state.confirmModal.message}</p>
                             
                             <div className="flex gap-2">
@@ -137,19 +137,19 @@ export const Parents = () => {
                                         actions.setConfirmModal({ ...state.confirmModal, show: false });
                                     }}
                                     className={cn(
-                                        "flex-1 py-4 text-white font-medium text-[10px] rounded-none shadow-sm transition-all active:scale-95 uppercase tracking-[0.2em] border",
+                                        "flex-1 py-4 text-white font-medium text-[10px] rounded-xl shadow-sm transition-all active:scale-95 uppercase tracking-[0.2em] border",
                                         state.confirmModal.variant === 'primary' 
-                                            ? "bg-indigo-600 border-indigo-400 hover:bg-indigo-700 shadow-indigo-600/20" 
+                                            ? "bg-blue-600 border-blue-400 hover:bg-blue-700 shadow-blue-600/20" 
                                             : "bg-rose-600 border-rose-400 hover:bg-rose-700 shadow-rose-600/20"
                                     )}
                                 >
-                                    {state.confirmModal.confirmText || 'ÊÃßíÏ ÇáÚãáíÉ'}
+                                    {state.confirmModal.confirmText || 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'}
                                 </button>
                                 <button
                                     onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                    className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-500 font-medium text-[10px] rounded-none hover:bg-slate-200 transition-all uppercase tracking-[0.2em]"
+                                    className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-500 font-medium text-[10px] rounded-xl hover:bg-slate-200 transition-all uppercase tracking-[0.2em]"
                                 >
-                                    ÊÑÇÌÚ
+                                    ï¿½ï¿½ï¿½ï¿½ï¿½
                                 </button>
                             </div>
                         </div>

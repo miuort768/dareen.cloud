@@ -41,12 +41,12 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
       <div
         key={i}
         className={cn(
-          'relative bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm',
+          'relative bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
           'p-3 flex flex-col items-center text-center'
         )}
       >
         <div className={cn(
-          "w-8 h-8 flex items-center justify-center bg-gradient-to-br text-white shadow-sm mb-1.5",
+          "w-8 h-8 flex items-center justify-center bg-gradient-to-br text-white shadow-sm mb-1.5 rounded-xl",
           s.gradient
         )}>
           <s.icon size={16} className="text-white" />

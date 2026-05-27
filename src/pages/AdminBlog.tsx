@@ -14,7 +14,7 @@ interface BlogPost {
     keywords: string;
     author: string;
     date: string;
-    // äÙÇã ÇáÊÕäíÝ ÇáÌÏíÏ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     contentType: string;   // notes | solutions | summaries | foundation
     curriculum: string;    // kuwait | qatar | uae | saudi
     level: string;         // primary | middle | secondary | basic | preparatory
@@ -38,7 +38,7 @@ export const AdminBlog = () => {
             const data = await api.get<BlogPost[]>('/blog');
             setPosts(data);
             } catch {
-                setError('ÍÏË ÎØÃ ÃËäÇÁ ÌáÈ ÇáÈíÇäÇÊ');
+                setError('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
                 setLoading(false);
         }
     }, []);
@@ -57,9 +57,9 @@ export const AdminBlog = () => {
                 excerpt: '',
                 content: '',
                 coverImage: '',
-                category: 'ÚÇã',
+                category: 'ï¿½ï¿½ï¿½',
                 keywords: '',
-                author: 'ÅÏÇÑÉ ÏÇÑíä',
+                author: 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½',
                 date: new Date().toISOString().split('T')[0],
                 contentType: 'notes',
                 curriculum: 'kuwait',
@@ -73,20 +73,20 @@ export const AdminBlog = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('åá ÃäÊ ãÊÃßÏ ãä ÍÐÝ åÐÇ ÇáãÞÇá¿')) return;
+        if (!window.confirm('ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½')) return;
         try {
             await api.delete(`/blog/${id}`);
-            showNotification('Êã ÍÐÝ ÇáãÞÇá ÈäÌÇÍ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
             setPosts(posts.filter(p => p.id !== id));
         } catch {
-            showNotification('ÝÔá ÍÐÝ ÇáãÞÇá', 'error');
+            showNotification('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!currentPost?.title || !currentPost?.slug) {
-            showNotification('íÑÌì ãáÁ ÇáÍÞæá ÇáÃÓÇÓíÉ', 'warning');
+            showNotification('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'warning');
             return;
         }
 
@@ -94,15 +94,15 @@ export const AdminBlog = () => {
             setSubmitting(true);
             if (currentPost.id) {
                 await api.put(`/blog/${currentPost.id}`, currentPost);
-                showNotification('Êã ÊÍÏíË ÇáãÞÇá ÈäÌÇÍ', 'success');
+                showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
             } else {
                 await api.post('/blog', currentPost);
-                showNotification('Êã ÅÖÇÝÉ ÇáãÞÇá ÈäÌÇÍ', 'success');
+                showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
             }
             setIsModalOpen(false);
             fetchPosts();
         } catch (err) {
-            showNotification(err.message || 'ÝÔá ÍÝÙ ÇáãÞÇá', 'error');
+            showNotification(err.message || 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         } finally {
             setSubmitting(false);
         }
@@ -119,28 +119,28 @@ export const AdminBlog = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-6 animate-fade-in">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-medium text-slate-900 dark:text-white">ÅÏÇÑÉ ÇáãÏæäÉ ÇáÊÚáíãíÉ</h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm">ÃÖÝ æÍÑÑ ÇáãÞÇáÇÊ áÒíÇÏÉ ÙåæÑ ÇáãäÕÉ Ýí ãÍÑßÇÊ ÇáÈÍË.</p>
+                    <h1 className="text-2xl font-medium text-slate-900 dark:text-white">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.</p>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-700 text-white font-medium rounded-none hover:from-red-700 hover:to-rose-800 transition-all shadow-sm shadow-red-600/20"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-700 text-white font-medium rounded-xl hover:from-red-700 hover:to-rose-800 transition-all shadow-sm shadow-red-600/20"
                 >
                     <Plus size={20} />
-                    <span>ãÞÇá ÌÏíÏ</span>
+                    <span>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</span>
                 </button>
             </div>
 
             {/* Search & Filters */}
-            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4">
+            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 rounded-2xl">
                 <div className="relative flex-grow">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                     <input
                         type="text"
-                        placeholder="ÈÍË Ýí ÇáÚäÇæíä Ãæ ÇáÊÕäíÝÇÊ..."
+                        placeholder="ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-12 py-3 focus:ring-2 focus:ring-red-500 transition-all font-normal text-sm"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-12 py-3 focus:ring-2 focus:ring-red-500 transition-all font-normal text-sm rounded-xl"
                     />
                 </div>
             </div>
@@ -151,14 +151,14 @@ export const AdminBlog = () => {
                     <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
                 </div>
             ) : filteredPosts.length === 0 ? (
-                <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800">
+                <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl">
                     <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
-                    <p className="text-slate-500 dark:text-slate-400 font-normal">áÇ íæÌÏ ãÞÇáÇÊ ÍÇáíÇð¡ ÇÈÏÃ ÈÅÖÇÝÉ Ãæá ãÞÇá!</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-normal">ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredPosts.map(post => (
-                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm group overflow-hidden">
+                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm group overflow-hidden rounded-2xl">
                             <div className="relative h-40 overflow-hidden">
                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 <div className="absolute top-2 right-2">
@@ -187,27 +187,27 @@ export const AdminBlog = () => {
             {/* Modal Form */}
             {isModalOpen && currentPost && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60   animate-fade-in">
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-200 dark:border-slate-800">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-200 dark:border-slate-800 rounded-2xl">
                         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                            <h2 className="text-xl font-medium">{currentPost.id ? 'ÊÚÏíá ãÞÇá' : 'ÅÖÇÝÉ ãÞÇá ÌÏíÏ'}</h2>
+                            <h2 className="text-xl font-medium">{currentPost.id ? 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><X size={20} /></button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÚäæÇä ÇáãÞÇá</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                     <input
                                         required
                                         type="text"
                                         value={currentPost.title}
                                         onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                        placeholder="ãËÇá: ÃÝÖá ØÑÞ ÇáãÐÇßÑÉ..."
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
+                                        placeholder="ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÇáÑÇÈØ ÇáãÎÊÕÑ (Slug)</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Slug)</label>
                                     <div className="relative">
                                         <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                         <input
@@ -215,7 +215,7 @@ export const AdminBlog = () => {
                                             type="text"
                                             value={currentPost.slug}
                                             onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left rounded-xl"
                                             dir="ltr"
                                             placeholder="best-study-tips"
                                         />
@@ -225,120 +225,120 @@ export const AdminBlog = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÇáÊÕäíÝ</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                     <div className="relative">
                                         <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                         <input
                                             type="text"
                                             value={currentPost.category}
                                             onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-10 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                            placeholder="ãËÇá: äÕÇÆÍ ÊÚáíãíÉ"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-10 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
+                                            placeholder="ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÇáßÇÊÈ</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                     <input
                                         type="text"
                                         value={currentPost.author}
                                         onChange={(e) => setCurrentPost({ ...currentPost, author: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÇáÊÇÑíÎ</label>
+                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                     <input
                                         type="date"
                                         value={currentPost.date?.split('T')[0]}
                                         onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
                                     />
                                 </div>
                             </div>
 
                             {/* ?? Classification Fields ?? */}
-                            <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-800 p-4">
-                                <p className="text-[10px] font-medium text-indigo-600 uppercase tracking-widest mb-4">ÊÕäíÝ ÇáãÍÊæì — íÙåÑ Ýí äÙÇã ÇáÊÕÝÍ</p>
+                            <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-800 p-4 rounded-2xl">
+                                <p className="text-[10px] font-medium text-blue-600 uppercase tracking-widest mb-4">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">äæÚ ÇáãÍÊæì</label>
-                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="notes">ãÐßÑÇÊ</option>
-                                            <option value="solutions">Íá ßÊÈ</option>
-                                            <option value="summaries">ãáÎÕÇÊ</option>
-                                            <option value="foundation">ÊÃÓíÓ</option>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            <option value="notes">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="solutions">ï¿½ï¿½ ï¿½ï¿½ï¿½</option>
+                                            <option value="summaries">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="foundation">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ÇáãäåÌ</label>
-                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="kuwait">ßæíÊí</option>
-                                            <option value="qatar">ÞØÑí</option>
-                                            <option value="uae">ÅãÇÑÇÊí</option>
-                                            <option value="saudi">ÓÚæÏí</option>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            <option value="kuwait">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="qatar">ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="uae">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="saudi">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ÇáãÑÍáÉ</label>
-                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="primary">ÇÈÊÏÇÆí</option>
-                                            <option value="middle">ãÊæÓØ</option>
-                                            <option value="secondary">ËÇäæí</option>
-                                            <option value="basic">ÃÓÇÓí (ÞØÑ)</option>
-                                            <option value="preparatory">ÅÚÏÇÏí (ÅãÇÑÇÊ)</option>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            <option value="primary">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="middle">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="secondary">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="basic">ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½)</option>
+                                            <option value="preparatory">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ÇáÕÝ</label>
-                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>ÇáÕÝ {g}</option>)}
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>ï¿½ï¿½ï¿½ï¿½ {g}</option>)}
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ÇáÊÑã</label>
-                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="1">ÊÑã Ãæá</option>
-                                            <option value="2">ÊÑã ËÇäí</option>
-                                            <option value="">Çáßá</option>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            <option value="1">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½</option>
+                                            <option value="2">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="">ï¿½ï¿½ï¿½ï¿½</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ÇáãÇÏÉ</label>
-                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-indigo-500">
-                                            <option value="arabic">ÚÑÈí</option>
-                                            <option value="math">ÑíÇÖíÇÊ</option>
-                                            <option value="islamic">ÅÓáÇãíÉ</option>
-                                            <option value="english">ÅäÌáíÒí</option>
-                                            <option value="science">Úáæã</option>
-                                            <option value="physics">ÝíÒíÇÁ</option>
-                                            <option value="chemistry">ßíãíÇÁ</option>
-                                            <option value="biology">ÃÍíÇÁ</option>
-                                            <option value="history">ÊÇÑíÎ</option>
-                                            <option value="geography">ÌÛÑÇÝíÇ</option>
-                                            <option value="social">ÇÌÊãÇÚíÇÊ</option>
-                                            <option value="computer">ÍÇÓÈ Âáí</option>
-                                            <option value="stats">ÅÍÕÇÁ</option>
+                                        <label className="text-[10px] font-medium text-slate-400 uppercase">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
+                                            <option value="arabic">ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="math">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="islamic">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="english">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="science">ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="physics">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="chemistry">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="biology">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="history">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="geography">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="social">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                            <option value="computer">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½</option>
+                                            <option value="stats">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÑÇÈØ ÕæÑÉ ÇáÛáÇÝ</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                 <div className="relative">
                                     <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
                                         type="url"
                                         value={currentPost.coverImage}
                                         onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left rounded-xl"
                                         dir="ltr"
                                         placeholder="https://..."
                                     />
                                 </div>
                                 {currentPost.coverImage && (
-                                    <div className="mt-2 h-32 w-full border border-slate-100 dark:border-slate-800 overflow-hidden">
+                                    <div className="mt-2 h-32 w-full border border-slate-100 dark:border-slate-800 overflow-hidden rounded-xl">
                                         <img
                                             src={currentPost.coverImage}
                                             alt="Preview"
@@ -352,36 +352,36 @@ export const AdminBlog = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ÇáßáãÇÊ ÇáÏáÇáíÉ (Keywords) - ãÝÕæáÉ ÈÝÇÕáÉ</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Keywords) - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                 <input
                                     type="text"
                                     value={currentPost.keywords}
                                     onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm"
-                                    placeholder="Óíæ¡ ÊÚáíã¡ ÇáßæíÊ¡ ÇáÓÚæÏíÉ"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
+                                    placeholder="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ãÞÊØÝ ÇáãÞÇá (ÇáÙÇåÑ Ýí ÇáÎÇÑÌ)</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</label>
                                 <textarea
                                     rows={2}
                                     value={currentPost.excerpt}
                                     onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none"
-                                    placeholder="æÕÝ ãÎÊÕÑ ááãÞÇá áÌÐÈ ÇáÞÑÇÁ..."
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none rounded-xl"
+                                    placeholder="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ãÍÊæì ÇáãÞÇá (íÏÚã HTML)</label>
+                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ HTML)</label>
                                 <textarea
                                     rows={10}
                                     required
                                     value={currentPost.content}
                                     onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none font-mono"
-                                    placeholder="ÇßÊÈ ãÍÊæì ÇáãÞÇá åäÇ..."
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none font-mono rounded-xl"
+                                    placeholder="ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½..."
                                 />
                             </div>
                         </form>
@@ -390,18 +390,18 @@ export const AdminBlog = () => {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="px-6 py-3 font-normal text-slate-500 hover:text-slate-800 transition-colors"
+                                className="px-6 py-3 font-normal text-slate-500 hover:text-slate-800 transition-colors rounded-xl"
                             >
-                                ÅáÛÇÁ
+                                ï¿½ï¿½ï¿½ï¿½ï¿½
                             </button>
                             <button
                                 type="submit"
                                 disabled={submitting}
                                 onClick={handleSubmit}
-                                className="flex items-center gap-2 px-10 py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:bg-slate-400 shadow-sm shadow-red-600/20"
+                                className="flex items-center gap-2 px-10 py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:bg-slate-400 shadow-sm shadow-red-600/20 rounded-xl"
                             >
                                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save size={20} />}
-                                <span>ÍÝÙ ÇáãÞÇá ÇáÂä</span>
+                                <span>ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</span>
                             </button>
                         </div>
                     </div>

@@ -12,7 +12,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
 
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-slate-950/40 animate-in fade-in">
-            <div className="bg-white dark:bg-slate-900 rounded-none border-4 border-amber-500 max-w-md w-full shadow-[12px_12px_0px_rgba(245,158,11,0.2)] p-0 overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border-4 border-amber-500 max-w-md w-full shadow-[12px_12px_0px_rgba(245,158,11,0.2)] p-0 overflow-hidden">
                 <div className="bg-amber-500 p-6 flex flex-col items-center text-center">
                     <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-3">
                         <Snowflake size={32} className="animate-spin-slow" />
@@ -33,7 +33,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                             </div>
                         </div>
                         <div className="flex items-start gap-4">
-                            <div className="w-9 h-9 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 shrink-0 border border-rose-200 dark:border-rose-800">
+                            <div className="w-9 h-9 bg-rose-50 dark:bg-rose-900/30 rounded-xl flex items-center justify-center text-rose-600 shrink-0 border border-rose-200 dark:border-rose-800">
                                 <Activity size={16} />
                             </div>
                             <div>
@@ -46,7 +46,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                     <div className="flex gap-3 pt-2">
                         <button
                             onClick={() => setShowMaintenanceModal(false)}
-                            className="flex-1 py-3 border-2 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-medium uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                            className="flex-1 py-3 border-2 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-medium uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all rounded-lg"
                         >
                             إلغاء الأمر
                         </button>
@@ -57,7 +57,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                                     showNotify('تم تفعيل وضع الصيانة بنجاح');
                                 });
                             }}
-                            className="flex-1 py-3 bg-amber-500 text-white text-[11px] font-medium uppercase tracking-widest hover:bg-amber-600 transition-all shadow-[4px_4px_0px_#b45309]"
+                            className="flex-1 py-3 bg-amber-500 text-white text-[11px] font-medium uppercase tracking-widest hover:bg-amber-600 transition-all shadow-[4px_4px_0px_#b45309] rounded-lg"
                         >
                             تأكيد التجميد
                         </button>

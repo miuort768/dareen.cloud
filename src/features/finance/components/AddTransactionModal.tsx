@@ -41,12 +41,12 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60  animate-in fade-in duration-300" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-sm rounded-none overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-sm rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
                 {/* Header */}
                 <div className="p-6 bg-slate-900 text-white flex justify-between items-center relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-32 h-full bg-white/5 skew-x-[30deg] -translate-x-16"></div>
                     <div className="relative z-10 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#5c59f2] flex items-center justify-center shadow-sm">
+                        <div className="w-10 h-10 bg-[#2563EB] flex items-center justify-center shadow-sm rounded-xl">
                             <DollarSign size={20} />
                         </div>
                         <div>
@@ -56,7 +56,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     </div>
                     <button 
                         onClick={onClose}
-                        className="relative z-10 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                        className="relative z-10 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors rounded-lg"
                     >
                         <X size={20} />
                     </button>
@@ -66,12 +66,12 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Tag size={12} className="text-[#5c59f2]" /> نوع المعاملة
+                                <Tag size={12} className="text-[#2563EB]" /> نوع المعاملة
                             </label>
                             <select
                                 value={newTransaction.type}
                                 onChange={e => setNewTransaction({ ...newTransaction, type: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none appearance-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl appearance-none"
                             >
                                 <option value="income">إيراد مالي (+)</option>
                                 <option value="expense">مصروفات (-)</option>
@@ -79,7 +79,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <DollarSign size={12} className="text-[#5c59f2]" /> المبلغ المستحق
+                                <DollarSign size={12} className="text-[#2563EB]" /> المبلغ المستحق
                             </label>
                             <input
                                 type="number"
@@ -87,7 +87,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                                 step="any"
                                 value={newTransaction.amount}
                                 onChange={e => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                                 placeholder="0.00"
                             />
                         </div>
@@ -96,27 +96,27 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Info size={12} className="text-[#5c59f2]" /> التصنيف الحسابي
+                                <Info size={12} className="text-[#2563EB]" /> التصنيف الحسابي
                             </label>
                             <input
                                 type="text"
                                 required
                                 value={newTransaction.category}
                                 onChange={e => setNewTransaction({ ...newTransaction, category: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                                 placeholder="مثال: إيجار، مكافأة..."
                             />
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Calendar size={12} className="text-[#5c59f2]" /> تاريخ المعاملة
+                                <Calendar size={12} className="text-[#2563EB]" /> تاريخ المعاملة
                             </label>
                             <input
                                 type="date"
                                 required
                                 value={newTransaction.date}
                                 onChange={e => setNewTransaction({ ...newTransaction, date: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                             />
                         </div>
                     </div>
@@ -126,7 +126,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         <textarea
                             value={newTransaction.description}
                             onChange={e => setNewTransaction({ ...newTransaction, description: e.target.value })}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none h-24 resize-none"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl h-24 resize-none"
                             placeholder="وصف تفصيلي للعملية المالية..."
                         />
                     </div>
@@ -135,13 +135,13 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         <button 
                             type="button"
                             onClick={onClose}
-                            className="flex-1 px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200"
+                            className="flex-1 px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200 rounded-lg"
                         >
                             إلغاء
                         </button>
                         <button 
                             type="submit" 
-                            className="flex-[2] bg-[#5c59f2] text-white font-medium py-4 uppercase tracking-[2px] shadow-sm shadow-indigo-100 dark:shadow-none transition-all hover:-translate-y-1 flex items-center justify-center gap-3"
+                            className="flex-[2] bg-[#2563EB] text-white font-medium py-4 uppercase tracking-[2px] shadow-sm shadow-blue-100 dark:shadow-none transition-all hover:-translate-y-1 flex items-center justify-center gap-3 rounded-lg"
                         >
                             <Save size={18} />
                             تأكيد وحفظ العملية

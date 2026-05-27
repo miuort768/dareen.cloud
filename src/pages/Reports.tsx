@@ -49,7 +49,7 @@ export const Reports = () => {
 
             {/* ── Tab Selection ── */}
             <div className="px-0 no-print">
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
+                <div className="grid grid-cols-3 md:grid-cols-5 gap-2 rounded-xl">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = state.activeReport === tab.id;
@@ -80,8 +80,8 @@ export const Reports = () => {
                 {state.activeReport === 'overview' && (
                     <div className="space-y-6">
                         {/* 1. اول مستطيل (Hero Card) */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 p-8 border border-white/10">
-                             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 p-8 border border-white/10">
+                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
                              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                                 <div>
                                     <h2 className="text-xl font-medium text-white uppercase tracking-tighter mb-2">ملخص الأداء العام</h2>
@@ -91,7 +91,7 @@ export const Reports = () => {
                                 </div>
                                 <div className="flex items-center gap-4 bg-white/5 p-4 border border-white/10">
                                     <div className="text-left">
-                                        <p className="text-[11px] font-medium text-indigo-400 uppercase tracking-widest">معدل الإنجاز</p>
+                                        <p className="text-[11px] font-medium text-blue-400 uppercase tracking-widest">معدل الإنجاز</p>
                                         <p className="text-2xl font-medium text-white font-mono leading-none mt-1">{state.attendanceRate}%</p>
                                     </div>
                                     <div className="w-[1px] h-10 bg-white/10 mx-2" />
@@ -111,7 +111,7 @@ export const Reports = () => {
                                     <button
                                         key={tab.id}
                                         onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                        className="bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 p-5 hover:border-indigo-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all group relative overflow-hidden"
+                                        className="bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 p-5 hover:border-blue-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all group relative overflow-hidden rounded-xl"
                                     >
                                         <div className="absolute -right-2 -bottom-2 opacity-5 group-hover:opacity-10 transition-opacity"><Icon size={48} /></div>
                                         <div className="flex flex-col items-center text-center">
@@ -130,7 +130,7 @@ export const Reports = () => {
                         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
                             {[
                                 { label: 'الطلاب', value: state.totalStudents, icon: Users, color: 'from-blue-600 to-blue-700' },
-                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: 'from-indigo-600 to-indigo-700' },
+                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: 'from-blue-600 to-blue-700' },
                                 { label: 'المواد', value: uniqueSubjects, icon: Award, color: 'from-purple-600 to-purple-700' },
                                 { label: 'الحصص', value: state.totalSessions, icon: Calendar, color: 'from-emerald-600 to-emerald-700' },
                                 { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, color: 'from-teal-600 to-teal-700' },
@@ -152,14 +152,14 @@ export const Reports = () => {
                         </div>
 
                         {/* Visual Breakdown */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl">
                              <div className="flex items-center justify-between mb-6">
                                  <h3 className="text-[10px] font-medium text-slate-400 uppercase tracking-[0.2em]">توزيع الاشتراكات حسب المادة</h3>
-                                 <span className="text-[10px] font-medium text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 uppercase">Live Analysis</span>
+                                 <span className="text-[10px] font-medium text-blue-500 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 uppercase">Live Analysis</span>
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {
-                                    const colors = ['bg-blue-600','bg-emerald-600','bg-purple-600','bg-amber-600','bg-rose-600','bg-indigo-600'];
+                                    const colors = ['bg-blue-600','bg-emerald-600','bg-purple-600','bg-amber-600','bg-rose-600','bg-blue-600'];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
                                         <div key={i} className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700 group hover:bg-white dark:hover:bg-slate-800 transition-colors">

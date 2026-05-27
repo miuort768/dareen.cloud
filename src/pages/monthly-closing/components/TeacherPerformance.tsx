@@ -17,7 +17,7 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {teacherPerformance.map((perf, idx) => (
                 <SectionCard key={idx} className="p-5 flex items-center gap-4">
-                    <div className="w-12 h-12 bg-slate-900 flex items-center justify-center text-white font-bold text-lg">
+                    <div className="w-12 h-12 bg-slate-900 flex items-center justify-center text-white font-bold text-lg rounded-xl">
                         {perf.name.charAt(0)}
                     </div>
                     <div className="flex-1">
@@ -32,7 +32,7 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                             </div>
                             <div className="space-y-1">
                                 <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-[#5c59f2]" style={{ width: `${perf.documentationRate}%` }} /></div>
+                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-[#2563EB]" style={{ width: `${perf.documentationRate}%` }} /></div>
                             </div>
                         </div>
                     </div>

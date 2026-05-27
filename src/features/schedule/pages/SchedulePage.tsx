@@ -80,7 +80,7 @@ const ACCENT_COLORS = [
     { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-900 dark:text-emerald-200', bar: 'bg-emerald-500' },
     { bg: 'bg-amber-50 dark:bg-amber-950/30', text: 'text-amber-900 dark:text-amber-200', bar: 'bg-amber-500'   },
     { bg: 'bg-rose-50 dark:bg-rose-950/30',   text: 'text-rose-900 dark:text-rose-200',   bar: 'bg-rose-500'   },
-    { bg: 'bg-indigo-50 dark:bg-indigo-950/30', text: 'text-indigo-900 dark:text-indigo-200', bar: 'bg-indigo-500' },
+    { bg: 'bg-blue-50 dark:bg-blue-950/30', text: 'text-blue-900 dark:text-blue-200', bar: 'bg-blue-500' },
     { bg: 'bg-teal-50 dark:bg-teal-950/30',   text: 'text-teal-900 dark:text-teal-200',   bar: 'bg-teal-500'   },
     { bg: 'bg-purple-50 dark:bg-purple-950/30', text: 'text-purple-900 dark:text-purple-200', bar: 'bg-purple-500' },
 ];
@@ -165,7 +165,7 @@ export const Schedule = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3 md:animate-in md:fade-in">
-            <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
             <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest">جاري تحميل الجدول...</p>
         </div>
     );
@@ -176,11 +176,11 @@ export const Schedule = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 dark:from-slate-950 dark:via-teal-950 dark:to-slate-950 rounded-none shadow-sm shadow-teal-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
+                <div className="relative overflow-hidden bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 dark:from-slate-950 dark:via-teal-950 dark:to-slate-950 rounded-2xl shadow-sm shadow-teal-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-blue-500/20 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-none overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10  flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10  flex items-center justify-center">
                             <CalendarDays size={24} className="text-white" />
                         </div>
                         <div>
@@ -198,7 +198,7 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-40 h-9 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-[10px] font-normal rounded-none px-8 focus:outline-none focus:border-indigo-500 transition-all"
+                                className="w-40 h-9 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-[10px] font-normal rounded-xl px-8 focus:outline-none focus:border-blue-500 transition-all"
                             />
                         </div>
 
@@ -206,7 +206,7 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-3 bg-white/10 border border-white/10 text-white text-[10px] font-medium rounded-none focus:outline-none focus:border-indigo-500 transition-all uppercase tracking-widest"
+                            className="h-9 px-3 bg-white/10 border border-white/10 text-white text-[10px] font-medium rounded-xl focus:outline-none focus:border-blue-500 transition-all uppercase tracking-widest"
                         >
                             <option value="all" className="text-slate-900">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -216,7 +216,7 @@ export const Schedule = () => {
 
                         <button
                             onClick={() => setShowSharedModal(true)}
-                            className="h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-medium rounded-none hover:from-amber-600 hover:to-amber-700 transition-all shadow-sm shadow-amber-500/20 border border-amber-400/30 flex items-center gap-2 uppercase tracking-widest"
+                            className="h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-medium rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all shadow-sm shadow-amber-500/20 border border-amber-400/30 flex items-center gap-2 uppercase tracking-widest"
                         >
                             <Share2 size={13} />
                             مشاركة
@@ -228,7 +228,7 @@ export const Schedule = () => {
                 <LiveClasses />
 
                 {/* Schedule Grid */}
-                <div className="bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mt-6">
+                <div className="bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mt-6">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
@@ -239,11 +239,11 @@ export const Schedule = () => {
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
                                         "p-3 text-[10px] font-medium text-center border-l border-slate-100 dark:border-slate-800 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50 uppercase tracking-tight",
-                                        isToday(day) ? "text-indigo-600 dark:text-indigo-400" : "text-slate-700 dark:text-slate-300"
+                                        isToday(day) ? "text-blue-600 dark:text-blue-400" : "text-slate-700 dark:text-slate-300"
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 bg-indigo-500 rounded-full inline-block animate-pulse" />
+                                            <span className="mr-1.5 w-1.5 h-1.5 bg-blue-500 rounded-full inline-block animate-pulse" />
                                         )}
                                     </div>
                                 ))}
@@ -338,7 +338,7 @@ export const Schedule = () => {
                 {/* Loading or Empty State */}
                 {loading && (
                     <div className="flex justify-center py-12">
-                        <Loader2 className="animate-spin text-indigo-600" size={24} />
+                        <Loader2 className="animate-spin text-blue-600" size={24} />
                     </div>
                 )}
             </div>
@@ -346,10 +346,10 @@ export const Schedule = () => {
             {/* Event Details Modal */}
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4  bg-slate-950/40" onClick={() => setShowDetails(false)}>
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none p-6 max-w-sm w-full shadow-sm" onClick={e => e.stopPropagation()}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-sm" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="font-medium text-slate-900 dark:text-white text-sm uppercase tracking-tight">تفاصيل الحصة</h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-none hover:bg-slate-200 transition-all">
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 transition-all">
                                 <X size={14} />
                             </button>
                         </div>
@@ -383,14 +383,14 @@ export const Schedule = () => {
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-medium rounded-none hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-sm flex items-center justify-center gap-2"
+                                className="flex-1 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-[10px] font-medium rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm flex items-center justify-center gap-2"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-medium rounded-none hover:bg-slate-200 transition-all border border-slate-200 dark:border-slate-700"
+                                className="flex-1 h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-medium rounded-lg hover:bg-slate-200 transition-all border border-slate-200 dark:border-slate-700"
                             >
                                 عرض الطالب
                             </button>
@@ -402,10 +402,10 @@ export const Schedule = () => {
             {/* Shared Link Modal */}
             {showSharedModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4  bg-slate-950/40" onClick={() => setShowSharedModal(false)}>
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none p-6 max-w-md w-full shadow-sm" onClick={e => e.stopPropagation()}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-sm" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between mb-5">
                             <h3 className="font-medium text-slate-900 dark:text-white text-sm uppercase tracking-tight">مشاركة الجدول</h3>
-                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-none hover:bg-slate-200 transition-all">
+                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 transition-all">
                                 <X size={14} />
                             </button>
                         </div>
@@ -415,11 +415,11 @@ export const Schedule = () => {
                                 type="text"
                                 readOnly
                                 value={sharedLink}
-                                className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-normal text-slate-900 dark:text-white"
+                                className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-normal text-slate-900 dark:text-white"
                             />
                             <button
                                 onClick={() => { navigator.clipboard.writeText(sharedLink); setShowSharedModal(false); }}
-                                className="h-10 px-4 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-medium rounded-none hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-sm"
+                                className="h-10 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-[10px] font-medium rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm"
                             >
                                 نسخ
                             </button>

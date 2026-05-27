@@ -13,9 +13,9 @@ interface TransactionsLogProps {
 const PAGE_SIZE = 15;
 
 const StatusBadge = ({ status }: { status: string }) => {
-    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-none uppercase tracking-wide"><CheckCircle2 size={9} /> معتمدة</span>;
-    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded-none uppercase tracking-wide"><Clock size={9} /> مراجعة</span>;
-    return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-none uppercase tracking-wide"><X size={9} /> ملغاة</span>;
+    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-lg uppercase tracking-wide"><CheckCircle2 size={9} /> معتمدة</span>;
+    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded-lg uppercase tracking-wide"><Clock size={9} /> مراجعة</span>;
+    return <span className="inline-flex items-center gap-1 text-[9px] font-medium text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg uppercase tracking-wide"><X size={9} /> ملغاة</span>;
 };
 
 export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: TransactionsLogProps) => {
@@ -28,12 +28,12 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
     if (page > totalPages && page !== 1) setPage(1);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden" dir="rtl">
 
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center rounded-none">
+                    <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center rounded-xl">
                         <History size={15} />
                     </div>
                     <div>
@@ -45,7 +45,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                 </div>
                 <button
                     onClick={onDeleteAll}
-                    className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 font-medium text-[9px] rounded-none border border-rose-100 dark:border-rose-800 hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-all uppercase tracking-widest"
+                    className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 font-medium text-[9px] rounded-lg border border-rose-100 dark:border-rose-800 hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-all uppercase tracking-widest"
                 >
                     <Trash2 size={12} />
                     تصفير الأرشيف
@@ -76,7 +76,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                     </td>
                                     <td className="px-5 py-3 text-center">
                                         <div className={cn(
-                                            "w-8 h-8 flex items-center justify-center rounded-none mx-auto",
+                                            "w-8 h-8 flex items-center justify-center rounded-xl mx-auto",
                                             tx.type === 'income' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
                                         )}>
                                             {tx.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
@@ -88,10 +88,10 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                     </td>
                                     <td className="px-5 py-3 text-center">
                                         <span className={cn(
-                                            "inline-block px-2 py-0.5 text-[9px] font-medium rounded-none uppercase tracking-wide",
+                                            "inline-block px-2 py-0.5 text-[9px] font-medium rounded-lg uppercase tracking-wide",
                                             tx.type === 'income'
                                                 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20'
-                                                : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20'
+                                                : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20'
                                         )}>
                                             {tx.category}
                                         </span>
@@ -134,7 +134,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                     return (
                         <div key={tx.id} className="p-4 flex items-center gap-3">
                             <div className={cn(
-                                "w-10 h-10 flex items-center justify-center rounded-none shrink-0 relative",
+                                "w-10 h-10 flex items-center justify-center rounded-xl shrink-0 relative",
                                 tx.type === 'income' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
                             )}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
@@ -175,7 +175,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <button
                             onClick={() => setPage(p => Math.max(1, p - 1))}
                             disabled={page === 1}
-                            className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             <ChevronRight size={14} />
                         </button>
@@ -184,7 +184,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                 key={i}
                                 onClick={() => setPage(i + 1)}
                                 className={cn(
-                                    "w-8 h-8 text-[11px] font-medium rounded-none border transition-all",
+                                    "w-8 h-8 text-[11px] font-medium rounded-xl border transition-all",
                                     page === i + 1
                                         ? "bg-slate-900 text-white border-slate-900"
                                         : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-slate-400"
@@ -197,7 +197,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <button
                             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                             disabled={page === totalPages}
-                            className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            className="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                         >
                             <ChevronLeft size={14} />
                         </button>

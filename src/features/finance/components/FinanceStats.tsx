@@ -14,16 +14,16 @@ interface FinanceStatsProps {
 const StatCard = ({ title, value, icon: Icon, gradient, sub, badge }: {
     title: string; value: string; icon: React.ComponentType<{ size?: number }>; gradient: string; sub?: string; badge?: { label: string; color: string };
 }) => (
-    <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between shadow-sm text-white", gradient)}>
+    <div className={cn("relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between shadow-sm text-white", gradient)}>
         {/* BG icon */}
         <div className="absolute -left-3 -bottom-3 opacity-10"><Icon size={72} /></div>
         {/* Top */}
         <div className="flex items-start justify-between mb-4">
-            <div className="w-9 h-9 bg-white/15 rounded-none flex items-center justify-center">
+            <div className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center">
                 <Icon size={18} className="text-white" />
             </div>
             {badge && (
-                <span className={cn("text-[9px] font-medium px-2 py-0.5 rounded-none uppercase tracking-widest", badge.color)}>
+                <span className={cn("text-[9px] font-medium px-2 py-0.5 rounded-lg uppercase tracking-widest", badge.color)}>
                     {badge.label}
                 </span>
             )}
@@ -72,7 +72,7 @@ export const FinanceStats = ({
                 title="المصروفات التشغيلية"
                 value={(totalFixedExpenses || 0).toLocaleString()}
                 icon={Wallet}
-                gradient="bg-gradient-to-br from-indigo-600 to-violet-800"
+                gradient="bg-gradient-to-br from-blue-600 to-violet-800"
                 sub="مصروفات ثابتة"
                 badge={{ label: 'ثابت', color: 'bg-white/20 text-white' }}
             />

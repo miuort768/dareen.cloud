@@ -53,7 +53,7 @@ export const GeneralSettings = ({
     handleSaveGeneral, isSaving
 }: GeneralSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <SectionCard className="rounded-none">
+        <SectionCard>
             <SectionTitle icon={Building2} label="الهوية الأساسية" sub="Academy Identity" />
             <div className="space-y-3">
                 <div>
@@ -89,7 +89,7 @@ export const GeneralSettings = ({
             </div>
         </SectionCard>
 
-        <SectionCard className="rounded-none">
+        <SectionCard>
             <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="Financial & Academic" />
             <div className="space-y-3">
                 <div>
@@ -116,12 +116,12 @@ export const GeneralSettings = ({
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-xl">
                         <FieldLabel>عدد أيام التجميد</FieldLabel>
                         <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
                         <p className="text-[9px] text-slate-400 mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
                     </div>
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-xl">
                         <ToggleRow
                             icon={Lock}
                             label="قفل التاريخ القديم"
@@ -135,7 +135,7 @@ export const GeneralSettings = ({
                 <p className="text-[10px] text-slate-400 bg-amber-50 dark:bg-amber-900/10 px-3 py-2 rounded-lg border-r-2 border-amber-400">
                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
                 </p>
-                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2 rounded-none">
+                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
                     <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
                 </PrimaryBtn>
             </div>

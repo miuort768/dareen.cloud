@@ -16,9 +16,9 @@ export const UserTableSection = ({
     onDeleteRequest
 }: UserTableSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow">
+        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
+                <div className="p-2 bg-primary-100 rounded-xl dark:bg-primary-900/30">
                     <Users size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
                 <h2 className="text-lg font-normal text-gray-900 dark:text-white">

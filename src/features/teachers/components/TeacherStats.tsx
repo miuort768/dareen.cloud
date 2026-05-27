@@ -10,7 +10,7 @@ interface TeacherStatsProps {
 
 const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; color: string; bg: string; trend?: string; borderColor?: string }) => (
     <div className={cn(
-        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-none shadow-sm relative overflow-hidden transition-all hover:shadow-sm group",
+        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm relative overflow-hidden transition-all hover:shadow-sm group",
         borderColor
     )}>
         {/* Background Large Digit Accent */}
@@ -20,7 +20,7 @@ const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: {
 
         <div className="flex justify-between items-start relative z-10">
             <div className="flex flex-col gap-2">
-                <div className={cn("w-8 h-8 rounded-none flex items-center justify-center border border-white/10 shadow-sm", bg)}>
+                <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center border border-white/10 shadow-sm", bg)}>
                     <Icon size={14} className={color} />
                 </div>
                 <p className="text-[8px] font-medium text-slate-400 uppercase tracking-[0.2em]">{label}</p>
@@ -46,9 +46,9 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                 label="إجمالي المعلمات" 
                 value={totalTeachers} 
                 icon={Users} 
-                color="text-[#5c59f2]" 
-                bg="bg-indigo-50 dark:bg-indigo-900/20"
-                borderColor="border-t-4 border-t-[#5c59f2]"
+                color="text-[#2563EB]" 
+                bg="bg-blue-50 dark:bg-blue-900/20"
+                borderColor="border-t-4 border-t-[#2563EB]"
                 trend="الكوادر النشطة"
             />
             <StatCard 

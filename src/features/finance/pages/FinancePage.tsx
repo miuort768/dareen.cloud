@@ -15,11 +15,11 @@ export const Finance = () => {
     if (state.loading) {
         return (
             <div className="space-y-4 p-4">
-                <div className="h-24 bg-white dark:bg-slate-900 rounded-none animate-pulse" />
+                <div className="h-24 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    {[...Array(4)].map((_, i) => <div key={i} className="h-28 bg-white dark:bg-slate-900 rounded-none animate-pulse" />)}
+                    {[...Array(4)].map((_, i) => <div key={i} className="h-28 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />)}
                 </div>
-                <div className="h-96 bg-white dark:bg-slate-900 rounded-none animate-pulse" />
+                <div className="h-96 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
             </div>
         );
     }
@@ -32,11 +32,11 @@ export const Finance = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* ── Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 dark:from-slate-950 dark:via-emerald-950 dark:to-slate-950 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 dark:from-slate-950 dark:via-emerald-950 dark:to-slate-950 border border-white/5 px-6 md:px-8 py-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-500/20 blur-[100px] pointer-events-none" />
                     <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 blur-[80px] pointer-events-none" />
                     <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_20px_rgba(52,211,153,0.3)] shrink-0 bg-white/10 flex items-center justify-center">
+                        <div className="w-12 h-12 overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_20px_rgba(52,211,153,0.3)] shrink-0 bg-white/10 flex items-center justify-center rounded-xl">
                             <span className="text-xl font-medium text-white">د</span>
                         </div>
                         <div>
@@ -55,26 +55,26 @@ export const Finance = () => {
                     <div className="relative z-10 flex items-center gap-2 no-print">
                         <button
                             onClick={() => navigate('/monthly-closing')}
-                            className="flex items-center gap-2 h-9 px-4 bg-white/10 hover:bg-white/15 text-white text-[10px] font-medium border border-white/10 transition-all uppercase tracking-widest"
+                            className="flex items-center gap-2 h-9 px-4 bg-white/10 hover:bg-white/15 text-white text-[10px] font-medium border border-white/10 transition-all uppercase tracking-widest rounded-lg"
                         >
                             <CalendarCheck size={13} />
                             <span className="hidden sm:inline">تسوية الشهر</span>
                         </button>
                         <button
                             onClick={() => actions.setShowAddModal(true)}
-                            className="flex items-center gap-2 h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-[10px] font-medium border border-amber-400/30 transition-all uppercase tracking-widest"
+                            className="flex items-center gap-2 h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-[10px] font-medium border border-amber-400/30 transition-all uppercase tracking-widest rounded-lg"
                         >
                             <Plus size={13} />
                             تسجيل معاملة
                         </button>
-                        <button className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-white/15 text-slate-300 border border-white/10 transition-all">
+                        <button className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-white/15 text-slate-300 border border-white/10 transition-all rounded-lg">
                             <Download size={14} />
                         </button>
                     </div>
                 </div>
 
                 <div className="py-5 space-y-6">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
                         <FinanceStats
                             totalIncome={state.totalIncome}
                             monthIncome={state.monthIncome}
@@ -86,7 +86,7 @@ export const Finance = () => {
                         />
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
                         <FixedExpensesManager
                             expenses={state.fixedExpenses}
                             onUpdateExpense={actions.handleUpdateFixedExpense}

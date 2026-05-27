@@ -30,7 +30,7 @@ const PIE_COLORS = [
 const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: { name?: string; value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right min-w-[150px]" dir="rtl">
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-sm border border-white/10 text-right min-w-[150px]" dir="rtl">
                 <p className="text-[10px] font-medium text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
                 <div className="space-y-1.5">
                     <div className="flex justify-between items-center gap-4">
@@ -59,10 +59,10 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-0" dir="rtl">
             
             {/* ── Area Chart ── */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-indigo-600 flex items-center justify-center rounded-none">
+                        <div className="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-xl">
                             <Calendar size={15} className="text-white" />
                         </div>
                         <div>
@@ -108,9 +108,9 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
             </div>
 
             {/* ── Pie Chart ── */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm flex flex-col overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                    <div className="w-8 h-8 bg-rose-600 flex items-center justify-center rounded-none">
+                    <div className="w-8 h-8 bg-rose-600 flex items-center justify-center rounded-xl">
                         <PieChartIcon size={15} className="text-white" />
                     </div>
                     <div>
@@ -134,7 +134,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                                             if (active && payload && payload.length) {
                                                 const data = payload[0].payload;
                                                 return (
-                                                    <div className="bg-slate-900 text-white px-3 py-2 rounded-none border border-white/10 shadow-sm text-right" dir="rtl">
+                                                    <div className="bg-slate-900 text-white px-3 py-2 rounded-xl border border-white/10 shadow-sm text-right" dir="rtl">
                                                         <p className="text-[9px] font-medium uppercase text-slate-400 mb-1">{data.name}</p>
                                                         <p className="text-sm font-medium font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">ج.م</span></p>
                                                     </div>
@@ -162,12 +162,12 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                         {pieData.sort((a, b) => b.value - a.value).slice(0, 4).map((entry, index) => (
                             <div key={entry.name} className="flex items-center justify-between group">
                                 <div className="flex items-center gap-2.5">
-                                    <div className="w-2.5 h-2.5 rounded-none" style={{ backgroundColor: PIE_COLORS[index % PIE_COLORS.length] }} />
+                                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: PIE_COLORS[index % PIE_COLORS.length] }} />
                                     <span className="text-[10px] font-normal text-slate-600 dark:text-slate-400 truncate max-w-[100px]">{entry.name}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-medium text-slate-800 dark:text-white font-mono">{entry.value.toLocaleString()}</span>
-                                    <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-none text-slate-500">
+                                    <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-lg text-slate-500">
                                         {((entry.value / totalExpenses) * 100).toFixed(0)}%
                                     </span>
                                 </div>

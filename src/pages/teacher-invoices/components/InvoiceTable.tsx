@@ -27,7 +27,7 @@ const statusStyle = (status: string) => {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 bg-[#172554] flex items-center justify-center text-[10px] font-bold text-white">
+  <div className="w-7 h-7 bg-[#172554] flex items-center justify-center text-[10px] font-bold text-white rounded-lg">
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -116,7 +116,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
         return (
           <div
             key={inv.id}
-            className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm"
+            className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl"
           >
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">

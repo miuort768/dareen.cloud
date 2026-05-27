@@ -25,10 +25,10 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
     return (
         <div className="w-full" dir="rtl">
             {/* Desktop View */}
-            <div className="hidden lg:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden">
+            <div className="hidden lg:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-right border-collapse">
-                        <thead className="bg-[var(--primary-color,#5c59f2)] text-white">
+                        <thead className="bg-[var(--primary-color,#2563EB)] text-white">
                             <tr>
                                 <th className="px-6 py-4 font-medium text-[10px] uppercase tracking-[0.2em]">المعلمة</th>
                                 <th className="px-6 py-4 font-medium text-[10px] uppercase tracking-[0.2em] text-center">التخصص</th>
@@ -46,12 +46,12 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                                         onClick={() => onSelect(teacher)}
                                         className={cn(
                                             "hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer",
-                                            isSelected ? "bg-indigo-50/50 dark:bg-indigo-900/20" : ""
+                                            isSelected ? "bg-blue-50/50 dark:bg-blue-900/20" : ""
                                         )}
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center font-normal text-sm shadow-sm">
+                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-normal text-sm shadow-sm">
                                                     {teacher.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -66,7 +66,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="w-7 h-7 inline-flex items-center justify-center bg-indigo-50 text-[#5c59f2] font-normal text-[11px] rounded-lg">
+                                            <span className="w-7 h-7 inline-flex items-center justify-center bg-blue-50 text-[#2563EB] font-normal text-[11px] rounded-lg">
                                                 {studentCounts[teacher.name] || 0}
                                             </span>
                                         </td>
@@ -79,7 +79,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
                                                 <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-emerald-500 rounded-lg transition-all" title="تعديل"><Edit size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-indigo-500 rounded-lg transition-all" title="مراسلة"><MessageCircle size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-blue-500 rounded-lg transition-all" title="مراسلة"><MessageCircle size={14} /></button>
                                                 <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition-all" title="حذف"><Trash2 size={14} /></button>
                                             </div>
                                         </td>
@@ -100,14 +100,14 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                             key={teacher.id} 
                             onClick={() => onSelect(teacher)} 
                             className={cn(
-                                "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
-                                "border-r-4 border-r-[var(--primary-color,#5c59f2)]",
-                                isSelected ? "ring-1 ring-[var(--primary-color,#5c59f2)]/20 shadow-sm" : ""
+                                "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
+                                "border-r-4 border-r-[var(--primary-color,#2563EB)]",
+                                isSelected ? "ring-1 ring-[var(--primary-color,#2563EB)]/20 shadow-sm" : ""
                             )}
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-none flex items-center justify-center font-normal text-sm">
+                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center font-normal text-sm">
                                         {teacher.name.charAt(0)}
                                     </div>
                                     <div>
@@ -122,20 +122,20 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                             </div>
                             
                             <div className="grid grid-cols-2 gap-3 mb-4">
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-none text-center flex items-center justify-center gap-2">
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl text-center flex items-center justify-center gap-2">
                                     <Users size={12} className="text-slate-300" />
                                     <span className="text-xs font-normal text-slate-600">{studentCounts[teacher.name] || 0} طالبة</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-none text-center flex items-center justify-center gap-2">
-                                    <BookOpen size={12} className="text-[#5c59f2] opacity-40" />
-                                    <span className="text-xs font-normal text-[#5c59f2]">نشطة</span>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl text-center flex items-center justify-center gap-2">
+                                    <BookOpen size={12} className="text-[#2563EB] opacity-40" />
+                                    <span className="text-xs font-normal text-[#2563EB]">نشطة</span>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-2 pt-1">
-                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-none font-normal text-[10px] uppercase tracking-widest">مراسلة</button>
-                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-none"><Edit size={14} /></button>
-                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center bg-rose-50 text-rose-500 rounded-none"><Trash2 size={14} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-lg font-normal text-[10px] uppercase tracking-widest">مراسلة</button>
+                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-lg"><Edit size={14} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center bg-rose-50 text-rose-500 rounded-lg"><Trash2 size={14} /></button>
                             </div>
                         </div>
                     );

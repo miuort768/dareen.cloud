@@ -24,7 +24,7 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="System Safeguards" />
             <div className="space-y-3">
-                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-none border border-rose-100 dark:border-rose-900">
+                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-xl border border-rose-100 dark:border-rose-900">
                     <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                             <p className="text-xs font-normal text-rose-800 dark:text-rose-200 flex items-center gap-1.5">
@@ -42,7 +42,7 @@ export const PoliciesSettings = ({
                 </div>
 
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <p className="text-[11px] font-normal text-[#5c59f2] flex items-center gap-1.5 mb-3">
+                    <p className="text-[11px] font-normal text-[#2563EB] flex items-center gap-1.5 mb-3">
                         <Wallet size={13} /> سياسة حساب العمولات
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -54,10 +54,10 @@ export const PoliciesSettings = ({
                                 key={opt.id}
                                 onClick={() => { setTeacherCommissionType(opt.id); showNotify(`الحساب: ${opt.label}`); }}
                                 className={cn(
-                                    'p-3 rounded-none border text-right transition-all',
+                                    'p-3 rounded-lg border text-right transition-all',
                                     teacherCommissionType === opt.id
-                                        ? 'bg-[#5c59f2] text-white border-[#5c59f2] shadow-sm'
-                                        : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#5c59f2]/30'
+                                        ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-sm'
+                                        : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/30'
                                 )}
                             >
                                 <p className="text-xs font-normal">{opt.label}</p>
@@ -73,7 +73,7 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="Auto-Freeze Mechanism" />
             <div className="space-y-3">
-                <div className="p-4 bg-sky-50 dark:bg-sky-900/10 rounded-none border border-sky-100 dark:border-sky-900">
+                <div className="p-4 bg-sky-50 dark:bg-sky-900/10 rounded-xl border border-sky-100 dark:border-sky-900">
                     <p className="text-xs font-normal text-sky-800 dark:text-sky-200 mb-1">حد الغياب المسموح</p>
                     <p className="text-[10px] text-sky-500 leading-relaxed mb-3">
                         إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
@@ -95,9 +95,9 @@ export const PoliciesSettings = ({
                     </div>
                 </div>
 
-                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-none border border-rose-200 dark:border-rose-800">
+                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-xl border border-rose-200 dark:border-rose-800">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 bg-rose-505 rounded-none flex items-center justify-center">
+                        <div className="w-8 h-8 bg-rose-500 rounded-xl flex items-center justify-center">
                             <Archive size={14} className="text-white" />
                         </div>
                         <div>

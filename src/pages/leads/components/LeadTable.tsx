@@ -12,7 +12,7 @@ interface LeadTableProps {
 
 export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost }: LeadTableProps) => {
     return (
-        <div className="hidden lg:block overflow-x-auto border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm">
+        <div className="hidden lg:block overflow-x-auto border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm rounded-2xl">
             <table className="w-full text-right border-collapse">
                 <thead className="bg-[#172554]">
                     <tr>
@@ -30,7 +30,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <tr onDoubleClick={() => handleMarkLost(lead.id)} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
                                 <td className="px-5 py-3.5">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-[#172554] text-white flex items-center justify-center font-bold text-xs">
+                                        <div className="w-8 h-8 bg-[#172554] text-white flex items-center justify-center font-bold text-xs rounded-xl">
                                             {lead.studentName?.charAt(0) || 'ع'}
                                         </div>
                                         <div>
@@ -47,8 +47,8 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                     </span>
                                 </td>
                                 <td className="px-5 py-3.5">
-                                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                                        <Tag size={11} className="text-indigo-400" /> {lead.subject}
+                                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl">
+                                        <Tag size={11} className="text-blue-400" /> {lead.subject}
                                     </span>
                                 </td>
                                 <td className="px-5 py-3.5">
@@ -82,7 +82,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                         <button 
                                             onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
                                             className={cn(
-                                                "w-7 h-7 flex items-center justify-center transition-all",
+                                                "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                                 lead.status === 'converted'
                                                     ? "bg-emerald-500 text-white"
                                                     : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
@@ -91,16 +91,16 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                         >
                                             <CheckCircle2 size={12} />
                                         </button>
-                                        <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all">
+                                        <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-xl">
                                             <PhoneCall size={12} />
                                         </button>
-                                        <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all">
+                                        <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-xl">
                                             <MessageSquare size={12} />
                                         </button>
                                         <button 
                                             onClick={() => handleMarkLost(lead.id)} 
                                             className={cn(
-                                                "w-7 h-7 flex items-center justify-center transition-all",
+                                                "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                                 lead.status === 'lost'
                                                     ? "bg-rose-500 text-white"
                                                     : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"

@@ -10,8 +10,8 @@ interface AttendanceStatsProps {
 }
 
 const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value: number, icon: LucideIcon, subLabel?: string }) => (
-    <div className="bg-blue-600 dark:bg-rose-600 p-4 rounded-none flex flex-col items-center text-center transition-colors duration-500">
-        <div className="w-10 h-10 rounded-none flex items-center justify-center mb-2 bg-white/20 border border-white/20">
+    <div className="bg-blue-600 dark:bg-rose-600 p-4 rounded-2xl flex flex-col items-center text-center transition-colors duration-500">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-2 bg-white/20 border border-white/20">
             <Icon size={18} className="text-white" />
         </div>
         <p className="text-[9px] font-medium text-white/70 uppercase tracking-widest">{title}</p>

@@ -153,47 +153,47 @@ export const MonthlyClosing: React.FC = () => {
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-teal-400/10 dark:bg-teal-500/5 blur-3xl pointer-events-none" />
             <div className="relative z-10 mx-auto px-2 space-y-4">
-                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-emerald-600 to-teal-600 text-white">
+                        <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-emerald-600 to-teal-600 text-white rounded-xl">
                             <ActivityIcon size={22} />
                         </div>
                         <div>
                             <h1 className="text-lg font-bold text-white leading-tight">تقفيل الحسابات والأنشطة المالية</h1>
-                            <p className="text-[10px] text-indigo-200/70 font-medium leading-none mt-1">التحليل المالي والختامي للفترة الحالية</p>
+                            <p className="text-[10px] text-blue-200/70 font-medium leading-none mt-1">التحليل المالي والختامي للفترة الحالية</p>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 no-print">
-                        <div className="flex items-center gap-2 bg-indigo-500/10 px-3 py-1.5 border border-indigo-500/20">
-                            <Calendar size={13} className="text-indigo-300" />
+                        <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1.5 border border-blue-500/20 rounded-xl">
+                            <Calendar size={13} className="text-blue-300" />
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-indigo-200 outline-none focus:ring-0 cursor-pointer"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-blue-200 outline-none focus:ring-0 cursor-pointer"
                             >
                                 {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
 
-                        <div className="flex items-center gap-2 bg-indigo-500/10 px-3 py-1.5 border border-indigo-500/20">
+                        <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1.5 border border-blue-500/20 rounded-xl">
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-indigo-200 outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-blue-200 outline-none cursor-pointer w-24"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
-                            <span className="text-[9px] text-indigo-300">→</span>
+                            <span className="text-[9px] text-blue-300">→</span>
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-indigo-200 outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-blue-200 outline-none cursor-pointer w-24"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
 
                         <button onClick={handleRefresh} className="p-1.5 hover:bg-white/10 transition-all">
-                            <RefreshCw size={14} className={cn("text-indigo-300", isLoading && "animate-spin")} />
+                            <RefreshCw size={14} className={cn("text-blue-300", isLoading && "animate-spin")} />
                         </button>
 
                         <PrimaryBtn onClick={() => window.print()} className="py-2 px-3 bg-slate-900 hover:bg-black">
@@ -208,8 +208,8 @@ export const MonthlyClosing: React.FC = () => {
                         title="صافي الربح المتوقع"
                         value={netProjectedProfit.toLocaleString()}
                         icon={TrendingUp}
-                        color="text-[#5c59f2]"
-                        bg="bg-[#eef2ff] dark:bg-indigo-900/30"
+                        color="text-[#2563EB]"
+                        bg="bg-blue-50 dark:bg-blue-900/30"
                         subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`}
                     />
                     <StatItem
@@ -239,7 +239,7 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
 
                 <div className="px-0 mb-4">
-                    <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
                         {[
                             { id: 'payroll', label: 'الرواتب', icon: Receipt },
                             { id: 'collections', label: 'التحصيلات', icon: Wallet },
@@ -253,9 +253,9 @@ export const MonthlyClosing: React.FC = () => {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as TabType)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 rounded-none text-[10px] font-normal transition-all whitespace-nowrap",
+                                    "flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-normal transition-all whitespace-nowrap",
                                     activeTab === tab.id
-                                        ? "bg-[#eef2ff] dark:bg-indigo-900/30 text-[#5c59f2] shadow-sm"
+                                        ? "bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] shadow-sm"
                                         : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                                 )}
                             >

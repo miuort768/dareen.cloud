@@ -17,26 +17,26 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
         <div className="xl:col-span-2 space-y-3">
             <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none flex items-center justify-center">
-                        <Users size={16} className="text-[#5c59f2]" />
+                    <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                        <Users size={16} className="text-[#2563EB]" />
                     </div>
                     <p className="text-sm font-normal text-slate-800 dark:text-white">الحسابات والمسؤولون</p>
                 </div>
-                <span className="text-[10px] font-normal text-[#5c59f2] bg-[#eef2ff] dark:bg-indigo-900/30 px-2.5 py-1 rounded-lg">
+                <span className="text-[10px] font-normal text-[#2563EB] bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1 rounded-lg">
                     {users.length} حسابات
                 </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {users.map(u => (
-                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-4 shadow-sm group hover:border-[#5c59f2]/30 transition-all">
+                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm group hover:border-[#2563EB]/30 transition-all">
                         <div className="flex justify-between items-start mb-3">
-                            <div className="w-10 h-10 bg-[#5c59f2] text-white rounded-none flex items-center justify-center font-normal text-sm">
+                            <div className="w-10 h-10 bg-[#2563EB] text-white rounded-xl flex items-center justify-center font-normal text-sm">
                                 {u.username[0].toUpperCase()}
                             </div>
                             <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }}
-                                    className="p-1.5 bg-slate-50 dark:bg-slate-800 text-slate-500 rounded-lg border border-slate-200 dark:border-slate-700 hover:text-[#5c59f2] hover:border-[#5c59f2]/30 transition-all"
+                                    className="p-1.5 bg-slate-50 dark:bg-slate-800 text-slate-500 rounded-lg border border-slate-200 dark:border-slate-700 hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all"
                                 >
                                     <Edit size={13} />
                                 </button>
@@ -52,7 +52,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                         </div>
                         <p className="font-normal text-sm text-slate-800 dark:text-white truncate">{u.name || u.username}</p>
                         <p className="text-[10px] text-slate-400 flex items-center gap-1 mt-1">
-                            <Shield size={10} className="text-[#5c59f2]" />
+                            <Shield size={10} className="text-[#2563EB]" />
                             {u.permissions?.includes('*') ? 'Admin كامل' : `${u.permissions?.length || 0} صلاحيات`}
                         </p>
                         <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-slate-50 dark:border-slate-800">
@@ -62,7 +62,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                 </span>
                             ))}
                             {(u.permissions?.length || 0) > 3 && (
-                                <span className="text-[9px] font-normal bg-[#eef2ff] dark:bg-indigo-900/30 text-[#5c59f2] px-1.5 py-0.5 rounded-md">
+                                <span className="text-[9px] font-normal bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] px-1.5 py-0.5 rounded-md">
                                     +{(u.permissions?.length || 0) - 3}
                                 </span>
                             )}
@@ -98,7 +98,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                 </div>
 
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <p className="text-[10px] font-normal text-[#5c59f2] flex items-center gap-1.5 mb-2">
+                    <p className="text-[10px] font-normal text-[#2563EB] flex items-center gap-1.5 mb-2">
                         <Shield size={11} /> قوالب صلاحيات سريعة
                     </p>
                     <div className="flex flex-wrap gap-1.5 mb-3">
@@ -110,14 +110,14 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                             <button
                                 key={role.label}
                                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                                className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-[#eef2ff] dark:hover:bg-indigo-900/30 hover:text-[#5c59f2] text-slate-500 text-[10px] font-normal rounded-lg border border-slate-200 dark:border-slate-700 transition-all"
+                                className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-[#2563EB] text-slate-500 text-[10px] font-normal rounded-lg border border-slate-200 dark:border-slate-700 transition-all"
                             >
                                 {role.label}
                             </button>
                         ))}
                     </div>
                     <p className="text-[10px] text-slate-400 mb-2">تخصيص يدوي</p>
-                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 rounded-none border border-slate-100 dark:border-slate-700">
+                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                         {AVAILABLE_PERMISSIONS.map(p => (
                             <button
                                 key={p.id}
@@ -130,8 +130,8 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                 className={cn(
                                     'p-2 text-[9px] font-normal rounded-lg border text-right transition-all',
                                     newUser.permissions.includes(p.id)
-                                        ? 'bg-[#5c59f2] text-white border-[#5c59f2]'
-                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#5c59f2]/30'
+                                        ? 'bg-[#2563EB] text-white border-[#2563EB]'
+                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/30'
                                 )}
                             >
                                 {p.label}

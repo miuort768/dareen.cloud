@@ -21,7 +21,7 @@ interface AcademicReportProps {
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden',
         className
     )}>
         {children}
@@ -30,7 +30,7 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
 
 const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none">
+        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl">
             <Icon size={15} className="text-white" />
         </div>
         <div>
@@ -43,7 +43,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; name?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right" dir="rtl">
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-sm border border-white/10 text-right" dir="rtl">
                 <p className="text-[10px] font-medium text-slate-400 uppercase mb-1">{label}</p>
                 <p className="text-lg font-medium font-mono">{payload[0].value} <span className="text-[10px] text-slate-400">طالب</span></p>
             </div>
@@ -117,17 +117,17 @@ export const AcademicReport = ({
                                     <div key={index}>
                                         <div className="flex items-center justify-between mb-1">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-2 h-2 rounded-none shrink-0" style={{ backgroundColor: color }} />
+                                                <div className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: color }} />
                                                 <span className="text-[11px] font-normal text-slate-700 dark:text-slate-300 truncate max-w-[120px]">{entry.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <span className="text-[10px] font-medium text-slate-500 font-mono">{entry.value}</span>
-                                                <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-none text-white" style={{ backgroundColor: color }}>{pct}%</span>
+                                                <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-lg text-white" style={{ backgroundColor: color }}>{pct}%</span>
                                             </div>
                                         </div>
-                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden">
+                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden">
                                             <div
-                                                className="h-full rounded-none transition-all duration-700"
+                                                className="h-full rounded-xl transition-all duration-700"
                                                 style={{ width: `${(entry.value / maxSubjectVal) * 100}%`, backgroundColor: color }}
                                             />
                                         </div>
@@ -147,9 +147,9 @@ export const AcademicReport = ({
                     { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, grad: 'from-emerald-600 to-emerald-800' },
                     { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, grad: 'from-purple-600 to-purple-800' },
                 ].map((item, i) => (
-                    <div key={i} className={cn("relative overflow-hidden rounded-none p-4 bg-gradient-to-br text-white shadow-sm", item.grad)}>
+                    <div key={i} className={cn("relative overflow-hidden rounded-2xl p-4 bg-gradient-to-br text-white shadow-sm", item.grad)}>
                         <div className="absolute -left-2 -bottom-2 opacity-10"><item.icon size={56} /></div>
-                        <div className="w-7 h-7 bg-white/15 rounded-none flex items-center justify-center mb-2">
+                        <div className="w-7 h-7 bg-white/15 rounded-xl flex items-center justify-center mb-2">
                             <item.icon size={14} className="text-white" />
                         </div>
                         <p className="text-xl font-medium font-mono">{item.value}</p>
@@ -163,7 +163,7 @@ export const AcademicReport = ({
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none">
+        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl">
                             <Activity size={15} className="text-white" />
                         </div>
                         <div>
@@ -180,7 +180,7 @@ export const AcademicReport = ({
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-normal focus:outline-none focus:border-indigo-500 transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-normal focus:outline-none focus:border-blue-600 transition-all"
                         />
                     </div>
                 </div>
@@ -212,14 +212,14 @@ export const AcademicReport = ({
                                         </td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center text-[10px] font-medium shrink-0">
+                                                <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center text-[10px] font-medium shrink-0">
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <span className="text-xs font-normal text-slate-800 dark:text-white">{student.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-3 text-center">
-                                            <span className="inline-flex px-2 py-0.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-[9px] font-medium rounded-none border border-indigo-100 dark:border-indigo-800 uppercase">
+                                            <span className="inline-flex px-2 py-0.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-[9px] font-medium rounded-lg border border-blue-100 dark:border-blue-800 uppercase">
                                                 {student.grade}
                                             </span>
                                         </td>
@@ -228,8 +228,8 @@ export const AcademicReport = ({
                                         <td className="px-5 py-3 text-center font-mono font-medium text-xs text-emerald-600">{student.usedSessions}</td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
-                                                    <div className={cn("h-full rounded-none transition-all duration-700", progColor)} style={{ width: `${prog}%` }} />
+                                                <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-xl overflow-hidden">
+                                                    <div className={cn("h-full rounded-xl transition-all duration-700", progColor)} style={{ width: `${prog}%` }} />
                                                 </div>
                                                 <span className={cn("text-[10px] font-medium w-9 text-left", textColor)}>{prog}%</span>
                                             </div>
@@ -257,9 +257,9 @@ export const AcademicReport = ({
                         const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
                         return (
                             <div key={student.id} className="p-4 flex items-center gap-3">
-                                <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-medium text-sm rounded-none shrink-0 relative">
+                                <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-medium text-sm rounded-xl shrink-0 relative">
                                     {student.name.charAt(0)}
-                                    <span className="absolute -top-1 -right-1 text-[8px] font-medium bg-indigo-600 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
+                                    <span className="absolute -top-1 -right-1 text-[8px] font-medium bg-blue-600 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
@@ -267,11 +267,11 @@ export const AcademicReport = ({
                                         <span className={cn("text-[10px] font-medium ml-2 shrink-0", textColor)}>{prog}%</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <span className="text-[9px] font-normal text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-none">{student.grade}</span>
+                                        <span className="text-[9px] font-normal text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-lg">{student.grade}</span>
                                         <span className="text-[9px] text-slate-400 font-normal">{student.usedSessions}/{student.totalSessions} حصة</span>
                                     </div>
-                                    <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
-                                        <div className={cn("h-full rounded-none", progColor)} style={{ width: `${prog}%` }} />
+                                    <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-xl overflow-hidden">
+                                        <div className={cn("h-full rounded-xl", progColor)} style={{ width: `${prog}%` }} />
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@ export const AcademicReport = ({
                             <button
                                 onClick={() => setPage(p => Math.max(1, p - 1))}
                                 disabled={page === 1}
-                                className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                className="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                             >
                                 <ChevronRight size={14} />
                             </button>
@@ -303,10 +303,10 @@ export const AcademicReport = ({
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={cn(
-                                        "w-8 h-8 text-[11px] font-medium rounded-none border transition-all",
+                                        "w-8 h-8 text-[11px] font-medium rounded-xl border transition-all",
                                         page === i + 1
-                                            ? "bg-indigo-600 text-white border-indigo-600"
-                                            : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400"
+                                            ? "bg-blue-600 text-white border-blue-600"
+                                            : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400"
                                     )}
                                 >
                                     {i + 1}
@@ -316,7 +316,7 @@ export const AcademicReport = ({
                             <button
                                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                 disabled={page === totalPages}
-                                className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                className="w-8 h-8 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                             >
                                 <ChevronLeft size={14} />
                             </button>

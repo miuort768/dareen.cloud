@@ -375,7 +375,7 @@ export const Settings = () => {
     };
 
     return (
-        <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5">
@@ -386,13 +386,13 @@ export const Settings = () => {
                         <p className="text-[10px] text-slate-400">إدارة السياسات والهوية والصلاحيات</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-normal text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-100 dark:border-slate-700">
+                <div className="flex items-center gap-2 text-[10px] font-normal text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-100 dark:border-slate-700 rounded-lg">
                     <Sparkles size={12} className="text-amber-400" />
                     {activeTab && TABS.find(t => t.id === activeTab)?.label}
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-2 shadow-sm">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-2 shadow-sm">
                 <div className="flex overflow-x-auto no-scrollbar gap-2 px-0">
                     {TABS.map(tab => (
                         <button
@@ -401,7 +401,7 @@ export const Settings = () => {
                             className={cn(
                                 'flex items-center gap-2 px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-all uppercase tracking-tight',
                                 activeTab === tab.id
-                                    ? 'bg-[#5c59f2] text-white transform scale-105 z-10'
+                                    ? 'bg-[#2563EB] text-white transform scale-105 z-10'
                                     : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 bg-slate-50/50 dark:bg-slate-800/50'
                             )}
                         >

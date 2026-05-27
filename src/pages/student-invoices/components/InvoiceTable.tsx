@@ -31,7 +31,7 @@ const statusConfig = {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 bg-[#172554] flex items-center justify-center text-[10px] font-bold text-white">
+  <div className="w-7 h-7 bg-[#172554] flex items-center justify-center text-[10px] font-bold text-white rounded-lg">
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -90,7 +90,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
               <td className="px-4 py-3">
                 <div className="flex items-center justify-center gap-1">
                   <ActionButton icon={Printer} onClick={() => setPreviewInvoice(inv)} title="معاينة وطباعة" hoverClass="hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20" />
-                  <ActionButton icon={Edit} onClick={() => handleEdit(inv)} title="تعديل" hoverClass="hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20" />
+                  <ActionButton icon={Edit} onClick={() => handleEdit(inv)} title="تعديل" hoverClass="hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20" />
                   <ActionButton icon={Trash2} onClick={() => setDeletingId(inv.id)} title="حذف" hoverClass="hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20" />
                 </div>
               </td>
@@ -112,7 +112,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
       {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
         const sc = statusConfig[inv.status];
         return (
-          <div key={inv.id} className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm">
+          <div key={inv.id} className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl">
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
             </div>
             <div className="flex items-center justify-end gap-1 px-4 py-2.5 border-t border-slate-100 dark:border-slate-800">
               <ActionButton icon={Printer} onClick={() => setPreviewInvoice(inv)} title="معاينة وطباعة" hoverClass="hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20" />
-              <ActionButton icon={Edit} onClick={() => handleEdit(inv)} title="تعديل" hoverClass="hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20" />
+              <ActionButton icon={Edit} onClick={() => handleEdit(inv)} title="تعديل" hoverClass="hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20" />
               <ActionButton icon={Trash2} onClick={() => setDeletingId(inv.id)} title="حذف" hoverClass="hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20" />
             </div>
           </div>

@@ -3,7 +3,7 @@ import { cn } from '../../../lib/utils';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 shadow-sm',
+        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
         className
     )}>
         {children}
@@ -12,7 +12,7 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#172554] text-white">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#172554] text-white rounded-xl">
             <Icon size={15} />
         </div>
         <div>
@@ -30,7 +30,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-[#172554] hover:bg-[#1e3a5f]',
-            'text-white text-xs font-bold px-4 py-2 transition-all shadow-sm active:scale-[0.97]',
+            'text-white text-xs font-bold px-4 py-2 transition-all shadow-sm active:scale-[0.97] rounded-xl',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -46,7 +46,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700',
-            'text-slate-600 dark:text-slate-300 text-xs font-bold px-3 py-2 border border-slate-200 dark:border-slate-700 transition-all shadow-sm',
+            'text-slate-600 dark:text-slate-300 text-xs font-bold px-3 py-2 border border-slate-200 dark:border-slate-700 transition-all shadow-sm rounded-xl',
             'active:scale-[0.97]',
             className
         )}
@@ -57,7 +57,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
 
 export const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, subValue?: string, bg: string }) => (
     <SectionCard className="p-4 flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 flex items-center justify-center mb-2", bg)}>
+        <div className={cn("w-8 h-8 flex items-center justify-center mb-2 rounded-xl", bg)}>
             <Icon size={16} className={color} />
         </div>
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>

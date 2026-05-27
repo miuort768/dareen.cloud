@@ -23,9 +23,9 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                         <div className="flex justify-between items-start mb-3">
                             <div>
                                 <h3 className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{item.studentName}</h3>
-                                <p className="text-[10px] font-bold text-[#5c59f2] mt-0.5">{item.subject}</p>
+                                <p className="text-[10px] font-bold text-[#2563EB] mt-0.5">{item.subject}</p>
                             </div>
-                            <div className="px-2 py-0.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 text-[9px] font-bold">رصيد منخفض</div>
+                            <div className="px-2 py-0.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 text-[9px] font-bold rounded-lg">رصيد منخفض</div>
                         </div>
                         <div className="bg-slate-50 dark:bg-slate-800/50 p-3 flex items-center justify-between mb-4 border border-slate-100 dark:border-slate-800">
                             <span className="text-[10px] font-bold text-slate-400">الحصص المتبقية</span>
@@ -39,7 +39,7 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                 </SectionCard>
             ))}
             {renewalsData.length === 0 && (
-                <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl">
                     <CheckCircle2 className="mx-auto mb-3 text-slate-100 dark:text-slate-800" size={48} />
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد تجديدات مطلوبة</p>
                 </div>

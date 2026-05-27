@@ -10,8 +10,8 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
     <SectionCard>
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-3">
-                <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none">
-                    <Activity size={16} className="text-[#5c59f2]" />
+                <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
+                    <Activity size={16} className="text-[#2563EB]" />
                 </div>
                 <div>
                     <p className="text-sm font-normal text-slate-800 dark:text-white">سجل الرقابة</p>
@@ -23,7 +23,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
             </SecondaryBtn>
         </div>
 
-        <div className="overflow-x-auto rounded-none border border-slate-100 dark:border-slate-800">
+        <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-slate-800">
             <table className="w-full text-right text-sm">
                 <thead>
                     <tr className="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
@@ -40,7 +40,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-lg flex items-center justify-center text-[10px] font-normal text-[#5c59f2]">
+                                    <div className="w-6 h-6 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-[10px] font-normal text-[#2563EB]">
                                         {log.username?.[0]?.toUpperCase() || 'A'}
                                     </div>
                                     <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{log.username}</span>
@@ -48,7 +48,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 bg-[#5c59f2] rounded-full" />
+                                    <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full" />
                                     <span className="text-xs text-slate-600 dark:text-slate-300">{log.action}</span>
                                 </div>
                             </td>

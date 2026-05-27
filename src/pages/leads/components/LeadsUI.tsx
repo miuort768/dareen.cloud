@@ -3,7 +3,7 @@ import { cn } from '../../../lib/utils';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 shadow-sm',
+        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
         className
     )}>
         {children}
@@ -19,7 +19,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500',
-            'text-white text-[11px] font-bold px-4 py-2.5 transition-all active:scale-95',
+            'text-white text-[11px] font-bold px-4 py-2.5 transition-all active:scale-95 rounded-xl',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -29,7 +29,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
 );
 
 const statBgMap: Record<string, string> = {
-  'إجمالي المهتمين': 'from-indigo-500 to-violet-600',
+  'إجمالي المهتمين': 'from-blue-500 to-blue-600',
   'عملاء جدد': 'from-blue-500 to-cyan-500',
   'تم التحويل': 'from-emerald-500 to-green-600',
   'معدل التحويل': 'from-amber-400 to-orange-500',
@@ -37,9 +37,9 @@ const statBgMap: Record<string, string> = {
 
 export const StatItem = ({ title, value, icon: Icon, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, bg?: string }) => (
     <div className={cn(
-        "relative flex flex-col items-center text-center text-white overflow-hidden",
+        "relative flex flex-col items-center text-center text-white overflow-hidden rounded-2xl",
         "bg-gradient-to-br shadow-sm border border-white/10",
-        statBgMap[title] || 'from-indigo-500 to-violet-600'
+        statBgMap[title] || 'from-blue-500 to-blue-600'
     )}>
         <div className="absolute left-2 bottom-0 opacity-15">
             <Icon size={56} className="md:size-[72px]" />

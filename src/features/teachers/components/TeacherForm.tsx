@@ -63,11 +63,11 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
             <div className="bg-slate-950 px-6 py-6 flex items-center justify-between gap-6 border-b border-white/5">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] text-white flex items-center justify-center rounded-none shadow-sm">
+                    <div className="w-10 h-10 bg-[var(--primary-color,#2563EB)] text-white flex items-center justify-center rounded-xl shadow-sm">
                         {initialData ? <Edit size={20} /> : <Plus size={20} />}
                     </div>
                     <div>
@@ -80,7 +80,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 <button 
                     type="button" 
                     onClick={onCancel}
-                    className="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white/10 rounded-none transition-all"
+                    className="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white/10 rounded-lg transition-all"
                 >
                     <X size={18} />
                 </button>
@@ -90,8 +90,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 pb-2 border-b border-slate-50 dark:border-slate-800">
-                        <div className="w-6 h-6 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-none">
-                            <Info size={12} className="text-[var(--primary-color,#5c59f2)]" />
+                        <div className="w-6 h-6 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
+                            <Info size={12} className="text-[var(--primary-color,#2563EB)]" />
                         </div>
                         <h4 className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest">بيانات التعريف الأساسية</h4>
                     </div>
@@ -112,7 +112,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                     type="number"
                                     value={formData.price}
                                     onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-none text-[11px] font-medium transition-all"
+                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-xl text-[11px] font-medium transition-all"
                                     placeholder="0.00"
                                 />
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-medium text-emerald-500 uppercase">ج.م</span>
@@ -122,16 +122,16 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 rounded-none border border-slate-100 dark:border-slate-800/50">
+                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800/50">
                     <label 
                         onClick={() => setEnableLogin(!enableLogin)}
                         className="flex items-center gap-3 cursor-pointer group mb-6"
                     >
                         <div className={cn(
-                            "w-4 h-4 rounded-none border flex items-center justify-center transition-all",
-                            enableLogin ? "bg-[var(--primary-color,#5c59f2)] border-[var(--primary-color,#5c59f2)]" : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700"
+                            "w-4 h-4 rounded border flex items-center justify-center transition-all",
+                            enableLogin ? "bg-[var(--primary-color,#2563EB)] border-[var(--primary-color,#2563EB)]" : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700"
                         )}>
-                            {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-none" />}
+                            {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-sm" />}
                         </div>
                         <span className="text-[10px] font-medium text-slate-700 dark:text-slate-300 uppercase tracking-widest">تفعيل حساب المعلمة على المنصة</span>
                     </label>
@@ -141,14 +141,14 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
                                     <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">اسم المستخدم</label>
-                                    <button type="button" onClick={generateUsername} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <button type="button" onClick={generateUsername} className="text-[8px] text-[var(--primary-color,#2563EB)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-medium font-mono"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono"
                                         placeholder="username"
                                     />
                                 </div>
@@ -156,7 +156,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
                                     <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">كلمة المرور</label>
-                                    <button type="button" onClick={generatePassword} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <button type="button" onClick={generatePassword} className="text-[8px] text-[var(--primary-color,#2563EB)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
@@ -164,7 +164,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-medium font-mono tracking-widest"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono tracking-widest"
                                         placeholder="password"
                                     />
                                 </div>
@@ -176,7 +176,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 <div className="flex items-center justify-end pt-4 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-[var(--primary-color,#5c59f2)] text-white text-[11px] font-medium uppercase tracking-[0.2em] hover:opacity-90 rounded-none flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-8 py-3 bg-[var(--primary-color,#2563EB)] text-white text-[11px] font-medium uppercase tracking-[0.2em] hover:opacity-90 rounded-lg flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
@@ -191,7 +191,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
     <div className="space-y-1.5">
         <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">
-            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--primary-color,#5c59f2)] transition-colors" size={12} />}
+            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--primary-color,#2563EB)] transition-colors" size={12} />}
             <input
                 required={required}
                 type={type}
@@ -199,7 +199,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] dark:text-white rounded-none text-[11px] font-medium transition-all",
+                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] dark:text-white rounded-xl text-[11px] font-medium transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}

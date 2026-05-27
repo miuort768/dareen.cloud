@@ -17,10 +17,10 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
                 <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center">
+                        <div className="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-xl">
                             <Receipt size={20} className="text-white" />
                         </div>
                         <div>
@@ -38,7 +38,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                         <div>
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">المعلمة</p>
                             <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
-                            <p className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 inline-block mt-1">{teacher.subject}</p>
+                            <p className="text-[10px] font-bold text-[#2563EB] bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 inline-block mt-1 rounded-lg">{teacher.subject}</p>
                         </div>
                         <div className="text-left">
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">التاريخ</p>
@@ -51,11 +51,11 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">إجمالي الحصص</p>
                             <p className="text-2xl font-black text-slate-800 dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="bg-[#eef2ff] dark:bg-indigo-900/20 p-4 border border-indigo-100 dark:border-indigo-800/30">
-                            <p className="text-[10px] font-bold text-[#5c59f2] uppercase mb-1">صافي المستحق</p>
+                        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 border border-blue-100 dark:border-blue-800/30 rounded-xl">
+                            <p className="text-[10px] font-bold text-[#2563EB] uppercase mb-1">صافي المستحق</p>
                             <div className="flex items-baseline gap-1">
-                                <p className="text-2xl font-black text-[#5c59f2] font-mono">{teacher.totalAmount.toLocaleString()}</p>
-                                <span className="text-[10px] font-bold text-[#5c59f2] uppercase">{CURRENCY_SYMBOL}</span>
+                                <p className="text-2xl font-black text-[#2563EB] font-mono">{teacher.totalAmount.toLocaleString()}</p>
+                                <span className="text-[10px] font-bold text-[#2563EB] uppercase">{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
                     <div className="flex gap-3 pt-2 no-print">
                         <SecondaryBtn onClick={onClose} className="flex-1">إغلاق</SecondaryBtn>
-                        <PrimaryBtn onClick={() => window.print()} className="flex-[2] py-3 shadow-indigo-500/10">
+                        <PrimaryBtn onClick={() => window.print()} className="flex-[2] py-3 shadow-blue-500/10">
                             <Printer size={16} /> طباعة القسيمة الرسمية
                         </PrimaryBtn>
                     </div>

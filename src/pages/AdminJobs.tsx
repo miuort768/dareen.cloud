@@ -52,10 +52,10 @@ export const AdminJobs = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
-            <div className="relative overflow-hidden bg-gradient-to-br from-amber-800 via-amber-700 to-slate-900 dark:from-slate-950 dark:via-amber-950 dark:to-slate-950 px-6 md:px-8 py-6 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-amber-800 via-amber-700 to-slate-900 dark:from-slate-950 dark:via-amber-950 dark:to-slate-950 px-6 md:px-8 py-6 mb-6 rounded-2xl">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center border border-white/10">
+                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center border border-white/10 rounded-xl">
                             <Briefcase size={24} className="text-white" />
                         </div>
                         <div>
@@ -70,7 +70,7 @@ export const AdminJobs = () => {
                             placeholder="بحث..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-white/10 border border-white/10 py-3 pr-12 pl-4 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-white/30"
+                            className="w-full bg-white/10 border border-white/10 py-3 pr-12 pl-4 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 rounded-xl"
                         />
                     </div>
                 </div>
@@ -78,19 +78,19 @@ export const AdminJobs = () => {
 
             <div className="max-w-5xl mx-auto px-4 space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white dark:bg-slate-900 h-32 animate-pulse border border-slate-200 dark:border-slate-800" />)}</div>
+                    <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white dark:bg-slate-900 h-32 animate-pulse border border-slate-200 dark:border-slate-800 rounded-2xl" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 p-16 text-center">
+                    <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 p-16 text-center rounded-2xl">
                         <Briefcase size={40} className="mx-auto mb-4 text-slate-300 dark:text-slate-700" />
                         <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">لا توجد طلبات</p>
                     </div>
                 ) : (
                     filtered.map(app => (
-                        <div key={app.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-200 dark:hover:border-amber-900 transition-colors">
+                        <div key={app.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-200 dark:hover:border-amber-900 transition-colors rounded-2xl">
                             <div className="p-6">
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800 flex items-center justify-center font-medium text-amber-700 text-sm">
+                                        <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800 flex items-center justify-center font-medium text-amber-700 text-sm rounded-xl">
                                             {app.name[0]}
                                         </div>
                                         <div>
@@ -98,7 +98,7 @@ export const AdminJobs = () => {
                                             <p className="text-[10px] text-amber-600 dark:text-amber-400 font-medium uppercase tracking-wider">{app.position}</p>
                                         </div>
                                     </div>
-                                    <button onClick={() => handleDelete(app.id)} className="p-2 text-slate-300 hover:text-rose-500 transition-colors">
+                                    <button onClick={() => handleDelete(app.id)} className="p-2 text-slate-300 hover:text-rose-500 transition-colors rounded-lg">
                                         <Trash2 size={16} />
                                     </button>
                                 </div>

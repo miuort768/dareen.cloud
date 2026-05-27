@@ -14,9 +14,9 @@ export const AcademySettingsSection = ({
     setAdminPhone
 }: AcademySettingsSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow">
+        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
+                <div className="p-2 bg-primary-100 rounded-xl dark:bg-primary-900/30">
                     <Building2 size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
                 <h2 className="text-lg font-normal text-gray-900 dark:text-white">
@@ -32,7 +32,7 @@ export const AcademySettingsSection = ({
                         type="text"
                         value={academyName}
                         onChange={(e) => setAcademyName(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
                         placeholder="أدخل اسم الأكاديمية"
                     />
                 </div>
@@ -44,7 +44,7 @@ export const AcademySettingsSection = ({
                         type="text"
                         value={adminPhone}
                         onChange={(e) => setAdminPhone(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
                         placeholder="01xxxxxxxxx"
                         dir="ltr"
                     />

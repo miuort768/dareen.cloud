@@ -95,7 +95,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
 
     return (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
-            <div className="bg-white dark:bg-gray-900 w-full max-w-2xl shadow-sm border-t-8 border-primary-600 animate-in zoom-in-95 max-h-[90vh] flex flex-col">
+            <div className="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-2xl shadow-sm border-t-8 border-primary-600 animate-in zoom-in-95 max-h-[90vh] flex flex-col">
                 <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
                     <div>
                         <h3 className="text-xl font-medium text-gray-900 dark:text-white flex items-center gap-2">
@@ -106,17 +106,17 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             <p className="text-lg font-medium text-gray-800 dark:text-gray-100">{studentName}</p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {studentGrade && (
-                                    <span className="text-[10px] bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-0.5 rounded border border-primary-100 dark:border-primary-800 font-normal">
+                                    <span className="text-[10px] bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-0.5 rounded-lg border border-primary-100 dark:border-primary-800 font-normal">
                                         الصف {studentGrade}
                                     </span>
                                 )}
                                 {studentCurriculum && (
-                                    <span className="text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800 font-normal">
+                                    <span className="text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 rounded-lg border border-amber-100 dark:border-amber-800 font-normal">
                                         {studentCurriculum}
                                     </span>
                                 )}
                                 {studentSubject && (
-                                    <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded border border-gray-200 dark:border-gray-700 font-normal">
+                                    <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded-lg border border-gray-200 dark:border-gray-700 font-normal">
                                         منهج {studentSubject}
                                     </span>
                                 )}
@@ -125,7 +125,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                     </div>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className="text-gray-400 hover:text-red-500 transition-colors p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl"
                     >
                         <X size={24} />
                     </button>
@@ -221,7 +221,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
 
                                             <div className="flex items-center gap-3">
                                                 <span className={cn(
-                                                    "text-[10px] font-medium uppercase px-2 py-1",
+                                                    "text-[10px] font-medium uppercase px-2 py-1 rounded-lg",
                                                     session.status === 'completed'
                                                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400"
                                                         : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-400"

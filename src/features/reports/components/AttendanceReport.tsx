@@ -15,14 +15,14 @@ interface AttendanceReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800', className)}>
+    <div className={cn('bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl', className)}>
         {children}
     </div>
 );
 
 const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none text-white">
+        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl text-white">
             <Icon size={15} />
         </div>
         <div>
@@ -35,12 +35,12 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right min-w-[140px]" dir="rtl">
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-sm border border-white/10 text-right min-w-[140px]" dir="rtl">
                 <p className="text-[10px] font-medium text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
                 {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
                     <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
                         <div className="flex items-center gap-1.5">
-                            <div className="w-2 h-2 rounded-none" style={{ backgroundColor: entry.stroke || entry.fill }} />
+                            <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: entry.stroke || entry.fill }} />
                             <span className="text-[10px] text-slate-400 font-normal">{entry.name}</span>
                         </div>
                         <span className="text-sm font-medium font-mono">{entry.value}</span>
@@ -72,13 +72,13 @@ export const AttendanceReport = ({
                     { label: 'إجمالي الحصص', value: totalSessions, icon: Calendar, grad: 'from-slate-700 to-slate-900', sub: 'كل الأشهر' },
                     { label: 'حصص مكتملة', value: totalCompleted, icon: CheckCircle2, grad: 'from-emerald-600 to-emerald-800', sub: 'حضور فعلي' },
                     { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, grad: 'from-rose-600 to-rose-800', sub: 'غياب/إلغاء' },
-                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, grad: 'from-indigo-600 to-violet-800', sub: 'نسبة النجاح الكلية' },
+                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, grad: 'from-blue-600 to-violet-800', sub: 'نسبة النجاح الكلية' },
                 ].map((item, i) => (
-                    <div key={i} className={cn("relative overflow-hidden rounded-none p-4 bg-gradient-to-br text-white", item.grad)}>
+                    <div key={i} className={cn("relative overflow-hidden rounded-2xl p-4 bg-gradient-to-br text-white", item.grad)}>
                         <div className="absolute -left-2 -bottom-2 opacity-10">
                             <item.icon size={60} />
                         </div>
-                        <div className="w-8 h-8 bg-white/15 rounded-none flex items-center justify-center mb-3">
+                        <div className="w-8 h-8 bg-white/15 rounded-xl flex items-center justify-center mb-3">
                             <item.icon size={16} className="text-white" />
                         </div>
                         <p className="text-xl font-medium font-mono">{item.value}</p>
@@ -175,7 +175,7 @@ export const AttendanceReport = ({
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 bg-emerald-600 text-white rounded-none flex items-center justify-center text-xs font-medium shrink-0">
+                                                    <div className="w-8 h-8 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-xs font-medium shrink-0">
                                                         {teacher.teacher.charAt(0)}
                                                     </div>
                                                     <span className="text-xs font-normal text-slate-800 dark:text-white">{teacher.teacher}</span>
@@ -186,9 +186,9 @@ export const AttendanceReport = ({
                                             <td className="px-5 py-3 text-center font-mono font-medium text-xs text-rose-500">{teacher.cancelled}</td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
+                                                    <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-xl overflow-hidden">
                                                         <div
-                                                            className={cn("h-full rounded-none transition-all duration-700", barColor)}
+                                                            className={cn("h-full rounded-xl transition-all duration-700", barColor)}
                                                             style={{ width: `${rate}%` }}
                                                         />
                                                     </div>
@@ -213,7 +213,7 @@ export const AttendanceReport = ({
                             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center font-medium text-sm rounded-none shrink-0">
+                                    <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center font-medium text-sm rounded-xl shrink-0">
                                         {medal || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -226,8 +226,8 @@ export const AttendanceReport = ({
                                             <span className="text-[9px] text-rose-500 font-normal">{teacher.cancelled} ✗</span>
                                             <span className="text-[9px] text-slate-400 font-normal">{teacher.total} إجمالي</span>
                                         </div>
-                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
-                                            <div className={cn("h-full rounded-none", barColor)} style={{ width: `${rate}%` }} />
+                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-xl overflow-hidden">
+                                            <div className={cn("h-full rounded-xl", barColor)} style={{ width: `${rate}%` }} />
                                         </div>
                                     </div>
                                 </div>

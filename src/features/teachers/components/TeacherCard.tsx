@@ -20,7 +20,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 <div className="p-3 flex justify-between items-center border-b border-slate-50 dark:border-slate-800 print:hidden bg-slate-50 dark:bg-slate-800/50">
                     <h3 className="font-medium text-[10px] uppercase tracking-widest text-slate-400 italic">Faculty Identity Card</h3>
                     <div className="flex gap-1.5">
-                        <button onClick={handlePrint} className="p-1.5 bg-white dark:bg-slate-800 text-slate-500 hover:text-[#5c59f2] transition-colors shadow-sm">
+                        <button onClick={handlePrint} className="p-1.5 bg-white dark:bg-slate-800 text-slate-500 hover:text-[#2563EB] transition-colors shadow-sm">
                             <Printer size={16} />
                         </button>
                         <button onClick={onClose} className="p-1.5 bg-white dark:bg-slate-800 text-rose-400 hover:bg-rose-500 hover:text-white transition-colors shadow-sm">
@@ -37,7 +37,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">
                         <div className="space-y-1">
-                            <div className="flex items-center gap-2 text-[#5c59f2]">
+                            <div className="flex items-center gap-2 text-[#2563EB]">
                                 <Award size={18} />
                                 <span className="font-medium text-[10px] uppercase tracking-widest leading-none">DAREEN ACADEMY</span>
                             </div>
@@ -53,7 +53,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         {/* Photo Placeholder */}
                         <div className="w-28 h-32 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center relative shadow-inner overflow-hidden">
                             <User size={48} className="text-slate-200 dark:text-slate-700" />
-                            <div className="absolute bottom-0 left-0 w-full h-1 bg-[#5c59f2]"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-[#2563EB]"></div>
                         </div>
 
                         {/* Details */}
@@ -66,7 +66,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                             <div className="grid grid-cols-2 gap-4 pt-2">
                                 <div className="space-y-1">
                                     <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest block text-center">التخصص</label>
-                                    <p className="text-xs font-medium text-[#5c59f2] uppercase tracking-tighter text-center">
+                                    <p className="text-xs font-medium text-[#2563EB] uppercase tracking-tighter text-center">
                                         {teacher.subject}
                                     </p>
                                 </div>
@@ -100,7 +100,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 </div>
 
                 {/* Print Footer Background */}
-                <div className="h-1 bg-[#5c59f2] w-full"></div>
+                <div className="h-1 bg-[#2563EB] w-full"></div>
             </div>
         </div>
     );
