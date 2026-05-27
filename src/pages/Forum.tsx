@@ -225,15 +225,21 @@ export const Forum = () => {
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #6366f1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10">
 
-            {/* ?? Header ?? */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-purple-800 to-slate-900 dark:from-slate-950 dark:via-purple-950 dark:to-slate-950 rounded-none md:rounded-none shadow-sm shadow-purple-500/15 border border-white/5 px-6 md:px-8 py-6 mx-0 md:mx-6 mt-0 md:mt-6 mb-6">
-                <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-400/20 rounded-full blur-[100px] pointer-events-none" />
-                <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
-                    <div className="w-12 h-12 bg-white/10  rounded-none flex items-center justify-center mb-4 border border-white/10 shadow-sm">
-                        <Sparkles size={24} className="text-white" />
+            {/* ════════ HEADER ════════ */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] rounded-3xl shadow-xl shadow-purple-200/30 border border-white/10 px-6 py-8 mx-4 mt-4 mb-6">
+                {/* Decorative blobs */}
+                <div className="absolute -top-16 -right-16 w-64 h-64 bg-purple-300/20 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-indigo-300/15 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-white/30 rounded-full" />
+                <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-300/40 rounded-full" />
+                <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white/20 rounded-full" />
+                <div className="absolute top-1/4 right-1/4 w-3 h-3 border border-white/10 rounded-full" />
+                <div className="relative z-10 flex flex-col items-center text-center">
+                    <div className="w-14 h-14 bg-white/15 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 border border-white/20 shadow-lg shadow-purple-500/20">
+                        <Sparkles size={26} className="text-white" />
                     </div>
-                    <h1 className="text-2xl font-medium text-white uppercase tracking-tighter mb-2">منتدى دارين</h1>
-                    <p className="text-xs text-white/80 font-normal uppercase tracking-widest leading-relaxed max-w-md">
+                    <h1 className="text-3xl font-black text-white leading-tight mb-2">منتدى دارين</h1>
+                    <p className="text-sm text-white/80 font-medium leading-relaxed max-w-md">
                         مساحة آمنة للنقاش وتبادل الأفكار بين الطلاب والمعلمات وأولياء الأمور.
                     </p>
                 </div>
@@ -241,48 +247,49 @@ export const Forum = () => {
 
             <div className="max-w-[700px] mx-auto px-4 space-y-6">
                 
-                {/* ??? Post Creation Area */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                    <div className="flex gap-4 items-start">
-                        <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none flex items-center justify-center shrink-0">
-                            <User size={20} className="text-slate-400" />
+                {/* ════════ CREATE POST CARD ════════ */}
+                <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] p-5">
+                    <div className="flex gap-3 items-start">
+                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center shrink-0 border-2 border-purple-200/50 dark:border-purple-700/30">
+                            <User size={18} className="text-purple-500 dark:text-purple-300" />
                         </div>
                         <div className="flex-1 space-y-3">
                             <textarea
                                 value={newPostContent}
                                 onChange={(e) => setNewPostContent(e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 min-h-[100px] text-sm font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                                placeholder="مشاركة فكرة أو سؤال..."
+                                className="w-full bg-purple-50/50 dark:bg-slate-800/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-300/50 transition-all placeholder:text-slate-400 resize-none border-0"
+                                placeholder="شارك فكرة أو سؤال…"
+                                style={{ lineHeight: 1.8 }}
                             />
                             <div className="flex justify-between items-center">
-                                <p className="text-[10px] text-slate-400 font-medium flex items-center gap-1.5 uppercase">
-                                    <ShieldCheck size={12} /> نشر متوافق مع سياسات المنصة
+                                <p className="text-[10px] text-slate-400 font-medium flex items-center gap-1.5">
+                                    <ShieldCheck size={11} className="text-purple-400" /> نشر متوافق مع سياسات المنصة
                                 </p>
                                 <button
                                     onClick={handleCreatePost}
                                     disabled={!newPostContent.trim()}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 text-[11px] font-medium uppercase tracking-widest disabled:opacity-30 transition-all flex items-center gap-2"
+                                    className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5A3BFF] hover:to-[#7C3AED] text-white px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-purple-200/40 active:scale-95"
                                 >
-                                    <Send size={14} /> نشر
+                                    <Send size={13} /> نشر
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ?? Posts Feed */}
+                {/* ════════ POSTS FEED ════════ */}
                 {loading ? (
                     <div className="space-y-6">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white dark:bg-slate-900 h-48 animate-pulse border border-slate-200 dark:border-slate-800"></div>
+                            <div key={i} className="bg-white dark:bg-slate-900 h-48 animate-pulse rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04)]"></div>
                         ))}
                     </div>
                 ) : posts.length === 0 ? (
-                    <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 p-16 text-center">
-                        <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700">
-                            <MessageSquare size={24} className="text-slate-300" />
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] p-16 text-center border-2 border-dashed border-purple-100 dark:border-purple-900/30">
+                        <div className="w-16 h-16 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <MessageSquare size={24} className="text-purple-400" />
                         </div>
-                        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">لا توجد منشورات هنا</p>
+                        <p className="text-sm font-bold text-slate-400">لا توجد منشورات هنا</p>
                     </div>
                 ) : (
                     <div className="space-y-6">
@@ -295,32 +302,31 @@ export const Forum = () => {
                                     key={post.id} 
                                     id={`post-${post.id}`}
                                     className={cn(
-                                        "bg-white dark:bg-slate-900 border transition-all duration-500 group",
-                                        isHighlighted 
-                                            ? "border-indigo-500 ring-4 ring-indigo-500/5 shadow-sm" 
-                                            : "border-slate-200 dark:border-slate-800 shadow-sm"
+                                        "bg-white dark:bg-slate-900 rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-500",
+                                        isHighlighted && "ring-2 ring-purple-400 shadow-lg shadow-purple-200/30"
                                     )}
                                 >
                                     {/* Post Header */}
-                                    <div className="p-4 md:p-6 flex justify-between items-start">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-none border border-indigo-100 dark:border-indigo-800 flex items-center justify-center font-medium text-indigo-600 text-xs">
+                                    <div className="p-4 md:p-5 flex justify-between items-start">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-600 dark:text-purple-300 text-sm border-2 border-purple-200/50 dark:border-purple-700/30">
                                                 {post.authorName[0].toUpperCase()}
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-0.5">
-                                                    <h4 className="font-medium text-slate-800 dark:text-white text-sm tracking-tight">{post.authorName}</h4>
-                                                    <span className={cn(
-                                                        "text-[9px] font-medium px-1.5 py-0.5 uppercase tracking-tighter",
-                                                        post.authorRole === 'admin' ? "bg-rose-50 text-rose-600 border border-rose-100" :
-                                                        post.authorRole === 'teacher' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
-                                                        "bg-blue-50 text-blue-600 border border-blue-100"
-                                                    )}>
-                                                        {post.authorRole === 'admin' ? 'إدارة' : post.authorRole === 'teacher' ? 'معلم' : 'طالب'}
-                                                    </span>
+                                                    <h4 className="font-bold text-slate-800 dark:text-white text-sm">{post.authorName}</h4>
+                                                    {post.authorRole === 'admin' && (
+                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-500 border border-rose-100 dark:bg-rose-900/20 dark:text-rose-300 dark:border-rose-800/30">إدارة</span>
+                                                    )}
+                                                    {post.authorRole === 'teacher' && (
+                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-300 dark:border-emerald-800/30">معلم</span>
+                                                    )}
+                                                    {post.authorRole === 'student' && (
+                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30">طالب</span>
+                                                    )}
                                                 </div>
-                                                <div className="flex items-center gap-2 text-[10px] text-slate-400 font-medium uppercase tracking-widest">
-                                                    <Clock size={10} />
+                                                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-medium">
+                                                    <Clock size={9} />
                                                     <span>{formatDistanceToNow(new Date(post.created_at) > new Date() ? new Date() : new Date(post.created_at), { addSuffix: true, locale: ar })}</span>
                                                 </div>
                                             </div>
@@ -329,73 +335,73 @@ export const Forum = () => {
                                             {isAdmin && (
                                                 <button 
                                                     onClick={() => handleDeletePost(post.id)}
-                                                    className="p-2 text-slate-400 hover:text-rose-500 transition-colors"
+                                                    className="p-2 text-slate-300 hover:text-rose-500 transition-colors rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20"
                                                     title="حذف المنشور"
                                                 >
-                                                    <Trash2 size={16} />
+                                                    <Trash2 size={15} />
                                                 </button>
                                             )}
-                                            <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
-                                                <MoreHorizontal size={18} />
+                                            <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                                <MoreHorizontal size={17} />
                                             </button>
                                         </div>
                                     </div>
 
                                     {/* Post Body */}
-                                    <div className="px-2 pb-6">
-                                        <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base font-medium leading-[1.8] whitespace-pre-wrap">
+                                    <div className="px-4 pb-5">
+                                        <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base font-medium leading-[1.9] whitespace-pre-wrap">
                                             {post.content}
                                         </p>
                                     </div>
 
                                     {/* Action Bar */}
-                                    <div className="px-2 md:px-4 py-2 flex border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+                                    <div className="px-3 md:px-4 py-1.5 flex border-t border-slate-100 dark:border-slate-800">
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
                                             className={cn(
-                                                "flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium transition-all uppercase tracking-widest active:scale-95",
-                                                isLiked ? "text-indigo-600" : "text-slate-400 hover:text-slate-600"
+                                                "flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold transition-all active:scale-95 rounded-xl",
+                                                isLiked ? "text-purple-600 bg-purple-50 dark:bg-purple-900/20" : "text-slate-400 hover:text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                             )}
                                         >
-                                            <ThumbsUp size={16} className={cn(isLiked && "fill-current")} />
+                                            <ThumbsUp size={15} className={cn(isLiked && "fill-current")} />
                                             <span>إعجاب</span>
                                         </button>
                                         <button 
                                             onClick={() => toggleComments(post.id)}
-                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-slate-400 hover:text-slate-600 transition-all uppercase tracking-widest active:scale-95 border-x border-slate-100 dark:border-slate-800"
+                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-all active:scale-95 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 mx-1"
                                         >
-                                            <MessageSquare size={16} />
+                                            <MessageSquare size={15} />
                                             <span>{post.commentCount || 0} تعليق</span>
                                         </button>
                                         <button 
                                             onClick={() => handleReport(post.id)}
-                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-rose-400 hover:text-rose-600 transition-all uppercase tracking-widest active:scale-95"
+                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold text-rose-400 hover:text-rose-600 transition-all active:scale-95 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20"
                                         >
-                                            <AlertTriangle size={16} />
+                                            <AlertTriangle size={15} />
                                             <span>بلاغ</span>
                                         </button>
                                     </div>
 
                                     {/* Comments Section */}
                                     {viewingComments[post.id] && (
-                                        <div className="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 p-4 md:p-6 space-y-6">
-                                            <div className="space-y-4">
+                                        <div className="bg-purple-50/30 dark:bg-slate-800/30 rounded-b-3xl border-t border-slate-100 dark:border-slate-800 p-4 md:p-5 space-y-4">
+                                            <div className="space-y-3">
                                                 {buildThreadedComments(post.comments || []).map((node) => (
-                                                    <div key={node.comment.id} className="space-y-4">
+                                                    <div key={node.comment.id} className="space-y-3">
                                                         {/* Main Comment */}
-                                                        <div className="flex gap-4">
-                                                            <div className="w-8 h-8 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-400 text-[10px] shrink-0">
+                                                        <div className="flex gap-3">
+                                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-500 text-[10px] shrink-0 border-2 border-purple-200/50 dark:border-purple-700/30">
                                                                 {node.comment.authorName[0].toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
-                                                                <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-700 relative">
-                                                                    <div className="flex justify-between items-center mb-1.5">
-                                                                        <h5 className="text-[11px] font-medium text-slate-800 dark:text-white uppercase tracking-tighter">{node.comment.authorName}</h5>
+                                                                <div className="bg-white dark:bg-slate-900 rounded-2xl p-3.5 shadow-sm border border-slate-100 dark:border-slate-700/50">
+                                                                    <div className="flex justify-between items-center mb-1">
+                                                                        <h5 className="text-[11px] font-bold text-slate-800 dark:text-white">{node.comment.authorName}</h5>
                                                                         <span className="text-[9px] text-slate-400 font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                     </div>
-                                                                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{node.comment.content}</p>
+                                                                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{node.comment.content}</p>
                                                                     
-                                                                    <div className="flex gap-4 mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+                                                                    <div className="flex gap-3 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
                                                                         <button 
                                                                             onClick={() => {
                                                                                 const currentText = commentTexts[post.id] || '';
@@ -403,32 +409,32 @@ export const Forum = () => {
                                                                                 setCommentTexts((prev) => ({ ...prev, [post.id]: newText }));
                                                                                 document.getElementById(`comment-input-${post.id}`)?.focus();
                                                                             }}
-                                                                            className="text-[10px] font-medium text-indigo-500 uppercase tracking-widest hover:underline"
+                                                                            className="text-[10px] font-bold text-purple-500 hover:text-purple-700 transition-colors"
                                                                         >رد</button>
                                                                         {(isAdmin || currentUser?.id === node.comment.authorId) && (
-                                                                             <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-medium text-rose-500 uppercase tracking-widest hover:underline">حذف</button>
+                                                                             <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-bold text-rose-400 hover:text-rose-600 transition-colors">حذف</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        {/* Replies Container */}
+                                                        {/* Replies */}
                                                         {node.replies.length > 0 && (
-                                                            <div className="pr-8 md:pr-12 space-y-4 border-r-2 border-slate-50 dark:border-slate-800 mr-4">
+                                                            <div className="pr-7 space-y-2 border-r-2 border-purple-100 dark:border-purple-900/30 mr-3">
                                                                 {node.replies.map((replyNode) => (
-                                                                    <div key={replyNode.comment.id} className="flex gap-3">
-                                                                        <div className="w-6 h-6 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-300 text-[8px] shrink-0">
+                                                                    <div key={replyNode.comment.id} className="flex gap-2">
+                                                                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-400 text-[8px] shrink-0 border border-purple-200/50 dark:border-purple-700/30">
                                                                             {replyNode.comment.authorName[0].toUpperCase()}
                                                                         </div>
-                                                                        <div className="flex-1 bg-slate-50/50 dark:bg-slate-800/30 p-3 border border-slate-100/50 dark:border-slate-700/50">
-                                                                            <div className="flex justify-between items-center mb-1">
-                                                                                <h5 className="text-[10px] font-medium text-slate-800 dark:text-white">{replyNode.comment.authorName}</h5>
+                                                                        <div className="flex-1 bg-white dark:bg-slate-900 rounded-xl p-2.5 shadow-sm border border-slate-100 dark:border-slate-700/50">
+                                                                            <div className="flex justify-between items-center mb-0.5">
+                                                                                <h5 className="text-[10px] font-bold text-slate-800 dark:text-white">{replyNode.comment.authorName}</h5>
                                                                                 <span className="text-[8px] text-slate-400">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                             </div>
-                                                                            <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">{replyNode.comment.content}</p>
+                                                                            <p className="text-[10px] text-slate-600 dark:text-slate-300 leading-relaxed">{replyNode.comment.content}</p>
                                                                             {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
-                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-2 text-[9px] font-medium text-rose-500 uppercase hover:underline">حذف</button>
+                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-1 text-[8px] font-bold text-rose-400 hover:text-rose-600 transition-colors">حذف</button>
                                                                             )}
                                                                         </div>
                                                                     </div>
@@ -440,9 +446,9 @@ export const Forum = () => {
                                             </div>
 
                                             {/* Add Comment Input */}
-                                            <div className="flex gap-4 items-center pt-4 border-t border-slate-100 dark:border-slate-800">
-                                                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-400 text-xs shrink-0">
-                                                    <User size={16} />
+                                            <div className="flex gap-3 items-center pt-3 border-t border-slate-100 dark:border-slate-700/50">
+                                                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center shrink-0 border-2 border-purple-200/50 dark:border-purple-700/30">
+                                                    <User size={14} className="text-purple-500 dark:text-purple-300" />
                                                 </div>
                                                 <div className="flex-1 relative">
                                                     <input 
@@ -451,15 +457,15 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب رداً على هذا المنشور..."
-                                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-12 pr-4 py-3 text-xs font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all"
+                                                        className="w-full bg-white dark:bg-slate-900 rounded-full pl-10 pr-4 py-2.5 text-xs font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-300/50 transition-all border border-slate-200 dark:border-slate-700 placeholder:text-slate-400"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button
                                                         onClick={() => handleAddComment(post.id)}
                                                         disabled={!(commentTexts[post.id] || '').trim()}
-                                                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 transition-all disabled:opacity-30"
+                                                        className="absolute left-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5A3BFF] hover:to-[#7C3AED] text-white flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
                                                     >
-                                                        <Send size={14} />
+                                                        <Send size={11} />
                                                     </button>
                                                 </div>
                                             </div>
@@ -468,14 +474,14 @@ export const Forum = () => {
 
                                     {/* Admin Quick Review Bar */}
                                     {isAdmin && post.status === 'pending' && (
-                                        <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border-t border-amber-200 flex justify-between items-center">
-                                            <div className="flex items-center gap-2 text-amber-700">
-                                                <AlertTriangle size={14} />
-                                                <span className="text-[10px] font-medium uppercase tracking-widest">هذا المنشور ينتظر الموافقة</span>
+                                        <div className="p-3.5 bg-amber-50 dark:bg-amber-900/10 rounded-b-3xl border-t border-amber-100 dark:border-amber-900/20 flex justify-between items-center">
+                                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                                                <AlertTriangle size={13} />
+                                                <span className="text-[10px] font-bold">هذا المنشور ينتظر الموافقة</span>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">موافقة</button>
-                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">حذف</button>
+                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-500 hover:bg-emerald-600 text-white px-3.5 py-1.5 text-[9px] font-bold rounded-full transition-all active:scale-95">موافقة</button>
+                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-500 hover:bg-rose-600 text-white px-3.5 py-1.5 text-[9px] font-bold rounded-full transition-all active:scale-95">حذف</button>
                                             </div>
                                         </div>
                                     )}
@@ -486,15 +492,16 @@ export const Forum = () => {
                 )}
             </div>
 
-            {/* ?? Help / Guidelines ?? */}
-            <div className="max-w-[700px] mx-auto px-4 mt-12 mb-8">
-                <div className="bg-indigo-600 p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-y-16 translate-x-16 rotate-45 pointer-events-none"></div>
+            {/* ════════ HELP / GUIDELINES ════════ */}
+            <div className="max-w-[700px] mx-auto px-4 mt-10 mb-8">
+                <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden shadow-xl shadow-purple-200/30">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-y-12 translate-x-12 rotate-45 rounded-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
                     <div className="relative z-10 text-center md:text-right">
-                        <h4 className="text-white font-medium text-lg mb-1 uppercase tracking-tighter">إرشادات المنتدى</h4>
-                        <p className="text-indigo-100 text-[11px] font-medium uppercase tracking-widest">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
+                        <h4 className="text-white font-black text-base mb-1">إرشادات المنتدى</h4>
+                        <p className="text-purple-100 text-[11px] font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
-                    <button className="relative z-10 bg-white text-indigo-600 px-8 py-3 text-[11px] font-medium uppercase tracking-widest hover:bg-indigo-50 transition-all shadow-sm shadow-indigo-900/20">
+                    <button className="relative z-10 bg-white text-[#6C4BFF] px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-purple-50 transition-all shadow-lg active:scale-95">
                         عرض الإرشادات
                     </button>
                 </div>
