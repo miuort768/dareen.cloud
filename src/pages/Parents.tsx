@@ -66,28 +66,26 @@ export const Parents = () => {
                     {!state.showDetails ? (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             {/* Toolbar - Only visible when not in details mode */}
-                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 overflow-hidden">
+                            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 p-3">
                                 <div className="flex-1 relative group">
-                                    <div className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center bg-slate-950 text-white z-10">
-                                        <Search size={16} />
+                                    <div className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center text-slate-400 z-10">
+                                        <Search size={15} />
                                     </div>
                                     <input
                                         type="text"
-                                        placeholder="����� �� ����� ������ ������ (����� ������ ������)..."
+                                        placeholder="ابحث باسم ولي الأمر..."
                                         value={state.searchTerm}
                                         onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                        className="w-full pl-6 pr-16 py-4 bg-transparent outline-none text-xs font-medium uppercase tracking-tight placeholder:text-slate-400 dark:text-white"
+                                        className="w-full pr-14 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl outline-none text-[11px] font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-400 transition-all"
                                     />
                                 </div>
-                                <div className="hidden lg:flex items-center gap-6 px-8 border-r border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl shadow-sm shadow-blue-600/20">
-                                            <Users size={14} className="text-white" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest leading-none">������ �������</p>
-                                            <p className="text-[10px] font-normal text-slate-400 mt-1 uppercase">{state.filteredParents.length} �� {state.totalParents}</p>
-                                        </div>
+                                <div className="hidden lg:flex items-center gap-3 px-5 border-r border-slate-100 dark:border-slate-800">
+                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                        <Users size={14} />
+                                    </div>
+                                    <div>
+                                        <p className="text-[9px] font-bold text-[#64748B]">إجمالي أولياء الأمور</p>
+                                        <p className="text-[10px] font-bold text-[#0F172A] dark:text-white">{state.filteredParents.length} / {state.totalParents}</p>
                                     </div>
                                 </div>
                             </div>

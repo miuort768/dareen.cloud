@@ -25,7 +25,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
             
             {/* ── Desktop View ── */}
-            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden">
                 <table className="w-full text-right border-collapse">
                     <thead>
                         <tr className="bg-slate-900 text-white">
@@ -57,8 +57,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 flex items-center justify-center bg-slate-950 text-white rounded-xl font-medium text-sm relative overflow-hidden group-hover:scale-105 transition-transform">
-                                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                 {parent.name.charAt(0)}
                                             </div>
                                             <div>
@@ -148,15 +147,13 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                             key={parent.id}
                             onClick={() => onSelectParent(parent)}
                             className={cn(
-                                "bg-white dark:bg-slate-900 border transition-all duration-200 p-4 rounded-2xl relative overflow-hidden",
-                                isSelected ? "border-blue-500 ring-1 ring-blue-500/20" : "border-slate-100 dark:border-slate-800"
+                                "bg-white dark:bg-slate-900 border transition-all duration-200 p-4 rounded-2xl relative shadow-sm",
+                                isSelected ? "border-blue-400 ring-1 ring-blue-500/20" : "border-slate-100/50 dark:border-slate-800/50"
                             )}
                         >
-                            {isSelected && <div className="absolute top-0 right-0 w-1 h-full bg-blue-500" />}
-                            
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-slate-950 text-white rounded-xl flex items-center justify-center font-medium text-base shadow-sm">
+                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                         {parent.name.charAt(0)}
                                     </div>
                                     <div>
@@ -168,21 +165,21 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 rounded-xl transition-all"><Edit size={13} /></button>
-                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-rose-500 rounded-xl transition-all"><Trash2 size={13} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 rounded-xl shadow-sm transition-all"><Edit size={13} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-800 text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl shadow-sm transition-all"><Trash2 size={13} /></button>
                                 </div>
                             </div>
 
                             <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest italic">الأبناء</span>
+                                    <span className="text-[9px] font-bold text-[#64748B]">الأبناء</span>
                                     <div className="flex -space-x-2 space-x-reverse">
                                         {children.slice(0, 3).map((_, i) => (
-                                            <div key={i} className="w-5 h-5 bg-blue-50 border border-blue-200 rounded-full" />
+                                            <div key={i} className="w-5 h-5 rounded-full" style={{ backgroundColor: '#2563EB20', border: '1px solid #2563EB40' }} />
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1.5 px-3 py-1 bg-blue-600 text-white text-[10px] font-medium rounded-xl shadow-sm">
+                                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl shadow-sm text-white text-[10px] font-bold" style={{ backgroundColor: '#2563EB' }}>
                                     <Users size={11} />
                                     {children.length}
                                 </div>
