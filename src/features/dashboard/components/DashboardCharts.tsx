@@ -11,10 +11,10 @@ interface DashboardChartsProps {
 export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps) => {
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 overflow-hidden rounded-2xl">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center border border-white/10 shadow-sm">
+                        <div className="w-10 h-10 bg-blue-600 text-white flex items-center justify-center border border-white/10 shadow-sm rounded-xl">
                         <BarChart2 size={20} />
                     </div>
                     <div>
@@ -24,7 +24,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                 </div>
                 
                 <div className="flex flex-wrap gap-2" dir="rtl">
-                    <LegendItem color="bg-indigo-600" label="الإيرادات" />
+                    <LegendItem color="bg-blue-600" label="الإيرادات" />
                     <LegendItem color="bg-emerald-600" label="الأداء" />
                     {!isTeacher && <LegendItem color="bg-rose-600" label="المصروفات" />}
                 </div>
@@ -54,7 +54,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     return (
                                         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 min-w-[160px]" dir="rtl">
                                             <div className="flex items-center gap-2 mb-2.5 border-b border-slate-100 dark:border-slate-700 pb-2">
-                                                <Target size={12} className="text-indigo-600" />
+                                                <Target size={12} className="text-blue-600" />
                                                 <p className="text-[11px] font-medium text-slate-900 dark:text-white uppercase">{label}</p>
                                             </div>
                                             <div className="space-y-2">
@@ -76,7 +76,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                 return null;
                             }}
                         />
-                        <Bar dataKey="revenue" name="الإيرادات" fill="#4f46e5" radius={[4, 4, 0, 0]} barSize={12} />
+                        <Bar dataKey="revenue" name="الإيرادات" fill="#2563EB" radius={[4, 4, 0, 0]} barSize={12} />
                         <Bar dataKey="completed" name="الأداء" fill="#059669" radius={[4, 4, 0, 0]} barSize={12} />
                          {!isTeacher && <Bar dataKey="expenses" name="المصروفات" fill="#e11d48" radius={[4, 4, 0, 0]} barSize={12} />}
                     </BarChart>
@@ -87,7 +87,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
 };
 
 const LegendItem = ({ color, label }: { color: string, label: string }) => (
-    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 transition-all hover:border-indigo-500/50">
+    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 transition-all hover:border-blue-500/50 rounded-lg">
         <div className={cn("w-2 h-2 rounded-full", color)} />
         <span className="text-[9px] font-medium text-slate-900 dark:text-slate-400 uppercase">{label}</span>
     </div>

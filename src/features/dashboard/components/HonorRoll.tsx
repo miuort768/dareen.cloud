@@ -23,11 +23,11 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
     return (
         <div className="w-full mt-6" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm relative group">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm relative group rounded-2xl">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-amber-400 text-slate-950 border border-white/20 flex items-center justify-center transition-transform group-hover:rotate-6 shadow-sm">
+                        <div className="w-10 h-10 bg-amber-400 text-slate-950 border border-white/20 flex items-center justify-center transition-transform group-hover:rotate-6 shadow-sm rounded-xl">
                             <Trophy size={20} />
                         </div>
                         <div>
@@ -51,7 +51,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                             <div 
                                 key={student.id} 
                                 className={cn(
-                                    "relative p-3 border transition-all hover:-translate-y-1 flex flex-col items-center text-center shadow-sm",
+                                    "relative p-3 border transition-all hover:-translate-y-1 flex flex-col items-center text-center shadow-sm rounded-xl",
                                     isFirst ? "bg-amber-50/50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-500/30" : 
                                     isSecond ? "bg-slate-50 border-slate-200 dark:bg-slate-800/40 dark:border-slate-700" :
                                     isThird ? "bg-orange-50 border-orange-200 dark:bg-orange-900/10 dark:border-orange-500/30" :
@@ -59,18 +59,18 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                 )}
                             >
                                 <div className={cn(
-                                    "w-7 h-7 border border-white/20 flex items-center justify-center mb-3 shadow-sm",
+                                    "w-7 h-7 border border-white/20 flex items-center justify-center mb-3 shadow-sm rounded-lg",
                                     isFirst ? "bg-amber-400 text-slate-950" : 
                                     isSecond ? "bg-slate-300 text-slate-700" :
                                     isThird ? "bg-orange-400 text-white" :
-                                    "bg-indigo-50 dark:bg-slate-700 text-indigo-500"
+                                    "bg-blue-50 dark:bg-slate-700 text-blue-500"
                                 )}>
                                     {isFirst ? <Crown size={14} /> : 
                                      isSecond ? <Award size={14} /> : 
                                      <Star size={12} fill={index < 3 ? "currentColor" : "none"} />}
                                 </div>
 
-                                <div className="w-11 h-11 bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 flex items-center justify-center mb-2 relative overflow-hidden rounded-full shadow-inner">
+                                <div className="w-11 h-11 bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 flex items-center justify-center mb-2 relative overflow-hidden rounded-xl shadow-inner">
                                      <span className="text-lg font-medium text-slate-200 dark:text-slate-500">{student.name.charAt(0)}</span>
                                      {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" />}
                                 </div>
@@ -82,7 +82,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                     )}>
                                         {student.name}
                                     </p>
-                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950">
+                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950 rounded-lg">
                                         <span className="text-[9px] font-medium tabular-nums">{student.totalPoints}</span>
                                         <span className="text-[7px] font-medium opacity-70">نقطة</span>
                                     </div>
