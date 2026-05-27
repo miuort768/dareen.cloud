@@ -18,7 +18,9 @@ import {
     TrendingUp,
     CheckCircle,
     Play,
-    ChevronLeft
+    ChevronLeft,
+    MoreHorizontal,
+    Home
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
@@ -474,15 +476,15 @@ export const ParentDashboard = () => {
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
                     <div className="relative z-10 px-4 pt-2 pb-1">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                            <div className="flex items-center gap-2.5">
+                                <div className="w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border-2 border-white/20">
                                     <User size={16} className="text-white" />
                                 </div>
                                 <div>
                                     <h1 className="text-white font-black text-xs leading-tight">
                                         {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                                     </h1>
-                                    <p className="text-white/50 text-[7px] font-medium">ولي أمر</p>
+                                    <p className="text-white/50 text-[7px] font-medium">طالب</p>
                                 </div>
                             </div>
                             <button onClick={logout} className="w-7 h-7 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
@@ -492,24 +494,24 @@ export const ParentDashboard = () => {
                         {/* Stats pills */}
                         <div className="flex items-center gap-2 mt-1.5">
                             <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                                <TrendingUp size={11} className="text-emerald-200 shrink-0" />
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-white font-black text-sm">{stats.academicProgress}%</span>
+                                    <span className="text-white/50 text-[7px] font-medium">نسبة النشاط</span>
+                                </div>
+                            </div>
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                                <BookOpen size={11} className="text-blue-200 shrink-0" />
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-white font-black text-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
+                                    <span className="text-white/50 text-[7px] font-medium">عدد القوائم</span>
+                                </div>
+                            </div>
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
                                 <Users size={11} className="text-purple-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-sm">{stats.childCount}</span>
-                                    <span className="text-white/50 text-[7px] font-medium">أبناء</span>
-                                </div>
-                            </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
-                                <CalendarDays size={11} className="text-blue-200 shrink-0" />
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{stats.upcomingSessions}</span>
-                                    <span className="text-white/50 text-[7px] font-medium">قادمة</span>
-                                </div>
-                            </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
-                                <Star size={11} className="text-amber-200 shrink-0" />
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{stats.attendanceRate}%</span>
-                                    <span className="text-white/50 text-[7px] font-medium">انضباط</span>
+                                    <span className="text-white/50 text-[7px] font-medium">عدد الأبناء</span>
                                 </div>
                             </div>
                         </div>
@@ -537,10 +539,10 @@ export const ParentDashboard = () => {
                     {activeTab === 'home' && (
                         <>
                             {/* ══════════ HERO SECTION ══════════ */}
-                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl relative overflow-hidden">
+                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl flex items-center justify-between gap-4 relative overflow-hidden">
                                 <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
                                 <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
-                                <div className="z-10 space-y-2">
+                                <div className="flex-1 z-10 space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-[#0C4A6E]">
                                         تعلّم بلا حدود{' '}
                                         <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
@@ -566,15 +568,28 @@ export const ParentDashboard = () => {
                                         </button>
                                     </div>
                                 </div>
+                                <div className="shrink-0 relative z-10">
+                                    <div className="w-[100px] h-[110px] relative">
+                                        <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 backdrop-blur-sm flex items-center justify-center shadow-xl">
+                                            <div className="flex flex-col items-center gap-0.5">
+                                                <span className="text-5xl">🌍</span>
+                                                <div className="flex gap-1">
+                                                    <span className="text-lg">📚</span>
+                                                    <span className="text-lg">📖</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* ══════════ STATS STRIP (like student dashboard) ══════════ */}
                             <div className="px-1 py-2">
                                 <div className="flex flex-row gap-3">
                                     {[
-                                        { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
-                                        { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
                                         { icon: TrendingUp, label: 'اللقب', value: rank.name, color: '#7C3AED', bg: '#FAF5FF' },
+                                        { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
+                                        { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
                                     ].map((item, idx) => {
                                         const Icon = item.icon;
                                         return (
@@ -801,6 +816,53 @@ export const ParentDashboard = () => {
                     )}
 
                     <div className="h-4" />
+                </div>
+            </div>
+
+            {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
+            <div className="block md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40">
+                <div className="flex items-center justify-around h-[68px] px-2">
+                    {[
+                        { id: 'profile', label: 'حسابي', icon: User },
+                        { id: 'favorites', label: 'المفضلة', icon: Star },
+                        { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, isCenter: true },
+                        { id: 'files', label: 'ملفاتي', icon: BookOpen },
+                        { id: 'more', label: 'المزيد', icon: MoreHorizontal },
+                    ].map((item) => {
+                        const Icon = item.icon;
+                        const isActive = item.id === 'home';
+                        const isCenter = item.isCenter;
+                        return (
+                            <button
+                                key={item.id}
+                                onClick={() => {
+                                    if (item.id === 'home') { setActiveTab('home') }
+                                    else if (item.id === 'profile') { navigate('/profile') }
+                                    else if (item.id === 'favorites') { navigate('/schedule') }
+                                    else if (item.id === 'files') { navigate('/parent-students') }
+                                    else if (item.id === 'more') { navigate('/forum') }
+                                }}
+                                className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
+                            >
+                                {isCenter ? (
+                                    <div className="w-14 h-14 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-full flex items-center justify-center shadow-xl shadow-purple-300/50">
+                                        <Icon size={26} className="text-white" />
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Icon
+                                            size={22}
+                                            className={`transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400'}`}
+                                            strokeWidth={isActive ? 2.5 : 1.5}
+                                        />
+                                        <span className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#6C4BFF]' : 'text-gray-400'}`}>
+                                            {item.label}
+                                        </span>
+                                    </>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </>
