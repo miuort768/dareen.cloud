@@ -9,26 +9,15 @@ interface DashboardStatsProps {
     isTeacher: boolean;
 }
 
-const gradients: Record<string, string> = {
-  'إجمالي الطلاب': 'from-[#2563EB] to-[#1D4ED8]',
-  'الاشتراكات النشطة': 'from-[#22C55E] to-[#16A34A]',
-  'حصص اليوم': 'from-[#38BDF8] to-[#0EA5E9]',
-  'الحصص المنفذة': 'from-[#8B5CF6] to-[#7C3AED]',
-  'إجمالي المعلمين': 'from-[#F97316] to-[#EA580C]',
-  'إجمالي الإيرادات': 'from-[#22C55E] to-[#16A34A]',
-  'إجمالي المصروفات': 'from-rose-500 to-rose-600',
-  'صافي الربح': 'from-[#2563EB] to-[#8B5CF6]',
-};
-
-const accentColors: Record<string, string> = {
-  'إجمالي الطلاب': 'border-r-[#2563EB] dark:border-r-[#3B82F6]',
-  'الاشتراكات النشطة': 'border-r-[#22C55E] dark:border-r-[#4ADE80]',
-  'حصص اليوم': 'border-r-[#38BDF8] dark:border-r-[#7DD3FC]',
-  'الحصص المنفذة': 'border-r-[#8B5CF6] dark:border-r-[#A78BFA]',
-  'إجمالي المعلمين': 'border-r-[#F97316] dark:border-r-[#FB923C]',
-  'إجمالي الإيرادات': 'border-r-[#22C55E] dark:border-r-[#4ADE80]',
-  'إجمالي المصروفات': 'border-r-rose-500 dark:border-r-rose-400',
-  'صافي الربح': 'border-r-[#2563EB] dark:border-r-[#8B5CF6]',
+const cardColors: Record<string, string> = {
+  'إجمالي الطلاب': '#2563EB',
+  'الاشتراكات النشطة': '#22C55E',
+  'حصص اليوم': '#38BDF8',
+  'الحصص المنفذة': '#8B5CF6',
+  'إجمالي المعلمين': '#F97316',
+  'إجمالي الإيرادات': '#22C55E',
+  'إجمالي المصروفات': '#F43F5E',
+  'صافي الربح': '#2563EB',
 };
 
 const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
@@ -52,25 +41,33 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
 
   const barWidth = trendData ? Math.min(Math.abs(trendData.percentage), 100) : 0;
 
+  const color = cardColors[title] || '#2563EB';
+
   return (
     <div
       ref={ref}
       className={cn(
-        "relative bg-white dark:bg-slate-900/90",
-        "border border-slate-200 dark:border-slate-700/50 p-4 rounded-2xl",
+        "relative p-4 rounded-2xl",
         "shadow-sm shadow-slate-100 dark:shadow-slate-950/20",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3",
-        "border-r-4",
-        accentColors[title] || 'border-r-[#2563EB]',
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
-      style={{ transitionDelay: `${index * 80}ms` }}
+      style={{
+        transitionDelay: `${index * 80}ms`,
+        backgroundColor: `${color}0D`,
+        border: `2px solid ${color}30`,
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = color;
+        e.currentTarget.style.backgroundColor = `${color}18`;
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = `${color}30`;
+        e.currentTarget.style.backgroundColor = `${color}0D`;
+      }}
     >
-      <div className={cn(
-        "w-10 h-10 rounded-2xl flex items-center justify-center bg-gradient-to-br shadow-sm shrink-0",
-        gradients[title] || 'from-[#2563EB] to-[#1D4ED8]'
-      )}>
+      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0 text-white" style={{ backgroundColor: color }}>
         <Icon size={18} strokeWidth={1.5} className="text-white" />
       </div>
 
