@@ -262,7 +262,7 @@ export const Blog = () => {
                   </h1>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5 leading-relaxed">
                     {view === 'types'
-                      ? 'اختر ما تريد لتبدأ رحلتك التعليمية'
+                      ? 'اختر ما تريد من كتب او مذكرات مجانا'
                       : view === 'curriculums'
                       ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                       : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
