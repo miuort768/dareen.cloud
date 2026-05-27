@@ -614,10 +614,12 @@ export const StudentDashboard = () => {
             </div>
 
             {/* Spacer for bottom nav */}
-            <div className="h-20" />
+            <div className="h-20 md:hidden" />
 
             {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
-            <MobileBottomNav activeNav={activeNav} setActiveNav={setActiveNav} />
+            <div className="block md:hidden">
+                <MobileBottomNav activeNav={activeNav} setActiveNav={setActiveNav} />
+            </div>
         </div>
     );
 };
