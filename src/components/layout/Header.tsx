@@ -106,28 +106,26 @@ export const Header = () => {
             "px-4 md:px-6 max-w-full",
             "md:translate-y-0 rounded-b-xl lg:rounded-xl",
             "md:top-2 md:border md:border-[#1e3a5f]/40 md:dark:border-[#1e3a5f]/40",
-            headerVisible ? "translate-y-0" : "-translate-y-full md:translate-y-0"
+            "translate-y-0"
         )}>
-            <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
                 <Link to="/" className="shrink-0">
                     <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(96,165,250,0.45)] hover:shadow-[0_0_22px_rgba(96,165,250,0.7)] transition-shadow duration-300">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                 </Link>
 
-                <div className="hidden md:flex items-center gap-3">
-                    <div className="w-px h-8 bg-white/20" />
-                    {title && (
-                        <div className="min-w-0">
-                            <h1 className="text-base md:text-lg font-medium text-white truncate tracking-tight leading-none">
-                                {title}
-                            </h1>
-                            <p className="text-[10px] font-normal text-blue-200/70 uppercase tracking-widest leading-none mt-0.5">
-                                دارين للتعليم والتدريب
-                            </p>
-                        </div>
-                    )}
-                </div>
+                <div className="w-px h-8 bg-white/20 shrink-0 hidden md:block" />
+                {title && (
+                    <div className="min-w-0 flex-1">
+                        <h1 className="text-sm md:text-lg font-bold text-white truncate tracking-tight leading-none">
+                            {title}
+                        </h1>
+                        <p className="hidden md:block text-[10px] font-normal text-blue-200/70 uppercase tracking-widest leading-none mt-0.5">
+                            دارين للتعليم والتدريب
+                        </p>
+                    </div>
+                )}
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2 shrink-0">
