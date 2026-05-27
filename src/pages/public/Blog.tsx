@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
@@ -113,13 +113,33 @@ export const Blog = () => {
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState<ViewType>('types');
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedCurriculum, setSelectedCurriculum] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('');
-  const [selectedGrade, setSelectedGrade] = useState('');
-  const [selectedTerm, setSelectedTerm] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = (searchParams.get('view') as ViewType) || 'types';
+  const selectedType = searchParams.get('type') || '';
+  const selectedCurriculum = searchParams.get('curriculum') || '';
+  const selectedLevel = searchParams.get('level') || '';
+  const selectedGrade = searchParams.get('grade') || '';
+  const selectedTerm = searchParams.get('term') || '';
+  const selectedSubject = searchParams.get('subject') || '';
+
+  const setView = useCallback((v: ViewType) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('view', v);
+      if (v === 'types') { ['type','curriculum','level','grade','term','subject'].forEach(k => next.delete(k)); }
+      else if (v === 'curriculums') { ['level','grade','term','subject'].forEach(k => next.delete(k)); }
+      else if (v === 'grades') { ['grade','term','subject'].forEach(k => next.delete(k)); }
+      else if (v === 'classrooms') { ['term','subject'].forEach(k => next.delete(k)); }
+      else if (v === 'terms') { next.delete('subject'); }
+      return next;
+    });
+  }, [setSearchParams]);
+  const setSelectedType = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('type', id); return n; }); }, [setSearchParams]);
+  const setSelectedCurriculum = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('curriculum', id); return n; }); }, [setSearchParams]);
+  const setSelectedLevel = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('level', id); return n; }); }, [setSearchParams]);
+  const setSelectedGrade = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', id); return n; }); }, [setSearchParams]);
+  const setSelectedTerm = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', id); return n; }); }, [setSearchParams]);
+  const setSelectedSubject = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', id); return n; }); }, [setSearchParams]);
 
   const currentTypeName = types.find(t => t.id === selectedType)?.name || '';
   const currentCurriculumName = curriculums.find(c => c.id === selectedCurriculum)?.name || '';
