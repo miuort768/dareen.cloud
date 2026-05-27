@@ -808,7 +808,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                         </>
                     )}
 
-                    <div className="h-4" />
+                    <div className="h-8" />
                 </div>
             </div>
 
