@@ -482,9 +482,13 @@ export const ParentDashboard = () => {
                                 </div>
                                 <div>
                                     <h1 className="text-white font-black text-base leading-tight">
-                                        {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
+                                        أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                     </h1>
-                                    <p className="text-white/60 text-[11px] font-bold">طالب</p>
+                                    <p className="text-white/60 text-[11px] font-bold">
+                                        {children.length > 0
+                                            ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
+                                            : 'طالب'}
+                                    </p>
                                 </div>
                             </div>
                             <button onClick={logout} className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
