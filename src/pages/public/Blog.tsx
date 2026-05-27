@@ -359,7 +359,7 @@ export const Blog = () => {
             )}
           </div>
         ) : (
-          <div>
+          <div className="pb-6">
             <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full shadow-sm mb-3">
                 <BookOpen size={10} className="text-violet-600" />
