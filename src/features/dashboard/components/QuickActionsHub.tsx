@@ -42,19 +42,26 @@ export const QuickActionsHub = () => {
                     to={action.href}
                     className={cn(
                         "relative overflow-hidden rounded-2xl",
-                        "bg-white dark:bg-slate-900",
-                        "border border-slate-100 dark:border-slate-800",
                         "p-5 shadow-sm",
                         "transition-all duration-300 active:scale-[0.98] hover:shadow-md",
                         "group"
                     )}
+                    style={{
+                        backgroundColor: `${action.color}0D`,
+                        border: `2px solid ${action.color}30`,
+                    }}
+                    onMouseEnter={e => {
+                        e.currentTarget.style.borderColor = action.color;
+                        e.currentTarget.style.backgroundColor = `${action.color}18`;
+                    }}
+                    onMouseLeave={e => {
+                        e.currentTarget.style.borderColor = `${action.color}30`;
+                        e.currentTarget.style.backgroundColor = `${action.color}0D`;
+                    }}
                 >
-                    {/* Gradient top accent */}
-                    <div className="absolute top-0 right-0 left-0 h-1 rounded-full" style={{ backgroundColor: action.color }} />
-                    
                     {/* Content */}
                     <div className="relative z-10 flex flex-col gap-4">
-                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${action.color}12`, color: action.color }}>
+                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: action.color }}>
                             <action.icon size={20} strokeWidth={1.5} />
                         </div>
 
@@ -62,12 +69,12 @@ export const QuickActionsHub = () => {
                             <h3 className="font-bold text-sm text-[#0F172A] dark:text-white leading-tight truncate">
                                 {action.title}
                             </h3>
-                            <p className="text-[10px] font-medium mt-1 text-[#64748B] dark:text-slate-500">
+                            <p className="text-[10px] font-medium mt-1 text-[#64748B] dark:text-slate-400">
                                 {action.description}
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-1 text-[9px] font-bold text-[#94A3B8] dark:text-slate-600 group-hover:text-[#2563EB] transition-colors">
+                        <div className="flex items-center gap-1 text-[9px] font-bold" style={{ color: action.color }}>
                             <span>انتقال</span>
                             <ArrowLeft size={12} strokeWidth={1.5} />
                         </div>
