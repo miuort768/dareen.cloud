@@ -476,19 +476,19 @@ export const ParentDashboard = () => {
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
                     <div className="relative z-10 px-4 pt-2 pb-1">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                                <div className="w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border-2 border-white/20">
-                                    <User size={16} className="text-white" />
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border-2 border-white/20">
+                                    <User size={20} className="text-white" />
                                 </div>
                                 <div>
-                                    <h1 className="text-white font-black text-xs leading-tight">
+                                    <h1 className="text-white font-black text-base leading-tight">
                                         {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                                     </h1>
-                                    <p className="text-white/50 text-[7px] font-medium">طالب</p>
+                                    <p className="text-white/60 text-[11px] font-bold">طالب</p>
                                 </div>
                             </div>
-                            <button onClick={logout} className="w-7 h-7 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
-                                <LogOut size={12} />
+                            <button onClick={logout} className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
+                                <LogOut size={16} />
                             </button>
                         </div>
                         {/* Stats pills */}
@@ -504,14 +504,14 @@ export const ParentDashboard = () => {
                                 <BookOpen size={14} className="text-blue-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-base">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
-                                    <span className="text-white/70 text-[10px] font-bold">عدد القوائم</span>
+                                    <span className="text-white/70 text-[10px] font-bold">المادة</span>
                                 </div>
                             </div>
                             <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
                                 <Users size={14} className="text-purple-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-white font-black text-base">{stats.childCount}</span>
-                                    <span className="text-white/70 text-[10px] font-bold">عدد الأبناء</span>
+                                    <span className="text-white/70 text-[10px] font-bold">الأبناء</span>
                                 </div>
                             </div>
                         </div>
