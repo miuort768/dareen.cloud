@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -209,49 +209,30 @@ export const Blog = () => {
             </div>
 
             {/* Hero Banner */}
-            <div className="relative rounded-3xl overflow-hidden mb-6 bg-gradient-to-br from-indigo-950 via-violet-900 to-purple-950 shadow-xl shadow-indigo-900/20 border border-violet-500/10">
-              {/* Soft glow */}
-              <div className="absolute -top-20 -right-20 w-60 h-60 bg-violet-500/10 rounded-full blur-[100px]" />
-              <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-indigo-500/10 rounded-full blur-[100px]" />
-
-              <div className="relative z-10 px-6 py-7 flex flex-col items-center gap-5">
-                {/* Top row: icon + text */}
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
-                    <GraduationCap size={28} className="text-amber-300" />
-                  </div>
-                  <div className="text-right">
-                    <h1 className="text-[26px] font-black text-white leading-tight tracking-tight">
-                      دارين
-                    </h1>
-                    <p className="text-xs text-violet-200/90 font-medium mt-0.5">منصة تعليم إلكتروني</p>
-                  </div>
-                </div>
-
-                {/* Anime-style children */}
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-200/90 to-sky-300/90 flex items-center justify-center shadow-inner relative">
-                    <div className="text-xl">👧</div>
-                    <div className="absolute -top-0.5 -left-0.5 w-3 h-3">
-                      <Star size={8} className="text-yellow-300 fill-yellow-300" />
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100/90 to-amber-200/90 flex items-center justify-center shadow-inner relative">
-                      <div className="text-[26px]">🧑‍🎓</div>
-                      <div className="absolute -top-0.5 -right-0.5 w-3 h-3">
-                        <Star size={8} className="text-yellow-300 fill-yellow-300" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-pink-200/90 to-pink-300/90 flex items-center justify-center shadow-inner relative">
-                    <div className="text-xl">👦</div>
-                    <div className="absolute -top-0.5 -left-0.5 w-3 h-3">
-                      <Star size={8} className="text-yellow-300 fill-yellow-300" />
-                    </div>
+            <div className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl overflow-hidden mb-6 shadow-sm border border-violet-100/50 dark:border-slate-800">
+              <div className="flex items-center gap-4 p-5">
+                <div className="flex-1">
+                  <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
+                    منصة دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
+                  </h2>
+                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">دروس خصوصية أونلاين</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <div className="flex flex-col gap-1.5">
+                    <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
+                      <Play className="w-3 h-3 fill-white" />
+                      تصفح الدورات
+                    </Link>
+                    <Link to="/login" className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center">
+                      تسجيل الدخول
+                    </Link>
                   </div>
                 </div>
-                <p className="text-[10px] text-violet-200/70 font-medium">معاً نصنع جيلاً مبدعاً</p>
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-violet-200/50 dark:bg-violet-800/30 rounded-full blur-xl" />
+                  <div className="relative w-[90px]">
+                    <img src="/hero-child.png" alt="طفل يدرس على منصة دارين" width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" />
+                  </div>
+                </div>
               </div>
             </div>
 
