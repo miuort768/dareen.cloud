@@ -475,7 +475,7 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ─── Mobile version (app-style with tabs) ─── */}
-            <div className="block md:hidden min-h-full pb-28 overflow-x-hidden relative bg-[#F7F8FC] font-sans overscroll-contain" dir="rtl">
+            <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] font-sans" dir="rtl">
                 {/* Sticky app bar */}
                 <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
