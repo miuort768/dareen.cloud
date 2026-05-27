@@ -52,6 +52,7 @@ const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
+import { CommandPalette } from './components/CommandPalette';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
@@ -267,6 +268,7 @@ function App() {
         </Routes>
         </main>
       </Suspense>
+      {isAuthenticated && <CommandPalette />}
     </>
   );
 }
