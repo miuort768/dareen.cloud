@@ -241,66 +241,6 @@ export const Blog = () => {
               </div>
             </div>
 
-            {/* Portal Card */}
-            {view === 'types' && (
-              <div className="bg-white dark:bg-slate-900 rounded-3xl p-5 mb-6 shadow-sm shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-800">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-[17px] font-black text-slate-900 dark:text-white">بوابة الكتب والملخصات</h2>
-                  <div className="w-10 h-10 rounded-2xl bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center">
-                    <Bell size={16} className="text-violet-600 dark:text-violet-400" />
-                  </div>
-                </div>
-
-                {/* Dark purple section */}
-                <div className="bg-gradient-to-br from-[#1a1040] via-[#2a1a60] to-[#3a2080] rounded-2xl p-5 shadow-lg mb-4">
-                  {/* Tabs */}
-                  <div className="flex gap-2 mb-4">
-                    <div className="px-4 py-2 rounded-xl bg-white/15 text-white text-xs font-bold text-center flex-1 backdrop-blur-sm border border-white/10">مركز دارين</div>
-                    <div className="px-4 py-2 rounded-xl bg-white/10 text-white/60 text-xs font-bold text-center flex-1 backdrop-blur-sm border border-white/5">المذكرات التعليمية</div>
-                  </div>
-
-                  <p className="text-xs text-violet-200/80 leading-relaxed mb-5 font-medium">
-                    نوفر لك أحدث المذكرات والملخصات الدراسية لجميع المراحل التعليمية في الخليج. حمل ما يناسبك الآن.
-                  </p>
-
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => setView('curriculums')}
-                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB] text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-lg shadow-[#6C4BFF]/30 active:scale-[0.97] transition-all"
-                    >
-                      <FileText size={16} />
-                      تحميل مذكرة
-                    </button>
-                    <a
-                      href={`https://wa.me/${whatsappNumber}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold px-5 py-3.5 rounded-2xl active:scale-[0.97] transition-all"
-                    >
-                      <MessageCircle size={16} />
-                      تواصل معنا
-                    </a>
-                  </div>
-                </div>
-
-                {/* Features */}
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { label: 'جودة مضمونة', icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/30' },
-                    { label: 'محتوى موثوق', icon: BookCheck, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/30' },
-                    { label: 'دعم مستمر', icon: Headset, color: 'text-violet-500', bg: 'bg-violet-50 dark:bg-violet-900/30' },
-                  ].map((f) => (
-                    <div key={f.label} className="flex flex-col items-center gap-2 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-                      <div className={`w-10 h-10 rounded-2xl ${f.bg} flex items-center justify-center`}>
-                        <f.icon size={18} className={f.color} />
-                      </div>
-                      <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 text-center leading-tight">{f.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Selection Grid for sub-views */}
             {view !== 'curriculums' && view !== 'grades' && (
               <>
