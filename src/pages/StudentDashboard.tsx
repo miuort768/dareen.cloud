@@ -206,37 +206,38 @@ export const StudentDashboard = () => {
         <div className="min-h-screen bg-[#F8F7FF] font-sans overflow-x-hidden" dir="rtl">
 
             {/* ══════════════════ MOBILE HEADER ══════════════════ */}
-            <div className="sticky top-0 z-50 bg-white shadow-sm">
-                <div className="flex items-center justify-between px-4 py-3 gap-3">
-                    {/* Bell */}
-                    <button
-                        className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 shrink-0"
-                        onClick={() => navigate('/announcements')}
-                    >
-                        <Bell size={20} className="text-gray-600" />
-                        <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
-                    </button>
-
-                    {/* Search */}
-                    <div className="flex-1 relative">
-                        <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                        <input
-                            type="text"
-                            placeholder="ابحث عن دورة أو درس..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full bg-gray-100 rounded-full py-2.5 pr-9 pl-4 text-sm text-right text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-purple-300 transition-all"
-                        />
-                    </div>
-
-                    {/* Logo */}
-                    <div className="shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-                        <div className="text-right">
-                            <div className="text-base font-black text-[#3D1F8F] leading-tight">دارين</div>
-                            <div className="text-[9px] text-gray-500 leading-tight">للتعليم والتدريب</div>
+            <div className="sticky top-0 z-50 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
+                <div className="relative z-10 px-4 pt-2 pb-2">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                                <GraduationCap size={16} className="text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-white font-black text-sm leading-tight">الرئيسية</h1>
+                                <p className="text-white/50 text-[7px] font-medium">طالب</p>
+                            </div>
                         </div>
-                        <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-[#7C3AED]/30 shadow">
-                            <img src="/dareen_logo_new.jpg" alt="دارين" className="w-full h-full object-cover" />
+                        <div className="flex items-center gap-2">
+                            {/* Search */}
+                            <div className="relative">
+                                <Search size={16} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
+                                <input
+                                    type="text"
+                                    placeholder="ابحث..."
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                    className="w-36 bg-white/10 backdrop-blur-sm rounded-full py-1.5 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
+                                />
+                            </div>
+                            {/* Bell */}
+                            <button
+                                className="relative w-8 h-8 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm shrink-0"
+                                onClick={() => navigate('/announcements')}
+                            >
+                                <Bell size={15} className="text-white" />
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-1.5 border-white" />
+                            </button>
                         </div>
                     </div>
                 </div>
