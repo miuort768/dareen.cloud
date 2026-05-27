@@ -479,25 +479,25 @@ export const ParentDashboard = () => {
                 {/* Sticky app bar */}
                 <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
-                    <div className="relative z-10 px-4 pt-12 pb-2">
+                    <div className="relative z-10 px-4 pt-2 pb-1">
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                                <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                    <User size={18} className="text-white" />
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                                    <User size={16} className="text-white" />
                                 </div>
                                 <div>
-                                    <h1 className="text-white font-black text-sm leading-tight">
+                                    <h1 className="text-white font-black text-xs leading-tight">
                                         {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                                     </h1>
-                                    <p className="text-white/50 text-[8px] font-medium">ولي أمر</p>
+                                    <p className="text-white/50 text-[7px] font-medium">ولي أمر</p>
                                 </div>
                             </div>
-                            <button onClick={logout} className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
-                                <LogOut size={14} />
+                            <button onClick={logout} className="w-7 h-7 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
+                                <LogOut size={12} />
                             </button>
                         </div>
                         {/* Stats pills */}
-                        <div className="flex items-center gap-2 mt-2.5">
+                        <div className="flex items-center gap-2 mt-1.5">
                             <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
                                 <Users size={11} className="text-purple-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
@@ -522,16 +522,16 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                     {/* Tab bar */}
-                    <div className="relative z-10 px-4 pb-0.5">
-                        <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-2xl p-1">
+                    <div className="relative z-10 px-4">
+                        <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-2xl p-0.5">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-[10px] font-bold transition-all ${
+                                    className={`flex-1 flex items-center justify-center gap-1 py-1.5 rounded-xl text-[10px] font-bold transition-all ${
                                         activeTab === tab.id
                                             ? 'bg-white text-[#6C4BFF] shadow-sm'
                                             : 'text-white/70'
                                     }`}>
-                                    <tab.icon size={14} />
+                                    <tab.icon size={12} />
                                     {tab.label}
                                 </button>
                             ))}
