@@ -471,51 +471,67 @@ export const ParentDashboard = () => {
 
             {/* ─── Mobile version (app-style with tabs) ─── */}
             <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] dark:bg-slate-950 font-sans" dir="rtl">
-                {/* Sticky app bar */}
-                <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
-                    <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
-                    <div className="relative z-10 px-4 pt-2 pb-1">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border-2 border-white/20">
-                                    <User size={20} className="text-white" />
+                {/* Sticky app bar — Savings-app style */}
+                <div className="sticky top-0 z-30">
+                    <div className="relative bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] overflow-hidden">
+                        {/* Decorative orbs */}
+                        <div className="absolute -top-12 -left-12 w-36 h-36 bg-purple-300/15 rounded-full blur-[60px] pointer-events-none" />
+                        <div className="absolute -bottom-10 -right-10 w-28 h-28 bg-indigo-300/10 rounded-full blur-[50px] pointer-events-none" />
+                        <div className="absolute top-6 right-8 w-2 h-2 bg-white/20 rounded-full" />
+                        <div className="absolute bottom-8 left-6 w-1.5 h-1.5 bg-purple-300/30 rounded-full" />
+                        
+                        <div className="relative z-10 px-4 pt-3 pb-2">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner shadow-white/10">
+                                        <User size={20} className="text-white drop-shadow-sm" />
+                                    </div>
+                                    <div>
+                                        <h1 className="text-white font-black text-base leading-tight drop-shadow-sm">
+                                            أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
+                                        </h1>
+                                        <div className="flex items-center gap-1.5 mt-0.5">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm" />
+                                            <p className="text-white/70 text-[11px] font-bold">
+                                                {children.length > 0
+                                                    ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
+                                                    : 'طالب'}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h1 className="text-white font-black text-base leading-tight">
-                                        أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
-                                    </h1>
-                                    <p className="text-white/60 text-[11px] font-bold">
-                                        {children.length > 0
-                                            ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
-                                            : 'طالب'}
-                                    </p>
-                                </div>
+                                <button onClick={logout} className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white/70 border border-white/10 active:scale-90 transition-transform">
+                                    <LogOut size={16} />
+                                </button>
                             </div>
-                            <button onClick={logout} className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center text-white/70">
-                                <LogOut size={16} />
-                            </button>
-                        </div>
-                        {/* Stats pills */}
-                        <div className="flex items-center gap-2.5 mt-2">
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
-                                <TrendingUp size={14} className="text-emerald-200 shrink-0" />
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-base">{stats.academicProgress}%</span>
-                                    <span className="text-white/70 text-[10px] font-bold">الالتزام</span>
+                            {/* Stats pills — premium card style */}
+                            <div className="flex items-center gap-2 mt-3">
+                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
+                                    <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                        <TrendingUp size={13} className="text-emerald-300" />
+                                    </div>
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-white font-black text-base drop-shadow-sm">{stats.academicProgress}%</span>
+                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">الالتزام</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
-                                <BookOpen size={14} className="text-blue-200 shrink-0" />
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-base">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
-                                    <span className="text-white/70 text-[10px] font-bold">المادة</span>
+                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
+                                    <div className="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                        <BookOpen size={13} className="text-blue-300" />
+                                    </div>
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-white font-black text-base drop-shadow-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
+                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">المادة</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
-                                <Users size={14} className="text-purple-200 shrink-0" />
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-base">{stats.childCount}</span>
-                                    <span className="text-white/70 text-[10px] font-bold">الأبناء</span>
+                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
+                                    <div className="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                        <Users size={13} className="text-purple-300" />
+                                    </div>
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-white font-black text-base drop-shadow-sm">{stats.childCount}</span>
+                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">الأبناء</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
