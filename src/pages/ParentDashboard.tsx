@@ -531,13 +531,13 @@ export const ParentDashboard = () => {
                     </div>
                     {/* Tab bar */}
                     <div className="px-4 pb-4">
-                        <div className="flex gap-1.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-1">
+                        <div className="flex gap-1 bg-white dark:bg-slate-800/90 rounded-2xl p-1 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.2)] border border-slate-100 dark:border-slate-700/50">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                                         activeTab === tab.id
-                                            ? 'bg-white dark:bg-slate-700 text-[#6C4BFF] dark:text-purple-300 shadow-sm'
-                                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
+                                            ? 'bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] text-white shadow-md shadow-purple-200/40'
+                                            : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'
                                     }`}>
                                     <tab.icon size={14} />
                                     {tab.label}
