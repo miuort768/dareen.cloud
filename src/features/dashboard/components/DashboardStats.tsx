@@ -10,25 +10,25 @@ interface DashboardStatsProps {
 }
 
 const gradients: Record<string, string> = {
-  'إجمالي الطلاب': 'from-indigo-500 to-violet-600',
-  'الاشتراكات النشطة': 'from-blue-500 to-cyan-500',
-  'حصص اليوم': 'from-amber-400 to-orange-500',
-  'الحصص المنفذة': 'from-emerald-500 to-green-600',
-  'إجمالي المعلمين': 'from-violet-500 to-purple-600',
-  'إجمالي الإيرادات': 'from-emerald-500 to-teal-600',
-  'إجمالي المصروفات': 'from-rose-500 to-pink-600',
-  'صافي الربح': 'from-fuchsia-500 to-rose-500',
+  'إجمالي الطلاب': 'from-[#2563EB] to-[#1D4ED8]',
+  'الاشتراكات النشطة': 'from-[#22C55E] to-[#16A34A]',
+  'حصص اليوم': 'from-[#38BDF8] to-[#0EA5E9]',
+  'الحصص المنفذة': 'from-[#8B5CF6] to-[#7C3AED]',
+  'إجمالي المعلمين': 'from-[#F97316] to-[#EA580C]',
+  'إجمالي الإيرادات': 'from-[#22C55E] to-[#16A34A]',
+  'إجمالي المصروفات': 'from-rose-500 to-rose-600',
+  'صافي الربح': 'from-[#2563EB] to-[#8B5CF6]',
 };
 
 const accentColors: Record<string, string> = {
-  'إجمالي الطلاب': 'border-r-indigo-500 dark:border-r-indigo-400',
-  'الاشتراكات النشطة': 'border-r-blue-500 dark:border-r-cyan-400',
-  'حصص اليوم': 'border-r-amber-400 dark:border-r-orange-400',
-  'الحصص المنفذة': 'border-r-emerald-500 dark:border-r-green-400',
-  'إجمالي المعلمين': 'border-r-violet-500 dark:border-r-purple-400',
-  'إجمالي الإيرادات': 'border-r-emerald-500 dark:border-r-teal-400',
-  'إجمالي المصروفات': 'border-r-rose-500 dark:border-r-pink-400',
-  'صافي الربح': 'border-r-fuchsia-500 dark:border-r-rose-400',
+  'إجمالي الطلاب': 'border-r-[#2563EB] dark:border-r-[#3B82F6]',
+  'الاشتراكات النشطة': 'border-r-[#22C55E] dark:border-r-[#4ADE80]',
+  'حصص اليوم': 'border-r-[#38BDF8] dark:border-r-[#7DD3FC]',
+  'الحصص المنفذة': 'border-r-[#8B5CF6] dark:border-r-[#A78BFA]',
+  'إجمالي المعلمين': 'border-r-[#F97316] dark:border-r-[#FB923C]',
+  'إجمالي الإيرادات': 'border-r-[#22C55E] dark:border-r-[#4ADE80]',
+  'إجمالي المصروفات': 'border-r-rose-500 dark:border-r-rose-400',
+  'صافي الربح': 'border-r-[#2563EB] dark:border-r-[#8B5CF6]',
 };
 
 const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
@@ -57,21 +57,21 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
       ref={ref}
       className={cn(
         "relative bg-white dark:bg-slate-900/90",
-        "border border-slate-200 dark:border-slate-700/50 p-4",
+        "border border-slate-200 dark:border-slate-700/50 p-4 rounded-2xl",
         "shadow-sm shadow-slate-100 dark:shadow-slate-950/20",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3",
         "border-r-4",
-        accentColors[title] || 'border-r-indigo-500',
+        accentColors[title] || 'border-r-[#2563EB]',
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div className={cn(
-        "w-10 h-10 flex items-center justify-center bg-gradient-to-br shadow-sm shrink-0",
-        gradients[title] || 'from-indigo-500 to-violet-600'
+        "w-10 h-10 rounded-2xl flex items-center justify-center bg-gradient-to-br shadow-sm shrink-0",
+        gradients[title] || 'from-[#2563EB] to-[#1D4ED8]'
       )}>
-        <Icon size={18} className="text-white" />
+        <Icon size={18} strokeWidth={1.5} className="text-white" />
       </div>
 
       <div className="flex-1 min-w-0">
