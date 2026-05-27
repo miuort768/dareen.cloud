@@ -471,80 +471,73 @@ export const ParentDashboard = () => {
 
             {/* ─── Mobile version (app-style with tabs) ─── */}
             <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] dark:bg-slate-950 font-sans" dir="rtl">
-                {/* Sticky app bar — Savings-app style */}
-                <div className="sticky top-0 z-30">
-                    <div className="relative bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] overflow-hidden">
-                        {/* Decorative orbs */}
-                        <div className="absolute -top-12 -left-12 w-36 h-36 bg-purple-300/15 rounded-full blur-[60px] pointer-events-none" />
-                        <div className="absolute -bottom-10 -right-10 w-28 h-28 bg-indigo-300/10 rounded-full blur-[50px] pointer-events-none" />
-                        <div className="absolute top-6 right-8 w-2 h-2 bg-white/20 rounded-full" />
-                        <div className="absolute bottom-8 left-6 w-1.5 h-1.5 bg-purple-300/30 rounded-full" />
-                        
-                        <div className="relative z-10 px-4 pt-3 pb-2">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner shadow-white/10">
-                                        <User size={20} className="text-white drop-shadow-sm" />
-                                    </div>
-                                    <div>
-                                        <h1 className="text-white font-black text-base leading-tight drop-shadow-sm">
-                                            أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
-                                        </h1>
-                                        <div className="flex items-center gap-1.5 mt-0.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm" />
-                                            <p className="text-white/70 text-[11px] font-bold">
-                                                {children.length > 0
-                                                    ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
-                                                    : 'طالب'}
-                                            </p>
-                                        </div>
+                {/* Sticky app bar — Savings-app style (no background rectangle) */}
+                <div className="sticky top-0 z-30 bg-[#F7F8FC] dark:bg-slate-950">
+                    <div className="px-4 pt-3 pb-1">
+                        {/* Profile row */}
+                        <div className="bg-white dark:bg-slate-800/90 rounded-3xl p-3.5 shadow-[0_2px_16px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.2)] flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] flex items-center justify-center shadow-md shadow-purple-200/40">
+                                    <User size={18} className="text-white" />
+                                </div>
+                                <div>
+                                    <h1 className="text-[#1E1E2F] dark:text-white font-black text-base leading-tight">
+                                        أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
+                                    </h1>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                        <p className="text-slate-400 dark:text-slate-400 text-[11px] font-bold">
+                                            {children.length > 0
+                                                ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
+                                                : 'طالب'}
+                                        </p>
                                     </div>
                                 </div>
-                                <button onClick={logout} className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white/70 border border-white/10 active:scale-90 transition-transform">
-                                    <LogOut size={16} />
-                                </button>
                             </div>
-                            {/* Stats pills — premium card style */}
-                            <div className="flex items-center gap-2 mt-3">
-                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
-                                    <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                                        <TrendingUp size={13} className="text-emerald-300" />
-                                    </div>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-white font-black text-base drop-shadow-sm">{stats.academicProgress}%</span>
-                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">الالتزام</span>
-                                    </div>
+                            <button onClick={logout} className="w-10 h-10 bg-slate-100 dark:bg-slate-700/60 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-400 active:scale-90 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700">
+                                <LogOut size={16} />
+                            </button>
+                        </div>
+                        {/* Stats pills — premium card style */}
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="flex-1 bg-white dark:bg-slate-800/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-700/50">
+                                <div className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                                    <TrendingUp size={13} className="text-emerald-600 dark:text-emerald-400" />
                                 </div>
-                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
-                                    <div className="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                        <BookOpen size={13} className="text-blue-300" />
-                                    </div>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-white font-black text-base drop-shadow-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
-                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">المادة</span>
-                                    </div>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-[#1E1E2F] dark:text-white font-black text-base">{stats.academicProgress}%</span>
+                                    <span className="text-slate-400 dark:text-slate-500 text-[9px] font-bold tracking-wide">الالتزام</span>
                                 </div>
-                                <div className="flex-1 bg-white/10 backdrop-blur-md rounded-2xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10 shadow-inner shadow-white/5">
-                                    <div className="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                                        <Users size={13} className="text-purple-300" />
-                                    </div>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-white font-black text-base drop-shadow-sm">{stats.childCount}</span>
-                                        <span className="text-white/60 text-[9px] font-bold tracking-wide">الأبناء</span>
-                                    </div>
+                            </div>
+                            <div className="flex-1 bg-white dark:bg-slate-800/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-700/50">
+                                <div className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <BookOpen size={13} className="text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-[#1E1E2F] dark:text-white font-black text-base drop-shadow-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
+                                    <span className="text-slate-400 dark:text-slate-500 text-[9px] font-bold tracking-wide">المادة</span>
+                                </div>
+                            </div>
+                            <div className="flex-1 bg-white dark:bg-slate-800/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-700/50">
+                                <div className="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                                    <Users size={13} className="text-purple-600 dark:text-purple-400" />
+                                </div>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-[#1E1E2F] dark:text-white font-black text-base drop-shadow-sm">{stats.childCount}</span>
+                                    <span className="text-slate-400 dark:text-slate-500 text-[9px] font-bold tracking-wide">الأبناء</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Tab bar */}
-                    <div className="relative z-10 px-4 pb-4 pt-1">
-                        <div className="flex gap-1.5 bg-white/10 backdrop-blur-md rounded-2xl p-1.5 border border-white/10 shadow-inner shadow-white/5">
+                    <div className="px-4 pb-4">
+                        <div className="flex gap-1.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-1">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                                         activeTab === tab.id
-                                            ? 'bg-white/90 text-[#6C4BFF] shadow-lg shadow-purple-500/10 backdrop-blur-sm'
-                                            : 'text-white/60 hover:text-white/90'
+                                            ? 'bg-white dark:bg-slate-700 text-[#6C4BFF] dark:text-purple-300 shadow-sm'
+                                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
                                     }`}>
                                     <tab.icon size={14} />
                                     {tab.label}
