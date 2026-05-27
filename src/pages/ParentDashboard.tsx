@@ -223,10 +223,10 @@ export const ParentDashboard = () => {
                 </div>
 
                 {/* ══════════ HERO SECTION (desktop) ══════════ */}
-                <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-6 md:p-8 rounded-3xl flex items-center justify-between gap-6 relative overflow-hidden">
+                <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-6 md:p-8 rounded-3xl relative overflow-hidden">
                     <div className="absolute top-[-40px] left-[-40px] w-40 h-40 bg-white/20 rounded-full blur-3xl" />
                     <div className="absolute bottom-[-30px] right-[30%] w-32 h-32 bg-white/15 rounded-full blur-2xl" />
-                    <div className="flex-1 z-10 space-y-3">
+                    <div className="z-10 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-black leading-tight text-[#0C4A6E]">
                             تعلّم بلا حدود{' '}
                             <span className="inline-block border-r-4 border-current pr-1 animate-pulse">|</span>
@@ -250,13 +250,6 @@ export const ParentDashboard = () => {
                                 استكشف الدورات
                                 <ChevronLeft size={14} />
                             </button>
-                        </div>
-                    </div>
-                    <div className="shrink-0 relative z-10">
-                        <div className="w-[130px] h-[140px] md:w-[160px] md:h-[170px] relative">
-                            <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 backdrop-blur-sm flex items-center justify-center text-7xl md:text-8xl shadow-xl">
-                                🌍
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -544,10 +537,10 @@ export const ParentDashboard = () => {
                     {activeTab === 'home' && (
                         <>
                             {/* ══════════ HERO SECTION ══════════ */}
-                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl flex items-center justify-between gap-4 relative overflow-hidden">
+                            <div className="bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC] p-5 rounded-3xl relative overflow-hidden">
                                 <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
                                 <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
-                                <div className="flex-1 z-10 space-y-2">
+                                <div className="z-10 space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-[#0C4A6E]">
                                         تعلّم بلا حدود{' '}
                                         <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
@@ -556,7 +549,7 @@ export const ParentDashboard = () => {
                                     <p className="text-xs leading-relaxed text-[#0C4A6E] opacity-70 max-w-[180px]">
                                         حصص تفاعلية مباشرة مع أفضل المعلمين، متابعة دورية، وتقارير مفصلة لأولياء الأمور.
                                     </p>
-                                    <div className="flex gap-2 pt-2 flex-wrap">
+                                    <div className="flex flex-row gap-2 pt-2">
                                         <button
                                             onClick={() => navigate('/chat')}
                                             className="flex items-center gap-1.5 bg-[#3D1F8F] text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
@@ -571,13 +564,6 @@ export const ParentDashboard = () => {
                                             استكشف الدورات
                                             <ChevronLeft size={12} />
                                         </button>
-                                    </div>
-                                </div>
-                                <div className="shrink-0 relative z-10">
-                                    <div className="w-[110px] h-[120px] relative">
-                                        <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
-                                            🌍
-                                        </div>
                                     </div>
                                 </div>
                             </div>
