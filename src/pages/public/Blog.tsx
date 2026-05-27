@@ -326,24 +326,28 @@ export const Blog = () => {
             )}
 
             {/* Selection Grid for sub-views */}
-            {view !== 'types' && (
+            {view !== 'curriculums' && view !== 'grades' && (
               <>
                 <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-4 mb-4 shadow-sm border border-violet-100/50 mt-0">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3 shadow-sm">
                     <BookOpen size={10} className="text-violet-600" />
                     <span className="text-[9px] font-black text-violet-600">
-                      {view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
+                      {view === 'types' ? 'اختر الخدمة' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                     </span>
                   </div>
                   <h1 className="text-[17px] font-black text-indigo-950 leading-tight">
-                    {view === 'curriculums' ? (
+                    {view === 'types' ? (
+                      <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
+                    ) : view === 'curriculums' ? (
                       <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
                     ) : (
                       <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
                     )}
                   </h1>
                   <p className="text-[11px] text-slate-500 font-medium mt-1 leading-relaxed">
-                    {view === 'curriculums'
+                    {view === 'types'
+                      ? 'اختر ما تريد لتبدأ رحلتك التعليمية'
+                      : view === 'curriculums'
                       ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                       : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
                   </p>
@@ -354,7 +358,8 @@ export const Blog = () => {
                     <button
                       key={item.id}
                       onClick={() => {
-                        if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
+                        if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
+                        else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
                         else { setSelectedLevel(item.id); setView('classrooms'); }
                       }}
                       className={cn(
