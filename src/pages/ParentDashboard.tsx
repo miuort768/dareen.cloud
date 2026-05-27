@@ -515,7 +515,7 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                     {/* Tab bar */}
-                    <div className="relative z-10 px-4">
+                    <div className="relative z-10 px-4 pb-2">
                         <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-2xl p-0.5">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
