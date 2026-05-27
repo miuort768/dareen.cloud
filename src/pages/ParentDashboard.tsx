@@ -492,26 +492,26 @@ export const ParentDashboard = () => {
                             </button>
                         </div>
                         {/* Stats pills */}
-                        <div className="flex items-center gap-2 mt-1.5">
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
-                                <TrendingUp size={11} className="text-emerald-200 shrink-0" />
+                        <div className="flex items-center gap-2.5 mt-2">
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
+                                <TrendingUp size={14} className="text-emerald-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{stats.academicProgress}%</span>
-                                    <span className="text-white/50 text-[7px] font-medium">الالتزام</span>
+                                    <span className="text-white font-black text-base">{stats.academicProgress}%</span>
+                                    <span className="text-white/70 text-[10px] font-bold">الالتزام</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
-                                <BookOpen size={11} className="text-blue-200 shrink-0" />
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
+                                <BookOpen size={14} className="text-blue-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
-                                    <span className="text-white/50 text-[7px] font-medium">عدد القوائم</span>
+                                    <span className="text-white font-black text-base">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
+                                    <span className="text-white/70 text-[10px] font-bold">عدد القوائم</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
-                                <Users size={11} className="text-purple-200 shrink-0" />
+                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-2.5 px-3 flex items-center gap-2.5 border border-white/10">
+                                <Users size={14} className="text-purple-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{stats.childCount}</span>
-                                    <span className="text-white/50 text-[7px] font-medium">عدد الأبناء</span>
+                                    <span className="text-white font-black text-base">{stats.childCount}</span>
+                                    <span className="text-white/70 text-[10px] font-bold">عدد الأبناء</span>
                                 </div>
                             </div>
                         </div>
