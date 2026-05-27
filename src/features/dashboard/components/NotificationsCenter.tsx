@@ -145,37 +145,46 @@ export const NotificationsCenter = ({
     const filteredSmartAlerts = smartAlerts;
     const filteredRoomAlerts = roomAlerts;
 
+    const color = '#8B5CF6';
+
     return (
         <div className="w-full space-y-6" dir="rtl">
-            {/* Header / Tabs - Soft Modern style */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-2xl">
+            {/* Header / Tabs */}
+            <div
+                className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 shadow-sm rounded-2xl transition-all duration-300"
+                style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
+            >
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-10 h-10 bg-blue-600 text-white flex items-center justify-center border border-white/10 shadow-sm transition-transform hover:rotate-3 rounded-xl">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
                         <ShieldAlert size={20} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-medium text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز العمليات الذكي</h3>
-                        <p className="text-[9px] font-medium text-slate-400 uppercase mt-0.5">غرفة التحكم الذكية</p>
+                        <h3 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">مركز العمليات الذكي</h3>
+                        <p className="text-[9px] font-medium text-[#64748B] mt-0.5">غرفة التحكم الذكية</p>
                     </div>
                 </div>
 
-                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 rounded-xl">
+                <div className="flex p-1 rounded-xl" style={{ backgroundColor: `${color}15` }}>
                     <button 
                         onClick={() => setActiveTab('smart')}
                         className={cn(
-                            "px-6 py-2 font-medium text-[9px] uppercase tracking-widest transition-all flex items-center gap-2 rounded-lg",
-                            activeTab === 'smart' ? "bg-white dark:bg-slate-900 text-blue-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                            "px-6 py-2 font-bold text-[9px] transition-all flex items-center gap-2 rounded-lg",
+                            activeTab === 'smart' ? "shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
+                        style={activeTab === 'smart' ? { backgroundColor: color, color: '#fff' } : {}}
                     >
                         <Zap size={12} />
                         إخطارات ذكية
                     </button>
-                        <button 
-                            onClick={() => setActiveTab('room')}
-                            className={cn(
-                                "px-6 py-2 font-medium text-[9px] uppercase tracking-widest transition-all flex items-center gap-2 rounded-lg",
-                            activeTab === 'room' ? "bg-white dark:bg-slate-900 text-blue-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    <button 
+                        onClick={() => setActiveTab('room')}
+                        className={cn(
+                            "px-6 py-2 font-bold text-[9px] transition-all flex items-center gap-2 rounded-lg",
+                            activeTab === 'room' ? "shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
+                        style={activeTab === 'room' ? { backgroundColor: color, color: '#fff' } : {}}
                     >
                         <Bell size={12} />
                         غرفة التنبيهات
@@ -184,113 +193,99 @@ export const NotificationsCenter = ({
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pb-6">
-                {/* ── 1. Smart Alerts (Left) ── */}
-                <div className={cn(
-                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm transition-all relative overflow-hidden h-full rounded-2xl",
-                    activeTab !== 'smart' && "hidden lg:block"
-                )}>
+                {/* Smart Alerts */}
+                <div className={cn("lg:col-span-7 p-6 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'smart' && "hidden lg:block")}
+                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
+                >
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center border border-white/10 rounded-xl">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
                                 <AlertTriangle size={18} />
                             </div>
                             <div>
-                                <h4 className="text-xs font-medium text-slate-900 dark:text-white uppercase tracking-tight">النظام التحليلي</h4>
-                                <p className="text-[8px] font-medium text-slate-400 uppercase mt-0.5">مراقبة الأنظمة الذكية</p>
+                                <h4 className="text-xs font-bold text-[#0F172A] dark:text-white">النظام التحليلي</h4>
+                                <p className="text-[8px] font-medium text-[#64748B] mt-0.5">مراقبة الأنظمة الذكية</p>
                             </div>
                         </div>
-                        <div className="bg-blue-600 text-white px-3 py-1 rounded-lg border border-blue-500/50">
-                            <span className="text-[9px] font-medium uppercase">{filteredSmartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج</span>
+                        <div className="px-3 py-1 rounded-lg shadow-sm text-white text-[9px] font-bold" style={{ backgroundColor: color }}>
+                            {filteredSmartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج
                         </div>
                     </div>
 
                     <div className="space-y-3">
                         {filteredSmartAlerts.map((alert) => (
-                            <div key={alert.id} className={cn(
-                                "p-4 border flex items-center justify-between group transition-all rounded-xl",
-                                alert.type === 'critical' ? "bg-rose-50/50 dark:bg-rose-500/5 border-rose-200 dark:border-rose-500/30" : 
-                                alert.type === 'success' ? "bg-emerald-50/50 dark:bg-emerald-500/5 border-emerald-200 dark:border-emerald-500/30" :
-                                "bg-amber-50/50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/30"
-                            )}>
+                            <div key={alert.id} className={cn("p-4 flex items-center justify-between group transition-all rounded-xl", alert.type === 'critical' ? "bg-rose-50/50 dark:bg-rose-500/5 border border-rose-200 dark:border-rose-500/30" : alert.type === 'success' ? "bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/30" : "bg-amber-50/50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/30")}>
                                 <div className="flex items-center gap-4">
-                                    <div className={cn(
-                                        "w-10 h-10 flex items-center justify-center text-white shadow-sm",
-                                        alert.type === 'critical' ? "bg-rose-600" :
-                                        alert.type === 'success' ? "bg-emerald-600" : "bg-amber-500 rounded-xl"
-                                    )}>
+                                    <div className={cn("w-10 h-10 flex items-center justify-center text-white shadow-sm rounded-xl", alert.type === 'critical' ? "bg-rose-600" : alert.type === 'success' ? "bg-emerald-600" : "bg-amber-500")}>
                                         {alert.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
                                     </div>
                                     <div>
-                                        <h3 className="font-medium text-xs uppercase tracking-tight text-slate-900 dark:text-white">{alert.title}</h3>
-                                        <p className="text-[10px] font-normal mt-1 text-slate-600 dark:text-slate-400">{alert.desc}</p>
+                                        <h3 className="font-bold text-xs text-[#0F172A] dark:text-white">{alert.title}</h3>
+                                        <p className="text-[10px] font-medium mt-1 text-[#64748B]">{alert.desc}</p>
                                     </div>
                                 </div>
                                 {alert.action && (
-                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-600 dark:text-white hover:bg-blue-600 hover:text-white transition-all border border-slate-200 dark:border-slate-700 shadow-sm rounded-lg">
+                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-sm rounded-lg text-white" style={{ backgroundColor: color }}>
                                         <ArrowLeft size={14} />
                                     </button>
                                 )}
                             </div>
                         ))}
                         {filteredSmartAlerts.length === 0 && (
-                            <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
-                                <p className="text-[9px] font-medium text-slate-400 uppercase">لا توجد بيانات ذكية حالياً</p>
+                            <div className="text-center py-16 rounded-xl" style={{ border: `2px dashed ${color}30` }}>
+                                <p className="text-[9px] font-bold text-[#64748B]">لا توجد بيانات ذكية حالياً</p>
                             </div>
                         )}
                     </div>
                 </div>
 
-                {/* ── 2. Alerts Room (Right) ── */}
-                <div className={cn(
-                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm transition-all relative overflow-hidden h-full rounded-2xl",
-                    activeTab !== 'room' && "hidden lg:block"
-                )}>
+                {/* Alerts Room */}
+                <div className={cn("lg:col-span-5 p-6 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'room' && "hidden lg:block")}
+                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
+                >
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center border border-white/10 rounded-xl">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
                                 <Bell size={18} />
                             </div>
                             <div>
-                                <h4 className="text-xs font-medium text-slate-900 dark:text-white uppercase tracking-tight">غرفة العمليات</h4>
-                                <p className="text-[8px] font-medium text-slate-400 uppercase mt-0.5">مركز العمليات المباشر</p>
+                                <h4 className="text-xs font-bold text-[#0F172A] dark:text-white">غرفة العمليات</h4>
+                                <p className="text-[8px] font-medium text-[#64748B] mt-0.5">مركز العمليات المباشر</p>
                             </div>
                         </div>
-                        <div className="bg-blue-600 text-white px-3 py-1 rounded-lg border border-blue-500/50">
-                            <span className="text-[9px] font-medium uppercase">{filteredRoomAlerts.length} تنبيهات</span>
+                        <div className="px-3 py-1 rounded-lg shadow-sm text-white text-[9px] font-bold" style={{ backgroundColor: color }}>
+                            {filteredRoomAlerts.length} تنبيهات
                         </div>
                     </div>
 
                     <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert) => (
-                            <div key={alert.id} className="flex items-center justify-between group p-3 border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all hover:border-blue-600/30 rounded-xl">
+                            <div key={alert.id} className="flex items-center justify-between group p-3 transition-all rounded-xl" style={{ border: `1px solid ${color}15`, backgroundColor: `${color}05` }}>
                                 <div className="flex items-center gap-4 min-w-0">
-                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700 rounded-lg">
+                                    <div className="w-10 h-10 flex items-center justify-center transition-all rounded-lg text-white" style={{ backgroundColor: color }}>
                                         <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
-                                        <h4 className="text-[11px] font-medium text-slate-900 dark:text-white truncate uppercase tracking-tight">{alert.title}</h4>
-                                        <p className="text-[9px] font-normal text-slate-400 truncate mt-0.5">{alert.description}</p>
+                                        <h4 className="text-[11px] font-bold text-[#0F172A] dark:text-white truncate">{alert.title}</h4>
+                                        <p className="text-[9px] font-medium text-[#64748B] truncate mt-0.5">{alert.description}</p>
                                     </div>
                                 </div>
                                 {alert.actionLabel === 'واتساب' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 bg-emerald-600 text-white hover:bg-emerald-700 text-[8px] font-medium uppercase tracking-widest border border-emerald-500/50 transition-all active:scale-[0.98] shadow-sm rounded-lg"
+                                        className="h-8 px-4 text-white text-[8px] font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: '#22C55E' }}
                                     >
                                         واتساب
                                     </button>
                                 ) : (
-                                    <Link 
-                                        to={alert.link || '#'} 
-                                        className="h-8 px-4 bg-blue-600 text-white hover:bg-blue-700 text-[8px] font-medium uppercase tracking-widest border border-blue-500/50 transition-all active:scale-[0.98] flex items-center justify-center shadow-sm rounded-lg"
-                                    >
+                                    <Link to={alert.link || '#'} className="h-8 px-4 text-white text-[8px] font-bold transition-all active:scale-[0.98] flex items-center justify-center shadow-sm rounded-lg" style={{ backgroundColor: color }}>
                                         عرض
                                     </Link>
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800">
-                                <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">كافة الأنظمة تعمل بشكل طبيعي</p>
+                            <div className="text-center py-16" style={{ border: `2px dashed ${color}30` }}>
+                                <p className="text-[9px] font-bold text-[#64748B]">كافة الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         )}
                     </div>

@@ -56,11 +56,18 @@ export const LiveClasses = () => {
 
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
 
+    const color = '#2563EB';
+
     return (
-        <div className="space-y-4 h-full" dir="rtl">
-            <div className="flex items-center justify-between bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+        <div className="space-y-4" dir="rtl">
+            <div
+                className="flex items-center justify-between p-4 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md"
+                style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
+            >
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-white flex items-center justify-center shadow-sm">
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
                         <Radio size={18} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -73,7 +80,8 @@ export const LiveClasses = () => {
                     <button
                         onClick={startNewSession}
                         disabled={starting}
-                        className="bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white px-5 py-2 text-[10px] font-bold rounded-2xl hover:from-[#1D4ED8] hover:to-[#1E40AF] transition-all active:scale-[0.97] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
+                        className="text-white px-5 py-2 text-[10px] font-bold rounded-2xl transition-all active:scale-[0.97] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+                        style={{ backgroundColor: color }}
                     >
                         {starting ? (
                             <><Loader2 size={13} strokeWidth={1.5} className="animate-spin" /> جاري البدء...</>
@@ -93,12 +101,15 @@ export const LiveClasses = () => {
 
             {loading ? (
                 <div className="flex justify-center p-8">
-                    <Loader2 className="animate-spin text-[#2563EB]" size={20} strokeWidth={1.5} />
+                    <Loader2 className="animate-spin" size={20} strokeWidth={1.5} style={{ color }} />
                 </div>
             ) : sessions.length === 0 ? (
-                <div className="bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 p-10 text-center rounded-2xl shadow-sm">
-                    <Monitor size={36} strokeWidth={1.5} className="mx-auto text-slate-300 mb-3" />
-                    <p className="text-slate-500 font-bold text-[11px]">لا يوجد بث مباشر متاح حالياً</p>
+                <div
+                    className="p-10 text-center rounded-2xl shadow-sm transition-all"
+                    style={{ backgroundColor: `${color}0D`, border: `2px dashed ${color}30` }}
+                >
+                    <Monitor size={36} strokeWidth={1.5} className="mx-auto mb-3" style={{ color: `${color}60` }} />
+                    <p className="font-bold text-[11px]" style={{ color }}>لا يوجد بث مباشر متاح حالياً</p>
                     {isTeacher && (
                         <p className="text-slate-400 text-[10px] mt-2 font-medium">اضغط "بدء بث جديد" لبدء حصة مباشرة</p>
                     )}
@@ -106,20 +117,24 @@ export const LiveClasses = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {sessions.map(session => (
-                        <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 flex flex-col justify-between group hover:border-[#2563EB]/30 transition-all rounded-2xl shadow-sm relative">
-                            <div className="absolute top-4 right-4">
-                                <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white px-2.5 py-1 rounded-xl shadow-sm">
-                                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                                    <span className="text-[8px] font-bold">مباشر</span>
-                                </div>
+                        <div
+                            key={session.id}
+                            className="p-5 flex flex-col justify-between group rounded-2xl shadow-sm transition-all hover:shadow-md"
+                            style={{ backgroundColor: `${color}08`, border: `1px solid ${color}25` }}
+                            onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}12`; }}
+                            onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}25`; e.currentTarget.style.backgroundColor = `${color}08`; }}
+                        >
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-white text-[8px] font-bold w-fit" style={{ backgroundColor: color }}>
+                                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                مباشر
                             </div>
 
-                            <div className="mt-2">
+                            <div className="mt-3">
                                 <h4 className="font-bold text-sm text-[#0F172A] dark:text-white mb-1 line-clamp-1">
                                     {session.title}
                                 </h4>
-                                <div className="flex items-center gap-2 text-[#64748B] mb-6">
-                                    <Users size={12} strokeWidth={1.5} className="text-[#2563EB]" />
+                                <div className="flex items-center gap-2 text-[#64748B] mb-4">
+                                    <Users size={12} strokeWidth={1.5} style={{ color }} />
                                     <span className="text-[10px] font-medium">{session.teacherName}</span>
                                     {session.subject && (
                                         <span className="text-[10px] text-[#94A3B8]">— {session.subject}</span>
@@ -129,12 +144,8 @@ export const LiveClasses = () => {
 
                             <button
                                 onClick={() => navigate(`/classroom/${session.id}`)}
-                                className={cn(
-                                    "w-full bg-gradient-to-r from-[#2563EB] to-[#1D4ED8]",
-                                    "text-white py-3 text-[10px] font-bold rounded-2xl flex items-center justify-center gap-2",
-                                    "hover:from-[#1D4ED8] hover:to-[#1E40AF] transition-all shadow-sm",
-                                    "active:scale-[0.97]"
-                                )}
+                                className="w-full text-white py-3 text-[10px] font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.97]"
+                                style={{ backgroundColor: color }}
                             >
                                 <PlayCircle size={16} strokeWidth={1.5} />
                                 دخول البث الآن

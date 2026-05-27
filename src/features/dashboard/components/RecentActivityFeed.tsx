@@ -35,13 +35,18 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
         }))
     ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
 
+    const color = '#2563EB';
+
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 md:p-8 shadow-sm flex flex-col h-full relative overflow-hidden transition-all group/feed" dir="rtl">
-            
-            {/* Header Section */}
+        <div className="p-6 md:p-8 shadow-sm flex flex-col h-full relative overflow-hidden transition-all duration-300 rounded-2xl hover:shadow-md"
+            style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
+            dir="rtl"
+        >
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center shadow-sm transition-transform group-hover/feed:rotate-3">
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
                         <History size={20} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -49,48 +54,43 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                         <p className="text-[9px] font-medium text-[#64748B] mt-0.5">سجل المراقبة الفورية</p>
                     </div>
                 </div>
-                <div className="w-8 h-8 rounded-xl bg-[#F8FAFC] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
-                    <ActivityIcon size={14} strokeWidth={1.5} className="animate-pulse text-[#2563EB]" />
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}15`, color }}>
+                    <ActivityIcon size={14} strokeWidth={1.5} className="animate-pulse" />
                 </div>
             </div>
 
-            {/* Compact Activities List */}
             <div className="space-y-6 flex-1 overflow-y-auto pr-1 -mr-1 custom-scrollbar">
                 {activities.length > 0 ? (
                     activities.map((act, i) => (
                         <div key={act.id} className="relative flex gap-5 items-start group">
-                            {/* Vertical Line Connector */}
                             {i !== activities.length - 1 && (
-                                <div className="absolute top-10 right-[19px] w-[2px] h-10 bg-slate-100 dark:bg-slate-800 group-hover:bg-[#2563EB]/20 transition-colors" />
+                                <div className="absolute top-10 right-[19px] w-[2px] h-10" style={{ backgroundColor: `${color}20` }} />
                             )}
 
-                            {/* Node Icon */}
                             <div className={cn(
-                                "z-10 w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all border border-slate-200 dark:border-slate-700 shadow-sm",
-                                act.color === 'emerald' ? 'bg-emerald-50 text-[#22C55E]' :
-                                act.color === 'rose' ? 'bg-rose-50 text-rose-500' :
-                                act.color === 'blue' ? 'bg-blue-50 text-[#2563EB]' :
-                                'bg-amber-50 text-amber-500'
-                            )}>
+                                "z-10 w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all shadow-sm",
+                                act.color === 'emerald' ? 'text-[#22C55E]' :
+                                act.color === 'rose' ? 'text-rose-500' :
+                                'text-white'
+                            )} style={{ backgroundColor: act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B' }}>
                                 {act.type === 'session' ? <Calendar size={18} strokeWidth={1.5} /> : <ListTodo size={18} strokeWidth={1.5} />}
                             </div>
                             
-                            {/* Content */}
                             <div className="flex-1 min-w-0 pt-1">
                                 <div className="flex flex-col">
-                                    <h4 className="font-bold text-xs text-[#0F172A] dark:text-white truncate group-hover:text-[#2563EB] transition-colors">{act.title}</h4>
+                                    <h4 className="font-bold text-xs text-[#0F172A] dark:text-white truncate" style={{ color: `${color}` }}>{act.title}</h4>
                                     <div className="flex items-center gap-3 mt-2">
                                         <span className={cn(
                                             "text-[9px] font-bold px-2 py-0.5 rounded-xl border",
-                                            act.color === 'emerald' ? 'bg-emerald-50/50 text-[#22C55E] border-emerald-100 dark:bg-emerald-500/10 dark:border-emerald-500/20' :
-                                            act.color === 'rose' ? 'bg-rose-50/50 text-rose-500 border-rose-100 dark:bg-rose-500/10 dark:border-rose-500/20' :
-                                            act.color === 'blue' ? 'bg-blue-50/50 text-[#2563EB] border-blue-100 dark:bg-blue-500/10 dark:border-blue-500/20' :
-                                            'bg-amber-50/50 text-amber-500 border-amber-100 dark:bg-amber-500/10 dark:border-amber-500/20'
-                                        )}>
+                                            act.color === 'emerald' ? 'text-[#22C55E] border-emerald-100 dark:border-emerald-500/20' :
+                                            act.color === 'rose' ? 'text-rose-500 border-rose-100 dark:border-rose-500/20' :
+                                            act.color === 'blue' ? 'text-[#2563EB] border-blue-100 dark:border-blue-500/20' :
+                                            'text-amber-500 border-amber-100 dark:border-amber-500/20'
+                                        )} style={{ backgroundColor: `${act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B'}15` }}>
                                             {act.status}
                                         </span>
                                         <span className="text-[9px] font-medium text-[#64748B] flex items-center gap-1">
-                                            <Clock size={10} strokeWidth={1.5} className="text-[#94A3B8]" />
+                                            <Clock size={10} strokeWidth={1.5} style={{ color: `${color}60` }} />
                                             {act.time}
                                         </span>
                                     </div>
@@ -99,15 +99,15 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                         </div>
                     ))
                 ) : (
-                    <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-2xl">
-                        <History size={24} strokeWidth={1.5} className="text-slate-200 mb-2" />
-                        <p className="text-[10px] font-medium text-[#64748B]">لا توجد نشاطات مؤخراً</p>
+                    <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl" style={{ border: `2px dashed ${color}30` }}>
+                        <History size={24} strokeWidth={1.5} style={{ color: `${color}50` }} />
+                        <p className="text-[10px] font-medium text-[#64748B] mt-2">لا توجد نشاطات مؤخراً</p>
                     </div>
                 )}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
-                <button className="w-full h-11 rounded-2xl bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] text-[10px] font-bold hover:bg-[#2563EB] dark:hover:bg-[#F1F5F9] transition-all shadow-sm active:scale-[0.98]">
+            <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${color}20` }}>
+                <button className="w-full h-11 rounded-2xl text-white text-[10px] font-bold transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: color }}>
                     عرض سجل النظام الكامل
                 </button>
             </div>

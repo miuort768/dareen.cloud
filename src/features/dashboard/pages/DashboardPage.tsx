@@ -69,11 +69,14 @@ export const Dashboard = () => {
                 </Section>
 
                 <div className="space-y-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <Section className="h-full"><LiveClasses /></Section>
-                        <Section className="h-full"><OperationsDashboard tasks={tasks} lowBalanceStudents={lowBalanceStudents} stats={stats} /></Section>
-                    </div>
 
+                    {/* 1. غرفة البث المباشر */}
+                    <Section><LiveClasses /></Section>
+
+                    {/* 2. تجديد الاشتراكات + المهام والطلبات */}
+                    <Section><OperationsDashboard tasks={tasks} lowBalanceStudents={lowBalanceStudents} stats={stats} /></Section>
+
+                    {/* 3. مركز التنبيهات (الإخطارات الذكية + غرفة العمليات) */}
                     <Section>
                         <NotificationsCenter
                             tasks={tasks}
@@ -84,24 +87,28 @@ export const Dashboard = () => {
                         />
                     </Section>
 
+                    {/* 4. مركز تحليل الأداء */}
                     <Section>
                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </Section>
 
+                    {/* 5. مركز تحليل البيانات + خارطة توزيع المناهج */}
                     <Section>
                         <AnalyticsDashboard students={rawStudents} sessions={rawSessions} monthlyData={monthlyData} />
                     </Section>
 
+                    {/* 6. لوحة الشرف */}
                     <Section>
                         <HonorRoll students={rawStudents} />
                     </Section>
 
+                    {/* 7. سجل النشاطات + الإعلانات */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Section>
-                            <ModernAnnouncements />
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                         </Section>
                         <Section>
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <ModernAnnouncements />
                         </Section>
                     </div>
                 </div>
