@@ -14,11 +14,14 @@ import {
     LayoutDashboard,
     Clock,
     Sparkles,
-    Bell
+    Bell,
+    TrendingUp,
+    CheckCircle
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { cn } from '../lib/utils';
+import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
@@ -181,6 +184,9 @@ export const ParentDashboard = () => {
         });
         return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     }, [children, todayArabic]);
+
+    const points = allPointLogs?.reduce((sum, log) => sum + (log.points || 0), 0) || 0;
+    const rank = getRankByPoints(points, STUDENT_RANKS);
 
     if (isLoading) {
         return <PageLoader />;
@@ -471,6 +477,34 @@ export const ParentDashboard = () => {
                 <div className="px-3 pt-3 space-y-3.5">
                     {activeTab === 'home' && (
                         <>
+                            {/* ══════════ STATS STRIP (like student dashboard) ══════════ */}
+                            <div className="px-1 py-2">
+                                <div className="grid grid-cols-3 gap-3">
+                                    {[
+                                        { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
+                                        { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
+                                        { icon: TrendingUp, label: 'اللقب', value: rank.name, color: '#7C3AED', bg: '#FAF5FF' },
+                                    ].map((item, idx) => {
+                                        const Icon = item.icon;
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
+                                            >
+                                                <div
+                                                    className="w-9 h-9 rounded-xl flex items-center justify-center"
+                                                    style={{ backgroundColor: item.bg }}
+                                                >
+                                                    <Icon size={18} style={{ color: item.color }} />
+                                                </div>
+                                                <span className="text-sm font-black text-gray-800">{item.value}</span>
+                                                <span className="text-[10px] text-gray-400 font-medium">{item.label}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
                             {/* Active session timers */}
                             {activeTimers.length > 0 && (
                                 <div className="space-y-2">
