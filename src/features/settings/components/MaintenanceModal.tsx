@@ -17,27 +17,27 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                     <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-3">
                         <Snowflake size={32} className="animate-spin-slow" />
                     </div>
-                    <h3 className="text-xl font-medium text-white uppercase tracking-tighter">وضع الصيانة الشامل</h3>
-                    <p className="text-[10px] text-white/80 font-normal uppercase tracking-widest mt-1">System Freeze Protocol</p>
+                    <h3 className="text-xl font-bold text-white uppercase tracking-tighter">وضع الصيانة الشامل</h3>
+                    <p className="text-[10px] text-white/80 font-bold uppercase tracking-widest mt-1">System Freeze Protocol</p>
                 </div>
 
                 <div className="p-6 space-y-6">
                     <div className="space-y-4">
                         <div className="flex items-start gap-4">
-                            <div className="w-9 h-9 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 shrink-0 border border-amber-200 dark:border-amber-800">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-amber-200/50 dark:border-amber-800/50" style={{ backgroundColor: '#D9770612', color: '#D97706' }}>
                                 <Lock size={16} />
                             </div>
                             <div>
-                                <p className="text-xs font-medium text-slate-800 dark:text-white uppercase">تعطيل الدخول</p>
+                                <p className="text-xs font-bold text-slate-800 dark:text-white uppercase">تعطيل الدخول</p>
                                 <p className="text-[10px] text-slate-500 dark:text-slate-400">سيتم منع كافة الطلاب والمعلمين من تسجيل الدخول فوراً.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-4">
-                            <div className="w-9 h-9 bg-rose-50 dark:bg-rose-900/30 rounded-xl flex items-center justify-center text-rose-600 shrink-0 border border-rose-200 dark:border-rose-800">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-rose-200/50 dark:border-rose-800/50" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>
                                 <Activity size={16} />
                             </div>
                             <div>
-                                <p className="text-xs font-medium text-slate-800 dark:text-white uppercase">إنهاء الجلسات</p>
+                                <p className="text-xs font-bold text-slate-800 dark:text-white uppercase">إنهاء الجلسات</p>
                                 <p className="text-[10px] text-slate-500 dark:text-slate-400">سيتم تسجيل خروج كافة المستخدمين المتصلين حالياً.</p>
                             </div>
                         </div>
@@ -46,7 +46,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                     <div className="flex gap-3 pt-2">
                         <button
                             onClick={() => setShowMaintenanceModal(false)}
-                            className="flex-1 py-3 border-2 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-medium uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all rounded-lg"
+                            className="flex-1 py-3 border border-slate-100/50 dark:border-slate-800/50 text-slate-600 dark:text-slate-400 text-[11px] font-bold uppercase tracking-widest hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all rounded-xl shadow-sm active:scale-95"
                         >
                             إلغاء الأمر
                         </button>
@@ -57,7 +57,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                                     showNotify('تم تفعيل وضع الصيانة بنجاح');
                                 });
                             }}
-                            className="flex-1 py-3 bg-amber-500 text-white text-[11px] font-medium uppercase tracking-widest hover:bg-amber-600 transition-all shadow-[4px_4px_0px_#b45309] rounded-lg"
+                            className="flex-1 py-3 bg-amber-500 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-amber-600 transition-all shadow-sm rounded-xl active:scale-95"
                         >
                             تأكيد التجميد
                         </button>

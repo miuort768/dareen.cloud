@@ -281,23 +281,21 @@ export const StudentInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 dark:bg-blue-500/5 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 blur-3xl pointer-events-none" />
-            <div className="relative z-10 mx-auto px-2 space-y-4">
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="mx-auto px-2 space-y-4">
 
-                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-xl">
-                            <FileText size={22} />
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
+                            <FileText size={22} style={{ color: '#2563EB' }} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">فواتير وتحصيل الطلاب</h1>
-                            <p className="text-[10px] text-blue-200/70 font-medium leading-none mt-1">إدارة التدفقات النقدية والمستحقات الدراسية</p>
+                            <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">فواتير وتحصيل الطلاب</h1>
+                            <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة التدفقات النقدية والمستحقات الدراسية</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap">
-                        <Sparkles size={13} className="text-emerald-300" />
+                    <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
+                        <Sparkles size={13} />
                         {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                     </div>
                 </div>
@@ -311,20 +309,20 @@ export const StudentInvoices = () => {
                     pendingCount={pendingCount}
                 />
 
-                <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm rounded-2xl">
+                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between p-3">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: '#94A3B8' }} />
                                 <input
                                     placeholder="بحث باسم الطالب أو البيان..."
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-9 py-2 text-xs font-medium outline-none focus:border-blue-400 text-slate-900 dark:text-white rounded-xl"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-9 py-2 text-xs font-bold outline-none focus:border-[#2563EB] text-slate-900 dark:text-white rounded-xl"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
                             <select
-                                className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs font-medium outline-none focus:border-blue-400 text-slate-900 dark:text-white rounded-xl"
+                                className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs font-bold outline-none focus:border-[#2563EB] text-slate-900 dark:text-white rounded-xl"
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
                             >

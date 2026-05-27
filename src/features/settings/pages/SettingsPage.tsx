@@ -375,34 +375,34 @@ export const Settings = () => {
     };
 
     return (
-        <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
+        <div className="space-y-4 pb-24 min-h-full" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
+                        <SettingsIcon size={22} style={{ color: '#2563EB' }} />
                     </div>
                     <div>
-                        <h1 className="text-sm font-normal text-slate-800 dark:text-white">إعدادات النظام</h1>
-                        <p className="text-[10px] text-slate-400">إدارة السياسات والهوية والصلاحيات</p>
+                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">إعدادات النظام</h1>
+                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة السياسات والهوية والصلاحيات</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-normal text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-100 dark:border-slate-700 rounded-lg">
-                    <Sparkles size={12} className="text-amber-400" />
+                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                    <Sparkles size={12} />
                     {activeTab && TABS.find(t => t.id === activeTab)?.label}
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-2 shadow-sm">
-                <div className="flex overflow-x-auto no-scrollbar gap-2 px-0">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl p-1 shadow-sm">
+                <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-all uppercase tracking-tight',
+                                'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight rounded-xl',
                                 activeTab === tab.id
-                                    ? 'bg-[#2563EB] text-white transform scale-105 z-10'
-                                    : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 bg-slate-50/50 dark:bg-slate-800/50'
+                                    ? 'bg-[#2563EB] text-white shadow-sm'
+                                    : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                             )}
                         >
                             <tab.icon size={15} />

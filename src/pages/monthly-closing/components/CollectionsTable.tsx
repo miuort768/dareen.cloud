@@ -25,8 +25,8 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
 
     return (
         <SectionCard>
-            <div className="p-4 border-b border-slate-50 dark:border-slate-800">
-                <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" />
+            <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50">
+                <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="#10B981" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
@@ -57,8 +57,8 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 text-white rounded-lg",
-                                            item.status === 'paid' ? "bg-emerald-600" : "bg-rose-600"
+                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                            item.status === 'paid' ? "bg-emerald-600 text-white" : "text-rose-600 border border-rose-200 bg-rose-50"
                                         )}
                                     >
                                         {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}

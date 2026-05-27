@@ -15,19 +15,19 @@ interface AttendanceReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl', className)}>
+    <div className={cn('bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm', className)}>
         {children}
     </div>
 );
 
 const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-xl text-white">
-            <Icon size={15} />
+    <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#10B98112' }}>
+            <Icon size={15} style={{ color: '#10B981' }} />
         </div>
         <div>
-            <p className="text-xs font-normal text-slate-700 dark:text-slate-300 uppercase">{label}</p>
-            {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-medium">{sub}</p>}
+            <p className="text-xs font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[9px] font-bold text-slate-400 mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -69,21 +69,18 @@ export const AttendanceReport = ({
             {/* Summary Stat Bar */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                    { label: 'إجمالي الحصص', value: totalSessions, icon: Calendar, grad: 'from-slate-700 to-slate-900', sub: 'كل الأشهر' },
-                    { label: 'حصص مكتملة', value: totalCompleted, icon: CheckCircle2, grad: 'from-emerald-600 to-emerald-800', sub: 'حضور فعلي' },
-                    { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, grad: 'from-rose-600 to-rose-800', sub: 'غياب/إلغاء' },
-                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, grad: 'from-blue-600 to-violet-800', sub: 'نسبة النجاح الكلية' },
+                    { label: 'إجمالي الحصص', value: totalSessions, icon: Calendar, color: '#64748B', sub: 'كل الأشهر' },
+                    { label: 'حصص مكتملة', value: totalCompleted, icon: CheckCircle2, color: '#10B981', sub: 'حضور فعلي' },
+                    { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, color: '#F43F5E', sub: 'غياب/إلغاء' },
+                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, color: '#8B5CF6', sub: 'نسبة النجاح الكلية' },
                 ].map((item, i) => (
-                    <div key={i} className={cn("relative overflow-hidden rounded-2xl p-4 bg-gradient-to-br text-white", item.grad)}>
-                        <div className="absolute -left-2 -bottom-2 opacity-10">
-                            <item.icon size={60} />
+                    <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-4">
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: `${item.color}12` }}>
+                            <item.icon size={16} style={{ color: item.color }} />
                         </div>
-                        <div className="w-8 h-8 bg-white/15 rounded-xl flex items-center justify-center mb-3">
-                            <item.icon size={16} className="text-white" />
-                        </div>
-                        <p className="text-xl font-medium font-mono">{item.value}</p>
-                        <p className="text-[9px] font-medium uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
-                        <p className="text-[8px] text-white/50 font-normal mt-0.5">{item.sub}</p>
+                        <p className="text-xl font-black font-mono" style={{ color: item.color }}>{item.value}</p>
+                        <p className="text-[9px] font-bold text-slate-400 mt-1">{item.label}</p>
+                        <p className="text-[8px] font-bold text-slate-400 mt-0.5">{item.sub}</p>
                     </div>
                 ))}
             </div>
@@ -131,7 +128,7 @@ export const AttendanceReport = ({
                     ].map((l, i) => (
                         <div key={i} className="flex items-center gap-1.5">
                             <div className="w-5 h-0.5 rounded-full" style={{ backgroundColor: l.color }} />
-                            <span className="text-[10px] font-normal text-slate-500">{l.label}</span>
+                            <span className="text-[10px] font-bold text-slate-500">{l.label}</span>
                         </div>
                     ))}
                 </div>
@@ -149,13 +146,13 @@ export const AttendanceReport = ({
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right">
                         <thead>
-                            <tr className="bg-slate-900 text-white">
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-left">#</th>
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest">اسم المعلمة</th>
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">المتوقعة</th>
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">مكتملة</th>
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">ملغية</th>
-                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center w-44">معدل الحضور</th>
+                            <tr className="bg-[#0F172A] text-white">
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70">#</th>
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-right">اسم المعلمة</th>
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center">المتوقعة</th>
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center">مكتملة</th>
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center">ملغية</th>
+                                <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center w-44">معدل الحضور</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -175,10 +172,10 @@ export const AttendanceReport = ({
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-xs font-medium shrink-0">
+                                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0" style={{ backgroundColor: '#10B98112', color: '#10B981' }}>
                                                         {teacher.teacher.charAt(0)}
                                                     </div>
-                                                    <span className="text-xs font-normal text-slate-800 dark:text-white">{teacher.teacher}</span>
+                                                    <span className="text-xs font-bold text-slate-800 dark:text-white">{teacher.teacher}</span>
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3 text-center font-mono font-medium text-xs text-slate-500">{teacher.total}</td>
@@ -213,7 +210,7 @@ export const AttendanceReport = ({
                             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center font-medium text-sm rounded-xl shrink-0">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black shrink-0" style={{ backgroundColor: '#10B98112', color: '#10B981' }}>
                                         {medal || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">

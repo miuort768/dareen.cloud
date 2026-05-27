@@ -11,12 +11,12 @@ interface InvoiceStatsProps {
 }
 
 const stats = [
-  { label: 'المحصل', key: 'total', icon: TrendingUp, gradient: 'from-emerald-500 to-green-600' },
-  { label: 'معلق', key: 'pending', icon: Wallet, gradient: 'from-amber-400 to-orange-500' },
-  { label: 'متأخر', key: 'overdue', icon: AlertCircle, gradient: 'from-rose-500 to-pink-600' },
-  { label: 'الفواتير', key: 'count', icon: FileText, gradient: 'from-blue-500 to-cyan-500' },
-  { label: 'المدفوعة', key: 'paid', icon: CheckCircle, gradient: 'from-blue-500 to-violet-600' },
-  { label: 'المعلقة', key: 'unpaid', icon: XCircle, gradient: 'from-purple-500 to-fuchsia-500' },
+  { label: 'المحصل', key: 'total', icon: TrendingUp, color: '#10B981' },
+  { label: 'معلق', key: 'pending', icon: Wallet, color: '#F59E0B' },
+  { label: 'متأخر', key: 'overdue', icon: AlertCircle, color: '#F43F5E' },
+  { label: 'الفواتير', key: 'count', icon: FileText, color: '#2563EB' },
+  { label: 'المدفوعة', key: 'paid', icon: CheckCircle, color: '#8B5CF6' },
+  { label: 'المعلقة', key: 'unpaid', icon: XCircle, color: '#E11D48' },
 ] as const;
 
 const getValue = (props: InvoiceStatsProps, key: string) => {
@@ -37,20 +37,19 @@ export const InvoiceStats = (props: InvoiceStatsProps) => (
       <div
         key={i}
         className={cn(
-          'relative bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
-          'p-3 flex flex-col items-center text-center'
+          'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl',
+          'p-3 flex items-center gap-3'
         )}
       >
-        <div className={cn(
-          "w-8 h-8 flex items-center justify-center bg-gradient-to-br text-white shadow-sm mb-1.5 rounded-xl",
-          s.gradient
-        )}>
-          <s.icon size={14} />
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${s.color}12` }}>
+          <s.icon size={16} style={{ color: s.color }} />
         </div>
-        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">{s.label}</p>
-        <p className="text-xs font-black text-slate-800 dark:text-white mt-0.5 tabular-nums">
-          {getValue(props, s.key)}
-        </p>
+        <div className="min-w-0">
+          <p className="text-[10px] font-bold text-slate-400 leading-none">{s.label}</p>
+          <p className="text-sm font-black mt-1 tabular-nums leading-none" style={{ color: s.color }}>
+            {getValue(props, s.key)}
+          </p>
+        </div>
       </div>
     ))}
   </div>

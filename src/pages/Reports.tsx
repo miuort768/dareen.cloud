@@ -41,32 +41,35 @@ export const Reports = () => {
     const uniqueSubjects = new Set(state.subjectPieData.map(s => s.name)).size;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-slate-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-slate-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-2">
 
             <ReportsHeader onExport={() => window.print()} />
 
             {/* ── Tab Selection ── */}
-            <div className="px-0 no-print">
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-2 rounded-xl">
+            <div className="no-print">
+                <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = state.activeReport === tab.id;
+                        const tabColors = [
+                            { color: '#64748B', label: 'نظرة عامة' },
+                            { color: '#8B5CF6', label: 'الأكاديمي' },
+                            { color: '#10B981', label: 'الحضور والغياب' },
+                            { color: '#F59E0B', label: 'المالي' },
+                            { color: '#F43F5E', label: 'التسجيلات' },
+                        ];
+                        const tc = tabColors[tabs.indexOf(tab)];
                         return (
                             <button
                                 key={tab.id}
                                 onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                className={cn(
-                                    "flex items-center gap-2 px-3 py-3 transition-all border text-right",
-                                    isActive
-                                        ? `bg-gradient-to-l ${tab.activeGrad} border-transparent text-white`
-                                        : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-slate-300"
-                                )}
+                                className="flex items-center gap-2 px-3 py-3 transition-all border rounded-xl text-right"
+                                style={isActive ? { backgroundColor: `${tc.color}12`, borderColor: `${tc.color}30`, color: tc.color } : { backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#94A3B8' }}
                             >
-                                <Icon size={14} className={isActive ? "text-white" : "text-slate-400"} />
-                                <span className="text-[10px] font-medium uppercase tracking-wide whitespace-nowrap">{tab.label}</span>
-                                {isActive && <div className="mr-auto w-1.5 h-1.5 bg-white/50 rounded-full animate-pulse shrink-0" />}
+                                <Icon size={14} />
+                                <span className="text-[10px] font-bold whitespace-nowrap">{tab.label}</span>
+                                {isActive && <div className="mr-auto w-1.5 h-1.5 rounded-full animate-pulse shrink-0" style={{ backgroundColor: tc.color }} />}
                             </button>
                         );
                     })}
@@ -79,97 +82,107 @@ export const Reports = () => {
                 {/* ── نظرة عامة ── */}
                 {state.activeReport === 'overview' && (
                     <div className="space-y-6">
-                        {/* 1. اول مستطيل (Hero Card) */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 p-8 border border-white/10">
-                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
-                             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        {/* Hero Card */}
+                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-5 md:p-6">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
                                 <div>
-                                    <h2 className="text-xl font-medium text-white uppercase tracking-tighter mb-2">ملخص الأداء العام</h2>
-                                    <p className="text-slate-400 text-[10px] font-normal uppercase tracking-widest leading-relaxed max-w-md">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+                                            <BarChart3 size={16} style={{ color: '#2563EB' }} />
+                                        </div>
+                                        <h2 className="text-base font-black text-slate-900 dark:text-white">ملخص الأداء العام</h2>
+                                    </div>
+                                    <p className="text-[11px] font-bold text-slate-400 leading-relaxed max-w-md">
                                         تقرير شامل يوضح الحالة الأكاديمية والمالية للمؤسسة. تم تحليل {state.totalEnrollments} اشتراك نشط عبر {uniqueSubjects} مادة مختلفة.
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-4 bg-white/5 p-4 border border-white/10">
-                                    <div className="text-left">
-                                        <p className="text-[11px] font-medium text-blue-400 uppercase tracking-widest">معدل الإنجاز</p>
-                                        <p className="text-2xl font-medium text-white font-mono leading-none mt-1">{state.attendanceRate}%</p>
+                                <div className="flex items-center gap-4 p-4 rounded-xl border" style={{ backgroundColor: '#F8FAFC', borderColor: '#E2E8F0' }}>
+                                    <div>
+                                        <p className="text-[11px] font-bold" style={{ color: '#2563EB' }}>معدل الإنجاز</p>
+                                        <p className="text-2xl font-black font-mono leading-none mt-1 text-slate-900 dark:text-white">{state.attendanceRate}%</p>
                                     </div>
-                                    <div className="w-[1px] h-10 bg-white/10 mx-2" />
-                                    <div className="text-left">
-                                        <p className="text-[11px] font-medium text-emerald-400 uppercase tracking-widest">النمو الشهري</p>
-                                        <p className="text-2xl font-medium text-white font-mono leading-none mt-1">+{Math.round((state.monthRevenue / (state.totalRevenue || 1)) * 100)}%</p>
+                                    <div className="w-px h-10" style={{ backgroundColor: '#E2E8F0' }} />
+                                    <div>
+                                        <p className="text-[11px] font-bold" style={{ color: '#10B981' }}>النمو الشهري</p>
+                                        <p className="text-2xl font-black font-mono leading-none mt-1 text-slate-900 dark:text-white">+{Math.round((state.monthRevenue / (state.totalRevenue || 1)) * 100)}%</p>
                                     </div>
                                 </div>
                              </div>
                         </div>
 
-                        {/* 2. 4 أزرار (Navigation Buttons) */}
+                        {/* Navigation Buttons */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                             {tabs.filter(t => t.id !== 'overview').map((tab) => {
                                 const Icon = tab.icon;
+                                const tabColors: Record<string, string> = { academic: '#8B5CF6', attendance: '#10B981', financial: '#F59E0B', enrollment: '#F43F5E' };
+                                const color = tabColors[tab.id] || '#2563EB';
                                 return (
                                     <button
                                         key={tab.id}
                                         onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                        className="bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 p-5 hover:border-blue-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all group relative overflow-hidden rounded-xl"
+                                        className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 transition-all group rounded-xl shadow-sm hover:shadow-md active:scale-95"
                                     >
-                                        <div className="absolute -right-2 -bottom-2 opacity-5 group-hover:opacity-10 transition-opacity"><Icon size={48} /></div>
                                         <div className="flex flex-col items-center text-center">
-                                            <div className="w-10 h-10 bg-slate-950 text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                                <Icon size={18} />
+                                            <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}12` }}>
+                                                <Icon size={20} style={{ color }} />
                                             </div>
-                                            <p className="text-[11px] font-medium text-slate-800 dark:text-white uppercase tracking-tighter">{tab.label}</p>
-                                            <p className="text-[11px] text-slate-400 font-normal mt-1 uppercase tracking-widest">انتقال سريع</p>
+                                            <p className="text-[11px] font-bold text-slate-800 dark:text-white">{tab.label}</p>
+                                            <p className="text-[10px] font-bold text-slate-400 mt-1">انتقال سريع</p>
                                         </div>
                                     </button>
                                 );
                             })}
                         </div>
 
-                        {/* 3. 8 مربعات (Mini Stats Squares) */}
+                        {/* Mini Stats Squares */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
                             {[
-                                { label: 'الطلاب', value: state.totalStudents, icon: Users, color: 'from-blue-600 to-blue-700' },
-                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: 'from-blue-600 to-blue-700' },
-                                { label: 'المواد', value: uniqueSubjects, icon: Award, color: 'from-purple-600 to-purple-700' },
-                                { label: 'الحصص', value: state.totalSessions, icon: Calendar, color: 'from-emerald-600 to-emerald-700' },
-                                { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, color: 'from-teal-600 to-teal-700' },
-                                { label: 'الإيرادات', value: Math.round(state.totalRevenue / 1000) + 'k', icon: DollarSign, color: 'from-amber-500 to-amber-600' },
-                                { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: 'from-rose-600 to-rose-700' },
-                                { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: 'from-slate-700 to-slate-800' }
+                                { label: 'الطلاب', value: state.totalStudents, icon: Users, color: '#2563EB' },
+                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: '#2563EB' },
+                                { label: 'المواد', value: uniqueSubjects, icon: Award, color: '#8B5CF6' },
+                                { label: 'الحصص', value: state.totalSessions, icon: Calendar, color: '#10B981' },
+                                { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, color: '#14B8A6' },
+                                { label: 'الإيرادات', value: Math.round(state.totalRevenue / 1000) + 'k', icon: DollarSign, color: '#F59E0B' },
+                                { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: '#F43F5E' },
+                                { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: '#64748B' }
                             ].map((stat, i) => (
-                                <div key={i} className={cn("relative overflow-hidden aspect-square p-3 flex flex-col justify-between text-white bg-gradient-to-br", stat.color)}>
-                                    <div className="absolute -left-1 -bottom-1 opacity-20"><stat.icon size={24} /></div>
-                                    <div className="w-6 h-6 bg-white/20 flex items-center justify-center">
-                                        <stat.icon size={12} className="text-white" />
+                                <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-3 flex flex-col justify-between aspect-square">
+                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${stat.color}12` }}>
+                                        <stat.icon size={14} style={{ color: stat.color }} />
                                     </div>
                                     <div className="mt-auto">
-                                        <p className="text-[14px] font-medium font-mono leading-none">{stat.value}</p>
-                                        <p className="text-[11px] font-medium uppercase tracking-tighter text-white/80 mt-1 truncate">{stat.label}</p>
+                                        <p className="text-sm font-black font-mono leading-none" style={{ color: stat.color }}>{stat.value}</p>
+                                        <p className="text-[10px] font-bold mt-1 truncate text-slate-400">{stat.label}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Visual Breakdown */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl">
-                             <div className="flex items-center justify-between mb-6">
-                                 <h3 className="text-[10px] font-medium text-slate-400 uppercase tracking-[0.2em]">توزيع الاشتراكات حسب المادة</h3>
-                                 <span className="text-[10px] font-medium text-blue-500 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 uppercase">Live Analysis</span>
+                        {/* Subject Distribution Cards */}
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-5">
+                             <div className="flex items-center justify-between mb-5">
+                                 <div className="flex items-center gap-2">
+                                     <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+                                         <BarChart3 size={14} style={{ color: '#8B5CF6' }} />
+                                     </div>
+                                     <h3 className="text-[10px] font-bold text-slate-400">توزيع الاشتراكات حسب المادة</h3>
+                                 </div>
+                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: '#10B98112', color: '#059669' }}>Live Analysis</span>
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {
-                                    const colors = ['bg-blue-600','bg-emerald-600','bg-purple-600','bg-amber-600','bg-rose-600','bg-blue-600'];
+                                    const hexColors = ['#2563EB','#10B981','#8B5CF6','#F59E0B','#F43F5E','#2563EB'];
+                                    const color = hexColors[i];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 p-3 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700 group hover:bg-white dark:hover:bg-slate-800 transition-colors">
+                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-xl border transition-all" style={{ backgroundColor: `${color}08`, borderColor: `${color}15` }}>
                                             <div className="flex items-center justify-between">
-                                                <div className={cn("w-2 h-2", colors[i])} />
-                                                <p className="text-[10px] font-medium font-mono text-slate-900 dark:text-white">{pct}%</p>
+                                                <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
+                                                <p className="text-[10px] font-black font-mono" style={{ color }}>{pct}%</p>
                                             </div>
-                                            <p className="text-[10px] font-normal text-slate-500 truncate">{s.name}</p>
-                                            <div className="w-full h-1 bg-slate-100 dark:bg-slate-900 mt-1">
-                                                <div className={cn("h-full", colors[i])} style={{ width: `${pct}%` }} />
+                                            <p className="text-[10px] font-bold text-slate-500 truncate">{s.name}</p>
+                                            <div className="w-full h-1.5 rounded-xl overflow-hidden" style={{ backgroundColor: `${color}10` }}>
+                                                <div className="h-full rounded-xl transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
                                             </div>
                                         </div>
                                     );

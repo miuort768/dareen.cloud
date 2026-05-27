@@ -25,23 +25,23 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                                 <h3 className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{item.studentName}</h3>
                                 <p className="text-[10px] font-bold text-[#2563EB] mt-0.5">{item.subject}</p>
                             </div>
-                            <div className="px-2 py-0.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 text-[9px] font-bold rounded-lg">رصيد منخفض</div>
+                            <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>رصيد منخفض</div>
                         </div>
-                        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 flex items-center justify-between mb-4 border border-slate-100 dark:border-slate-800">
-                            <span className="text-[10px] font-bold text-slate-400">الحصص المتبقية</span>
-                            <span className="text-lg font-black text-slate-800 dark:text-white font-mono">{item.remaining}</span>
+                        <div className="bg-white dark:bg-slate-900 p-3 flex items-center justify-between mb-4 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
+                            <span className="text-[10px] font-bold text-[#64748B]">الحصص المتبقية</span>
+                            <span className="text-lg font-black text-[#0F172A] dark:text-white font-mono">{item.remaining}</span>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white text-[10px] font-bold hover:bg-emerald-700 transition-all"><MessageCircle size={14} /> واتساب</button>
-                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2 bg-slate-900 text-white text-[10px] font-bold hover:bg-black transition-all"><Phone size={14} /> اتصال</a>
+                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
+                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-[#0F172A] hover:bg-slate-800 text-white text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
                     </div>
                 </SectionCard>
             ))}
             {renewalsData.length === 0 && (
-                <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl">
-                    <CheckCircle2 className="mx-auto mb-3 text-slate-100 dark:text-slate-800" size={48} />
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد تجديدات مطلوبة</p>
+                <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm">
+                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: '#10B98120' }} />
+                    <p className="text-xs font-bold text-[#64748B]">لا توجد تجديدات مطلوبة</p>
                 </div>
             )}
         </div>

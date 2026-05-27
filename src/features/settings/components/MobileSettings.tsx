@@ -34,13 +34,13 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
                 </div>
             </div>
         </SectionCard>
-        <SectionCard className="border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
-            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                <Smartphone size={32} className="text-slate-400" />
+        <SectionCard className="border-dashed border-2 border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-12 text-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: '#2563EB12' }}>
+                <Smartphone size={32} style={{ color: '#2563EB' }} />
             </div>
-            <h4 className="text-sm font-normal text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
-            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
-            <button className="text-[10px] font-medium text-blue-600 uppercase tracking-widest hover:underline">
+            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+            <p className="text-xs font-bold text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+            <button className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest hover:underline">
                 التحقق من وجود تحديثات
             </button>
         </SectionCard>

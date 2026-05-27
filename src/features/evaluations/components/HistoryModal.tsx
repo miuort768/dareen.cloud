@@ -20,25 +20,25 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
 
     return (
         <div className="fixed inset-0 bg-slate-900/50  flex items-center justify-center p-4 z-[10001] md:animate-in md:fade-in">
-            <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100 dark:border-slate-800 mt-20 md:mt-0 rounded-2xl">
-                <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
+            <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100/50 dark:border-slate-800/50 mt-20 md:mt-0 rounded-2xl">
+                <div className="p-5 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center bg-[#172554] text-white">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center border border-blue-100 dark:border-blue-900 rounded-xl">
-                            <User size={18} className="text-blue-500" />
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#ffffff15' }}>
+                            <User size={18} style={{ color: '#ffffff' }} />
                         </div>
                         <div>
-                            <h3 className="text-sm font-medium text-slate-900 dark:text-white">سجل التقييمات الكامل</h3>
-                            <p className="text-blue-600 dark:text-blue-400 text-[10px] font-medium">{student.name as string}</p>
+                            <h3 className="text-sm font-bold">سجل التقييمات الكامل</h3>
+                            <p className="text-white/70 text-[10px] font-medium">{student.name as string}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 bg-slate-200 dark:bg-slate-700 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center transition-colors rounded-lg"><X size={16} /></button>
+                    <button onClick={onClose} className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-xl"><X size={16} /></button>
                 </div>
 
-                <div className="p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-950">
+                <div className="p-4 overflow-y-auto space-y-3" style={{ backgroundColor: '#F43F5E02' }}>
                     {studentEvals.map((ev) => {
                         const r = RATING_OPTIONS.find(ro => ro.value === ev.rating) || RATING_OPTIONS[0];
                         return (
-                            <div key={ev.id as string} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 shadow-sm hover:border-blue-200 transition-all group rounded-2xl">
+                            <div key={ev.id as string} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 shadow-sm hover:border-blue-200 transition-all group rounded-2xl">
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
                                         <span className={cn("flex items-center gap-1.5 text-[9px] font-medium px-2 py-1", r.pill)}>
@@ -46,7 +46,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                                             {ev.rating as string}
                                         </span>
                                         {(ev.points as number) > 0 && (
-                                            <span className="text-[8px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 border border-amber-100 rounded-lg">+{ev.points as number} XP</span>
+                                            <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>+{ev.points as number} XP</span>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -67,15 +67,15 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                         );
                     })}
                     {studentEvals.length === 0 && (
-                        <div className="py-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-2xl">
-                            <History size={28} className="mx-auto text-slate-200 mb-3" />
-                            <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات حالياً</p>
+                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-2xl" style={{ border: '2px dashed', borderColor: '#E11D4830' }}>
+                            <History size={28} style={{ color: '#E11D4830' }} className="mb-3" />
+                            <p className="text-[10px] font-bold text-slate-400">لا يوجد سجل تقييمات حالياً</p>
                         </div>
                     )}
                 </div>
 
-                <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
-                    <button onClick={onClose} className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium text-xs hover:opacity-90 transition-all rounded-lg">إغلاق</button>
+                <div className="p-4 border-t border-slate-100/50 dark:border-slate-800/50 flex justify-center bg-white dark:bg-slate-900">
+                    <button onClick={onClose} className="px-8 py-2.5 bg-[#172554] hover:bg-[#0f1d3d] text-white font-bold text-xs transition-all shadow-sm rounded-xl">إغلاق</button>
                 </div>
             </div>
         </div>

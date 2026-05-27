@@ -117,12 +117,12 @@ export const Evaluations = () => {
                             />
                         ))}
                         {teacherStudents.length === 0 && (
-                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-slate-50 dark:bg-slate-900/30 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800">
-                                <div className="w-20 h-20 mx-auto bg-white dark:bg-slate-800 rounded-xl shadow-sm flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-700">
-                                    <User size={36} className="text-slate-300" />
+                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-100/50 dark:border-slate-800/50 shadow-sm">
+                                <div className="w-20 h-20 mx-auto rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#E11D4808', border: '2px dashed', borderColor: '#E11D4830' }}>
+                                    <User size={36} style={{ color: '#E11D48' }} />
                                 </div>
-                                <h3 className="text-lg font-medium text-slate-700 dark:text-white mb-1">لا يوجد طلاب مسجلون حالياً</h3>
-                                <p className="text-sm text-slate-400 max-w-xs">بمجرد تعيين طلاب لكِ، سيظهرون هنا تلقائياً.</p>
+                                <h3 className="text-lg font-bold text-slate-700 dark:text-white mb-1">لا يوجد طلاب مسجلون حالياً</h3>
+                                <p className="text-sm font-medium text-slate-400 max-w-xs">بمجرد تعيين طلاب لكِ، سيظهرون هنا تلقائياً.</p>
                             </div>
                         )}
                     </div>

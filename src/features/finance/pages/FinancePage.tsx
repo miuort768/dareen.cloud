@@ -32,49 +32,41 @@ export const Finance = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* ── Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 dark:from-slate-950 dark:via-emerald-950 dark:to-slate-950 border border-white/5 px-6 md:px-8 py-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-500/20 blur-[100px] pointer-events-none" />
-                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 blur-[80px] pointer-events-none" />
-                    <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_20px_rgba(52,211,153,0.3)] shrink-0 bg-white/10 flex items-center justify-center rounded-xl">
-                            <span className="text-xl font-medium text-white">د</span>
+                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-5 md:px-7 py-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#10B98112', color: '#10B981' }}>
+                            <span className="text-xl font-bold">د</span>
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-medium text-white leading-tight tracking-tighter">الإدارة المالية والحسابات</h1>
+                            <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">الإدارة المالية والحسابات</h1>
                             <div className="flex items-center gap-2 mt-1">
-                                <TrendingUp size={10} className={isProfit ? "text-emerald-400" : "text-rose-400"} />
-                                <span className={cn("text-[10px] font-medium uppercase tracking-widest", isProfit ? "text-emerald-400" : "text-rose-400")}>
+                                <TrendingUp size={10} style={{ color: isProfit ? '#10B981' : '#F43F5E' }} />
+                                <span style={{ color: isProfit ? '#10B981' : '#F43F5E' }} className="text-[10px] font-bold uppercase tracking-widest">
                                     هامش الربح: {state.profitMargin}%
                                 </span>
-                                <span className="w-1 h-1 bg-white/20 rounded-full" />
-                                <span className="text-[10px] text-slate-400 font-normal">مركز التقارير الموحد</span>
+                                <span className="w-1 h-1 bg-slate-200 rounded-full" />
+                                <span className="text-[10px] font-medium text-[#64748B]">مركز التقارير الموحد</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative z-10 flex items-center gap-2 no-print">
-                        <button
-                            onClick={() => navigate('/monthly-closing')}
-                            className="flex items-center gap-2 h-9 px-4 bg-white/10 hover:bg-white/15 text-white text-[10px] font-medium border border-white/10 transition-all uppercase tracking-widest rounded-lg"
-                        >
+                    <div className="flex items-center gap-2 no-print">
+                        <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-2 h-9 px-4 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all rounded-xl shadow-sm">
                             <CalendarCheck size={13} />
-                            <span className="hidden sm:inline">تسوية الشهر</span>
+                            <span className="hidden sm:inline whitespace-nowrap">تسوية الشهر</span>
                         </button>
-                        <button
-                            onClick={() => actions.setShowAddModal(true)}
-                            className="flex items-center gap-2 h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-[10px] font-medium border border-amber-400/30 transition-all uppercase tracking-widest rounded-lg"
-                        >
+                        <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-2 h-9 px-4 bg-[#10B981] hover:bg-emerald-700 text-white text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl">
                             <Plus size={13} />
                             تسجيل معاملة
                         </button>
-                        <button className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-white/15 text-slate-300 border border-white/10 transition-all rounded-lg">
+                        <button className="w-9 h-9 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all rounded-xl shadow-sm">
                             <Download size={14} />
                         </button>
                     </div>
                 </div>
 
                 <div className="py-5 space-y-6">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
                         <FinanceStats
                             totalIncome={state.totalIncome}
                             monthIncome={state.monthIncome}
@@ -86,7 +78,7 @@ export const Finance = () => {
                         />
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 md:p-6 rounded-2xl">
                         <FixedExpensesManager
                             expenses={state.fixedExpenses}
                             onUpdateExpense={actions.handleUpdateFixedExpense}

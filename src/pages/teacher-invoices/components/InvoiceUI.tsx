@@ -3,7 +3,7 @@ import { RefreshCw } from 'lucide-react';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-    'bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
+    'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl',
     className
   )}>
     {children}
@@ -11,13 +11,13 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 );
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
-  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-    <div className="w-8 h-8 flex items-center justify-center bg-[#172554] text-white rounded-xl">
-      <Icon size={15} />
+  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
+    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+      <Icon size={15} style={{ color: '#8B5CF6' }} />
     </div>
     <div>
       <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
-      {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+      {sub && <p className="text-[10px] font-bold text-slate-400 mt-0.5">{sub}</p>}
     </div>
   </div>
 );
@@ -30,9 +30,9 @@ export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 
 const baseInput = [
   'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-  'px-3 py-2 text-xs font-medium text-slate-800 dark:text-white',
-  'focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200/50 dark:focus:ring-blue-700/50',
-  'transition-all duration-200',
+  'px-3 py-2 text-xs font-bold text-slate-800 dark:text-white',
+  'focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-blue-200/50 dark:focus:ring-blue-700/50',
+  'transition-all duration-200 rounded-xl',
 ].join(' ');
 
 export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

@@ -20,14 +20,15 @@ interface InvoiceTableProps {
     isTeacher: boolean;
 }
 
+const statusColors: Record<string, string> = { 'مدفوعة': '#10B981', 'قيد المعالجة': '#F59E0B' };
+
 const statusStyle = (status: string) => {
-  if (status === 'مدفوعة') return { bg: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400', dot: 'bg-emerald-500', border: 'border-emerald-200 dark:border-emerald-800' };
-  if (status === 'قيد المعالجة') return { bg: 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400', dot: 'bg-amber-500', border: 'border-amber-200 dark:border-amber-800' };
-  return { bg: 'bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-400', dot: 'bg-rose-500', border: 'border-rose-200 dark:border-rose-800' };
+  const color = statusColors[status] || '#F43F5E';
+  return { color, dot: color };
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 bg-[#172554] flex items-center justify-center text-[10px] font-bold text-white rounded-lg">
+  <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -48,13 +49,13 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
     <SectionCard className="hidden md:block overflow-hidden">
       <table className="w-full text-right text-sm border-collapse">
         <thead>
-          <tr className="bg-[#172554]">
-            <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f]">المعلمة</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f]">التخصص</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f] text-center">المبلغ</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f] text-center">الصافي</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f] text-center">الحالة</th>
-            {!isTeacher && <th className="px-4 py-3 text-[9px] font-bold text-white/90 tracking-wider border-b border-[#1e3a5f] text-center">الإجراءات</th>}
+          <tr className="bg-[#0F172A]">
+            <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent">المعلمة</th>
+            <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent">التخصص</th>
+            <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent text-center">المبلغ</th>
+            <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent text-center">الصافي</th>
+            <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent text-center">الحالة</th>
+            {!isTeacher && <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent text-center">الإجراءات</th>}
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -75,14 +76,14 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                     {inv.amount.toLocaleString()} ج.م
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className="inline-flex px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] border border-emerald-100 dark:border-emerald-800/50">
+                    <span className="inline-flex px-2 py-0.5 font-bold text-[10px] rounded-lg" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
                       {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-center">
-                      <span className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all", sc.bg, sc.border)}>
-                        <div className={cn("w-1 h-1", sc.dot)} />
+                      <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-lg" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
+                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.color }} />
                         {inv.status}
                       </span>
                     </div>
@@ -100,7 +101,9 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
             }) : (
               <tr>
                 <td colSpan={!isTeacher ? 6 : 5} className="py-16 text-center">
-                  <GraduationCap className="mx-auto mb-2 text-slate-200 dark:text-slate-700" size={28} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
+                    <GraduationCap size={18} style={{ color: '#8B5CF6' }} />
+                  </div>
                   <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
                 </td>
               </tr>
@@ -116,7 +119,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
         return (
           <div
             key={inv.id}
-            className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl"
+            className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl"
           >
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
@@ -134,20 +137,20 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                     <p className="text-[8px] font-bold text-slate-400 uppercase mb-0.5">المبلغ</p>
                     <span className="font-mono text-sm font-black text-slate-800 dark:text-white">{inv.amount.toLocaleString()} ج.م</span>
                   </div>
-                  <div className="w-px h-6 bg-slate-100 dark:bg-slate-800" />
+                  <div className="w-px h-6 bg-slate-100/50 dark:bg-slate-800" />
                   <div>
                     <p className="text-[8px] font-bold text-slate-400 uppercase mb-0.5">الصافي</p>
-                    <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] font-bold" style={{ color: '#059669' }}>{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
                   </div>
                 </div>
-                <span className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border", sc.bg, sc.border)}>
-                  <div className={cn("w-1 h-1", sc.dot)} />
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-lg" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
+                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.color }} />
                   {inv.status}
                 </span>
               </div>
             </div>
             {!isTeacher && (
-              <div className="flex items-center justify-end gap-1 px-4 py-2.5 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-end gap-1 px-4 py-2.5 border-t border-slate-100/50 dark:border-slate-800">
                 <ActionButton icon={Edit} onClick={() => handleEdit(inv)} title="تعديل" hoverClass="hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20" />
                 <ActionButton icon={Trash2} onClick={() => handleDelete(inv.id)} title="حذف" hoverClass="hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20" />
               </div>
@@ -155,8 +158,10 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
           </div>
         );
       }) : (
-        <SectionCard className="py-16 text-center">
-          <GraduationCap className="mx-auto mb-2 text-slate-200 dark:text-slate-700" size={28} />
+        <SectionCard className="py-16 text-center border-dashed border-slate-200 dark:border-slate-700">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
+            <GraduationCap size={18} style={{ color: '#8B5CF6' }} />
+          </div>
           <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
         </SectionCard>
       )}

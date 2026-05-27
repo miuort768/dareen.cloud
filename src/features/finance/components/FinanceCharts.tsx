@@ -59,11 +59,11 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-0" dir="rtl">
             
             {/* ── Area Chart ── */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-blue-600 flex items-center justify-center rounded-xl">
-                            <Calendar size={15} className="text-white" />
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#10B98112', color: '#10B981' }}>
+                            <Calendar size={15} />
                         </div>
                         <div>
                             <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">تحليل التدفق النقدي</p>
@@ -108,10 +108,10 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
             </div>
 
             {/* ── Pie Chart ── */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm flex flex-col overflow-hidden">
-                <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                    <div className="w-8 h-8 bg-rose-600 flex items-center justify-center rounded-xl">
-                        <PieChartIcon size={15} className="text-white" />
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm flex flex-col overflow-hidden">
+                <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>
+                        <PieChartIcon size={15} />
                     </div>
                     <div>
                         <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">هيكلية المصاريف</p>

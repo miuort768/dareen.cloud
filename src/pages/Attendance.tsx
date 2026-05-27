@@ -20,21 +20,21 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
     </div>
 );
 
-const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
+const SectionTitle = ({ icon: Icon, label, sub, color = '#2563EB' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
-            <Icon size={16} className="text-blue-600" />
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
+            <Icon size={16} />
         </div>
         <div>
-            <p className="text-sm font-normal text-slate-800 dark:text-white leading-none">{label}</p>
-            {sub && <p className="text-[10px] text-slate-400 mt-1">{sub}</p>}
+            <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">{label}</p>
+            {sub && <p className="text-[10px] font-bold text-[#64748B] mt-1">{sub}</p>}
         </div>
     </div>
 );
@@ -46,8 +46,8 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700',
-            'text-white text-xs font-normal px-4 py-2.5 rounded-xl transition-all shadow-sm',
+            'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -279,8 +279,8 @@ export const Attendance = () => {
                 {isTeacher ? (
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden rounded-2xl">
-                            <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
-                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" />
+                            <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100/50 dark:border-slate-800/50">
+                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" color="#2563EB" />
                                 <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
@@ -288,7 +288,7 @@ export const Attendance = () => {
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         placeholder="ابحث باسم الطالب أو المادة..."
-                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-blue-600 transition-all"
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:border-blue-600 transition-all"
                                     />
                                 </div>
                             </div>
@@ -317,8 +317,8 @@ export const Attendance = () => {
                                         />
                                     )) : (
                                         <div className="col-span-full py-16 text-center">
-                                            <Users className="mx-auto mb-2 text-slate-200" size={32} />
-                                            <p className="text-xs font-normal text-slate-400">لا يوجد طلاب متاحون</p>
+                                            <Users className="mx-auto mb-2" size={32} style={{ color: '#64748B30' }} />
+                                            <p className="text-xs font-bold text-[#64748B]">لا يوجد طلاب متاحون</p>
                                         </div>
                                     )}
                             </div>
@@ -337,17 +337,17 @@ export const Attendance = () => {
 
                             return (
                                 <SectionCard key={teacher} className="p-0 overflow-hidden">
-                                    <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
+                                    <div className="bg-white dark:bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-100/50 dark:border-slate-800/50">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-blue-600 flex items-center justify-center text-white font-normal rounded-lg text-xs">
+                                            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-normal text-xs text-white">قائمة الطلاب: {teacher}</h3>
-                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">إدارة الحصص والتحضير</p>
+                                                <h3 className="text-xs font-bold text-slate-800 dark:text-white">قائمة الطلاب: {teacher}</h3>
+                                                <p className="text-[9px] font-bold text-[#64748B] tracking-wider">إدارة الحصص والتحضير</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-normal bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
+                                        <div className="text-[9px] font-bold px-3 py-1 rounded-xl" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
                                             {filteredTStudents.length} طالب
                                         </div>
                                     </div>
@@ -373,39 +373,39 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-normal rounded-xl text-sm">
+                                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
-                                                                    <h4 className="font-normal text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
+                                                                    <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-normal text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
+                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100/50 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
-                                                                        <p className="text-[9px] font-normal text-slate-400 flex items-center gap-1">
-                                                                            <BookOpen size={10} className="text-blue-600" />
+                                                                        <p className="text-[9px] font-bold text-[#64748B] flex items-center gap-1">
+                                                                            <BookOpen size={10} style={{ color: '#2563EB' }} />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-medium bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
+                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-md uppercase animate-pulse" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>
                                                                 انتظار
                                                             </div>
                                                         </div>
 
                                                         <div className="space-y-1.5">
-                                                            <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
+                                                            <div className="flex justify-between items-center text-[9px] font-bold uppercase text-[#64748B]">
                                                                 <span>تغطية الحصص</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
-                                                            <div className="h-1 bg-white dark:bg-slate-900 rounded-full overflow-hidden">
+                                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                                                                 <div
                                                                     className={cn(
-                                                                        "h-full transition-all duration-1000",
+                                                                        "h-full transition-all duration-1000 rounded-full",
                                                                         (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-rose-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                                                                     )}
                                                                     style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
@@ -416,13 +416,13 @@ export const Attendance = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-xl flex items-center justify-center transition-all"
+                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-xl flex items-center justify-center transition-all"
+                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 غياب
                                                             </button>

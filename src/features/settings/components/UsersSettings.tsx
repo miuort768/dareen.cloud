@@ -22,15 +22,15 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                     </div>
                     <p className="text-sm font-normal text-slate-800 dark:text-white">الحسابات والمسؤولون</p>
                 </div>
-                <span className="text-[10px] font-normal text-[#2563EB] bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1 rounded-lg">
+                <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                     {users.length} حسابات
                 </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {users.map(u => (
-                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm group hover:border-[#2563EB]/30 transition-all">
+                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl p-4 shadow-sm group hover:border-[#2563EB]/30 transition-all">
                         <div className="flex justify-between items-start mb-3">
-                            <div className="w-10 h-10 bg-[#2563EB] text-white rounded-xl flex items-center justify-center font-normal text-sm">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                 {u.username[0].toUpperCase()}
                             </div>
                             <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">

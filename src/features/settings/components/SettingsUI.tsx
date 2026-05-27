@@ -54,7 +54,7 @@ export const THEME_COLORS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-5',
         className
     )}>
         {children}
@@ -62,19 +62,19 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 );
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
-            <Icon size={16} className="text-[#2563EB]" />
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+            <Icon size={16} style={{ color: '#2563EB' }} />
         </div>
         <div>
-            <p className="text-sm font-normal text-slate-800 dark:text-white">{label}</p>
-            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[10px] font-bold text-slate-400 mt-0.5">{sub}</p>}
         </div>
     </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[11px] font-normal text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+    <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
         {children}
     </label>
 );
@@ -84,7 +84,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
         {...props}
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
+            'rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 dark:text-white',
             'focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10 transition-all',
             props.className
         )}
@@ -96,7 +96,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
         {...props}
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white resize-none',
+            'rounded-xl px-3 py-2.5 text-sm font-bold text-slate-800 dark:text-white resize-none',
             'focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10 transition-all',
             props.className
         )}
@@ -125,7 +125,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700',
-            'text-white text-xs font-normal px-4 py-2.5 rounded-lg transition-all',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm active:scale-95 transition-all',
             className
         )}
     >
@@ -139,9 +139,9 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800',
-            'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
-            'text-xs font-normal px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 transition-all',
+            'flex items-center justify-center gap-2 bg-white dark:bg-slate-800',
+            'hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
+            'text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm active:scale-95 transition-all',
             className
         )}
     >
@@ -155,11 +155,12 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-900/20',
-            'hover:bg-rose-600 hover:text-white text-rose-600',
-            'text-xs font-normal px-4 py-2.5 rounded-lg border border-rose-200 dark:border-rose-800 transition-all',
+            'flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-800',
+            'hover:bg-rose-600 hover:border-rose-600 hover:text-white text-rose-600',
+            'text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm active:scale-95 transition-all',
             className
         )}
+        style={{ backgroundColor: '#F43F5E12' }}
     >
         {children}
     </button>
@@ -168,14 +169,14 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
 export const ToggleRow = ({
     icon: Icon, label, sub, checked, onChange
 }: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
-    <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+    <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100/50 dark:border-slate-800/50">
         <div className="flex items-center gap-3">
-            <div className="w-7 h-7 flex items-center justify-center bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
-                <Icon size={14} className="text-slate-400" />
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+                <Icon size={14} style={{ color: '#2563EB' }} />
             </div>
             <div>
-                <p className="text-xs font-normal text-slate-700 dark:text-slate-200">{label}</p>
-                {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{label}</p>
+                {sub && <p className="text-[10px] font-bold text-slate-400 mt-0.5">{sub}</p>}
             </div>
         </div>
         <Toggle checked={checked} onChange={onChange} />

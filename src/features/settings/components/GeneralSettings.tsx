@@ -116,12 +116,12 @@ export const GeneralSettings = ({
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-xl">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
                         <FieldLabel>عدد أيام التجميد</FieldLabel>
                         <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
-                        <p className="text-[9px] text-slate-400 mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
+                        <p className="text-[9px] font-bold text-slate-400 mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
                     </div>
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-xl">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
                         <ToggleRow
                             icon={Lock}
                             label="قفل التاريخ القديم"

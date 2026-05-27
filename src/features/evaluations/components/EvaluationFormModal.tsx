@@ -17,13 +17,13 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
 
     return (
         <div className="fixed inset-0 bg-slate-900/50  flex items-center justify-center p-4 z-[10001] md:animate-in md:fade-in">
-            <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800 mt-20 md:mt-0 rounded-2xl">
-                <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-blue-600 to-violet-600 dark:from-rose-500 dark:to-rose-600 text-white">
-                    <h3 className="text-sm font-medium flex items-center gap-2">
+            <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden border border-slate-100/50 dark:border-slate-800/50 mt-20 md:mt-0 rounded-2xl">
+                <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center bg-[#172554] text-white">
+                    <h3 className="text-sm font-bold flex items-center gap-2">
                         <Award size={16} />
                         {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name || ''}` : 'إضافة تقييم جديد'}
                     </h3>
-                    <button onClick={onClose} className="w-7 h-7 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-lg"><X size={14} /></button>
+                    <button onClick={onClose} className="w-7 h-7 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-xl"><X size={14} /></button>
                 </div>
 
                 <div className="p-4 overflow-y-auto space-y-4">
@@ -65,13 +65,13 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                                 <div className="flex gap-1.5">
                                     {[5, 10, 20, 50].map(p => (
                                         <button key={p} type="button" onClick={() => onChange({ ...formData, points: p })}
-                                            className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 px-2 py-0.5 font-normal text-[9px] transition-colors rounded-lg">+{p}</button>
+                                            className="px-2 py-0.5 font-bold text-[9px] transition-colors rounded-lg" style={{ backgroundColor: '#F59E0B12', color: '#D97706', border: '1px solid #F59E0B30' }}>+{p}</button>
                                     ))}
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 rounded-xl">
-                                    <Zap size={16} className="text-amber-500 fill-current" />
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#F59E0B12' }}>
+                                    <Zap size={16} style={{ color: '#D97706' }} />
                                 </div>
                                 <input type="number" value={formData.points || ''} onChange={(e) => onChange({ ...formData, points: Number(e.target.value) })}
                                     placeholder="0" min="0"
@@ -88,9 +88,9 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                     </form>
                 </div>
 
-                <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
-                    <button type="button" onClick={onClose} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-medium hover:bg-slate-200 transition-all rounded-lg">إلغاء</button>
-                    <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-blue-600 dark:bg-rose-500 hover:bg-blue-700 dark:hover:bg-rose-600 text-white text-xs font-medium transition-all shadow-sm shadow-blue-500/20 flex items-center gap-2 rounded-lg">
+                <div className="p-4 border-t border-slate-100/50 dark:border-slate-800/50 flex justify-end gap-3">
+                    <button type="button" onClick={onClose} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-bold hover:bg-slate-200 transition-all rounded-xl">إلغاء</button>
+                    <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-[#172554] hover:bg-[#0f1d3d] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-2 rounded-xl">
                         <CheckCircle2 size={14} /> إرسال التقييم
                     </button>
                 </div>

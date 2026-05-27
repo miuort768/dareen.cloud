@@ -41,45 +41,39 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60  animate-in fade-in duration-300" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-sm rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-sm rounded-2xl overflow-hidden border border-slate-100/50 dark:border-slate-800/50 animate-in zoom-in-95 duration-300">
                 {/* Header */}
-                <div className="p-6 bg-slate-900 text-white flex justify-between items-center relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-32 h-full bg-white/5 skew-x-[30deg] -translate-x-16"></div>
-                    <div className="relative z-10 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#2563EB] flex items-center justify-center shadow-sm rounded-xl">
+                <div className="p-5 bg-[#172554] text-white flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#ffffff15' }}>
                             <DollarSign size={20} />
                         </div>
                         <div>
-                            <h3 className="text-lg font-medium tracking-tighter uppercase italic">تسجيل معاملة مالية</h3>
-                            <p className="text-[10px] font-normal text-slate-400 uppercase tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
+                            <h3 className="text-base font-bold">تسجيل معاملة مالية</h3>
+                            <p className="text-[10px] font-medium text-white/70 tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
                         </div>
                     </div>
-                    <button 
-                        onClick={onClose}
-                        className="relative z-10 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors rounded-lg"
-                    >
-                        <X size={20} />
-                    </button>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl"><X size={18} /></button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Tag size={12} className="text-[#2563EB]" /> نوع المعاملة
+                            <label className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
+                                <Tag size={11} style={{ color: '#2563EB' }} /> نوع المعاملة
                             </label>
                             <select
                                 value={newTransaction.type}
                                 onChange={e => setNewTransaction({ ...newTransaction, type: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl appearance-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl appearance-none"
                             >
                                 <option value="income">إيراد مالي (+)</option>
                                 <option value="expense">مصروفات (-)</option>
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <DollarSign size={12} className="text-[#2563EB]" /> المبلغ المستحق
+                            <label className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
+                                <DollarSign size={11} style={{ color: '#2563EB' }} /> المبلغ المستحق
                             </label>
                             <input
                                 type="number"
@@ -87,7 +81,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                                 step="any"
                                 value={newTransaction.amount}
                                 onChange={e => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                                 placeholder="0.00"
                             />
                         </div>
@@ -95,54 +89,47 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Info size={12} className="text-[#2563EB]" /> التصنيف الحسابي
+                            <label className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
+                                <Info size={11} style={{ color: '#2563EB' }} /> التصنيف الحسابي
                             </label>
                             <input
                                 type="text"
                                 required
                                 value={newTransaction.category}
                                 onChange={e => setNewTransaction({ ...newTransaction, category: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                                 placeholder="مثال: إيجار، مكافأة..."
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                                <Calendar size={12} className="text-[#2563EB]" /> تاريخ المعاملة
+                            <label className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest flex items-center gap-1.5">
+                                <Calendar size={11} style={{ color: '#2563EB' }} /> تاريخ المعاملة
                             </label>
                             <input
                                 type="date"
                                 required
                                 value={newTransaction.date}
                                 onChange={e => setNewTransaction({ ...newTransaction, date: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
+                        <label className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
                         <textarea
                             value={newTransaction.description}
                             onChange={e => setNewTransaction({ ...newTransaction, description: e.target.value })}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl h-24 resize-none"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#2563EB] outline-none transition-all dark:text-white rounded-xl h-24 resize-none"
                             placeholder="وصف تفصيلي للعملية المالية..."
                         />
                     </div>
 
                     <div className="flex gap-4 pt-4">
-                        <button 
-                            type="button"
-                            onClick={onClose}
-                            className="flex-1 px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200 rounded-lg"
-                        >
+                        <button type="button" onClick={onClose} className="flex-1 px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200 rounded-xl">
                             إلغاء
                         </button>
-                        <button 
-                            type="submit" 
-                            className="flex-[2] bg-[#2563EB] text-white font-medium py-4 uppercase tracking-[2px] shadow-sm shadow-blue-100 dark:shadow-none transition-all hover:-translate-y-1 flex items-center justify-center gap-3 rounded-lg"
-                        >
+                        <button type="submit" className="flex-[2] bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 uppercase tracking-[2px] shadow-sm transition-all active:scale-95 flex items-center justify-center gap-3 rounded-xl">
                             <Save size={18} />
                             تأكيد وحفظ العملية
                         </button>

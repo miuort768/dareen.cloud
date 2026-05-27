@@ -24,21 +24,21 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
     return (
         <div className="px-0 mb-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4">
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-4">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center rounded-xl">
-                            <SlidersHorizontal size={14} className="text-blue-600" />
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                            <SlidersHorizontal size={14} />
                         </div>
                         <div>
-                            <h3 className="text-xs font-normal text-slate-800 dark:text-white">فلترة السجلات</h3>
-                            <p className="text-[10px] text-slate-400">تخصيص عرض الجلسات</p>
+                            <h3 className="text-xs font-bold text-slate-800 dark:text-white">فلترة السجلات</h3>
+                            <p className="text-[10px] font-bold text-[#64748B]">تخصيص عرض الجلسات</p>
                         </div>
                     </div>
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white font-normal text-[10px] rounded-lg transition-all"
+                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>

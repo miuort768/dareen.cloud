@@ -13,35 +13,32 @@ interface AttendanceHeaderProps {
 
 export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, isTeacher }) => {
     return (
-        <div className="relative overflow-hidden bg-gradient-to-br from-amber-900 via-amber-800 to-slate-900 shadow-sm shadow-amber-500/15 px-4 md:px-6 py-8 md:py-10 border-y md:border-none border-blue-400/30 print:hidden mb-2">
-            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
-            <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 ">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <h1 className="text-lg md:text-2xl font-medium text-white tracking-tight leading-none">تحضير الطلاب والمتابعة اليومية</h1>
-                        <p className="text-[10px] md:text-[11px] font-normal text-white/60 mt-1.5 uppercase tracking-widest">إدارة الجداول الأكاديمية والتحضير المباشر</p>
-                    </div>
+        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-5 md:px-7 py-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
+                    <Sparkles size={22} />
                 </div>
+                <div>
+                    <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
+                    <p className="text-[10px] font-bold text-[#64748B] mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
+                </div>
+            </div>
 
-                <div className="flex items-center gap-3 self-end md:self-center">
-                    {!isTeacher && (
-                        <div className="flex items-center gap-2 bg-white/15  px-4 py-2 border border-white/20 shadow-sm transition-all hover:bg-white/25">
-                            <Calendar size={15} className="text-white/80" />
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => onDateChange(e.target.value)}
-                                className="bg-transparent border-none p-0 text-[11px] font-medium text-white outline-none focus:ring-0 cursor-pointer [color-scheme:dark]"
-                            />
-                        </div>
-                    )}
-                    <div className="flex items-center gap-2 text-[10px] font-medium text-white bg-emerald-500/20 px-4 py-2 border border-emerald-500/30 uppercase tracking-widest">
-                        <Sparkles size={12} className="text-emerald-300 animate-pulse" />
-                        Live System
+            <div className="flex items-center gap-3">
+                {!isTeacher && (
+                    <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <Calendar size={14} style={{ color: '#2563EB' }} />
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => onDateChange(e.target.value)}
+                            className="bg-transparent border-none p-0 text-[10px] font-bold text-[#0F172A] dark:text-white outline-none focus:ring-0 cursor-pointer w-28"
+                        />
                     </div>
+                )}
+                <div className="flex items-center gap-2 text-[10px] font-bold rounded-xl px-3 py-1.5 border shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#D97706', borderColor: '#F59E0B30' }}>
+                    <Sparkles size={12} />
+                    Live System
                 </div>
             </div>
         </div>

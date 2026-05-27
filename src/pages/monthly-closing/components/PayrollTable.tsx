@@ -23,8 +23,8 @@ interface PayrollTableProps {
 export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacherAdjustments, handleTeacherAdjustment, setSelectedTeacherForSlip, startDate, endDate }) => {
     return (
         <SectionCard>
-            <div className="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
-                <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} />
+            <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center">
+                <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} color="#2563EB" />
                 <SecondaryBtn className="h-8 text-[10px]">
                     <Download size={14} /> تصدير PDF
                 </SecondaryBtn>
@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white font-bold text-[10px] rounded-xl">
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>

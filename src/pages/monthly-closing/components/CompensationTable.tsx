@@ -19,8 +19,8 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
 
     return (
         <SectionCard>
-            <div className="p-4 border-b border-slate-50 dark:border-slate-800">
-                <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" />
+            <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50">
+                <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" color="#F59E0B" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
@@ -39,14 +39,14 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                                 <td className="px-4 py-4 text-xs font-bold text-slate-600 dark:text-slate-400">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-[10px] text-rose-500">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
-                                    <div className="inline-block px-2 py-0.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-[9px] font-bold rounded-lg">تعويض معلق</div>
+                                    <div className="inline-block px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>تعويض معلق</div>
                                 </td>
                             </tr>
                         ))}
                         {cancelledNeedingComp.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="px-6 py-20 text-center">
-                                    <CheckCircle2 className="mx-auto mb-3 text-slate-100 dark:text-slate-800" size={48} />
+                                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: '#10B98120' }} />
                                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                 </td>
                             </tr>

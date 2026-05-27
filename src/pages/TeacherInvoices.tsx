@@ -312,54 +312,52 @@ export const TeacherInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 blur-3xl pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-2 space-y-4">
 
-            <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-violet-600 to-emerald-600 text-white rounded-xl">
-                        <GraduationCap size={22} />
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#8B5CF612' }}>
+                        <GraduationCap size={22} style={{ color: '#8B5CF6' }} />
                     </div>
                     <div>
-                        <h1 className="text-lg font-bold text-white leading-tight">������ ��������</h1>
-                        <p className="text-[10px] text-blue-200/70 font-medium leading-none mt-1">����� ����� �������� ������ ��������</p>
+                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">فواتير المعلمات</h1>
+                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة مستحقات المعلمات المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap">
-                    <Sparkles size={13} className="text-emerald-300" />
-                    {stats.totalAmount.toLocaleString()} �.� ������ �������
+                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
+                    <Sparkles size={13} />
+                    {stats.totalAmount.toLocaleString()} ج.م إجمالي المستحقات
                 </div>
             </div>
 
             <InvoiceStats stats={stats} />
 
-            <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
                 <div className="flex flex-col lg:flex-row gap-3 items-center justify-between p-3">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: '#94A3B8' }} />
                                 <InputField
-                                    placeholder="��� ���� �������..."
+                                    placeholder="بحث باسم المعلمة..."
                                     className="pr-9 py-2 text-xs"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
                             <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                <Calendar size={14} className="text-slate-400" />
+                                <Calendar size={14} style={{ color: '#94A3B8' }} />
                                 <div className="flex items-center gap-1">
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
-                                    <span className="text-[10px] text-slate-400">?</span>
+                                    <span className="text-[10px] font-bold text-slate-400">إلى</span>
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />
@@ -370,9 +368,9 @@ export const TeacherInvoices = () => {
                                 type="select"
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value)}
-                                className="w-auto min-w-[140px] py-2 text-xs font-normal"
+                                className="w-auto min-w-[140px] py-2 text-xs"
                             >
-                                <option value="all">���� �������</option>
+                                <option value="all">جميع الحالات</option>
                                 {Object.values(INVOICE_STATUS).map(status => (
                                     <option key={status} value={status}>{status}</option>
                                 ))}
@@ -384,17 +382,17 @@ export const TeacherInvoices = () => {
                                 <>
                         <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
                             {showForm ? <X size={14} /> : <Plus size={14} />}
-                            {showForm ? '�����' : '����� ������'}
+                            {showForm ? 'إلغاء' : 'إضافة فاتورة'}
                         </PrimaryBtn>
-                        <SecondaryBtn onClick={handleImportTeachers} title="������� �� ��������">
-                            <UserPlus size={14} /> �������
+                        <SecondaryBtn onClick={handleImportTeachers} title="استيراد من الحصص">
+                            <UserPlus size={14} /> استيراد
                         </SecondaryBtn>
-                        <DangerBtn onClick={handleDeleteAll} title="��� ����">
+                        <DangerBtn onClick={handleDeleteAll} title="حذف الكل">
                             <Trash2 size={14} />
                         </DangerBtn>
                                 </>
                             )}
-                            <SecondaryBtn onClick={() => window.print()} title="����� �����">
+                            <SecondaryBtn onClick={() => window.print()} title="طباعة السجل">
                                 <Printer size={14} />
                             </SecondaryBtn>
                         </div>

@@ -18,7 +18,7 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
     return (
         <div className="space-y-6">
             <SectionCard className="p-6">
-                <SectionTitle icon={BarChart3} label="تحليل ربحية المواد العلمية" sub="مقارنة الإيرادات مقابل المصاريف" />
+                <SectionTitle icon={BarChart3} label="تحليل ربحية المواد العلمية" sub="مقارنة الإيرادات مقابل المصاريف" color="#2563EB" />
                 <div className="h-[300px] w-full mt-6">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={subjectAnalysis}>
@@ -35,18 +35,23 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {subjectAnalysis.map((subj, idx) => (
-                    <SectionCard key={idx} className="p-5 border-t-4 border-blue-600">
-                        <h3 className="text-xs font-bold text-slate-800 dark:text-white mb-3">{subj.name}</h3>
+                    <SectionCard key={idx} className="p-5">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                <span className="text-xs font-black">{String(subj.name).charAt(0)}</span>
+                            </div>
+                            <h3 className="text-xs font-bold text-slate-800 dark:text-white">{subj.name}</h3>
+                        </div>
                         <div className="space-y-2">
                             <div className="flex justify-between items-center text-[10px]">
-                                <span className="text-slate-400">صافي الربح</span>
-                                <span className="font-bold text-blue-600">{subj.profit.toLocaleString()} ج.م</span>
+                                <span className="text-[#64748B] font-bold">صافي الربح</span>
+                                <span className="font-black" style={{ color: '#2563EB' }}>{subj.profit.toLocaleString()} ج.م</span>
                             </div>
-                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden">
-                                <div className="h-full bg-blue-500" style={{ width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
+                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full">
+                                <div className="h-full rounded-full" style={{ backgroundColor: '#2563EB', width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
                             </div>
-                            <div className="flex justify-between items-center text-[9px] text-slate-400 mt-1">
-                                <span>النشاط: {subj.sessionsCount} حصة</span>
+                            <div className="flex justify-between items-center text-[9px] text-[#64748B] mt-1">
+                                <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
                             </div>
                         </div>
                     </SectionCard>

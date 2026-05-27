@@ -3,21 +3,21 @@ import { cn } from '../../../lib/utils';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 shadow-sm rounded-2xl',
+        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl',
         className
     )}>
         {children}
     </div>
 );
 
-export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#172554] text-white rounded-xl">
+export const SectionTitle = ({ icon: Icon, label, sub, color = '#2563EB' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
             <Icon size={15} />
         </div>
         <div>
             <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
-            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+            {sub && <p className="text-[10px] text-[#64748B] mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -55,13 +55,17 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
     </button>
 );
 
-export const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, subValue?: string, bg: string }) => (
-    <SectionCard className="p-4 flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 flex items-center justify-center mb-2 rounded-xl", bg)}>
-            <Icon size={16} className={color} />
+export const StatItem = ({ title, value, icon: Icon, color, subValue }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, subValue?: string }) => (
+    <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-4">
+        <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12` }}>
+                <Icon size={20} style={{ color }} />
+            </div>
+            <div className="min-w-0">
+                <p className="text-[10px] font-bold text-[#64748B]">{title}</p>
+                <p className="text-lg font-black leading-none mt-0.5" style={{ color }}>{value}</p>
+                {subValue && <p className="text-[9px] font-bold text-[#64748B] mt-1">{subValue}</p>}
+            </div>
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>
-        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value}</p>
-        {subValue && <p className="text-[9px] text-slate-400 mt-0.5">{subValue}</p>}
-    </SectionCard>
+    </div>
 );

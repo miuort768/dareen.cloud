@@ -28,12 +28,12 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
     if (page > totalPages && page !== 1) setPage(1);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden" dir="rtl">
 
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center rounded-xl">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
                         <History size={15} />
                     </div>
                     <div>
@@ -45,7 +45,9 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                 </div>
                 <button
                     onClick={onDeleteAll}
-                    className="flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 font-medium text-[9px] rounded-lg border border-rose-100 dark:border-rose-800 hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-all uppercase tracking-widest"
+                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold rounded-xl border transition-all uppercase tracking-widest shadow-sm" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E', borderColor: '#F43F5E30' }} 
+                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#F43F5E'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#F43F5E'; }}
+                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#F43F5E12'; e.currentTarget.style.color = '#F43F5E'; e.currentTarget.style.borderColor = '#F43F5E30'; }}
                 >
                     <Trash2 size={12} />
                     تصفير الأرشيف
@@ -75,10 +77,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                         <span className="text-[10px] font-medium text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <div className={cn(
-                                            "w-8 h-8 flex items-center justify-center rounded-xl mx-auto",
-                                            tx.type === 'income' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
-                                        )}>
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center mx-auto" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
                                             {tx.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                                         </div>
                                     </td>
@@ -87,12 +86,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                         <p className="text-[9px] text-slate-400 font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className={cn(
-                                            "inline-block px-2 py-0.5 text-[9px] font-medium rounded-lg uppercase tracking-wide",
-                                            tx.type === 'income'
-                                                ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20'
-                                                : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20'
-                                        )}>
+                                        <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded-lg uppercase tracking-wide" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#2563EB12', color: tx.type === 'income' ? '#059669' : '#2563EB' }}>
                                             {tx.category}
                                         </span>
                                     </td>
@@ -133,12 +127,9 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                     const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
                     return (
                         <div key={tx.id} className="p-4 flex items-center gap-3">
-                            <div className={cn(
-                                "w-10 h-10 flex items-center justify-center rounded-xl shrink-0 relative",
-                                tx.type === 'income' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
-                            )}>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                <span className="absolute -top-1 -right-1 text-[8px] font-medium bg-slate-900 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
+                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full" style={{ backgroundColor: '#0F172A', color: 'white' }}>{globalIdx}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">
@@ -167,8 +158,8 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                    <p className="text-[10px] font-normal text-slate-400">
+                <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
+                    <p className="text-[10px] font-bold text-slate-400">
                         {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, transactions.length)} من {transactions.length}
                     </p>
                     <div className="flex items-center gap-1">

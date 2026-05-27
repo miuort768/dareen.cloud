@@ -17,52 +17,52 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
-                <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
+                <div className="bg-[#172554] text-white p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-xl">
-                            <Receipt size={20} className="text-white" />
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#ffffff15' }}>
+                            <Receipt size={20} />
                         </div>
                         <div>
                             <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
-                            <p className="text-[10px] text-slate-400 uppercase tracking-wider">سجل مالي معتمد • {month}</p>
+                            <p className="text-[10px] font-medium text-white/70 tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 transition-colors">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
                         <X size={18} />
                     </button>
                 </div>
 
                 <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh]">
-                    <div className="flex justify-between items-start pb-6 border-b border-slate-50 dark:border-slate-800">
+                    <div className="flex justify-between items-start pb-6 border-b border-slate-100/50 dark:border-slate-800/50">
                         <div>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">المعلمة</p>
+                            <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">المعلمة</p>
                             <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
-                            <p className="text-[10px] font-bold text-[#2563EB] bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 inline-block mt-1 rounded-lg">{teacher.subject}</p>
+                            <p className="text-[10px] font-bold px-2 py-0.5 inline-block mt-1 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>{teacher.subject}</p>
                         </div>
                         <div className="text-left">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">التاريخ</p>
+                            <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">التاريخ</p>
                             <p className="text-xs font-black text-slate-800 dark:text-white">{new Date().toLocaleDateString('ar-EG')}</p>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-700">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">إجمالي الحصص</p>
-                            <p className="text-2xl font-black text-slate-800 dark:text-white font-mono">{teacher.sessionsCount}</p>
+                        <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
+                            <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">إجمالي الحصص</p>
+                            <p className="text-2xl font-black text-[#0F172A] dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 border border-blue-100 dark:border-blue-800/30 rounded-xl">
-                            <p className="text-[10px] font-bold text-[#2563EB] uppercase mb-1">صافي المستحق</p>
+                        <div className="p-4 border rounded-xl" style={{ backgroundColor: '#2563EB08', borderColor: '#2563EB20' }}>
+                            <p className="text-[10px] font-bold uppercase mb-1" style={{ color: '#2563EB' }}>صافي المستحق</p>
                             <div className="flex items-baseline gap-1">
-                                <p className="text-2xl font-black text-[#2563EB] font-mono">{teacher.totalAmount.toLocaleString()}</p>
-                                <span className="text-[10px] font-bold text-[#2563EB] uppercase">{CURRENCY_SYMBOL}</span>
+                                <p className="text-2xl font-black font-mono" style={{ color: '#2563EB' }}>{teacher.totalAmount.toLocaleString()}</p>
+                                <span className="text-[10px] font-bold uppercase" style={{ color: '#2563EB' }}>{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
-                        <div className="border border-slate-100 dark:border-slate-800 overflow-hidden">
+                        <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" color="#2563EB" />
+                        <div className="border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
                             <table className="w-full text-right text-[11px]">
                                 <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>

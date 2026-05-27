@@ -114,33 +114,36 @@ export const AdminBlog = () => {
     );
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-6 animate-fade-in">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-medium text-slate-900 dark:text-white">����� ������� ���������</h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm">��� ���� �������� ������ ���� ������ �� ������ �����.</p>
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-2 space-y-6">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#E11D4812' }}>
+                        <BookOpen size={22} style={{ color: '#E11D48' }} />
+                    </div>
+                    <div>
+                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">المقالات التعليمية</h1>
+                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
+                    </div>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-700 text-white font-medium rounded-xl hover:from-red-700 hover:to-rose-800 transition-all shadow-sm shadow-red-600/20"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#E11D48] text-white font-bold rounded-xl hover:bg-[#BE123C] transition-all shadow-sm active:scale-95"
                 >
-                    <Plus size={20} />
-                    <span>���� ����</span>
+                    <Plus size={18} />
+                    <span className="text-xs">إضافة مقال</span>
                 </button>
             </div>
 
-            {/* Search & Filters */}
-            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 shadow-sm flex items-center gap-4 rounded-2xl">
                 <div className="relative flex-grow">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                    <Search className="absolute right-4 top-1/2 -translate-y-1/2" size={20} style={{ color: '#94A3B8' }} />
                     <input
                         type="text"
-                        placeholder="��� �� �������� �� ���������..."
+                        placeholder="بحث عن مقالات أو تصنيفات..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-12 py-3 focus:ring-2 focus:ring-red-500 transition-all font-normal text-sm rounded-xl"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-12 py-3 focus:border-[#E11D48] transition-all font-bold text-sm rounded-xl outline-none"
                     />
                 </div>
             </div>
@@ -148,35 +151,37 @@ export const AdminBlog = () => {
             {/* Posts Grid */}
             {loading ? (
                 <div className="flex items-center justify-center py-20">
-                    <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
+                    <div className="w-10 h-10 rounded-full border-2 border-slate-200 border-t-[#E11D48] animate-spin" />
                 </div>
             ) : filteredPosts.length === 0 ? (
-                <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl">
-                    <BookOpen size={48} className="mx-auto text-slate-300 mb-4" />
-                    <p className="text-slate-500 dark:text-slate-400 font-normal">�� ���� ������ ������ ���� ������ ��� ����!</p>
+                <div className="text-center py-20 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: '#E11D4812' }}>
+                        <BookOpen size={22} style={{ color: '#E11D48' }} />
+                    </div>
+                    <p className="text-sm font-bold text-slate-400">لا توجد مقالات بعد! أضف أول مقال الآن</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredPosts.map(post => (
-                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm group overflow-hidden rounded-2xl">
+                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm group overflow-hidden rounded-2xl">
                             <div className="relative h-40 overflow-hidden">
                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 <div className="absolute top-2 right-2">
-                                    <span className="bg-red-600 text-white text-[10px] font-medium px-2 py-1 uppercase">{post.category}</span>
+                                    <span className="text-[10px] font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: '#E11D48', color: '#FFFFFF' }}>{post.category}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h3 className="font-medium text-slate-900 dark:text-white mb-2 line-clamp-2 min-h-[3rem]">{post.title}</h3>
-                                <div className="flex items-center gap-3 text-[10px] text-slate-500 mb-4">
+                                <h3 className="font-bold text-slate-900 dark:text-white mb-2 line-clamp-2 min-h-[3rem] text-sm">{post.title}</h3>
+                                <div className="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-4">
                                     <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
                                     <div className="flex items-center gap-1"><User size={12} /> {post.author}</div>
                                 </div>
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+                                <div className="flex items-center justify-between pt-4 border-t border-slate-100/50 dark:border-slate-800/50">
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleOpenModal(post)} className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"><Edit2 size={18} /></button>
-                                        <button onClick={() => handleDelete(post.id)} className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"><Trash2 size={18} /></button>
+                                        <button onClick={() => handleOpenModal(post)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#2563EB' }}><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDelete(post.id)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#E11D48' }}><Trash2 size={16} /></button>
                                     </div>
-                                    <a href={`/blog/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"><ExternalLink size={18} /></a>
+                                    <a href={`/blog/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 transition-all active:scale-90" style={{ color: '#94A3B8' }}><ExternalLink size={16} /></a>
                                 </div>
                             </div>
                         </div>
@@ -186,36 +191,36 @@ export const AdminBlog = () => {
 
             {/* Modal Form */}
             {isModalOpen && currentPost && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60   animate-fade-in">
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-200 dark:border-slate-800 rounded-2xl">
-                        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                            <h2 className="text-xl font-medium">{currentPost.id ? '����� ����' : '����� ���� ����'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><X size={20} /></button>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
+                        <div className="p-5 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
+                            <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all"><X size={18} /></button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">����� ������</label>
+                        <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-5 custom-scrollbar">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">عنوان المقال</label>
                                     <input
                                         required
                                         type="text"
                                         value={currentPost.title}
                                         onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
-                                        placeholder="����: ���� ��� ��������..."
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                        placeholder="مثال: أفضل نصائح الدراسة..."
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">������ ������� (Slug)</label>
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الرابط المختصر (Slug)</label>
                                     <div className="relative">
-                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
                                         <input
                                             required
                                             type="text"
                                             value={currentPost.slug}
                                             onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left rounded-xl"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
                                             dir="ltr"
                                             placeholder="best-study-tips"
                                         />
@@ -223,122 +228,121 @@ export const AdminBlog = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">�������</label>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التصنيف</label>
                                     <div className="relative">
-                                        <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                                        <Tag className="absolute right-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
                                         <input
                                             type="text"
                                             value={currentPost.category}
                                             onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none pr-10 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
-                                            placeholder="����: ����� �������"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-10 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                            placeholder="مثل: نصائح دراسية"
                                         />
                                     </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">������</label>
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكاتب</label>
                                     <input
                                         type="text"
                                         value={currentPost.author}
                                         onChange={(e) => setCurrentPost({ ...currentPost, author: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">�������</label>
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التاريخ</label>
                                     <input
                                         type="date"
                                         value={currentPost.date?.split('T')[0]}
                                         onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
                                     />
                                 </div>
                             </div>
 
-                            {/* ?? Classification Fields ?? */}
-                            <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-800 p-4 rounded-2xl">
-                                <p className="text-[10px] font-medium text-blue-600 uppercase tracking-widest mb-4">����� ������� � ���� �� ���� ������</p>
+                            <div className="p-4 rounded-2xl" style={{ backgroundColor: '#E11D4808', border: '1px solid #E11D4815' }}>
+                                <p className="text-[10px] font-bold mb-4" style={{ color: '#E11D48' }}>تصنيف تعليمي — سيظهر في صفحة المواد</p>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">��� �������</label>
-                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            <option value="notes">������</option>
-                                            <option value="solutions">�� ���</option>
-                                            <option value="summaries">������</option>
-                                            <option value="foundation">�����</option>
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
+                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            <option value="notes">ملخصات</option>
+                                            <option value="solutions">حلول</option>
+                                            <option value="summaries">مراجعات</option>
+                                            <option value="foundation">تأسيس</option>
                                         </select>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">������</label>
-                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            <option value="kuwait">�����</option>
-                                            <option value="qatar">����</option>
-                                            <option value="uae">�������</option>
-                                            <option value="saudi">�����</option>
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المنهج</label>
+                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            <option value="kuwait">الكويت</option>
+                                            <option value="qatar">قطر</option>
+                                            <option value="uae">الإمارات</option>
+                                            <option value="saudi">السعودية</option>
                                         </select>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">�������</label>
-                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            <option value="primary">�������</option>
-                                            <option value="middle">�����</option>
-                                            <option value="secondary">�����</option>
-                                            <option value="basic">����� (���)</option>
-                                            <option value="preparatory">������ (������)</option>
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المرحلة</label>
+                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            <option value="primary">ابتدائي</option>
+                                            <option value="middle">متوسط</option>
+                                            <option value="secondary">ثانوي</option>
+                                            <option value="basic">أساسي (عمان)</option>
+                                            <option value="preparatory">إعدادي (مصر)</option>
                                         </select>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">����</label>
-                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>���� {g}</option>)}
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">الصف</label>
+                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
                                         </select>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">�����</label>
-                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            <option value="1">��� ���</option>
-                                            <option value="2">��� ����</option>
-                                            <option value="">����</option>
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">الفصل</label>
+                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            <option value="1">الفصل الأول</option>
+                                            <option value="2">الفصل الثاني</option>
+                                            <option value="">بدون</option>
                                         </select>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] font-medium text-slate-400 uppercase">������</label>
-                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-normal focus:ring-2 focus:ring-blue-500">
-                                            <option value="arabic">����</option>
-                                            <option value="math">�������</option>
-                                            <option value="islamic">�������</option>
-                                            <option value="english">�������</option>
-                                            <option value="science">����</option>
-                                            <option value="physics">������</option>
-                                            <option value="chemistry">������</option>
-                                            <option value="biology">�����</option>
-                                            <option value="history">�����</option>
-                                            <option value="geography">�������</option>
-                                            <option value="social">���������</option>
-                                            <option value="computer">���� ���</option>
-                                            <option value="stats">�����</option>
+                                    <div>
+                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المادة</label>
+                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                            <option value="arabic">عربي</option>
+                                            <option value="math">رياضيات</option>
+                                            <option value="islamic">إسلامية</option>
+                                            <option value="english">إنجليزي</option>
+                                            <option value="science">علوم</option>
+                                            <option value="physics">فيزياء</option>
+                                            <option value="chemistry">كيمياء</option>
+                                            <option value="biology">أحياء</option>
+                                            <option value="history">تاريخ</option>
+                                            <option value="geography">جغرافيا</option>
+                                            <option value="social">اجتماعيات</option>
+                                            <option value="computer">حاسب آلي</option>
+                                            <option value="stats">إحصاء</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">���� ���� ������</label>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رابط الصورة الرئيسية</label>
                                 <div className="relative">
-                                    <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                                    <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
                                     <input
                                         type="url"
                                         value={currentPost.coverImage}
                                         onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 pl-10 focus:ring-2 focus:ring-red-500 font-normal text-sm text-left rounded-xl"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
                                         dir="ltr"
                                         placeholder="https://..."
                                     />
                                 </div>
                                 {currentPost.coverImage && (
-                                    <div className="mt-2 h-32 w-full border border-slate-100 dark:border-slate-800 overflow-hidden rounded-xl">
+                                    <div className="mt-2 h-32 w-full border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
                                         <img
                                             src={currentPost.coverImage}
                                             alt="Preview"
@@ -351,57 +355,57 @@ export const AdminBlog = () => {
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">������� �������� (Keywords) - ������ ������</label>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
                                 <input
                                     type="text"
                                     value={currentPost.keywords}
                                     onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm rounded-xl"
-                                    placeholder="��� ����� �����ʡ ��������"
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    placeholder="دراسة, نصائح, تفوق"
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">����� ������ (������ �� ������)</label>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
                                 <textarea
                                     rows={2}
                                     value={currentPost.excerpt}
                                     onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none rounded-xl"
-                                    placeholder="��� ����� ������ ���� ������..."
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none rounded-xl outline-none"
+                                    placeholder="وصف قصير يظهر في نتائج البحث..."
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-medium text-slate-400 uppercase tracking-widest block">����� ������ (���� HTML)</label>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">محتوى المقال (كود HTML)</label>
                                 <textarea
                                     rows={10}
                                     required
                                     value={currentPost.content}
                                     onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-normal text-sm resize-none font-mono rounded-xl"
-                                    placeholder="���� ����� ������ ���..."
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                    placeholder="اكتب محتوى المقال هنا..."
                                 />
                             </div>
                         </form>
 
-                        <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex justify-end gap-4">
+                        <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 flex justify-end gap-3">
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="px-6 py-3 font-normal text-slate-500 hover:text-slate-800 transition-colors rounded-xl"
+                                className="px-5 py-2.5 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl"
                             >
-                                �����
+                                إلغاء
                             </button>
                             <button
                                 type="submit"
                                 disabled={submitting}
                                 onClick={handleSubmit}
-                                className="flex items-center gap-2 px-10 py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:bg-slate-400 shadow-sm shadow-red-600/20 rounded-xl"
+                                className="flex items-center gap-2 px-6 py-2.5 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 shadow-sm active:scale-95 rounded-xl"
                             >
-                                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save size={20} />}
-                                <span>��� ������ ����</span>
+                                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
+                                <span className="text-xs">نشر المقال</span>
                             </button>
                         </div>
                     </div>

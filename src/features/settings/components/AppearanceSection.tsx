@@ -16,12 +16,12 @@ export const AppearanceSection = ({
     setThemeColor
 }: AppearanceSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 rounded-2xl shadow-sm hover:shadow-sm transition-shadow">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="p-2 bg-primary-100 rounded-xl dark:bg-primary-900/30">
-                    <Palette size={20} className="text-primary-600 dark:text-primary-400" />
+        <section className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100/50 dark:border-slate-800/50">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+                    <Palette size={18} style={{ color: '#2563EB' }} />
                 </div>
-                <h2 className="text-lg font-normal text-gray-900 dark:text-white">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                     المظهر
                 </h2>
             </div>
