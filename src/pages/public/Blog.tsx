@@ -286,9 +286,13 @@ export const Blog = () => {
                 <button
                   key={item.id}
                   onClick={() => {
-                    if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
-                    else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
-                    else { setSelectedLevel(item.id); setView('classrooms'); }
+                    setSearchParams(prev => {
+                      const next = new URLSearchParams(prev);
+                      if (view === 'types') { next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k)); }
+                      else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
+                      else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
+                      return next;
+                    });
                   }}
                   className={cn(
                     "relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl text-white overflow-hidden shadow-lg active:scale-[0.97] transition-all",
@@ -403,7 +407,7 @@ export const Blog = () => {
 
             <div className="grid grid-cols-2 gap-2.5">
               {view === 'classrooms' && currentClassrooms.map((cls, i) => (
-                <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }}
+                <button key={cls} onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', cls); n.set('view', 'terms'); n.delete('subject'); return n; }); }}
                   className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-sm active:scale-[0.97] transition-all">
                   <GraduationCap size={18} />
                   <span className="text-[10px] font-black text-center">الصف {gradeNames[cls] || cls}</span>
@@ -412,12 +416,12 @@ export const Blog = () => {
 
               {view === 'terms' && (
                 <>
-                  <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
+                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '1'); n.set('view', 'subjects'); return n; }); }}
                     className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm active:scale-[0.97] transition-all">
                     <BookOpen size={18} />
                     <span className="text-[10px] font-black">ترم أول</span>
                   </button>
-                  <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
+                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '2'); n.set('view', 'subjects'); return n; }); }}
                     className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-sm active:scale-[0.97] transition-all">
                     <BookOpen size={18} />
                     <span className="text-[10px] font-black">ترم ثاني</span>
@@ -426,7 +430,7 @@ export const Blog = () => {
               )}
 
               {view === 'subjects' && currentSubjects.map((subj, i) => (
-                <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }}
+                <button key={subj.id} onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', subj.id); n.set('view', 'results'); return n; }); window.scrollTo(0, 0); }}
                   className={cn("flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br text-white shadow-sm active:scale-[0.97] transition-all", subj.gradient)}>
                   <span className="text-[10px] font-black text-center">{subj.name}</span>
                 </button>
@@ -484,9 +488,13 @@ export const Blog = () => {
                     <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
                       <button
                         onClick={() => {
-                          if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
-                          else if (view === 'curriculums') { setSelectedCurriculum(item.id); setView('grades'); }
-                          else { setSelectedLevel(item.id); setView('classrooms'); }
+                          setSearchParams(prev => {
+                            const next = new URLSearchParams(prev);
+                            if (view === 'types') { next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k)); }
+                            else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
+                            else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
+                            return next;
+                          });
                         }}
                         className={cn(
                           "relative w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl text-white overflow-hidden transition-all duration-300 active:scale-[0.97] shadow-lg",
@@ -616,7 +624,7 @@ export const Blog = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
                   {view === 'classrooms' && currentClassrooms.map((cls, i) => (
                     <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <button onClick={() => { setSelectedGrade(cls); setView('terms'); }}
+                      <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', cls); n.set('view', 'terms'); n.delete('subject'); return n; }); }}
                         className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white border border-white/5 shadow-lg active:scale-[0.97] transition-all">
                         <GraduationCap size={24} />
                         <span className="text-sm font-black text-center">الصف {gradeNames[cls] || cls}</span>
@@ -627,14 +635,14 @@ export const Blog = () => {
                   {view === 'terms' && (
                     <>
                       <div className="animate-in zoom-in-95 duration-500">
-                        <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
+                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '1'); n.set('view', 'subjects'); return n; }); }}
                           className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg active:scale-[0.97] transition-all">
                           <BookOpen size={24} />
                           <span className="text-sm font-black">ترم أول</span>
                         </button>
                       </div>
                       <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: '60ms' }}>
-                        <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
+                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '2'); n.set('view', 'subjects'); return n; }); }}
                           className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-lg active:scale-[0.97] transition-all">
                           <BookOpen size={24} />
                           <span className="text-sm font-black">ترم ثاني</span>
@@ -645,7 +653,7 @@ export const Blog = () => {
 
                   {view === 'subjects' && currentSubjects.map((subj, i) => (
                     <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <button onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }}
+                      <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', subj.id); n.set('view', 'results'); return n; }); window.scrollTo(0, 0); }}
                         className={cn("w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br text-white shadow-lg active:scale-[0.97] transition-all", subj.gradient)}>
                         <span className="text-sm font-black text-center">{subj.name}</span>
                       </button>
