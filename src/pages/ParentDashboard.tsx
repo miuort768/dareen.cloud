@@ -588,7 +588,7 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التنقل السريع</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">التنقل السريع</h2>
                                 </div>
                                 <div className="grid grid-cols-2 gap-2">
                                     <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
@@ -659,7 +659,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">البث المباشر</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">البث المباشر</h2>
                                 </div>
                                 <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
@@ -674,7 +674,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
                                         <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
-                                        <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الواجبات والملاحظات</h2>
+                                        <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">الواجبات والملاحظات</h2>
                                     </div>
                                     <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5 space-y-3">
                                         {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
@@ -702,7 +702,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التقدم الأكاديمي</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">التقدم الأكاديمي</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
@@ -730,7 +730,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                         <section>
                             <div className="flex items-center gap-2 mb-2 px-1">
                                 <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">جدول حصص اليوم</h2>
+                                <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">جدول حصص اليوم</h2>
                             </div>
                             <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5">
                                 <div className="space-y-2">
@@ -765,7 +765,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-amber-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">آخر النشاطات</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">آخر النشاطات</h2>
                                 </div>
                                 <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-3.5">
                                     <div className="space-y-2">
@@ -798,7 +798,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-rose-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الدعم الفني</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-sm font-black">الدعم الفني</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] rounded-2xl p-4 text-white shadow-lg shadow-purple-200/30 relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
