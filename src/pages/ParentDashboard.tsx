@@ -574,6 +574,28 @@ export const ParentDashboard = () => {
                                 </div>
                             </div>
 
+                            {/* ══════════ QUICK NAV ══════════ */}
+                            <section>
+                                <div className="flex items-center gap-2 mb-2 px-1">
+                                    <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التنقل السريع</h2>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2.5">
+                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                        <div className="w-11 h-11 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
+                                            <Users size={20} />
+                                        </div>
+                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">ملفات الأبناء</span>
+                                    </button>
+                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
+                                        <div className="w-11 h-11 bg-gradient-to-br from-[#3478F6] to-[#5B9DFF] rounded-2xl flex items-center justify-center text-white shadow-sm">
+                                            <LayoutDashboard size={20} />
+                                        </div>
+                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">المنتدى</span>
+                                    </button>
+                                </div>
+                            </section>
+
                             {/* ══════════ STATS STRIP (like student dashboard) ══════════ */}
                             <div className="px-1 py-2">
                                 <div className="flex flex-row gap-3">
@@ -631,26 +653,6 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                                 </div>
                                 <div className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
-                                </div>
-                            </section>
-                            <section>
-                                <div className="flex items-center gap-2 mb-2 px-1">
-                                    <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">التنقل السريع</h2>
-                                </div>
-                                <div className="grid grid-cols-2 gap-2.5">
-                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
-                                        <div className="w-11 h-11 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl flex items-center justify-center text-white shadow-sm">
-                                            <Users size={20} />
-                                        </div>
-                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">ملفات الأبناء</span>
-                                    </button>
-                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-slate-800/80 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)] p-4 flex flex-col items-center gap-2 active:scale-[0.97] transition-transform">
-                                        <div className="w-11 h-11 bg-gradient-to-br from-[#3478F6] to-[#5B9DFF] rounded-2xl flex items-center justify-center text-white shadow-sm">
-                                            <LayoutDashboard size={20} />
-                                        </div>
-                                        <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold">المنتدى</span>
-                                    </button>
                                 </div>
                             </section>
                         </>
