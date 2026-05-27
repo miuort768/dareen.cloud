@@ -245,12 +245,6 @@ export const Blog = () => {
             {view !== 'curriculums' && view !== 'grades' && (
               <>
                 <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-slate-800 rounded-2xl mb-4 shadow-sm border border-slate-100 dark:border-slate-700">
-                    <BookOpen size={12} className="text-violet-600 dark:text-violet-400" />
-                    <span className="text-[11px] font-bold text-violet-600 dark:text-violet-400">
-                      {view === 'types' ? 'اختر الخدمة' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
-                    </span>
-                  </div>
                   <h1 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
                     {view === 'types' ? (
                       <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
