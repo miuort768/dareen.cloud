@@ -286,32 +286,30 @@ export const Teachers = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* Header Section */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-violet-900 via-violet-800 to-slate-900 dark:from-slate-950 dark:via-violet-950 dark:to-slate-950 shadow-sm shadow-violet-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-violet-500/20 rounded-full blur-[100px] pointer-events-none" />
-                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-fuchsia-500/10 rounded-full blur-[80px] pointer-events-none" />
-                    <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(139,92,246,0.3)] shrink-0 bg-white/10 flex items-center justify-center">
-                            <Presentation size={24} className="text-white" />
+                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                            <Presentation size={24} />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-medium text-white leading-tight tracking-tighter">إدارة المعلمات</h1>
-                            <p className="text-xs md:text-sm text-violet-200/80 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">إدارة المعلمات</h1>
+                            <p className="text-[10px] font-medium text-[#64748B] mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
-                                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</span>
-                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                                <span className="text-[9px] font-medium text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5">مزامنة نشطة</span>
+                                <span className="text-[9px] font-medium text-[#94A3B8]">{teachers.length} معلمة</span>
+                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                                <span className="text-[8px] font-bold text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-xl border border-emerald-200 dark:border-emerald-800">نشطة</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative z-10 flex items-center gap-3 no-print">
+                    <div className="flex items-center gap-3 no-print">
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-widest transition-all shadow-sm active:scale-95",
+                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-bold transition-all shadow-sm active:scale-95 rounded-xl",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
-                                : "bg-gradient-to-r from-violet-500 to-violet-600 text-white hover:from-violet-600 hover:to-violet-700 shadow-violet-500/20"
+                                : "bg-[#8B5CF6] text-white hover:bg-violet-700"
                             )}
                         >
                             {showAddForm ? <X size={16} /> : <Plus size={16} />}
