@@ -150,14 +150,9 @@ export const NotificationsCenter = ({
     return (
         <div className="w-full space-y-6" dir="rtl">
             {/* Header / Tabs */}
-            <div
-                className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 shadow-sm rounded-2xl transition-all duration-300"
-                style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
-            >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                         <ShieldAlert size={20} />
                     </div>
                     <div>
@@ -194,12 +189,10 @@ export const NotificationsCenter = ({
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pb-6">
                 {/* Smart Alerts */}
-                <div className={cn("lg:col-span-7 p-6 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'smart' && "hidden lg:block")}
-                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
-                >
+                <div className={cn("lg:col-span-7 p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all relative overflow-hidden", activeTab !== 'smart' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                                 <AlertTriangle size={18} />
                             </div>
                             <div>
@@ -232,7 +225,7 @@ export const NotificationsCenter = ({
                             </div>
                         ))}
                         {filteredSmartAlerts.length === 0 && (
-                            <div className="text-center py-16 rounded-xl" style={{ border: `2px dashed ${color}30` }}>
+                            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
                                 <p className="text-[9px] font-bold text-[#64748B]">لا توجد بيانات ذكية حالياً</p>
                             </div>
                         )}
@@ -240,12 +233,10 @@ export const NotificationsCenter = ({
                 </div>
 
                 {/* Alerts Room */}
-                <div className={cn("lg:col-span-5 p-6 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'room' && "hidden lg:block")}
-                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
-                >
+                <div className={cn("lg:col-span-5 p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all relative overflow-hidden", activeTab !== 'room' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                                 <Bell size={18} />
                             </div>
                             <div>
@@ -260,9 +251,9 @@ export const NotificationsCenter = ({
 
                     <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert) => (
-                            <div key={alert.id} className="flex items-center justify-between group p-3 transition-all rounded-xl" style={{ border: `1px solid ${color}15`, backgroundColor: `${color}05` }}>
+                            <div key={alert.id} className="flex items-center justify-between group p-3 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all">
                                 <div className="flex items-center gap-4 min-w-0">
-                                    <div className="w-10 h-10 flex items-center justify-center transition-all rounded-lg text-white" style={{ backgroundColor: color }}>
+                                    <div className="w-10 h-10 flex items-center justify-center transition-all rounded-lg" style={{ backgroundColor: `${color}12`, color }}>
                                         <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
@@ -284,7 +275,7 @@ export const NotificationsCenter = ({
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-16" style={{ border: `2px dashed ${color}30` }}>
+                            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
                                 <p className="text-[9px] font-bold text-[#64748B]">كافة الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         )}

@@ -42,26 +42,15 @@ export const QuickActionsHub = () => {
                     to={action.href}
                     className={cn(
                         "relative overflow-hidden rounded-2xl",
-                        "p-5 shadow-sm",
+                        "p-5 bg-white dark:bg-slate-900",
+                        "shadow-sm border border-slate-100/50 dark:border-slate-800/50",
                         "transition-all duration-300 active:scale-[0.98] hover:shadow-md",
                         "group"
                     )}
-                    style={{
-                        backgroundColor: `${action.color}0D`,
-                        border: `2px solid ${action.color}30`,
-                    }}
-                    onMouseEnter={e => {
-                        e.currentTarget.style.borderColor = action.color;
-                        e.currentTarget.style.backgroundColor = `${action.color}18`;
-                    }}
-                    onMouseLeave={e => {
-                        e.currentTarget.style.borderColor = `${action.color}30`;
-                        e.currentTarget.style.backgroundColor = `${action.color}0D`;
-                    }}
                 >
                     {/* Content */}
                     <div className="relative z-10 flex flex-col gap-4">
-                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: action.color }}>
+                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${action.color}12`, color: action.color }}>
                             <action.icon size={20} strokeWidth={1.5} />
                         </div>
 

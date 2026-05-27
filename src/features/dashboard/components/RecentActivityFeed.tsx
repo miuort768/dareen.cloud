@@ -38,15 +38,10 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
     const color = '#2563EB';
 
     return (
-        <div className="p-6 md:p-8 shadow-sm flex flex-col h-full relative overflow-hidden transition-all duration-300 rounded-2xl hover:shadow-md"
-            style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
-            dir="rtl"
-        >
+        <div className="p-6 md:p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 flex flex-col h-full relative overflow-hidden transition-all duration-300 hover:shadow-md" dir="rtl">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                         <History size={20} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -69,10 +64,11 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
 
                             <div className={cn(
                                 "z-10 w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all shadow-sm",
-                                act.color === 'emerald' ? 'text-[#22C55E]' :
-                                act.color === 'rose' ? 'text-rose-500' :
-                                'text-white'
-                            )} style={{ backgroundColor: act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B' }}>
+                                act.color === 'emerald' && 'text-[#22C55E]',
+                                act.color === 'rose' && 'text-rose-500',
+                                act.color === 'blue' && 'text-[#2563EB]',
+                                act.color === 'amber' && 'text-amber-500'
+                            )} style={{ backgroundColor: `${act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B'}12` }}>
                                 {act.type === 'session' ? <Calendar size={18} strokeWidth={1.5} /> : <ListTodo size={18} strokeWidth={1.5} />}
                             </div>
                             

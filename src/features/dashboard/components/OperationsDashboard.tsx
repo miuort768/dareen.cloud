@@ -28,15 +28,10 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4" dir="rtl">
             {/* 1. Subscriptions & Renewals */}
-            <div
-                className="p-5 flex flex-col rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md"
-                style={{ backgroundColor: `${subColor}0D`, border: `2px solid ${subColor}30` }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = subColor; e.currentTarget.style.backgroundColor = `${subColor}18`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${subColor}30`; e.currentTarget.style.backgroundColor = `${subColor}0D`; }}
-            >
+            <div className="p-5 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: subColor }}>
+                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
                             <CreditCard size={20} />
                         </div>
                         <div>
@@ -52,9 +47,9 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
                     {lowBalanceStudents.length > 0 ? (
                         lowBalanceStudents.map((item, idx) => (
-                            <div key={idx} className="p-3 rounded-2xl transition-all flex items-center justify-between group/item" style={{ backgroundColor: `${subColor}08`, border: `1px solid ${subColor}20` }}>
+                            <div key={idx} className="p-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all flex items-center justify-between group/item">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[11px] transition-colors text-white" style={{ backgroundColor: subColor }}>
+                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[11px] transition-colors" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
                                         {item.studentName.charAt(0)}
                                     </div>
                                     <div className="min-w-0">
@@ -86,8 +81,8 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             </div>
                         ))
                     ) : (
-                        <div className="py-12 text-center rounded-2xl" style={{ border: `2px dashed ${subColor}30` }}>
-                            <UserX size={24} className="mx-auto mb-2" style={{ color: `${subColor}50` }} />
+                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                            <UserX size={24} className="mx-auto mb-2" style={{ color: `${subColor}40` }} />
                             <p className="text-[9px] font-medium text-[#64748B]">لا توجد تجديدات معلقة</p>
                         </div>
                     )}
@@ -102,15 +97,10 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
             </div>
 
             {/* 2. Tasks & Requests */}
-            <div
-                className="p-5 flex flex-col rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md"
-                style={{ backgroundColor: `${taskColor}0D`, border: `2px solid ${taskColor}30` }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = taskColor; e.currentTarget.style.backgroundColor = `${taskColor}18`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${taskColor}30`; e.currentTarget.style.backgroundColor = `${taskColor}0D`; }}
-            >
+            <div className="p-5 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: taskColor }}>
+                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${taskColor}12`, color: taskColor }}>
                             <Briefcase size={20} />
                         </div>
                         <div>
@@ -126,7 +116,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
                     {tasks.length > 0 ? (
                         tasks.slice(0, 10).map((task) => (
-                            <div key={task.id} className="p-3 rounded-2xl transition-all flex items-center justify-between" style={{ backgroundColor: `${taskColor}08`, border: `1px solid ${taskColor}20` }}>
+                            <div key={task.id} className="p-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all flex items-center justify-between">
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className={cn("w-1.5 h-8 rounded-full", task.priority === 'high' ? "bg-rose-500" : task.priority === 'medium' ? "bg-[#38BDF8]" : "bg-[#2563EB]")} />
                                     <div className="min-w-0">
@@ -147,8 +137,8 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             </div>
                         ))
                     ) : (
-                        <div className="py-12 text-center rounded-2xl" style={{ border: `2px dashed ${taskColor}30` }}>
-                            <ListTodo size={24} className="mx-auto mb-2" style={{ color: `${taskColor}50` }} />
+                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                            <ListTodo size={24} className="mx-auto mb-2" style={{ color: `${taskColor}40` }} />
                             <p className="text-[9px] font-medium text-[#64748B]">تم إنجاز كافة المهام</p>
                         </div>
                     )}

@@ -48,27 +48,18 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
       ref={ref}
       className={cn(
         "relative p-4 rounded-2xl",
-        "shadow-sm shadow-slate-100 dark:shadow-slate-950/20",
+        "bg-white dark:bg-slate-900",
+        "shadow-sm border border-slate-100/50 dark:border-slate-800/50",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3",
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
       style={{
         transitionDelay: `${index * 80}ms`,
-        backgroundColor: `${color}0D`,
-        border: `2px solid ${color}30`,
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.borderColor = color;
-        e.currentTarget.style.backgroundColor = `${color}18`;
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.borderColor = `${color}30`;
-        e.currentTarget.style.backgroundColor = `${color}0D`;
       }}
     >
-      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0 text-white" style={{ backgroundColor: color }}>
-        <Icon size={18} strokeWidth={1.5} className="text-white" />
+      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+        <Icon size={18} strokeWidth={1.5} />
       </div>
 
       <div className="flex-1 min-w-0">

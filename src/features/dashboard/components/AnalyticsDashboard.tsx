@@ -58,14 +58,9 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     return (
         <div className="w-full space-y-6" dir="rtl">
             {/* Header / Tabs */}
-            <div
-                className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 shadow-sm rounded-2xl transition-all duration-300"
-                style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
-            >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                         <Database size={24} />
                     </div>
                     <div>
@@ -100,12 +95,10 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
                 {/* التحليل التحصيلي */}
-                <div className={cn("p-6 md:p-8 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'commitment' && "hidden lg:block")}
-                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
-                >
+                <div className={cn("p-6 md:p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all relative overflow-hidden", activeTab !== 'commitment' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                                 <TrendingUp size={20} />
                             </div>
                             <div>
@@ -165,12 +158,10 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
 
                 {/* خارطة توزيع المناهج */}
-                <div className={cn("p-6 md:p-8 shadow-sm transition-all relative overflow-hidden rounded-2xl", activeTab !== 'database' && "hidden lg:block")}
-                    style={{ backgroundColor: `${color}08`, border: `1px solid ${color}20` }}
-                >
+                <div className={cn("p-6 md:p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all relative overflow-hidden", activeTab !== 'database' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                                 <BarChart3 size={20} />
                             </div>
                             <div>

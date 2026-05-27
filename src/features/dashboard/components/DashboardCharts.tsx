@@ -17,14 +17,10 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
     const totalExpenses = useMemo(() => monthlyData.reduce((s, m) => s + (m.expenses || 0), 0), [monthlyData]);
 
     return (
-        <div className="p-5 overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md"
-            style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
-        >
+        <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md overflow-hidden">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                         <BarChart2 size={20} />
                     </div>
                     <div>

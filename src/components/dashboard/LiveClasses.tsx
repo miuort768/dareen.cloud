@@ -60,14 +60,9 @@ export const LiveClasses = () => {
 
     return (
         <div className="space-y-4" dir="rtl">
-            <div
-                className="flex items-center justify-between p-4 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md"
-                style={{ backgroundColor: `${color}0D`, border: `2px solid ${color}30` }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}18`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}30`; e.currentTarget.style.backgroundColor = `${color}0D`; }}
-            >
+            <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm text-white" style={{ backgroundColor: color }}>
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
                         <Radio size={18} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -104,11 +99,8 @@ export const LiveClasses = () => {
                     <Loader2 className="animate-spin" size={20} strokeWidth={1.5} style={{ color }} />
                 </div>
             ) : sessions.length === 0 ? (
-                <div
-                    className="p-10 text-center rounded-2xl shadow-sm transition-all"
-                    style={{ backgroundColor: `${color}0D`, border: `2px dashed ${color}30` }}
-                >
-                    <Monitor size={36} strokeWidth={1.5} className="mx-auto mb-3" style={{ color: `${color}60` }} />
+                <div className="p-10 text-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all">
+                    <Monitor size={36} strokeWidth={1.5} className="mx-auto mb-3" style={{ color: `${color}40` }} />
                     <p className="font-bold text-[11px]" style={{ color }}>لا يوجد بث مباشر متاح حالياً</p>
                     {isTeacher && (
                         <p className="text-slate-400 text-[10px] mt-2 font-medium">اضغط "بدء بث جديد" لبدء حصة مباشرة</p>
@@ -119,10 +111,7 @@ export const LiveClasses = () => {
                     {sessions.map(session => (
                         <div
                             key={session.id}
-                            className="p-5 flex flex-col justify-between group rounded-2xl shadow-sm transition-all hover:shadow-md"
-                            style={{ backgroundColor: `${color}08`, border: `1px solid ${color}25` }}
-                            onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.backgroundColor = `${color}12`; }}
-                            onMouseLeave={e => { e.currentTarget.style.borderColor = `${color}25`; e.currentTarget.style.backgroundColor = `${color}08`; }}
+                            className="p-5 flex flex-col justify-between group bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all hover:shadow-md hover:border-slate-200 dark:hover:border-slate-700"
                         >
                             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-white text-[8px] font-bold w-fit" style={{ backgroundColor: color }}>
                                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
