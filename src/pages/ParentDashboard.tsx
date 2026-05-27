@@ -473,7 +473,14 @@ export const ParentDashboard = () => {
             <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-[#F7F8FC] dark:bg-slate-950 font-sans" dir="rtl">
                 {/* Sticky app bar — Savings-app style (no background rectangle) */}
                 <div className="sticky top-0 z-30 bg-[#F7F8FC] dark:bg-slate-950">
-                    <div className="px-4 pt-3 pb-1">
+                    <div className="px-4 pt-2 pb-1">
+                        {/* Page title */}
+                        <div className="flex items-center gap-2 mb-2 px-0.5">
+                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] flex items-center justify-center">
+                                <LayoutDashboard size={12} className="text-white" />
+                            </div>
+                            <h2 className="text-slate-500 dark:text-slate-400 text-[11px] font-bold tracking-wide">لوحة التحكم</h2>
+                        </div>
                         {/* Profile row */}
                         <div className="bg-white dark:bg-slate-800/90 rounded-3xl p-3.5 shadow-[0_2px_16px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.2)] flex items-center justify-between">
                             <div className="flex items-center gap-3">
