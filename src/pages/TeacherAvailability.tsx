@@ -1,14 +1,12 @@
 ﻿import { useState, useEffect } from 'react';
-import { CalendarDays, Clock, CheckCircle2, XCircle, Save, Sun, Moon, User } from 'lucide-react';
+import { CalendarDays, Clock, CheckCircle2, XCircle, Save, Search, ChevronDown, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 const dayNumbers = [0, 1, 2, 3, 4, 5, 6];
-
-const dayColors = ['from-rose-500 to-pink-600', 'from-blue-500 to-indigo-600', 'from-emerald-500 to-teal-600', 'from-violet-500 to-purple-600', 'from-amber-500 to-orange-600', 'from-cyan-500 to-blue-600', 'from-rose-500 to-pink-600'];
 
 interface Slot {
   dayOfWeek: number;
@@ -30,6 +28,7 @@ interface Availability {
 export const TeacherAvailability = () => {
   const [selectedTeacher, setSelectedTeacher] = useState<string>('');
   const [editingSlots, setEditingSlots] = useState<Slot[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
   const queryClient = useQueryClient();
 
@@ -71,7 +70,8 @@ export const TeacherAvailability = () => {
       if (teacherAvail.length > 0) {
         setEditingSlots(teacherAvail.map((a: Availability) => ({ dayOfWeek: a.dayOfWeek, startTime: a.startTime, endTime: a.endTime, isAvailable: a.isAvailable })));
       } else {
-        setEditingSlots(dayNumbers.map(d => ({ dayOfWeek: d, startTime: '09:00', endTime: '17:00', isAvailable: 1 })));
+        const defaultSlots = dayNumbers.map(d => ({ dayOfWeek: d, startTime: '09:00', endTime: '17:00', isAvailable: 1 }));
+        setEditingSlots(defaultSlots);
       }
       setHasChanges(false);
     }
@@ -91,176 +91,145 @@ export const TeacherAvailability = () => {
     }
     setHasChanges(true);
   };
+  const filteredTeachers = Array.isArray(teachers) ? teachers.filter((t: { name: string }) => t.name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
   const selTeacher = Array.isArray(teachers) ? teachers.find((t: { id: string }) => t.id === selectedTeacher) : null;
   const getSlotsForDay = (day: number) => editingSlots.find(s => s.dayOfWeek === day);
 
-  const availableCount = editingSlots.filter(s => s.isAvailable === 1).length;
-  const totalHours = editingSlots.filter(s => s.isAvailable === 1).reduce((sum, s) => {
-    const [sh, sm] = s.startTime.split(':').map(Number);
-    const [eh, em] = s.endTime.split(':').map(Number);
-    return sum + Math.max(0, (eh * 60 + em - sh * 60 - sm) / 60);
-  }, 0);
-
   return (
     <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 dark:bg-blue-500/5 blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-400/10 dark:bg-indigo-500/5 blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-emerald-400/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none rounded-full" />
-      <div className="relative z-10 mx-auto px-2 space-y-5 max-w-[1400px]">
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 dark:bg-blue-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-400/10 dark:bg-indigo-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-teal-400/10 dark:bg-teal-500/5 blur-3xl pointer-events-none" />
+      <div className="relative z-10 mx-auto px-2 space-y-4 max-w-[1400px]">
 
-        <div className="bg-gradient-to-br from-[#2563EB] via-[#3B82F6] to-[#1D4ED8] shadow-lg shadow-blue-600/20 px-5 md:px-7 py-5 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-          <div className="flex items-center gap-4 relative">
-            <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm text-white rounded-xl border border-white/20 shadow-lg">
+        <div className="bg-gradient-to-br from-[#2563EB] via-[#3B82F6] to-[#1D4ED8] shadow-lg shadow-blue-600/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm text-white rounded-xl border border-white/20">
               <CalendarDays size={22} />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white leading-tight">جدول المواعيد المتاحة</h1>
-              <p className="text-[10px] text-blue-200/80 font-medium leading-none mt-1">إدارة أوقات عمل المعلمات</p>
+              <p className="text-[10px] text-white/70 font-medium leading-none mt-1">إدارة أوقات عمل المعلمات</p>
             </div>
           </div>
-          <AnimatePresence>
-            {availableNow && availableNow.length > 0 && (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-4 py-2.5 border border-emerald-500/20 whitespace-nowrap rounded-xl backdrop-blur-sm relative">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-                </span>
-                {availableNow.length} متاحة الآن
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {availableNow && availableNow.length > 0 && (
+            <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-3 py-2 border border-emerald-500/20 whitespace-nowrap rounded-xl backdrop-blur-sm">
+              <CheckCircle2 size={13} className="text-emerald-300" />
+              {availableNow.length} متاحة الآن
+            </div>
+          )}
         </div>
 
         {availableNow && availableNow.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="border border-blue-100 dark:border-blue-800/30 bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm p-3 md:p-4 flex flex-wrap items-center gap-2 rounded-2xl shadow-sm">
-            <div className="flex items-center gap-1.5 text-[10px] font-medium text-slate-500 ml-2">
-              <Clock size={12} />
-              المتاحات الآن:
-            </div>
-            {availableNow.slice(0, 8).map((t: { teacherId: string; teacherName: string; subject: string }, i: number) => (
-              <motion.span key={t.teacherId} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} className="text-[10px] font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700 shadow-sm">
-                {t.teacherName}
-                <span className="text-[9px] text-slate-400 mr-1">{t.subject}</span>
-              </motion.span>
+          <div className="border border-blue-100 dark:border-blue-800/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-3 flex flex-wrap items-center gap-2 rounded-2xl shadow-sm">
+            <span className="text-[10px] font-medium text-slate-500 ml-1">المتاحات الآن:</span>
+            {availableNow.slice(0, 8).map((t: { teacherId: string; teacherName: string; subject: string }) => (
+              <span key={t.teacherId} className="text-[10px] font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-2 py-1.5 border border-blue-100 dark:border-blue-800 rounded-lg">
+                {t.teacherName} ({t.subject})
+              </span>
             ))}
-            {availableNow.length > 8 && <span className="text-[10px] font-medium text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1.5 rounded-lg border border-blue-100 dark:border-blue-800">+{availableNow.length - 8}</span>}
-          </motion.div>
-        )}
-
-        {Array.isArray(teachers) && teachers.length > 0 && !selTeacher && (
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-12 md:p-16 text-center">
-            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl flex items-center justify-center mb-5 shadow-inner">
-              <User size={36} className="text-blue-400 dark:text-blue-500" />
-            </div>
-            <h3 className="text-lg font-medium text-slate-700 dark:text-slate-300 mb-2">اختر معلمة من القائمة</h3>
-            <p className="text-sm text-slate-400">لعرض وتعديل أوقات العمل والأيام المتاحة</p>
+            {availableNow.length > 8 && <span className="text-[10px] font-medium text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-1.5 border border-blue-100 dark:border-blue-800 rounded-lg">+{availableNow.length - 8}</span>}
           </div>
         )}
 
-        {selTeacher && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 md:p-4 overflow-x-auto">
-              <div className="flex items-center gap-2 min-w-0">
-                {Array.isArray(teachers) && teachers.map((t: { id: string; name: string; subject: string }, i: number) => (
-                  <motion.button key={t.id} onClick={() => setSelectedTeacher(t.id)} whileTap={{ scale: 0.97 }} className={cn("flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all border whitespace-nowrap", selectedTeacher === t.id ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-600/20' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700')}>
-                    <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold", selectedTeacher === t.id ? 'bg-white/20 text-white' : 'bg-gradient-to-br ' + dayColors[i % 7] + ' text-white')}>{t.name.charAt(0)}</div>
-                    <div className="text-right">
-                      <div className="text-xs leading-tight">{t.name}</div>
-                      {t.subject && <div className="text-[9px] opacity-70 leading-tight">{t.subject}</div>}
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="lg:w-72 shrink-0">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
+            <div className="relative mb-3">
+              <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="بحث عن معلمة..." className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-normal focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all" />
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center"><CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-400" /></div>
-                  <div><p className="text-[10px] text-slate-500 font-medium">أيام متاحة</p><p className="text-lg font-medium text-slate-900 dark:text-white mt-0.5">{availableCount} / 7</p></div>
-                </div>
-              </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center"><Clock size={18} className="text-blue-600 dark:text-blue-400" /></div>
-                  <div><p className="text-[10px] text-slate-500 font-medium">ساعات أسبوعياً</p><p className="text-lg font-medium text-slate-900 dark:text-white mt-0.5">{totalHours.toFixed(0)}</p></div>
-                </div>
-              </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center"><Sun size={18} className="text-amber-600 dark:text-amber-400" /></div>
-                  <div><p className="text-[10px] text-slate-500 font-medium">أيام غير متاحة</p><p className="text-lg font-medium text-slate-900 dark:text-white mt-0.5">{editingSlots.filter(s => s.isAvailable === 0).length}</p></div>
-                </div>
-              </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center"><Moon size={18} className="text-slate-500 dark:text-slate-400" /></div>
-                  <div><p className="text-[10px] text-slate-500 font-medium">بدون تحديد</p><p className="text-lg font-medium text-slate-900 dark:text-white mt-0.5">{7 - editingSlots.length}</p></div>
-                </div>
-              </div>
-              <div className="col-span-2 md:col-span-4 flex justify-end">
-                <button onClick={() => { if (selTeacher) saveMutation.mutate({ teacherId: selTeacher.id, teacherName: selTeacher.name, slots: editingSlots }); }} disabled={!hasChanges || saveMutation.isPending} className={cn("flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-medium transition-all shadow-sm", hasChanges && !saveMutation.isPending ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed')}>
-                  {saveMutation.isPending ? <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <Save size={14} />}
-                  حفظ التغييرات
+            <div className="space-y-1 max-h-[400px] overflow-y-auto custom-scrollbar">
+              {filteredTeachers.map((t: { id: string; name: string; subject: string }) => (
+                <button key={t.id} onClick={() => setSelectedTeacher(t.id)} className={cn("w-full text-right px-3 py-2.5 rounded-xl text-xs font-normal transition-all flex items-center gap-2", selectedTeacher === t.id ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800' : 'bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700')}>
+                  <User size={12} className={cn(selectedTeacher === t.id ? 'text-blue-500' : 'text-slate-400')} />
+                  <div className="text-right">
+                    <span className="text-xs">{t.name}</span>
+                    {t.subject && <span className="text-[10px] text-slate-400 mr-1 block leading-tight">{t.subject}</span>}
+                  </div>
                 </button>
+              ))}
+            </div>
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+              <p className="text-[10px] font-medium text-slate-500 mb-2">الحالة</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-3 h-3 bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-300 dark:border-emerald-700 rounded-sm" />متاحة</div>
+                <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-3 h-3 bg-rose-100 dark:bg-rose-900/40 border border-rose-300 dark:border-rose-700 rounded-sm" />غير متاحة</div>
+                <div className="flex items-center gap-2 text-[11px] font-normal text-slate-600 dark:text-slate-400"><div className="w-3 h-3 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-sm" />بدون تحديد</div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <AnimatePresence mode="wait">
+        <div className="flex-1">
+          {!selTeacher ? (
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-12 text-center">
+              <div className="w-16 h-16 mx-auto bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-4">
+                <User size={28} className="text-slate-400" />
+              </div>
+              <p className="text-sm font-medium text-slate-500">اختر معلمة من القائمة</p>
+              <p className="text-xs text-slate-400 mt-1">لعرض وتعديل أوقات العمل</p>
+            </div>
+          ) : (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5 mb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-sm">
+                      <User size={18} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-slate-900 dark:text-white">{selTeacher.name}</h3>
+                      {selTeacher.subject && <p className="text-[11px] text-slate-500 font-normal">{selTeacher.subject}</p>}
+                    </div>
+                  </div>
+                  <button onClick={() => { if (selTeacher) saveMutation.mutate({ teacherId: selTeacher.id, teacherName: selTeacher.name, slots: editingSlots }); }} disabled={!hasChanges || saveMutation.isPending} className={cn("flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-normal transition-all shadow-sm active:scale-95", hasChanges && !saveMutation.isPending ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed')}>
+                    <Save size={14} /> حفظ التغييرات
+                  </button>
+                </div>
+              </div>
+
               {isLoading ? (
-                <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-16 text-center mt-5">
-                  <div className="animate-spin w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full mx-auto mb-4" />
-                  <p className="text-sm text-slate-400">جاري تحميل الجدول...</p>
-                </motion.div>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-12 text-center">
+                  <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-3" />
+                  <p className="text-sm text-slate-400">جاري التحميل...</p>
+                </div>
               ) : (
-                <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-5">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3">
-                    {dayNumbers.map((day, i) => {
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-4">
+                    {dayNumbers.map(day => {
                       const slot = getSlotsForDay(day);
                       const isAvail = slot?.isAvailable;
-                      const startHour = slot ? parseInt(slot.startTime) : 9;
-                      const fillPercent = slot ? Math.min(100, ((parseInt(slot.endTime) - startHour) / 12) * 100) : 0;
                       return (
-                        <motion.div key={day} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                          <div className={cn("rounded-2xl border-2 overflow-hidden transition-all duration-200 cursor-pointer group", isAvail === 1 ? 'bg-white dark:bg-slate-800 border-emerald-200 dark:border-emerald-800 hover:border-emerald-400 dark:hover:border-emerald-600 hover:shadow-lg hover:shadow-emerald-500/10' : isAvail === 0 ? 'bg-rose-50/50 dark:bg-slate-800/50 border-rose-200 dark:border-rose-800/50 hover:border-rose-400 dark:hover:border-rose-600' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md')} onClick={() => toggleDay(day)}>
-                            <div className={cn("px-3 py-2.5 flex items-center justify-between border-b", isAvail === 1 ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800' : isAvail === 0 ? 'bg-rose-50 dark:bg-rose-900/10 border-rose-100 dark:border-rose-800' : 'bg-slate-50 dark:bg-slate-700/50 border-slate-100 dark:border-slate-700')}>
-                              <span className={cn("text-xs font-bold", isAvail === 1 ? 'text-emerald-700 dark:text-emerald-400' : isAvail === 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500 dark:text-slate-400')}>{days[day]}</span>
-                              <div className={cn("w-7 h-7 rounded-lg flex items-center justify-center transition-all", isAvail === 1 ? 'bg-emerald-200 dark:bg-emerald-700 text-emerald-700 dark:text-emerald-200' : isAvail === 0 ? 'bg-rose-200 dark:bg-rose-700 text-rose-700 dark:text-rose-200' : 'bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300')}>
-                                {isAvail === 1 ? <CheckCircle2 size={14} /> : isAvail === 0 ? <XCircle size={14} /> : <Clock size={14} />}
-                              </div>
-                            </div>
-                            <div className="p-3 space-y-2" onClick={e => e.stopPropagation()}>
-                              {slot ? (
-                                <>
-                                  <div className="flex items-center gap-1.5">
-                                    <input type="time" value={slot.startTime} onChange={e => updateSlot(day, 'startTime', e.target.value)} className={cn("flex-1 px-2 py-1.5 rounded-lg text-[11px] font-normal border focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isAvail === 1 ? 'bg-white dark:bg-slate-700 border-emerald-200 dark:border-emerald-700' : isAvail === 0 ? 'bg-white dark:bg-slate-700 border-rose-200 dark:border-rose-700' : 'bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600')} />
-                                    <span className="text-slate-300 dark:text-slate-600 text-xs">–</span>
-                                    <input type="time" value={slot.endTime} onChange={e => updateSlot(day, 'endTime', e.target.value)} className={cn("flex-1 px-2 py-1.5 rounded-lg text-[11px] font-normal border focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isAvail === 1 ? 'bg-white dark:bg-slate-700 border-emerald-200 dark:border-emerald-700' : isAvail === 0 ? 'bg-white dark:bg-slate-700 border-rose-200 dark:border-rose-700' : 'bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600')} />
-                                  </div>
-                                  {isAvail === 1 && (
-                                    <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                                      <div className="h-full bg-gradient-to-l from-emerald-400 to-emerald-500 rounded-full transition-all" style={{ width: `${fillPercent}%` }} />
-                                    </div>
-                                  )}
-                                </>
-                              ) : (
-                                <div className="flex items-center justify-center h-[34px] bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-dashed border-slate-200 dark:border-slate-600">
-                                  <span className="text-[10px] text-slate-400">اضغط للإعداد</span>
-                                </div>
-                              )}
-                            </div>
+                        <div key={day} className={cn("rounded-2xl border p-4 transition-all hover:shadow-md", isAvail === 1 ? 'bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-900/30' : isAvail === 0 ? 'bg-rose-50/50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-900/30' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700')}>
+                          <div className="flex items-center justify-between mb-3">
+                            <span className={cn("text-sm font-medium", isAvail === 1 ? 'text-emerald-700 dark:text-emerald-400' : isAvail === 0 ? 'text-rose-700 dark:text-rose-400' : 'text-slate-500')}>{days[day]}</span>
+                            <button onClick={() => toggleDay(day)} className={cn("px-3 py-1 rounded-lg text-[10px] font-medium transition-all border", isAvail === 1 ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 border-emerald-200 dark:border-emerald-800' : isAvail === 0 ? 'bg-rose-100 dark:bg-rose-900/40 text-rose-600 border-rose-200 dark:border-rose-800' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 border-slate-200 dark:border-slate-600')}>
+                              {isAvail === 1 ? 'متاح' : isAvail === 0 ? 'غير متاح' : 'إعداد'}
+                            </button>
                           </div>
-                        </motion.div>
+                          {slot ? (
+                            <div className="flex items-center gap-2">
+                              <input type="time" value={slot.startTime} onChange={e => updateSlot(day, 'startTime', e.target.value)} className={cn("flex-1 px-2 py-1.5 rounded-xl text-xs font-normal border focus:outline-none focus:ring-2 focus:ring-blue-500/20", isAvail === 1 ? 'bg-white dark:bg-slate-800 border-emerald-200 dark:border-emerald-800' : isAvail === 0 ? 'bg-white dark:bg-slate-800 border-rose-200 dark:border-rose-800' : 'bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600')} />
+                              <span className="text-slate-400 text-xs">–</span>
+                              <input type="time" value={slot.endTime} onChange={e => updateSlot(day, 'endTime', e.target.value)} className={cn("flex-1 px-2 py-1.5 rounded-xl text-xs font-normal border focus:outline-none focus:ring-2 focus:ring-blue-500/20", isAvail === 1 ? 'bg-white dark:bg-slate-800 border-emerald-200 dark:border-emerald-800' : isAvail === 0 ? 'bg-white dark:bg-slate-800 border-rose-200 dark:border-rose-800' : 'bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600')} />
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-center h-9 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-600">
+                              <span className="text-[11px] text-slate-400 font-normal">غير محدد</span>
+                            </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </div>
+      </div>
       </div>
     </div>
   );

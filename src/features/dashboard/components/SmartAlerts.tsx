@@ -1,256 +1,137 @@
-import { useState, useMemo } from 'react';
-import { Bell, Zap, AlertTriangle, Info, Flame, Phone, ArrowLeft } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useMemo } from 'react';
+import { AlertTriangle, CreditCard, TrendingDown, CheckCircle2, Zap, ArrowLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
-import { useAdminPhone } from '../../../context/AppContext';
-import type { DashboardTask, LowBalanceStudent } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface SmartAlertsProps {
-  tasks: DashboardTask[];
-  lowBalanceStudents: LowBalanceStudent[];
-  students: Record<string, unknown>[];
-  sessions: Record<string, unknown>[];
-  studentInvoices: Record<string, unknown>[];
+    students: Record<string, unknown>[];
+    sessions: Record<string, unknown>[];
+    studentInvoices: Record<string, unknown>[];
+    lowBalanceStudents: { id: string; studentName: string; subject: string; remainingSessions: number }[];
 }
 
-type AlertPriority = 'urgent' | 'followup' | 'info';
+export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStudents }: SmartAlertsProps) => {
+    const navigate = useNavigate();
 
-interface AlertItem {
-  id: string;
-  priority: AlertPriority;
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  action?: () => void;
-  link?: string;
-  actionLabel?: string;
-}
+    const alerts = useMemo(() => {
+        const result: { id: string; type: string; title: string; desc: string; action: () => void; priority: string }[] = [];
 
-export const SmartAlerts = ({ tasks, lowBalanceStudents, students, sessions, studentInvoices }: SmartAlertsProps) => {
-  const adminPhone = useAdminPhone();
-  const navigate = useNavigate();
-  const [activePriority, setActivePriority] = useState<AlertPriority>('urgent');
-
-  const alerts = useMemo(() => {
-    const result: AlertItem[] = [];
-
-    lowBalanceStudents.forEach(s => {
-      if (s.remainingSessions <= 1) {
-        result.push({
-          id: `urgent-${s.id}`,
-          priority: 'urgent',
-          title: s.studentName,
-          description: `${s.subject} — باقي ${s.remainingSessions === 0 ? 'صفر جلسة' : 'جلسة واحدة'}`,
-          icon: Flame,
-          action: () => sendWhatsAppReminder(s, undefined, adminPhone),
-          actionLabel: 'واتساب'
+        lowBalanceStudents.forEach(s => {
+            if (s.remainingSessions <= 1) {
+                result.push({
+                    id: `low-${s.id}-${s.subject}`,
+                    type: 'critical',
+                    icon: AlertTriangle,
+                    color: 'rose',
+                    title: `${s.studentName}`,
+                    desc: `${s.subject}: باقي ${s.remainingSessions === 0 ? 'صفر' : '1'}!`,
+                    action: () => navigate('/students'),
+                    actionLabel: 'تعبئة'
+                });
+            }
         });
-      }
-    });
 
-    lowBalanceStudents.filter(s => s.remainingSessions === 2).forEach(s => {
-      result.push({
-        id: `follow-${s.id}`,
-        priority: 'followup',
-        title: s.studentName,
-        description: `${s.subject} — ${s.remainingSessions} جلسات متبقية`,
-        icon: AlertTriangle,
-        action: () => sendWhatsAppReminder(s, undefined, adminPhone),
-        actionLabel: 'واتساب'
-      });
-    });
-
-    students.forEach(s => {
-      const studentSessions = sessions.filter(ss => ss.studentId === s.id);
-      if (studentSessions.length < 3) return;
-      const absent = studentSessions.filter(ss => ss.status === 'cancelled').length;
-      const rate = (absent / studentSessions.length) * 100;
-      if (rate > 30) {
-        result.push({
-          id: `absent-${s.id}`,
-          priority: 'followup',
-          title: s.name as string,
-          description: `نسبة غياب ${Math.round(rate)}%`,
-          icon: AlertTriangle,
-          action: () => navigate('/attendance'),
-          actionLabel: 'عرض'
+        students.forEach(s => {
+            const studentSessions = sessions.filter(ss => ss.studentId === s.id);
+            if (studentSessions.length < 3) return;
+            const absent = studentSessions.filter(ss => ss.status === 'cancelled').length;
+            const rate = (absent / studentSessions.length) * 100;
+            if (rate > 30) {
+                result.push({
+                    id: `absent-${s.id}`,
+                    type: 'warning',
+                    icon: TrendingDown,
+                    color: 'amber',
+                    title: `${s.name}`,
+                    desc: `غياب ${Math.round(rate)}%`,
+                    action: () => navigate('/attendance'),
+                    actionLabel: 'سجل'
+                });
+            }
         });
-      }
-    });
 
-    const overdueCount = studentInvoices.filter(inv => {
-      if (!['unpaid', 'pending', 'overdue'].includes((inv.status as string)?.toLowerCase())) return false;
-      const sevenDays = 7 * 24 * 60 * 60 * 1000;
-      const created = new Date((inv.date || inv.created_at || 0) as string).getTime();
-      return (Date.now() - created) > sevenDays;
-    }).length;
+        const overdueInvoices = studentInvoices.filter(inv => {
+            if (!['unpaid', 'pending', 'overdue'].includes(inv.status?.toLowerCase())) return false;
+            const now = Date.now();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
+            const created = new Date(inv.date || inv.created_at || 0).getTime();
+            return (now - created) > sevenDays;
+        });
 
-    if (overdueCount > 0) {
-      result.push({
-        id: 'overdue-invoices',
-        priority: 'info',
-        title: `${overdueCount} فواتير متأخرة`,
-        description: 'مطلوب تحصيل مالي عاجل',
-        icon: Info,
-        link: '/student-invoices'
-      });
-    }
+        if (overdueInvoices.length > 0) {
+            result.push({
+                id: 'overdue-invoices',
+                type: 'warning',
+                icon: CreditCard,
+                color: 'indigo',
+                title: `${overdueInvoices.length} فواتير`,
+                desc: `تحصيل مالي مطلوب`,
+                action: () => navigate('/studentInvoices'),
+                actionLabel: 'تحصيل'
+            });
+        }
 
-    tasks.filter(t => ['high', 'عالية', 'urgent', 'عاجل'].includes(t.priority?.toLowerCase())).forEach(t => {
-      result.push({
-        id: `task-${t.id}`,
-        priority: 'urgent',
-        title: t.title,
-        description: `تاريخ: ${t.dueDate}`,
-        icon: Zap,
-        link: '/tasks'
-      });
-    });
+        if (result.length === 0) {
+            result.push({
+                id: 'all-good',
+                type: 'success',
+                icon: CheckCircle2,
+                color: 'emerald',
+                title: 'النظام سليم',
+                desc: 'لا توجد معلقات.',
+                action: null,
+                actionLabel: ''
+            });
+        }
 
-    return result.sort((a) => (a.priority === 'urgent' ? -1 : a.priority === 'followup' ? 0 : 1));
-  }, [tasks, lowBalanceStudents, students, sessions, studentInvoices, navigate, adminPhone]);
+        return result;
+    }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
-  const filteredAlerts = alerts.filter(a => a.priority === activePriority);
+    const colorMap: Record<string, string> = {
+        rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-none', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
+        amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-none', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
+        indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-none', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },
+        emerald: { bg: 'bg-emerald-500/5', border: 'border-emerald-500/10', icon: 'bg-emerald-500 text-white shadow-none', text: 'text-emerald-600', sub: 'text-emerald-500/70', btn: '' },
+    };
 
-  const priorityMeta: Record<AlertPriority, { label: string; icon: React.ComponentType<{ size?: number; className?: string }>; borderColor: string; dotColor: string; count: number }> = {
-    urgent: {
-      label: 'عاجل',
-      icon: Flame,
-      borderColor: 'border-r-rose-400 dark:border-r-rose-500',
-      dotColor: 'bg-rose-500',
-      count: alerts.filter(a => a.priority === 'urgent').length
-    },
-    followup: {
-      label: 'متابعة',
-      icon: AlertTriangle,
-      borderColor: 'border-r-amber-400 dark:border-r-amber-500',
-      dotColor: 'bg-amber-500',
-      count: alerts.filter(a => a.priority === 'followup').length
-    },
-    info: {
-      label: 'معلومات',
-      icon: Info,
-      borderColor: 'border-r-blue-400 dark:border-r-blue-500',
-      dotColor: 'bg-blue-500',
-      count: alerts.filter(a => a.priority === 'info').length
-    }
-  };
-
-  const tabs: { key: AlertPriority }[] = [
-    { key: 'urgent' },
-    { key: 'followup' },
-    { key: 'info' },
-  ];
-
-  return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] overflow-hidden" dir="rtl">
-      <div className="flex items-center justify-between px-6 pt-5 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#1D4ED8] text-white flex items-center justify-center">
-            <Bell size={16} strokeWidth={1.5} />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white leading-tight">التنبيهات الذكية</h3>
-            <p className="text-[9px] font-medium text-slate-400">أهم ما يحتاج انتباهك</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-6 pb-3">
-        <div className="flex gap-1.5 border-b border-slate-100 dark:border-slate-800">
-          {tabs.map(({ key }) => {
-            const meta = priorityMeta[key];
-            const isActive = activePriority === key;
-            return (
-              <button
-                key={key}
-                onClick={() => setActivePriority(key)}
-                className={cn(
-                  "flex items-center gap-1.5 px-4 py-2.5 text-[10px] font-semibold transition-all relative",
-                  isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
-                )}
-              >
-                <div className={cn("w-1.5 h-1.5 rounded-full", meta.dotColor)} />
-                {meta.label}
-                {meta.count > 0 && (
-                  <span className={cn(
-                    "text-[8px] font-bold px-1.5 py-0.5 rounded-full",
-                    key === 'urgent' ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400' :
-                    key === 'followup' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400' :
-                    'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                  )}>
-                    {meta.count}
-                  </span>
-                )}
-                {isActive && (
-                  <motion.div
-                    layoutId="alert-indicator"
-                    className="absolute bottom-0 right-0 left-0 h-0.5 bg-slate-900 dark:bg-white rounded-full"
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="px-6 pb-5">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activePriority}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="space-y-2 min-h-[120px]"
-          >
-            {filteredAlerts.length === 0 ? (
-              <div className="py-10 text-center">
-                <div className="w-10 h-10 mx-auto bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center mb-2">
-                  <Bell size={18} className="text-slate-300" strokeWidth={1.5} />
-                </div>
-                <p className="text-xs font-medium text-slate-400">لا توجد تنبيهات</p>
-              </div>
-            ) : (
-              filteredAlerts.map((alert) => (
-                <div
-                  key={alert.id}
-                  className={cn(
-                    "flex items-center justify-between py-3 px-4 border-r-4 bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-xl",
-                    priorityMeta[alert.priority].borderColor
-                  )}
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={cn(
-                      "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                      alert.priority === 'urgent' ? 'bg-rose-50 dark:bg-rose-900/20 text-rose-500' :
-                      alert.priority === 'followup' ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-500' :
-                      'bg-blue-50 dark:bg-blue-900/20 text-blue-500'
-                    )}>
-                      <alert.icon size={14} strokeWidth={1.5} />
+    return (
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-none flex flex-col" dir="rtl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 rounded-none flex items-center justify-center border border-slate-200">
+                        <Zap size={16} />
                     </div>
-                    <div className="min-w-0">
-                      <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">{alert.title}</div>
-                      <div className="text-[10px] font-medium text-slate-400 dark:text-slate-500 truncate mt-0.5">{alert.description}</div>
+                    <div>
+                        <h4 className="text-sm font-normal text-slate-900 dark:text-white uppercase tracking-tight">إخطارات ذكية</h4>
                     </div>
-                  </div>
-                  {alert.actionLabel === 'واتساب' ? (
-                    <button onClick={alert.action} className="h-7 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-[9px] font-bold rounded-xl transition-all whitespace-nowrap shrink-0">
-                      واتساب
-                    </button>
-                  ) : alert.link ? (
-                    <Link to={alert.link} className="h-7 px-3 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-[9px] font-bold rounded-xl transition-all flex items-center gap-1 shrink-0">
-                      عرض
-                    </Link>
-                  ) : null}
                 </div>
-              ))
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
+            </div>
+
+            <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
+                {alerts.map(alert => {
+                    const c = colorMap[alert.color] || colorMap.indigo;
+                    const Icon = alert.icon;
+                    return (
+                        <div key={alert.id} className={cn("p-3 border border-slate-100 flex items-center gap-3 rounded-none transition-all hover:bg-white dark:hover:bg-slate-800", c.bg)}>
+                            <div className={cn("w-8 h-8 shrink-0 flex items-center justify-center rounded-none", c.icon)}>
+                                <Icon size={14} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className={cn("font-normal text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
+                                <p className={cn("text-[9px] font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
+                            </div>
+                            {alert.action && (
+                                <button
+                                    onClick={alert.action}
+                                    className={cn("shrink-0 p-2 rounded-none transition-all hover:brightness-110", c.btn)}
+                                >
+                                    <ArrowLeft size={12} />
+                                </button>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 };
