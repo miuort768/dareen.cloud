@@ -68,9 +68,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         >
                             <Sun size={18} />
                         </button>
-                        <div className="text-[#54656f] dark:text-[#aebac1]">
-                            <NotificationDropdown />
-                        </div>
+                        <NotificationDropdown />
                     </div>
                 </div>
 

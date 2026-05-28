@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useNotificationsEnabled, useCurrentUser, useShowNotification } from '../../context/AppContext';
 import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -23,6 +23,8 @@ export const NotificationDropdown = () => {
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const navigate = useNavigate();
+    const location = useLocation();
+    const isChatPage = location.pathname === '/chat' || location.pathname.startsWith('/chat/');
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const lastNotifIdRef = useRef<string | null>(null);
@@ -148,9 +150,9 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center text-inherit hover:bg-black/5 dark:hover:bg-white/15 hover:scale-110 active:scale-95 transition-all duration-200"
+                className="relative w-10 h-10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/15 hover:scale-110 active:scale-95 transition-all duration-200"
             >
-                <Bell size={24} className={cn(unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "")} />
+                <Bell size={24} className={cn(isChatPage ? "text-[#111b21] dark:text-[#e9edef]" : "text-white", unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "")} />
                 {notificationsEnabled && unreadCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 bg-red-600 rounded-full text-white text-[10px] font-bold flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-lg">
                         {unreadCount}
