@@ -40,10 +40,10 @@ export const Agenda = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['sessions'] });
             queryClient.invalidateQueries({ queryKey: ['students'] });
-            showNotification('Êã ÊÓÌíá ÇáÍÕÉ ÈäÌÇÍ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
         },
         onError: () => {
-            showNotification('ÝÔá ÊÓÌíá ÇáÍÕÉ', 'error');
+            showNotification('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         }
     });
 
@@ -74,7 +74,7 @@ export const Agenda = () => {
                             studentGrade: student.grade,
                             teacherName: enrollment.teacher,
                             subject: enrollment.subject,
-                            time: `${slot.hour} ${slot.period === 'am' ? 'ÕÈÇÍÇð' : 'ãÓÇÁð'}`,
+                            time: `${slot.hour} ${slot.period === 'am' ? 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½ï¿½ï¿½'}`,
                             hour: slot.hour,
                             period: slot.period,
                             isDone,
@@ -116,39 +116,38 @@ export const Agenda = () => {
         });
     };
 
-    const DAYS = ['ÇáÓÈÊ', 'ÇáÃÍÏ', 'ÇáÇËäíä', 'ÇáËáÇËÇÁ', 'ÇáÃÑÈÚÇÁ', 'ÇáÎãíÓ', 'ÇáÌãÚÉ'];
+    const DAYS = ['ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'];
 
     if (loadingStudents || loadingSessions) {
-        return <div className="p-12 text-center">ÌÇÑí ÊÍãíá ÇáÃÌäÏÉ...</div>;
+        return <div className="p-12 text-center">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...</div>;
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
-    <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
     <div className="relative z-10 max-w-[1600px] mx-auto px-2">
             <PageHeader
-                title="ÃÌäÏÉ ÇáÍÕÕ ÇáíæãíÉ"
-                subtitle="ãÊÇÈÚÉ æÊäÝíÐ ÇáÍÕÕ ÇáãÌÏæáÉ ááíæã"
+                title="ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
+                subtitle="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½"
                 icon={CalendarCheck}
                 color="amber"
                 stats={[
-                    { label: 'ÍÕÕ Çáíæã', value: scheduledAppointments.length },
-                    { label: 'Êã ÇáÊäÝíÐ', value: scheduledAppointments.filter(a => a.isDone).length }
+                    { label: 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', value: scheduledAppointments.length },
+                    { label: 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', value: scheduledAppointments.filter(a => a.isDone).length }
                 ]}
             />
 
             {/* Quick Filters */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-6 flex flex-col md:flex-row gap-6 items-center justify-between shadow-sm">
-                <div className="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto custom-scrollbar">
+            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6" style={{ backgroundColor: '#F59E0B' }}>
+                <div className="flex gap-2 overflow-x-auto w-full md:w-auto custom-scrollbar">
                     {DAYS.map(day => (
                         <button
                             key={day}
                             onClick={() => setActiveDay(day)}
                             className={cn(
-                                "px-6 py-2.5 text-xs font-medium transition-all whitespace-nowrap border-b-2",
+                                "px-4 py-2 text-[10px] font-bold transition-all whitespace-nowrap rounded-none",
                                 activeDay === day
-                                    ? "bg-amber-50 text-amber-700 border-amber-500 dark:bg-amber-900/20"
-                                    : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
+                                    ? "bg-white text-amber-700"
+                                    : "bg-white/15 text-white/70 hover:bg-white/30"
                             )}
                         >
                             {day}
@@ -156,14 +155,14 @@ export const Agenda = () => {
                     ))}
                 </div>
 
-                <div className="relative w-full md:w-80">
-                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <div className="relative w-full md:w-64 shrink-0">
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
                     <input
                         type="text"
-                        placeholder="ÈÍË Ýí ÇáÃÌäÏÉ..."
+                        placeholder="Ø¨Ø­Ø« Ø¹Ù† Ø·Ø§Ù„Ø¨..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-normal focus:ring-2 ring-amber-500 rounded-none dark:text-white"
+                        className="w-full bg-white/15 border border-white/20 text-white placeholder:text-white/50 pr-10 py-2 text-[11px] font-bold outline-none rounded-none"
                     />
                 </div>
             </div>
@@ -198,7 +197,7 @@ export const Agenda = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-medium text-gray-500 rounded font-mono">
+                                    <div className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-medium text-gray-500 rounded-none font-mono">
                                         {app.time}
                                     </div>
                                 </div>
@@ -211,7 +210,7 @@ export const Agenda = () => {
                                     {!isTeacher && (
                                         <div className="flex items-center gap-2 text-xs font-normal text-gray-500">
                                             <User size={14} className="text-blue-500" />
-                                            <span>Ã. {app.teacherName}</span>
+                                            <span>ï¿½. {app.teacherName}</span>
                                         </div>
                                     )}
                                 </div>
@@ -219,7 +218,7 @@ export const Agenda = () => {
                                 {/* Progress for that enrollment */}
                                 <div className="pt-2">
                                     <div className="flex justify-between items-center mb-1 text-[9px] font-medium uppercase tracking-widest text-gray-400">
-                                        <span>ÊÞÏã ÇáØÇáÈ</span>
+                                        <span>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
                                     <div className="h-1.5 bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -237,7 +236,7 @@ export const Agenda = () => {
                                     {app.isDone ? (
                                         <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
                                             <CheckCircle2 size={16} />
-                                            Êã ÇáÅäÌÇÒ
+                                            ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                                         </div>
                                     ) : (
                                         <button
@@ -245,10 +244,10 @@ export const Agenda = () => {
                                             disabled={logAttendanceMutation.isPending}
                                             className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-amber-500/10 active:scale-95 disabled:opacity-50"
                                         >
-                                            {logAttendanceMutation.isPending ? 'ÌÇÑí ÇáÊÓÌíá...' : (
+                                            {logAttendanceMutation.isPending ? 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...' : (
                                                 <>
                                                     <CheckCircle2 size={16} />
-                                                    ÊÃßíÏ ÇáÅäÌÇÒ
+                                                    ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                                                 </>
                                             )}
                                         </button>
@@ -258,10 +257,10 @@ export const Agenda = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="col-span-full py-24 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
+                    <div className="col-span-full py-24 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 rounded-none">
                         <Calendar size={48} className="mx-auto mb-4 text-gray-200" />
-                        <h3 className="text-lg font-medium text-gray-400">áÇ ÊæÌÏ ÍÕÕ ãÌÏæáÉ áåÐÇ Çáíæã</h3>
-                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">íÑÌì ÇáÊÃßÏ ãä ÇáÌÏÇæá ÇáÏÑÇÓíÉ</p>
+                        <h3 className="text-lg font-medium text-gray-400">ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½</h3>
+                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                     </div>
                 )}
             </div>

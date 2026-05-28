@@ -175,27 +175,27 @@ export const Schedule = () => {
             <div className="max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
-                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-none" style={{ backgroundColor: '#2563EB' }}>
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
-                            <CalendarDays size={22} style={{ color: '#2563EB' }} />
+                        <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                            <CalendarDays size={22} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">الجداول الدراسية</h1>
-                            <p className="text-[11px] font-bold text-slate-400 mt-0.5">جدول الحصص الأسبوعي</p>
+                            <h1 className="text-lg md:text-xl font-bold text-white leading-tight">الجداول الدراسية</h1>
+                            <p className="text-[11px] font-bold text-white/70 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2 no-print">
                         {/* Search */}
                         <div className="relative">
-                            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: '#94A3B8' }} />
+                            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-36 h-9 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-[10px] font-bold rounded-xl px-8 outline-none focus:border-[#2563EB] transition-all"
+                                className="w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-none px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
 
@@ -203,17 +203,17 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-[10px] font-bold rounded-xl outline-none focus:border-[#2563EB] transition-all"
+                            className="h-9 px-3 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none outline-none focus:border-white/50 transition-all"
                         >
-                            <option value="all">كل الأيام</option>
+                            <option value="all" className="text-slate-900">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
-                                <option key={day} value={day}>{day}</option>
+                                <option key={day} value={day} className="text-slate-900">{day}</option>
                             ))}
                         </select>
 
                         <button
                             onClick={() => setShowSharedModal(true)}
-                            className="h-9 px-4 bg-[#F59E0B] text-white text-[10px] font-bold rounded-xl shadow-sm hover:bg-amber-600 transition-all active:scale-95 flex items-center gap-2 border-0"
+                            className="h-9 px-4 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
                         >
                             <Share2 size={13} />
                             مشاركة
@@ -225,22 +225,22 @@ export const Schedule = () => {
                 <LiveClasses />
 
                 {/* Schedule Grid */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden mt-4">
+                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none mt-4">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
-                            <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-100/50 dark:border-slate-800/50">
-                                <div className="p-3 text-[9px] font-bold text-slate-400 border-l border-slate-100/50 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-900/50">
+                            <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-700">
+                                <div className="p-3 text-[9px] font-bold text-white/70 border-l border-slate-700 bg-[#0F172A]">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-[10px] font-bold text-center border-l border-slate-100/50 dark:border-slate-800/50 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50",
-                                        isToday(day) ? "text-[#2563EB]" : "text-slate-700 dark:text-slate-300"
+                                        "p-3 text-[10px] font-bold text-center border-l border-slate-700 last:border-l-0 bg-[#0F172A]",
+                                        isToday(day) ? "text-white" : "text-white/70"
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ backgroundColor: '#2563EB' }} />
+                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-none inline-block animate-pulse" style={{ backgroundColor: '#2563EB' }} />
                                         )}
                                     </div>
                                 ))}
@@ -260,6 +260,51 @@ export const Schedule = () => {
                                             <Clock size={10} className="ml-1 inline" />
                                             {slot.label}
                                         </div>
+
+                                        {DAYS_OF_WEEK.map((day) => {
+                                            const dayEvents = getDayEvents(currentTimeSlots, day);
+                                            const event = dayEvents[0];
+
+                                            if (event) {
+                                                const colorIdx = getColorIndex(event);
+                                                const accent = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length];
+                                                const { color } = accent;
+
+                                                return (
+                                                    <div
+                                                        key={`${day}-${slot.hour}`}
+                                                        onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
+                                                        className="p-1.5 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[65px]"
+                                                        style={{ backgroundColor: `${color}08` }}
+                                                    >
+                                                        <div className="absolute top-0 right-0 w-full h-0.5" style={{ backgroundColor: color }} />
+
+                                                        <div className="flex items-start gap-1.5 h-full">
+                                                            <div className="w-1 h-full shrink-0 mt-0.5" style={{ backgroundColor: color }} />
+                                                            <div className="min-w-0 flex-1">
+                                                                <p className="text-[9px] font-bold leading-tight mb-0.5 truncate" style={{ color }}>
+                                                                    {event.studentName}
+                                                                </p>
+                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.subject}</p>
+                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.teacherName}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+
+                                            return (
+                                                <div
+                                                    key={`${day}-${slot.hour}`}
+                                                    className="p-2 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 min-h-[65px]"
+                                                >
+                                                    {!isEmpty && (
+                                                        <div className="text-[7px] font-bold text-slate-300 text-center">—</div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
 
                                         {DAYS_OF_WEEK.map((day) => {
                                             const dayEvents = getDayEvents(currentTimeSlots, day);
@@ -311,13 +356,13 @@ export const Schedule = () => {
                     </div>
 
                     {/* Legend */}
-                    <div className="border-t border-slate-100/50 dark:border-slate-800/50 p-4 flex flex-wrap items-center gap-4">
+                    <div className="border-t border-slate-100/50 dark:border-slate-800/50 p-4 flex flex-wrap items-center gap-4 bg-slate-50/50 dark:bg-slate-950/20">
                         <span className="text-[9px] font-bold text-slate-400">دليل الألوان:</span>
                         {uniqueTeachers.map((teacher, idx) => {
                             const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
                             return (
                                 <div key={idx} className="flex items-center gap-1.5">
-                                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: accent.color }} />
+                                    <div className="w-2 h-2" style={{ backgroundColor: accent.color }} />
                                     <span className="text-[8px] font-bold text-slate-400">{teacher}</span>
                                 </div>
                             );
@@ -339,13 +384,13 @@ export const Schedule = () => {
             {/* Event Details Modal */}
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 overflow-hidden" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 bg-[#172554] text-white flex items-center justify-between">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-none" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 text-white flex items-center justify-between rounded-none" style={{ backgroundColor: '#2563EB' }}>
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
                             </h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-none">
                                 <X size={16} />
                             </button>
                         </div>
@@ -379,14 +424,14 @@ export const Schedule = () => {
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 bg-[#2563EB] text-white text-[10px] font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2 rounded-none" style={{ backgroundColor: '#2563EB' }}
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-white dark:bg-slate-900 text-slate-700 dark:text-white text-[10px] font-bold rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95"
+                                className="flex-1 h-10 bg-white dark:bg-slate-900 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 rounded-none"
                             >
                                 عرض الطالب
                             </button>
@@ -398,13 +443,13 @@ export const Schedule = () => {
             {/* Shared Link Modal */}
             {showSharedModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 overflow-hidden" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 bg-[#172554] text-white flex items-center justify-between">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-md shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-none" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 text-white flex items-center justify-between rounded-none" style={{ backgroundColor: '#2563EB' }}>
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <Share2 size={16} />
                                 مشاركة الجدول
                             </h3>
-                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
+                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-none">
                                 <X size={16} />
                             </button>
                         </div>
@@ -415,11 +460,11 @@ export const Schedule = () => {
                                     type="text"
                                     readOnly
                                     value={sharedLink}
-                                    className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none"
+                                    className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white outline-none rounded-none"
                                 />
                                 <button
                                     onClick={() => { navigator.clipboard.writeText(sharedLink); setShowSharedModal(false); }}
-                                    className="h-10 px-4 bg-[#2563EB] text-white text-[10px] font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all active:scale-95"
+                                    className="h-10 px-4 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 rounded-none" style={{ backgroundColor: '#2563EB' }}
                                 >
                                     نسخ
                                 </button>
