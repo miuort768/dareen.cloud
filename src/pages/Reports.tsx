@@ -108,14 +108,15 @@ export const Reports = () => {
                                         <button
                                             key={tab.id}
                                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                            className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 transition-all group rounded-none shadow-sm hover:shadow-md active:scale-95"
+                                            className="border-0 p-5 transition-all group rounded-none shadow-sm hover:shadow-md active:scale-95"
+                                            style={{ backgroundColor: `${color}10` }}
                                         >
                                         <div className="flex flex-col items-center text-center">
-                                            <div className="w-11 h-11 rounded-none flex items-center justify-center mb-3 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}12` }}>
+                                            <div className="w-11 h-11 rounded-none flex items-center justify-center mb-3 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}25` }}>
                                                 <Icon size={20} style={{ color }} />
                                             </div>
-                                            <p className="text-[11px] font-bold text-slate-800 dark:text-white">{tab.label}</p>
-                                            <p className="text-[10px] font-bold text-slate-400 mt-1">انتقال سريع</p>
+                                            <p className="text-[11px] font-bold" style={{ color }}>{tab.label}</p>
+                                            <p className="text-[10px] font-bold mt-1" style={{ color: `${color}aa` }}>انتقال سريع</p>
                                         </div>
                                     </button>
                                 );
