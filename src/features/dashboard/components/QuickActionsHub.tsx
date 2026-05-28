@@ -1,6 +1,5 @@
 import { UserPlus, FilePlus, Megaphone, Calendar, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { cn } from '../../../lib/utils';
 
 const actions = [
     { 
@@ -40,30 +39,25 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className={cn(
-                        "relative overflow-hidden rounded-2xl",
-                        "p-5 bg-white dark:bg-slate-900",
-                        "shadow-sm border border-slate-100/50 dark:border-slate-800/50",
-                        "transition-all duration-300 active:scale-[0.98] hover:shadow-md",
-                        "group"
-                    )}
+                    className="relative overflow-hidden rounded-none p-5 shadow-sm transition-all duration-300 active:scale-[0.98] hover:shadow-md group"
+                    style={{ backgroundColor: action.color }}
                 >
                     {/* Content */}
                     <div className="relative z-10 flex flex-col gap-4">
-                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${action.color}12`, color: action.color }}>
+                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                             <action.icon size={20} strokeWidth={1.5} />
                         </div>
 
                         <div>
-                            <h3 className="font-bold text-sm text-[#0F172A] dark:text-white leading-tight truncate">
+                            <h3 className="font-bold text-sm text-white leading-tight truncate">
                                 {action.title}
                             </h3>
-                            <p className="text-[10px] font-medium mt-1 text-[#64748B] dark:text-slate-400">
+                            <p className="text-[10px] font-medium mt-1 text-white/70">
                                 {action.description}
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-1 text-[9px] font-bold" style={{ color: action.color }}>
+                        <div className="flex items-center gap-1 text-[9px] font-bold text-white">
                             <span>انتقال</span>
                             <ArrowLeft size={12} strokeWidth={1.5} />
                         </div>

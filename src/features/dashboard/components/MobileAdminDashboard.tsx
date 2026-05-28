@@ -433,13 +433,14 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
         variants={fadeUpItem}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className="bg-white dark:bg-slate-900 rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm border border-slate-100 dark:border-slate-800 active:scale-95 transition-all w-full hover:shadow-md hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50"
+        className="rounded-none p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all w-full"
+        style={{ backgroundColor: color }}
     >
-        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
             <Icon {...iconProps} />
         </div>
-        <span className="text-[10px] font-bold text-[#0F172A] dark:text-white leading-none mt-1">{label}</span>
-        <span className="text-[8px] font-medium text-[#64748B] dark:text-slate-500">{subtext}</span>
+        <span className="text-[10px] font-bold text-white leading-none mt-1">{label}</span>
+        <span className="text-[8px] font-medium text-white/70">{subtext}</span>
     </motion.button>
 );
 
