@@ -12,16 +12,16 @@ interface LeadTableProps {
 
 export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost }: LeadTableProps) => {
     return (
-        <div className="hidden lg:block overflow-x-auto border border-slate-100/50 dark:border-slate-800/50 bg-white dark:bg-slate-900 shadow-sm rounded-2xl">
+        <div className="hidden lg:block overflow-x-auto border border-slate-100/50 dark:border-slate-800/50 bg-white dark:bg-slate-900 shadow-sm rounded-none">
             <table className="w-full text-right border-collapse">
-                <thead className="bg-[#172554]">
+                <thead className="bg-[#0F172A]">
                     <tr>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f]">العميل</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f]">التواصل</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f]">المادة</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f]">الحالة</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f] text-center">الأولوية</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/90 border-b border-[#1e3a5f] text-center">إجراءات</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70">العميل</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70">التواصل</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70">المادة</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70">الحالة</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70 text-center">الأولوية</th>
+                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-white/70 text-center">إجراءات</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -82,33 +82,33 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                         <button 
                                             onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
                                             className={cn(
-                                                "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
-                                                lead.status === 'converted'
-                                                    ? "bg-emerald-500 text-white"
-                                                    : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
-                                            )}
-                                            title="تم التحويل / مشترك"
-                                        >
-                                            <CheckCircle2 size={12} />
-                                        </button>
-                                        <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-xl">
-                                            <PhoneCall size={12} />
-                                        </button>
-                                        <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-xl">
-                                            <MessageSquare size={12} />
-                                        </button>
-                                        <button 
-                                            onClick={() => handleMarkLost(lead.id)} 
-                                            className={cn(
-                                                "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
-                                                lead.status === 'lost'
-                                                    ? "bg-rose-500 text-white"
-                                                    : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"
-                                            )}
-                                            title="رفض / ملغي"
-                                        >
-                                            <Trash size={12} />
-                                        </button>
+                                                    "w-7 h-7 flex items-center justify-center transition-all rounded-none",
+                                                    lead.status === 'converted'
+                                                        ? "bg-emerald-500 text-white"
+                                                        : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+                                                )}
+                                                title="تم التحويل / مشترك"
+                                            >
+                                                <CheckCircle2 size={12} />
+                                            </button>
+                                            <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-none">
+                                                <PhoneCall size={12} />
+                                            </button>
+                                            <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-none">
+                                                <MessageSquare size={12} />
+                                            </button>
+                                            <button 
+                                                onClick={() => handleMarkLost(lead.id)} 
+                                                className={cn(
+                                                    "w-7 h-7 flex items-center justify-center transition-all rounded-none",
+                                                    lead.status === 'lost'
+                                                        ? "bg-rose-500 text-white"
+                                                        : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"
+                                                )}
+                                                title="رفض / ملغي"
+                                            >
+                                                <Trash size={12} />
+                                            </button>
                                     </div>
                                 </td>
                             </tr>

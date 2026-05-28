@@ -14,15 +14,15 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl w-full max-w-lg animate-in fade-in zoom-in-95 duration-200 rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl w-full max-w-lg animate-in fade-in zoom-in-95 duration-200 rounded-none">
                 <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-emerald-600 flex items-center justify-center rounded-xl">
-                            <UserPlus size={16} className="text-white" />
+                        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: '#22C55E12' }}>
+                            <UserPlus size={16} style={{ color: '#22C55E' }} />
                         </div>
                         <h2 className="text-sm font-bold text-white">إضافة عميل محتمل</h2>
                     </div>
-                    <button onClick={() => setIsAddModalOpen(false)} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-xl"><X size={16} /></button>
+                    <button onClick={() => setIsAddModalOpen(false)} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-none"><X size={16} /></button>
                 </div>
                 <form ref={formRef} className="p-5 space-y-4" onSubmit={(e) => {
                     e.preventDefault();

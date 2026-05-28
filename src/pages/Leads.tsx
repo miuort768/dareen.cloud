@@ -13,27 +13,25 @@ import { AddLeadModal } from './leads/components/AddLeadModal';
 
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-200 dark:border-slate-700 shadow-xl rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-200 dark:border-slate-700 shadow-xl rounded-none">
             <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-rose-500/20 flex items-center justify-center rounded-xl">
-                        <AlertTriangle size={18} className="text-rose-300" />
+                    <div className="w-8 h-8 flex items-center justify-center rounded-none" style={{ backgroundColor: '#F43F5E12' }}>
+                        <AlertTriangle size={18} style={{ color: '#F43F5E' }} />
                     </div>
                     <h3 className="text-sm font-bold text-white">حذف العميل</h3>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-xl">
-                    <X size={16} />
-                </button>
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-none"><X size={16} /></button>
             </div>
             <div className="p-5">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
+                <p className="text-xs font-bold text-slate-400 leading-relaxed">
                     سيتم حذف العميل <span className="text-rose-500 font-bold">نهائياً</span> من قاعدة البيانات ولا يمكن التراجع.
                 </p>
             </div>
             <div className="flex border-t border-slate-100 dark:border-slate-800">
-                    <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all rounded-bl-xl">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all rounded-br-xl">تأكيد الحذف</button>
+                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">إلغاء</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 transition-all">تأكيد الحذف</button>
             </div>
         </div>
     </div>
@@ -113,14 +111,61 @@ export const Leads: React.FC = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-blue-950/20" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
+                <div className="shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-none" style={{ backgroundColor: '#2563EB' }}>
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
+                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                             <Users size={22} />
                         </div>
+                        <div>
+                            <h1 className="text-lg font-bold text-white leading-tight">العملاء المحتملين</h1>
+                            <p className="text-[10px] font-bold text-white/70 mt-0.5">إدارة طلبات التسجيل والمهتمين</p>
+                        </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
+                        <button onClick={() => setShowLost(!showLost)} className={cn(
+                            "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-none",
+                            showLost
+                                ? "bg-white text-rose-600 border-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-700"
+                                : "bg-white text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
+                        )}>
+                            {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
+                            <span>{showLost ? 'الكل' : 'المرفوضون'}</span>
+                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
+                        </button>
+                        <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 border-0 rounded-none">
+                            <Plus size={14} /> إضافة عميل
+                        </PrimaryBtn>
+                    </div>
+                </div>
+                {/* Stats */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                    <StatItem title="إجمالي المهتمين" value={stats?.total || 0} icon={Users} />
+                    <StatItem title="عملاء جدد" value={stats?.new || 0} icon={Clock} />
+                    <StatItem title="تم التحويل" value={stats?.converted || 0} icon={CheckCircle2} />
+                    <StatItem title="معدل التحويل" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} />
+                </div>
+                {/* Search & Filter */}
+                <div className="shadow-sm mb-6 rounded-none p-3" style={{ backgroundColor: '#2563EB' }}>
+                    <div className="flex flex-col md:flex-row gap-3">
+                        <div className="relative flex-1">
+                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                            <input type="text" placeholder="ابحث بالاسم أو رقم الهاتف..." className="w-full bg-white/15 border border-white/20 px-9 py-2 outline-none text-xs font-bold text-white placeholder:text-white/50 focus:border-white/40" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                        </div>
+                        <div className="flex items-center gap-2 w-full md:w-auto">
+                            <Filter size={14} className="text-white/70 hidden md:block shrink-0" />
+                            <div className="relative w-full md:w-auto">
+                                <select className="w-full md:w-auto appearance-none bg-white/15 border border-white/20 px-3 py-2 text-[11px] font-bold outline-none cursor-pointer focus:border-white/40 text-white" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                    <option value="all">كل الحالات</option>
+                                    {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
+                                </select>
+                                <ChevronDown className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-white/50" size={12} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                         <div>
                             <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">العملاء المحتملين</h1>
                             <p className="text-[10px] font-medium text-[#64748B] mt-0.5">إدارة طلبات التسجيل والمهتمين</p>

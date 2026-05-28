@@ -21,7 +21,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                 <div
                     key={lead.id}
                     onDoubleClick={() => handleMarkLost(lead.id)}
-                    className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm active:scale-[0.98] transition-all cursor-pointer rounded-2xl"
+                    className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm active:scale-[0.98] transition-all cursor-pointer rounded-none"
                     title="اضغط مرتين للإخفاء"
                 >
                     {/* Card header */}
@@ -64,7 +64,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                     </div>
 
                     {lead.notes && (
-                        <div className="mx-4 mb-3 bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/20 px-3 py-2 rounded-xl">
+                        <div className="mx-4 mb-3 bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/20 px-3 py-2 rounded-none">
                             <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{lead.notes}</p>
                         </div>
                     )}
@@ -89,7 +89,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                 <button 
                                     onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
                                     className={cn(
-                                        "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
+                                        "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                         lead.status === 'converted'
                                             ? "bg-emerald-500 text-white"
                                             : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
@@ -98,16 +98,16 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                 >
                                     <CheckCircle2 size={12} />
                                 </button>
-                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-xl">
+                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-none">
                                     <PhoneCall size={12} />
                                 </button>
-                                <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-xl">
+                                <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-none">
                                     <MessageSquare size={12} />
                                 </button>
                                 <button 
                                     onClick={() => handleMarkLost(lead.id)}
                                     className={cn(
-                                        "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
+                                        "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                         lead.status === 'lost'
                                             ? "bg-rose-500 text-white"
                                             : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"

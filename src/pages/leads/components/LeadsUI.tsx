@@ -19,7 +19,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500',
-            'text-white text-[11px] font-bold px-4 py-2.5 transition-all active:scale-95 rounded-xl',
+            'text-white text-[11px] font-bold px-4 py-2.5 transition-all active:scale-95 rounded-none',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -38,13 +38,13 @@ const statStyleMap: Record<string, { color: string }> = {
 export const StatItem = ({ title, value, icon: Icon }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
     const { color } = statStyleMap[title] || { color: '#2563EB' };
     return (
-        <div className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-4 transition-all hover:shadow-md">
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                 <Icon size={20} />
             </div>
             <div className="min-w-0">
-                <p className="text-[10px] font-bold text-[#64748B] leading-none">{title}</p>
-                <p className="text-xl font-black text-[#0F172A] dark:text-white tabular-nums mt-1">{value}</p>
+                <p className="text-[10px] font-bold text-white/70 leading-none">{title}</p>
+                <p className="text-xl font-black text-white tabular-nums mt-1">{value}</p>
             </div>
         </div>
     );
