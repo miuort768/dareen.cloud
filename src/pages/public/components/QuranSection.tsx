@@ -170,7 +170,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-[#7D8597] dark:text-slate-400 text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
+                    <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
                         منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                     </p>
 
@@ -200,10 +200,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <div className="text-left">
                             <div className="flex items-center gap-1.5">
                                 <span className="text-lg font-black text-[#1B1B1F] dark:text-white">4.9</span>
-                                <span className="text-sm font-bold text-[#7D8597] dark:text-slate-400">/5</span>
+                                <span className="text-sm font-bold text-slate-500 dark:text-slate-400">/5</span>
                                 <Star size={14} className="text-amber-400 fill-amber-400" />
                             </div>
-                            <div className="text-[11px] text-[#7D8597] dark:text-slate-400 font-medium mt-0.5">من قبل آلاف الطلاب</div>
+                            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">من قبل آلاف الطلاب</div>
                         </div>
                         <div className="h-10 w-px bg-emerald-200/60 dark:bg-emerald-800/60"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
@@ -223,14 +223,14 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <ClipboardCheck size={22} className="text-[#F5A623] dark:text-amber-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">متابعة دقيقة</h3>
-                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </div>
                         <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-[#6C4BFF] dark:text-purple-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">أوقات مرنة</h3>
-                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
                         </div>
                         <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
@@ -244,7 +244,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <Mic size={22} className="text-[#08B26A] dark:text-emerald-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">معلمون مجازون</h3>
-                            <p className="text-[#7D8597] dark:text-slate-400 text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
                         </div>
                     </div>
 

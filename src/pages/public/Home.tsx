@@ -154,7 +154,7 @@ export const Home = () => {
                   </div>
                   <div className="flex justify-center gap-1 -mt-1">
                     {[0, 1, 2].map((d) => (
-                      <button key={d} onClick={() => setHeroIndex(d)} className={`w-1.5 h-1.5 rounded-full transition-all $                    {heroIndex === d ? 'bg-indigo-600 w-3' : 'bg-slate-300 dark:bg-slate-600'}`} />
+                      <button key={d} onClick={() => setHeroIndex(d)} aria-label={`الانتقال إلى الشريحة ${d + 1}`} className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-indigo-600 w-3' : 'bg-slate-300 dark:bg-slate-600'}`} />
                     ))}
                   </div>
                 </div>

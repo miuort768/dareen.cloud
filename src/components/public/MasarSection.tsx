@@ -98,7 +98,7 @@ export const MasarSection = () => {
                     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-5 mb-5 flex items-center justify-between">
                         <div>
                             <h2 className="text-[#1E1E2F] dark:text-white text-lg font-black">بوابة الكتب والملخصات</h2>
-                            <p className="text-[#7D8597] dark:text-slate-400 text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
                         <div className="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
                             <Download size={20} className="text-[#6C4BFF] dark:text-purple-400" />
