@@ -305,51 +305,6 @@ export const Schedule = () => {
                                             );
                                         })}
                                     </div>
-
-                                        {DAYS_OF_WEEK.map((day) => {
-                                            const dayEvents = getDayEvents(currentTimeSlots, day);
-                                            const event = dayEvents[0];
-
-                                            if (event) {
-                                                const colorIdx = getColorIndex(event);
-                                                const accent = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length];
-                                                const { color } = accent;
-
-                                                return (
-                                                    <div
-                                                        key={`${day}-${slot.hour}`}
-                                                        onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
-                                                        className="p-1.5 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[65px]"
-                                                        style={{ backgroundColor: `${color}08` }}
-                                                    >
-                                                        <div className="absolute top-0 right-0 w-full h-0.5" style={{ backgroundColor: color, borderRadius: '0 0 999px 999px' }} />
-
-                                                        <div className="flex items-start gap-1.5 h-full">
-                                                            <div className="w-1 h-full rounded-full shrink-0 mt-0.5" style={{ backgroundColor: color }} />
-                                                            <div className="min-w-0 flex-1">
-                                                                <p className="text-[9px] font-bold leading-tight mb-0.5 truncate" style={{ color }}>
-                                                                    {event.studentName}
-                                                                </p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.subject}</p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.teacherName}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            }
-
-                                            return (
-                                                <div
-                                                    key={`${day}-${slot.hour}`}
-                                                    className="p-2 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 min-h-[65px]"
-                                                >
-                                                    {!isEmpty && (
-                                                        <div className="text-[7px] font-bold text-slate-300 text-center">—</div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
                                 );
                             })}
                         </div>
