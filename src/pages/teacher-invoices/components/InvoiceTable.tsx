@@ -83,7 +83,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                   <td className="px-4 py-3">
                     <div className="flex justify-center">
                       <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-none" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
-                        <div className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.color }} />
+                        <div className="w-1 h-1" style={{ backgroundColor: sc.color }} />
                         {inv.status}
                       </span>
                     </div>
@@ -144,7 +144,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-none" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: sc.color }} />
+                  <div className="w-1 h-1" style={{ backgroundColor: sc.color }} />
                   {inv.status}
                 </span>
               </div>

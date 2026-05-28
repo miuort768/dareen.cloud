@@ -83,8 +83,8 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-center">
-                  <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-none" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
-                    <div className="w-1 h-1 rounded-full" style={{ backgroundColor: statusColors[inv.status] }} />
+                    <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-none" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
+                     <div className="w-1 h-1" style={{ backgroundColor: statusColors[inv.status] }} />
                     {statusConfig[inv.status].label}
                   </button>
                 </div>
@@ -140,7 +140,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
                   </div>
                 </div>
                 <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-none" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: statusColors[inv.status] }} />
+                  <div className="w-1 h-1" style={{ backgroundColor: statusColors[inv.status] }} />
                   {sc.label}
                 </button>
               </div>

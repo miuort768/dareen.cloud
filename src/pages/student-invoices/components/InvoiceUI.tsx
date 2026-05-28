@@ -49,7 +49,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '', disable
     disabled={disabled || loading}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 bg-[#172554] hover:bg-[#1e3a5f]',
+      'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1d4ed8]',
       'active:scale-[0.97] text-white text-xs font-bold px-4 py-2 transition-all shadow-sm rounded-none',
       'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100',
       className
