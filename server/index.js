@@ -74,8 +74,9 @@ app.use(cors({
 
         const filteredOrigins = allowedOrigins.filter(Boolean); // Remove undefined/null
 
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
+        // Allow requests with no origin only in development
+        if (!origin && !isProd) return callback(null, true);
+        if (!origin) return callback(new Error('Not allowed by CORS'));
 
         if (filteredOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
             callback(null, true);
@@ -167,7 +168,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '10mb' }));
 
 async function startServer() {
     try {

@@ -85,7 +85,6 @@ export const InstallPWA = () => {
                 const promptEvent = deferredPromptRef.current as Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
                 await promptEvent.prompt();
                 const { outcome } = await promptEvent.userChoice;
-                console.log('User response to install prompt:', outcome);
                 
                 if (outcome === 'accepted') {
                     setIsVisible(false);

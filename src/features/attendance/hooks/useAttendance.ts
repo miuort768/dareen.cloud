@@ -78,7 +78,6 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
             );
             updatedStudent.enrollments = updatedEnrollments;
 
-            console.log(`Saving notes for ${student.name} - ${subject}:`, notes);
             await attendanceService.updateStudent(updatedStudent);
             // Deep update state to ensure re-render
             setStudents(prev => [...prev.map(s => s.id === studentId ? { ...updatedStudent } : s)]);

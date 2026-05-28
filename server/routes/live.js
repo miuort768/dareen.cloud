@@ -67,8 +67,11 @@ router.get('/token', (req, res) => {
         return res.status(400).json({ error: 'Room name is required' });
     }
 
-    const apiKey = process.env.LIVEKIT_API_KEY || 'devkey';
-    const apiSecret = process.env.LIVEKIT_API_SECRET || 'secret';
+    const apiKey = process.env.LIVEKIT_API_KEY;
+    const apiSecret = process.env.LIVEKIT_API_SECRET;
+    if (!apiKey || !apiSecret) {
+        return res.status(500).json({ error: 'LiveKit credentials not configured' });
+    }
 
     const at = new AccessToken(apiKey, apiSecret, {
         identity: participantId,

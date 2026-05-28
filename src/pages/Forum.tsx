@@ -310,7 +310,7 @@ export const Forum = () => {
                                     <div className="p-4 md:p-5 flex justify-between items-start">
                                         <div className="flex items-center gap-3">
                                             <div className="w-11 h-11 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-600 dark:text-purple-300 text-sm border-2 border-purple-200/50 dark:border-purple-700/30">
-                                                {post.authorName[0].toUpperCase()}
+                                                {(post.authorName?.[0] || '').toUpperCase()}
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-0.5">
@@ -391,7 +391,7 @@ export const Forum = () => {
                                                         {/* Main Comment */}
                                                         <div className="flex gap-3">
                                                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-500 text-[10px] shrink-0 border-2 border-purple-200/50 dark:border-purple-700/30">
-                                                                {node.comment.authorName[0].toUpperCase()}
+                                                                {(node.comment.authorName?.[0] || '').toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
                                                                 <div className="bg-white dark:bg-slate-900 rounded-2xl p-3.5 shadow-sm border border-slate-100 dark:border-slate-700/50">
@@ -425,7 +425,7 @@ export const Forum = () => {
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-2">
                                                                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center font-bold text-purple-400 text-[8px] shrink-0 border border-purple-200/50 dark:border-purple-700/30">
-                                                                            {replyNode.comment.authorName[0].toUpperCase()}
+                                                                            {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
                                                                         </div>
                                                                         <div className="flex-1 bg-white dark:bg-slate-900 rounded-xl p-2.5 shadow-sm border border-slate-100 dark:border-slate-700/50">
                                                                             <div className="flex justify-between items-center mb-0.5">

@@ -33,7 +33,8 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     if (!isOpen) return null;
 
     const handleConfirm = () => {
-        if (password.toLowerCase() !== 'dareen') {
+        const secret = import.meta.env.VITE_ATTENDANCE_SECRET || 'dareen@2024';
+        if (password.toLowerCase() !== secret.toLowerCase()) {
             setError('كلمة المرور غير صحيحة');
             return;
         }
