@@ -1,4 +1,5 @@
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
+import { ScrollReveal } from '../../../components/animations/ScrollReveal';
 
 export const FAQSection = () => {
     return (
@@ -16,6 +17,7 @@ export const FAQSection = () => {
                 }}>
             </div>
             <div className="container mx-auto px-4 relative z-10">
+                <ScrollReveal>
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-100 dark:border-slate-700 rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-indigo-600" />
@@ -26,7 +28,8 @@ export const FAQSection = () => {
                     </h2>
                     <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
                 </div>
-                <div className="max-w-2xl mx-auto space-y-3">
+                </ScrollReveal>
+                <StaggerContainer staggerDelay={0.1} className="max-w-2xl mx-auto space-y-3">
                     {[
                         {
                             q: "كيف يتم الدراسة في المعهد ؟",
@@ -71,7 +74,7 @@ export const FAQSection = () => {
                             </div>
                         );
                     })}
-                </div>
+                </StaggerContainer>
             </div>
         </section>
     );

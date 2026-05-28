@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Play, ArrowLeft, Star } from 'lucide-react';
+import { ScrollReveal } from '../../../components/animations/ScrollReveal';
 
 interface HeroSectionProps {
     typewriterText: string;
@@ -8,10 +10,20 @@ interface HeroSectionProps {
 }
 
 export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: HeroSectionProps) => {
+    const { scrollY } = useScroll();
+    const prefersReduced = useReducedMotion();
+    const parallaxSpeed = prefersReduced ? 0 : 1;
+
+    const blob1Y = useTransform(scrollY, [0, 600], [0, -180 * parallaxSpeed]);
+    const blob2Y = useTransform(scrollY, [0, 600], [0, 180 * parallaxSpeed]);
+    const contentY = useTransform(scrollY, [0, 400], [0, -60 * parallaxSpeed]);
+    const imageY = useTransform(scrollY, [0, 400], [0, -40 * parallaxSpeed]);
+    const fadeOut = useTransform(scrollY, [0, 400], [1, prefersReduced ? 1 : 0.85]);
+
     return (
         <>
-            <div className="hero-blob bg-indigo-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
-            <div className="hero-blob bg-purple-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <motion.div style={{ y: blob1Y }} className="hero-blob bg-indigo-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></motion.div>
+            <motion.div style={{ y: blob2Y }} className="hero-blob bg-purple-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></motion.div>
 
             <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
@@ -27,7 +39,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                     }}>
                 </div>
                 <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6">
+                    <motion.div style={{ y: contentY, opacity: fadeOut }} className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6">
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
@@ -113,7 +125,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                     </picture>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                     
                 </div>
                 

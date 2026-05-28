@@ -1,4 +1,6 @@
 import { Star, Quote } from 'lucide-react';
+import { ScrollReveal } from '../../../components/animations/ScrollReveal';
+import { StaggerContainer } from '../../../components/animations/StaggerContainer';
 
 interface Review {
     name: string;
@@ -22,6 +24,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
             <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
             <div className="container mx-auto px-4 relative z-10">
+                <ScrollReveal>
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-indigo-600" />
@@ -31,8 +34,10 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                         ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
                     </h2>
                 </div>
+                </ScrollReveal>
 
                 <div className="max-w-6xl mx-auto">
+                    <ScrollReveal>
                     <div className="lg:hidden">
                         <div className="relative group">
                             <div className="p-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[140px]">
@@ -57,8 +62,9 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                             </div>
                         </div>
                     </div>
+                    </ScrollReveal>
 
-                    <div className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
+                    <StaggerContainer staggerDelay={0.1} className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
                         {reviews.map((review, index) => {
                             const isFirstDual = index === (currentIndex % reviews.length);
                             const isSecondDual = index === ((currentIndex + 3) % reviews.length);
@@ -97,7 +103,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                 </div>
                             );
                         })}
-                    </div>
+                    </StaggerContainer>
                 </div>
             </div>
         </section>

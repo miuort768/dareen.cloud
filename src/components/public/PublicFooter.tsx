@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { ScrollReveal } from '../animations/ScrollReveal';
 
 export const PublicFooter = () => {
     const { adminPhone } = useSettingsStore();
@@ -19,7 +20,7 @@ export const PublicFooter = () => {
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 mb-10">
+                <StaggerContainer staggerDelay={0.08} direction="up" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 mb-10">
                     {/* Brand */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
@@ -117,7 +118,7 @@ export const PublicFooter = () => {
                             </Link>
                         </div>
                     </div>
-                </div>
+                </StaggerContainer>
 
                 {/* Bottom */}
                 <div className="border-t border-white/10 pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">

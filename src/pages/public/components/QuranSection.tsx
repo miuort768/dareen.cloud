@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react';
+import { ScrollReveal } from '../../../components/animations/ScrollReveal';
+import { StaggerContainer } from '../../../components/animations/StaggerContainer';
 
 interface QuranSectionProps {
     whatsappNumber: string;
@@ -45,7 +47,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 </div>
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
-                        <div className="w-full lg:w-1/2 text-center">
+                        <ScrollReveal direction="left" className="w-full lg:w-1/2 text-center">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 rounded-full mb-6 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                                 <span className="text-emerald-900 dark:text-emerald-300 font-bold text-xs">برامج تحفيظ متميزة</span>
@@ -95,9 +97,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <div className="text-xs text-gray-500 dark:text-slate-400">من قبل آلاف الطلاب</div>
                                 </div>
                             </div>
-                        </div>
+                        </ScrollReveal>
+                        <ScrollReveal direction="right" delay={0.2}>
                         <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
-                            <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
+                            <StaggerContainer staggerDelay={0.12} className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
                                 <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
                                     <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12 rounded-xl">
@@ -130,8 +133,9 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
                                     <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
                                 </div>
-                            </div>
+                            </StaggerContainer>
                         </div>
+                        </ScrollReveal>
                     </div>
                 </div>
             </section>
