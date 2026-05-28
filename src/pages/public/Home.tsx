@@ -150,7 +150,14 @@ export const Home = () => {
                 <div className="relative shrink-0">
                   <div className="absolute inset-0 bg-violet-200/50 dark:bg-violet-800/30 rounded-full blur-xl" />
                   <div className="relative w-[90px]">
-                    <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" />
+                    {i === 0 ? (
+                      <picture>
+                        <source srcSet="/hero-child.webp" type="image/webp" />
+                        <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" fetchPriority="high" />
+                      </picture>
+                    ) : (
+                      <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" loading="lazy" />
+                    )}
                   </div>
                   <div className="flex justify-center gap-1 -mt-1">
                     {[0, 1, 2].map((d) => (
@@ -232,6 +239,7 @@ export const Home = () => {
                     alt={c.title}
                     width="180"
                     height="96"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <span className={`absolute top-2 right-2 text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-sm ${
