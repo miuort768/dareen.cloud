@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { ScrollReveal } from '../animations/ScrollReveal';
+import { StaggerContainer } from '../animations/StaggerContainer';
 
 export const PublicFooter = () => {
     const { adminPhone } = useSettingsStore();

@@ -29,11 +29,6 @@ export class ErrorBoundary extends Component<Props, State> {
                         <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
                             حدثت مشكلة أثناء تشغيل التطبيق. يرجى تحديث الصفحة أو المحاولة لاحقاً.
                         </p>
-                        <pre className="text-xs text-red-600 dark:text-red-400 mb-4 text-left max-h-40 overflow-auto bg-red-50 dark:bg-red-900/20 p-3 border border-red-200 dark:border-red-800">
-                            {this.state.error?.name}: {this.state.error?.message}
-                            {'\n\n'}
-                            {this.state.error?.stack}
-                        </pre>
                         <button
                             onClick={() => window.location.reload()}
                             className="px-6 py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 text-sm font-black transition-all hover:bg-slate-800 dark:hover:bg-slate-200 active:scale-[0.98]"

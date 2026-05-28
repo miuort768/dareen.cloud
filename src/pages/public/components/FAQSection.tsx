@@ -1,5 +1,6 @@
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 import { ScrollReveal } from '../../../components/animations/ScrollReveal';
+import { StaggerContainer } from '../../../components/animations/StaggerContainer';
 
 export const FAQSection = () => {
     return (
