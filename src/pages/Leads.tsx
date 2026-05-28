@@ -166,55 +166,6 @@ export const Leads: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                        <div>
-                            <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">العملاء المحتملين</h1>
-                            <p className="text-[10px] font-medium text-[#64748B] mt-0.5">إدارة طلبات التسجيل والمهتمين</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
-                        <button onClick={() => setShowLost(!showLost)} className={cn(
-                            "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-xl",
-                            showLost
-                                ? "bg-white text-rose-600 border-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-700"
-                                : "bg-white text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
-                        )}>
-                            {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                            <span>{showLost ? 'الكل' : 'المرفوضون'}</span>
-                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
-                        </button>
-                        <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 bg-emerald-600 hover:bg-emerald-500 border-0">
-                            <Plus size={14} /> إضافة عميل
-                        </PrimaryBtn>
-                    </div>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-                    <StatItem title="إجمالي المهتمين" value={stats?.total || 0} icon={Users} />
-                    <StatItem title="عملاء جدد" value={stats?.new || 0} icon={Clock} />
-                    <StatItem title="تم التحويل" value={stats?.converted || 0} icon={CheckCircle2} />
-                    <StatItem title="معدل التحويل" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} />
-                </div>
-
-                {/* Search & Filter */}
-                <div className="border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/90 shadow-sm mb-6 rounded-2xl">
-                    <div className="flex flex-col md:flex-row gap-3 p-3">
-                        <div className="relative flex-1">
-                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
-                            <input type="text" placeholder="ابحث بالاسم أو رقم الهاتف..." className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-9 py-2 outline-none text-xs font-medium focus:border-emerald-500 text-slate-900 dark:text-white" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                        </div>
-                        <div className="flex items-center gap-2 w-full md:w-auto">
-                            <Filter size={14} className="text-emerald-600 hidden md:block shrink-0" />
-                            <div className="relative w-full md:w-auto">
-                                <select className="w-full md:w-auto appearance-none bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-[11px] font-medium outline-none cursor-pointer focus:border-emerald-500 text-slate-900 dark:text-white" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
-                                    <option value="all">كل الحالات</option>
-                                    {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
-                                </select>
-                                <ChevronDown className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400" size={12} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 {/* Table (desktop) / Cards (mobile) */}
                 <div>
