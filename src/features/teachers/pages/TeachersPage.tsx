@@ -281,23 +281,22 @@ export const Teachers = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-violet-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-violet-950/20" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* Header Section */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl">
+                <div className="shadow-sm px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-none" style={{ backgroundColor: '#8B5CF6' }}>
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                             <Presentation size={24} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">إدارة المعلمات</h1>
-                            <p className="text-[10px] font-medium text-[#64748B] mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <h1 className="text-lg font-bold text-white leading-tight">إدارة المعلمات</h1>
+                            <p className="text-[10px] font-bold text-white/70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
-                                <span className="text-[9px] font-medium text-[#94A3B8]">{teachers.length} معلمة</span>
+                                <span className="text-[9px] font-bold text-white/60">{teachers.length} معلمة</span>
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                                <span className="text-[8px] font-bold text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-xl border border-emerald-200 dark:border-emerald-800">نشطة</span>
+                                <span className="text-[8px] font-bold px-2 py-0.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -306,10 +305,10 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-bold transition-all shadow-sm active:scale-95 rounded-xl",
+                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-bold transition-all shadow-sm active:scale-95 rounded-none",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
-                                : "bg-[#8B5CF6] text-white hover:bg-violet-700"
+                                : "bg-white text-[#8B5CF6] hover:bg-white/90"
                             )}
                         >
                             {showAddForm ? <X size={16} /> : <Plus size={16} />}

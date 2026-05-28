@@ -18,13 +18,13 @@ const statSettings: Record<string, { color: string }> = {
 const StatCard = ({ label, value, icon: Icon }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }> }) => {
     const { color } = statSettings[label] || { color: '#8B5CF6' };
     return (
-        <div className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-4 transition-all hover:shadow-md">
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                 <Icon size={20} />
             </div>
             <div className="min-w-0">
-                <p className="text-[10px] font-bold text-[#64748B] leading-none">{label}</p>
-                <p className="text-2xl font-black text-[#0F172A] dark:text-white tabular-nums mt-1" style={{ color }}>{value}</p>
+                <p className="text-[10px] font-bold text-white/70 leading-none">{label}</p>
+                <p className="text-2xl font-black text-white tabular-nums mt-1">{value}</p>
             </div>
         </div>
     );
