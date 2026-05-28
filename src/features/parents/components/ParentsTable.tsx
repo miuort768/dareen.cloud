@@ -25,15 +25,15 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
             
             {/* ── Desktop View ── */}
-            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden">
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none">
                 <table className="w-full text-right border-collapse">
                     <thead>
-                        <tr className="bg-slate-900 text-white">
-                            <th className="px-6 py-4 font-medium text-[9px] uppercase tracking-widest text-center w-16">ID</th>
-                            <th className="px-6 py-4 font-medium text-[9px] uppercase tracking-widest">ولي الأمر</th>
-                            <th className="px-6 py-4 font-medium text-[9px] uppercase tracking-widest">بيانات التواصل</th>
-                            <th className="px-6 py-4 font-medium text-[9px] uppercase tracking-widest text-center">الطلاب المرتبطين</th>
-                            <th className="px-6 py-4 font-medium text-[9px] uppercase tracking-widest text-center">الإجراءات</th>
+                        <tr className="bg-[#0F172A]">
+                            <th className="px-6 py-4 font-bold text-[9px] uppercase tracking-widest text-white/70 text-center w-16">ID</th>
+                            <th className="px-6 py-4 font-bold text-[9px] uppercase tracking-widest text-white/70">ولي الأمر</th>
+                            <th className="px-6 py-4 font-bold text-[9px] uppercase tracking-widest text-white/70">بيانات التواصل</th>
+                            <th className="px-6 py-4 font-bold text-[9px] uppercase tracking-widest text-white/70 text-center">الطلاب المرتبطين</th>
+                            <th className="px-6 py-4 font-bold text-[9px] uppercase tracking-widest text-white/70 text-center">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -69,14 +69,14 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     <td className="px-6 py-4">
                                         <div className="flex flex-col gap-1.5">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-5 h-5 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-100 dark:border-emerald-800/50">
+                                                <div className="w-5 h-5 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-none">
                                                     <Phone size={10} className="text-emerald-600" />
                                                 </div>
                                                 <span className="font-mono text-[11px] font-medium text-slate-700 dark:text-slate-300" dir="ltr">{parent.phone}</span>
                                             </div>
                                             {parent.email && (
                                                 <div className="flex items-center gap-2">
-                                                    <div className="w-5 h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                                                    <div className="w-5 h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none">
                                                         <Mail size={10} className="text-slate-400" />
                                                     </div>
                                                     <span className="text-[10px] font-normal text-slate-400 truncate max-w-[180px]">{parent.email}</span>
@@ -103,21 +103,21 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center justify-center gap-1">
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
-                                                className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all rounded-xl"
-                                            >
-                                                <Edit size={13} />
-                                            </button>
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                                className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all rounded-xl"
-                                            >
-                                                <Trash2 size={13} />
-                                            </button>
-                                            <button className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all rounded-xl">
-                                                <ArrowUpRight size={13} />
-                                            </button>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
+                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all rounded-none"
+                                                    >
+                                                        <Edit size={13} />
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
+                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all rounded-none"
+                                                    >
+                                                        <Trash2 size={13} />
+                                                    </button>
+                                                    <button className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all rounded-none">
+                                                        <ArrowUpRight size={13} />
+                                                    </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -125,7 +125,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                         }) : (
                             <tr>
                                 <td colSpan={5} className="py-20 text-center">
-                                    <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700/50">
+                                            <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700/50 rounded-none">
                                         <Users size={32} className="text-slate-200 dark:text-slate-600" />
                                     </div>
                                     <p className="text-[10px] font-medium text-slate-400 uppercase tracking-[0.2em]">لا توجد سجلات حالياً</p>
@@ -147,7 +147,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                             key={parent.id}
                             onClick={() => onSelectParent(parent)}
                             className={cn(
-                                "bg-white dark:bg-slate-900 border transition-all duration-200 p-4 rounded-2xl relative shadow-sm",
+                                "bg-white dark:bg-slate-900 border transition-all duration-200 p-4 relative shadow-sm rounded-none",
                                 isSelected ? "border-blue-400 ring-1 ring-blue-500/20" : "border-slate-100/50 dark:border-slate-800/50"
                             )}
                         >
@@ -165,8 +165,8 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 rounded-xl shadow-sm transition-all"><Edit size={13} /></button>
-                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center bg-rose-50 dark:bg-rose-900/20 border border-rose-100 dark:border-rose-800 text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl shadow-sm transition-all"><Trash2 size={13} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 shadow-sm transition-all rounded-none"><Edit size={13} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center shadow-sm transition-all rounded-none" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash2 size={13} /></button>
                                 </div>
                             </div>
 
@@ -179,7 +179,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl shadow-sm text-white text-[10px] font-bold" style={{ backgroundColor: '#2563EB' }}>
+                                <div className="flex items-center gap-1.5 px-3 py-1 shadow-sm text-white text-[10px] font-bold rounded-none" style={{ backgroundColor: '#2563EB' }}>
                                     <Users size={11} />
                                     {children.length}
                                 </div>
