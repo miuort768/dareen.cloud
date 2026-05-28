@@ -1,4 +1,4 @@
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ReactNode, HTMLAttributes } from 'react';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'scale' | 'none';
@@ -33,7 +33,7 @@ export const ScrollReveal = ({
   className,
   ...rest
 }: ScrollRevealProps) => {
-  const variants: Variants = {
+  const variants = {
     hidden: getHidden(direction, distance),
     visible: {
       opacity: 1,

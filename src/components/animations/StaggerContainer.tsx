@@ -1,9 +1,9 @@
-import { motion, Variants, HTMLMotionProps } from 'framer-motion';
-import { ReactNode, Children } from 'react';
+import { motion } from 'framer-motion';
+import { ReactNode, Children, HTMLAttributes } from 'react';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'scale' | 'none';
 
-interface StaggerContainerProps extends HTMLMotionProps<'div'> {
+interface StaggerContainerProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   staggerDelay?: number;
   direction?: Direction;
@@ -31,12 +31,12 @@ export const StaggerContainer = ({
   className,
   ...rest
 }: StaggerContainerProps) => {
-  const containerVariants: Variants = {
+  const containerVariants = {
     hidden: {},
     visible: { transition: { staggerChildren: staggerDelay } }
   };
 
-  const itemVariants: Variants = {
+  const itemVariants = {
     hidden: getHidden(direction, distance),
     visible: {
       opacity: 1,

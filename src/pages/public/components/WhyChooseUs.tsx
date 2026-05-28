@@ -123,6 +123,7 @@ export const WhyChooseUs = () => {
                 <div className="text-[9px] text-white/50 font-bold">معلم خبير</div>
               </div>
             </div>
+          </div>
           </ScrollReveal>
         </StaggerContainer>
 

@@ -139,29 +139,6 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                         ))}
                     </div>
                 </div>
-                    <p className="text-[10px] text-slate-400 mb-2">تخصيص يدوي</p>
-                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
-                        {AVAILABLE_PERMISSIONS.map(p => (
-                            <button
-                                key={p.id}
-                                onClick={() => {
-                                    const perms = newUser.permissions.includes(p.id)
-                                        ? newUser.permissions.filter(x => x !== p.id)
-                                        : [...newUser.permissions, p.id];
-                                    setNewUser({ ...newUser, permissions: perms });
-                                }}
-                                className={cn(
-                                    'p-2 text-[9px] font-normal border text-right transition-all',
-                                    newUser.permissions.includes(p.id)
-                                        ? 'bg-[#2563EB] text-white border-[#2563EB]'
-                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/30'
-                                )}
-                            >
-                                {p.label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
 
                 <div className="flex flex-col gap-2 pt-2">
                     <PrimaryBtn onClick={handleUserAction} className="w-full">
