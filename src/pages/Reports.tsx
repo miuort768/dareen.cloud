@@ -41,7 +41,7 @@ export const Reports = () => {
     const uniqueSubjects = new Set(state.subjectPieData.map(s => s.name)).size;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-slate-50 dark:bg-slate-950" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2">
 
             <ReportsHeader onExport={() => window.print()} />
