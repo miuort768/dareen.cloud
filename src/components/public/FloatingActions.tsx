@@ -7,7 +7,8 @@ import { cn } from '../../lib/utils';
 export const FloatingActions = () => {
     const { adminPhone, telegramHandle } = useSettingsStore();
     const [theme, setTheme] = useDarkMode();
-    const whatsappNumber = adminPhone.replace(/\D/g, '');
+    const whatsappNumber = typeof adminPhone === 'string' ? adminPhone.replace(/\D/g, '') : '';
+    const tgHandle = typeof telegramHandle === 'string' ? telegramHandle : '';
 
     const actions = [
         {
@@ -23,7 +24,7 @@ export const FloatingActions = () => {
             icon: <Send className="w-5 h-5" />,
             label: 'تليجرام',
             color: 'bg-[#229ED9]',
-            href: telegramHandle.startsWith('http') ? telegramHandle : `https://t.me/${telegramHandle}`,
+            href: tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`,
             isExternal: true
         },
         {

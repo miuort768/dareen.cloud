@@ -121,7 +121,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 if (settings.academy_logo !== undefined && settings.academy_logo !== null) updates.academyLogo = settings.academy_logo;
                 if (settings.academy_tagline !== undefined && settings.academy_tagline !== null) updates.academyTagline = settings.academy_tagline;
                 if (settings.academy_address !== undefined && settings.academy_address !== null) updates.academyAddress = settings.academy_address;
-                if (settings.admin_phone !== undefined && settings.admin_phone !== null) updates.adminPhone = settings.admin_phone;
+                if (settings.admin_phone !== undefined && settings.admin_phone !== null) updates.adminPhone = String(settings.admin_phone);
                 if (settings.theme_color !== undefined && settings.theme_color !== null) {
                     updates.themeColor = settings.theme_color;
                     applyThemeColor(settings.theme_color);
@@ -162,7 +162,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) {
                     updates.autoFreezeThreshold = Number(settings.auto_freeze_threshold);
                 }
-                if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) updates.telegramHandle = settings.telegram_handle;
+                if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) updates.telegramHandle = String(settings.telegram_handle);
                 if (settings.hero_banners !== undefined && settings.hero_banners !== null) updates.heroBanners = settings.hero_banners;
                 if (settings.reminder_minutes_before !== undefined && settings.reminder_minutes_before !== null) {
                     updates.reminderMinutesBefore = Number(settings.reminder_minutes_before);
