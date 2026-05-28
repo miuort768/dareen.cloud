@@ -31,13 +31,13 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-slate-50 dark:bg-slate-800">
+                    <thead className="bg-[#0F172A]">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">المعلمة</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحصص</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الأساسي</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">تعديلات</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الصافي</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">المعلمة</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الحصص</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الأساسي</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">تعديلات</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الصافي</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                        <div className="w-8 h-8 rounded-none flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>
@@ -61,7 +61,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                         type="number"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 text-center font-bold text-[10px] outline-none focus:border-[#2563EB]"
+                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 text-center font-bold text-[10px] outline-none focus:border-[#2563EB] rounded-none"
                                         placeholder="0"
                                     />
                                 </td>

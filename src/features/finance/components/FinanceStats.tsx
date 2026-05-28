@@ -16,23 +16,23 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, sub, badge }: StatCardProps) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl overflow-hidden">
+    <div className="shadow-sm overflow-hidden rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
         <div className="p-4 flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: `${color}12` }}>
-                <Icon size={20} style={{ color }} />
+            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                <Icon size={20} style={{ color: '#fff' }} />
             </div>
             <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
-                    <p className="text-[9px] font-bold text-[#64748B] uppercase tracking-widest truncate">{title}</p>
+                    <p className="text-[9px] font-bold text-white/70 uppercase tracking-widest truncate">{title}</p>
                     {badge && (
-                        <span className={cn("text-[8px] font-bold px-1.5 py-0.5 rounded-lg uppercase tracking-widest shrink-0", badge.color)}>
+                        <span className="text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-widest shrink-0 rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                             {badge.label}
                         </span>
                     )}
                 </div>
-                <p className="text-lg font-black font-mono leading-none mt-1" style={{ color }}>{value}</p>
-                <p className="text-[9px] font-bold text-[#64748B] mt-0.5">ج.م</p>
-                {sub && <p className="text-[8px] font-bold text-[#64748B] mt-0.5">{sub}</p>}
+                <p className="text-lg font-black font-mono leading-none mt-1 text-white">{value}</p>
+                <p className="text-[9px] font-bold text-white/60 mt-0.5">ج.م</p>
+                {sub && <p className="text-[8px] font-bold text-white/60 mt-0.5">{sub}</p>}
             </div>
         </div>
     </div>

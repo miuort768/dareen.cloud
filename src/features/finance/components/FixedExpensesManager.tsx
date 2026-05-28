@@ -29,7 +29,7 @@ const ExpenseInput = ({
         <input
             type="number"
             step="any"
-            className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 px-2 py-1 text-xs font-normal focus:border-[#2563EB] focus:ring-0 outline-none transition-all rounded-lg"
+            className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 px-2 py-1 text-xs font-normal focus:border-[#2563EB] focus:ring-0 outline-none transition-all rounded-none"
             placeholder="0"
             value={val}
             onChange={(e) => setVal(e.target.value)}
@@ -46,10 +46,10 @@ export const FixedExpensesManager = ({
 }: FixedExpensesManagerProps) => {
     return (
         <div className="px-0 mb-8" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none">
                 <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
+                        <div className="w-9 h-9 flex items-center justify-center rounded-none" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
                             <Wallet size={18} />
                         </div>
                         <div>
@@ -59,11 +59,11 @@ export const FixedExpensesManager = ({
                     </div>
 
                     <div className="flex gap-2 w-full md:w-auto">
-                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-[#2563EB] hover:bg-blue-700 text-white px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 rounded-xl shadow-sm transition-all uppercase">
+                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-[#2563EB] hover:bg-blue-700 text-white px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 shadow-sm transition-all uppercase rounded-none">
                             <RefreshCcw size={14} />
                             ترحيل الكل
                         </button>
-                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-rose-500 px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 rounded-xl border transition-all uppercase shadow-sm" style={{ backgroundColor: '#F43F5E12', borderColor: '#F43F5E30' }}>
+                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-rose-500 px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 transition-all uppercase shadow-sm rounded-none" style={{ backgroundColor: '#F43F5E12', border: '1px solid #F43F5E30' }}>
                             <Trash2 size={14} />
                             تصفير
                         </button>
@@ -72,7 +72,7 @@ export const FixedExpensesManager = ({
 
                 <div className="p-4 grid grid-cols-2 md:grid-cols-5 gap-3">
                     {expenses.map(item => (
-                        <div key={item.id} className="p-3 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl hover:border-amber-400 transition-all group">
+                        <div key={item.id} className="p-3 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 hover:border-amber-400 transition-all group rounded-none">
                             <label className="text-[9px] font-normal text-slate-400 uppercase mb-2 block truncate">
                                 {item.name}
                             </label>

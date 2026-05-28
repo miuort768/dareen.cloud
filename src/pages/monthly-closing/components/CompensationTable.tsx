@@ -24,12 +24,12 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-slate-50 dark:bg-slate-800">
+                    <thead className="bg-[#0F172A]">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">الطالب</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500">المعلمة</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">التاريخ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحالة</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">الطالب</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70">المعلمة</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">التاريخ</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الحالة</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -39,7 +39,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                                 <td className="px-4 py-4 text-xs font-bold text-slate-600 dark:text-slate-400">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-[10px] text-rose-500">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
-                                    <div className="inline-block px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>تعويض معلق</div>
+                                    <div className="inline-block px-2 py-0.5 text-[9px] font-bold rounded-none" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>تعويض معلق</div>
                                 </td>
                             </tr>
                         ))}

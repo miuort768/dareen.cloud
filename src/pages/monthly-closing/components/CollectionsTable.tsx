@@ -30,12 +30,12 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-slate-50 dark:bg-slate-800">
+                    <thead className="bg-[#0F172A]">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">الطالب</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">المبلغ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">التاريخ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحالة</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">الطالب</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">المبلغ</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">التاريخ</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الحالة</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -57,7 +57,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-none",
                                             item.status === 'paid' ? "bg-emerald-600 text-white" : "text-rose-600 border border-rose-200 bg-rose-50"
                                         )}
                                     >

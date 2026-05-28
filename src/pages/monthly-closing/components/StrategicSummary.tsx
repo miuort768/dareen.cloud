@@ -11,7 +11,7 @@ interface StrategicSummaryProps {
 
 export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout }) => {
     return (
-        <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden shadow-2xl rounded-2xl">
+        <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden shadow-2xl rounded-none">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/5 -rotate-12 translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
             <div className="absolute top-20 left-10 w-40 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rotate-45 pointer-events-none"></div>
@@ -54,7 +54,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
 
                     <div className="pt-8 border-t border-white/5 flex flex-wrap gap-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center border border-white/10">
+                            <div className="w-10 h-10 rounded-none bg-slate-900 flex items-center justify-center border border-white/10">
                                 <TrendingUp size={16} className="text-emerald-500" />
                             </div>
                             <div>
@@ -63,7 +63,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center border border-white/10">
+                            <div className="w-10 h-10 rounded-none bg-slate-900 flex items-center justify-center border border-white/10">
                                 <Receipt size={16} className="text-rose-500" />
                             </div>
                             <div>
@@ -75,7 +75,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                 </div>
 
                 <div className="lg:col-span-5">
-                    <div className="bg-white/[0.02] border border-white/10 p-10 h-full flex flex-col justify-between rounded-2xl relative">
+                    <div className="bg-white/[0.02] border border-white/10 p-10 h-full flex flex-col justify-between rounded-none relative">
                         <div className="absolute top-0 right-0 w-2 h-2 bg-[#2563EB] -translate-x-1/2 -translate-y-1/2"></div>
                         <div className="absolute bottom-0 left-0 w-2 h-2 bg-[#2563EB] translate-x-1/2 translate-y-1/2"></div>
 

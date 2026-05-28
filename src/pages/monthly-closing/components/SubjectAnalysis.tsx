@@ -37,7 +37,7 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                 {subjectAnalysis.map((subj, idx) => (
                     <SectionCard key={idx} className="p-5">
                         <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                            <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                 <span className="text-xs font-black">{String(subj.name).charAt(0)}</span>
                             </div>
                             <h3 className="text-xs font-bold text-slate-800 dark:text-white">{subj.name}</h3>
@@ -47,8 +47,8 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                                 <span className="text-[#64748B] font-bold">صافي الربح</span>
                                 <span className="font-black" style={{ color: '#2563EB' }}>{subj.profit.toLocaleString()} ج.م</span>
                             </div>
-                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full">
-                                <div className="h-full rounded-full" style={{ backgroundColor: '#2563EB', width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
+                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-none">
+                                <div className="h-full rounded-none" style={{ backgroundColor: '#2563EB', width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
                             </div>
                             <div className="flex justify-between items-center text-[9px] text-[#64748B] mt-1">
                                 <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>

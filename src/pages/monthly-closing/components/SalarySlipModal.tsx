@@ -17,10 +17,10 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-lg w-full max-w-xl overflow-hidden rounded-none md:animate-in md:zoom-in-95 md:duration-200">
                 <div className="bg-[#172554] text-white p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#ffffff15' }}>
+                        <div className="w-10 h-10 rounded-none flex items-center justify-center" style={{ backgroundColor: '#ffffff15' }}>
                             <Receipt size={20} />
                         </div>
                         <div>
@@ -28,7 +28,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <p className="text-[10px] font-medium text-white/70 tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-none">
                         <X size={18} />
                     </button>
                 </div>
@@ -38,7 +38,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                         <div>
                             <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">المعلمة</p>
                             <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
-                            <p className="text-[10px] font-bold px-2 py-0.5 inline-block mt-1 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>{teacher.subject}</p>
+                            <p className="text-[10px] font-bold px-2 py-0.5 inline-block mt-1 rounded-none" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>{teacher.subject}</p>
                         </div>
                         <div className="text-left">
                             <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">التاريخ</p>
@@ -47,11 +47,11 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
+                        <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 rounded-none">
                             <p className="text-[10px] font-bold text-[#64748B] uppercase mb-1">إجمالي الحصص</p>
                             <p className="text-2xl font-black text-[#0F172A] dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="p-4 border rounded-xl" style={{ backgroundColor: '#2563EB08', borderColor: '#2563EB20' }}>
+                        <div className="p-4 border rounded-none" style={{ backgroundColor: '#2563EB08', borderColor: '#2563EB20' }}>
                             <p className="text-[10px] font-bold uppercase mb-1" style={{ color: '#2563EB' }}>صافي المستحق</p>
                             <div className="flex items-baseline gap-1">
                                 <p className="text-2xl font-black font-mono" style={{ color: '#2563EB' }}>{teacher.totalAmount.toLocaleString()}</p>
@@ -62,7 +62,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
                     <div>
                         <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" color="#2563EB" />
-                        <div className="border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
+                        <div className="border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-none">
                             <table className="w-full text-right text-[11px]">
                                 <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>

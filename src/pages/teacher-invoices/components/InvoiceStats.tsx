@@ -41,16 +41,16 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
       <div
         key={i}
         className={cn(
-          'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl',
-          'p-3 flex items-center gap-3'
+          'rounded-none p-3 flex items-center gap-3 dark:brightness-[0.65]'
         )}
+        style={{ backgroundColor: s.color }}
       >
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${s.color}12` }}>
-          <s.icon size={16} style={{ color: s.color }} />
+        <div className="w-9 h-9 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+          <s.icon size={16} className="text-white" />
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] font-bold text-slate-400 leading-none">{s.label}</p>
-          <p className="text-sm font-black mt-1 tabular-nums leading-none" style={{ color: s.color }}>
+          <p className="text-[10px] font-bold text-white/70 leading-none">{s.label}</p>
+          <p className="text-sm font-black mt-1 tabular-nums leading-none text-white">
             {getValue(stats, s.key)}
           </p>
         </div>

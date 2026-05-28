@@ -315,17 +315,17 @@ export const TeacherInvoices = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2 space-y-4">
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="rounded-none px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ backgroundColor: '#8B5CF6' }}>
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#8B5CF612' }}>
-                        <GraduationCap size={22} style={{ color: '#8B5CF6' }} />
+                    <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <GraduationCap size={22} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">فواتير المعلمات</h1>
-                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة مستحقات المعلمات المالية</p>
+                        <h1 className="text-lg md:text-xl font-black text-white leading-tight">فواتير المعلمات</h1>
+                        <p className="text-[11px] font-bold text-white/70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
+                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-none" style={{ backgroundColor: '#10B981', color: 'white' }}>
                     <Sparkles size={13} />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي المستحقات
                 </div>
@@ -333,11 +333,11 @@ export const TeacherInvoices = () => {
 
             <InvoiceStats stats={stats} />
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
-                <div className="flex flex-col lg:flex-row gap-3 items-center justify-between p-3">
+            <div className="rounded-none p-3" style={{ backgroundColor: '#8B5CF6' }}>
+                <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: '#94A3B8' }} />
+                                <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
                                 <InputField
                                     placeholder="بحث باسم المعلمة..."
                                     className="pr-9 py-2 text-xs"
@@ -345,19 +345,19 @@ export const TeacherInvoices = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
-                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                <Calendar size={14} style={{ color: '#94A3B8' }} />
+                            <div className="flex items-center gap-2 rounded-none px-3 py-2" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                                <Calendar size={14} className="text-white/50" />
                                 <div className="flex items-center gap-1">
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-white outline-none cursor-pointer" 
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
-                                    <span className="text-[10px] font-bold text-slate-400">إلى</span>
+                                    <span className="text-[10px] font-bold text-white/50">إلى</span>
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-white outline-none cursor-pointer" 
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />
