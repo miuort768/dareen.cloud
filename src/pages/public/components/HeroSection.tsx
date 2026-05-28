@@ -72,6 +72,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                             src={`https://i.pravatar.cc/100?img=${i + 10}`}
                                             width="40"
                                             height="40"
+                                            alt=""
                                             className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 shadow-sm"
                                         />
                                     ))}

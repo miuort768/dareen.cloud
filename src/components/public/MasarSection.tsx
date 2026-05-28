@@ -5,7 +5,7 @@ import { useSettingsStore } from '../../store/settingsStore';
 const FloatingBtns = ({ phone }: { phone: string }) => (
     <div className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 flex-col gap-3 z-50">
         <a href={`https://wa.me/${phone}`} target="_blank" rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center" title="واتساب">
+            className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center" aria-label="تواصل معنا عبر واتساب">
             <MessageCircle size={22} />
         </a>
         <a href="https://t.me/daren_school" target="_blank" rel="noopener noreferrer"

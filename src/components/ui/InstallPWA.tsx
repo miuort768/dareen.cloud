@@ -217,6 +217,7 @@ export const InstallPWA = () => {
                     <button
                         onClick={handleDismiss}
                         className="p-1.5 bg-white/10 text-white hover:bg-red-600 hover:text-white transition-colors rounded-full"
+                        aria-label="إغلاق"
                     >
                         <X size={12} />
                     </button>
