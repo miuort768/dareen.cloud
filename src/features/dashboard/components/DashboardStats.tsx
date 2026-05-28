@@ -47,31 +47,31 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
     <div
       ref={ref}
       className={cn(
-        "relative p-4 rounded-2xl",
-        "bg-white dark:bg-slate-900",
-        "shadow-sm border border-slate-100/50 dark:border-slate-800/50",
+        "relative p-4 rounded-none",
+        "shadow-sm",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3",
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
       style={{
+        backgroundColor: color,
         transitionDelay: `${index * 80}ms`,
       }}
     >
-      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
         <Icon size={18} strokeWidth={1.5} />
       </div>
 
       <div className="flex-1 min-w-0">
-        <h4 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 leading-none mb-0.5 truncate">
+        <h4 className="text-[10px] font-bold text-white/70 leading-none mb-0.5 truncate">
           {title}
         </h4>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none">
+          <span className="text-xl font-black text-white tabular-nums tracking-tighter leading-none">
             {value ?? 0}
           </span>
           {unit && (
-            <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500">
+            <span className="text-[8px] font-bold text-white/60">
               {unit}
             </span>
           )}
@@ -79,19 +79,13 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
 
         {trendData && (
           <div className="flex items-center gap-2 mt-1.5">
-            <div className="flex-1 h-1 bg-slate-100 dark:bg-slate-800 overflow-hidden">
+            <div className="flex-1 h-1 bg-white/20 overflow-hidden">
               <div
-                className={cn(
-                  "h-full transition-all duration-700",
-                  trendData.isPositive ? "bg-emerald-400" : "bg-rose-400"
-                )}
+                className="h-full transition-all duration-700 bg-white/60"
                 style={{ width: visible ? `${barWidth}%` : '0%' }}
               />
             </div>
-            <div className={cn(
-              "flex items-center gap-0.5 text-[8px] font-bold shrink-0",
-              trendData.isPositive ? "text-emerald-500" : "text-rose-500"
-            )}>
+            <div className="flex items-center gap-0.5 text-[8px] font-bold shrink-0 text-white/80">
               {trendData.isPositive ? <ArrowUp size={8} /> : <ArrowDown size={8} />}
               <span>{trendData.percentage}%</span>
             </div>
