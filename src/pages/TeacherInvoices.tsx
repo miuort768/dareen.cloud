@@ -338,11 +338,11 @@ export const TeacherInvoices = () => {
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
-                                <InputField
+                                <input
                                     placeholder="بحث باسم المعلمة..."
-                                    className="pr-9 py-2 text-xs"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full rounded-none pr-9 py-2 text-xs font-bold outline-none text-white placeholder:text-white/50" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
                                 />
                             </div>
                             <div className="flex items-center gap-2 rounded-none px-3 py-2" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
@@ -364,17 +364,16 @@ export const TeacherInvoices = () => {
                                 </div>
                             </div>
 
-                            <InputField
-                                type="select"
+                            <select
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value)}
-                                className="w-auto min-w-[140px] py-2 text-xs"
+                                className="w-auto min-w-[140px] rounded-none px-3 py-2 text-xs font-bold outline-none text-white" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
                             >
-                                <option value="all">جميع الحالات</option>
+                                <option value="all" className="text-slate-900">جميع الحالات</option>
                                 {Object.values(INVOICE_STATUS).map(status => (
-                                    <option key={status} value={status}>{status}</option>
+                                    <option key={status} value={status} className="text-slate-900">{status}</option>
                                 ))}
-                            </InputField>
+                            </select>
                         </div>
 
                         <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto no-scrollbar pb-1 lg:pb-0">
