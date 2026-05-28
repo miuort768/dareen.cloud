@@ -13,30 +13,30 @@ interface AttendanceHeaderProps {
 
 export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, isTeacher }) => {
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm px-5 md:px-7 py-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="rounded-none px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ backgroundColor: '#F59E0B' }}>
             <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
-                    <Sparkles size={22} />
+                <div className="w-12 h-12 rounded-none flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                    <Sparkles size={22} className="text-white" />
                 </div>
                 <div>
-                    <h1 className="text-lg font-bold text-[#0F172A] dark:text-white leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
-                    <p className="text-[10px] font-bold text-[#64748B] mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
+                    <h1 className="text-lg font-bold text-white leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
+                    <p className="text-[10px] font-bold text-white/70 mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
                 </div>
             </div>
 
             <div className="flex items-center gap-3">
                 {!isTeacher && (
-                    <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-                        <Calendar size={14} style={{ color: '#2563EB' }} />
+                    <div className="flex items-center gap-2 rounded-none px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <Calendar size={14} className="text-white/70" />
                         <input
                             type="date"
                             value={date}
                             onChange={(e) => onDateChange(e.target.value)}
-                            className="bg-transparent border-none p-0 text-[10px] font-bold text-[#0F172A] dark:text-white outline-none focus:ring-0 cursor-pointer w-28"
+                            className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none focus:ring-0 cursor-pointer w-28"
                         />
                     </div>
                 )}
-                <div className="flex items-center gap-2 text-[10px] font-bold rounded-xl px-3 py-1.5 border shadow-sm" style={{ backgroundColor: '#F59E0B12', color: '#D97706', borderColor: '#F59E0B30' }}>
+                <div className="flex items-center gap-2 text-[10px] font-bold rounded-none px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: 'white' }}>
                     <Sparkles size={12} />
                     Live System
                 </div>

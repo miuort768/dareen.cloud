@@ -18,7 +18,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     const progress = total > 0 ? (used / total) * 100 : 0;
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm h-full">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm h-full">
             <div className={cn(
                 "h-1.5 w-full transition-all",
                 session.status === 'completed' ? 'bg-emerald-500' : session.status === 'cancelled' ? 'bg-rose-500' : 'bg-slate-100 dark:bg-slate-800'
@@ -27,7 +27,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                        <div className="w-10 h-10 rounded-none flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                             {studentGrade?.charAt(0) || session.studentName.charAt(0)}
                         </div>
                         <div>
@@ -43,13 +43,13 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                         </div>
                     </div>
                     {session.status !== 'scheduled' && (
-                        <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? '#10B98112' : '#F43F5E12', color: session.status === 'completed' ? '#10B981' : '#F43F5E' }}>
+                        <div className="px-2 py-0.5 text-[9px] font-bold rounded-none" style={{ backgroundColor: session.status === 'completed' ? '#10B98112' : '#F43F5E12', color: session.status === 'completed' ? '#10B981' : '#F43F5E' }}>
                             {session.status === 'completed' ? 'منفذة' : 'ملغاة'}
                         </div>
                     )}
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-100/50 dark:border-slate-800/50">
+                <div className="bg-white dark:bg-slate-900 p-3 rounded-none border border-slate-100/50 dark:border-slate-800/50">
                     <div className="flex items-center gap-2 mb-1.5">
                         <Clock size={12} style={{ color: '#2563EB' }} />
                         <span className="text-[9px] font-bold text-[#64748B] uppercase tracking-wide">موعد الحصة</span>
@@ -70,7 +70,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                             <span className="opacity-50">/ {total}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out",
@@ -86,7 +86,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <button
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95",
+                        "flex-1 py-2.5 font-bold text-[10px] rounded-none transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95",
                         session.status === 'completed'
                             ? 'bg-[#10B981] text-white'
                             : 'bg-[#0F172A] dark:bg-slate-800 text-white hover:bg-black'
@@ -97,7 +97,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <button
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-sm active:scale-95",
+                        "flex-1 py-2.5 font-bold text-[10px] rounded-none transition-all flex items-center justify-center gap-1.5 border shadow-sm active:scale-95",
                         session.status === 'cancelled'
                             ? 'bg-[#F43F5E] border-[#F43F5E] text-white'
                             : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600'

@@ -20,7 +20,7 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
@@ -29,7 +29,7 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
 
 const SectionTitle = ({ icon: Icon, label, sub, color = '#2563EB' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
             <Icon size={16} />
         </div>
         <div>
@@ -47,7 +47,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700',
-            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-none transition-all shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -182,9 +182,8 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-4">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-2 space-y-4">
             
             <AttendanceHeader
                 date={date}
@@ -278,7 +277,7 @@ export const Attendance = () => {
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden rounded-2xl">
+                        <SectionCard className="p-0 overflow-hidden rounded-none">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100/50 dark:border-slate-800/50">
                                 <SectionTitle icon={Activity} label="حصص الطلاب المقررة" color="#2563EB" />
                                 <div className="relative w-full md:w-[400px]">
@@ -288,7 +287,7 @@ export const Attendance = () => {
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         placeholder="ابحث باسم الطالب أو المادة..."
-                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:border-blue-600 transition-all"
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-blue-600 transition-all"
                                     />
                                 </div>
                             </div>
@@ -336,10 +335,10 @@ export const Attendance = () => {
                             if (filteredTStudents.length === 0) return null;
 
                             return (
-                                <SectionCard key={teacher} className="p-0 overflow-hidden">
+                                <SectionCard key={teacher} className="p-0 overflow-hidden rounded-none">
                                     <div className="bg-white dark:bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-100/50 dark:border-slate-800/50">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                            <div className="w-8 h-8 rounded-none flex items-center justify-center text-xs font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
@@ -347,7 +346,7 @@ export const Attendance = () => {
                                                 <p className="text-[9px] font-bold text-[#64748B] tracking-wider">إدارة الحصص والتحضير</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-bold px-3 py-1 rounded-xl" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
+                                        <div className="text-[9px] font-bold px-3 py-1 rounded-none" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
                                             {filteredTStudents.length} طالب
                                         </div>
                                     </div>
@@ -373,16 +372,16 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                                                <div className="w-10 h-10 rounded-none flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100/50 dark:border-slate-700">
+                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-100/50 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
                                                                         <p className="text-[9px] font-bold text-[#64748B] flex items-center gap-1">
@@ -392,7 +391,7 @@ export const Attendance = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-md uppercase animate-pulse" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>
+                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-none uppercase animate-pulse" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>
                                                                 انتظار
                                                             </div>
                                                         </div>
@@ -402,10 +401,10 @@ export const Attendance = () => {
                                                                 <span>تغطية الحصص</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
-                                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-none overflow-hidden">
                                                                 <div
                                                                     className={cn(
-                                                                        "h-full transition-all duration-1000 rounded-full",
+                                                                        "h-full transition-all duration-1000 rounded-none",
                                                                         (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-rose-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                                                                     )}
                                                                     style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
@@ -416,13 +415,13 @@ export const Attendance = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 غياب
                                                             </button>

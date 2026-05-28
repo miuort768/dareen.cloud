@@ -24,10 +24,10 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
     return (
         <div className="px-0 mb-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-4">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm p-4">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                             <SlidersHorizontal size={14} />
                         </div>
                         <div>
@@ -38,7 +38,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
+                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-none transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>
@@ -53,7 +53,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                             placeholder="اسم الطالب، المادة..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-blue-600 transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-blue-600 transition-all"
                         />
                     </div>
 
@@ -62,7 +62,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-blue-600 transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-blue-600 transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">جميع الحالات</option>
                             <option value="scheduled">مجدولة</option>
@@ -76,7 +76,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-blue-600 transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-blue-600 transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">كافة المعلمات</option>
                             {uniqueTeachers.map(teacher => (
