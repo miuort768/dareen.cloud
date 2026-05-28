@@ -6,7 +6,7 @@ export const PublicFooter = () => {
     const { adminPhone } = useSettingsStore();
 
     return (
-        <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500">
+        <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500 min-h-[300px]">
             {/* Decorative Overlays - Premium Royal Theme Shapes */}
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-indigo-600 rounded-full blur-[120px]"></div>
@@ -15,7 +15,7 @@ export const PublicFooter = () => {
                 {/* Geometric Floating Elements */}
                 <div className="absolute top-10 left-10 w-20 h-20 border border-white/5 rotate-45"></div>
                 <div className="absolute bottom-20 right-10 w-32 h-32 border border-white/5 -rotate-12"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)' }}></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">

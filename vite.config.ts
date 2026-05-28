@@ -33,7 +33,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'socket.io-client'],
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          socket: ['socket.io-client'],
           ui: ['lucide-react', 'framer-motion'],
           query: ['@tanstack/react-query'],
           charts: ['recharts'],
