@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones, Moon } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
-import { ScrollReveal } from '../animations/ScrollReveal';
-import { StaggerContainer } from '../animations/StaggerContainer';
 
 const FloatingBtns = ({ phone }: { phone: string }) => (
     <div className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 flex-col gap-3 z-50">
@@ -31,7 +29,6 @@ export const MasarSection = () => {
             {/* ─── Desktop version ─── */}
             <section className="hidden md:block py-4 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
-                    <ScrollReveal>
                     <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81] shadow-[0_30px_60px_-15px_rgba(30,27,75,0.4)] overflow-hidden border border-white/5 relative rounded-none">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute right-0 top-0 w-80 h-80 bg-indigo-600/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
@@ -77,7 +74,6 @@ export const MasarSection = () => {
                             </div>
                         </div>
                     </div>
-                    </ScrollReveal>
                 </div>
             </section>
 
@@ -89,7 +85,6 @@ export const MasarSection = () => {
 
                 <div className="relative z-10 px-4">
                     {/* Hero Banner Image */}
-                    <ScrollReveal>
                     <div className="relative rounded-2xl overflow-hidden shadow-lg mb-4">
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1B1464]/60 via-transparent to-transparent z-10"></div>
                         <picture>
@@ -98,7 +93,6 @@ export const MasarSection = () => {
                             <img src="/dareen_books_portal_v3.png" alt="بوابة الكتب والملخصات" width="400" height="300" loading="lazy" className="w-full h-auto object-cover" />
                         </picture>
                     </div>
-                    </ScrollReveal>
 
                     {/* Title Card */}
                     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-5 mb-5 flex items-center justify-between">
@@ -112,7 +106,6 @@ export const MasarSection = () => {
                     </div>
 
                     {/* Purple Gradient Section */}
-                    <ScrollReveal>
                     <div className="bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] rounded-3xl p-6 shadow-lg shadow-purple-500/20 mb-5">
                         {/* Tabs */}
                         <div className="flex items-center gap-4 mb-4">
@@ -149,10 +142,9 @@ export const MasarSection = () => {
                             </a>
                         </div>
                     </div>
-                    </ScrollReveal>
 
                     {/* Trust Indicators */}
-                    <StaggerContainer staggerDelay={0.12} className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 gap-4">
                         <div className="text-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100/80 dark:border-slate-800 p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
                                 <Shield size={20} className="text-[#6C4BFF] dark:text-purple-400" />
@@ -171,7 +163,7 @@ export const MasarSection = () => {
                             </div>
                             <span className="text-[#1E1E2F] dark:text-white text-[11px] font-bold leading-tight block">دعم مستمر</span>
                         </div>
-                    </StaggerContainer>
+                    </div>
                 </div>
             </section>
 

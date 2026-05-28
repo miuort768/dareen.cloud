@@ -1,7 +1,5 @@
 import { Users, Star, Zap, ArrowLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { ScrollReveal } from '../../../components/animations/ScrollReveal';
-import { StaggerContainer } from '../../../components/animations/StaggerContainer';
 
 interface HowItWorksProps {
     whatsappNumber: string;
@@ -17,7 +15,6 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <ScrollReveal>
                 <div className="text-center mb-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 dark:bg-slate-800 text-white rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-amber-400" />
@@ -27,7 +24,6 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         كيف تشترك في <span className="text-indigo-600 dark:text-indigo-400">المعهد؟</span>
                     </h2>
                 </div>
-                </ScrollReveal>
                 
                 <div className="max-w-4xl mx-auto relative pt-4">
                     <div className="hidden md:block absolute inset-0 pointer-events-none overflow-visible">
@@ -53,7 +49,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         </svg>
                     </div>
 
-                    <StaggerContainer staggerDelay={0.15} className="grid grid-cols-3 gap-2 md:gap-4">
+                    <div className="grid grid-cols-3 gap-2 md:gap-4">
                         {[
                             {
                                 id: '01',
@@ -102,9 +98,8 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                 <div className="hidden md:block absolute top-[45px] -right-2 w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 group-last:hidden"></div>
                             </div>
                         ))}
-                    </StaggerContainer>
+                    </div>
 
-                    <ScrollReveal>
                     <div className="mt-10 flex justify-center">
                         <a
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
@@ -119,7 +114,6 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             </div>
                         </a>
                     </div>
-                    </ScrollReveal>
                 </div>
             </div>
         </section>

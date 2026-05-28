@@ -1,6 +1,4 @@
 import { ShieldCheck, Lightbulb, Heart, Star, Users, BookOpen, Award, CheckCircle, ArrowLeft } from 'lucide-react';
-import { ScrollReveal } from '../../../components/animations/ScrollReveal';
-import { StaggerContainer } from '../../../components/animations/StaggerContainer';
 
 const features = [
   {
@@ -51,8 +49,7 @@ export const WhyChooseUs = () => {
 
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <ScrollReveal>
-          <div className="text-center mb-4 md:mb-6">
+        <div className="text-center mb-4 md:mb-6">
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4">
             لماذا{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">
@@ -63,10 +60,9 @@ export const WhyChooseUs = () => {
             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
           </p>
         </div>
-        </ScrollReveal>
 
         {/* ─── Mobile Layout ─── */}
-        <StaggerContainer staggerDelay={0.12} className="md:hidden space-y-4">
+        <div className="md:hidden space-y-4">
           {features.map((f, i) => {
             const Icon = featureIcons[i];
             return (
@@ -89,8 +85,7 @@ export const WhyChooseUs = () => {
           })}
 
           {/* Showcase card (mobile) */}
-          <ScrollReveal>
-            <div className="mt-6 p-5 bg-gradient-to-br from-[#0B1020] via-[#111827] to-[#1a1040] rounded-3xl relative overflow-hidden">
+          <div className="mt-6 p-5 bg-gradient-to-br from-[#0B1020] via-[#111827] to-[#1a1040] rounded-3xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/10 rounded-full mb-3">
@@ -124,11 +119,10 @@ export const WhyChooseUs = () => {
               </div>
             </div>
           </div>
-          </ScrollReveal>
-        </StaggerContainer>
+        </div>
 
         {/* ─── Desktop Layout (old design) ─── */}
-        <StaggerContainer staggerDelay={0.1} direction="up" distance={50} className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-0 pb-4 md:pb-6">
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-0 pb-4 md:pb-6">
           <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-indigo-600 to-indigo-950 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
             <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
@@ -194,7 +188,7 @@ export const WhyChooseUs = () => {
               </div>
             </div>
           </div>
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
