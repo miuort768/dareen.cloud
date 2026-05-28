@@ -17,33 +17,33 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
         <div className="xl:col-span-2 space-y-3">
             <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                    <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                         <Users size={16} className="text-[#2563EB]" />
                     </div>
                     <p className="text-sm font-normal text-slate-800 dark:text-white">الحسابات والمسؤولون</p>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                <span className="text-[10px] font-bold px-2.5 py-1" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                     {users.length} حسابات
                 </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {users.map(u => (
-                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl p-4 shadow-sm group hover:border-[#2563EB]/30 transition-all">
+                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 shadow-sm group hover:border-[#2563EB]/30 transition-all">
                         <div className="flex justify-between items-start mb-3">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                            <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                 {u.username[0].toUpperCase()}
                             </div>
                             <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }}
-                                    className="p-1.5 bg-slate-50 dark:bg-slate-800 text-slate-500 rounded-lg border border-slate-200 dark:border-slate-700 hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all"
+                                    className="p-1.5 bg-slate-50 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 hover:text-[#2563EB] hover:border-[#2563EB]/30 transition-all"
                                 >
                                     <Edit size={13} />
                                 </button>
                                 {u.id !== user?.id && (
                                     <button
                                         onClick={() => setShowDeleteModal(u)}
-                                        className="p-1.5 bg-rose-50 dark:bg-rose-900/20 text-rose-400 rounded-lg border border-rose-100 dark:border-rose-800 hover:text-rose-600 transition-all"
+                                        className="p-1.5 bg-rose-50 dark:bg-rose-900/20 text-rose-400 border border-rose-100 dark:border-rose-800 hover:text-rose-600 transition-all"
                                     >
                                         <Trash2 size={13} />
                                     </button>
@@ -57,12 +57,12 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                         </p>
                         <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-slate-50 dark:border-slate-800">
                             {u.permissions?.slice(0, 3).map(p => (
-                                <span key={p} className="text-[9px] font-normal bg-slate-50 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
+                                <span key={p} className="text-[9px] font-normal bg-slate-50 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 border border-slate-100 dark:border-slate-700">
                                     {p}
                                 </span>
                             ))}
                             {(u.permissions?.length || 0) > 3 && (
-                                <span className="text-[9px] font-normal bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] px-1.5 py-0.5 rounded-md">
+                                <span className="text-[9px] font-normal bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] px-1.5 py-0.5">
                                     +{(u.permissions?.length || 0) - 3}
                                 </span>
                             )}
@@ -110,14 +110,37 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                             <button
                                 key={role.label}
                                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                                className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-[#2563EB] text-slate-500 text-[10px] font-normal rounded-lg border border-slate-200 dark:border-slate-700 transition-all"
+                                className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-[#2563EB] text-slate-500 text-[10px] font-normal border border-slate-200 dark:border-slate-700 transition-all"
                             >
                                 {role.label}
                             </button>
                         ))}
                     </div>
                     <p className="text-[10px] text-slate-400 mb-2">تخصيص يدوي</p>
-                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                        {AVAILABLE_PERMISSIONS.map((p: { id: string; label: string }) => (
+                            <button
+                                key={p.id}
+                                onClick={() => {
+                                    const perms = newUser.permissions.includes(p.id)
+                                        ? newUser.permissions.filter(x => x !== p.id)
+                                        : [...newUser.permissions, p.id];
+                                    setNewUser({ ...newUser, permissions: perms });
+                                }}
+                                className={cn(
+                                    'p-2 text-[9px] font-normal border text-right transition-all',
+                                    newUser.permissions.includes(p.id)
+                                        ? 'bg-[#2563EB] text-white border-[#2563EB]'
+                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/30'
+                                )}
+                            >
+                                {p.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                    <p className="text-[10px] text-slate-400 mb-2">تخصيص يدوي</p>
+                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
                         {AVAILABLE_PERMISSIONS.map(p => (
                             <button
                                 key={p.id}
@@ -128,7 +151,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                     setNewUser({ ...newUser, permissions: perms });
                                 }}
                                 className={cn(
-                                    'p-2 text-[9px] font-normal rounded-lg border text-right transition-all',
+                                    'p-2 text-[9px] font-normal border text-right transition-all',
                                     newUser.permissions.includes(p.id)
                                         ? 'bg-[#2563EB] text-white border-[#2563EB]'
                                         : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#2563EB]/30'

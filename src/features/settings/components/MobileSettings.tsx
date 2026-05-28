@@ -26,7 +26,7 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
                         showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
                     }}
                 />
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-xl">
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500">
                     <h4 className="text-xs font-medium text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
                         تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
@@ -35,7 +35,7 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
             </div>
         </SectionCard>
         <SectionCard className="border-dashed border-2 border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center p-12 text-center">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: '#2563EB12' }}>
+            <div className="w-16 h-16 flex items-center justify-center mb-4" style={{ backgroundColor: '#2563EB12' }}>
                 <Smartphone size={32} style={{ color: '#2563EB' }} />
             </div>
             <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>

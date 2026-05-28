@@ -30,8 +30,8 @@ export const SettingsStatsGrid = ({ usersCount, theme, autoBackup }: SettingsSta
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {statCards.map(s => (
-                <div key={s.key} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-3 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${s.color}12` }}>
+                <div key={s.key} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm p-3 flex items-center gap-3">
+                    <div className="w-9 h-9 flex items-center justify-center shrink-0" style={{ backgroundColor: `${s.color}12` }}>
                         <s.icon size={16} style={{ color: s.color }} />
                     </div>
                     <div className="min-w-0">

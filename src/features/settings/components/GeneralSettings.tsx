@@ -116,12 +116,12 @@ export const GeneralSettings = ({
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50">
                         <FieldLabel>عدد أيام التجميد</FieldLabel>
                         <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
                         <p className="text-[9px] font-bold text-slate-400 mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
                     </div>
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50">
                         <ToggleRow
                             icon={Lock}
                             label="قفل التاريخ القديم"
@@ -132,7 +132,7 @@ export const GeneralSettings = ({
                     </div>
                 </div>
 
-                <p className="text-[10px] text-slate-400 bg-amber-50 dark:bg-amber-900/10 px-3 py-2 rounded-lg border-r-2 border-amber-400">
+                <p className="text-[10px] text-slate-400 bg-amber-50 dark:bg-amber-900/10 px-3 py-2 border-r-2 border-amber-400">
                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
                 </p>
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">

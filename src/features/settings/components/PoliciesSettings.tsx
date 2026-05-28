@@ -24,7 +24,7 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="System Safeguards" />
             <div className="space-y-3">
-                <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-rose-100/50 dark:border-rose-900/50">
+                <div className="p-4 bg-white dark:bg-slate-900 border border-rose-100/50 dark:border-rose-900/50">
                     <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                             <p className="text-xs font-bold text-rose-800 dark:text-rose-200 flex items-center gap-1.5">
@@ -54,7 +54,7 @@ export const PoliciesSettings = ({
                                 key={opt.id}
                                 onClick={() => { setTeacherCommissionType(opt.id); showNotify(`الحساب: ${opt.label}`); }}
                                 className={cn(
-                                    'p-3 rounded-xl border text-right transition-all',
+                                    'p-3 border text-right transition-all',
                                     teacherCommissionType === opt.id
                                         ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-sm'
                                         : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-100/50 dark:border-slate-800/50 hover:border-[#2563EB]/30'
@@ -73,7 +73,7 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="Auto-Freeze Mechanism" />
             <div className="space-y-3">
-                <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-sky-100/50 dark:border-sky-900/50">
+                <div className="p-4 bg-white dark:bg-slate-900 border border-sky-100/50 dark:border-sky-900/50">
                     <p className="text-xs font-bold text-sky-800 dark:text-sky-200 mb-1">حد الغياب المسموح</p>
                     <p className="text-[10px] text-sky-500 leading-relaxed mb-3">
                         إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
@@ -95,9 +95,9 @@ export const PoliciesSettings = ({
                     </div>
                 </div>
 
-                <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border border-rose-200/50 dark:border-rose-800/50">
+                <div className="p-4 bg-white dark:bg-slate-900 border border-rose-200/50 dark:border-rose-800/50">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F43F5E12' }}>
+                        <div className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#F43F5E12' }}>
                             <Archive size={14} style={{ color: '#F43F5E' }} />
                         </div>
                         <div>

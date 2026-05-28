@@ -16,9 +16,9 @@ export const AppearanceSection = ({
     setThemeColor
 }: AppearanceSectionProps) => {
     return (
-        <section className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-6">
+        <section className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm p-6">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100/50 dark:border-slate-800/50">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+                <div className="w-9 h-9 flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
                     <Palette size={18} style={{ color: '#2563EB' }} />
                 </div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white">

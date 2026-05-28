@@ -10,7 +10,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
     <SectionCard>
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
             <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
+                <div className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
                     <Activity size={16} style={{ color: '#2563EB' }} />
                 </div>
                 <div>
@@ -23,7 +23,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
             </SecondaryBtn>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-100/50 dark:border-slate-800/50">
+        <div className="overflow-x-auto border border-slate-100/50 dark:border-slate-800/50">
             <table className="w-full text-right text-sm">
                 <thead>
                     <tr className="bg-[#0F172A]">
@@ -40,7 +40,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                    <div className="w-6 h-6 flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                         {log.username?.[0]?.toUpperCase() || 'A'}
                                     </div>
                                     <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{log.username}</span>

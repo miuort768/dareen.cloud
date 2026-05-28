@@ -375,34 +375,34 @@ export const Settings = () => {
     };
 
     return (
-        <div className="space-y-4 pb-24 min-h-full" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex items-center justify-between">
+        <div className="space-y-0 pb-24 min-h-full" dir="rtl">
+            <div className="bg-[#2563EB] px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
-                        <SettingsIcon size={22} style={{ color: '#2563EB' }} />
+                    <div className="w-11 h-11 flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <SettingsIcon size={22} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">إعدادات النظام</h1>
-                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة السياسات والهوية والصلاحيات</p>
+                        <h1 className="text-lg md:text-xl font-black text-white leading-tight">إعدادات النظام</h1>
+                        <p className="text-[11px] font-bold text-white/70 mt-0.5">إدارة السياسات والهوية والصلاحيات</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                     <Sparkles size={12} />
                     {activeTab && TABS.find(t => t.id === activeTab)?.label}
                 </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl p-1 shadow-sm">
+            <div className="bg-[#1D4ED8] px-1 py-1">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight rounded-xl',
+                                'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight',
                                 activeTab === tab.id
-                                    ? 'bg-[#2563EB] text-white shadow-sm'
-                                    : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
+                                    ? 'bg-white text-[#2563EB] shadow-sm'
+                                    : 'text-white/70 hover:text-white'
                             )}
                         >
                             <tab.icon size={15} />
