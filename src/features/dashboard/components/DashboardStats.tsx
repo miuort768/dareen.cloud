@@ -50,7 +50,7 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
         "relative p-4 rounded-none",
         "shadow-sm",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
-        "flex items-center gap-3",
+        "flex items-center gap-3 dark:brightness-[0.65]",
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
       style={{
