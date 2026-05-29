@@ -107,13 +107,13 @@ export const AdminJobs = () => {
                                 </div>
 
                                 {/* Avatar + Name Section */}
-                                <div className="flex flex-col items-center gap-4 mb-6">
-                                    <div className="w-20 h-24 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center relative shadow-inner overflow-hidden">
-                                        <span className="text-2xl font-bold text-[#14B8A6]">{app.name[0]}</span>
-                                        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#14B8A6]"></div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-12 h-14 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center relative shadow-inner overflow-hidden shrink-0">
+                                        <span className="text-base font-bold text-[#14B8A6]">{app.name[0]}</span>
+                                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#14B8A6]"></div>
                                     </div>
-                                    <div className="text-center">
-                                        <h3 className="text-base font-bold text-slate-800 dark:text-white">{app.name}</h3>
+                                    <div className="text-right">
+                                        <h3 className="text-sm font-bold text-slate-800 dark:text-white">{app.name}</h3>
                                         <p className="text-[10px] font-bold text-[#14B8A6] uppercase tracking-tighter mt-0.5">{app.position}</p>
                                     </div>
                                 </div>
