@@ -52,6 +52,7 @@ const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
+import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidget';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
@@ -196,6 +197,7 @@ function App() {
       <Suspense fallback={null}>
         <SocketInitLayer />
       </Suspense>
+      {isAuthenticated && <FloatingTasbeehWidget />}
       <Suspense fallback={<PageLoader />}>
         <main id="main-content">
         <Routes>
