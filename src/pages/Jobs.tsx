@@ -1,20 +1,33 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle, ChevronLeft, ChevronRight, Building2 } from 'lucide-react';
+import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle, ChevronLeft, ChevronRight, Building2, BookMarked } from 'lucide-react';
 import { api } from '../lib/api';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
 
+const subjects = [
+    'القرآن الكريم',
+    'المواد الشرعية',
+    'اللغة العربية',
+    'اللغة الإنجليزية',
+    'اللغة الفرنسية',
+    'الرياضيات',
+    'الدراسات الاجتماعية',
+    'العلوم أو فروعها',
+];
+
 const steps = [
     { id: 1, title: 'المعلومات الشخصية', icon: User },
     { id: 2, title: 'المؤهلات والوظيفة', icon: GraduationCap },
-    { id: 3, title: 'الخبرات', icon: Award },
+    { id: 3, title: 'المادة', icon: BookMarked },
+    { id: 4, title: 'الخبرات', icon: Award },
 ];
 
 const stepFields: Record<number, (keyof typeof formInitial)[]> = {
     1: ['name', 'phone', 'whatsapp'],
     2: ['position', 'qualification', 'grade'],
-    3: ['graduationYear', 'onlineYears', 'curriculums'],
+    3: ['subject'],
+    4: ['graduationYear', 'onlineYears', 'curriculums'],
 };
 
 const formInitial = {
@@ -24,6 +37,7 @@ const formInitial = {
     position: '',
     qualification: '',
     grade: '',
+    subject: '',
     graduationYear: '',
     onlineYears: '',
     curriculums: '',
@@ -176,7 +190,7 @@ export const Jobs = () => {
                                     الخطوة {step} من {totalSteps}
                                 </span>
                             </div>
-                            <div className="grid grid-cols-3 gap-2 md:gap-4">
+                            <div className="grid grid-cols-4 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
@@ -233,6 +247,43 @@ export const Jobs = () => {
                                         )}
 
                                         {step === 3 && (
+                                            <>
+                                                <div className="mb-4">
+                                                    <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                                                        <BookMarked size={16} className="text-indigo-500" />
+                                                        المادة التي تدرسها
+                                                    </h3>
+                                                    <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    {subjects.map(s => (
+                                                        <label
+                                                            key={s}
+                                                            className={`flex items-center gap-3 p-4 border cursor-pointer transition-all ${
+                                                                form.subject === s
+                                                                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10'
+                                                                    : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
+                                                            }`}
+                                                        >
+                                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                                                                form.subject === s
+                                                                    ? 'border-indigo-500'
+                                                                    : 'border-slate-300 dark:border-slate-600'
+                                                            }`}>
+                                                                {form.subject === s && <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />}
+                                                            </div>
+                                                            <span className={`text-sm font-bold ${
+                                                                form.subject === s
+                                                                    ? 'text-indigo-700 dark:text-indigo-300'
+                                                                    : 'text-slate-600 dark:text-slate-400'
+                                                            }`}>{s}</span>
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
+
+                                        {step === 4 && (
                                             <>
                                                 <div className="mb-4">
                                                     <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
