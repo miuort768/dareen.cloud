@@ -74,7 +74,7 @@ export const Jobs = () => {
         return (
             <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans flex flex-col" dir="rtl">
                 <MobileHeader />
-                <main className="flex-grow flex items-center justify-center px-4 py-20">
+                <main className="flex-grow flex items-start justify-center px-4 pt-8 pb-20">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
