@@ -35,3 +35,5 @@ server/database.sqlite*
 # Generated WebP/AVIF images (built by scripts/convert-webp.mjs)
 public/**/*.webp
 public/**/*.avif
+.env
+database.sqlite
