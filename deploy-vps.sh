@@ -20,8 +20,13 @@ docker rm -f darin-app livekit-server 2>/dev/null || true
 
 # 3. قتل أي عملية قديمة على المنافذ المستخدمة (حل مشكلة address already in use)
 echo "🔪 تحرير المنافذ القديمة..."
-fuser -k 3001/tcp 2>/dev/null || true
-fuser -k 3005/tcp 2>/dev/null || true
+for port in 3001 3005; do
+  pid=$(ss -tlnp "sport = :$port" 2>/dev/null | grep -oP 'pid=\K[0-9]+' | head -1)
+  if [ -n "$pid" ]; then
+    echo "   -> إنهاء عملية $pid على المنفذ $port"
+    kill -9 "$pid" 2>/dev/null || true
+  fi
+done
 
 # 4. بناء وتشغيل الحاويات
 echo "🏗️ بناء وتشغيل الحاويات..."
