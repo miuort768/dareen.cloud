@@ -25,7 +25,7 @@ export const MobileHeader = () => {
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-[15px] font-black text-indigo-950 dark:text-indigo-100 leading-tight">دارين السابعة</h1>
+            <p className="text-[15px] font-black text-indigo-950 dark:text-indigo-100 leading-tight">دارين السابعة</p>
             <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 leading-tight">للتعليم والتدريب</p>
             <p className="text-[7px] text-indigo-600 dark:text-indigo-400 leading-tight mt-0.5">Dareen of Education and Online Learning</p>
           </div>

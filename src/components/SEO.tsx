@@ -123,6 +123,17 @@ export const SEO: React.FC<SEOProps> = ({
                     },
                     {
                         "@context": "https://schema.org",
+                        "@type": "Course",
+                        "name": "دروس خصوصية أونلاين للمناهج الخليجية",
+                        "description": "دروس خصوصية عن بعد في جميع المواد للمناهج الكويتية والسعودية والقطرية والإماراتية والعمانية مع نخبة من أفضل المعلمين.",
+                        "provider": {
+                            "@type": "EducationalOrganization",
+                            "name": "دارين السابعة للتعليم والتدريب",
+                            "url": "https://dareen.cloud/"
+                        }
+                    },
+                    {
+                        "@context": "https://schema.org",
                         "@type": "FAQPage",
                         "mainEntity": [
                             {
