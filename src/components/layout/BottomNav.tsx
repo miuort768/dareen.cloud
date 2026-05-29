@@ -55,26 +55,26 @@ export const BottomNav = () => {
             >
               <div className={cn(
                 "p-1.5 rounded-2xl transition-all duration-200",
-                isActive && "bg-indigo-50 dark:bg-indigo-950/40"
+                isActive && "bg-primary-50 dark:bg-primary-950/40"
               )}>
                 <Icon 
                   size={24} 
                   className={cn(
                     "transition-all duration-200",
                     isActive 
-                      ? "text-indigo-600 dark:text-indigo-400 stroke-[2.5]" 
+                      ? "text-primary-600 dark:text-primary-400 stroke-[2.5]" 
                       : "text-slate-400 dark:text-slate-500 stroke-[1.5]"
                   )} 
                 />
               </div>
               <span className={cn(
                 "text-[10px] font-medium tracking-tight transition-all duration-200",
-                isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
+                isActive ? "text-primary-600 dark:text-primary-400" : "text-slate-400 dark:text-slate-500"
               )}>
                 {item.label}
               </span>
               {isActive && (
-                <div className="absolute -top-0.5 w-6 h-1 bg-indigo-500 dark:bg-indigo-400 rounded-full" />
+                <div className="absolute -top-0.5 w-6 h-1 bg-primary-500 dark:bg-primary-400 rounded-full" />
               )}
             </button>
           );

@@ -57,19 +57,48 @@ interface SettingsState {
 const applyThemeColor = (color: string) => {
     if (typeof document === 'undefined') return;
     const root = document.documentElement;
-    const colors: Record<string, string> = {
-        indigo: '79 70 229', blue: '37 99 235', emerald: '16 185 129', rose: '225 29 72',
-        amber: '217 119 6', purple: '147 51 234', cyan: '8 145 178', teal: '13 148 136',
-        orange: '234 88 12', slate: '71 85 105', pink: '219 39 119', lime: '101 163 13',
-        sky: '2 132 199', fuchsia: '192 38 211',
-        sunset: '234 88 12', ocean: '37 99 235', forest: '16 185 129', royal: '147 51 234',
-        electric: '139 92 246', mint: '20 184 166', berry: '190 24 93', gold: '234 179 8',
-        crimson: '190 18 60', midnight: '15 23 42', lava: '220 38 38', lavender: '167 139 250',
-        spring: '132 204 22', flame: '249 115 22', nebula: '139 92 246', aurora: '34 197 94',
-        fire: '239 68 68', ice: '14 165 233', jungle: '21 128 61', desert: '180 83 9',
-        coffee: '120 113 108'
+    const colors: Record<string, { primary: string; deep: string; mid: string; light: string }> = {
+        indigo:   { primary: '79 70 229', deep: '30 27 75', mid: '99 102 241', light: '224 231 255' },
+        blue:     { primary: '37 99 235', deep: '23 37 84', mid: '59 130 246', light: '219 234 254' },
+        emerald:  { primary: '16 185 129', deep: '6 78 59', mid: '52 211 153', light: '209 250 229' },
+        rose:     { primary: '225 29 72', deep: '76 5 25', mid: '244 63 94', light: '255 228 235' },
+        amber:    { primary: '217 119 6', deep: '69 26 3', mid: '245 158 11', light: '254 243 199' },
+        purple:   { primary: '147 51 234', deep: '59 7 100', mid: '168 85 247', light: '243 232 255' },
+        cyan:     { primary: '8 145 178', deep: '22 78 99', mid: '6 182 212', light: '207 250 254' },
+        teal:     { primary: '13 148 136', deep: '19 78 74', mid: '20 184 166', light: '204 251 241' },
+        orange:   { primary: '234 88 12', deep: '67 20 7', mid: '251 146 60', light: '255 237 213' },
+        slate:    { primary: '71 85 105', deep: '15 23 42', mid: '100 116 139', light: '226 232 240' },
+        pink:     { primary: '219 39 119', deep: '74 4 43', mid: '236 72 153', light: '252 231 243' },
+        lime:     { primary: '101 163 13', deep: '39 59 10', mid: '132 204 22', light: '236 252 203' },
+        sky:      { primary: '2 132 199', deep: '7 47 73', mid: '14 165 233', light: '224 242 254' },
+        fuchsia:  { primary: '192 38 211', deep: '70 5 89', mid: '217 70 239', light: '250 232 255' },
+        sunset:   { primary: '234 88 12', deep: '67 20 7', mid: '251 146 60', light: '255 237 213' },
+        ocean:    { primary: '37 99 235', deep: '23 37 84', mid: '59 130 246', light: '219 234 254' },
+        forest:   { primary: '16 185 129', deep: '6 78 59', mid: '52 211 153', light: '209 250 229' },
+        royal:    { primary: '147 51 234', deep: '59 7 100', mid: '168 85 247', light: '243 232 255' },
+        electric: { primary: '139 92 246', deep: '49 46 129', mid: '167 139 250', light: '237 233 254' },
+        mint:     { primary: '20 184 166', deep: '19 78 74', mid: '52 211 153', light: '204 251 241' },
+        berry:    { primary: '190 24 93', deep: '74 4 43', mid: '236 72 153', light: '252 231 243' },
+        gold:     { primary: '234 179 8', deep: '113 63 18', mid: '250 204 21', light: '254 252 232' },
+        crimson:  { primary: '190 18 60', deep: '76 5 25', mid: '225 29 72', light: '255 228 235' },
+        midnight: { primary: '15 23 42', deep: '2 6 23', mid: '30 41 59', light: '226 232 240' },
+        lava:     { primary: '220 38 38', deep: '69 10 10', mid: '239 68 68', light: '254 226 226' },
+        lavender: { primary: '167 139 250', deep: '76 29 149', mid: '196 181 253', light: '245 243 255' },
+        spring:   { primary: '132 204 22', deep: '54 83 20', mid: '163 230 53', light: '236 252 203' },
+        flame:    { primary: '249 115 22', deep: '67 20 7', mid: '251 146 60', light: '255 237 213' },
+        nebula:   { primary: '139 92 246', deep: '49 46 129', mid: '167 139 250', light: '237 233 254' },
+        aurora:   { primary: '34 197 94', deep: '5 46 22', mid: '74 222 128', light: '220 252 231' },
+        fire:     { primary: '239 68 68', deep: '69 10 10', mid: '248 113 113', light: '254 226 226' },
+        ice:      { primary: '14 165 233', deep: '7 47 73', mid: '56 189 248', light: '224 242 254' },
+        jungle:   { primary: '21 128 61', deep: '5 46 22', mid: '34 197 94', light: '220 252 231' },
+        desert:   { primary: '180 83 9', deep: '69 26 3', mid: '217 119 6', light: '254 243 199' },
+        coffee:   { primary: '120 113 108', deep: '41 37 36', mid: '168 162 158', light: '231 229 228' },
     };
-    root.style.setProperty('--color-primary', colors[color] || colors.indigo);
+    const c = colors[color] || colors.indigo;
+    root.style.setProperty('--color-primary', c.primary);
+    root.style.setProperty('--color-primary-deep', c.deep);
+    root.style.setProperty('--color-primary-mid', c.mid);
+    root.style.setProperty('--color-primary-light', c.light);
 };
 
 const updateSettingOnApi = async (key: string, value: string) => {

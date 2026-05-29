@@ -280,7 +280,7 @@ export const Sidebar = () => {
                         className={({ isActive }) => cn(
                             "flex items-center justify-center transition-all duration-500 rounded-full",
                             isActive
-                                ? "bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2"
+                                ? "bg-primary-50 dark:bg-primary-900/40 text-primary-600 dark:text-primary-300 px-4 py-2"
                                 : "text-gray-400 dark:text-gray-500 p-2"
                         )}
                     >
@@ -311,7 +311,7 @@ export const Sidebar = () => {
 
                 <button
                     onClick={() => setMobileMenuOpen(true)}
-                    className="flex items-center justify-center p-2 text-gray-400 dark:text-gray-500 hover:text-indigo-600 transition-colors"
+                    className="flex items-center justify-center p-2 text-gray-400 dark:text-gray-500 hover:text-primary-600 transition-colors"
                 >
                     <Menu size={22} strokeWidth={2} />
                 </button>

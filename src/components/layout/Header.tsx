@@ -99,18 +99,17 @@ export const Header = () => {
         <header className={cn(
             "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-[9999]",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
-            "bg-[#172554]/95",
-            "dark:bg-[#172554]/95",
-            "backdrop-blur-md border-b border-[#1e3a5f]/50 dark:border-[#1e3a5f]/50",
+            "header-nav",
+            "backdrop-blur-md",
             "shadow-sm shadow-black/10",
             "px-4 md:px-6 max-w-full",
             "md:translate-y-0 rounded-b-xl lg:rounded-xl",
-            "md:top-2 md:border md:border-[#1e3a5f]/40 md:dark:border-[#1e3a5f]/40",
+            "md:top-2 md:border",
             "translate-y-0"
         )}>
             <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
                 <Link to="/" className="shrink-0">
-                    <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(96,165,250,0.45)] hover:shadow-[0_0_22px_rgba(96,165,250,0.7)] transition-shadow duration-300">
+                    <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(var(--color-primary),0.45)] hover:shadow-[0_0_22px_rgba(var(--color-primary),0.7)] transition-shadow duration-300">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                 </Link>

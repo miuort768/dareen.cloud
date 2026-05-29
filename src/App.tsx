@@ -197,7 +197,7 @@ function App() {
       <Suspense fallback={null}>
         <SocketInitLayer />
       </Suspense>
-      {isAuthenticated && <FloatingTasbeehWidget />}
+      {isAuthenticated && currentUser?.role === 'admin' && <FloatingTasbeehWidget />}
       <Suspense fallback={<PageLoader />}>
         <main id="main-content">
         <Routes>

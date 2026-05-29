@@ -47,8 +47,11 @@ html, body {
 
 @layer base {
   :root {
-    /* ── Dareen Brand: Watermelon Rose ── */
-    --color-primary:   236 72 153; /* rose-500  – vibrant brand */
+    /* ── Dareen Brand: Dynamic Theme ── */
+    --color-primary:   79 70 229; /* indigo-600 – default brand */
+    --color-primary-deep: 30 27 75; /* indigo-950 – deep nav bg */
+    --color-primary-mid: 99 102 241; /* indigo-500 – hover/accents */
+    --color-primary-light: 224 231 255; /* indigo-100 – light tint */
     --color-primary-h: 254 205 223; /* rose-200  – tint for badges */
     --color-success:   52 211 153;  /* emerald-400 */
     --color-warning:   251 191 36;  /* amber-400   */
@@ -72,7 +75,10 @@ html, body {
 
   /* ── Unified Dark Mode – same brand hue, adjusted luminance ── */
   .dark {
-    --color-primary:   251 113 133; /* rose-400 – lighter for dark bg */
+    --color-primary:   129 140 248; /* indigo-400 – lighter for dark bg */
+    --color-primary-deep: 30 27 75; /* indigo-950 */
+    --color-primary-mid: 99 102 241; /* indigo-500 */
+    --color-primary-light: 49 46 129; /* indigo-900 – dark tint */
     --color-primary-h:  63  12  24; /* dark rose tint for hover */
     --color-success:   52 211 153;
     --color-warning:   251 191 36;
@@ -290,6 +296,69 @@ html, body {
   .dark table tbody tr:hover {
     background-color: rgba(30, 41, 59, 0.5) !important;
   }
+}
+
+/* ── Dynamic Theme Color Overrides ── */
+/* Force blue and indigo Tailwind classes to use primary color */
+.bg-blue-50, .bg-indigo-50 { background-color: rgba(var(--color-primary-light), 0.5) !important; }
+.bg-blue-100, .bg-indigo-100 { background-color: rgba(var(--color-primary-light), 0.7) !important; }
+.bg-blue-500, .bg-indigo-500 { background-color: rgb(var(--color-primary)) !important; }
+.bg-blue-600, .bg-indigo-600 { background-color: rgb(var(--color-primary)) !important; }
+.bg-blue-700, .bg-indigo-700 { background-color: rgb(var(--color-primary-deep)) !important; }
+.bg-blue-900\/80, .bg-indigo-900\/80 { background-color: rgba(var(--color-primary-deep), 0.8) !important; }
+.bg-blue-950\/60, .bg-indigo-950\/60 { background-color: rgba(var(--color-primary-deep), 0.6) !important; }
+.bg-blue-950\/40, .bg-indigo-950\/40 { background-color: rgba(var(--color-primary-deep), 0.4) !important; }
+
+.text-blue-500, .text-indigo-500 { color: rgb(var(--color-primary-mid)) !important; }
+.text-blue-600, .text-indigo-600 { color: rgb(var(--color-primary)) !important; }
+.text-blue-700, .text-indigo-700 { color: rgb(var(--color-primary-deep)) !important; }
+.text-blue-200\/70 { color: rgba(var(--color-primary-light), 0.7) !important; }
+
+.border-blue-100, .border-indigo-100 { border-color: rgba(var(--color-primary-light), 0.5) !important; }
+.border-blue-200, .border-indigo-200 { border-color: rgba(var(--color-primary-light), 0.7) !important; }
+.border-blue-200\/30, .border-indigo-200\/30 { border-color: rgba(var(--color-primary-light), 0.3) !important; }
+.border-blue-300, .border-indigo-300 { border-color: rgb(var(--color-primary-mid)) !important; }
+.border-blue-800\/30, .border-indigo-800\/30 { border-color: rgba(var(--color-primary-deep), 0.3) !important; }
+
+.shadow-blue-200\/40, .shadow-indigo-200\/40 { box-shadow: 0 10px 15px -3px rgba(var(--color-primary-light), 0.4) !important; }
+.shadow-blue-950\/40, .shadow-indigo-950\/40 { box-shadow: 0 10px 15px -3px rgba(var(--color-primary-deep), 0.4) !important; }
+
+.hover\:bg-blue-50:hover, .hover\:bg-indigo-50:hover { background-color: rgba(var(--color-primary-light), 0.5) !important; }
+.hover\:text-blue-600:hover, .hover\:text-indigo-600:hover { color: rgb(var(--color-primary)) !important; }
+
+.from-blue-900\/80 { --tw-gradient-from: rgba(var(--color-primary-deep), 0.8) !important; }
+.via-blue-950\/60 { --tw-gradient-via: rgba(var(--color-primary-deep), 0.6) !important; }
+.to-slate-950\/80, .to-indigo-950\/20 { --tw-gradient-to: rgba(var(--color-primary-deep), 0.8) !important; }
+
+/* ── Dynamic Theme Gradients ── */
+.dashboard-header-gradient {
+  background: linear-gradient(135deg, rgb(var(--color-primary-deep)), rgb(var(--color-primary-mid)), rgb(var(--color-primary)));
+  border: 1px solid rgba(var(--color-primary-light), 0.3);
+  box-shadow: 0 10px 15px -3px rgba(var(--color-primary), 0.2);
+}
+.dark .dashboard-header-gradient {
+  background: linear-gradient(135deg, rgb(var(--color-primary-deep)), rgb(var(--color-primary)), rgb(var(--color-primary-deep)));
+}
+.dashboard-header-orb {
+  background-color: rgba(var(--color-primary-light), 0.2);
+}
+.dark .dashboard-header-orb {
+  background-color: rgba(var(--color-primary), 0.12);
+}
+.dashboard-header-orb-subtle {
+  background-color: rgba(var(--color-primary-light), 0.15);
+}
+.dark .dashboard-header-orb-subtle {
+  background-color: rgba(var(--color-primary), 0.08);
+}
+
+/* ── Dynamic Header Nav ── */
+.header-nav {
+  background-color: rgb(var(--color-primary-deep) / 0.95);
+  border-bottom: 1px solid rgba(var(--color-primary), 0.3);
+}
+.dark .header-nav {
+  background-color: rgb(var(--color-primary-deep) / 0.95);
 }
 
 /* Global focus-visible outline for keyboard accessibility */

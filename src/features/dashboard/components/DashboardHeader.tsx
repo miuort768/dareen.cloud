@@ -21,15 +21,12 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     return (
         <div className={cn(
             "hidden md:flex relative overflow-hidden rounded-3xl",
-            "bg-gradient-to-br from-[#2563EB] via-[#3B82F6] to-[#1D4ED8]",
-            "dark:from-blue-900/80 dark:via-blue-950/60 dark:to-slate-950/80",
-            "border border-blue-200/30 dark:border-blue-800/30",
-            "shadow-lg shadow-blue-200/40 dark:shadow-blue-950/40",
+            "dashboard-header-gradient",
             "px-8 py-8 flex-col md:flex-row md:items-center justify-between gap-6"
         )} dir="rtl">
             {/* Blur orbs */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-blue-300/20 dark:bg-blue-500/10 rounded-full blur-[60px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-300/15 dark:bg-indigo-500/10 rounded-full blur-[50px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-[60px] pointer-events-none dashboard-header-orb" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full blur-[50px] pointer-events-none dashboard-header-orb-subtle" />
 
             {/* Identity & Welcome */}
             <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
@@ -74,14 +71,16 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                     </span>
                 </div>
 
-                <button
-                    onClick={toggleTasbeeh}
-                    className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold bg-white/15 backdrop-blur-sm text-white rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
-                >
-                    <Sparkles size={14} strokeWidth={1.5} />
-                    المسبحة
-                    <Sparkles size={10} strokeWidth={1.5} className="text-blue-200" />
-                </button>
+                {currentUser?.role === 'admin' && (
+                    <button
+                        onClick={toggleTasbeeh}
+                        className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold bg-white/15 backdrop-blur-sm text-white rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
+                    >
+                        <Sparkles size={14} strokeWidth={1.5} />
+                        المسبحة
+                        <Sparkles size={10} strokeWidth={1.5} className="text-blue-200" />
+                    </button>
+                )}
             </div>
         </div>
     );
