@@ -10,6 +10,25 @@ router.post('/', async (req, res) => {
         if (!name || !phone || !position || !qualification) {
             return res.status(400).json({ error: 'الاسم ورقم الهاتف والوظيفة والمؤهل مطلوبة' });
         }
+
+        // Check if phone or whatsapp already exists
+        const existing = await req.db.get(
+            'SELECT id, name, created_at FROM job_applications WHERE phone = ? OR (whatsapp != "" AND whatsapp = ?)',
+            [phone, phone]
+        );
+        if (existing) {
+            return res.status(409).json({ error: 'هذا الرقم مسجل لدينا مسبقاً، يوجد طلب تقديم سابق' });
+        }
+        if (whatsapp && whatsapp !== phone) {
+            const existingWhatsapp = await req.db.get(
+                'SELECT id, name, created_at FROM job_applications WHERE phone = ? OR (whatsapp != "" AND whatsapp = ?)',
+                [whatsapp, whatsapp]
+            );
+            if (existingWhatsapp) {
+                return res.status(409).json({ error: 'رقم الواتساب مسجل لدينا مسبقاً، يوجد طلب تقديم سابق' });
+            }
+        }
+
         const id = uuidv4();
         const createdAt = new Date().toISOString();
         await req.db.run(

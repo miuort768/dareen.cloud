@@ -77,8 +77,8 @@ export const Jobs = () => {
         try {
             await api.post('/jobs', form);
             setSubmitted(true);
-        } catch {
-            alert('حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
+        } catch (err: any) {
+            alert(err?.message || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
         } finally {
             setLoading(false);
         }
