@@ -74,9 +74,8 @@ app.use(cors({
 
         const filteredOrigins = allowedOrigins.filter(Boolean); // Remove undefined/null
 
-        // Allow requests with no origin only in development
-        if (!origin && !isProd) return callback(null, true);
-        if (!origin) return callback(new Error('Not allowed by CORS'));
+        // Allow requests with no origin (same-origin via Nginx proxy)
+        if (!origin) return callback(null, true);
 
         if (filteredOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
             callback(null, true);
