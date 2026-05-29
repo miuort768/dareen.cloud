@@ -186,11 +186,15 @@ export const Jobs = () => {
                         <div className="p-6 md:p-8 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-sm font-black text-slate-900 dark:text-white">تقديم طلب التوظيف</h2>
-                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full">
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full md:hidden">
+                                    {step} / {totalSteps}
+                                </span>
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full hidden md:inline-block">
                                     الخطوة {step} من {totalSteps}
                                 </span>
                             </div>
-                            <div className="grid grid-cols-4 gap-2 md:gap-4">
+                            <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-3 md:hidden">{steps.find(s => s.id === step)?.title}</p>
+                            <div className="hidden md:grid grid-cols-4 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
