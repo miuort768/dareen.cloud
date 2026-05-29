@@ -2,6 +2,7 @@ import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { DashboardHeader } from '../components/DashboardHeader';
 import { DashboardStats } from '../components/DashboardStats';
+import { TeacherFocusList } from '../components/TeacherFocusList';
 import { NotificationsCenter } from '../components/NotificationsCenter';
 import { DashboardCharts } from '../components/DashboardCharts';
 import { OperationsDashboard } from '../components/OperationsDashboard';
@@ -34,6 +35,7 @@ export const Dashboard = () => {
         stats,
         monthlyData,
         lowBalanceStudents,
+        focusStudents,
         tasks,
         loading,
         rawStudents,
@@ -86,6 +88,13 @@ export const Dashboard = () => {
                             studentInvoices={rawStudentInvoices}
                         />
                     </Section>
+
+                    {/* 3.5 الطلاب ذوو الرصد المنخفض */}
+                    {focusStudents && focusStudents.length > 0 && (
+                        <Section>
+                            <TeacherFocusList students={focusStudents} />
+                        </Section>
+                    )}
 
                     {/* 4. مركز تحليل الأداء */}
                     <Section>

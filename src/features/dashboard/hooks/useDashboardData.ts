@@ -227,26 +227,26 @@ export const useDashboardData = (currentUser: User | null) => {
         });
 
         // 6b. Focus List
-        const focusStudentsList: { id: string; name: string; attendanceRate?: number; subject?: string }[] = [];
-        if (isTeacher) {
-            filteredStudents.forEach((s: Student) => {
-                const stuSessions = filteredSessions.filter((ss: Session) => ss.studentId === s.id);
-                const stuCompleted = stuSessions.filter((ss: Session) => ss.status === 'completed');
-                const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
-                
-                const stuEvals = evaluations.filter((e: { studentId: string; teacherId: string }) => e.studentId === s.id && e.teacherId === currentUser.id);
-                const lastEval = [...stuEvals].sort((a,b) => (b.date || '').localeCompare(a.date || ''))[0];
-                const needsEval = stuCompleted.length > 0 && (!lastEval || (now.getTime() - new Date(lastEval.date).getTime()) > 7 * 24 * 60 * 60 * 1000);
+        const focusStudentsList: { id: string; name: string; reason: string; type: 'attendance' | 'performance' | 'engagement' }[] = [];
+        filteredStudents.forEach((s: Student) => {
+            const stuSessions = filteredSessions.filter((ss: Session) => ss.studentId === s.id);
+            const stuCompleted = stuSessions.filter((ss: Session) => ss.status === 'completed');
+            const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
 
-                if (attendanceRate < 0.7) {
-                    focusStudentsList.push({ id: s.id, name: s.name, reason: `نسبة الحضور منخفضة (${Math.round(attendanceRate * 100)}%)`, type: 'attendance' });
-                } else if (lastEval && (lastEval.rating === 'ضعيف' || lastEval.rating === 'مقبول')) {
-                    focusStudentsList.push({ id: s.id, name: s.name, reason: `آخر تقييم: ${lastEval.rating}`, type: 'performance' });
-                } else if (needsEval) {
-                    focusStudentsList.push({ id: s.id, name: s.name, reason: 'لم يتم التقييم منذ أسبوع', type: 'engagement' });
-                }
-            });
-        }
+            const stuEvals = isTeacher
+                ? evaluations.filter((e: { studentId: string; teacherId: string }) => e.studentId === s.id && e.teacherId === currentUser.id)
+                : evaluations.filter((e: { studentId: string }) => e.studentId === s.id);
+            const lastEval = [...stuEvals].sort((a,b) => (b.date || '').localeCompare(a.date || ''))[0];
+            const needsEval = stuCompleted.length > 0 && (!lastEval || (now.getTime() - new Date(lastEval.date).getTime()) > 7 * 24 * 60 * 60 * 1000);
+
+            if (attendanceRate < 0.7) {
+                focusStudentsList.push({ id: s.id, name: s.name, reason: `نسبة الحضور منخفضة (${Math.round(attendanceRate * 100)}%)`, type: 'attendance' });
+            } else if (lastEval && (lastEval.rating === 'ضعيف' || lastEval.rating === 'مقبول')) {
+                focusStudentsList.push({ id: s.id, name: s.name, reason: `آخر تقييم: ${lastEval.rating}`, type: 'performance' });
+            } else if (needsEval) {
+                focusStudentsList.push({ id: s.id, name: s.name, reason: 'لم يتم التقييم منذ أسبوع', type: 'engagement' });
+            }
+        });
 
         // 7. Stats Object
         const stats: DashboardStats = {
