@@ -176,14 +176,16 @@ export const Jobs = () => {
                                     الخطوة {step} من {totalSteps}
                                 </span>
                             </div>
-                            <div className="flex items-center justify-center gap-2 md:gap-4">
+                            <div className="grid grid-cols-3 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
-                                    <div key={s.id} className="flex items-center gap-1.5 md:gap-2">
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 ${step === s.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-110' : step > s.id ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500'}`}>
-                                            {step > s.id ? <CheckCircle2 size={14} /> : s.id}
+                                    <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
+                                        <div className="flex items-center gap-1.5 md:gap-2 w-full">
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-110' : step > s.id ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500'}`}>
+                                                {step > s.id ? <CheckCircle2 size={14} /> : s.id}
+                                            </div>
+                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-emerald-400' : 'bg-slate-200 dark:bg-slate-700'}`} />}
                                         </div>
-                                        <span className={`text-[10px] font-bold transition-colors whitespace-nowrap ${step === s.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}>{s.title}</span>
-                                        {i < steps.length - 1 && <div className={`w-6 md:w-12 h-0.5 mx-1 transition-colors duration-500 ${step > s.id ? 'bg-emerald-400' : 'bg-slate-200 dark:bg-slate-700'}`} />}
+                                        <span className={`text-[10px] font-bold transition-colors text-center ${step === s.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`}>{s.title}</span>
                                     </div>
                                 ))}
                             </div>
