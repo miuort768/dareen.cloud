@@ -77,7 +77,7 @@ export const AdminJobs = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="bg-[#14B8A6] px-4 md:px-6 py-5 mb-6">
+            <div className="bg-primary-600 px-4 md:px-6 py-5 mb-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
@@ -121,8 +121,8 @@ export const AdminJobs = () => {
                     <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white dark:bg-slate-900 h-32 animate-pulse border border-slate-100/50 dark:border-slate-800/50" />)}</div>
                 ) : filtered.length === 0 ? (
                     <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#14B8A612' }}>
-                            <Briefcase size={28} style={{ color: '#14B8A6' }} />
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
+                            <Briefcase size={28} style={{ color: 'rgb(var(--color-primary))' }} />
                         </div>
                         <p className="text-sm font-bold text-slate-400">لا توجد طلبات</p>
                     </div>
@@ -133,11 +133,11 @@ export const AdminJobs = () => {
                         }`}>
                             {/* Top accent bar */}
                             <div className={`h-1.5 w-full transition-colors duration-300 ${
-                                app.contacted ? 'bg-slate-300 dark:bg-slate-600' : 'bg-[#14B8A6]'
+                                app.contacted ? 'bg-slate-300 dark:bg-slate-600' : 'bg-primary-500'
                             }`}></div>
 
                             {/* Decorative pattern */}
-                            {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-[#14B8A6]/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-[#14B8A6]/10"></div>}
+                            {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-primary-500/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-primary-500/10"></div>}
 
                             <div className={`p-6 relative z-10 transition-all duration-300 ${
                                 app.contacted ? 'line-through decoration-1 decoration-slate-400/50' : ''
@@ -145,7 +145,7 @@ export const AdminJobs = () => {
                                 {/* Academy branding */}
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
-                                        <Award size={14} className={app.contacted ? 'text-slate-300' : 'text-[#14B8A6]'} />
+                                        <Award size={14} className={app.contacted ? 'text-slate-300' : 'text-primary-500'} />
                                         <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-slate-400">DAREEN ACADEMY</span>
                                     </div>
                                     <div className="flex gap-1">
@@ -170,7 +170,7 @@ export const AdminJobs = () => {
                                 <div className={`flex items-center gap-4 mb-6 p-4 rounded-lg ${
                                     app.contacted
                                         ? 'bg-slate-100 dark:bg-slate-800'
-                                        : 'bg-[#14B8A6]'
+                                        : 'bg-primary-600'
                                 }`}>
                                     <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center relative overflow-hidden shrink-0">
                                         <span className="text-base font-bold text-white">{app.name[0]}</span>
@@ -191,8 +191,8 @@ export const AdminJobs = () => {
                                     <div className="col-span-2 md:col-span-4 flex items-start gap-2 pb-2 border-b border-slate-50 dark:border-slate-800 mb-1">
                                         <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${
                                             app.contacted ? 'opacity-30' : ''
-                                        }`} style={{ backgroundColor: '#14B8A612' }}>
-                                            <BookOpen size={10} style={{ color: app.contacted ? '#94A3B8' : '#14B8A6' }} />
+                                        }`} style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
+                                            <BookOpen size={10} style={{ color: app.contacted ? '#94A3B8' : 'rgb(var(--color-primary))' }} />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">المناهج</p>
@@ -220,8 +220,8 @@ export const AdminJobs = () => {
 
 const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string; contacted?: boolean }) => (
     <div className={`flex items-center gap-2 ${contacted ? 'opacity-40' : ''}`}>
-        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#14B8A612' }}>
-            <Icon size={10} style={{ color: contacted ? '#94A3B8' : '#14B8A6' }} />
+        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
+            <Icon size={10} style={{ color: contacted ? '#94A3B8' : 'rgb(var(--color-primary))' }} />
         </div>
         <div className="min-w-0">
             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
