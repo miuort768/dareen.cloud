@@ -87,38 +87,55 @@ export const AdminJobs = () => {
                     </div>
                 ) : (
                     filtered.map(app => (
-                        <div key={app.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm">
-                            <div className="p-6">
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#14B8A612', color: '#14B8A6' }}>
-                                            {app.name[0]}
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-slate-900 dark:text-white text-sm">{app.name}</h3>
-                                            <p className="text-[10px] font-bold" style={{ color: '#14B8A6' }}>{app.position}</p>
-                                        </div>
+                        <div key={app.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden group">
+                            {/* Top accent bar */}
+                            <div className="h-1.5 bg-[#14B8A6] w-full"></div>
+
+                            {/* Decorative pattern */}
+                            <div className="absolute top-0 left-0 w-24 h-24 bg-[#14B8A6]/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-[#14B8A6]/10"></div>
+
+                            <div className="p-6 relative z-10">
+                                {/* Academy branding */}
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <Award size={14} className="text-[#14B8A6]" />
+                                        <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-slate-400">DAREEN ACADEMY</span>
                                     </div>
-                                    <button onClick={() => handleDelete(app.id)} className="p-2 text-slate-300 hover:text-rose-500 transition-colors active:scale-90" aria-label="حذف الطلب">
-                                        <Trash2 size={16} />
+                                    <button onClick={() => handleDelete(app.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all" aria-label="حذف الطلب">
+                                        <Trash2 size={14} />
                                     </button>
                                 </div>
 
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-[11px]">
-                                    <InfoBadge icon={Phone} label={app.phone} />
-                                    <InfoBadge icon={MessageCircle} label={app.whatsapp || '-'} />
-                                    <InfoBadge icon={GraduationCap} label={app.qualification} />
-                                    <InfoBadge icon={Award} label={app.grade || '-'} />
-                                    <InfoBadge icon={Calendar} label={app.graduationYear || '-'} />
-                                    <InfoBadge icon={Globe} label={`${app.onlineYears || '0'} سنة`} />
-                                    <div className="col-span-2 flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                                        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#14B8A612' }}>
-                                            <BookOpen size={10} style={{ color: '#14B8A6' }} />
-                                        </div>
-                                        <span className="truncate font-bold">{app.curriculums || '-'}</span>
+                                {/* Avatar + Name Section */}
+                                <div className="flex flex-col items-center gap-4 mb-6">
+                                    <div className="w-20 h-24 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center relative shadow-inner overflow-hidden">
+                                        <span className="text-2xl font-bold text-[#14B8A6]">{app.name[0]}</span>
+                                        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#14B8A6]"></div>
+                                    </div>
+                                    <div className="text-center">
+                                        <h3 className="text-base font-bold text-slate-800 dark:text-white">{app.name}</h3>
+                                        <p className="text-[10px] font-bold text-[#14B8A6] uppercase tracking-tighter mt-0.5">{app.position}</p>
                                     </div>
                                 </div>
 
+                                {/* Details Grid */}
+                                <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 dark:border-slate-800 pt-4">
+                                    <DetailRow icon={Phone} label="الهاتف" value={app.phone} />
+                                    <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} />
+                                    <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} />
+                                    <DetailRow icon={Award} label="التقدير" value={app.grade || '-'} />
+                                    <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} />
+                                    <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} />
+                                    <div className="col-span-2 flex items-start gap-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                                        <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: '#14B8A612' }}>
+                                            <BookOpen size={10} style={{ color: '#14B8A6' }} />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">المناهج</p>
+                                            <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{app.curriculums || '-'}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))
@@ -128,11 +145,14 @@ export const AdminJobs = () => {
     );
 };
 
-const InfoBadge = ({ icon: Icon, label }: { icon: React.FC<{ size?: number; className?: string }>; label: string }) => (
-    <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+const DetailRow = ({ icon: Icon, label, value }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string }) => (
+    <div className="flex items-center gap-2">
         <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#14B8A612' }}>
             <Icon size={10} style={{ color: '#14B8A6' }} />
         </div>
-        <span className="truncate font-bold">{label}</span>
+        <div className="min-w-0">
+            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
+            <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate block">{value}</span>
+        </div>
     </div>
 );
