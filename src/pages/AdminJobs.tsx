@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { api } from '../lib/api';
+import { ConfirmModal } from '../shared/components/ConfirmModal';
 
 interface JobApp {
     id: string;
@@ -29,6 +30,7 @@ export const AdminJobs = () => {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [subjectFilter, setSubjectFilter] = useState('');
+    const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
     const fetchApps = async () => {
         try {
@@ -45,13 +47,13 @@ export const AdminJobs = () => {
     useEffect(() => { fetchApps(); }, []);
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('حذف هذا الطلب؟')) return;
         try {
             await api.delete(`/jobs/${id}`);
             setApps(apps.filter(a => a.id !== id));
         } catch (err) {
             console.error(err);
         }
+        setDeleteTarget(null);
     };
 
     const handleContacted = async (id: string) => {
@@ -160,7 +162,7 @@ export const AdminJobs = () => {
                                         >
                                             <CheckCircle2 size={14} />
                                         </button>
-                                        <button onClick={() => handleDelete(app.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all" aria-label="حذف الطلب">
+                                        <button onClick={() => setDeleteTarget(app.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all" aria-label="حذف الطلب">
                                             <Trash2 size={14} />
                                         </button>
                                     </div>
@@ -214,6 +216,17 @@ export const AdminJobs = () => {
                     ))
                 )}
             </div>
+
+            <ConfirmModal
+                isOpen={deleteTarget !== null}
+                onClose={() => setDeleteTarget(null)}
+                onConfirm={() => deleteTarget && handleDelete(deleteTarget)}
+                title="حذف الطلب"
+                message="هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء."
+                confirmText="حذف"
+                cancelText="تراجع"
+                isDestructive
+            />
         </div>
     );
 };
