@@ -57,12 +57,9 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isO
         if (isOpen) {
             setTimeout(resizeCanvas, 50);
         }
-    }, [isOpen, resizeCanvas]);
-
-    useEffect(() => {
         window.addEventListener('resize', resizeCanvas);
         return () => window.removeEventListener('resize', resizeCanvas);
-    }, [resizeCanvas]);
+    }, [isOpen, resizeCanvas]);
 
     const drawLine = useCallback((x0: number, y0: number, x1: number, y1: number, color: string, size: number, isEraserMode: boolean = false, emit = true) => {
         const canvas = canvasRef.current;

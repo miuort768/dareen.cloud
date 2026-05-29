@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Video, X, BellRing, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,15 +16,21 @@ export const SessionCallAlert = () => {
     const navigate = useNavigate();
     const [callData, setCallData] = useState<CallData | null>(null);
     const [show, setShow] = useState(false);
+    const notificationAudioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
+        if (!notificationAudioRef.current) {
+            notificationAudioRef.current = new Audio('/notification.mp3');
+        }
+        const audio = notificationAudioRef.current;
+
         const socket = socketService.getSocket();
         if (!socket || currentUser?.role !== 'student') return;
 
         const handleInvite = (data: CallData) => {
             setCallData(data);
             setShow(true);
-            const audio = new Audio('/notification.mp3');
+            audio.currentTime = 0;
             audio.play().catch(() => {});
         };
 

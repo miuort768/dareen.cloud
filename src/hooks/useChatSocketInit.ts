@@ -41,7 +41,7 @@ export const useChatSocketInit = () => {
         if (!isAuthenticated || !currentUser) return;
         const currentUserId = String(currentUser.id);
 
-        const socket = socketService.connect(currentUserId);
+        const socket = socketService.connect();
         if (!socket) return;
 
         const typingTimeouts = typingTimeoutsRef.current;
@@ -131,7 +131,6 @@ export const useChatSocketInit = () => {
                 });
             });
 
-            queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
 
             // 4. Notifications

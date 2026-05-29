@@ -452,10 +452,11 @@ async function startServer() {
             });
 
             // Simple-Peer Meeting Signals (New System)
+            const isTeacherOrAdmin = user?.role === 'teacher' || user?.role === 'admin' || user?.permissions?.includes('*');
+
             socket.on('teacher_ready', (data) => {
-                // Teacher started sharing, notify all students in room
+                if (!isTeacherOrAdmin) return;
                 socket.to(data.conversationId).emit('teacher_ready', data);
-                // Also broadcast meeting started event for UI indicators to EVERYONE (including sender)
                 io.in(data.conversationId).emit('meeting_started', {
                     conversationId: data.conversationId,
                     teacherId: data.teacherId,
@@ -466,25 +467,22 @@ async function startServer() {
             });
 
             socket.on('teacher_stopped', async (data) => {
-                // Teacher stopped sharing - notify all students
-                socket.to(data.conversationId).emit('teacher_stopped', data);
-                io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
-                console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
-
-                // End the live session in the DB by matching the room name
+                if (!isTeacherOrAdmin) return;
                 try {
-                    const sessionId = data.conversationId?.replace('live_session_', '');
+                    const sessionId = data.conversationId?.replace(/^live_session_/, '');
                     if (sessionId) {
                         const db = await getDb();
                         await db.run(
                             'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
                             [sessionId, userId]
                         );
-                        console.log(`   💾 Live session ${sessionId} marked as ended in DB`);
                     }
                 } catch (err) {
                     console.error('[Live] Failed to end session in DB:', err);
                 }
+                socket.to(data.conversationId).emit('teacher_stopped', data);
+                io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
+                console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
             });
 
 
@@ -508,6 +506,7 @@ async function startServer() {
 
             // --- New: Direct Session Invites ---
             socket.on('call_student', async (data) => {
+                if (!isTeacherOrAdmin) return;
                 const studentIdStr = String(data.studentId);
                 const targetRoom = `user_${studentIdStr}`;
                 
@@ -517,11 +516,17 @@ async function startServer() {
                     teacherSocketId: socket.id, 
                     subject: data.subject,
                     type: data.type || 'video',
-                    sessionId: data.sessionId,               // ← جلب sessionId من الإرسال
+                    sessionId: data.sessionId,
                     timestamp: new Date().toISOString()
                 };
 
                 activeSessions.set(studentIdStr, sessionData);
+                // Auto-expire session invite after 5 minutes
+                setTimeout(() => {
+                    if (activeSessions.get(studentIdStr)?.teacherSocketId === socket.id) {
+                        activeSessions.delete(studentIdStr);
+                    }
+                }, 300000);
                 io.to(targetRoom).emit('session_invite', sessionData);
 
                 // --- 🔔 Also create a persistent database notification ---
@@ -559,7 +564,10 @@ async function startServer() {
 
 
             socket.on('end_session', (data) => {
+                if (!isTeacherOrAdmin) return;
                 const studentIdStr = String(data.studentId);
+                const session = activeSessions.get(studentIdStr);
+                if (session && session.teacherSocketId !== socket.id && !user?.permissions?.includes('*')) return;
                 activeSessions.delete(studentIdStr);
                 io.to(`user_${studentIdStr}`).emit('session_ended', { teacherId: user.id });
             });

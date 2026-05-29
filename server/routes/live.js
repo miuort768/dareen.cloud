@@ -17,7 +17,7 @@ router.get('/turn-credentials', (req, res) => {
     const turnUrl = process.env.TURN_SERVER_URL;
 
     if (!secret || !turnUrl) {
-        // No TURN configured — return only STUN (still works on open networks)
+        console.warn('[TURN] TURN_SECRET/TURN_SERVER_URL not configured — using STUN only (may fail on restrictive networks)');
         return res.json({
             iceServers: [
                 { urls: 'stun:stun.l.google.com:19302' },
@@ -174,9 +174,12 @@ router.post('/start', async (req, res) => {
 // ── POST /api/live/end/:id — End a session ───────────────────────────────────
 router.post('/end/:id', async (req, res) => {
     try {
+        const isAdmin = req.user?.role === 'admin' || req.user?.permissions?.includes('*');
         const result = await req.db.run(
-            'UPDATE live_sessions SET status = "ended" WHERE id = ?',
-            [req.params.id]
+            isAdmin
+                ? 'UPDATE live_sessions SET status = "ended" WHERE id = ?'
+                : 'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
+            isAdmin ? [req.params.id] : [req.params.id, req.user.id]
         );
 
         if (result.changes === 0) {

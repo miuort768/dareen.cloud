@@ -25,7 +25,9 @@ export const LiveClasses = () => {
         try {
             const data = await api.get<LiveSession[]>('/live/active');
             if (Array.isArray(data)) setSessions(data);
+            setError(null);
         } catch {
+            setError('تعذر تحميل بيانات البث المباشر');
         } finally {
             setLoading(false);
         }

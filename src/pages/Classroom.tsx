@@ -18,6 +18,7 @@ import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
 import { Whiteboard } from '../components/ui/Whiteboard';
 import { cn } from '../lib/utils';
+import { API_BASE_URL } from '../config/api';
 
 // --- Custom Top Bar Component ---
 const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpen }: { isTeacher: boolean; onLeave: () => void; toggleWhiteboard: () => void; isWhiteboardOpen: boolean }) => {
@@ -136,7 +137,8 @@ export const Classroom = () => {
     const roomName = `live_session_${id}`;
 
     const configuredUrl = import.meta.env.VITE_LIVEKIT_URL;
-    const serverUrl = configuredUrl || `ws://${window.location.hostname}:7880`;
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const serverUrl = configuredUrl || `${protocol}://${window.location.hostname}:7880`;
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -150,12 +152,19 @@ export const Classroom = () => {
         };
 
         if (id) fetchToken();
-    }, [id, roomName]);
+    }, [id]);
 
     useEffect(() => {
         const socket = socketService.getSocket();
         
-        socket.emit('join_conversation', roomName);
+        const onConnect = () => {
+            socket.emit('join_conversation', roomName);
+        };
+        if (socket.connected) {
+            onConnect();
+        } else {
+            socket.on('connect', onConnect);
+        }
 
         socket.on('whiteboard_state', (data: { open: boolean }) => {
             setIsWhiteboardOpen(data.open);
@@ -163,13 +172,16 @@ export const Classroom = () => {
 
         return () => {
             socket.off('whiteboard_state');
-            socket.emit('leave_conversation', roomName);
+            socket.off('connect', onConnect);
+            if (socket.connected) {
+                socket.emit('leave_conversation', roomName);
+            }
         };
     }, [roomName]);
 
     const endSessionInDb = useCallback(async () => {
         if (isTeacher && id) {
-            try { await api.post(`/live/end/${id}`, {}); } catch { /* non-critical */ }
+            try { await api.post(`/live/end/${id}`, {}); } catch (e) { console.error('[Live] endSessionInDb failed:', e); }
         }
     }, [isTeacher, id]);
 
@@ -186,7 +198,7 @@ export const Classroom = () => {
         if (!isTeacher) return;
         const handleBeforeUnload = () => {
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
-            navigator.sendBeacon(`/api/live/end/${id}`, '{}');
+            navigator.sendBeacon(`${API_BASE_URL}/live/end/${id}`, '{}');
         };
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);

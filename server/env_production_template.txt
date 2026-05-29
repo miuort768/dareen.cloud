@@ -13,3 +13,8 @@ NODE_ENV=production
 
 # إعدادات قاعدة البيانات (لا تغيرها إلا إذا كنت تعرف ماذا تفعل)
 DB_PATH=./database.sqlite
+
+# إعدادات LiveKit للبث المباشر (مطلوبة)
+# يمكنك استخدام أي قيم للتجربة، لكن في الإنتاج استخدم قيم قوية
+LIVEKIT_API_KEY=devkey
+LIVEKIT_API_SECRET=secret
