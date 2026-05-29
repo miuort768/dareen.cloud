@@ -18,11 +18,16 @@ echo "🛑 إيقاف الحاويات القديمة..."
 docker compose down --remove-orphans || true
 docker rm -f darin-app livekit-server 2>/dev/null || true
 
-# 3. بناء وتشغيل الحاويات
+# 3. قتل أي عملية قديمة على المنافذ المستخدمة (حل مشكلة address already in use)
+echo "🔪 تحرير المنافذ القديمة..."
+fuser -k 3001/tcp 2>/dev/null || true
+fuser -k 3005/tcp 2>/dev/null || true
+
+# 4. بناء وتشغيل الحاويات
 echo "🏗️ بناء وتشغيل الحاويات..."
 docker compose up -d --build
 
-# 4. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
+# 5. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
 echo "🧹 تنظيف الملفات غير المستخدمة..."
 docker image prune -f
 
