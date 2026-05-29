@@ -185,7 +185,7 @@ export const AdminJobs = () => {
                                 </div>
 
                                 {/* Details Grid */}
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 dark:border-slate-800 pt-4">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 dark:border-slate-800 pt-4">
                                     <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} />
                                     <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
@@ -193,7 +193,7 @@ export const AdminJobs = () => {
                                     {app.subject && <DetailRow icon={BookMarked} label="المادة" value={app.subject} contacted={!!app.contacted} />}
                                     <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
-                                    <div className="col-span-2 md:col-span-3 flex items-start gap-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                                    <div className="col-span-2 md:col-span-4 flex items-start gap-2 pt-2 border-t border-slate-50 dark:border-slate-800">
                                         <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${
                                             app.contacted ? 'opacity-30' : ''
                                         }`} style={{ backgroundColor: '#14B8A612' }}>
