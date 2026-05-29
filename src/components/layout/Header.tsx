@@ -83,6 +83,7 @@ export const Header = () => {
                 return { title: 'العملاء المحتملين', subtitle: 'إدارة طلبات التسجيل والمهتمين.' };
             case '/admin':
                 if (path.includes('/blog')) return { title: 'إدارة المدونة', subtitle: 'إدارة مقالات المدونة والكتب.' };
+                if (path.includes('/jobs')) return { title: 'طلبات التوظيف', subtitle: 'إدارة طلبات التوظيف المقدمة.' };
                 return { title: 'الإدارة', subtitle: 'لوحة تحكم الإدارة.' };
             case '/classroom':
                 return { title: 'الفصل الدراسي', subtitle: 'منصة التعلم التفاعلي.' };
@@ -93,7 +94,7 @@ export const Header = () => {
         }
     };
 
-    const { title } = getPageTitle(location.pathname);
+    const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
         <header className={cn(
@@ -120,8 +121,8 @@ export const Header = () => {
                         <h1 className="text-sm md:text-lg font-bold text-white truncate tracking-tight leading-none">
                             {title}
                         </h1>
-                        <p className="hidden md:block text-[10px] font-normal text-blue-200/70 uppercase tracking-widest leading-none mt-0.5">
-                            دارين للتعليم والتدريب
+                        <p className="hidden md:block text-[10px] font-normal text-white/70 uppercase tracking-widest leading-none mt-0.5">
+                            {subtitle || 'دارين للتعليم والتدريب'}
                         </p>
                     </div>
                 )}
