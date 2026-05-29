@@ -263,6 +263,7 @@ export const Jobs = () => {
                                                     {subjects.map(s => (
                                                         <label
                                                             key={s}
+                                                            onClick={() => setForm(prev => ({ ...prev, subject: s }))}
                                                             className={`flex items-center gap-3 p-4 border cursor-pointer transition-all ${
                                                                 form.subject === s
                                                                     ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10'
