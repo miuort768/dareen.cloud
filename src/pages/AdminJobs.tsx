@@ -64,7 +64,13 @@ export const AdminJobs = () => {
     };
 
     const filtered = apps.filter(a => {
-        const matchesSearch = a.name.includes(search) || a.phone.includes(search) || a.position.includes(search);
+        const q = search.trim().toLowerCase();
+        if (!q && !subjectFilter) return true;
+        const matchesSearch = !q ||
+            a.name.toLowerCase().includes(q) ||
+            a.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+            (a.whatsapp || '').replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+            a.position.toLowerCase().includes(q);
         const matchesSubject = !subjectFilter || a.subject === subjectFilter;
         return matchesSearch && matchesSubject;
     });
