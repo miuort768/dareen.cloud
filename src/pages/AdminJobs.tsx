@@ -51,7 +51,7 @@ export const AdminJobs = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="bg-[#F59E0B] px-4 md:px-6 py-5 mb-6">
+            <div className="bg-[#14B8A6] px-4 md:px-6 py-5 mb-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
@@ -80,8 +80,8 @@ export const AdminJobs = () => {
                     <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white dark:bg-slate-900 h-32 animate-pulse border border-slate-100/50 dark:border-slate-800/50" />)}</div>
                 ) : filtered.length === 0 ? (
                     <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#F59E0B12' }}>
-                            <Briefcase size={28} style={{ color: '#F59E0B' }} />
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#14B8A612' }}>
+                            <Briefcase size={28} style={{ color: '#14B8A6' }} />
                         </div>
                         <p className="text-sm font-bold text-slate-400">لا توجد طلبات</p>
                     </div>
@@ -91,12 +91,12 @@ export const AdminJobs = () => {
                             <div className="p-6">
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}>
+                                        <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#14B8A612', color: '#14B8A6' }}>
                                             {app.name[0]}
                                         </div>
                                         <div>
                                             <h3 className="font-bold text-slate-900 dark:text-white text-sm">{app.name}</h3>
-                                            <p className="text-[10px] font-bold" style={{ color: '#F59E0B' }}>{app.position}</p>
+                                            <p className="text-[10px] font-bold" style={{ color: '#14B8A6' }}>{app.position}</p>
                                         </div>
                                     </div>
                                     <button onClick={() => handleDelete(app.id)} className="p-2 text-slate-300 hover:text-rose-500 transition-colors active:scale-90" aria-label="حذف الطلب">
@@ -112,16 +112,13 @@ export const AdminJobs = () => {
                                     <InfoBadge icon={Calendar} label={app.graduationYear || '-'} />
                                     <InfoBadge icon={Globe} label={`${app.onlineYears || '0'} سنة`} />
                                     <div className="col-span-2 flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                                        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#F59E0B12' }}>
-                                            <BookOpen size={10} style={{ color: '#F59E0B' }} />
+                                        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#14B8A612' }}>
+                                            <BookOpen size={10} style={{ color: '#14B8A6' }} />
                                         </div>
                                         <span className="truncate font-bold">{app.curriculums || '-'}</span>
                                     </div>
                                 </div>
 
-                                <p className="text-[9px] font-bold text-slate-400 mt-4 pt-3 border-t border-slate-100/50 dark:border-slate-800/50">
-                                    {new Date(app.created_at).toLocaleDateString('ar-KW', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                                </p>
                             </div>
                         </div>
                     ))
@@ -133,8 +130,8 @@ export const AdminJobs = () => {
 
 const InfoBadge = ({ icon: Icon, label }: { icon: React.FC<{ size?: number; className?: string }>; label: string }) => (
     <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#F59E0B12' }}>
-            <Icon size={10} style={{ color: '#F59E0B' }} />
+        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: '#14B8A612' }}>
+            <Icon size={10} style={{ color: '#14B8A6' }} />
         </div>
         <span className="truncate font-bold">{label}</span>
     </div>

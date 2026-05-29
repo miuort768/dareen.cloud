@@ -100,8 +100,8 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                         <X size={14} />
                                     </button>
                                 </div>
-                                <div className="flex gap-2">
-                                    {[1, 2, 4].map(num => (
+                                <div className="flex gap-1.5">
+                                    {[1, 2, 4, 8].map(num => (
                                         <button
                                             key={num}
                                             onClick={() => {
@@ -113,6 +113,18 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                             +{num} {num === 1 ? 'حصة' : 'حصص'}
                                         </button>
                                     ))}
+                                    <button
+                                        onClick={() => {
+                                            const val = prompt('أدخل عدد الحصص:');
+                                            if (val && !isNaN(Number(val)) && Number(val) > 0) {
+                                                for (let i = 0; i < Number(val); i++) addSession(student.id, student.name);
+                                            }
+                                        }}
+                                        disabled={!subject.trim()}
+                                        className="px-2 py-1.5 bg-gray-700 text-white text-[10px] font-bold rounded hover:bg-gray-800 transition-colors disabled:opacity-40"
+                                    >
+                                        مخصص
+                                    </button>
                                 </div>
                             </div>
                         )}
