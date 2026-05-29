@@ -167,25 +167,21 @@ export const AdminJobs = () => {
                                 </div>
 
                                 {/* Avatar + Name Section */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className={`w-12 h-14 border-2 flex items-center justify-center relative shadow-inner overflow-hidden shrink-0 ${
-                                        app.contacted
-                                            ? 'bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600'
-                                            : 'bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700'
-                                    }`}>
-                                        <span className={`text-base font-bold ${
-                                            app.contacted ? 'text-slate-300' : 'text-[#14B8A6]'
-                                        }`}>{app.name[0]}</span>
-                                        <div className={`absolute bottom-0 left-0 w-full h-0.5 ${
-                                            app.contacted ? 'bg-slate-300' : 'bg-[#14B8A6]'
-                                        }`}></div>
+                                <div className={`flex items-center gap-4 mb-6 p-4 rounded-lg ${
+                                    app.contacted
+                                        ? 'bg-slate-100 dark:bg-slate-800'
+                                        : 'bg-[#14B8A6]'
+                                }`}>
+                                    <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center relative overflow-hidden shrink-0">
+                                        <span className="text-base font-bold text-white">{app.name[0]}</span>
+                                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/50"></div>
                                     </div>
                                     <div className="text-right">
                                         <h3 className={`text-sm font-bold ${
-                                            app.contacted ? 'text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-white'
+                                            app.contacted ? 'text-slate-500 dark:text-slate-400' : 'text-white'
                                         }`}>{app.name}</h3>
                                         <p className={`text-[10px] font-bold uppercase tracking-tighter mt-0.5 ${
-                                            app.contacted ? 'text-slate-300' : 'text-[#14B8A6]'
+                                            app.contacted ? 'text-slate-400' : 'text-white/80'
                                         }`}>{app.position}</p>
                                     </div>
                                 </div>
