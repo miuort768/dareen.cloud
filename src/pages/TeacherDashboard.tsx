@@ -4,6 +4,7 @@ import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
+import { TeacherFocusList } from '../features/dashboard/components/TeacherFocusList';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { TopAttendanceStudents } from '../features/dashboard/components/TopAttendanceStudents';
@@ -25,7 +26,8 @@ export const TeacherDashboard = () => {
         tasks,
         loading,
         rawSessions,
-        lowBalanceStudents
+        lowBalanceStudents,
+        focusStudents
     } = useDashboardData(currentUser);
 
     const [briefingStudent, setBriefingStudent] = useState<Record<string, unknown> | null>(null);
@@ -73,6 +75,9 @@ export const TeacherDashboard = () => {
 
                         <div className="lg:col-span-4 space-y-6">
                             <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+                            {focusStudents && focusStudents.length > 0 && (
+                                <TeacherFocusList students={focusStudents} />
+                            )}
                         </div>
                     </div>
 

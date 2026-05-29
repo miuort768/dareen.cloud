@@ -1,4 +1,6 @@
-import { AlertTriangle, UserCircle, MessageSquare, Clock, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { AlertTriangle, UserCircle, Plus, Clock, CheckCircle2, X } from 'lucide-react';
+import { api } from '../../../lib/api';
 
 interface FocusStudent {
     id: string;
@@ -13,6 +15,31 @@ interface TeacherFocusListProps {
 }
 
 export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListProps) => {
+    const [addingFor, setAddingFor] = useState<string | null>(null);
+    const [subject, setSubject] = useState('');
+
+    const addSession = async (studentId: string, studentName: string) => {
+        if (!subject.trim()) return;
+        try {
+            const today = new Date();
+            const dayNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            await api.post('/sessions', {
+                studentId,
+                studentName,
+                subject: subject.trim(),
+                date: today.toISOString().split('T')[0],
+                day: dayNames[today.getDay()],
+                time: today.toTimeString().slice(0, 5),
+                status: 'scheduled'
+            });
+            setAddingFor(null);
+            setSubject('');
+            window.location.reload();
+        } catch (e) {
+            console.error('Error adding session:', e);
+        }
+    };
+
     if (!students || students.length === 0) return (
         <div className="bg-emerald-50 dark:bg-emerald-900/10 border-4 border-gray-950 p-8 flex items-center justify-center gap-6 shadow-[10px_10px_0px_0px_rgba(16,185,129,0.2)] dark:shadow-none animate-in zoom-in-95 duration-500">
             <div className="w-16 h-16 bg-emerald-500 border-4 border-gray-950 flex items-center justify-center text-white shadow-[4px_4px_0px_0px_black] transform rotate-3">
@@ -34,25 +61,61 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
 
             <div className="space-y-3">
                 {students.map((student) => (
-                    <div 
-                        key={student.id} 
-                        onClick={() => onStudentClick?.(student)}
-                        className="flex items-center justify-between p-3 bg-rose-50 dark:bg-rose-900/10 border-2 border-gray-950 hover:bg-rose-100 transition-colors cursor-pointer"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 flex-shrink-0 bg-white dark:bg-gray-950 border-2 border-gray-950 flex items-center justify-center text-rose-500 shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">
-                                <UserCircle size={24} />
+                    <div key={student.id}>
+                        <div 
+                            onClick={() => onStudentClick?.(student)}
+                            className="flex items-center justify-between p-3 bg-rose-50 dark:bg-rose-900/10 border-2 border-gray-950 hover:bg-rose-100 transition-colors cursor-pointer"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 flex-shrink-0 bg-white dark:bg-gray-950 border-2 border-gray-950 flex items-center justify-center text-rose-500 shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">
+                                    <UserCircle size={24} />
+                                </div>
+                                <div className="min-w-0">
+                                    <h4 className="text-xs font-medium text-gray-900 dark:text-white truncate">{student.name}</h4>
+                                    <p className="text-[9px] font-normal text-rose-700 dark:text-rose-400 uppercase tracking-widest">{student.reason}</p>
+                                </div>
                             </div>
-                            <div className="min-w-0">
-                                <h4 className="text-xs font-medium text-gray-900 dark:text-white truncate">{student.name}</h4>
-                                <p className="text-[9px] font-normal text-rose-700 dark:text-rose-400 uppercase tracking-widest">{student.reason}</p>
-                            </div>
+                            
+                            <button
+                                onClick={(e) => { e.stopPropagation(); setAddingFor(addingFor === student.id ? null : student.id); setSubject(''); }}
+                                className="p-2 bg-gray-950 text-white hover:bg-emerald-600 transition-colors flex items-center gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] active:translate-y-0.5 active:shadow-none"
+                            >
+                                <Plus size={12} />
+                                <span className="text-[9px] font-medium uppercase">إضافة حصة</span>
+                            </button>
                         </div>
-                        
-                        <button className="p-2 bg-gray-950 text-white hover:bg-rose-600 transition-colors flex items-center gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] active:translate-y-0.5 active:shadow-none">
-                            <MessageSquare size={12} />
-                            <span className="text-[9px] font-medium uppercase">تحفيز</span>
-                        </button>
+
+                        {addingFor === student.id && (
+                            <div className="p-3 mt-2 bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-500">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <input
+                                        type="text"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                        placeholder="المادة (مثال: رياضيات)"
+                                        className="flex-1 px-2 py-1 text-[10px] border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded"
+                                        dir="rtl"
+                                    />
+                                    <button onClick={() => setAddingFor(null)} className="p-1 text-gray-400 hover:text-gray-600">
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                                <div className="flex gap-2">
+                                    {[1, 2, 4].map(num => (
+                                        <button
+                                            key={num}
+                                            onClick={() => {
+                                                for (let i = 0; i < num; i++) addSession(student.id, student.name);
+                                            }}
+                                            disabled={!subject.trim()}
+                                            className="flex-1 py-1.5 bg-emerald-600 text-white text-[10px] font-bold rounded hover:bg-emerald-700 transition-colors disabled:opacity-40"
+                                        >
+                                            +{num} {num === 1 ? 'حصة' : 'حصص'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
