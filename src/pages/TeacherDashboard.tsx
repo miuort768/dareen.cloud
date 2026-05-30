@@ -99,7 +99,7 @@ export const TeacherDashboard = () => {
                         isOpen={!!selectedStudentForReport}
                         onClose={() => setSelectedStudentForReport(null)}
                         student={selectedStudentForReport}
-                        onShare={(platform) => console.log('Sharing on', platform)}
+                        onShare={() => {}}
                     />
                 )}
                 </div>
@@ -286,7 +286,7 @@ export const TeacherDashboard = () => {
                         isOpen={!!selectedStudentForReport}
                         onClose={() => setSelectedStudentForReport(null)}
                         student={selectedStudentForReport}
-                        onShare={(platform) => console.log('Sharing on', platform)}
+                        onShare={() => {}}
                     />
                 )}
             </div>

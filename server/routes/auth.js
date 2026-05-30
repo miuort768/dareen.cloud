@@ -260,6 +260,27 @@ router.post('/verify', verifyLimiter, async (req, res) => {
 });
 
 /**
+ * POST /auth/refresh
+ * Re-issue token if current one is still valid (used on 401 to avoid forced logout)
+ */
+router.post('/refresh', async (req, res) => {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ error: 'Token is required' });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const newToken = jwt.sign(
+            { id: decoded.id, username: decoded.username, role: decoded.role, phone: decoded.phone, teacherName: decoded.teacherName, token_version: decoded.token_version, permissions: decoded.permissions },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        );
+        res.json({ token: newToken });
+    } catch {
+        res.status(401).json({ error: 'Token expired or invalid' });
+    }
+});
+
+/**
  * POST /auth/logout-all
  * Invalidate all active sessions for this user
  */

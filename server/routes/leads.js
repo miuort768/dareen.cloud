@@ -9,7 +9,7 @@ const { createLeadSchema, updateLeadSchema } = require('../utils/validators');
 
 const emitLeadUpdate = (req) => {
     const io = req.app.get('socketio');
-    if (io) io.emit('lead_updated');
+    if (io) io.to('admin_room').emit('lead_updated');
 };
 
 router.get('/', authMiddleware, async (req, res) => {

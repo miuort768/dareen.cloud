@@ -13,6 +13,7 @@ interface SEOProps {
     url?: string;
     preloadImages?: string[];
     breadcrumbs?: { name: string; item: string }[];
+    noindex?: boolean;
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -22,7 +23,8 @@ export const SEO: React.FC<SEOProps> = ({
     image = '/dareen_logo_new.jpg',
     url = 'https://dareen.cloud/',
     preloadImages = [],
-    breadcrumbs
+    breadcrumbs,
+    noindex = false
 }) => {
     const absUrl = url.startsWith('http') ? url : `${BASE}${url}`;
     const absImage = toAbs(image);
@@ -38,6 +40,7 @@ export const SEO: React.FC<SEOProps> = ({
             <meta name="title" content={fullTitle} />
             <meta name="description" content={siteDescription} />
             <meta name="keywords" content={siteKeywords} />
+            <meta name="author" content="دارين السابعة للتعليم والتدريب" />
             <link rel="icon" type="image/png" href="/icons/icon-48x48.png" />
 
             {/* Open Graph / Facebook */}
@@ -49,10 +52,12 @@ export const SEO: React.FC<SEOProps> = ({
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
             <meta property="og:locale" content="ar_AR" />
+            <meta property="og:locale:alternate" content="en_US" />
             <meta property="og:site_name" content="دارين السابعة" />
 
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:site" content="@dareen_academy" />
             <meta property="twitter:url" content={absUrl} />
             <meta property="twitter:title" content={fullTitle} />
             <meta property="twitter:description" content={siteDescription} />
@@ -73,6 +78,9 @@ export const SEO: React.FC<SEOProps> = ({
             <link rel="alternate" href={absUrl} hrefLang="ar-sa" />
             <link rel="alternate" href={absUrl} hrefLang="ar-kw" />
             <link rel="alternate" href={absUrl} hrefLang="ar-ae" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-qa" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-om" />
+            <link rel="alternate" href={absUrl} hrefLang="ar-bh" />
             <link rel="alternate" href={absUrl} hrefLang="x-default" />
 
             {/* Advanced Multi-Schema for Rich Snippets (Sitelinks, Star Ratings, FAQs, Courses) */}
@@ -113,13 +121,38 @@ export const SEO: React.FC<SEOProps> = ({
                         "logo": "https://dareen.cloud/logo.png",
                         "description": siteDescription,
                         "telephone": "+965XXXXXXXX",
+                        "email": "info@dareen.cloud",
                         "areaServed": ["Saudi Arabia", "Kuwait", "United Arab Emirates", "Qatar", "Oman", "Bahrain"],
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressRegion": "Kuwait",
+                            "addressCountry": "KW"
+                        },
+                        "openingHoursSpecification": [
+                            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"], "opens": "08:00", "closes": "20:00" },
+                            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "08:00", "closes": "16:00" }
+                        ],
+                        "sameAs": [
+                            "https://wa.me/965XXXXXXXX",
+                            "https://instagram.com/dareen.academy"
+                        ],
                         "aggregateRating": {
                             "@type": "AggregateRating",
                             "ratingValue": "4.9",
                             "bestRating": "5",
                             "ratingCount": "3450"
                         }
+                    },
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "HowTo",
+                        "name": "كيفية الاشتراك في دارين السابعة",
+                        "description": "ثلاث خطوات بسيطة للبدء في رحلتك التعليمية مع دارين السابعة",
+                        "step": [
+                            { "@type": "HowToStep", "position": 1, "name": "اختر الخدمة", "text": "حدد النظام التعليمي المناسب لابنك أو ابنتك من بين دوراتنا المتنوعة." },
+                            { "@type": "HowToStep", "position": 2, "name": "حصة مجانية", "text": "استمتع بحصة تجريبية مجانية للتعرف على أسلوب المعلمين والمنصة." },
+                            { "@type": "HowToStep", "position": 3, "name": "اشترك الآن", "text": "تواصل معنا عبر الواتساب لحجز المقعد والبدء في رحلة التعلم." }
+                        ]
                     },
                     {
                         "@context": "https://schema.org",
@@ -151,6 +184,30 @@ export const SEO: React.FC<SEOProps> = ({
                                     "@type": "Answer",
                                     "text": "نعم، نوفر نخبة من أفضل المعلمين والمدرسين الخصوصيين لتدريس المنهج الكويتي، السعودي، القطري، الإماراتي والعماني، وتجهيز الطلاب للاختبارات النهائية والقدرات."
                                 }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "كم تكلفة الدروس الخصوصية الأونلاين في دارين السابعة؟",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "نقدم حصة تجريبية مجانية للتعرف على المنصة والمعلمين. بعد ذلك، لدينا باقات مرنة تناسب جميع الاحتياجات بأسعار تنافسية. يمكنكم التواصل معنا عبر الواتساب للحصول على عرض سعر مخصص."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "هل تقدمون تحفيظ قرآن عن بعد للأطفال؟",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "نعم، لدينا برنامج متكامل لتحفيظ القرآن الكريم عن بعد للأطفال والكبار مع معلمين متخصصين في التجويد والتلاوة، مع متابعة مستمرة وتقارير دورية للأهل."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "ما هي المناهج الدراسية التي تغطيها منصة دارين السابعة؟",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "نغطي المناهج الكويتية والسعودية والقطرية والإماراتية والعمانية لجميع المراحل الدراسية. نقدم تأسيساً في اللغة العربية والرياضيات والعلوم واللغة الإنجليزية والمواد الشرعية، بالإضافة إلى دورات قدرات وتحصيلي."
+                                }
                             }
                         ]
                     }
@@ -175,6 +232,7 @@ export const SEO: React.FC<SEOProps> = ({
 
             {/* Canonical URL */}
             <link rel="canonical" href={absUrl} />
+            {noindex && <meta name="robots" content="noindex, follow" />}
         </Helmet>
     );
 };

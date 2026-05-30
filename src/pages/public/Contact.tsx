@@ -53,7 +53,7 @@ export const Contact = () => {
 
     return (
         <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
-            <SEO title="اتصل بنا | دارين السابعة للتعليم عن بعد" description="تواصل مع فريق دارين السابعة للاستفسار عن دوراتنا التعليمية، اشتراكات الطلاب، أو الدعم الفني. اتصل بنا عبر واتساب أو نموذج التواصل لدعم فوري." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" />
+            <SEO title="اتصل بنا | دارين السابعة للتعليم عن بعد" description="تواصل مع فريق دارين السابعة للاستفسار عن دوراتنا التعليمية، اشتراكات الطلاب، أو الدعم الفني. اتصل بنا عبر واتساب أو نموذج التواصل لدعم فوري." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
             <MobileHeader />
 
             <main className="flex-grow md:pt-28 pb-2 relative overflow-hidden">

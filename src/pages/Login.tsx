@@ -87,7 +87,7 @@ export const Login = () => {
 
     return (
         <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
-            <SEO title="تسجيل الدخول | دارين السابعة - منصة تعليم عن بعد" description="تسجيل دخول الطلاب، المعلمين، وأولياء الأمور إلى منصة دارين السابعة للتعليم عن بعد. متابعة الحصص، الجدول الدراسي، والنتائج من مكان واحد." url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" />
+            <SEO title="تسجيل الدخول | دارين السابعة - منصة تعليم عن بعد" description="تسجيل دخول الطلاب، المعلمين، وأولياء الأمور إلى منصة دارين السابعة للتعليم عن بعد. متابعة الحصص، الجدول الدراسي، والنتائج من مكان واحد." url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" noindex />
 
             {/* Static Background Layer */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[rgb(var(--bg-surface))]">

@@ -12,6 +12,7 @@ export const PrivacyPolicy = () => {
                 title="سياسة الخصوصية والأمان | دارين السابعة"
                 description="سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد. نضمن حماية بيانات الطلاب وأولياء الأمور والمعلمين وفق أعلى معايير الأمان والخصوصية."
                 url="https://dareen.cloud/privacy-policy"
+                breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'سياسة الخصوصية', item: '/privacy-policy' }]}
             />
             <MobileHeader />
 

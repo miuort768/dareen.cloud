@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map(i => (
                                         <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden shadow-sm">
-                                            <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt={`صورة طالب ${i}`} width="40" height="40" />
+                                            <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="40" height="40" />
                                         </div>
                                     ))}
                                     <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300 shadow-sm">+5k</div>
@@ -163,8 +163,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
                                 </svg>
                             </span>
-                        </h2>
-                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] dark:text-white font-heading mt-0.5">
+                            <br />
                             تبدأ بخطوة
                         </h2>
                     </div>

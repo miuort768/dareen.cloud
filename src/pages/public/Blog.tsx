@@ -234,9 +234,9 @@ export const Blog = () => {
             <div className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl overflow-hidden mb-6 shadow-sm border border-violet-100/50 dark:border-slate-800">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
+                  <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
                     برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
-                  </h2>
+                  </p>
                   <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">دروس خصوصية أونلاين</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">

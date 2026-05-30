@@ -18,7 +18,9 @@ class SocketService {
                 autoConnect: true,
                 auth: { token: token || 'guest' },
                 reconnection: true,
-                reconnectionAttempts: Infinity,
+                reconnectionAttempts: 5,
+                reconnectionDelay: 1000,
+                reconnectionDelayMax: 10000,
                 timeout: 30000
             });
 
@@ -32,6 +34,12 @@ class SocketService {
             });
 
             this.socket.on('connect_error', (err) => {
+                if (err.message === 'Authentication error') {
+                    this.socket?.disconnect();
+                    this.socket = null;
+                    console.error('❌ Socket auth failed, stopping reconnection');
+                    return;
+                }
                 console.error('❌ Socket connection error:', err.message);
             });
         } else {

@@ -121,7 +121,7 @@ export const Home = () => {
 
   return (
     <div className="min-h-full bg-[#F8F8FC] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-500">
-      <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" />
+      <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" keywords="دارين السابعة, تعليم عن بعد, منصة تعليمية, دروس خصوصية الكويت, مدرس خصوصي كورسات السعودية, تحفيظ قرآن, مناهج خليجية, تأسيس أطفال, مراجعات نهائية, قدرات تحصيلي, اونلاين" breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <MobileHeader />
 
@@ -134,7 +134,7 @@ export const Home = () => {
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                   <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h2>
+                   <h1 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h1>
                   <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-0.5">{slide.subtitle}</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
@@ -195,7 +195,7 @@ export const Home = () => {
         {/* Latest Courses */}
         <section className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-[15px] font-black text-slate-900 dark:text-white">أحدث الدورات</h3>
+            <h2 className="text-[15px] font-black text-slate-900 dark:text-white">أحدث الدورات</h2>
             <Link to="/courses" className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
               عرض الكل
               <ChevronLeft className="w-3.5 h-3.5" />
@@ -252,7 +252,7 @@ export const Home = () => {
                   </span>
                 </div>
                 <div className="p-3">
-                  <h4 className="text-[12px] font-black text-slate-900 dark:text-white mb-0.5">{c.title}</h4>
+                  <h3 className="text-[12px] font-black text-slate-900 dark:text-white mb-0.5">{c.title}</h3>
                   <p className="text-[9px] text-slate-400 font-medium mb-2 line-clamp-1 dark:text-slate-400">{c.desc}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">

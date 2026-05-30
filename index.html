@@ -7,7 +7,8 @@
 
   <!-- PWA Core -->
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
   <meta name="description" content="دارين السابعة منصة تعليم عن بعد رائدة في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية." />
   <meta name="google-site-verification" content="mytUHbLksst_mleQcjvYFbEh_iLkvHiWuMq7SH6xnOA" />
 
@@ -51,42 +52,30 @@
   <meta name="application-name" content="دارين السابعة" />
   <meta name="format-detection" content="telephone=no" />
 
-  <!-- ✅ Open Graph (for sharing) -->
-  <meta property="og:title" content="دارين السابعة" />
-  <meta property="og:description" content="نظام إدارة شامل لمنصة دارين السابعة للتعليم والتدريب" />
-  <meta property="og:image" content="/dareen_logo_new.jpg" />
-  <meta property="og:type" content="website" />
-
   <title>دارين السابعة للتعليم والتدريب</title>
 </head>
 
 <body>
-  <!-- ⚡ PWA Cache Buster: Visit URL with ?clear=1 to force update all static assets -->
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+
+  <!-- ⚡ PWA Cache Buster (deferred - non-blocking) -->
   <script>
     if (window.location.search.includes('clear=1')) {
-      console.log('Force clearing PWA caches and service workers...');
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for (let registration of registrations) {
-            registration.unregister();
-          }
+          for (let registration of registrations) { registration.unregister(); }
         });
       }
       if ('caches' in window) {
         caches.keys().then(function(names) {
-          for (let name of names) {
-            caches.delete(name);
-          }
+          for (let name of names) { caches.delete(name); }
         });
       }
-      const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      setTimeout(function() {
-        window.location.href = cleanUrl;
-      }, 500);
+      var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      setTimeout(function() { window.location.href = cleanUrl; }, 500);
     }
   </script>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>

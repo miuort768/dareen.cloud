@@ -75,7 +75,7 @@ export const Courses = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
-      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية. تأسيس لغة عربية، تحفيظ قرآن، مراجعات نهائية، وقدرات. دروس خصوصية مع نخبة المعلمين في الخليج." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" />
+      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية. تأسيس لغة عربية، تحفيظ قرآن، مراجعات نهائية، وقدرات. دروس خصوصية مع نخبة المعلمين في الخليج." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 
@@ -196,9 +196,9 @@ export const Courses = () => {
                   </div>
 
                   <div className="p-4 pb-0 flex flex-col flex-1">
-                    <h3 className="text-lg md:text-xl font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h2 className="text-lg md:text-xl font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       {course.title}
-                    </h3>
+                    </h2>
 
                     <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mt-2 mb-4">
                       {course.desc}
@@ -243,7 +243,7 @@ export const Courses = () => {
               <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
                 <Search size={28} className="text-slate-300 dark:text-slate-600" />
               </div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 mb-1">لا توجد نتائج</h3>
+              <h2 className="text-xl font-black text-slate-900 dark:text-slate-100 mb-1">لا توجد نتائج</h2>
               <p className="text-sm text-slate-400 dark:text-slate-500 font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
             </motion.div>
           )}

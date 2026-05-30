@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { api } from '../lib/api';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -31,20 +31,26 @@ export const AdminJobs = () => {
     const [search, setSearch] = useState('');
     const [subjectFilter, setSubjectFilter] = useState('');
     const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+    const mountedRef = useRef(true);
 
-    const fetchApps = async () => {
-        try {
-            setLoading(true);
-            const data = await api.get<JobApp[]>('/jobs');
-            setApps(data.map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })));
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => { fetchApps(); }, []);
+    useEffect(() => {
+        mountedRef.current = true;
+        const fetchApps = async () => {
+            if (!mountedRef.current) return;
+            try {
+                setLoading(true);
+                const data = await api.get<JobApp[]>('/jobs');
+                if (!mountedRef.current) return;
+                setApps(data.map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })));
+            } catch (err) {
+                console.error(err);
+            } finally {
+                if (mountedRef.current) setLoading(false);
+            }
+        };
+        fetchApps();
+        return () => { mountedRef.current = false; };
+    }, []);
 
     const handleDelete = async (id: string) => {
         try {

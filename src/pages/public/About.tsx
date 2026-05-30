@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
-            <SEO title="من نحن | دارين السابعة - منصة تعليمية رائدة في الخليج" description="منصة تعليمية خليجية رائدة. تعرف على مهمتنا في تقديم تعليم عن بعد متميز للطلاب في الكويت والسعودية وقطر والإمارات وعمان بأفضل المعلمين والتقنيات الحديثة." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" />
+            <SEO title="من نحن | دارين السابعة - منصة تعليمية رائدة في الخليج" description="منصة تعليمية خليجية رائدة. تعرف على مهمتنا في تقديم تعليم عن بعد متميز للطلاب في الكويت والسعودية وقطر والإمارات وعمان بأفضل المعلمين والتقنيات الحديثة." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'من نحن', item: '/about' }]} />
             <MobileHeader />
 
             {/* Hero Section */}
@@ -77,7 +77,7 @@ export const About = () => {
                                         </div>
                                         <div className="h-48 bg-amber-500 rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
                                             <Sparkles size={24} className="mb-4 text-white/90" />
-                                            <h4 className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">إبداع مستمر</h4>
+                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">إبداع مستمر</p>
                                         </div>
                                     </div>
                                     <div className="space-y-4">
@@ -112,7 +112,7 @@ export const About = () => {
                                         <Zap size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-black text-gray-900 dark:text-white mb-1">رؤية الابتكار</h4>
+                                        <h3 className="text-lg font-black text-gray-900 dark:text-white mb-1">رؤية الابتكار</h3>
                                         <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@ export const About = () => {
                                         <BookOpen size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-black text-gray-900 dark:text-white mb-1">رسالة التمكين</h4>
+                                        <h3 className="text-lg font-black text-gray-900 dark:text-white mb-1">رسالة التمكين</h3>
                                         <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">تقديم تجربة تعليمية قيميّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
                                     </div>
                                 </div>

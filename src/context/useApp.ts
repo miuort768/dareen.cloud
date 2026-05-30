@@ -1,7 +1,6 @@
 import { useAuthStore } from '../store/authStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useUIStore } from '../store/uiStore';
-import { useUserStore } from '../store/userStore';
 import type { User } from '../types/auth';
 
 /** @deprecated Use individual hooks (useCurrentUser, useSidebarCollapsed, etc.) for better re-render performance */
@@ -67,13 +66,6 @@ export const useSetTelegramHandle = () => useSettingsStore(s => s.setTelegramHan
 export const useSetHeroBanners = () => useSettingsStore(s => s.setHeroBanners);
 export const useSetReminderMinutesBefore = () => useSettingsStore(s => s.setReminderMinutesBefore);
 
-export const useUsers = () => useUserStore(s => s.users);
-export const useAddUser = () => useUserStore(s => s.addUser);
-export const useEditUser = () => useUserStore(s => s.editUser);
-export const useDeleteUser = () => useUserStore(s => s.deleteUser);
-export const useRefreshUsers = () => useUserStore(s => s.fetchUsers);
-export const useIsUsersLoading = () => useUserStore(s => s.isLoading);
-
 /** @deprecated Use individual hooks (useCurrentUser, useSidebarCollapsed, etc.) for better re-render performance */
 export function useApp() {
     const currentUser = useAuthStore(s => s.currentUser);
@@ -90,7 +82,6 @@ export function useApp() {
     const setSidebarCollapsed = useUIStore(s => s.setSidebarCollapsed);
 
     const settings = useSettingsStore();
-    const users = useUserStore();
 
     return {
         toasts, showNotification, requestDesktopNotifications,
@@ -145,11 +136,5 @@ export function useApp() {
         setTelegramHandle: settings.setTelegramHandle,
         setHeroBanners: settings.setHeroBanners,
         setReminderMinutesBefore: settings.setReminderMinutesBefore,
-        users: users.users,
-        addUser: users.addUser,
-        editUser: users.editUser,
-        deleteUser: users.deleteUser,
-        refreshUsers: users.fetchUsers,
-        isUsersLoading: users.isLoading,
     };
 }

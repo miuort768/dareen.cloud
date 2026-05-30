@@ -6,6 +6,7 @@ type FetchOptions = RequestInit & {
 
 class ApiClient {
     private baseUrl: string;
+    private refreshing: Promise<boolean> | null = null;
     constructor() {
         this.baseUrl = API_BASE_URL;
     }
@@ -13,6 +14,27 @@ class ApiClient {
     private getAuthHeader(): Record<string, string> {
         const token = localStorage.getItem('auth_token');
         return token ? { 'Authorization': `Bearer ${token}` } : {};
+    }
+
+    private async refreshToken(): Promise<boolean> {
+        const token = localStorage.getItem('auth_token');
+        if (!token) return false;
+        try {
+            const res = await fetch(`${this.baseUrl}/auth/refresh`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+            if (!res.ok) return false;
+            const data = await res.json();
+            if (data.token) {
+                localStorage.setItem('auth_token', data.token);
+                return true;
+            }
+            return false;
+        } catch {
+            return false;
+        }
     }
 
     private async fetchWithProgress(input: string, init?: RequestInit, timeout = 15000): Promise<Response> {
@@ -25,18 +47,37 @@ class ApiClient {
 
         try {
             return await fetch(input, combinedInit);
+        } catch (err) {
+            if (err instanceof DOMException && err.name === 'AbortError') {
+                throw new Error('انتهت مهلة الطلب، يرجى المحاولة مرة أخرى');
+            }
+            throw err;
         } finally {
             clearTimeout(timer);
         }
     }
 
-    private async handleResponse<T>(response: Response): Promise<T> {
-        if (response.status === 401) {
+    private async handleResponse<T>(response: Response, url?: string, init?: RequestInit): Promise<T> {
+        if (response.status === 401 && url && url !== `${this.baseUrl}/auth/refresh`) {
+            if (!this.refreshing) {
+                this.refreshing = this.refreshToken();
+            }
+            const refreshed = await this.refreshing;
+            this.refreshing = null;
+
+            if (refreshed) {
+                const retryHeaders = { ...init?.headers as Record<string, string>, ...this.getAuthHeader() };
+                const retryRes = await this.fetchWithProgress(url, { ...init, headers: retryHeaders });
+                if (retryRes.ok) {
+                    const text = await retryRes.text();
+                    return text ? JSON.parse(text) : {} as T;
+                }
+            }
+
             localStorage.removeItem('auth_token');
             localStorage.removeItem('app_isAuthenticated');
             localStorage.removeItem('app_current_user');
             
-            // Fire global logout event to sync tabs and Zustand stores
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new Event('auth_logout'));
             }
@@ -47,15 +88,22 @@ class ApiClient {
         if (!response.ok) {
             let errorMessage = 'حدث خطأ ما في الاتصال بالسيرفر';
             try {
-                const error = await response.json();
-                errorMessage = error.error || error.message || errorMessage;
+                const text = await response.text();
+                try {
+                    const error = JSON.parse(text);
+                    errorMessage = error.error || error.message || errorMessage;
+                } catch {
+                    errorMessage = text || response.statusText || errorMessage;
+                }
             } catch {
                 errorMessage = response.statusText || errorMessage;
             }
             throw new Error(errorMessage);
         }
 
-        return response.json();
+        const text = await response.text();
+        if (!text) return {} as T;
+        return JSON.parse(text);
     }
 
     private buildUrl(url: string, params?: Record<string, string>): string {
@@ -70,20 +118,21 @@ class ApiClient {
 
     public async get<T>(url: string, options: FetchOptions = {}): Promise<T> {
         const fullUrl = this.buildUrl(url, options.params);
-        const response = await this.fetchWithProgress(fullUrl, {
+        const init = {
             ...options,
             method: 'GET',
             headers: {
                 ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
-        });
-        return this.handleResponse<T>(response);
+        };
+        const response = await this.fetchWithProgress(fullUrl, init);
+        return this.handleResponse<T>(response, fullUrl, init);
     }
 
     public async post<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = this.buildUrl(url, options.params);
-        const response = await this.fetchWithProgress(fullUrl, {
+        const init = {
             ...options,
             method: 'POST',
             headers: {
@@ -92,13 +141,14 @@ class ApiClient {
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
-        });
-        return this.handleResponse<T>(response);
+        };
+        const response = await this.fetchWithProgress(fullUrl, init);
+        return this.handleResponse<T>(response, fullUrl, init);
     }
 
     public async put<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = this.buildUrl(url, options.params);
-        const response = await this.fetchWithProgress(fullUrl, {
+        const init = {
             ...options,
             method: 'PUT',
             headers: {
@@ -107,13 +157,14 @@ class ApiClient {
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
-        });
-        return this.handleResponse<T>(response);
+        };
+        const response = await this.fetchWithProgress(fullUrl, init);
+        return this.handleResponse<T>(response, fullUrl, init);
     }
 
     public async patch<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = this.buildUrl(url, options.params);
-        const response = await this.fetchWithProgress(fullUrl, {
+        const init = {
             ...options,
             method: 'PATCH',
             headers: {
@@ -122,21 +173,23 @@ class ApiClient {
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
-        });
-        return this.handleResponse<T>(response);
+        };
+        const response = await this.fetchWithProgress(fullUrl, init);
+        return this.handleResponse<T>(response, fullUrl, init);
     }
 
     public async delete<T>(url: string, options: FetchOptions = {}): Promise<T> {
         const fullUrl = this.buildUrl(url, options.params);
-        const response = await this.fetchWithProgress(fullUrl, {
+        const init = {
             ...options,
             method: 'DELETE',
             headers: {
                 ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
-        });
-        return this.handleResponse<T>(response);
+        };
+        const response = await this.fetchWithProgress(fullUrl, init);
+        return this.handleResponse<T>(response, fullUrl, init);
     }
 }
 

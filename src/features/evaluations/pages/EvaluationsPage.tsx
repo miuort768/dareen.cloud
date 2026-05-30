@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { User } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { useCurrentUser } from '../../../context/AppContext';
@@ -13,41 +13,38 @@ export const Evaluations = () => {
     const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [historyModalStudent, setHistoryModalStudent] = useState<Student | null>(null);
-
-    const [formData, setFormData] = useState({
-        studentId: '', rating: 'ممتاز', points: 0, notes: ''
-    });
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
+    const mountedRef = useRef(true);
 
     const fetchData = useCallback(async () => {
+        if (!mountedRef.current) return;
         try {
             setIsLoading(true);
             if (currentUser?.role === 'parent') {
                 const myChildren = await api.get<Student[]>('/parents/my-children');
+                if (!mountedRef.current) return;
                 setStudents(myChildren);
                 const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`));
                 const allEvalsResults = await Promise.all(evalsPromises);
+                if (!mountedRef.current) return;
                 setEvaluations(allEvalsResults.flat());
             } else {
                 const studentsRes = await api.get<Student[]>('/students');
+                if (!mountedRef.current) return;
                 setStudents(studentsRes);
                 let evalsUrl = '/evaluations';
                 if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
                 const evalsRes = await api.get<Evaluation[]>(evalsUrl);
+                if (!mountedRef.current) return;
                 setEvaluations(evalsRes);
             }
         } catch (error) {
             console.error('Error fetching evaluations:', error);
         } finally {
-            setIsLoading(false);
+            if (mountedRef.current) setIsLoading(false);
         }
     }, [currentUser]);
 
-    useEffect(() => { fetchData(); }, [currentUser, fetchData]);
+    useEffect(() => { mountedRef.current = true; fetchData(); return () => { mountedRef.current = false; }; }, [currentUser, fetchData]);
 
     const teacherStudents = useMemo(() => {
         if (!currentUser) return [];

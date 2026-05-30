@@ -87,23 +87,37 @@ app.use(cors({
     credentials: true
 }));
 
+// WWW → non-www canonical redirect
+app.use((req, res, next) => {
+    const host = req.headers.host;
+    if (host && host.startsWith('www.')) {
+        return res.redirect(301, `https://${host.slice(4)}${req.url}`);
+    }
+    next();
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Automated SEO Sitemap Generator
-app.get('/sitemap.xml', (req, res) => {
+// Automated SEO Sitemap Generator — includes blog posts from DB
+app.get('/sitemap.xml', async (req, res) => {
     try {
         const baseUrl = 'https://dareen.cloud';
         const date = new Date().toISOString().split('T')[0];
         
-        // Dynamic public routes
         const routes = [
             { url: '/', priority: '1.0', changefreq: 'daily' },
             { url: '/courses', priority: '0.9', changefreq: 'weekly' },
             { url: '/about', priority: '0.8', changefreq: 'monthly' },
             { url: '/contact', priority: '0.8', changefreq: 'monthly' },
+            { url: '/books', priority: '0.9', changefreq: 'weekly' },
+            { url: '/jobs', priority: '0.5', changefreq: 'weekly' },
+            { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
+            { url: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
+            { url: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
+            { url: '/terms-of-work', priority: '0.3', changefreq: 'yearly' },
             { url: '/login', priority: '0.5', changefreq: 'monthly' }
         ];
 
@@ -118,6 +132,23 @@ app.get('/sitemap.xml', (req, res) => {
             xml += `    <priority>${route.priority}</priority>\n`;
             xml += '  </url>\n';
         });
+
+        // Add blog posts from DB
+        try {
+            const db = await getDb();
+            const posts = await db.all('SELECT slug, updated_at FROM blog_posts WHERE status = ? OR status IS NULL', ['published']);
+            posts.forEach((post) => {
+                const postDate = post.updated_at ? post.updated_at.split('T')[0] : date;
+                xml += '  <url>\n';
+                xml += `    <loc>${baseUrl}/books/${post.slug}</loc>\n`;
+                xml += `    <lastmod>${postDate}</lastmod>\n`;
+                xml += '    <changefreq>monthly</changefreq>\n';
+                xml += '    <priority>0.7</priority>\n';
+                xml += '  </url>\n';
+            });
+        } catch (dbErr) {
+            console.warn('Could not fetch blog posts for sitemap:', dbErr.message);
+        }
         
         xml += '</urlset>';
 
@@ -137,6 +168,12 @@ Allow: /
 Disallow: /dashboard
 Disallow: /admin
 Disallow: /login
+Disallow: /api/
+Disallow: /chat
+Disallow: /settings
+Disallow: /teacher/
+Disallow: /profile
+Disallow: /classroom
 
 Sitemap: https://dareen.cloud/sitemap.xml
 `);
@@ -327,9 +364,14 @@ async function startServer() {
             });
         });
 
-        // The "catchall" handler
+        // The SPA catch-all handler: serve index.html for all non-asset routes
+        // so React Router handles routing. Use 404 status for unknown paths to
+        // signal to search engines that the page doesn't exist.
+        const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs']);
         app.get(/(.*)/, (req, res) => {
-            res.sendFile(path.join(__dirname, '../dist/index.html'));
+            const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');
+            const status = isKnown ? 200 : 404;
+            res.status(status).sendFile(path.join(__dirname, '../dist/index.html'));
         });
 
         const http = require('http');
@@ -355,7 +397,7 @@ async function startServer() {
                         );
                     }
                     const filtered = allowedOrigins.filter(Boolean);
-                    if (!origin || filtered.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
+                    if (!origin || filtered.indexOf(origin) !== -1) {
                         callback(null, true);
                     } else {
                         callback(new Error('Not allowed by CORS'));
@@ -402,9 +444,11 @@ async function startServer() {
             if (userId) {
                 const userRoom = `user_${userId}`;
                 socket.join(userRoom);
+                if (user?.role === 'admin' || user?.permissions?.includes('*')) {
+                    socket.join('admin_room');
+                }
                 console.log(`   ✅ Joined Personal Room: ${userRoom}`);
 
-                // PERSISTENCE: If student reconnects, check if there's an active session for them
                 if (user?.role === 'student' || user?.role === 'user') {
                     const activeSession = activeSessions.get(String(userId));
                     if (activeSession) {
@@ -414,9 +458,23 @@ async function startServer() {
                 }
             }
 
-            socket.on('join_conversation', (conversationId) => {
-                socket.join(conversationId);
-                console.log(`   👥 User ${userId} joined room: ${conversationId}`);
+            socket.on('join_conversation', async (conversationId) => {
+                if (!conversationId || !userId) return;
+                try {
+                    const db = await getDb();
+                    const member = await db.get(
+                        'SELECT 1 FROM chat_members WHERE conversationId = ? AND userId = ?',
+                        [conversationId, userId]
+                    );
+                    if (member || user?.role === 'admin') {
+                        socket.join(conversationId);
+                        console.log(`   👥 User ${userId} joined room: ${conversationId}`);
+                    } else {
+                        console.log(`   ⛔ User ${userId} denied join to room: ${conversationId}`);
+                    }
+                } catch (err) {
+                    console.error(`   ❌ Error verifying conversation membership:`, err);
+                }
             });
 
             socket.on('leave_conversation', (conversationId) => {
@@ -434,20 +492,36 @@ async function startServer() {
                 }
             });
 
+            const typingThrottle = new Map();
             socket.on('typing', (data) => {
+                if (!data?.conversationId || !userId) return;
+                const key = `${userId}:${data.conversationId}`;
+                const now = Date.now();
+                const last = typingThrottle.get(key);
+                if (last && now - last < 2000) return;
+                typingThrottle.set(key, now);
                 socket.to(data.conversationId).emit('typing', data);
             });
 
             // Collaborative Whiteboard events
+            const drawingThrottle = new Map();
             socket.on('drawing', (data) => {
+                if (!data?.conversationId || !userId) return;
+                const key = `${userId}:${data.conversationId}`;
+                const now = Date.now();
+                const last = drawingThrottle.get(key);
+                if (last && now - last < 200) return;
+                drawingThrottle.set(key, now);
                 socket.to(data.conversationId).emit('drawing', data);
             });
 
             socket.on('whiteboard_state', (data) => {
+                if (!data?.conversationId || !userId) return;
                 socket.to(data.conversationId).emit('whiteboard_state', data);
             });
 
             socket.on('clear_whiteboard', (data) => {
+                if (!data?.conversationId || !userId) return;
                 socket.to(data.conversationId).emit('clear_whiteboard', data);
             });
 
@@ -472,17 +546,20 @@ async function startServer() {
                     const sessionId = data.conversationId?.replace(/^live_session_/, '');
                     if (sessionId) {
                         const db = await getDb();
-                        await db.run(
+                        const result = await db.run(
                             'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
                             [sessionId, userId]
                         );
+                        if (result.changes === 0) {
+                            console.log(`   ⚠️ No live session found to end: ${sessionId}`);
+                        }
                     }
+                    socket.to(data.conversationId).emit('teacher_stopped', data);
+                    io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
+                    console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
                 } catch (err) {
                     console.error('[Live] Failed to end session in DB:', err);
                 }
-                socket.to(data.conversationId).emit('teacher_stopped', data);
-                io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
-                console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
             });
 
 
@@ -509,56 +586,66 @@ async function startServer() {
                 if (!isTeacherOrAdmin) return;
                 const studentIdStr = String(data.studentId);
                 const targetRoom = `user_${studentIdStr}`;
-                
-                const sessionData = {
-                    teacherId: user.id,
-                    teacherName: user.name,
-                    teacherSocketId: socket.id, 
-                    subject: data.subject,
-                    type: data.type || 'video',
-                    sessionId: data.sessionId,
-                    timestamp: new Date().toISOString()
-                };
 
-                activeSessions.set(studentIdStr, sessionData);
-                // Auto-expire session invite after 5 minutes
-                setTimeout(() => {
-                    if (activeSessions.get(studentIdStr)?.teacherSocketId === socket.id) {
-                        activeSessions.delete(studentIdStr);
-                    }
-                }, 300000);
-                io.to(targetRoom).emit('session_invite', sessionData);
-
-                // --- 🔔 Also create a persistent database notification ---
                 try {
                     const db = await getDb();
-                    
-                    // Create notification for student
-                    const studentNotifId = uuidv4();
-                    const msg = `بدأت المعلمة ${user.name} حصة ${data.subject} الآن. يمكنك الانضمام مباشرة!`;
-                    
-                    await db.run(
-                        `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [studentNotifId, user.id, studentIdStr, user.name, 'حصة مباشرة بدأت!', msg, 'live', new Date().toISOString(), 0, '/student-dashboard']
-                    );
-                    io.to(targetRoom).emit('notification', { id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', time: new Date().toISOString() });
+                    const student = await db.get('SELECT id, parentPhone FROM students WHERE id = ?', [studentIdStr]);
+                    if (!student) {
+                        console.log(`   ⛔ call_student: Student ${studentIdStr} not found`);
+                        socket.emit('error_message', { message: 'الطالب غير موجود في النظام' });
+                        return;
+                    }
 
-                    // Find Parent and create notification for them too
-                    const student = await db.get('SELECT parentPhone FROM students WHERE id = ?', [studentIdStr]);
-                    if (student && student.parentPhone) {
-                        const parent = await db.get('SELECT id FROM users WHERE phone = ? AND role = ?', [student.parentPhone, 'parent']);
-                        if (parent) {
-                            const parentNotifId = uuidv4();
-                            const parentMsg = `بدأت الحصة المباشرة لابنكم/ابنتكم في مادة ${data.subject} مع المعلمة ${user.name}.`;
-                            await db.run(
-                                `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                                [parentNotifId, user.id, parent.id, user.name, 'تنبيه حصة مباشرة لابنكم', parentMsg, 'live', new Date().toISOString(), 0, '/parent-dashboard']
-                            );
-                            io.to(`user_${parent.id}`).emit('notification', { id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', time: new Date().toISOString() });
+                    const sessionData = {
+                        teacherId: user.id,
+                        teacherName: user.name,
+                        teacherSocketId: socket.id, 
+                        subject: data.subject,
+                        type: data.type || 'video',
+                        sessionId: data.sessionId,
+                        timestamp: new Date().toISOString()
+                    };
+
+                    activeSessions.set(studentIdStr, sessionData);
+                    // Auto-expire session invite after 5 minutes
+                    const timeoutId = setTimeout(() => {
+                        if (activeSessions.get(studentIdStr)?.teacherSocketId === socket.id) {
+                            activeSessions.delete(studentIdStr);
                         }
+                    }, 300000);
+                    sessionData._timeoutId = timeoutId;
+                    io.to(targetRoom).emit('session_invite', sessionData);
+
+                    // --- 🔔 Also create a persistent database notification ---
+                    try {
+                        // Create notification for student
+                        const studentNotifId = uuidv4();
+                        const msg = `بدأت المعلمة ${user.name} حصة ${data.subject} الآن. يمكنك الانضمام مباشرة!`;
+                        
+                        await db.run(
+                            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                            [studentNotifId, user.id, studentIdStr, user.name, 'حصة مباشرة بدأت!', msg, 'live', new Date().toISOString(), 0, '/student-dashboard']
+                        );
+                        io.to(targetRoom).emit('notification', { id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', time: new Date().toISOString() });
+
+                        // Find Parent and create notification for them too
+                        if (student.parentPhone) {
+                            const parent = await db.get('SELECT id FROM users WHERE phone = ? AND role = ?', [student.parentPhone, 'parent']);
+                            if (parent) {
+                                const parentNotifId = uuidv4();
+                                const parentMsg = `بدأت الحصة المباشرة لابنكم/ابنتكم في مادة ${data.subject} مع المعلمة ${user.name}.`;
+                                await db.run(
+                                    `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                    [parentNotifId, user.id, parent.id, user.name, 'تنبيه حصة مباشرة لابنكم', parentMsg, 'live', new Date().toISOString(), 0, '/parent-dashboard']
+                                );
+                                io.to(`user_${parent.id}`).emit('notification', { id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', time: new Date().toISOString() });
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Error creating live session notifications:', err);
                     }
                 } catch (err) {
-                    console.error('Error creating live session notifications:', err);
+                    console.error('Error in call_student:', err);
                 }
             });
 
@@ -574,10 +661,10 @@ async function startServer() {
 
             socket.on('disconnect', () => {
                 console.log(`🔌 Socket Disconnected: ${socket.id}`);
-                // Cleanup: Find any sessions this socket was hosting
                 activeSessions.forEach((session, studentId) => {
                     if (session.teacherSocketId === socket.id) {
                         console.log(`   🧹 Cleaning up abandoned session for student ${studentId}`);
+                        if (session._timeoutId) clearTimeout(session._timeoutId);
                         activeSessions.delete(studentId);
                         io.to(`user_${studentId}`).emit('session_ended', { teacherId: user.id });
                     }

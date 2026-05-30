@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
     Calendar, Clock, Search, User, GraduationCap, 
     BookOpen, Filter, X, CheckCircle2,
@@ -60,24 +60,30 @@ export const Appointments = () => {
     const [showDetails, setShowDetails] = useState(false);
     const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
+    const mountedRef = useRef(true);
 
     useEffect(() => {
+        mountedRef.current = true;
         const checkAndReset = async () => {
             try {
                 if (currentUser?.role === 'admin') {
                     const settings = await api.get<Record<string, unknown>>('/system/settings');
+                    if (!mountedRef.current) return;
                     const lastResetDate = settings?.last_appointment_reset;
                     const todayStr = new Date().toDateString();
                     if (lastResetDate !== todayStr) {
                         await api.delete('/appointments/completed-sessions/reset');
+                        if (!mountedRef.current) return;
                         setCompletedSessionIds([]);
                         await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
                     } else {
                         const sessions = await api.get<string[]>('/appointments/completed-sessions');
+                        if (!mountedRef.current) return;
                         setCompletedSessionIds(sessions || []);
                     }
                 } else {
                     const sessions = await api.get<string[]>('/appointments/completed-sessions');
+                    if (!mountedRef.current) return;
                     setCompletedSessionIds(sessions || []);
                 }
             } catch (error) {
@@ -85,6 +91,7 @@ export const Appointments = () => {
             }
         };
         checkAndReset();
+        return () => { mountedRef.current = false; };
     }, [currentUser]);
 
     const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
@@ -97,19 +104,24 @@ export const Appointments = () => {
         }
     };
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const data = await api.get<Record<string, unknown>[]>('/students');
-            setStudents(Array.isArray(data) ? data : (data.data || []));
-        } catch (error) {
-            console.error("Error fetching data", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => {
+        mountedRef.current = true;
+        const fetchData = async () => {
+            if (!mountedRef.current) return;
+            setLoading(true);
+            try {
+                const data = await api.get<Record<string, unknown>[]>('/students');
+                if (!mountedRef.current) return;
+                setStudents(Array.isArray(data) ? data : (data.data || []));
+            } catch (error) {
+                console.error("Error fetching data", error);
+            } finally {
+                if (mountedRef.current) setLoading(false);
+            }
+        };
+        fetchData();
+        return () => { mountedRef.current = false; };
+    }, []);
 
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>
