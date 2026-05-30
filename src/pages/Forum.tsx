@@ -6,6 +6,7 @@ import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
+import { confirm } from '../lib/confirmDialog';
 
 interface Comment {
     id: string;
@@ -158,7 +159,7 @@ export const Forum = () => {
     };
 
     const handleDeletePost = async (postId: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا المنشور؟')) return;
+        if (!await confirm('هل أنت متأكد من حذف هذا المنشور؟')) return;
         try {
             await api.delete(`/forum/${postId}`);
             showNotification('تم حذف المنشور', 'success');
@@ -199,7 +200,7 @@ export const Forum = () => {
     };
     
     const handleDeleteComment = async (postId: string, commentId: string) => {
-        if(!window.confirm('هل أنت متأكد من حذف هذا التعليق؟')) return;
+        if(!await confirm('هل أنت متأكد من حذف هذا التعليق؟')) return;
         try {
             await api.delete(`/forum/comments/${commentId}`);
             showNotification('تم حذف التعليق', 'success');

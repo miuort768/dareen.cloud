@@ -14,6 +14,7 @@ import {
 import { api } from '../lib/api';
 import { useShowNotification } from '../context/AppContext';
 import { cn } from '../lib/utils';
+import { confirm } from '../lib/confirmDialog';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
@@ -91,7 +92,7 @@ export const Announcements = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
+        if (!await confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
         try {
             await api.delete(`/announcements/${id}`);
             showNotification('تم حذف الإعلان', 'success');

@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
+import { confirm } from '../lib/confirmDialog';
 import { PageLoader } from '../components/ui/PageLoader';
 
 interface Task {
@@ -93,7 +94,7 @@ export const Tasks = () => {
     };
 
     const deleteTask = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذه المهمة؟')) return;
+        if (!await confirm('هل أنت متأكد من حذف هذه المهمة؟')) return;
         try {
             await api.delete(`/tasks/${id}`);
             setTasks(tasks.filter(t => t.id !== id));

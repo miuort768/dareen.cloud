@@ -14,6 +14,7 @@ import '@livekit/components-styles';
 
 import { PhoneOff, Loader2, Users, Edit3 } from 'lucide-react';
 import { useCurrentUser } from '../context/AppContext';
+import { confirm } from '../lib/confirmDialog';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
 import { Whiteboard } from '../components/ui/Whiteboard';
@@ -186,7 +187,7 @@ export const Classroom = () => {
     }, [isTeacher, id]);
 
     const handleLeave = useCallback(async () => {
-        if (!window.confirm('هل أنت متأكد من مغادرة الفصل؟')) return;
+        if (!await confirm('هل أنت متأكد من مغادرة الفصل؟')) return;
         if (isTeacher) {
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
             await endSessionInDb();

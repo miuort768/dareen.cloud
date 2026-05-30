@@ -25,6 +25,7 @@ import {
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { cn } from '../lib/utils';
+import { confirm } from '../lib/confirmDialog';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -217,7 +218,7 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                     <button 
-                        onClick={() => { if (window.confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
+                        onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
                         className="w-10 h-10 bg-white/70 dark:bg-slate-800/70 text-slate-500 hover:text-rose-500 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 transition-all hover:bg-rose-50 dark:hover:bg-rose-900/20"
                     >
                         <LogOut size={18} />
@@ -502,7 +503,7 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => { if (window.confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-slate-100 dark:bg-slate-700/60 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-400 active:scale-90 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700" aria-label="تسجيل الخروج">
+                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-slate-100 dark:bg-slate-700/60 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-400 active:scale-90 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700" aria-label="تسجيل الخروج">
                                 <LogOut size={16} />
                             </button>
                         </div>

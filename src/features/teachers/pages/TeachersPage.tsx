@@ -6,6 +6,7 @@ import { useTeachers } from '../hooks/useTeachers';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
+import { confirm } from '../../../lib/confirmDialog';
 
 // Shared Components
 import { ConfirmModal } from '../../../shared/components/ConfirmModal';
@@ -257,7 +258,7 @@ export const Teachers = () => {
     };
 
     const handleDeleteAll = async () => {
-        if (!window.confirm('⚠️ حذف جميع المعلمات؟ لا يمكن التراجع!')) return;
+        if (!await confirm({ message: 'حذف جميع المعلمات؟ لا يمكن التراجع!', isDestructive: true })) return;
         try {
             await api.delete('/teachers');
             queryClient.invalidateQueries({ queryKey: ['teachers'] });

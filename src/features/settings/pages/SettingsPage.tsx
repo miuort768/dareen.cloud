@@ -6,6 +6,7 @@ import {
 import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser } from '../../../context/AppContext';
 import { Skeleton } from '../../../components/ui/Skeleton';
 import { cn } from '../../../lib/utils';
+import { confirm } from '../../../lib/confirmDialog';
 import { settingsService } from '../services/settingsService';
 import { GeneralSettings } from '../components/GeneralSettings';
 import { MobileSettings } from '../components/MobileSettings';
@@ -144,7 +145,7 @@ export const Settings = () => {
     const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        if (!window.confirm('⚠️ تحذير: استيراد البيانات سيؤدي إلى استبدال كافة البيانات الحالية بالبيانات الموجودة في الملف. هل أنت متأكد؟')) {
+        if (!await confirm({ message: 'استيراد البيانات سيؤدي إلى استبدال كافة البيانات الحالية بالبيانات الموجودة في الملف. هل أنت متأكد؟', isDestructive: true })) {
             e.target.value = '';
             return;
         }

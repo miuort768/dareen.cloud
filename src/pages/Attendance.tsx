@@ -3,6 +3,7 @@ import { Users, Search, BookOpen, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
+import { confirm } from '../lib/confirmDialog';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats';
@@ -227,7 +228,7 @@ export const Attendance = () => {
                                 return;
                             }
 
-                            if (!window.confirm(`سيتم تسجيل (${todayStudents.length}) طالب كحضور تلقائي`)) return;
+                            if (!await confirm(`سيتم تسجيل (${todayStudents.length}) طالب كحضور تلقائي`)) return;
                             
                             const now = new Date();
                             const currentTime = now.toLocaleTimeString('ar-EG', {

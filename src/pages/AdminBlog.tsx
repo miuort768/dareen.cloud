@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star } from 'lucide-react';
 import { api } from '../lib/api';
+import { confirm } from '../lib/confirmDialog';
 
 interface BlogPost {
     id: string;
@@ -80,7 +81,7 @@ export const AdminBlog = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
+        if (!await confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
         try {
             await api.delete(`/blog/${id}`);
             showNotification('تم حذف المقال بنجاح', 'success');

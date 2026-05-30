@@ -28,6 +28,7 @@ import {
     Briefcase
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { confirm } from '../../lib/confirmDialog';
 import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
 import { useUnreadStore } from '../../store/unreadStore';
@@ -49,8 +50,8 @@ export const Sidebar = () => {
         localStorage.setItem('sidebar_collapsed', String(collapsed));
     }, [collapsed]);
 
-    const handleLogout = () => {
-        if (!window.confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
+    const handleLogout = async () => {
+        if (!await confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
         logout();
         navigate('/login');
     };
