@@ -11,8 +11,6 @@ export type { CardProps }  from './Card';
 export { Modal }           from './Modal';
 export type { ModalProps } from './Modal';
 
-export { default as Skeleton, SkeletonCard, SkeletonRow, SkeletonGrid, SkeletonTable } from './Skeleton';
-
 export { EmptyState }      from './EmptyState';
 
 export { StaggeredList, StaggeredGrid } from './StaggeredList';
