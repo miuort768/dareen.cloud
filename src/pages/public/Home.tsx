@@ -179,8 +179,8 @@ export const Home = () => {
                   <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-none mb-0">{f.label}</span>
-                  <span className="text-[6px] text-slate-400 font-medium block -mt-1 leading-none">{f.desc}</span>
+                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight mb-0">{f.label}</span>
+                  <span className="text-[6px] text-slate-400 font-medium block leading-tight">{f.desc}</span>
                 </div>
               </div>
             ))}
