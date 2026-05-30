@@ -27,7 +27,7 @@ export const MobileHeader = () => {
           <div>
             <p className="text-[15px] font-black text-indigo-950 dark:text-indigo-100 leading-tight">دارين السابعة</p>
             <p className="text-[9px] font-bold leading-tight text-indigo-950 dark:text-indigo-100">أفضل مدرسة افتراضية</p>
-            <p className="text-[7px] text-indigo-600 dark:text-indigo-400 leading-tight mt-0.5">دارين للتعليم والتعلم عبر الإنترنت</p>
+            <p className="text-[7px] text-indigo-600 dark:text-indigo-400 leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
         </Link>
         <div className="relative ml-1">
