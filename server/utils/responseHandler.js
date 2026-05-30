@@ -1,6 +1,5 @@
-/**
- * Standard utility for consistent API responses.
- */
+const logger = require('./logger');
+
 class ResponseHandler {
     static success(res, data, status = 200) {
         return res.status(status).json(data);
@@ -13,6 +12,16 @@ class ResponseHandler {
             response.stack = details.stack;
         }
         return res.status(status).json(response);
+    }
+
+    static serverError(res, err, context = '') {
+        const isDev = process.env.NODE_ENV === 'development';
+        logger.error(`${context}: ${err?.message || err}`, err);
+        return res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'حدث خطأ غير متوقع في الخادم',
+            ...(isDev && { details: err?.message })
+        });
     }
 
     static notFound(res, entity = 'Resource') {

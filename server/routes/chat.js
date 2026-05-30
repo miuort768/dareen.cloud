@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ChatService = require('../services/chatService');
 const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 const { getDb } = require('../utils/db');
 
 // Database and Service Initialization
@@ -25,7 +26,7 @@ router.get('/profiles', async (req, res) => {
         const profiles = await req.chatService.getProfiles();
         ResponseHandler.success(res, profiles);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -34,7 +35,7 @@ router.post('/profiles', async (req, res) => {
         const result = await req.chatService.createProfile(req.body);
         ResponseHandler.success(res, result, 201);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -43,7 +44,7 @@ router.put('/profiles/:id', async (req, res) => {
         const result = await req.chatService.updateProfile(req.params.id, req.body);
         ResponseHandler.success(res, result);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -52,7 +53,7 @@ router.delete('/profiles/:id', async (req, res) => {
         const result = await req.chatService.deleteProfile(req.params.id);
         ResponseHandler.success(res, result);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -62,7 +63,7 @@ router.get('/users', async (req, res) => {
         const users = await req.chatService.getAvailableUsers();
         ResponseHandler.success(res, users);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -74,7 +75,7 @@ router.get('/conversations', async (req, res) => {
         const convs = await req.chatService.getConversations(userId);
         ResponseHandler.success(res, convs);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -100,7 +101,7 @@ router.post('/conversations', async (req, res) => {
 
         ResponseHandler.success(res, result, 201);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -118,7 +119,7 @@ router.put('/conversations/:id', async (req, res) => {
         const result = await req.chatService.updateConversation(req.params.id, req.body);
         ResponseHandler.success(res, result);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -142,7 +143,7 @@ router.delete('/conversations/:id', async (req, res) => {
         const result = await req.chatService.deleteConversation(req.params.id);
         ResponseHandler.success(res, result);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -159,7 +160,7 @@ router.get('/conversations/:id/messages', async (req, res) => {
         const messages = await req.chatService.getMessages(req.params.id);
         ResponseHandler.success(res, messages);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -197,22 +198,19 @@ router.post('/conversations/:id/messages', async (req, res) => {
         const newMessage = await req.chatService.saveMessage(conversationId, { senderId, senderName, content });
 
         // Send notifications
-        req.chatService.sendNotification({ conversationId, senderId, senderName, content }).catch(err => console.error('Notification error:', err));
+        req.chatService.sendNotification({ conversationId, senderId, senderName, content }).catch(err => logger.error('Chat notification error:', err));
 
         // Emit Socket Event
         const io = req.app.get('socketio');
         if (io) {
             const members = await req.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', conversationId);
 
-            console.log(`📡 Broadcasting message to conversation ${conversationId} (${members.length} members)`);
+            logger.info(`Broadcasting message to conversation ${conversationId} (${members.length} members)`);
 
-            // 1. Send to the conversation room
             io.to(conversationId).emit('new_message', newMessage);
 
-            // 2. Send to individual user rooms for sidebar updates
             for (const member of members) {
                 if (member.userId !== senderId) {
-                    console.log(`   -> Sending to user room: user_${member.userId}`);
                     io.to(`user_${member.userId}`).emit('new_message', newMessage);
                 }
             }
@@ -220,7 +218,7 @@ router.post('/conversations/:id/messages', async (req, res) => {
 
         ResponseHandler.success(res, newMessage);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 
@@ -231,7 +229,7 @@ router.post('/conversations/:id/read', async (req, res) => {
         const result = await req.chatService.markAsRead(req.params.id, userId);
         ResponseHandler.success(res, result);
     } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
+        ResponseHandler.serverError(res, err, 'Chat route error');
     }
 });
 

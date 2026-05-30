@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { authMiddleware, checkRole } = require('../middleware/auth');
-
-// Using req.db from middleware
-
-
 const logger = require('../utils/logger');
+const ResponseHandler = require('../utils/responseHandler');
 
 // 1. Get all parents
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
@@ -69,9 +66,8 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
         if (err.message.includes('UNIQUE constraint failed: parents.username')) {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.' });
         }
-        console.error('SERVER UPDATE PARENT ERROR:', err);
         logger.error('Error updating parent', err, { id });
-        res.status(500).json({ error: 'Internal Server Error', details: err.message });
+        ResponseHandler.serverError(res, err, 'Update parent');
     }
 });
 

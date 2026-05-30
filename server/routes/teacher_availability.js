@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 const { authMiddleware } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createAvailabilitySchema } = require('../utils/validators');
+const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 
 router.use(authMiddleware);
 
@@ -18,7 +20,7 @@ router.get('/', async (req, res) => {
         }
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch availability');
     }
 });
 
@@ -29,10 +31,7 @@ router.get('/available-at', async (req, res) => {
             return res.status(400).json({ error: 'day and time query params required' });
         }
         const rows = await req.db.all(
-            `SELECT ta.*, t.name as teacherName, t.subject 
-             FROM teacher_availability ta 
-             JOIN teachers t ON t.id = ta.teacherId 
-             WHERE ta.dayOfWeek = ? AND ta.isAvailable = 1 AND ta.startTime <= ? AND ta.endTime >= ?`,
+            `SELECT ta.*, t.name as teacherName, t.subject FROM teacher_availability ta JOIN teachers t ON t.id = ta.teacherId WHERE ta.dayOfWeek = ? AND ta.isAvailable = 1 AND ta.startTime <= ? AND ta.endTime >= ?`,
             [parseInt(day), time, time]
         );
 
@@ -45,7 +44,7 @@ router.get('/available-at', async (req, res) => {
 
         res.json(available);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch available slots');
     }
 });
 
@@ -69,7 +68,7 @@ router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
         const saved = await req.db.all('SELECT * FROM teacher_availability WHERE teacherId = ? ORDER BY dayOfWeek, startTime', [teacherId]);
         res.status(201).json(saved);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Bulk save availability');
     }
 });
 
@@ -83,7 +82,7 @@ router.put('/:id', async (req, res) => {
         const updated = await req.db.get('SELECT * FROM teacher_availability WHERE id = ?', [req.params.id]);
         res.json(updated);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Update availability slot');
     }
 });
 
@@ -92,7 +91,7 @@ router.delete('/:id', async (req, res) => {
         await req.db.run('DELETE FROM teacher_availability WHERE id = ?', [req.params.id]);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete availability slot');
     }
 });
 

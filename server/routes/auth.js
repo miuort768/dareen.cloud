@@ -6,6 +6,8 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const rateLimit = require('express-rate-limit');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const logger = require('../utils/logger');
+const ResponseHandler = require('../utils/responseHandler');
+const { safeTable } = require('../utils/asyncHandler');
 
 const router = express.Router();
 
@@ -150,7 +152,7 @@ router.post('/login', loginLimiter, async (req, res) => {
             token,
             user: {
                 ...finalUserData,
-                id: tokenPayload.id, // Ensure frontend gets the "effective" ID
+                id: tokenPayload.id,
                 role: role,
                 teacherName: teacherName || (role === 'teacher' ? finalUserData.name : null),
                 permissions: role === 'admin'
@@ -161,13 +163,12 @@ router.post('/login', loginLimiter, async (req, res) => {
                             ? ['parent_dashboard', 'chat']
                             : (role === 'student'
                                 ? ['student_dashboard', 'chat']
-                                : ['chat']))) // Chat users only see chat
+                                : ['chat'])))
             }
         });
     } catch (error) {
-        console.error('CRITICAL LOGIN ERROR:', error);
         logger.error('Login error', error, { username });
-        res.status(500).json({ error: 'Server error during authentication', details: error.message });
+        ResponseHandler.serverError(res, error, 'Login error');
     }
 });
 
@@ -252,14 +253,11 @@ router.post('/verify', async (req, res) => {
  */
 router.post('/logout-all', authMiddleware, async (req, res) => {
     try {
-        let table = 'users';
-        if (req.user.role === 'teacher') table = 'teachers';
-        if (req.user.role === 'parent') table = 'parents';
-        if (req.user.role === 'student') table = 'students';
-
+        const table = safeTable(req.user.role);
         await req.db.run(`UPDATE ${table} SET token_version = token_version + 1 WHERE id = ?`, [req.user.id]);
         res.json({ success: true, message: 'Logged out from all devices.' });
     } catch (error) {
+        logger.error('Logout-all error', error);
         res.status(500).json({ error: 'Failed to logout from all devices.' });
     }
 });

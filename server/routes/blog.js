@@ -2,29 +2,28 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 
-// Get all blog posts
 router.get('/', async (req, res) => {
     try {
         const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC');
         res.json(posts);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch blog posts');
     }
 });
 
-// Get single blog post by slug
 router.get('/:slug', async (req, res) => {
     try {
         const post = await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]);
         if (!post) return res.status(404).json({ error: 'Post not found' });
         res.json(post);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch blog post');
     }
 });
 
-// Create new blog post (Admin only)
 router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
@@ -32,60 +31,50 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
             contentType, curriculum, level, grade, term, subject
         } = req.body;
         const id = uuidv4();
-        
+
         await req.db.run(
-            `INSERT INTO blog_posts 
-             (id, slug, title, excerpt, content, coverImage, category, keywords, author, date,
-              contentType, curriculum, level, grade, term, subject)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [id, slug, title, excerpt, content, coverImage, category, keywords, author,
              date || new Date().toISOString(),
              contentType || null, curriculum || null, level || null,
              grade || null, term || null, subject || null]
         );
-        
+
         res.status(201).json({ id, title, slug });
     } catch (err) {
         if (err.message.includes('UNIQUE constraint failed: blog_posts.slug')) {
             return res.status(400).json({ error: 'الرابط المختصر (slug) موجود بالفعل، يرجى استخدام رابط مختلف.' });
         }
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Create blog post');
     }
 });
 
-// Update blog post (Admin only)
 router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
             contentType, curriculum, level, grade, term, subject
         } = req.body;
-        
+
         await req.db.run(
-            `UPDATE blog_posts 
-             SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?,
-                 category = ?, keywords = ?, author = ?, date = ?,
-                 contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?
-             WHERE id = ?`,
+            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ? WHERE id = ?`,
             [title, slug, excerpt, content, coverImage, category, keywords, author, date,
              contentType || null, curriculum || null, level || null,
-             grade || null, term || null, subject || null,
-             req.params.id]
+             grade || null, term || null, subject || null, req.params.id]
         );
-        
+
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Update blog post');
     }
 });
 
-// Delete blog post (Admin only)
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await req.db.run('DELETE FROM blog_posts WHERE id = ?', [req.params.id]);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete blog post');
     }
 });
 

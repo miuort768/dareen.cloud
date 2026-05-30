@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { authMiddleware } = require('../middleware/auth');
+const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 
-// POST submit job application (public, no auth)
 router.post('/', async (req, res) => {
     try {
         const { name, phone, whatsapp, position, qualification, grade, graduationYear, onlineYears, curriculums, subject } = req.body;
@@ -11,7 +12,6 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'الاسم ورقم الهاتف والوظيفة والمؤهل مطلوبة' });
         }
 
-        // Check if phone or whatsapp already exists
         const existing = await req.db.get(
             'SELECT id, name, created_at FROM job_applications WHERE phone = ? OR (whatsapp != "" AND whatsapp = ?)',
             [phone, phone]
@@ -37,21 +37,19 @@ router.post('/', async (req, res) => {
         );
         res.status(201).json({ message: 'تم تقديم الطلب بنجاح' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Submit job application');
     }
 });
 
-// GET all applications (authenticated)
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const apps = await req.db.all('SELECT * FROM job_applications ORDER BY created_at DESC');
         res.json(apps);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch job applications');
     }
 });
 
-// PATCH toggle contacted status
 router.patch('/:id/contacted', authMiddleware, async (req, res) => {
     try {
         const app = await req.db.get('SELECT contacted FROM job_applications WHERE id = ?', [req.params.id]);
@@ -60,17 +58,16 @@ router.patch('/:id/contacted', authMiddleware, async (req, res) => {
         await req.db.run('UPDATE job_applications SET contacted = ? WHERE id = ?', [newVal, req.params.id]);
         res.json({ contacted: !!newVal });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Toggle job contacted');
     }
 });
 
-// DELETE an application
 router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         await req.db.run('DELETE FROM job_applications WHERE id = ?', [req.params.id]);
         res.json({ message: 'تم الحذف' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete job application');
     }
 });
 

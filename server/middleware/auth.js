@@ -1,27 +1,20 @@
 const jwt = require('jsonwebtoken');
+const { safeTable } = require('../utils/asyncHandler');
 
-/**
- * Middleware to verify JWT token
- */
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ error: 'No token provided' });
     }
 
+    const token = authHeader.split(' ')[1];
+
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        
-        // --- Security Enhancement: Token Version Check ---
-        // This ensures that "Logout from all devices" works instantly.
-        if (decoded.token_version !== undefined && req.db) {
-            let table = 'users';
-            if (decoded.role === 'teacher') table = 'teachers';
-            if (decoded.role === 'parent') table = 'parents';
-            if (decoded.role === 'student') table = 'students';
 
+        if (decoded.token_version !== undefined && req.db) {
+            const table = safeTable(decoded.role);
             const current = await req.db.get(`SELECT token_version FROM ${table} WHERE id = ?`, [decoded.id]);
             if (current && current.token_version !== decoded.token_version) {
                 return res.status(401).json({ error: 'Session revoked. Please login again.' });

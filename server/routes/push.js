@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const webpush = require('web-push');
-
-// Configuration - Should be in .env in production
-// If not provided, the system will still work locally but won't send real push
-const vapidPublicKey = process.env.VAPID_PUBLIC_KEY || 'BFM-tXp9_QW4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4zY9w4';
-const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY || 'example-private-key';
+const { authMiddleware, checkRole } = require('../middleware/auth');
+const logger = require('../utils/logger');
+const ResponseHandler = require('../utils/responseHandler');
 
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -15,8 +13,7 @@ if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   );
 }
 
-// 1. Save subscription
-router.post('/subscribe', async (req, res) => {
+router.post('/subscribe', authMiddleware, async (req, res) => {
     try {
         const { subscription, deviceType } = req.body;
         const userId = req.user.id;
@@ -25,7 +22,6 @@ router.post('/subscribe', async (req, res) => {
             return res.status(400).json({ error: 'Subscription is required' });
         }
 
-        // Check if subscription already exists for this user to avoid duplicates
         const subJson = JSON.stringify(subscription);
         const existing = await req.db.get(
             'SELECT id FROM push_subscriptions WHERE userId = ? AND subscription = ?',
@@ -41,12 +37,10 @@ router.post('/subscribe', async (req, res) => {
 
         res.status(201).json({ success: true });
     } catch (err) {
-        console.error('Push subscribe error:', err);
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Push subscribe');
     }
 });
 
-// 2. Helper to send push to a user
 async function sendPushToUser(db, userId, title, message, url = '/') {
     try {
         const subscriptions = await db.all(
@@ -54,17 +48,12 @@ async function sendPushToUser(db, userId, title, message, url = '/') {
             [userId]
         );
 
-        const payload = JSON.stringify({
-            title,
-            body: message,
-            url
-        });
+        const payload = JSON.stringify({ title, body: message, url });
 
         const sendPromises = subscriptions.map(sub => {
             const pushConfig = JSON.parse(sub.subscription);
             return webpush.sendNotification(pushConfig, payload).catch(err => {
-                console.error('Push error for sub:', err.endpoint, err.message);
-                // If 404 or 410, subscription is no longer valid, delete it
+                logger.error(`Push error for ${err.endpoint}: ${err.message}`);
                 if (err.statusCode === 404 || err.statusCode === 410) {
                     db.run('DELETE FROM push_subscriptions WHERE subscription = ?', [sub.subscription]);
                 }
@@ -73,31 +62,28 @@ async function sendPushToUser(db, userId, title, message, url = '/') {
 
         await Promise.all(sendPromises);
     } catch (err) {
-        console.error('sendPushToUser error:', err);
+        logger.error('sendPushToUser error:', err.message);
     }
 }
 
-// 3. Notify student's parent(s) when a session starts
-router.post('/notify-student-parent', async (req, res) => {
+router.post('/notify-student-parent', authMiddleware, async (req, res) => {
     try {
         const { studentId, title, body } = req.body;
         if (!studentId) return res.status(400).json({ error: 'studentId required' });
 
-        // Find all parents whose children includes this student
-        const parents = await req.db.all(`SELECT * FROM parents`);
+        const parents = await req.db.all('SELECT * FROM parents');
         let notified = 0;
         for (const parent of parents) {
             let children = [];
             try { children = JSON.parse(parent.children || '[]'); } catch { children = []; }
             if (children.includes(studentId)) {
-                await sendPushToUser(req.db, parent.id, title || '🎓 بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
+                await sendPushToUser(req.db, parent.id, title || 'بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
                 notified++;
             }
         }
         res.json({ success: true, notified });
     } catch (err) {
-        console.error('notify-student-parent error:', err);
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Notify student parent');
     }
 });
 

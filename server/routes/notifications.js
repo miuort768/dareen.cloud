@@ -1,19 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 
 router.use(authMiddleware);
 
-// Using req.db from middleware
-
-
-// 1. Get notifications
 router.get('/', async (req, res) => {
     try {
         const userId = req.user.id;
         const isAdmin = req.user.role === 'admin';
-
-        // Users can only see their own notifications, Admins can see all if they specify receiverId
         let query = 'SELECT * FROM notifications';
         const params = [];
 
@@ -28,23 +25,17 @@ router.get('/', async (req, res) => {
         query += ' ORDER BY time DESC';
 
         const notifications = await req.db.all(query, params);
-        const mapped = notifications.map(n => ({
-            ...n,
-            read: n.read === 1
-        }));
+        const mapped = notifications.map(n => ({ ...n, read: n.read === 1 }));
         res.json(mapped);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch notifications');
     }
 });
 
-// 2. Add notification (Admin only)
 router.post('/', checkRole(['admin']), async (req, res) => {
     const body = req.body;
-    const { v4: uuidv4 } = require('uuid');
     const id = body.id || uuidv4();
     try {
-        // Validation: senderId should ideally be current user or 'system'
         const senderId = body.senderId || 'system';
 
         await req.db.run(
@@ -52,51 +43,39 @@ router.post('/', checkRole(['admin']), async (req, res) => {
             [id, senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0, body.conversationId || null, body.link || null]
         );
 
-        // Send Real-Time Push Notification if subscription exists
         if (req.sendPushToUser && body.receiverId) {
             req.sendPushToUser(req.db, body.receiverId, body.title, body.message, body.url || '/');
         }
 
         const newItem = await req.db.get('SELECT * FROM notifications WHERE id = ?', [id]);
-        if (newItem) {
-            newItem.read = newItem.read === 1;
-        }
+        if (newItem) newItem.read = newItem.read === 1;
         res.status(201).json(newItem);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Create notification');
     }
 });
 
-// 3. Mark notification as read
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const body = req.body;
     try {
-        // Security: Ensure notification belongs to user
         const notif = await req.db.get('SELECT receiverId FROM notifications WHERE id = ?', [id]);
         if (notif && notif.receiverId !== req.user.id && req.user.role !== 'admin') {
             return res.status(403).json({ error: 'Unauthorized to update this notification' });
         }
 
-        await req.db.run(
-            `UPDATE notifications SET read = ? WHERE id = ?`,
-            [body.read ? 1 : 0, id]
-        );
+        await req.db.run('UPDATE notifications SET read = ? WHERE id = ?', [body.read ? 1 : 0, id]);
         const updated = await req.db.get('SELECT * FROM notifications WHERE id = ?', [id]);
-        if (updated) {
-            updated.read = updated.read === 1;
-        }
+        if (updated) updated.read = updated.read === 1;
         res.json(updated);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Update notification');
     }
 });
 
-// 4. Delete one notification
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        // Security check
         const notif = await req.db.get('SELECT receiverId FROM notifications WHERE id = ?', [id]);
         if (notif && notif.receiverId !== req.user.id && req.user.role !== 'admin') {
             return res.status(403).json({ error: 'Unauthorized to delete this notification' });
@@ -105,11 +84,10 @@ router.delete('/:id', async (req, res) => {
         await req.db.run('DELETE FROM notifications WHERE id = ?', [id]);
         res.json({ message: 'Deleted' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete notification');
     }
 });
 
-// 5. Delete all notifications (optional filter by receiver)
 router.delete('/', async (req, res) => {
     const userId = req.user.id;
     const isAdmin = req.user.role === 'admin';
@@ -119,9 +97,8 @@ router.delete('/', async (req, res) => {
         await req.db.run('DELETE FROM notifications WHERE receiverId = ?', [targetReceiver]);
         res.json({ message: 'Deleted notifications for user' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete all notifications');
     }
 });
 
 module.exports = { notificationRouter: router };
-

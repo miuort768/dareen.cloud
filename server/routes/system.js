@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { getStudentEnrollments, withTransaction } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const ResponseHandler = require('../utils/responseHandler');
+const logger = require('../utils/logger');
 
-// Apply robust defense-in-depth protection to ALL system endpoints (Admin only)
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
 
@@ -83,7 +84,7 @@ router.get('/backup', async (req, res) => {
 
         res.json(backup);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -293,7 +294,7 @@ router.post('/restore', async (req, res) => {
 
         res.json({ message: 'Restore successful, system completely updated.' });
     } catch (err) {
-        console.error("CRITICAL RESTORE ERROR:", err);
+        logger.error('CRITICAL RESTORE ERROR:', err);
         res.status(500).json({ error: 'Restore failed: ' + err.message });
     }
 });
@@ -357,7 +358,7 @@ router.post('/system-reset', async (req, res) => {
         });
         res.json({ message: 'System reset successful' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -377,7 +378,7 @@ router.post('/archive-month', async (req, res) => {
         });
         res.json({ message: 'Month archived successfully' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -392,7 +393,7 @@ router.get('/settings', async (req, res) => {
         });
         res.json(settingsMap);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -402,7 +403,7 @@ router.post('/settings', async (req, res) => {
         await req.db.run('INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)', [key, String(value)]);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -416,7 +417,7 @@ router.get('/users', async (req, res) => {
         }));
         res.json(parsedUsers);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -431,7 +432,7 @@ router.post('/users', async (req, res) => {
         );
         res.status(201).json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -454,7 +455,7 @@ router.put('/users/:id', async (req, res) => {
         }
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -464,7 +465,7 @@ router.delete('/users/:id', async (req, res) => {
         await req.db.run('DELETE FROM users WHERE id = ?', id);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -474,7 +475,7 @@ router.get('/dismissed-notifications', async (req, res) => {
         const dismissed = await req.db.all('SELECT id FROM dismissed_notifications');
         res.json(dismissed.map(d => d.id));
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -484,7 +485,7 @@ router.post('/dismissed-notifications', async (req, res) => {
         await req.db.run('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', id);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -493,7 +494,7 @@ router.delete('/dismissed-notifications/reset', async (req, res) => {
         await req.db.run('DELETE FROM dismissed_notifications');
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -503,7 +504,7 @@ router.get('/audit-logs', async (req, res) => {
         const logs = await req.db.all('SELECT * FROM audit_logs ORDER BY timestamp DESC LIMIT 500');
         res.json(logs);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -514,7 +515,7 @@ router.post('/audit-logs', async (req, res) => {
             [userId || 'system', username || 'System', action, details]);
         res.status(201).json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -524,7 +525,7 @@ router.get('/whatsapp-templates', async (req, res) => {
         const templates = await req.db.all('SELECT * FROM whatsapp_templates');
         res.json(templates);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -535,7 +536,7 @@ router.post('/whatsapp-templates', async (req, res) => {
             [id || require('uuid').v4(), name, content, isActive !== undefined ? isActive : 1]);
         res.status(201).json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -547,7 +548,7 @@ router.put('/whatsapp-templates/:id', async (req, res) => {
             [name, content, isActive, id]);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
@@ -557,7 +558,7 @@ router.delete('/whatsapp-templates/:id', async (req, res) => {
         await req.db.run('DELETE FROM whatsapp_templates WHERE id = ?', id);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 

@@ -2,23 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { checkRole } = require('../middleware/auth');
+const ResponseHandler = require('../utils/responseHandler');
 
-// GET all announcements (Visible to all authenticated users)
 router.get('/', async (req, res) => {
     try {
         const announcements = await req.db.all('SELECT * FROM announcements ORDER BY date DESC');
-        // Convert isActive to boolean for consistency with frontend
-        const parsed = announcements.map(a => ({
-            ...a,
-            isActive: a.isActive === 1
-        }));
+        const parsed = announcements.map(a => ({ ...a, isActive: a.isActive === 1 }));
         res.json(parsed);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Fetch announcements');
     }
 });
 
-// POST new announcement (Admin only)
 router.post('/', checkRole(['admin']), async (req, res) => {
     const { title, content, type, date, isActive } = req.body;
     try {
@@ -29,11 +24,10 @@ router.post('/', checkRole(['admin']), async (req, res) => {
         );
         res.status(201).json({ success: true, id });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Create announcement');
     }
 });
 
-// PUT update announcement (Admin only)
 router.put('/:id', checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     const { title, content, type, isActive } = req.body;
@@ -44,18 +38,17 @@ router.put('/:id', checkRole(['admin']), async (req, res) => {
         );
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Update announcement');
     }
 });
 
-// DELETE announcement (Admin only)
 router.delete('/:id', checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         await req.db.run('DELETE FROM announcements WHERE id = ?', id);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete announcement');
     }
 });
 

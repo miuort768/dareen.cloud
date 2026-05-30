@@ -2,16 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
+const { authMiddleware, checkRole } = require('../middleware/auth');
 
-// Middleware to ensure DB is available
-const ensureDb = (req, res, next) => {
-    if (!req.db) {
-        return res.status(500).json({ error: 'Database connection not available' });
-    }
-    next();
-};
-
-router.use(ensureDb);
+router.use(authMiddleware, checkRole(['admin']));
 
 // --- Manual Transactions Routes ---
 

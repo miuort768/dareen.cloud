@@ -5,6 +5,7 @@ const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createTeacherSchema, updateTeacherSchema } = require('../utils/validators');
+const ResponseHandler = require('../utils/responseHandler');
 
 // Using req.db from middleware
 
@@ -110,7 +111,7 @@ router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
         await req.db.run('DELETE FROM teachers');
         res.json({ message: 'All teachers deleted' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        ResponseHandler.serverError(res, err, 'Delete all teachers');
     }
 });
 
