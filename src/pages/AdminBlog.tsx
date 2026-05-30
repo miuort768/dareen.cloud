@@ -121,6 +121,7 @@ export const AdminBlog = () => {
     );
 
     return (
+        <>
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2 space-y-6">
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -198,7 +199,7 @@ export const AdminBlog = () => {
 
             {/* Modal Form */}
             {isModalOpen && currentPost && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60">
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
                         <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
                             <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
@@ -465,5 +466,6 @@ export const AdminBlog = () => {
             )}
             </div>
         </div>
+        </>
     );
 };
