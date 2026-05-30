@@ -78,7 +78,7 @@ export const AdminJobs = () => {
     });
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl" style={{ '--color-primary': '51 27 136' } as React.CSSProperties}>
             <div className="bg-primary-600 px-4 md:px-6 py-5 mb-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
@@ -120,9 +120,9 @@ export const AdminJobs = () => {
 
             <div className="max-w-5xl mx-auto px-4 space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white dark:bg-slate-900 h-32 animate-pulse border border-slate-100/50 dark:border-slate-800/50" />)}</div>
+                    <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-slate-100/50" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 p-16 text-center">
+                    <div className="bg-white border border-dashed border-slate-200 p-16 text-center">
                         <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
                             <Briefcase size={28} style={{ color: 'rgb(var(--color-primary))' }} />
                         </div>
@@ -130,16 +130,16 @@ export const AdminJobs = () => {
                     </div>
                 ) : (
                     filtered.map(app => (
-                        <div key={app.id} className={`bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden group transition-all duration-300 ${
+                        <div key={app.id} className={`bg-white border border-slate-100/50 shadow-sm relative overflow-hidden group transition-all duration-300 ${
                             app.contacted ? 'opacity-40 grayscale saturate-0' : ''
                         }`}>
                             {/* Top accent bar */}
                             <div className={`h-1.5 w-full transition-colors duration-300 ${
-                                app.contacted ? 'bg-slate-300 dark:bg-slate-600' : 'bg-primary-500'
+                                app.contacted ? 'bg-slate-300' : 'bg-[#4C1670]'
                             }`}></div>
 
                             {/* Decorative pattern */}
-                            {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-primary-500/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-primary-500/10"></div>}
+                            {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-[#4C1670]/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-[#4C1670]/10"></div>}
 
                             <div className={`p-6 relative z-10 transition-all duration-300 ${
                                 app.contacted ? 'line-through decoration-1 decoration-slate-400/50' : ''
@@ -155,14 +155,14 @@ export const AdminJobs = () => {
                                             onClick={() => handleContacted(app.id)}
                                             className={`p-1.5 transition-all ${
                                                 app.contacted
-                                                    ? 'text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10'
-                                                    : 'text-slate-300 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10'
+                                                    ? 'text-emerald-500 bg-emerald-50'
+                                                    : 'text-slate-300 hover:text-emerald-500 hover:bg-emerald-50:bg-emerald-500/10'
                                             }`}
                                             title="تم التواصل"
                                         >
                                             <CheckCircle2 size={14} />
                                         </button>
-                                        <button onClick={() => setDeleteTarget(app.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all" aria-label="حذف الطلب">
+                                        <button onClick={() => setDeleteTarget(app.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50:bg-rose-500/10 transition-all" aria-label="حذف الطلب">
                                             <Trash2 size={14} />
                                         </button>
                                     </div>
@@ -171,7 +171,7 @@ export const AdminJobs = () => {
                                 {/* Avatar + Name Section */}
                                 <div className={`flex items-center gap-4 mb-6 p-4 rounded-lg ${
                                     app.contacted
-                                        ? 'bg-slate-100 dark:bg-slate-800'
+                                        ? 'bg-slate-100'
                                         : 'bg-primary-600'
                                 }`}>
                                     <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center relative overflow-hidden shrink-0">
@@ -180,7 +180,7 @@ export const AdminJobs = () => {
                                     </div>
                                     <div className="text-right">
                                         <h3 className={`text-sm font-bold ${
-                                            app.contacted ? 'text-slate-500 dark:text-slate-400' : 'text-white'
+                                            app.contacted ? 'text-slate-500' : 'text-white'
                                         }`}>{app.name}</h3>
                                         <p className={`text-[10px] font-bold uppercase tracking-tighter mt-0.5 ${
                                             app.contacted ? 'text-slate-400' : 'text-white/80'
@@ -189,7 +189,7 @@ export const AdminJobs = () => {
                                 </div>
 
                                 {/* Details Grid */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 dark:border-slate-800 pt-4">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 pt-4">
                                     <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} />
                                     <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
@@ -197,7 +197,7 @@ export const AdminJobs = () => {
                                     {app.subject && <DetailRow icon={BookMarked} label="المادة" value={app.subject} contacted={!!app.contacted} />}
                                     <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
-                                    <div className="col-span-2 md:col-span-4 flex items-start gap-2 pt-3 border-t border-slate-50 dark:border-slate-800 mt-1">
+                                    <div className="col-span-2 md:col-span-4 flex items-start gap-2 pt-3 border-t border-slate-50 mt-1">
                                         <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${
                                             app.contacted ? 'opacity-30' : ''
                                         }`} style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
@@ -206,7 +206,7 @@ export const AdminJobs = () => {
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">المناهج</p>
                                             <span className={`text-[10px] font-bold ${
-                                                app.contacted ? 'text-slate-300 dark:text-slate-500' : 'text-slate-600 dark:text-slate-300'
+                                                app.contacted ? 'text-slate-300' : 'text-slate-600'
                                             }`}>{app.curriculums || '-'}</span>
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@ const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ s
         </div>
         <div className="min-w-0">
             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
-            <span className={`text-[10px] font-bold truncate block ${contacted ? 'text-slate-300 dark:text-slate-500' : 'text-slate-700 dark:text-slate-300'}`}>{value}</span>
+            <span className={`text-[10px] font-bold truncate block ${contacted ? 'text-slate-300' : 'text-slate-700'}`}>{value}</span>
         </div>
     </div>
 );
