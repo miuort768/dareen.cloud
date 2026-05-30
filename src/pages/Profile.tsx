@@ -81,7 +81,7 @@ export const Profile = () => {
                     <div className="relative group">
                         <div className="w-24 h-24 md:w-32 md:h-32 rounded-none bg-slate-100 dark:bg-slate-800 border-4 border-white dark:border-slate-950 shadow-sm overflow-hidden flex items-center justify-center">
                             {currentUser?.avatar ? (
-                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" loading="lazy" />
                             ) : (
                                 <User size={48} className="text-slate-400" />
                             )}

@@ -31,14 +31,15 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
+import type { Student } from '../types';
 
 export const ParentDashboard = () => {
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
     const navigate = useNavigate();
-    const [children, setChildren] = useState<Record<string, unknown>[]>([]);
-    const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);
+    const [children, setChildren] = useState<Student[]>([]);
+    const [sessions, setSessions] = useState<Student[]>([]);
     const [allPointLogs, setAllPointLogs] = useState<{ id: string; date: string; status: string; points?: number }[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('home');
@@ -56,12 +57,12 @@ export const ParentDashboard = () => {
         const fetchAllData = async () => {
             try {
                 setIsLoading(true);
-                const students = await api.get<Record<string, unknown>[]>('/parents/my-children');
+                const students = await api.get<Student[]>('/parents/my-children');
                 setChildren(students);
                 
                 const sessionsPromises = students.map(async s => {
                     try {
-                        return await api.get<Record<string, unknown>[]>(`/parents/child-sessions/${s.id}`) || [];
+                        return await api.get<unknown[]>(`/parents/child-sessions/${s.id}`) || [];
                     } catch (e) {
                         console.error(`Failed to fetch sessions for child ${s.id}:`, e);
                         return [];
@@ -69,7 +70,7 @@ export const ParentDashboard = () => {
                 });
                 const logsPromises = students.map(async s => {
                     try {
-                        return await api.get<Record<string, unknown>[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
+                        return await api.get<unknown[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
                     } catch (e) {
                         console.error(`Failed to fetch logs for child ${s.id}:`, e);
                         return [];
@@ -104,7 +105,7 @@ export const ParentDashboard = () => {
     }, []);
 
     // ── Active timer for parent ──
-    const [activeTimers, setActiveTimers] = useState<Record<string, unknown>[]>([]);
+    const [activeTimers, setActiveTimers] = useState<Student[]>([]);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const [, setTimerTick] = useState(0);
 
@@ -116,10 +117,10 @@ export const ParentDashboard = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) return;
-                const data: Record<string, unknown>[] = await res.json();
+                const data: Student[] = await res.json();
                 setActiveTimers(data);
 
-                const students = await api.get<Record<string, unknown>[]>('/parents/my-children');
+                const students = await api.get<Student[]>('/parents/my-children');
                 setChildren(students);
 
                 if (data.length > 0 && !timerTickRef.current) {
@@ -497,7 +498,7 @@ export const ParentDashboard = () => {
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                         <p className="text-slate-400 dark:text-slate-400 text-[11px] font-bold">
                                             {children.length > 0
-                                                ? children.sort((a: any, b: any) => (a.dateOfBirth || a.id || '') > (b.dateOfBirth || b.id || '') ? 1 : -1)[0]?.name || 'طالب'
+                                                ? [...children].sort((a, b) => a.id.localeCompare(b.id))[0]?.name || 'طالب'
                                                 : 'طالب'}
                                         </p>
                                     </div>
@@ -523,7 +524,7 @@ export const ParentDashboard = () => {
                                     <BookOpen size={13} className="text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-[#1E1E2F] dark:text-white font-black text-base drop-shadow-sm">{children.reduce((sum, c) => sum + ((c as any).enrollments?.length || 0), 0)}</span>
+                                    <span className="text-[#1E1E2F] dark:text-white font-black text-base drop-shadow-sm">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
                                     <span className="text-slate-400 dark:text-slate-500 text-[9px] font-bold tracking-wide">المادة</span>
                                 </div>
                             </div>

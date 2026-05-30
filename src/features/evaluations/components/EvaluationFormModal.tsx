@@ -36,7 +36,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                                     className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-3 py-2 md:px-4 md:py-3 font-normal text-xs md:text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500/30 outline-none rounded-none">
                                     <option value="">-- اختر من قائمة طلابك --</option>
                                     {teacherStudents.map(s => (
-                                        <option key={s.id as string} value={s.id as string}>{s.name as string} ({s.grade as string})</option>
+                                        <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
                                     ))}
                                 </select>
                             </div>

@@ -77,7 +77,7 @@ app.use(cors({
         // Allow requests with no origin (same-origin via Nginx proxy)
         if (!origin) return callback(null, true);
 
-        if (filteredOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
+        if (filteredOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin); // Log blocked origins

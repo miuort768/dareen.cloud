@@ -61,7 +61,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
                                 <div className="w-11 h-11 flex items-center justify-center mb-2 relative overflow-hidden rounded-xl shadow-inner text-white" style={{ backgroundColor: `${color}50` }}>
                                     <span className="text-lg font-bold">{student.name.charAt(0)}</span>
-                                    {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" />}
+                                    {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />}
                                 </div>
 
                                 <div className="w-full">

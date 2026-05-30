@@ -1,17 +1,18 @@
 import { create } from 'zustand';
 import { socketService } from '../lib/socket';
+import type { LiveSession } from '../types';
 
 interface ChatState {
     typingUsers: { conversationId: string; userName: string }[];
     activeConversationId: string | null;
     isConnected: boolean;
-    liveSession: Record<string, unknown> | null;
+    liveSession: LiveSession | null;
     totalUnreadCount: number;
 
     setTyping: (conversationId: string, isTyping: boolean, userName: string, currentUserId?: string) => void;
     setActiveConversationId: (id: string | null) => void;
     setIsConnected: (connected: boolean) => void;
-    setLiveSession: (session: Record<string, unknown> | null) => void;
+    setLiveSession: (session: LiveSession | null) => void;
     setTypingUsers: (users: { conversationId: string; userName: string }[]) => void;
     setTotalUnreadCount: (count: number) => void;
 }

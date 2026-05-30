@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
 import { useCurrentUser, useIsAuthenticated } from '../context/AppContext';
 import { useChatStore } from '../store/chatStore';
+import type { LiveSession } from '../types';
 
 interface ChatMessage {
     id: string;
@@ -159,7 +160,7 @@ export const useChatSocketInit = () => {
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
-        const handleSessionInvite = (data: Record<string, unknown>) => {
+        const handleSessionInvite = (data: LiveSession) => {
             setLiveSession(data);
         };
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { authMiddleware } = require('../middleware/auth');
+const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const validate = require('../middleware/validation');
@@ -68,7 +68,7 @@ router.put('/:id', authMiddleware, validate(updateLeadSchema), async (req, res) 
     }
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await req.db.run('DELETE FROM leads WHERE id = ?', [req.params.id]);
         emitLeadUpdate(req);

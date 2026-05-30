@@ -4,6 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 const { authMiddleware } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const { sanitizeInput } = require('../middleware/advanced');
+
+router.use(sanitizeInput);
 
 router.post('/', async (req, res) => {
     try {

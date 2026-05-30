@@ -213,7 +213,7 @@ export const Teachers = () => {
         reader.onload = async (event) => {
             try {
                 const content = event.target?.result as string;
-                let parsedData: Record<string, unknown>[] = [];
+                let parsedData: Teacher[] = [];
 
                 if (file.name.endsWith('.json')) {
                     const json = JSON.parse(content);

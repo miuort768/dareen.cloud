@@ -15,7 +15,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
 
             <div className="relative z-10 flex items-center gap-4">
                 <div className="w-12 h-12 overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 ">
-                        <img src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full object-cover" />
+                        <img src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                 <div>
                     <h1 className="text-sm md:text-xl font-medium text-white uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>

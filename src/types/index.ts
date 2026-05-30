@@ -144,6 +144,16 @@ export interface Evaluation {
     created_at: string;
 }
 
+export interface LiveSession {
+    teacherId: string;
+    teacherName: string;
+    teacherSocketId: string;
+    subject?: string;
+    type?: string;
+    sessionId?: string;
+    timestamp?: string;
+}
+
 export interface FixedExpense {
     id: number;
     name: string;

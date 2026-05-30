@@ -5,6 +5,9 @@ const { getDb } = require('../utils/db');
 const rateLimit = require('express-rate-limit');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const { sanitizeInput } = require('../middleware/advanced');
+
+router.use(sanitizeInput);
 
 const publicChatLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

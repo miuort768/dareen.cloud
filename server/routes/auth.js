@@ -17,6 +17,18 @@ const loginLimiter = rateLimit({
     message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' }
 });
 
+const verifyLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30,
+    message: { error: 'محاولات تحقق كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' }
+});
+
+const logoutAllLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 5,
+    message: { error: 'محاولات تسجيل خروج كثيرة جداً، يرجى المحاولة بعد ساعة' }
+});
+
 router.post('/login', loginLimiter, async (req, res) => {
     const { username, password } = req.body;
 
@@ -176,7 +188,7 @@ router.post('/login', loginLimiter, async (req, res) => {
  * POST /auth/verify
  * Verify if token is still valid
  */
-router.post('/verify', async (req, res) => {
+router.post('/verify', verifyLimiter, async (req, res) => {
     const { token } = req.body;
 
     if (!token) {
@@ -251,7 +263,7 @@ router.post('/verify', async (req, res) => {
  * POST /auth/logout-all
  * Invalidate all active sessions for this user
  */
-router.post('/logout-all', authMiddleware, async (req, res) => {
+router.post('/logout-all', authMiddleware, logoutAllLimiter, async (req, res) => {
     try {
         const table = safeTable(req.user.role);
         await req.db.run(`UPDATE ${table} SET token_version = token_version + 1 WHERE id = ?`, [req.user.id]);

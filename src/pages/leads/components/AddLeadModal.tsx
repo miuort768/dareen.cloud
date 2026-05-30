@@ -2,10 +2,20 @@ import React from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { PrimaryBtn } from './LeadsUI';
 
+interface LeadFormData {
+    studentName: string;
+    phone: string;
+    subject: string;
+    curriculum: string;
+    status: string;
+    priority: string;
+    notes: string;
+}
+
 interface AddLeadModalProps {
     isAddModalOpen: boolean;
     setIsAddModalOpen: (v: boolean) => void;
-    addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean };
+    addMutation: { mutate: (data: LeadFormData) => void; isPending: boolean };
     formRef: React.RefObject<HTMLFormElement | null>;
 }
 
@@ -27,14 +37,15 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                 <form ref={formRef} className="p-5 space-y-4" onSubmit={(e) => {
                     e.preventDefault();
                     const formData = new FormData(e.currentTarget);
+                    const getStr = (name: string) => (formData.get(name) as string) || '';
                     addMutation.mutate({
-                        studentName: formData.get('name') as string,
-                        phone: formData.get('phone') as string,
-                        subject: formData.get('subject') as string,
-                        curriculum: formData.get('curriculum') as string,
+                        studentName: getStr('name'),
+                        phone: getStr('phone'),
+                        subject: getStr('subject'),
+                        curriculum: getStr('curriculum'),
                         status: 'new',
-                        priority: formData.get('priority') as string,
-                        notes: formData.get('notes') as string
+                        priority: getStr('priority'),
+                        notes: getStr('notes')
                     });
                 }}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

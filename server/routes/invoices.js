@@ -3,6 +3,10 @@ const router = express.Router();
 
 // Using req.db from middleware
 
+const { authMiddleware, checkRole } = require('../middleware/auth');
+
+router.use(authMiddleware);
+router.use(checkRole(['admin']));
 
 const logger = require('../utils/logger');
 const validate = require('../middleware/validation');

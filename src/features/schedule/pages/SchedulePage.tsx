@@ -130,7 +130,7 @@ export const Schedule = () => {
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص'].includes(normalizedPeriod);
-                        const sId = student.id || (student as Record<string, unknown>)._id as string;
+                        const sId = student.id;
                         return {
                             id: `${sId}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
                             studentId: sId,
