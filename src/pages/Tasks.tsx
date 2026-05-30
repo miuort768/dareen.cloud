@@ -129,33 +129,37 @@ export const Tasks = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-3">
             
             {/* ?? Header Canvas (Premium Royal Purple) ?? */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-4 md:px-6 py-4 mb-4">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
 
-                <div className="relative z-10 flex flex-col items-center">
-                    <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-3">
-                        <Sparkles size={10} className="text-indigo-400" />
-                        <span className="text-[8px] font-medium text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex flex-col items-start">
+                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-3">
+                            <Sparkles size={10} className="text-indigo-400" />
+                            <span className="text-[8px] font-medium text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
+                        </div>
+                        
+                        <h1 className="text-xl md:text-3xl font-medium text-white uppercase tracking-tighter mb-2 drop-shadow-sm">
+                            مركز التحكم بالمهام
+                        </h1>
+                        <p className="text-[10px] md:text-xs font-normal text-slate-400 uppercase tracking-widest max-w-lg leading-relaxed">
+                            تتبع وإدارة جميع المهام الخاصة بك <span className="text-indigo-500">في مكان واحد</span>
+                        </p>
                     </div>
-                    
-                    <h1 className="text-xl md:text-3xl font-medium text-white uppercase tracking-tighter mb-2 drop-shadow-sm">
-                        مركز التحكم بالمهام
-                    </h1>
-                    <p className="text-[10px] md:text-xs font-normal text-slate-400 uppercase tracking-widest mb-6 max-w-lg leading-relaxed">
-                        تتبع وإدارة جميع المهام الخاصة بك <span className="text-indigo-500">في مكان واحد</span>
-                    </p>
 
-                    <button
-                        onClick={() => setShowAddForm(true)}
-                        className="group relative inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 font-medium text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
-                    >
-                        <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
-                        إضافة مهمة جديدة
-                        <div className="absolute inset-0 border border-white/20 translate-x-1 translate-y-1 -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
-                    </button>
+                    <div className="flex items-center md:items-center">
+                        <button
+                            onClick={() => setShowAddForm(true)}
+                            className="group relative inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 font-medium text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
+                        >
+                            <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
+                            إضافة مهمة جديدة
+                            <div className="absolute inset-0 border border-white/20 translate-x-1 translate-y-1 -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                        </button>
+                    </div>
                 </div>
             </div>
 
