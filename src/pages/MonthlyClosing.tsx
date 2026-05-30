@@ -190,7 +190,7 @@ export const MonthlyClosing: React.FC = () => {
                             />
                         </div>
 
-                        <button onClick={handleRefresh} className="p-1.5 rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <button onClick={handleRefresh} className="p-1.5 rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }} aria-label="تحديث">
                             <RefreshCw size={14} className="text-white" />
                         </button>
 

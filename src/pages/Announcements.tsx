@@ -250,7 +250,7 @@ export const Announcements = () => {
                                     {editingAnnouncement ? 'تعديل الإعلان الحالي' : 'إضافة إعلان جديد'}
                                 </h3>
                             </div>
-                            <button onClick={() => setIsModalOpen(false)} className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/10 hover:bg-rose-500 transition-all"><X size={16} /></button>
+                            <button onClick={() => setIsModalOpen(false)} className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/10 hover:bg-rose-500 transition-all" aria-label="إغلاق"><X size={16} /></button>
                         </div>
 
                         <form onSubmit={handleSave} className="p-6 space-y-5">

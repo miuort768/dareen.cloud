@@ -502,7 +502,7 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => { if (window.confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-slate-100 dark:bg-slate-700/60 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-400 active:scale-90 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <button onClick={() => { if (window.confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-slate-100 dark:bg-slate-700/60 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-400 active:scale-90 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700" aria-label="تسجيل الخروج">
                                 <LogOut size={16} />
                             </button>
                         </div>

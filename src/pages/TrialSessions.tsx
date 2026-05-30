@@ -154,8 +154,8 @@ export const TrialSessions = () => {
                 {t.status === 'pending' && (
                   <button onClick={() => convertMutation.mutate(t.id)} className="p-2 rounded-none bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all" title="تحويل لطالب مقيد"><ArrowLeftRight size={14} /></button>
                 )}
-                <button onClick={() => openEdit(t)} className="p-2 rounded-none bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"><X size={14} className="rotate-45" /></button>
-                <button onClick={() => setConfirmId(t.id)} className="p-2 rounded-none bg-rose-50 dark:bg-rose-900/20 text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all"><Trash size={14} /></button>
+                <button onClick={() => openEdit(t)} className="p-2 rounded-none bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all" aria-label="تعديل"><X size={14} className="rotate-45" /></button>
+                <button onClick={() => setConfirmId(t.id)} className="p-2 rounded-none bg-rose-50 dark:bg-rose-900/20 text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all" aria-label="حذف"><Trash size={14} /></button>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@ export const TrialSessions = () => {
         <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-lg border border-slate-100/50 dark:border-slate-800/50 max-h-[90vh] overflow-y-auto rounded-none">
           <div className="bg-[#172554] px-5 py-4 flex items-center justify-between">
             <h3 className="text-sm font-bold text-white">{editingId ? 'تعديل جلسة مراجعة' : 'إضافة جلسة مراجعة'}</h3>
-            <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="text-white/70 hover:text-white rounded-none"><X size={18} /></button>
+            <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="text-white/70 hover:text-white rounded-none" aria-label="إغلاق"><X size={18} /></button>
           </div>
           <form onSubmit={e => { e.preventDefault(); addMutation.mutate(form); }} className="p-5 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

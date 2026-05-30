@@ -186,8 +186,8 @@ export const AdminBlog = () => {
                                 </div>
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-100/50 dark:border-slate-800/50">
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleOpenModal(post)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#2563EB' }}><Edit2 size={16} /></button>
-                                        <button onClick={() => handleDelete(post.id)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#E11D48' }}><Trash2 size={16} /></button>
+                                        <button onClick={() => handleOpenModal(post)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#2563EB' }} aria-label="تعديل"><Edit2 size={16} /></button>
+                                        <button onClick={() => handleDelete(post.id)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#E11D48' }} aria-label="حذف"><Trash2 size={16} /></button>
                                     </div>
                                     <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 transition-all active:scale-90" style={{ color: '#94A3B8' }}><ExternalLink size={16} /></a>
                                 </div>
@@ -205,7 +205,7 @@ export const AdminBlog = () => {
                     <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
                         <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
                             <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all"><X size={18} /></button>
+                            <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all" aria-label="إغلاق"><X size={18} /></button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">

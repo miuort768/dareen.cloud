@@ -341,6 +341,7 @@ export const Forum = () => {
                                                 <button
                                                     onClick={() => setShowMenuPostId(showMenuPostId === post.id ? null : post.id)}
                                                     className="p-2 text-slate-300 hover:text-slate-600 transition-colors rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                                                    aria-label="القائمة"
                                                 >
                                                     <MoreHorizontal size={17} />
                                                 </button>

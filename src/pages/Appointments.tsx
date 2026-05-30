@@ -245,7 +245,7 @@ export const Appointments = () => {
                             className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#8B5CF6] bg-slate-50 dark:bg-slate-800 transition-all placeholder:text-slate-400 text-slate-700 dark:text-white rounded-xl"
                         />
                         {searchTerm && (
-                            <button onClick={() => setSearchTerm('')} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors">
+                            <button onClick={() => setSearchTerm('')} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors" aria-label="مسح البحث">
                                 <X size={11} />
                             </button>
                         )}
