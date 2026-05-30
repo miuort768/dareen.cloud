@@ -16,3 +16,4 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export * from './useApp';
+export { useUsers, useAddUser, useEditUser, useDeleteUser } from '../store/userStore';
