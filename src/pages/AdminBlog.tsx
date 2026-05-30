@@ -196,9 +196,11 @@ export const AdminBlog = () => {
                     ))}
                 </div>
             )}
+            </div>
+        </div>
 
-            {/* Modal Form */}
-            {isModalOpen && currentPost && (
+        {/* Modal Form */}
+        {isModalOpen && currentPost && (
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
                         <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
@@ -464,8 +466,6 @@ export const AdminBlog = () => {
                     </div>
                 </div>
             )}
-            </div>
-        </div>
         </>
     );
 };
