@@ -249,30 +249,25 @@ export const Forum = () => {
                 
                 {/* ════════ CREATE POST CARD ════════ */}
                 <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] p-5">
-                    <div className="flex gap-3 items-start">
-                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 flex items-center justify-center shrink-0 border-2 border-purple-200/50 dark:border-purple-700/30">
-                            <User size={18} className="text-purple-500 dark:text-purple-300" />
-                        </div>
-                        <div className="flex-1 space-y-3">
-                            <textarea
-                                value={newPostContent}
-                                onChange={(e) => setNewPostContent(e.target.value)}
-                                className="w-full bg-purple-50/50 dark:bg-slate-800/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-300/50 transition-all placeholder:text-slate-400 resize-none border-0"
-                                placeholder="شارك فكرة أو سؤال…"
-                                style={{ lineHeight: 1.8 }}
-                            />
-                            <div className="flex justify-between items-center">
-                                <p className="text-[10px] text-slate-400 font-medium flex items-center gap-1.5">
-                                    <ShieldCheck size={11} className="text-purple-400" /> نشر متوافق مع سياسات المنصة
-                                </p>
-                                <button
-                                    onClick={handleCreatePost}
-                                    disabled={!newPostContent.trim()}
-                                    className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5A3BFF] hover:to-[#7C3AED] text-white px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-purple-200/40 active:scale-95"
-                                >
-                                    <Send size={13} /> نشر
-                                </button>
-                            </div>
+                    <div className="space-y-3">
+                        <textarea
+                            value={newPostContent}
+                            onChange={(e) => setNewPostContent(e.target.value)}
+                            className="w-full bg-purple-50/50 dark:bg-slate-800/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-300/50 transition-all placeholder:text-slate-400 resize-none border-0"
+                            placeholder="شارك فكرة أو سؤال…"
+                            style={{ lineHeight: 1.8 }}
+                        />
+                        <div className="flex justify-between items-center">
+                            <p className="text-[10px] text-slate-400 font-medium flex items-center gap-1.5">
+                                <ShieldCheck size={11} className="text-purple-400" /> نشر متوافق مع سياسات المنصة
+                            </p>
+                            <button
+                                onClick={handleCreatePost}
+                                disabled={!newPostContent.trim()}
+                                className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5A3BFF] hover:to-[#7C3AED] text-white px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-purple-200/40 active:scale-95"
+                            >
+                                <Send size={13} /> نشر
+                            </button>
                         </div>
                     </div>
                 </div>
