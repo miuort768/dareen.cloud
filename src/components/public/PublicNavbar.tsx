@@ -139,7 +139,7 @@ export const PublicNavbar = () => {
                                         لوحة التحكم
                                     </Link>
                                     <button
-                                        onClick={() => { logout(); setIsDropdownOpen(false); }}
+                                        onClick={() => { if (!window.confirm('هل أنت متأكد من تسجيل الخروج؟')) return; logout(); setIsDropdownOpen(false); }}
                                         className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                                         aria-label="تسجيل الخروج"
                                     >
@@ -202,7 +202,7 @@ export const PublicNavbar = () => {
                                         لوحة التحكم
                                     </Link>
                                     <button
-                                        onClick={() => { logout(); setIsMenuOpen(false); }}
+                                        onClick={() => { if (!window.confirm('هل أنت متأكد من تسجيل الخروج؟')) return; logout(); setIsMenuOpen(false); }}
                                         className="flex w-full items-center gap-3 px-6 py-4 rounded-full font-bold text-red-500 hover:bg-red-50"
                                     >
                                         <LogOut size={20} className="rotate-180" />

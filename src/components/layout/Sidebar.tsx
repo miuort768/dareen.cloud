@@ -50,6 +50,7 @@ export const Sidebar = () => {
     }, [collapsed]);
 
     const handleLogout = () => {
+        if (!window.confirm('هل أنت متأكد من تسجيل الخروج؟')) return;
         logout();
         navigate('/login');
     };

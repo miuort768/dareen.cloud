@@ -186,6 +186,7 @@ export const Classroom = () => {
     }, [isTeacher, id]);
 
     const handleLeave = useCallback(async () => {
+        if (!window.confirm('هل أنت متأكد من مغادرة الفصل؟')) return;
         if (isTeacher) {
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
             await endSessionInDb();

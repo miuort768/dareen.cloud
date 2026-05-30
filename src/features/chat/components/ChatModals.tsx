@@ -196,7 +196,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <div className="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <span className="text-white text-xs font-normal uppercase tracking-wider">تغيير الصورة</span>
                                     </div>
-                                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { /* handle avatar upload */ } }} />
+                                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { alert('سيتم تفعيل رفع الصور قريباً'); } e.target.value = ''; }} />
                                 </div>
                                 <p className="mt-4 text-xs font-normal text-gray-400 uppercase tracking-widest">أيقونة المجموعة</p>
                             </div>

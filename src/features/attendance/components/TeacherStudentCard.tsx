@@ -92,7 +92,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch { /* silent */ }
+            } catch { console.warn('فشل إنهاء الجلسة النشطة في الخادم'); }
         } else {
             const start = Date.now();
             setTimerSeconds(0);

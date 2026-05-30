@@ -105,6 +105,8 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
 
 export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
     <button
+        role="switch"
+        aria-checked={checked}
         onClick={onChange}
         className={cn(
             'w-11 h-6 rounded-full relative transition-all duration-300 shrink-0',

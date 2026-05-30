@@ -27,7 +27,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {filteredLeads.map((lead) => (
                         <React.Fragment key={lead.id}>
-                            <tr onDoubleClick={() => handleMarkLost(lead.id)} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
+                            <tr onDoubleClick={() => { if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
                                 <td className="px-5 py-3.5">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
@@ -80,7 +80,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                 <td className="px-5 py-3.5">
                                     <div className="flex items-center justify-center gap-1.5">
                                         <button 
-                                            onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
+                                            onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }}
                                             className={cn(
                                                     "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                                     lead.status === 'converted'
@@ -91,14 +91,14 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                             >
                                                 <CheckCircle2 size={12} />
                                             </button>
-                                            <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-none">
+                                            <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-none">
                                                 <PhoneCall size={12} />
                                             </button>
-                                            <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-none">
+                                            <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-none">
                                                 <MessageSquare size={12} />
                                             </button>
                                             <button 
-                                                onClick={() => handleMarkLost(lead.id)} 
+                                                onClick={(e) => { e.stopPropagation(); if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }} 
                                                 className={cn(
                                                     "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                                     lead.status === 'lost'
