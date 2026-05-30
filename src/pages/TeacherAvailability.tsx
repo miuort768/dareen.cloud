@@ -84,8 +84,7 @@ export const TeacherAvailability = () => {
       if (teacherAvail.length > 0) {
         setEditingSlots(teacherAvail.map((a: Availability) => ({ dayOfWeek: a.dayOfWeek, startTime: a.startTime, endTime: a.endTime, isAvailable: a.isAvailable })));
       } else {
-        const defaultSlots = dayNumbers.map(d => ({ dayOfWeek: d, startTime: '09:00', endTime: '17:00', isAvailable: 1 }));
-        setEditingSlots(defaultSlots);
+        setEditingSlots([]);
       }
       setHasChanges(false);
     }
@@ -107,7 +106,11 @@ export const TeacherAvailability = () => {
   };
 
   const applyPreset = (start: string, end: string) => {
-    setEditingSlots(prev => prev.map(s => ({ ...s, startTime: start, endTime: end, isAvailable: 1 })));
+    if (editingSlots.length === 0) {
+      setEditingSlots(dayNumbers.map(d => ({ dayOfWeek: d, startTime: start, endTime: end, isAvailable: 1 })));
+    } else {
+      setEditingSlots(prev => prev.map(s => ({ ...s, startTime: start, endTime: end, isAvailable: 1 })));
+    }
     setHasChanges(true);
   };
 

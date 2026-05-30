@@ -1,6 +1,6 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
-  Search, Plus, X, Phone, Clock, Trash, AlertTriangle, ArrowLeftRight, GraduationCap, Calendar, BookOpen
+  Search, Plus, X, Phone, Clock, Trash, AlertTriangle, ArrowLeftRight, GraduationCap, Calendar, BookOpen, CheckCircle2
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -53,7 +53,7 @@ export const TrialSessions = () => {
   const [showModal, setShowModal] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState({ studentName: '', parentPhone: '', subject: '', teacherName: '', date: '', time: '', notes: '' });
+  const [form, setForm] = useState({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
   const queryClient = useQueryClient();
 
   const { data: trials = [], isLoading } = useQuery({
@@ -66,6 +66,13 @@ export const TrialSessions = () => {
     queryFn: () => api.get<Record<string, unknown>[]>('/teachers')
   });
 
+  const { data: availability = [] } = useQuery({
+    queryKey: ['teacher-availability'],
+    queryFn: () => api.get<{ teacherId: string; dayOfWeek: number; startTime: string; endTime: string; isAvailable: number }[]>('/teacher-availability')
+  });
+
+  const dayOfWeek = form.date ? new Date(form.date + 'T12:00:00').getDay() : null;
+
   const { data: stats } = useQuery({
     queryKey: ['trial-sessions-stats'],
     queryFn: () => api.get<{ total: number; completed: number; pending: number; cancelled: number }>('/trial-sessions/stats')
@@ -73,7 +80,7 @@ export const TrialSessions = () => {
 
   const addMutation = useMutation({
     mutationFn: (data: Record<string, unknown>) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); }
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['teacher-availability'] }); setShowModal(false); setEditingId(null); resetForm(); }
   });
 
   const deleteMutation = useMutation({
@@ -86,11 +93,18 @@ export const TrialSessions = () => {
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); }
   });
 
-  const resetForm = () => setForm({ studentName: '', parentPhone: '', subject: '', teacherName: '', date: '', time: '', notes: '' });
+  const resetForm = () => setForm({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
 
   const openEdit = (t: TrialSession) => {
-    setForm({ studentName: t.studentName, parentPhone: t.parentPhone, subject: t.subject || '', teacherName: t.teacherName || '', date: t.date, time: t.time || '', notes: t.notes || '' });
+    setForm({ studentName: t.studentName, parentPhone: t.parentPhone, subject: t.subject || '', teacherId: t.teacherId || '', teacherName: t.teacherName || '', date: t.date, time: t.time || '', notes: t.notes || '' });
     setEditingId(t.id); setShowModal(true);
+  };
+
+  const isTeacherAvailable = (teacherId: string, day: number | null, time: string) => {
+    if (day === null || !time) return null;
+    const slots = availability.filter((a: { teacherId: string; dayOfWeek: number; isAvailable: number }) => a.teacherId === teacherId && a.dayOfWeek === day && a.isAvailable === 1);
+    if (slots.length === 0) return false;
+    return slots.some((s: { startTime: string; endTime: string }) => time >= s.startTime && time <= s.endTime);
   };
 
   const filtered = trials.filter((t: TrialSession) => {
@@ -174,10 +188,25 @@ export const TrialSessions = () => {
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المعلمة</label><select value={form.teacherName} onChange={e => setForm({ ...form, teacherName: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30">
-                <option value="">اختر معلمة</option>
-                {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => <option key={t.id} value={t.name}>{t.name}</option>)}
-              </select></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المعلمة</label>
+                <div className="relative">
+                  <select value={form.teacherName} onChange={e => {
+                    const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
+                    setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
+                  }} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30 appearance-none">
+                    <option value="">اختر معلمة</option>
+                    {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => {
+                      const avail = form.date && form.time ? isTeacherAvailable(t.id, dayOfWeek, form.time) : null;
+                      return <option key={t.id} value={t.name} disabled={avail === false}>{t.name}{avail === true ? ' ✓' : avail === false ? ' (غير متاحة)' : ''}</option>;
+                    })}
+                  </select>
+                  {form.teacherId && form.date && form.time && (
+                    <div className={`absolute left-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[8px] font-bold px-1.5 py-0.5 rounded ${isTeacherAvailable(form.teacherId, dayOfWeek, form.time) ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
+                      {isTeacherAvailable(form.teacherId, dayOfWeek, form.time) ? 'متاحة' : 'غير متاحة'}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
             </div>
