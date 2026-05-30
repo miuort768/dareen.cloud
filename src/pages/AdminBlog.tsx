@@ -14,7 +14,7 @@ interface BlogPost {
     keywords: string;
     author: string;
     date: string;
-    // ���� ������� ������
+    // حقول التصنيف التعليمي
     contentType: string;   // notes | solutions | summaries | foundation
     curriculum: string;    // kuwait | qatar | uae | saudi
     level: string;         // primary | middle | secondary | basic | preparatory
@@ -37,9 +37,10 @@ export const AdminBlog = () => {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog');
             setPosts(data);
-            } catch {
-                setError('��� ��� ����� ��� ��������');
-                setLoading(false);
+            setLoading(false);
+        } catch {
+            showNotification('حدث خطأ في تحميل المقالات', 'error');
+            setLoading(false);
         }
     }, []);
 
@@ -57,9 +58,9 @@ export const AdminBlog = () => {
                 excerpt: '',
                 content: '',
                 coverImage: '',
-                category: '���',
+                category: 'عام',
                 keywords: '',
-                author: '����� �����',
+                author: 'فريق دارين',
                 date: new Date().toISOString().split('T')[0],
                 contentType: 'notes',
                 curriculum: 'kuwait',
@@ -73,20 +74,20 @@ export const AdminBlog = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('�� ��� ����� �� ��� ��� ������')) return;
+        if (!window.confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
         try {
             await api.delete(`/blog/${id}`);
-            showNotification('�� ��� ������ �����', 'success');
+            showNotification('تم حذف المقال بنجاح', 'success');
             setPosts(posts.filter(p => p.id !== id));
         } catch {
-            showNotification('��� ��� ������', 'error');
+            showNotification('حدث خطأ في الحذف', 'error');
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!currentPost?.title || !currentPost?.slug) {
-            showNotification('���� ��� ������ ��������', 'warning');
+            showNotification('يرجى إكمال الحقول المطلوبة', 'warning');
             return;
         }
 
@@ -94,15 +95,15 @@ export const AdminBlog = () => {
             setSubmitting(true);
             if (currentPost.id) {
                 await api.put(`/blog/${currentPost.id}`, currentPost);
-                showNotification('�� ����� ������ �����', 'success');
+                showNotification('تم تحديث المقال بنجاح', 'success');
             } else {
                 await api.post('/blog', currentPost);
-                showNotification('�� ����� ������ �����', 'success');
+                showNotification('تم نشر المقال بنجاح', 'success');
             }
             setIsModalOpen(false);
             fetchPosts();
         } catch (err) {
-            showNotification(err.message || '��� ��� ������', 'error');
+            showNotification(err.message || 'حدث خطأ في الحفظ', 'error');
         } finally {
             setSubmitting(false);
         }
