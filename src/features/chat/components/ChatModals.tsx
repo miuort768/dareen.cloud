@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { X, Users as UsersIcon, ChevronLeft, Search, Check, Camera } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { ChatUser, DeleteType, Conversation } from '../../../types/chat.types';
@@ -42,6 +42,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     isDeleting, handleDeleteAction
 }) => {
     
+    const avatarInputRef = useRef<HTMLInputElement>(null);
     // Internal state to track "Select Members" vs "Add Group Info" steps
     const [step, setStep] = React.useState<'select' | 'info'>('select');
 
@@ -190,11 +191,12 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         /* Step 2: Group Info */
                         <div className="flex-1 flex flex-col p-6 animate-in slide-in-from-right-5 fade-in duration-300">
                             <div className="flex flex-col items-center mb-10">
-                                <div className="w-40 h-40 bg-[#dfe5e7] dark:bg-[#3b4a54] rounded-full flex items-center justify-center text-[#707c84] dark:text-[#8696a0] relative group cursor-pointer shadow-inner">
+                                <div onClick={() => avatarInputRef.current?.click()} className="w-40 h-40 bg-[#dfe5e7] dark:bg-[#3b4a54] rounded-full flex items-center justify-center text-[#707c84] dark:text-[#8696a0] relative group cursor-pointer shadow-inner">
                                     <Camera size={48} />
                                     <div className="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <span className="text-white text-xs font-normal uppercase tracking-wider">تغيير الصورة</span>
                                     </div>
+                                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { /* handle avatar upload */ } }} />
                                 </div>
                                 <p className="mt-4 text-xs font-normal text-gray-400 uppercase tracking-widest">أيقونة المجموعة</p>
                             </div>

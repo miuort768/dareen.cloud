@@ -141,7 +141,7 @@ export const Header = () => {
                 </div>
 
                 <Link
-                    to={currentUser?.role === 'admin' ? '/settings' : '/profile'}
+                    to={currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-dashboard' : currentUser?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard'}
                     className="flex items-center pr-2 border-r border-white/20 shrink-0 group transition-all"
                 >
                     <div className="w-9 h-9 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">

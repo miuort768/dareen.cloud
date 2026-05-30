@@ -1,4 +1,5 @@
 import { Trophy, Star, ChevronLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface ChildAchievement {
     id: string;
@@ -13,6 +14,7 @@ interface ParentExcellenceRadarProps {
 }
 
 export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarProps) => {
+    const navigate = useNavigate();
     if (!achievements || achievements.length === 0) return null;
 
     return (
@@ -50,7 +52,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
 
             <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-[9px] font-medium uppercase tracking-widest text-white/40">
                 <span>تم التحديث: اليوم</span>
-                <div className="flex items-center gap-1 group-hover:text-yellow-400 transition-colors cursor-pointer">
+                <div onClick={() => navigate('/parent-students')} className="flex items-center gap-1 group-hover:text-yellow-400 transition-colors cursor-pointer">
                     عرض كافة الإنجازات <ChevronLeft size={12} />
                 </div>
             </div>

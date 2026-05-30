@@ -853,7 +853,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                                 key={item.id}
                                 onClick={() => {
                                     if (item.id === 'home') { setActiveTab('home') }
-                                    else if (item.id === 'profile') { navigate('/profile') }
+                                    else if (item.id === 'profile') { navigate('/parent-dashboard') }
                                     else if (item.id === 'favorites') { navigate('/schedule') }
                                     else if (item.id === 'files') { navigate('/parent-students') }
                                     else if (item.id === 'more') { navigate('/forum') }

@@ -122,14 +122,14 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
                                     <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
-                                <div className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
+                                <Link to="/contact" className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
                                     <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform rounded-xl">
                                         <Sparkles className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
                                     <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -461,7 +461,7 @@ export const StudentDashboard = () => {
             {/* ══════════════════ CONTINUE LEARNING ══════════════════ */}
             <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-3">
-                    <button className="text-[#7C3AED] text-sm font-bold">عرض الكل</button>
+                    <button onClick={() => navigate('/schedule')} className="text-[#7C3AED] text-sm font-bold">عرض الكل</button>
                     <h2 className="text-lg font-black text-gray-800">تابع تعلمك</h2>
                 </div>
 
@@ -638,7 +638,7 @@ const MobileBottomNav = ({
 
     const navItems = [
         { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
-        { id: 'profile', label: 'الملف الشخصي', icon: User, path: '/profile' },
+        { id: 'profile', label: 'الملف الشخصي', icon: User, path: '/student-dashboard' },
         { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard', isCenter: true },
         { id: 'library', label: 'مكتبة الدورات', icon: Library, path: '/schedule' },
         { id: 'main', label: 'الرئيسية', icon: Home, path: '/' },
