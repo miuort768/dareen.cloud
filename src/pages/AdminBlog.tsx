@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useShowNotification } from '../context/AppContext';
-import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star } from 'lucide-react';
 import { api } from '../lib/api';
 
 interface BlogPost {
@@ -21,6 +21,9 @@ interface BlogPost {
     grade: string;         // 1-12
     term: string;          // 1 | 2 | ''
     subject: string;       // arabic | math | physics ...
+    downloadLink: string;
+    watchLink: string;
+    isNew: boolean;
 }
 
 export const AdminBlog = () => {
@@ -68,6 +71,9 @@ export const AdminBlog = () => {
                 grade: '7',
                 term: '1',
                 subject: 'arabic',
+                downloadLink: '',
+                watchLink: '',
+                isNew: false,
             });
         }
         setIsModalOpen(true);
@@ -193,13 +199,13 @@ export const AdminBlog = () => {
             {/* Modal Form */}
             {isModalOpen && currentPost && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60">
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
-                        <div className="p-5 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
+                        <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
                             <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all"><X size={18} /></button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-5 custom-scrollbar">
+                        <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
                                     <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">عنوان المقال</label>
@@ -354,6 +360,51 @@ export const AdminBlog = () => {
                                         />
                                     </div>
                                 )}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
+                                    <div className="relative">
+                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                        <input
+                                            type="url"
+                                            value={currentPost.downloadLink || ''}
+                                            onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                            dir="ltr"
+                                            placeholder="https://..."
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
+                                    <div className="relative">
+                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                        <input
+                                            type="url"
+                                            value={currentPost.watchLink || ''}
+                                            onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                            dir="ltr"
+                                            placeholder="https://..."
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={currentPost.isNew || false}
+                                        onChange={(e) => setCurrentPost({ ...currentPost, isNew: e.target.checked })}
+                                        className="w-4 h-4 rounded border-slate-300 text-[#E11D48] focus:ring-[#E11D48]"
+                                    />
+                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                        <Star size={12} className="text-amber-500" /> جديد
+                                    </span>
+                                </label>
                             </div>
 
                             <div>
