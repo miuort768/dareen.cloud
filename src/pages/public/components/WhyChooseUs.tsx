@@ -3,7 +3,7 @@ import { ShieldCheck, Lightbulb, Heart, Star, Users, BookOpen, Award, CheckCircl
 const features = [
   {
     title: 'نتائج مضمونة',
-    desc: 'متابعة دقيقة لضمان تحقيق أفضل النتائج التعليمية.',
+    desc: 'متابعة دقيقة مع تقارير أسبوعية لتحسين المستوى الدراسي في الكويت والخليج.',
     color: 'text-emerald-500',
     colorDark: 'dark:text-emerald-400',
     bg: 'bg-emerald-50',
@@ -14,7 +14,7 @@ const features = [
   },
   {
     title: 'طرق تعليم مبتكرة',
-    desc: 'طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.',
+    desc: 'دروس خصوصية تفاعلية للمناهج الكويتية والسعودية والقطرية تنمي مهارات الفهم والتفكير الإبداعي.',
     color: 'text-indigo-500',
     colorDark: 'dark:text-indigo-400',
     bg: 'bg-indigo-50',
@@ -25,7 +25,7 @@ const features = [
   },
   {
     title: 'بيئة آمنة ومحفزة',
-    desc: 'بيئة تعليمية افتراضية آمنة تشجع الطلاب على التفاعل والمشاركة بحرية.',
+    desc: 'فصول افتراضية آمنة لدروس التقوية أونلاين مع نخبة معلمي الرياضيات والعلوم واللغة العربية.',
     color: 'text-violet-500',
     colorDark: 'dark:text-violet-400',
     bg: 'bg-violet-50',
@@ -57,7 +57,7 @@ export const WhyChooseUs = () => {
             </span>
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-4xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
-            نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
+            أفضل منصة تعليم عن بعد في الكويت، السعودية، قطر، الإمارات وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export const WhyChooseUs = () => {
               </div>
               <h3 className="text-lg font-black text-white font-heading mb-2">بيئة تعليمية متطورة</h3>
               <p className="text-[11px] text-white/70 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
-                نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.
+                نخبة من المعلمين المتخصصين في تدريس المناهج الكويتية والخليجية لضمان تفوق طفلك في الرياضيات والعلوم واللغات.
               </p>
               <a
                 href="https://wa.me/96500000000"
@@ -130,7 +130,7 @@ export const WhyChooseUs = () => {
             </div>
             <div className="relative z-10">
               <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
-              <p className="text-xs text-indigo-50 leading-relaxed">طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.</p>
+              <p className="text-xs text-indigo-50 leading-relaxed">دروس خصوصية تفاعلية أونلاين للمناهج الخليجية تنمي مهارات الفهم والتفكير الإبداعي.</p>
             </div>
           </div>
 
@@ -141,7 +141,7 @@ export const WhyChooseUs = () => {
             </div>
             <div className="relative z-10">
               <h3 className="text-base font-bold mb-1">بيئة آمنة ومحفزة</h3>
-              <p className="text-xs text-white/90 leading-relaxed">بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة بحرية.</p>
+              <p className="text-xs text-white/90 leading-relaxed">فصول افتراضية آمنة لدروس التقوية الأونلاين في الكويت، تشجع الطالب على التفاعل والمشاركة.</p>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export const WhyChooseUs = () => {
             </div>
             <div className="relative z-10 text-right">
               <h3 className="text-base font-black text-slate-900 dark:text-white mb-1">نتائج مضمونة</h3>
-              <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">متابعة دقيقة لضمان تحقيق أفضل النتائج التعليمية.</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">متابعة وتعزيز مستمرين مع تقارير أسبوعية لمستوى الطالب في المواد الدراسية المختلفة.</p>
             </div>
           </div>
 
@@ -172,7 +172,7 @@ export const WhyChooseUs = () => {
                   <span className="text-xs font-bold text-gray-300">التميز التعليمي</span>
                 </div>
                 <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
-                <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.</p>
+                <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">نخبة من المعلمين المبدعين لتدريس المناهج الكويتية والخليجية. تعليم عن بعد، تحفيظ قرآن، وتأسيس في الرياضيات والعلوم واللغة العربية والإنجليزية.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
                 <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-indigo-400/30">

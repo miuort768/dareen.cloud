@@ -31,7 +31,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                                <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليمية بتصميم عصري</span>
+                                <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليم عن بعد رائدة في الكويت والخليج</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
@@ -41,7 +41,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 </span>
                             </h1>
                             <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.
+                                منصة تعليم عن بعد رائدة في الكويت، السعودية، قطر، الإمارات وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة من أفضل المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link

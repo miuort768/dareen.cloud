@@ -21,19 +21,19 @@ import {
 } from 'lucide-react';
 
 const quickFeatures = [
-  { icon: BookOpen, label: 'دروس خصوصية', desc: 'مع نخبة من أفضل المعلمين', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
-  { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي وأكثر', color: 'text-sky-600', colorDark: 'dark:text-sky-400', bg: 'bg-sky-50', bgDark: 'dark:bg-sky-900/30', border: 'border-sky-100', borderDark: 'dark:border-sky-900/50' },
-  { icon: Video, label: 'تحفيظ قرآن', desc: 'برامج تجويد وإتقان للحفظ', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
-  { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية للإنجاز', color: 'text-amber-600', colorDark: 'dark:text-amber-400', bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', border: 'border-amber-100', borderDark: 'dark:border-amber-900/50' },
+  { icon: BookOpen, label: 'دروس خصوصية أونلاين', desc: 'مع نخبة معلمين للمناهج الخليجية', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
+  { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي، قطري وعماني', color: 'text-sky-600', colorDark: 'dark:text-sky-400', bg: 'bg-sky-50', bgDark: 'dark:bg-sky-900/30', border: 'border-sky-100', borderDark: 'dark:border-sky-900/50' },
+  { icon: Video, label: 'تحفيظ قرآن عن بعد', desc: 'تجويد وإتقان مع قراء مجازين', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
+  { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية لمتابعة المستوى', color: 'text-amber-600', colorDark: 'dark:text-amber-400', bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', border: 'border-amber-100', borderDark: 'dark:border-amber-900/50' },
 ];
 
 const getFilteredCourses = (category: string) =>
   category === 'all' ? COURSES : COURSES.filter(c => c.category === category);
 
 const heroSlides = [
-  { title: 'منصة دارين', subtitle: 'دروس خصوصية أونلاين', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين' },
-  { title: 'دورات تفاعلية', subtitle: 'تعلم بأحدث الأساليب', desc: 'محتوى تعليمي مبتكر ينمي مهارات الطالب.', image: '/teacher-foundation.png', alt: 'معلم يشرح الدرس' },
-  { title: 'مستقبل مشرق', subtitle: 'مع نخبة المعلمين', desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج.', image: '/dareen_books_portal_v3.png', alt: 'كتب ومواد تعليمية' },
+  { title: 'منصة دارين', subtitle: 'دروس خصوصية أونلاين', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم في الكويت والخليج.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين السابعة للتعليم عن بعد في الكويت' },
+  { title: 'دورات تفاعلية', subtitle: 'تعلم بأحدث الأساليب', desc: 'دروس خصوصية تفاعلية في جميع المواد للمناهج الكويتية والخليجية.', image: '/teacher-foundation.png', alt: 'معلم خصوصي يشرح درس أونلاين لطالب في الكويت' },
+  { title: 'مستقبل مشرق', subtitle: 'مع نخبة المعلمين', desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج في الرياضيات والعلوم واللغات.', image: '/dareen_books_portal_v3.png', alt: 'مكتبة دارين السابعة التعليمية - كتب ومواد دراسية للمناهج الخليجية' },
 ];
 
 const stages = CATEGORIES;
