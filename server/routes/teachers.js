@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const validate = require('../middleware/validation');
+const { createTeacherSchema, updateTeacherSchema } = require('../utils/validators');
 
 // Using req.db from middleware
 
@@ -19,7 +21,7 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 });
 
 // 2. Add teacher
-router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSchema), async (req, res) => {
     const { id, name, phone1, phone2, subject, price, email, username, password } = req.body;
     const newId = id || `t_${require('crypto').randomBytes(4).toString('hex')}`;
 
@@ -53,7 +55,7 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 
 
 // 3. Update teacher
-router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateTeacherSchema), async (req, res) => {
     const { id } = req.params;
     const { name, phone1, phone2, subject, price, email, username, password } = req.body;
     try {

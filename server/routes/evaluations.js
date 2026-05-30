@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const { awardPoints, withTransaction } = require('../utils/dbHelper');
+const validate = require('../middleware/validation');
+const { createEvaluationSchema } = require('../utils/validators');
 
 // 0. Get all evaluations (Admin/Staff view)
 router.get('/', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
@@ -55,7 +57,7 @@ router.get('/teacher/:teacherId', authMiddleware, async (req, res) => {
 });
 
 // 3. Create a new evaluation (Teacher/Admin only)
-router.post('/', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(createEvaluationSchema), async (req, res) => {
     const { studentId, sessionId, rating, notes, points } = req.body;
     // Enforce creator data from the auth token
     const teacherId = req.user.role === 'teacher' ? req.user.id : (req.body.teacherId || 'admin');

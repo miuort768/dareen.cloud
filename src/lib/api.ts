@@ -40,6 +40,8 @@ class ApiClient {
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new Event('auth_logout'));
             }
+
+            throw new Error('انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى');
         }
 
         if (!response.ok) {

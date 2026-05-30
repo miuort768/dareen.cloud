@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const validate = require('../middleware/validation');
+const { createTrialSessionSchema, updateTrialSessionSchema } = require('../utils/validators');
 
 router.use(authMiddleware);
 
@@ -30,7 +32,7 @@ router.get('/stats', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validate(createTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, notes } = req.body;
         const id = uuidv4();
@@ -46,7 +48,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes } = req.body;
         await req.db.run(

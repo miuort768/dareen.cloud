@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { authMiddleware } = require('../middleware/auth');
+const validate = require('../middleware/validation');
+const { createAvailabilitySchema } = require('../utils/validators');
 
 router.use(authMiddleware);
 
@@ -47,7 +49,7 @@ router.get('/available-at', async (req, res) => {
     }
 });
 
-router.post('/bulk', async (req, res) => {
+router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
     try {
         const { teacherId, teacherName, slots } = req.body;
         if (!teacherId || !slots || !Array.isArray(slots)) {

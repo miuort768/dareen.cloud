@@ -812,6 +812,78 @@ async function setupDatabase() {
         console.warn('Could not auto-populate user credentials:', e.message);
     }
 
+    // ─── PERFORMANCE & INTEGRITY IMPROVEMENTS ───
+    console.log('Applying performance and integrity improvements...');
+
+    // 1. Fix: Drop old parents username index (created without WHERE clause at line 451)
+    // and recreate it with proper WHERE username IS NOT NULL to match students/teachers pattern
+    try {
+        await db.exec('DROP INDEX IF EXISTS idx_parents_username');
+        await db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_parents_username ON parents(username) WHERE username IS NOT NULL');
+        console.log('  ✓ Fixed idx_parents_username (added WHERE clause)');
+    } catch (e) {
+        console.warn('  ✗ Could not fix parents index:', e.message);
+    }
+
+    // 2. Add is_dismissed flag to notifications (replaces dismissed_notifications table pattern)
+    await addColumnIfNotExists('notifications', 'is_dismissed', 'INTEGER DEFAULT 0');
+
+    // 3. Add missing indexes for performance (FK columns and frequently filtered columns)
+    const missingIndices = [
+        // FK indexes
+        'CREATE INDEX IF NOT EXISTS idx_points_log_student ON points_log(studentId)',
+        'CREATE INDEX IF NOT EXISTS idx_teacher_availability_teacher ON teacher_availability(teacherId)',
+        'CREATE INDEX IF NOT EXISTS idx_evaluations_session ON evaluations(sessionId)',
+        'CREATE INDEX IF NOT EXISTS idx_forum_comments_post ON forum_comments(postId)',
+        'CREATE INDEX IF NOT EXISTS idx_notifications_receiver ON notifications(receiverId)',
+        'CREATE INDEX IF NOT EXISTS idx_notifications_sender ON notifications(senderId)',
+        'CREATE INDEX IF NOT EXISTS idx_notifications_receiver_read ON notifications(receiverId, read)',
+        'CREATE INDEX IF NOT EXISTS idx_messages_sender ON messages(senderId)',
+        'CREATE INDEX IF NOT EXISTS idx_tasks_user ON tasks(userId)',
+        'CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user ON push_subscriptions(userId)',
+        'CREATE INDEX IF NOT EXISTS idx_trial_sessions_teacher ON trial_sessions(teacherId)',
+        'CREATE INDEX IF NOT EXISTS idx_trial_sessions_date ON trial_sessions(date)',
+        'CREATE INDEX IF NOT EXISTS idx_trial_sessions_status ON trial_sessions(status)',
+        'CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status)',
+        'CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at)',
+        'CREATE INDEX IF NOT EXISTS idx_live_sessions_teacher_status ON live_sessions(teacherId, status)',
+        'CREATE INDEX IF NOT EXISTS idx_audit_logs_user ON audit_logs(userId)',
+        'CREATE INDEX IF NOT EXISTS idx_audit_logs_action ON audit_logs(action)',
+        'CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp)',
+        'CREATE INDEX IF NOT EXISTS idx_blog_posts_category ON blog_posts(category)',
+        'CREATE INDEX IF NOT EXISTS idx_blog_posts_curriculum ON blog_posts(curriculum)',
+        'CREATE INDEX IF NOT EXISTS idx_conversations_creator ON conversations(createdBy)',
+        'CREATE INDEX IF NOT EXISTS idx_announcements_type ON announcements(type)',
+        'CREATE INDEX IF NOT EXISTS idx_announcements_date ON announcements(date)',
+        'CREATE INDEX IF NOT EXISTS idx_job_applications_position ON job_applications(position)',
+        'CREATE INDEX IF NOT EXISTS idx_active_sessions_teacher ON active_sessions(teacherId)',
+        'CREATE INDEX IF NOT EXISTS idx_active_sessions_student ON active_sessions(studentId)',
+        'CREATE INDEX IF NOT EXISTS idx_forum_posts_author ON forum_posts(authorId)',
+        'CREATE INDEX IF NOT EXISTS idx_forum_posts_status ON forum_posts(status)',
+    ];
+
+    for (const idx of missingIndices) {
+        try {
+            await db.exec(idx);
+        } catch (e) {
+            console.warn(`  ✗ Could not create index [${idx}]:`, e.message);
+        }
+    }
+    console.log(`  ✓ Created ${missingIndices.length} indexes`);
+
+    // 4. Convert existing data: populate is_dismissed from dismissed_notifications table (if has data)
+    try {
+        await db.exec(`
+            UPDATE notifications SET is_dismissed = 1 
+            WHERE id IN (SELECT id FROM dismissed_notifications)
+        `);
+        console.log('  ✓ Migrated dismissed_notifications data to notifications.is_dismissed');
+    } catch (e) {
+        // dismissed_notifications table might not exist or be empty - fine
+    }
+
+    console.log('Performance and integrity improvements applied.');
+
     console.log('Database setup complete.');
 }
 

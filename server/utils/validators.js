@@ -1,7 +1,7 @@
 const { z } = require('zod');
 
 // Shared basic schemas
-const idSchema = z.string().or(z.number()); // IDs can be string or auto-inc number (though mostly UUID strings in this app)
+const idSchema = z.string().or(z.number());
 const phoneSchema = z.string().min(10, "Phone number too short").optional().or(z.literal(''));
 
 // --- Student Schemas ---
@@ -21,9 +21,7 @@ const createStudentSchema = z.object({
     enrollments: z.array(z.any()).nullable().optional()
 });
 
-const updateStudentSchema = createStudentSchema.partial().extend({
-    // Add specific fields for update if any
-});
+const updateStudentSchema = createStudentSchema.partial();
 
 // --- Teacher Schemas ---
 const createTeacherSchema = z.object({
@@ -38,20 +36,24 @@ const createTeacherSchema = z.object({
     password: z.string().optional().or(z.literal(''))
 });
 
+const updateTeacherSchema = createTeacherSchema.partial();
+
 // --- Parent Schemas ---
 const createParentSchema = z.object({
     id: z.string().optional(),
     name: z.string().min(2, "Name is required").trim(),
-    phone: z.string().min(1, "Phone is required").trim(), // Parents MUST have a phone as ID often relies on it or it's unique
+    phone: z.string().min(1, "Phone is required").trim(),
     email: z.string().email().optional().or(z.literal('')),
     username: z.string().optional().or(z.literal('')),
     password: z.string().optional().or(z.literal('')),
     studentCount: z.number().optional()
 });
 
+const updateParentSchema = createParentSchema.partial();
+
 // --- Session Schemas ---
 const createSessionSchema = z.object({
-    id: z.string().optional(), // Often generated on client or server
+    id: z.string().optional(),
     studentId: idSchema,
     studentName: z.string().min(1, "Student Name is required"),
     teacherId: idSchema.optional(),
@@ -66,8 +68,62 @@ const createSessionSchema = z.object({
 
 const updateSessionSchema = createSessionSchema.partial();
 
+// --- Evaluation Schemas ---
+const createEvaluationSchema = z.object({
+    id: z.string().optional(),
+    studentId: z.string().min(1, "Student ID is required"),
+    teacherId: z.string().optional(),
+    teacherName: z.string().optional(),
+    sessionId: z.string().optional(),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional().or(z.literal('')),
+    rating: z.enum(['ممتاز', 'جيد جدًا', 'جيد', 'يحتاج تحسين']).default('ممتاز'),
+    notes: z.string().optional().or(z.literal('')),
+    points: z.number().int().min(0).default(0)
+});
+
+const updateEvaluationSchema = createEvaluationSchema.partial();
+
+// --- Trial Session Schemas ---
+const createTrialSessionSchema = z.object({
+    id: z.string().optional(),
+    studentName: z.string().min(1, "Student name is required").trim(),
+    parentPhone: z.string().min(1, "Parent phone is required").trim(),
+    subject: z.string().optional().or(z.literal('')),
+    teacherId: z.string().optional(),
+    teacherName: z.string().optional().or(z.literal('')),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
+    time: z.string().optional().or(z.literal('')),
+    notes: z.string().optional().or(z.literal(''))
+});
+
+const updateTrialSessionSchema = createTrialSessionSchema.partial();
+
+// --- Teacher Availability Schemas ---
+const createAvailabilitySchema = z.object({
+    teacherId: z.string().min(1, "Teacher ID is required"),
+    teacherName: z.string().min(1, "Teacher name is required"),
+    slots: z.array(z.object({
+        dayOfWeek: z.number().int().min(0).max(6),
+        startTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be HH:MM"),
+        endTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be HH:MM"),
+        isAvailable: z.number().int().min(0).max(1).optional().default(1)
+    })).min(1, "At least one slot is required")
+});
+
+// --- Task Schemas ---
+const createTaskSchema = z.object({
+    id: z.string().optional(),
+    title: z.string().min(1, "Title is required").trim(),
+    description: z.string().optional().or(z.literal('')),
+    status: z.enum(['pending', 'completed']).default('pending'),
+    priority: z.enum(['low', 'medium', 'high']).default('medium'),
+    dueDate: z.string().optional().or(z.literal('')),
+    userId: z.string().optional()
+});
+
+const updateTaskSchema = createTaskSchema.partial();
+
 // --- Invoice Schemas ---
-// Student Invoice
 const createStudentInvoiceSchema = z.object({
     id: z.string().optional(),
     studentId: idSchema,
@@ -82,7 +138,6 @@ const createStudentInvoiceSchema = z.object({
     items: z.array(z.any()).optional()
 });
 
-// Teacher Invoice
 const createTeacherInvoiceSchema = z.object({
     id: z.string().optional(),
     teacherId: idSchema.optional(),
@@ -95,15 +150,40 @@ const createTeacherInvoiceSchema = z.object({
     personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
 });
 
+// --- Lead Schemas ---
+const createLeadSchema = z.object({
+    id: z.string().optional(),
+    studentName: z.string().min(1, "Student name is required").trim(),
+    phone: z.string().min(1, "Phone is required").trim(),
+    subject: z.string().optional().or(z.literal('')),
+    curriculum: z.string().optional().or(z.literal('')),
+    status: z.enum(['new', 'contacted', 'interested', 'trial', 'enrolled', 'lost']).default('new'),
+    priority: z.enum(['low', 'medium', 'high']).default('medium'),
+    notes: z.string().optional().or(z.literal(''))
+});
+
+const updateLeadSchema = createLeadSchema.partial();
+
 module.exports = {
     createStudentSchema,
     updateStudentSchema,
     createTeacherSchema,
+    updateTeacherSchema,
     createParentSchema,
+    updateParentSchema,
     createSessionSchema,
     updateSessionSchema,
+    createEvaluationSchema,
+    updateEvaluationSchema,
+    createTrialSessionSchema,
+    updateTrialSessionSchema,
+    createAvailabilitySchema,
+    createTaskSchema,
+    updateTaskSchema,
     createStudentInvoiceSchema,
     updateStudentInvoiceSchema: createStudentInvoiceSchema.partial(),
     createTeacherInvoiceSchema,
-    updateTeacherInvoiceSchema: createTeacherInvoiceSchema.partial()
+    updateTeacherInvoiceSchema: createTeacherInvoiceSchema.partial(),
+    createLeadSchema,
+    updateLeadSchema
 };
