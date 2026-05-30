@@ -189,7 +189,7 @@ export const AdminBlog = () => {
                                         <button onClick={() => handleOpenModal(post)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#2563EB' }}><Edit2 size={16} /></button>
                                         <button onClick={() => handleDelete(post.id)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#E11D48' }}><Trash2 size={16} /></button>
                                     </div>
-                                    <a href={`/blog/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 transition-all active:scale-90" style={{ color: '#94A3B8' }}><ExternalLink size={16} /></a>
+                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 transition-all active:scale-90" style={{ color: '#94A3B8' }}><ExternalLink size={16} /></a>
                                 </div>
                             </div>
                         </div>

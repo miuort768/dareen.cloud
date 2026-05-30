@@ -61,8 +61,14 @@ export const Login = () => {
                 const savedUser = JSON.parse(localStorage.getItem('app_current_user') || '{}');
                 if (savedUser.role === 'chat_user') {
                     navigate('/chat', { replace: true });
+                } else if (savedUser.role === 'parent') {
+                    navigate('/parent-dashboard', { replace: true });
+                } else if (savedUser.role === 'student') {
+                    navigate('/student-dashboard', { replace: true });
+                } else if (savedUser.role === 'teacher') {
+                    navigate('/teacher-dashboard', { replace: true });
                 } else {
-                    navigate('/dashboard', { replace: true });
+                    navigate('/admin-dashboard', { replace: true });
                 }
             } else {
                 setError('اسم المستخدم أو كلمة المرور غير صحيحة');

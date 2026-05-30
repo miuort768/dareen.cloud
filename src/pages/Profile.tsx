@@ -9,20 +9,20 @@ import { cn } from '../lib/utils';
 import { triggerHaptic } from '../lib/haptics';
 
 const THEME_COLORS = [
-    { id: 'indigo', label: 'äíáí', class: 'bg-indigo-500' },
-    { id: 'blue', label: 'ÃÒÑÞ', class: 'bg-blue-500' },
-    { id: 'emerald', label: 'ÒãÑÏí', class: 'bg-emerald-500' },
-    { id: 'rose', label: 'æÑÏí', class: 'bg-rose-500' },
-    { id: 'amber', label: 'ßåÑãÇäí', class: 'bg-amber-500' },
-    { id: 'purple', label: 'ÃÑÌæÇäí', class: 'bg-purple-500' },
-    { id: 'cyan', label: 'ÓíÇä', class: 'bg-cyan-500' },
-    { id: 'teal', label: 'ÊÑßæÇÒ', class: 'bg-teal-500' },
-    { id: 'orange', label: 'ÈÑÊÞÇáí', class: 'bg-orange-500' },
-    { id: 'pink', label: 'ÒåÑí', class: 'bg-pink-500' },
-    { id: 'lava', label: 'Íãã', class: 'bg-orange-600' },
-    { id: 'midnight', label: 'áíáí', class: 'bg-slate-900' },
-    { id: 'gold', label: 'ÐåÈí', class: 'bg-amber-400' },
-    { id: 'crimson', label: 'ÞÑãÒí', class: 'bg-rose-600' },
+    { id: 'indigo', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-indigo-500' },
+    { id: 'blue', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-blue-500' },
+    { id: 'emerald', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-emerald-500' },
+    { id: 'rose', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-rose-500' },
+    { id: 'amber', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-amber-500' },
+    { id: 'purple', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-purple-500' },
+    { id: 'cyan', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-cyan-500' },
+    { id: 'teal', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-teal-500' },
+    { id: 'orange', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-orange-500' },
+    { id: 'pink', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-pink-500' },
+    { id: 'lava', label: 'ï¿½ï¿½ï¿½', class: 'bg-orange-600' },
+    { id: 'midnight', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-slate-900' },
+    { id: 'gold', label: 'ï¿½ï¿½ï¿½ï¿½', class: 'bg-amber-400' },
+    { id: 'crimson', label: 'ï¿½ï¿½ï¿½ï¿½ï¿½', class: 'bg-rose-600' },
 ];
 
 export const Profile = () => {
@@ -39,12 +39,12 @@ export const Profile = () => {
 
     const handleSaveProfile = async () => {
         if (!name.trim()) {
-            showNotification('íÑÌì ÅÏÎÇá ÇáÇÓã', 'error');
+            showNotification('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
             return;
         }
 
         if (password && password !== confirmPassword) {
-            showNotification('ßáãÇÊ ÇáÓÑ ÛíÑ ãÊØÇÈÞÉ', 'error');
+            showNotification('ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
             return;
         }
 
@@ -61,11 +61,11 @@ export const Profile = () => {
             }
 
             await updateCurrentUser(updates);
-            showNotification('Êã ÊÍÏíË ÇáãáÝ ÇáÔÎÕí ÈäÌÇÍ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
             setPassword('');
             setConfirmPassword('');
         } catch {
-            showNotification('ÝÔá ÊÍÏíË ÇáÈíÇäÇÊ', 'error');
+            showNotification('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         } finally {
             setIsSaving(false);
         }
@@ -94,9 +94,9 @@ export const Profile = () => {
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 font-normal text-sm flex items-center justify-center md:justify-start gap-2">
                             <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-3 py-0.5 rounded-full text-[10px] uppercase tracking-widest">
-                                {currentUser?.role === 'admin' ? 'ãÏíÑ ÇáäÙÇã' : 
-                                 currentUser?.role === 'student' ? 'ØÇáÈ' : 
-                                 currentUser?.role === 'parent' ? 'æáí ÃãÑ' : 'ãÚáã'}
+                                {currentUser?.role === 'admin' ? 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' : 
+                                 currentUser?.role === 'student' ? 'ï¿½ï¿½ï¿½ï¿½' : 
+                                 currentUser?.role === 'parent' ? 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½ï¿½'}
                             </span>
                             <span className="opacity-40">/</span>
                             <span className="font-mono">@{currentUser?.username}</span>
@@ -105,8 +105,8 @@ export const Profile = () => {
 
                     <div className="flex gap-2">
                          <div className="flex flex-col items-center px-4 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-slate-100 dark:border-slate-800">
-                            <span className="text-[10px] text-slate-400 font-normal uppercase mb-1">ÊÇÑíÎ ÇáÇäÖãÇã</span>
-                            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">ÓÈÊãÈÑ 2023</span>
+                            <span className="text-[10px] text-slate-400 font-normal uppercase mb-1">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</span>
+                            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2023</span>
                          </div>
                     </div>
                 </div>
@@ -122,22 +122,22 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-none flex items-center justify-center text-blue-600">
                                 <UserCog size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ÇáãÚáæãÇÊ ÇáÃÓÇÓíÉ</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ÇáÇÓã ÇáßÇãá</label>
+                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                 <input 
                                     type="text" 
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-primary-500/20 transition-all"
-                                    placeholder="ÃÏÎá ÇÓãß åäÇ..."
+                                    placeholder="ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½..."
                                 />
                             </div>
                             <div>
-                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ÇÓã ÇáãÓÊÎÏã (áÇ íãßä ÊÛííÑå)</label>
+                                <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)</label>
                                 <input 
                                     type="text" 
                                     value={currentUser?.username}
@@ -154,40 +154,40 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-none flex items-center justify-center text-rose-600">
                                 <ShieldCheck size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ÃãÇä ÇáÍÓÇÈ</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ßáãÉ ÇáÓÑ ÇáÌÏíÏÉ</label>
+                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-rose-500/20 transition-all"
-                                            placeholder="••••••••"
+                                            placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                                         />
                                         <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ÊÃßíÏ ßáãÉ ÇáÓÑ</label>
+                                    <label className="block text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 mr-1">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             className="w-full bg-slate-50 dark:bg-slate-800/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-slate-700 dark:text-white focus:ring-2 focus:ring-rose-500/20 transition-all"
-                                            placeholder="••••••••"
+                                            placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                                         />
                                         <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                                     </div>
                                 </div>
                             </div>
                             <p className="text-[10px] text-slate-400 font-medium leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-                                äÕíÍÉ: ÇÓÊÎÏã ßáãÉ ÓÑ ÞæíÉ ÊÍÊæí Úáì ÍÑæÝ æÃÑÞÇã. ÓíÊãßä ãÏíÑ ÇáäÙÇã ãä ãÓÇÚÏÊß Ýí ÍÇá äÓíÇäåÇ.
+                                ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                             </p>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ export const Profile = () => {
                         ) : (
                             <>
                                 <Save size={20} />
-                                <span className="uppercase tracking-widest text-sm">ÍÝÙ ÇáÊÛííÑÇÊ</span>
+                                <span className="uppercase tracking-widest text-sm">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</span>
                             </>
                         )}
                     </button>
@@ -218,10 +218,10 @@ export const Profile = () => {
                             <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-none flex items-center justify-center text-amber-600">
                                 <Palette size={20} />
                             </div>
-                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ÓãÇÊ ÇáÃáæÇä</h2>
+                            <h2 className="font-medium text-slate-800 dark:text-white tracking-tight">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h2>
                         </div>
 
-                        <p className="text-[11px] text-slate-400 mb-4 font-normal uppercase tracking-tighter">ÇÎÊÑ Çááæä ÇáÐí ÊÝÖáå áæÇÌåÉ ÇáãäÕÉ</p>
+                        <p className="text-[11px] text-slate-400 mb-4 font-normal uppercase tracking-tighter">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                         
                         <div className="grid grid-cols-4 gap-3">
                             {THEME_COLORS.map(c => (
@@ -251,13 +251,13 @@ export const Profile = () => {
                     <div className="bg-gradient-to-br from-indigo-600 to-primary-700 rounded-none p-6 text-white shadow-sm relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
                         <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-                             ãÑßÒ ÇáãÓÇÚÏÉ
+                             ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         </h3>
                         <p className="text-xs text-white/80 leading-relaxed mb-6 font-medium">
-                            ÅÐÇ æÇÌåÊ Ãí ãÔßáÉ Ýí ÍÓÇÈß Ãæ ÃãÇä ÇáÈíÇäÇÊ¡ íãßäß ÇáÊæÇÕá ãÚ ÇáÏÚã ÇáÝäí ãÈÇÔÑÉ.
+                            ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                         </p>
-                        <button className="w-full bg-white/20 hover:bg-white/30  text-white border border-white/20 py-2.5 rounded-lg text-xs font-medium uppercase tracking-widest transition-all">
-                            ÊæÇÕá ãÚäÇ
+                        <button onClick={() => showNotification('Ø³ÙŠØªÙ… ØªÙˆÙÙŠØ± Ø®Ø§ØµÙŠØ© Ø§Ù„ØªÙˆØ§ØµÙ„ Ù‚Ø±ÙŠØ¨Ø§Ù‹', 'info')} className="w-full bg-white/20 hover:bg-white/30  text-white border border-white/20 py-2.5 rounded-lg text-xs font-medium uppercase tracking-widest transition-all">
+                            ØªÙˆØ§ØµÙ„ Ù…Ø¹Ù†Ø§
                         </button>
                     </div>
                 </div>
