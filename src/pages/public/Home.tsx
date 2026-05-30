@@ -142,7 +142,7 @@ export const Home = () => {
                       <Play className="w-3 h-3 fill-white" />
                       تصفح الدورات
                     </Link>
-                    <Link to="/login" className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center">
+                    <Link to="/login" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all w-full text-center">
                       تسجيل الدخول
                     </Link>
                   </div>
