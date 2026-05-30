@@ -138,7 +138,7 @@ export const BlogPost = () => {
                     <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-4">
                             <span className="font-bold text-gray-900 dark:text-white">شارك المقال:</span>
-                            <button className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 transition-colors">
+                            <button onClick={() => { if (navigator.share) { navigator.share({ title: post.title, url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); alert('تم نسخ الرابط'); } }} className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 transition-colors">
                                 <Share2 size={18} />
                             </button>
                         </div>

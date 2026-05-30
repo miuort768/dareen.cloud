@@ -95,6 +95,7 @@ export const Forum = () => {
     const [loading, setLoading] = useState(true);
     const [commentTexts, setCommentTexts] = useState<Record<string, string>>({});
     const [viewingComments, setViewingComments] = useState<Record<string, boolean>>({});
+    const [showMenuPostId, setShowMenuPostId] = useState<string | null>(null);
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -336,9 +337,21 @@ export const Forum = () => {
                                                     <Trash2 size={15} />
                                                 </button>
                                             )}
-                                            <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                                                <MoreHorizontal size={17} />
-                                            </button>
+                                            <div className="relative">
+                                                <button
+                                                    onClick={() => setShowMenuPostId(showMenuPostId === post.id ? null : post.id)}
+                                                    className="p-2 text-slate-300 hover:text-slate-600 transition-colors rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                                                >
+                                                    <MoreHorizontal size={17} />
+                                                </button>
+                                                {showMenuPostId === post.id && (
+                                                    <div className="absolute left-0 top-full mt-1 w-36 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 z-50 py-1">
+                                                        <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-[10px] font-bold text-right text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+                                                            <AlertTriangle size={12} className="text-rose-400" /> الإبلاغ عن المنشور
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -496,7 +509,7 @@ export const Forum = () => {
                         <h4 className="text-white font-black text-base mb-1">إرشادات المنتدى</h4>
                         <p className="text-purple-100 text-[11px] font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
-                    <button className="relative z-10 bg-white text-[#6C4BFF] px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-purple-50 transition-all shadow-lg active:scale-95">
+                    <button onClick={() => window.alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين. الممنوع: الإساءة، المحتوى المسيء، الترويج، نشر معلومات شخصية.')} className="relative z-10 bg-white text-[#6C4BFF] px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-purple-50 transition-all shadow-lg active:scale-95">
                         عرض الإرشادات
                     </button>
                 </div>

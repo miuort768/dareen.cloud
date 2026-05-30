@@ -66,7 +66,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 color: 'indigo',
                 title: `${overdueInvoices.length} فواتير`,
                 desc: `تحصيل مالي مطلوب`,
-                action: () => navigate('/studentInvoices'),
+                action: () => navigate('/student-invoices'),
                 actionLabel: 'تحصيل'
             });
         }

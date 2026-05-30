@@ -102,7 +102,7 @@ export const NotificationsCenter = ({
                 type: 'warning',
                 title: `${overdueInvoices.length} فواتير متأخرة`,
                 desc: `مطلوب تحصيل مالي عاجل`,
-                action: () => navigate('/studentInvoices'),
+                action: () => navigate('/student-invoices'),
                 color: 'indigo'
             });
         }

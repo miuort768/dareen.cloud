@@ -40,7 +40,7 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
             </div>
             <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
             <p className="text-xs font-bold text-slate-500 mb-4">الإصدار 2.1.0</p>
-            <button className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest hover:underline">
+            <button onClick={() => showNotify('أنت على أحدث إصدار')} className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest hover:underline">
                 التحقق من وجود تحديثات
             </button>
         </SectionCard>

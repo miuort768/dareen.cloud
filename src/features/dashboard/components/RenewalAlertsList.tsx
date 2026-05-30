@@ -3,6 +3,7 @@ import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import { useAdminPhone } from '../../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 interface RenewalAlertsListProps {
     stats: Stats;
@@ -11,6 +12,7 @@ interface RenewalAlertsListProps {
 
 export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsListProps) => {
     const adminPhone = useAdminPhone();
+    const navigate = useNavigate();
     return (
         <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full" dir="rtl">
             {/* Header Section */}
@@ -77,7 +79,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
             </div>
 
             <div className="mt-auto pt-6">
-                <button className="w-full h-11 flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white rounded-none transition-all active:scale-95 border border-slate-200 dark:border-slate-700">
+                <button onClick={() => navigate('/attendance')} className="w-full h-11 flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white rounded-none transition-all active:scale-95 border border-slate-200 dark:border-slate-700">
                     عرض كافة السجلات
                     <ChevronLeft size={16} />
                 </button>
