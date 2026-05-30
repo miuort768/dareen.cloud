@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef, type ComponentType } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle, ChevronLeft, ChevronRight, Building2, BookMarked, AlertTriangle, X } from 'lucide-react';
 import { api } from '../lib/api';
@@ -451,7 +451,7 @@ export const Jobs = () => {
 };
 
 interface InputFieldProps {
-    icon: React.FC<{ size?: number; className?: string }>;
+    icon: ComponentType<{ size?: number; className?: string }>;
     label: string;
     name: string;
     value: string;
@@ -463,7 +463,7 @@ interface InputFieldProps {
     autoComplete?: string;
 }
 
-const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
     <div className="space-y-1.5">
         <label className="flex items-center gap-2 text-[10px] font-black text-slate-500 dark:text-slate-400">
             <Icon size={12} className="text-primary-500 shrink-0" />
