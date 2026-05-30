@@ -134,8 +134,8 @@ export const Home = () => {
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                  <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h2>
-                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">{slide.subtitle}</p>
+                   <h2 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h2>
+                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-0.5">{slide.subtitle}</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
                     <Link to="/courses" className="bg-white dark:bg-slate-200 text-slate-900 dark:text-slate-900 text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-black/10 dark:shadow-slate-900/30 hover:bg-slate-100 dark:hover:bg-slate-300 transition-all flex items-center justify-center gap-1 w-full">
@@ -179,8 +179,8 @@ export const Home = () => {
                   <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight">{f.label}</span>
-                  <span className="text-[6px] text-slate-400 font-medium leading-tight">{f.desc}</span>
+                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-none mb-0">{f.label}</span>
+                  <span className="text-[6px] text-slate-400 font-medium leading-none">{f.desc}</span>
                 </div>
               </div>
             ))}
