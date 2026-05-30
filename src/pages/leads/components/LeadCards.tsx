@@ -20,7 +20,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
             ) : filteredLeads.map((lead) => (
                 <div
                     key={lead.id}
-                    onDoubleClick={() => { if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }}
+                    onDoubleClick={() => handleMarkLost(lead.id)}
                     className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm active:scale-[0.98] transition-all cursor-pointer rounded-none"
                     title="اضغط مرتين للإخفاء"
                 >
@@ -105,7 +105,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                     <MessageSquare size={12} />
                                 </button>
                                 <button 
-                                    onClick={(e) => { e.stopPropagation(); if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }}
+                                    onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }}
                                     className={cn(
                                         "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                         lead.status === 'lost'

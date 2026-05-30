@@ -111,7 +111,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch { /* silent */ }
+            } catch { console.warn('فشل بدء الجلسة النشطة في الخادم'); }
         }
     };
 

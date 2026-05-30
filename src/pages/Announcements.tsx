@@ -86,18 +86,18 @@ export const Announcements = () => {
             setFormData({ title: '', content: '', type: 'general', isActive: true });
             fetchAnnouncements();
         } catch {
-            showNotification('��� ��� �������', 'error');
+            showNotification('فشل حفظ الإعلان', 'error');
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('�� ��� ����� �� ��� ��� �������')) return;
+        if (!window.confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
         try {
             await api.delete(`/announcements/${id}`);
-            showNotification('�� ��� �������', 'success');
+            showNotification('تم حذف الإعلان', 'success');
             fetchAnnouncements();
         } catch {
-            showNotification('��� ��� �������', 'error');
+            showNotification('فشل حذف الإعلان', 'error');
         }
     };
 

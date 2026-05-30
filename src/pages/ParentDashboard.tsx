@@ -127,7 +127,7 @@ export const ParentDashboard = () => {
                     clearInterval(timerTickRef.current);
                     timerTickRef.current = null;
                 }
-            } catch { /* silent */ }
+            } catch { console.warn('فشل التحقق من الجلسات النشطة'); }
         };
         poll();
         const interval = setInterval(poll, 5000);

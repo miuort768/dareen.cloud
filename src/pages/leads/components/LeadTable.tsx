@@ -27,7 +27,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {filteredLeads.map((lead) => (
                         <React.Fragment key={lead.id}>
-                            <tr onDoubleClick={() => { if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
+                            <tr onDoubleClick={() => handleMarkLost(lead.id)} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
                                 <td className="px-5 py-3.5">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
@@ -98,7 +98,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                                 <MessageSquare size={12} />
                                             </button>
                                             <button 
-                                                onClick={(e) => { e.stopPropagation(); if (window.confirm('هل أنت متأكد من إخفاء هذا العميل؟')) handleMarkLost(lead.id); }} 
+                                                onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} 
                                                 className={cn(
                                                     "w-7 h-7 flex items-center justify-center transition-all rounded-none",
                                                     lead.status === 'lost'
