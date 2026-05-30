@@ -1,12 +1,13 @@
 import { Award, X, CheckCircle2, Zap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { RATING_OPTIONS } from '../types/constants';
+import type { Student } from '../../../types';
 
 interface EvaluationFormModalProps {
     isOpen: boolean;
     formData: { studentId: string; rating: string; points: number; notes: string };
-    students: Record<string, unknown>[];
-    teacherStudents: Record<string, unknown>[];
+    students: Student[];
+    teacherStudents: Student[];
     onClose: () => void;
     onChange: (data: { studentId: string; rating: string; points: number; notes: string }) => void;
     onSubmit: (e: React.FormEvent) => void;
@@ -23,7 +24,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                         <Award size={16} />
                         {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name || ''}` : 'إضافة تقييم جديد'}
                     </h3>
-                    <button onClick={onClose} className="w-7 h-7 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-none"><X size={14} /></button>
+                    <button onClick={onClose} aria-label="إغلاق" className="w-7 h-7 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-none"><X size={14} /></button>
                 </div>
 
                 <div className="p-4 overflow-y-auto space-y-4">

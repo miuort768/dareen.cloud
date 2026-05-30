@@ -6,14 +6,15 @@ import { EvaluationsHeader } from '../components/EvaluationsHeader';
 import { EvaluationCard } from '../components/EvaluationCard';
 import { EvaluationFormModal } from '../components/EvaluationFormModal';
 import { HistoryModal } from '../components/HistoryModal';
+import type { Student, Evaluation } from '../../../types';
 
 export const Evaluations = () => {
     const currentUser = useCurrentUser();
-    const [evaluations, setEvaluations] = useState<Record<string, unknown>[]>([]);
-    const [students, setStudents] = useState<Record<string, unknown>[]>([]);
+    const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
+    const [students, setStudents] = useState<Student[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [historyModalStudent, setHistoryModalStudent] = useState<Record<string, unknown> | null>(null);
+    const [historyModalStudent, setHistoryModalStudent] = useState<Student | null>(null);
 
     const [formData, setFormData] = useState({
         studentId: '', rating: 'ممتاز', points: 0, notes: ''
@@ -26,17 +27,17 @@ export const Evaluations = () => {
         try {
             setIsLoading(true);
             if (currentUser?.role === 'parent') {
-                const myChildren = await api.get<Record<string, unknown>[]>('/parents/my-children');
+                const myChildren = await api.get<Student[]>('/parents/my-children');
                 setStudents(myChildren);
-                const evalsPromises = myChildren.map(c => api.get<Record<string, unknown>[]>(`/evaluations/student/${c.id}`));
+                const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`));
                 const allEvalsResults = await Promise.all(evalsPromises);
                 setEvaluations(allEvalsResults.flat());
             } else {
-                const studentsRes = await api.get<Record<string, unknown>[]>('/students');
+                const studentsRes = await api.get<Student[]>('/students');
                 setStudents(studentsRes);
                 let evalsUrl = '/evaluations';
                 if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
-                const evalsRes = await api.get<Record<string, unknown>[]>(evalsUrl);
+                const evalsRes = await api.get<Evaluation[]>(evalsUrl);
                 setEvaluations(evalsRes);
             }
         } catch (error) {
@@ -53,7 +54,7 @@ export const Evaluations = () => {
         if (currentUser.role === 'admin') return students;
         if (currentUser.role === 'teacher') {
             return students.filter(s =>
-                (s.enrollments as Record<string, unknown>[])?.some((e: Record<string, unknown>) =>
+                s.enrollments?.some(e =>
                     e.teacherId === currentUser.id ||
                     e.teacher === (currentUser.teacherName || currentUser.name)
                 )
@@ -81,7 +82,7 @@ export const Evaluations = () => {
         catch (error) { console.error('Error deleting evaluation', error); }
     };
 
-    const totalXP = useMemo(() => evaluations.reduce((sum, ev) => sum + ((ev.points as number) || 0), 0), [evaluations]);
+    const totalXP = useMemo(() => evaluations.reduce((sum, ev) => sum + (ev.points || 0), 0), [evaluations]);
 
     if (isLoading) return (
         <div className="space-y-4 p-6">
@@ -103,11 +104,11 @@ export const Evaluations = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                         {teacherStudents.filter(s =>
                             !searchTerm ||
-                            ((s.name as string) || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            ((s.grade as string) || '').toLowerCase().includes(searchTerm.toLowerCase())
+                            (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            (s.grade || '').toLowerCase().includes(searchTerm.toLowerCase())
                         ).map((student) => (
                             <EvaluationCard
-                                key={student.id as string}
+                                key={student.id}
                                 student={student}
                                 evaluations={evaluations}
                                 isParent={currentUser?.role === 'parent'}
@@ -138,7 +139,7 @@ export const Evaluations = () => {
                 <HistoryModal
                     student={historyModalStudent}
                     evaluations={evaluations}
-                    canDelete={(ev) => currentUser?.role === 'admin' || currentUser?.id === ev.teacherId}
+                    canDelete={(ev: Evaluation) => currentUser?.role === 'admin' || currentUser?.id === ev.teacherId}
                     onDelete={handleDelete}
                     onClose={() => setHistoryModalStudent(null)}
                 />

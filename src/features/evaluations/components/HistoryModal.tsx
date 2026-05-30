@@ -2,11 +2,12 @@ import { User, X, Trash2, History } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { RATING_OPTIONS } from '../types/constants';
+import type { Student, Evaluation } from '../../../types';
 
 interface HistoryModalProps {
-    student: Record<string, unknown> | null;
-    evaluations: Record<string, unknown>[];
-    canDelete: (evaluation: Record<string, unknown>) => boolean;
+    student: Student | null;
+    evaluations: Evaluation[];
+    canDelete: (evaluation: Evaluation) => boolean;
     onDelete: (id: string) => void;
     onClose: () => void;
 }
@@ -28,40 +29,40 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                         </div>
                         <div>
                             <h3 className="text-sm font-bold">سجل التقييمات الكامل</h3>
-                            <p className="text-white/70 text-[10px] font-medium">{student.name as string}</p>
+                            <p className="text-white/70 text-[10px] font-medium">{student.name}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-none"><X size={16} /></button>
+                    <button onClick={onClose} aria-label="إغلاق" className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-none"><X size={16} /></button>
                 </div>
 
                 <div className="p-4 overflow-y-auto space-y-3" style={{ backgroundColor: '#00542F02' }}>
                     {studentEvals.map((ev) => {
                         const r = RATING_OPTIONS.find(ro => ro.value === ev.rating) || RATING_OPTIONS[0];
                         return (
-                            <div key={ev.id as string} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 shadow-sm hover:border-blue-200 transition-all group rounded-none">
+                            <div key={ev.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 shadow-sm hover:border-blue-200 transition-all group rounded-none">
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
                                         <span className={cn("flex items-center gap-1.5 text-[9px] font-medium px-2 py-1", r.pill)}>
                                             <r.icon size={10} strokeWidth={3} />
-                                            {ev.rating as string}
+                                            {ev.rating}
                                         </span>
-                                        {(ev.points as number) > 0 && (
-                                            <span className="text-[8px] font-bold px-2 py-0.5 rounded-none" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>+{ev.points as number} XP</span>
+                                        {ev.points > 0 && (
+                                            <span className="text-[8px] font-bold px-2 py-0.5 rounded-none" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>+{ev.points} XP</span>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <span className="text-[9px] font-normal text-slate-400 tabular-nums">{format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}</span>
                                         {canDelete(ev) && (
-                                            <button onClick={() => onDelete(ev.id as string)} className="text-slate-300 hover:text-[#00542F] transition-colors p-1 hover:bg-[#00542F08]"><Trash2 size={12} /></button>
+                                            <button onClick={() => onDelete(ev.id)} className="text-slate-300 hover:text-[#00542F] transition-colors p-1 hover:bg-[#00542F08]"><Trash2 size={12} /></button>
                                         )}
                                     </div>
                                 </div>
                                 <p className="text-[10px] font-normal text-slate-600 dark:text-slate-400 italic leading-relaxed border-r-2 border-blue-200 pr-3">
-                                    &ldquo;{(ev.notes as string) || 'لا يوجد ملاحظات'}&rdquo;
+                                    &ldquo;{ev.notes || 'لا يوجد ملاحظات'}&rdquo;
                                 </p>
                                 <div className="mt-2 pt-2 border-t border-slate-50 dark:border-slate-800 flex items-center gap-1.5">
                                     <User size={8} className="text-slate-300" />
-                                    <span className="text-[8px] font-normal text-slate-400">بواسطة: {ev.teacherName as string || 'نظام آلي'}</span>
+                                    <span className="text-[8px] font-normal text-slate-400">بواسطة: {ev.teacherName || 'نظام آلي'}</span>
                                 </div>
                             </div>
                         );

@@ -132,6 +132,18 @@ export interface Transaction {
     status: string;
 }
 
+export interface Evaluation {
+    id: string;
+    studentId: string;
+    teacherId: string;
+    teacherName: string;
+    rating: string;
+    points: number;
+    notes?: string;
+    date: string;
+    created_at: string;
+}
+
 export interface FixedExpense {
     id: number;
     name: string;

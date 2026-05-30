@@ -255,8 +255,8 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
                                     <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-slate-200 dark:border-slate-700">
-                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} className="text-blue-600"><Edit size={10} /></button>
-                                        <button onClick={() => onDeleteSlot(student, en, i)} className="text-rose-600"><Trash2 size={10} /></button>
+                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-blue-600"><Edit size={10} /></button>
+                                        <button onClick={() => onDeleteSlot(student, en, i)} aria-label="حذف الموعد" className="text-rose-600"><Trash2 size={10} /></button>
                                     </div>
                                 )}
                             </div>
