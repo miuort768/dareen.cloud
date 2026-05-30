@@ -13,7 +13,12 @@ export const Evaluations = () => {
     const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [historyModalStudent, setHistoryModalStudent] = useState<Student | null>(null);
+    const [formData, setFormData] = useState({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
+    const [searchTerm, setSearchTerm] = useState('');
     const mountedRef = useRef(true);
+    const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
 
     const fetchData = useCallback(async () => {
         if (!mountedRef.current) return;
