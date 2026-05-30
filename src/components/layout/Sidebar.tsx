@@ -143,7 +143,7 @@ export const Sidebar = () => {
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                             <div className={cn("shrink-0", collapsed ? "w-10 h-10" : "w-8 h-8")}>
-                                <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
+                                <img src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full object-contain" />
                             </div>
                             <span className={cn(
                                 "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
@@ -177,7 +177,7 @@ export const Sidebar = () => {
                 )}>
                     <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                         <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-6 h-6")}>
-                            <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
+                            <img src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full object-contain" />
                         </div>
                         <span className={cn(
                             "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
@@ -335,7 +335,7 @@ export const Sidebar = () => {
 
                     <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100 dark:border-gray-800">
                         <div className="flex items-center gap-3">
-                            <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
+                            <img src="/dareen_logo_new.jpg" alt="الشعار" className="w-8 h-8 object-contain" />
                             <div>
                                 <h2 className="text-base font-medium text-gray-900 dark:text-white leading-tight">{academyName}</h2>
                                 <p className="text-[10px] text-gray-500 dark:text-gray-400 font-normal uppercase tracking-widest">قائمة الوصول السريع</p>

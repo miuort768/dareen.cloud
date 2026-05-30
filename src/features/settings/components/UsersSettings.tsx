@@ -84,7 +84,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                     <InputField
                         value={newUser.username}
                         onChange={e => setNewUser({ ...newUser, username: e.target.value })}
-                        placeholder="admin_username"
+                        placeholder="اسم المستخدم"
                     />
                 </div>
                 <div>

@@ -11,7 +11,7 @@ interface MobileSettingsProps {
 export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: MobileSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="تجربة التطبيق" />
             <div className="space-y-4">
                 <ToggleRow
                     icon={Zap}
@@ -39,7 +39,7 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
                 <Smartphone size={32} style={{ color: '#2563EB' }} />
             </div>
             <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
-            <p className="text-xs font-bold text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+            <p className="text-xs font-bold text-slate-500 mb-4">الإصدار 2.1.0</p>
             <button className="text-[10px] font-bold text-[#2563EB] uppercase tracking-widest hover:underline">
                 التحقق من وجود تحديثات
             </button>

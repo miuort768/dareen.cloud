@@ -39,7 +39,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-[#2563EB]">
                                 <Award size={18} />
-                                <span className="font-medium text-[10px] uppercase tracking-widest leading-none">DAREEN ACADEMY</span>
+                                <span className="font-medium text-[10px] uppercase tracking-widest leading-none">أكاديمية دارين</span>
                             </div>
                             <h2 className="text-xl font-medium text-slate-800 dark:text-white leading-none tracking-tighter">بطاقة هوية معلم</h2>
                         </div>

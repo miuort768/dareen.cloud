@@ -18,7 +18,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                         <Snowflake size={32} className="animate-spin-slow" />
                     </div>
                     <h3 className="text-xl font-bold text-white uppercase tracking-tighter">وضع الصيانة الشامل</h3>
-                    <p className="text-[10px] text-white/80 font-bold uppercase tracking-widest mt-1">System Freeze Protocol</p>
+                    <p className="text-[10px] text-white/80 font-bold uppercase tracking-widest mt-1">بروتوكول تجميد النظام</p>
                 </div>
 
                 <div className="p-6 space-y-6">

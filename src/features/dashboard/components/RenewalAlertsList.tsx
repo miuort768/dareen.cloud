@@ -21,7 +21,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                     </div>
                     <div>
                         <h3 className="text-sm font-medium text-slate-950 dark:text-white uppercase tracking-tighter">تجديد الاشتراكات</h3>
-                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest mt-1">Financial Monitoring</p>
+                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest mt-1">المراقبة المالية</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 border border-rose-100 dark:border-rose-900/20 px-3 py-1.5 rounded-none text-[10px] font-medium uppercase tracking-widest">
@@ -56,7 +56,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                                     "text-[9px] font-medium px-2 py-0.5 rounded-none uppercase tracking-widest",
                                     item.remainingSessions === 0 ? "bg-rose-100 text-rose-600" : "bg-amber-100 text-amber-600"
                                 )}>
-                                    {item.remainingSessions === 0 ? 'Exp' : `${item.remainingSessions} S` }
+                                    {item.remainingSessions === 0 ? 'انتهاء' : `${item.remainingSessions} م` }
                                 </span>
                                 
                                 <button

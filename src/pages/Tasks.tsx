@@ -139,7 +139,7 @@ export const Tasks = () => {
                     <div className="flex flex-col items-start">
                         <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-3">
                             <Sparkles size={10} className="text-indigo-400" />
-                            <span className="text-[8px] font-medium text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
+                            <span className="text-[8px] font-medium text-indigo-400 uppercase tracking-widest">مركز القيادة</span>
                         </div>
                         
                         <h1 className="text-xl md:text-3xl font-medium text-white uppercase tracking-tighter mb-2 drop-shadow-sm">
@@ -256,7 +256,7 @@ export const Tasks = () => {
                                         </div>
                                         <div className="flex items-center gap-2 text-[9px] font-medium text-slate-400 uppercase tracking-widest">
                                             <Calendar size={12} className="text-indigo-500" />
-                                            <span>Deadline: {task.dueDate}</span>
+                                            <span>الموعد النهائي: {task.dueDate}</span>
                                         </div>
                                     </div>
                                     <div className={cn(
@@ -265,7 +265,7 @@ export const Tasks = () => {
                                         task.priority === 'medium' ? "text-amber-600 border-amber-200 bg-amber-50 dark:bg-amber-900/10 dark:border-amber-900/30" : 
                                         "text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-900/10 dark:border-indigo-900/30"
                                     )}>
-                                        {task.priority === 'high' ? 'High Priority' : task.priority === 'medium' ? 'Medium' : 'Normal'}
+                                        {task.priority === 'high' ? 'أولوية عالية' : task.priority === 'medium' ? 'متوسطة' : 'عادي'}
                                     </div>
                                 </div>
 
@@ -329,7 +329,7 @@ export const Tasks = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-base font-medium text-slate-800 dark:text-white uppercase tracking-tighter">إنشاء مهمة جديدة</h3>
-                                    <p className="text-[8px] text-slate-400 font-normal uppercase tracking-[0.2em]">New Operation Protocol</p>
+                                    <p className="text-[8px] text-slate-400 font-normal uppercase tracking-[0.2em]">بروتوكول تشغيل جديد</p>
                                 </div>
                             </div>
                             <button onClick={() => setShowAddForm(false)} className="text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
@@ -360,9 +360,9 @@ export const Tasks = () => {
                                             value={newTask.priority}
                                             onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                         >
-                                            <option value="low">منخفضة (Low)</option>
-                                            <option value="medium">متوسطة (Medium)</option>
-                                            <option value="high">عالية (Critical)</option>
+                                            <option value="low">منخفضة</option>
+                                            <option value="medium">متوسطة</option>
+                                            <option value="high">عالية</option>
                                         </select>
                                     </div>
                                     <div className="space-y-1.5">

@@ -22,7 +22,7 @@ export const PoliciesSettings = ({
 }: PoliciesSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="System Safeguards" />
+            <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="ضمانات النظام" />
             <div className="space-y-3">
                 <div className="p-4 bg-white dark:bg-slate-900 border border-rose-100/50 dark:border-rose-900/50">
                     <div className="flex items-start justify-between gap-4">
@@ -71,7 +71,7 @@ export const PoliciesSettings = ({
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="Auto-Freeze Mechanism" />
+            <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="آلية التجميد التلقائي" />
             <div className="space-y-3">
                 <div className="p-4 bg-white dark:bg-slate-900 border border-sky-100/50 dark:border-sky-900/50">
                     <p className="text-xs font-bold text-sky-800 dark:text-sky-200 mb-1">حد الغياب المسموح</p>
@@ -102,7 +102,7 @@ export const PoliciesSettings = ({
                         </div>
                         <div>
                             <p className="text-xs font-bold text-rose-700 dark:text-rose-300">إقفال الشهر المالي</p>
-                            <p className="text-[9px] text-rose-400">Danger Zone</p>
+                            <p className="text-[9px] text-rose-400">منطقة الخطر</p>
                         </div>
                     </div>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">

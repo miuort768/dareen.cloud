@@ -32,7 +32,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
                         <div>
                             <h3 className="text-xl font-medium text-slate-900 dark:text-white uppercase tracking-tight italic">تقرير التميز الأكاديمي</h3>
-                            <p className="text-[10px] font-medium text-slate-400 uppercase mt-1">Darin Academy Hub — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                            <p className="text-[10px] font-medium text-slate-400 uppercase mt-1">منصة دارين التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                         </div>
                     </div>
 
@@ -40,11 +40,11 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         {/* Student Signature Header */}
                         <div className="flex items-center justify-between p-6 bg-slate-50 dark:bg-slate-800 border-2 border-slate-950 rounded-none">
                             <div className="space-y-1 text-right">
-                                <p className="text-[9px] font-medium text-indigo-600 uppercase">ACADEMIC STAR</p>
+                                <p className="text-[9px] font-medium text-indigo-600 uppercase">نجمة أكاديمية</p>
                                 <h4 className="text-2xl font-medium text-slate-900 dark:text-white uppercase tracking-tight">{student.name}</h4>
                             </div>
                             <div className="text-left bg-white dark:bg-slate-950 px-4 py-2 border-2 border-slate-950 rounded-none shadow-sm">
-                                <p className="text-[9px] font-medium text-slate-400 uppercase mb-0.5">LEVEL / SUBJECT</p>
+                                <p className="text-[9px] font-medium text-slate-400 uppercase mb-0.5">المستوى / المادة</p>
                                 <p className="text-[11px] font-medium text-indigo-600 uppercase">{student.grade} - {student.subject}</p>
                             </div>
                         </div>
@@ -52,9 +52,9 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         {/* Quantitative Metrics Grid */}
                         <div className="grid grid-cols-3 gap-4">
                             {[
-                                { label: 'Attendance', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-emerald-600' },
-                                { label: 'Total Points', value: student.points, icon: Star, color: 'bg-amber-500' },
-                                { label: 'Sessions', value: student.sessionsCompleted, icon: Calendar, color: 'bg-indigo-600' }
+                                { label: 'الحضور', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-emerald-600' },
+                                { label: 'إجمالي النقاط', value: student.points, icon: Star, color: 'bg-amber-500' },
+                                { label: 'الجلسات', value: student.sessionsCompleted, icon: Calendar, color: 'bg-indigo-600' }
                             ].map((item, idx) => (
                                 <div key={idx} className="bg-white dark:bg-slate-800 p-5 border-2 border-slate-950 rounded-none text-center shadow-md transition-transform hover:translate-y-[-2px]">
                                     <div className={cn("w-10 h-10 rounded-none border-2 border-slate-950 flex items-center justify-center mx-auto mb-3 text-white", item.color)}>

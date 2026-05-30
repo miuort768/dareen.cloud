@@ -61,7 +61,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, email: e.target.value })} />
                         {!isEdit && <InputField label="اسم المستخدم" icon={User} type="text" value={formData.username || ''}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })} />}
-                        {!isEdit && <InputField label="كلمة المرور" icon={User} type="password" placeholder="Create password"
+                        {!isEdit && <InputField label="كلمة المرور" icon={User} type="password" placeholder="إنشاء كلمة مرور"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />}
                     </div>
 

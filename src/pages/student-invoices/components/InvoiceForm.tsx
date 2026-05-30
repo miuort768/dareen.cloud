@@ -59,7 +59,7 @@ export const InvoiceForm = ({
         <SectionTitle
           icon={editingId ? Edit : Plus}
           label={editingId ? 'تعديل الفاتورة' : 'إصدار فاتورة جديدة'}
-          sub="Student Billing Management"
+          sub="إدارة فواتير الطلاب"
         />
         <button
           type="button"

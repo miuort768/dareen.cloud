@@ -148,7 +148,7 @@ export const AdminJobs = () => {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <Award size={14} className={app.contacted ? 'text-slate-300' : 'text-primary-500'} />
-                                        <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-slate-400">DAREEN ACADEMY</span>
+                                        <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-slate-400">أكاديمية دارين</span>
                                     </div>
                                     <div className="flex gap-1">
                                         <button

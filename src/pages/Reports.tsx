@@ -156,7 +156,7 @@ export const Reports = () => {
                                      </div>
                                      <h3 className="text-[10px] font-bold text-slate-400">توزيع الاشتراكات حسب المادة</h3>
                                  </div>
-                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: '#10B98112', color: '#059669' }}>Live Analysis</span>
+                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: '#10B98112', color: '#059669' }}>تحليل مباشر</span>
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {

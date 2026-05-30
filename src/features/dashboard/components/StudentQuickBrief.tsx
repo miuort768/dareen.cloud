@@ -47,7 +47,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                     <span className="px-2 py-0.5 bg-slate-950 text-white text-[9px] font-medium uppercase">{student.grade}</span>
                                     <span className="px-2 py-0.5 bg-amber-400 text-amber-950 border-2 border-slate-950 text-[9px] font-medium uppercase flex items-center gap-1">
                                         <Star size={10} className="fill-amber-950" />
-                                        {student.totalPoints || 0} POINTS
+                                        {student.totalPoints || 0} النقاط
                                     </span>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                              <div className="absolute top-2 left-2">
                                 <Sparkles size={16} className="text-amber-600/30" />
                              </div>
-                             <p className="text-[9px] font-medium text-amber-600 uppercase mb-2">NEXT SESSION PREP</p>
+                             <p className="text-[9px] font-medium text-amber-600 uppercase mb-2">تحضير الجلسة القادمة</p>
                              <p className="text-sm font-normal text-amber-950 dark:text-amber-400 leading-tight">"{enrollment.nextSessionNotes}"</p>
                         </div>
                     )}
@@ -78,10 +78,10 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-slate-400">
                             <MessageSquare size={14} className="text-indigo-600" />
-                            <h4 className="text-[10px] font-medium uppercase">Guardian Context</h4>
+                            <h4 className="text-[10px] font-medium uppercase">سياق ولي الأمر</h4>
                         </div>
                         <div className="text-sm font-normal text-slate-900 dark:text-gray-300 leading-relaxed bg-slate-50 dark:bg-slate-800/40 p-5 border-2 border-slate-950 rounded-none">
-                            {student.notes || 'No parent notes recorded for this student.'}
+                            {student.notes || 'لا توجد ملاحظات من ولي الأمر لهذا الطالب.'}
                         </div>
                     </div>
 
@@ -89,7 +89,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 text-slate-400">
                             <TrendingUp size={14} className="text-emerald-600" />
-                            <h4 className="text-[10px] font-medium uppercase">Recent Learning Path</h4>
+                            <h4 className="text-[10px] font-medium uppercase">مسار التعلم الأخير</h4>
                         </div>
 
                         <div className="space-y-2">
@@ -101,7 +101,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                         <div className="flex items-center gap-2 mt-1.5">
                                             <div className="w-1.5 h-1.5 rounded-none bg-emerald-600 border border-slate-950/20"></div>
                                             <p className="text-[10px] font-medium text-emerald-600 uppercase">
-                                                Performance: {sess.rating}
+                                                الأداء: {sess.rating}
                                             </p>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                 </div>
                             )) : (
                                 <div className="py-12 text-center border-2 border-dashed border-slate-300 rounded-none bg-slate-50">
-                                    <p className="text-[10px] text-slate-400 font-medium uppercase">Initialization phase</p>
+                                    <p className="text-[10px] text-slate-400 font-medium uppercase">مرحلة البدء</p>
                                 </div>
                             )}
                         </div>

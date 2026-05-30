@@ -54,7 +54,7 @@ export const GeneralSettings = ({
 }: GeneralSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="Academy Identity" />
+            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="هوية الأكاديمية" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>اسم الأكاديمية</FieldLabel>
@@ -62,7 +62,7 @@ export const GeneralSettings = ({
                 </div>
                 <div>
                     <FieldLabel>رابط الشعار (URL)</FieldLabel>
-                    <InputField value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." dir="ltr" className="font-mono text-xs" />
+                    <InputField value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="رابط الموقع..." dir="ltr" className="font-mono text-xs" />
                 </div>
                 <div>
                     <FieldLabel>الشعار اللفظي</FieldLabel>
@@ -74,7 +74,7 @@ export const GeneralSettings = ({
                 </div>
                 <div>
                     <FieldLabel>قناة تليجرام</FieldLabel>
-                    <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" dir="ltr" className="font-mono" />
+                    <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="تطبيق دارين" dir="ltr" className="font-mono" />
                 </div>
                 <ToggleRow
                     icon={Monitor}
@@ -90,7 +90,7 @@ export const GeneralSettings = ({
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="Financial & Academic" />
+            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="المالية والأكاديمية" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>تسمية الفصل الدراسي</FieldLabel>

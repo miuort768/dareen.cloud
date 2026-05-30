@@ -172,7 +172,7 @@ export const Settings = () => {
             type: 'reset',
             title: 'تصفير كافة الحسابات والبيانات',
             description: 'هذا الإجراء سيقوم بحذف كافة السجلات المالية وحصص الطلاب والمعلمين وتصفير الأرصدة. لا يمكن التراجع عن هذا الإجراء.',
-            confirmWord: 'RESET-ALL-DATA',
+            confirmWord: 'إعادة-تعيين-كل-البيانات',
             actionFn: async () => {
                 setIsSaving(true);
                 try {
@@ -190,7 +190,7 @@ export const Settings = () => {
             type: 'archive',
             title: 'أرشفة بيانات الموسم الحالي',
             description: 'سيتم نقل كافة السجلات الحالية إلى الأرشيف التاريخي وبدء موسم جديد ببيانات نظيفة.',
-            confirmWord: 'ARCHIVE-NOW',
+            confirmWord: 'أرشفة-الآن',
             actionFn: async () => {
                 setIsSaving(true);
                 try {

@@ -44,7 +44,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         </div>
                         <div>
                             <h3 className="font-medium text-xl text-gray-900 dark:text-white">معاينة الفاتورة</h3>
-                            <p className="text-xs text-gray-400 font-normal uppercase tracking-widest leading-none mt-1">Invoice Preview</p>
+                            <p className="text-xs text-gray-400 font-normal uppercase tracking-widest leading-none mt-1">معاينة الفاتورة</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -73,7 +73,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-medium text-gray-900 dark:text-white tracking-tighter">{academyName || 'أكاديمية الشيخ خوارزمي'}</h2>
-                                    <p className="text-[10px] text-gray-400 font-normal uppercase tracking-widest">Academy Invoice</p>
+                                    <p className="text-[10px] text-gray-400 font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
                                 </div>
                             </div>
                             <div className="text-xs font-normal text-gray-500 space-y-1">

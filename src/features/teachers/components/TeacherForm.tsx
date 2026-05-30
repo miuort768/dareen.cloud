@@ -149,7 +149,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
                                         className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono"
-                                        placeholder="username"
+                                        placeholder="اسم المستخدم"
                                     />
                                 </div>
                             </div>
@@ -165,7 +165,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
                                         className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono tracking-widest"
-                                        placeholder="password"
+                                        placeholder="كلمة المرور"
                                     />
                                 </div>
                             </div>

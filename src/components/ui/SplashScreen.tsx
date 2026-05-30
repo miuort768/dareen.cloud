@@ -44,7 +44,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           
           <img 
             src="/logo.png" 
-            alt="Logo" 
+            alt="الشعار" 
             className="relative w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(79,70,229,0.3)] animate-float"
           />
         </div>

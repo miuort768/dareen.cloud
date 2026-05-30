@@ -31,12 +31,12 @@ export const AdvancedSettings = ({
 }: AdvancedSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Phone} label="أتمتة الواتساب والرسائل" sub="WhatsApp Automation" />
+            <SectionTitle icon={Phone} label="أتمتة الواتساب والرسائل" sub="أتمتة واتساب" />
             <div className="space-y-3">
                 <ToggleRow
                     icon={Bell}
                     label="إرسال الفواتير تلقائياً"
-                    sub="Automatic Notifications"
+                    sub="الإشعارات التلقائية"
                     checked={whatsappAutoNotify}
                     onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
                 />
@@ -70,7 +70,7 @@ export const AdvancedSettings = ({
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Bell} label="تذكير أولياء الأمور بالحصص" sub="Parent Session Reminders" />
+            <SectionTitle icon={Bell} label="تذكير أولياء الأمور بالحصص" sub="تذكير جلسات أولياء الأمور" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>إرسال تذكير قبل الحصة بـ (دقائق)</FieldLabel>
@@ -86,7 +86,7 @@ export const AdvancedSettings = ({
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Calendar} label="إدارة الفصول والأرشيف" sub="Academic Ledger" />
+            <SectionTitle icon={Calendar} label="إدارة الفصول والأرشيف" sub="السجل الأكاديمي" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>الفصل الحالي</FieldLabel>
@@ -120,7 +120,7 @@ export const AdvancedSettings = ({
                         actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
                     })}
                 >
-                    <Trash2 size={13} /> إعادة ضبط المصنع (Factory Reset)
+                    <Trash2 size={13} /> إعادة ضبط المصنع
                 </DangerBtn>
             </div>
         </SectionCard>

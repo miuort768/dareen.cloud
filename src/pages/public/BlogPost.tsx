@@ -125,7 +125,7 @@ export const BlogPost = () => {
                                         const trimmed = line.trim();
                                         const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
                                         if (imgRegex.test(trimmed)) {
-                                            return `<img src="${trimmed}" alt="Article Image" class="w-full h-auto rounded-none shadow-lg my-8" />`;
+                                            return `<img src="${trimmed}" alt="صورة المقال" class="w-full h-auto rounded-none shadow-lg my-8" />`;
                                         }
                                         return line;
                                     })

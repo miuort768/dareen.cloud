@@ -39,7 +39,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-primary-600">
                                 <ShieldCheck size={20} className="fill-current/10" />
-                                <span className="font-medium text-xs uppercase tracking-widest">Dareen Academy</span>
+                                <span className="font-medium text-xs uppercase tracking-widest">أكاديمية دارين</span>
                             </div>
                             <h2 className="text-xl font-medium text-gray-900 dark:text-white leading-none">بطاقة تعريف طالب</h2>
                         </div>

@@ -15,7 +15,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                 </div>
                 <div>
                     <p className="text-sm font-bold text-slate-800 dark:text-white">سجل الرقابة</p>
-                    <p className="text-[10px] font-bold text-slate-400">Global Activity Audit Log</p>
+                    <p className="text-[10px] font-bold text-slate-400">سجل تدقيق النشاط العام</p>
                 </div>
             </div>
             <SecondaryBtn onClick={fetchLogs}>
@@ -58,7 +58,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             <td colSpan={3} className="py-16 text-center">
                                 <CheckCircle2 className="mx-auto mb-2 text-emerald-400" size={24} />
                                 <p className="text-sm font-normal text-slate-400">لا توجد سجلات</p>
-                                <p className="text-[10px] text-slate-300 mt-1">No activity recorded</p>
+                                <p className="text-[10px] text-slate-300 mt-1">لا يوجد نشاط مسجل</p>
                             </td>
                         </tr>
                     )}
@@ -69,7 +69,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
         <div className="flex items-center justify-between mt-3 px-1">
             <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
                 <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                Monitor Active
+                المراقبة نشطة
             </div>
             <span className="text-[10px] text-slate-300">{auditLogs.length} سجل</span>
         </div>

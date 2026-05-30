@@ -232,7 +232,7 @@ export const AdminBlog = () => {
                                             onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
                                             dir="ltr"
-                                            placeholder="best-study-tips"
+                                            placeholder="أفضل-نصائح-الدراسة"
                                         />
                                     </div>
                                 </div>
@@ -355,7 +355,7 @@ export const AdminBlog = () => {
                                     <div className="mt-2 h-32 w-full border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
                                         <img
                                             src={currentPost.coverImage}
-                                            alt="Preview"
+                                            alt="معاينة"
                                             className="w-full h-full object-cover"
                                             onError={(e) => {
                                                 (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';

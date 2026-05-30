@@ -48,7 +48,7 @@ export const UserFormSection = ({
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                            placeholder="username"
+                            placeholder="اسم المستخدم"
                         />
                     </div>
                     <div>

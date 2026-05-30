@@ -42,7 +42,7 @@ const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpe
 
     const statusConfig: Record<string, { color: string; label: string }> = {
         [ConnectionState.Connecting]: { color: 'bg-yellow-600', label: 'جاري الاتصال...' },
-        [ConnectionState.Connected]: { color: 'bg-red-600', label: 'LIVE' },
+        [ConnectionState.Connected]: { color: 'bg-red-600', label: 'مباشر' },
         [ConnectionState.Reconnecting]: { color: 'bg-orange-500', label: 'إعادة الاتصال...' },
         [ConnectionState.Disconnected]: { color: 'bg-slate-600', label: 'مفصول' },
     };
