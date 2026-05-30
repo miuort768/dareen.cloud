@@ -131,6 +131,21 @@ export const Students = () => {
         }
     };
 
+    const handleAddSessions = async (index: number, amount: number) => {
+        if (!selectedStudent) return;
+        const enrollment = selectedStudent.enrollments?.[index];
+        if (!enrollment) return;
+
+        const updatedEnrollments = [...(selectedStudent.enrollments || [])];
+        updatedEnrollments[index] = { ...enrollment, sessionsTotal: enrollment.sessionsTotal + amount };
+
+        const updatedStudent = { ...selectedStudent, enrollments: updatedEnrollments };
+        updateStudent(updatedStudent);
+        setSelectedStudent(updatedStudent);
+        queryClient.invalidateQueries({ queryKey: ['students'] });
+        showNotification(`تمت إضافة ${amount} حصة بنجاح`, 'success');
+    };
+
     if (loading) {
         return <PageLoader />;
     }
@@ -263,10 +278,8 @@ export const Students = () => {
                                 student={selectedStudent}
                                 teachers={teachers}
                                 onClose={() => setShowDetails(false)}
-                                onUpdateStudent={(updated) => {
-                                    updateStudent(updated as Student);
-                                }}
                                 onAddEnrollment={handleAddEnrollment}
+                                onAddSessions={handleAddSessions}
                             />
                         )}
                     </div>

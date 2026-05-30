@@ -14,10 +14,10 @@ interface StudentDetailsProps {
     student: Student;
     onClose: () => void;
     onAddEnrollment: (data: Record<string, unknown>) => void;
-    onDeleteEnrollment: (index: number) => void;
-    onRenewEnrollment: (index: number) => void;
-    onSendReminder: (enrollment: Enrollment) => void;
-    onAddSessions: (index: number, amount: number) => void;
+    onDeleteEnrollment?: (index: number) => void;
+    onRenewEnrollment?: (index: number) => void;
+    onSendReminder?: (enrollment: Enrollment) => void;
+    onAddSessions?: (index: number, amount: number) => void;
     onFreezeEnrollment?: (enrollmentId: string, isFrozen: boolean, reason?: string) => void;
     teachers: Teacher[];
 }
@@ -165,9 +165,9 @@ export const StudentDetails = ({
                                                     {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
                                                 </button>
                                             )}
-                                            <button onClick={() => onSendReminder(en)} className="w-6 h-6 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 transition-all rounded-lg" title="تذكير"><MessageCircle size={12} /></button>
-                                            <button onClick={() => onRenewEnrollment(i)} className="w-6 h-6 flex items-center justify-center text-blue-500 hover:bg-blue-50 transition-all rounded-lg" title="تجديد"><RefreshCw size={12} /></button>
-                                            <button onClick={() => onDeleteEnrollment(i)} className="w-6 h-6 flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all rounded-lg" title="حذف"><Trash size={12} /></button>
+                                            <button onClick={() => onSendReminder?.(en)} className="w-6 h-6 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 transition-all rounded-lg" title="تذكير"><MessageCircle size={12} /></button>
+                                            <button onClick={() => onRenewEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-blue-500 hover:bg-blue-50 transition-all rounded-lg" title="تجديد"><RefreshCw size={12} /></button>
+                                            <button onClick={() => onDeleteEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all rounded-lg" title="حذف"><Trash size={12} /></button>
                                         </div>
                                     </div>
 
@@ -220,7 +220,7 @@ export const StudentDetails = ({
                                             {[1, 2, 4, 8].map(num => (
                                                 <button
                                                     key={num}
-                                                    onClick={() => { onAddSessions(i, num); setAddingSessionsIndex(null); }}
+                                                    onClick={() => { onAddSessions?.(i, num); setAddingSessionsIndex(null); }}
                                                     className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-blue-500 hover:text-white text-slate-600 dark:text-slate-300 font-normal text-[10px] font-mono transition-all rounded-lg"
                                                 >
                                                     +{num} حصة
@@ -230,7 +230,7 @@ export const StudentDetails = ({
                                                 onClick={() => {
                                                     const val = prompt('أدخل عدد الحصص المراد إضافتها:');
                                                     if (val && !isNaN(Number(val)) && Number(val) > 0) {
-                                                        onAddSessions(i, Number(val));
+                                                        onAddSessions?.(i, Number(val));
                                                         setAddingSessionsIndex(null);
                                                     }
                                                 }}
