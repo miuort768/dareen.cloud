@@ -34,7 +34,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                     <button onClick={onClose} className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-none"><X size={16} /></button>
                 </div>
 
-                <div className="p-4 overflow-y-auto space-y-3" style={{ backgroundColor: '#F43F5E02' }}>
+                <div className="p-4 overflow-y-auto space-y-3" style={{ backgroundColor: '#00542F02' }}>
                     {studentEvals.map((ev) => {
                         const r = RATING_OPTIONS.find(ro => ro.value === ev.rating) || RATING_OPTIONS[0];
                         return (
@@ -52,7 +52,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                                     <div className="flex items-center gap-2">
                                         <span className="text-[9px] font-normal text-slate-400 tabular-nums">{format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}</span>
                                         {canDelete(ev) && (
-                                            <button onClick={() => onDelete(ev.id as string)} className="text-slate-300 hover:text-rose-500 transition-colors p-1 hover:bg-rose-50"><Trash2 size={12} /></button>
+                                            <button onClick={() => onDelete(ev.id as string)} className="text-slate-300 hover:text-[#00542F] transition-colors p-1 hover:bg-[#00542F08]"><Trash2 size={12} /></button>
                                         )}
                                     </div>
                                 </div>
@@ -67,8 +67,8 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                         );
                     })}
                     {studentEvals.length === 0 && (
-                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-none" style={{ border: '2px dashed', borderColor: '#E11D4830' }}>
-                            <History size={28} style={{ color: '#E11D4830' }} className="mb-3" />
+                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-none" style={{ border: '2px dashed', borderColor: '#00542F30' }}>
+                            <History size={28} style={{ color: '#00542F30' }} className="mb-3" />
                             <p className="text-[10px] font-bold text-slate-400">لا يوجد سجل تقييمات حالياً</p>
                         </div>
                     )}

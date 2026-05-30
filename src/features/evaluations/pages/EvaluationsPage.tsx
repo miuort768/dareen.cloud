@@ -117,8 +117,8 @@ export const Evaluations = () => {
                         ))}
                         {teacherStudents.length === 0 && (
                             <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none">
-                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-none" style={{ backgroundColor: '#E11D4808', border: '2px dashed', borderColor: '#E11D4830' }}>
-                                    <User size={36} style={{ color: '#E11D48' }} />
+                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-none" style={{ backgroundColor: '#00542F08', border: '2px dashed', borderColor: '#00542F30' }}>
+                                    <User size={36} style={{ color: '#00542F' }} />
                                 </div>
                                 <h3 className="text-lg font-bold text-slate-700 dark:text-white mb-1">لا يوجد طلاب مسجلون حالياً</h3>
                                 <p className="text-sm font-medium text-slate-400 max-w-xs">بمجرد تعيين طلاب لكِ، سيظهرون هنا تلقائياً.</p>

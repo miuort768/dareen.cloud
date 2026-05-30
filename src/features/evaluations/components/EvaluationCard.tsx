@@ -64,8 +64,8 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                     </div>
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
-                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-none" style={{ backgroundColor: '#F43F5E08', border: '1px dashed', borderColor: '#F43F5E30' }}>
-                            <Award size={20} style={{ color: '#F43F5E' }} />
+                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-none" style={{ backgroundColor: '#00542F08', border: '1px dashed', borderColor: '#00542F30' }}>
+                            <Award size={20} style={{ color: '#00542F' }} />
                         </div>
                         <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">لم يتم التقييم بعد</p>
                     </div>
@@ -74,7 +74,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
 
             {!isParent && (
                 <div className="px-4 pb-4 grid grid-cols-2 gap-2">
-                    <button onClick={() => onAddEvaluation(student.id as string)} className="bg-[#E11D48] hover:bg-rose-700 text-white py-2.5 text-[10px] font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 rounded-none">
+                    <button onClick={() => onAddEvaluation(student.id as string)} className="bg-[#00542F] hover:bg-[#004028] text-white py-2.5 text-[10px] font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 rounded-none">
                         <Plus size={12} /> أضف تقييم
                     </button>
                     <button onClick={() => onViewHistory(student)} className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 py-2.5 text-[10px] font-bold transition-all flex items-center justify-center gap-1.5 rounded-none">
