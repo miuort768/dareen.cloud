@@ -602,7 +602,7 @@ export const StudentDashboard = () => {
                         <h3 className="text-white font-black text-lg mb-1 text-right">تحتاج مساعدة؟</h3>
                         <p className="text-purple-200 text-xs mb-4 text-right">فريقنا جاهز لمساعدتك في أي وقت</p>
                         <a
-                            href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '965')}`}
+                            href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 bg-white text-[#5B21B6] py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"

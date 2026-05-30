@@ -73,13 +73,13 @@ export const PublicFooter = () => {
                             <li className="flex items-center gap-3 text-sm text-gray-400 dark:text-gray-300">
                                 <Phone className="w-5 h-5 text-amber-500 shrink-0" />
                                 <a
-                                    href={`https://wa.me/${adminPhone.replace(/\D/g, '')}`}
+                                    href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hover:text-amber-500 transition-colors"
                                     dir="ltr"
                                 >
-                                    +{adminPhone.replace(/\D/g, '')}
+                                    +{adminPhone?.replace(/\D/g, '') || '965000000000'}
                                 </a>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400 dark:text-gray-300">

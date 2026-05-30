@@ -456,7 +456,7 @@ export const ParentDashboard = () => {
                         <p className="text-[11px] font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
                     </div>
                     <a 
-                        href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
+                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`}
                         target="_blank" rel="noopener noreferrer"
                         className="bg-white text-amber-600 px-5 py-3 rounded-xl font-bold text-[10px] flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center"
                     >
@@ -820,7 +820,7 @@ className="flex-1 bg-white dark:bg-slate-800/80 rounded-2xl p-3 shadow-sm border
                                             <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
                                             <p className="text-[9px] text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                         </div>
-                                        <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`} target="_blank" rel="noopener noreferrer"
+                                        <a href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`} target="_blank" rel="noopener noreferrer"
                                             className="bg-white dark:bg-slate-800 text-[#6C4BFF] dark:text-purple-300 px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
                                             <MessageSquare size={13} />
                                             تواصل

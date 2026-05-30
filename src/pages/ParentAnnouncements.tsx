@@ -194,7 +194,7 @@ export const ParentAnnouncements = () => {
                                     </div>
                                     
                                     <a 
-                                        href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}?text=${encodeURIComponent(`استفسار بخصوص إعلان: ${ann.title}`)}`}
+                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`استفسار بخصوص إعلان: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
                                         className="text-[#8B5CF6] border border-[#8B5CF620] px-4 py-1.5 rounded-xl text-[10px] font-bold flex items-center gap-2 transition-all hover:bg-[#8B5CF6] hover:text-white active:scale-95"
                                         style={{ backgroundColor: '#8B5CF608' }}

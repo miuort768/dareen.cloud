@@ -120,7 +120,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                                 <p className={cn("font-normal text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
                                 <p className={cn("text-[9px] font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
                             </div>
-                            {alert.action && (
+                            {typeof alert.action === 'function' && (
                                 <button
                                     onClick={alert.action}
                                     className={cn("shrink-0 p-2 rounded-none transition-all hover:brightness-110", c.btn)}

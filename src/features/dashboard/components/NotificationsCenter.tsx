@@ -217,7 +217,7 @@ export const NotificationsCenter = ({
                                         <p className="text-[10px] font-medium mt-1 text-[#64748B]">{alert.desc}</p>
                                     </div>
                                 </div>
-                                {alert.action && (
+                                {typeof alert.action === 'function' && (
                                     <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-sm rounded-lg text-white" style={{ backgroundColor: color }}>
                                         <ArrowLeft size={14} />
                                     </button>
@@ -261,7 +261,7 @@ export const NotificationsCenter = ({
                                         <p className="text-[9px] font-medium text-[#64748B] truncate mt-0.5">{alert.description}</p>
                                     </div>
                                 </div>
-                                {alert.actionLabel === 'واتساب' ? (
+                                {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
                                     <button 
                                         onClick={alert.action} 
                                         className="h-8 px-4 text-white text-[8px] font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: '#22C55E' }}
