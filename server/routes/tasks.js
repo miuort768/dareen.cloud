@@ -16,6 +16,9 @@ router.use(ensureDb);
 router.use(authMiddleware);
 
 const logger = require('../utils/logger');
+const { z } = require('zod');
+const validate = require('../middleware/validation');
+const { createTaskSchema } = require('../utils/validators');
 
 // GET /api/tasks - Fetch all tasks
 router.get('/', async (req, res) => {
@@ -29,12 +32,8 @@ router.get('/', async (req, res) => {
 });
 
 // POST /api/tasks - Add a new task
-router.post('/', async (req, res) => {
+router.post('/', validate(createTaskSchema), async (req, res) => {
     const { title, description, priority, dueDate, status } = req.body;
-
-    if (!title) {
-        return res.status(400).json({ error: 'Title is required' });
-    }
 
     const id = uuidv4();
     const taskStatus = status || 'pending';
@@ -56,13 +55,9 @@ router.post('/', async (req, res) => {
 });
 
 // PATCH /api/tasks/:id - Update task status
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', validate(z.object({ status: z.enum(['pending', 'in-progress', 'completed']) })), async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-
-    if (!status) {
-        return res.status(400).json({ error: 'Status is required' });
-    }
 
     try {
         const result = await req.db.run('UPDATE tasks SET status = ? WHERE id = ? AND userId = ?', [status, id, req.user.id]);

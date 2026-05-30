@@ -108,7 +108,7 @@ async function setupDatabase() {
             teacherName TEXT NOT NULL,
             title TEXT,
             subject TEXT,
-            status TEXT DEFAULT 'active',
+            status TEXT DEFAULT 'active' CHECK(status IN ('active','ended')),
             targetStudentId TEXT,
             started_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
@@ -125,7 +125,7 @@ async function setupDatabase() {
             time TEXT,
             price INTEGER DEFAULT 0,
             teacherPrice INTEGER DEFAULT 0,
-            status TEXT DEFAULT 'pending',
+            status TEXT DEFAULT 'scheduled' CHECK(status IN ('scheduled','pending','completed','cancelled')),
             topics TEXT,
             homework TEXT,
             needsCompensation INTEGER DEFAULT 0,
@@ -141,7 +141,7 @@ async function setupDatabase() {
             specialization TEXT,
             amount INTEGER NOT NULL,
             paymentMethod TEXT,
-            status TEXT DEFAULT 'unpaid',
+            status TEXT DEFAULT 'unpaid' CHECK(status IN ('pending','paid','reviewed','unpaid')),
             personalExpenses INTEGER DEFAULT 0,
             date TEXT NOT NULL,
             FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
@@ -155,7 +155,7 @@ async function setupDatabase() {
             description TEXT,
             date TEXT NOT NULL,
             dueDate TEXT,
-            status TEXT DEFAULT 'unpaid',
+            status TEXT DEFAULT 'unpaid' CHECK(status IN ('pending','paid','unpaid','overdue','partially_paid','absent')),
             paymentMethod TEXT,
             notes TEXT,
             items TEXT,
@@ -169,19 +169,19 @@ async function setupDatabase() {
             senderName TEXT,
             title TEXT NOT NULL,
             message TEXT,
-            type TEXT DEFAULT 'info', -- success, warning, info
+            type TEXT DEFAULT 'info' CHECK(type IN ('info','success','warning')),
             time TEXT NOT NULL,
             read INTEGER DEFAULT 0
         );
 
         CREATE TABLE IF NOT EXISTS manual_transactions (
             id TEXT PRIMARY KEY,
-            type TEXT, -- income, expense
+            type TEXT CHECK(type IN ('income','expense')),
             category TEXT,
             amount REAL,
             date TEXT NOT NULL,
             description TEXT,
-            status TEXT DEFAULT 'completed',
+            status TEXT DEFAULT 'completed' CHECK(status IN ('pending','completed')),
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
@@ -196,8 +196,8 @@ async function setupDatabase() {
             id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
             description TEXT,
-            status TEXT DEFAULT 'pending', -- pending, completed
-            priority TEXT DEFAULT 'medium', -- low, medium, high
+            status TEXT DEFAULT 'pending' CHECK(status IN ('pending','in-progress','completed')),
+            priority TEXT DEFAULT 'medium' CHECK(priority IN ('low','medium','high')),
             dueDate TEXT,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
@@ -317,7 +317,7 @@ async function setupDatabase() {
             authorName TEXT NOT NULL,
             authorRole TEXT NOT NULL,
             content TEXT NOT NULL,
-            status TEXT DEFAULT 'pending', -- pending, approved, rejected
+            status TEXT DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected')),
             upvotes TEXT DEFAULT '[]',
             downvotes TEXT DEFAULT '[]',
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
@@ -350,8 +350,8 @@ async function setupDatabase() {
             phone TEXT NOT NULL,
             subject TEXT,
             curriculum TEXT,
-            status TEXT DEFAULT 'new',
-            priority TEXT DEFAULT 'medium',
+            status TEXT DEFAULT 'new' CHECK(status IN ('new','contacted','interested','trial','converted','lost')),
+            priority TEXT DEFAULT 'medium' CHECK(priority IN ('low','medium','high')),
             notes TEXT,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
@@ -365,7 +365,7 @@ async function setupDatabase() {
             teacherName TEXT,
             date TEXT NOT NULL,
             time TEXT,
-            status TEXT DEFAULT 'pending',
+            status TEXT DEFAULT 'pending' CHECK(status IN ('pending','completed','cancelled','converted')),
             notes TEXT,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
@@ -881,6 +881,70 @@ async function setupDatabase() {
     } catch (e) {
         // dismissed_notifications table might not exist or be empty - fine
     }
+
+    // 5. Drop dead tables (replaced by is_dismissed flag and is_archived flag respectively)
+    const deadTables = ['completed_sessions', 'dismissed_notifications'];
+    for (const table of deadTables) {
+        try { await db.exec(`DROP TABLE IF EXISTS ${table}`); console.log(`  ✓ Dropped dead table: ${table}`); } catch (e) { }
+    }
+
+    // 6. Compound index for common notifications query pattern
+    try {
+        await db.exec('CREATE INDEX IF NOT EXISTS idx_notifications_receiver_dismissed_read ON notifications(receiverId, is_dismissed, read)');
+        console.log('  ✓ Added compound index idx_notifications_receiver_dismissed_read');
+    } catch (e) {
+        console.warn('  ✗ Could not create compound notifications index:', e.message);
+    }
+
+    // 7. Trigger-based CHECK constraints for existing tables (runtime enforcement)
+    const checkTriggers = [
+        `CREATE TRIGGER IF NOT EXISTS trg_sessions_status_check
+         BEFORE INSERT OR UPDATE ON sessions WHEN NEW.status NOT IN ('scheduled','pending','completed','cancelled')
+         BEGIN SELECT RAISE(ABORT, 'sessions.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_tasks_status_check
+         BEFORE INSERT OR UPDATE ON tasks WHEN NEW.status NOT IN ('pending','in-progress','completed')
+         BEGIN SELECT RAISE(ABORT, 'tasks.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_tasks_priority_check
+         BEFORE INSERT OR UPDATE ON tasks WHEN NEW.priority NOT IN ('low','medium','high')
+         BEGIN SELECT RAISE(ABORT, 'tasks.priority: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_notifications_type_check
+         BEFORE INSERT OR UPDATE ON notifications WHEN NEW.type NOT IN ('info','success','warning')
+         BEGIN SELECT RAISE(ABORT, 'notifications.type: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_live_sessions_status_check
+         BEFORE INSERT OR UPDATE ON live_sessions WHEN NEW.status NOT IN ('active','ended')
+         BEGIN SELECT RAISE(ABORT, 'live_sessions.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_forum_posts_status_check
+         BEFORE INSERT OR UPDATE ON forum_posts WHEN NEW.status NOT IN ('pending','approved','rejected')
+         BEGIN SELECT RAISE(ABORT, 'forum_posts.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_leads_status_check
+         BEFORE INSERT OR UPDATE ON leads WHEN NEW.status NOT IN ('new','contacted','interested','trial','converted','lost')
+         BEGIN SELECT RAISE(ABORT, 'leads.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_leads_priority_check
+         BEFORE INSERT OR UPDATE ON leads WHEN NEW.priority NOT IN ('low','medium','high')
+         BEGIN SELECT RAISE(ABORT, 'leads.priority: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_trial_sessions_status_check
+         BEFORE INSERT OR UPDATE ON trial_sessions WHEN NEW.status NOT IN ('pending','completed','cancelled','converted')
+         BEGIN SELECT RAISE(ABORT, 'trial_sessions.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_teacher_invoices_status_check
+         BEFORE INSERT OR UPDATE ON teacher_invoices WHEN NEW.status NOT IN ('pending','paid','reviewed','unpaid')
+         BEGIN SELECT RAISE(ABORT, 'teacher_invoices.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_student_invoices_status_check
+         BEFORE INSERT OR UPDATE ON student_invoices WHEN NEW.status NOT IN ('pending','paid','unpaid','overdue','partially_paid','absent')
+         BEGIN SELECT RAISE(ABORT, 'student_invoices.status: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_manual_transactions_type_check
+         BEFORE INSERT OR UPDATE ON manual_transactions WHEN NEW.type NOT IN ('income','expense')
+         BEGIN SELECT RAISE(ABORT, 'manual_transactions.type: قيمة غير مسموح بها'); END`,
+        `CREATE TRIGGER IF NOT EXISTS trg_manual_transactions_status_check
+         BEFORE INSERT OR UPDATE ON manual_transactions WHEN NEW.status NOT IN ('pending','completed')
+         BEGIN SELECT RAISE(ABORT, 'manual_transactions.status: قيمة غير مسموح بها'); END`,
+    ];
+
+    for (const trigger of checkTriggers) {
+        try { await db.exec(trigger); } catch (e) {
+            console.warn(`  ✗ Could not create trigger:`, e.message.substring(0, 80));
+        }
+    }
+    console.log('  ✓ Created CHECK constraint triggers');
 
     console.log('Performance and integrity improvements applied.');
 

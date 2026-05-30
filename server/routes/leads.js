@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 const { authMiddleware } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const validate = require('../middleware/validation');
+const { createLeadSchema, updateLeadSchema } = require('../utils/validators');
 
 const emitLeadUpdate = (req) => {
     const io = req.app.get('socketio');
@@ -33,7 +35,7 @@ router.get('/stats', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, validate(createLeadSchema), async (req, res) => {
     try {
         const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         const id = uuidv4();
@@ -51,7 +53,7 @@ router.post('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, validate(updateLeadSchema), async (req, res) => {
     try {
         const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         await req.db.run(

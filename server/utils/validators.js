@@ -76,7 +76,7 @@ const createEvaluationSchema = z.object({
     teacherName: z.string().optional(),
     sessionId: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional().or(z.literal('')),
-    rating: z.enum(['ممتاز', 'جيد جدًا', 'جيد', 'يحتاج تحسين']).default('ممتاز'),
+    rating: z.enum(['ممتاز', 'جيد جدًا', 'جيد', 'مقبول', 'ضعيف', 'يحتاج تحسين']).default('ممتاز'),
     notes: z.string().optional().or(z.literal('')),
     points: z.number().int().min(0).default(0)
 });
@@ -115,7 +115,7 @@ const createTaskSchema = z.object({
     id: z.string().optional(),
     title: z.string().min(1, "Title is required").trim(),
     description: z.string().optional().or(z.literal('')),
-    status: z.enum(['pending', 'completed']).default('pending'),
+    status: z.enum(['pending', 'in-progress', 'completed']).default('pending'),
     priority: z.enum(['low', 'medium', 'high']).default('medium'),
     dueDate: z.string().optional().or(z.literal('')),
     userId: z.string().optional()
@@ -144,7 +144,7 @@ const createTeacherInvoiceSchema = z.object({
     teacher: z.string().min(1, "Teacher Name is required"),
     specialization: z.string().optional().or(z.literal('')),
     amount: z.number().or(z.string().transform(val => Number(val))),
-    status: z.enum(['pending', 'paid', 'reviewed', 'مدفوعة', 'قيد المعالجة', 'متأخرة', 'غير مدفوعة', 'unpaid']).default('pending'),
+    status: z.enum(['pending', 'paid', 'reviewed', 'unpaid']).default('pending'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     paymentMethod: z.string().optional().or(z.literal('')),
     personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
@@ -157,7 +157,7 @@ const createLeadSchema = z.object({
     phone: z.string().min(1, "Phone is required").trim(),
     subject: z.string().optional().or(z.literal('')),
     curriculum: z.string().optional().or(z.literal('')),
-    status: z.enum(['new', 'contacted', 'interested', 'trial', 'enrolled', 'lost']).default('new'),
+    status: z.enum(['new', 'contacted', 'interested', 'trial', 'converted', 'lost']).default('new'),
     priority: z.enum(['low', 'medium', 'high']).default('medium'),
     notes: z.string().optional().or(z.literal(''))
 });
