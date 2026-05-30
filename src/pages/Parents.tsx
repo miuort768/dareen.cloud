@@ -100,6 +100,10 @@ export const Parents = () => {
                                 }}
                                 onEdit={actions.handleEditParent}
                                 onDelete={actions.handleDeleteParent}
+                                onViewParent={(parent) => {
+                                    actions.setSelectedParent(parent);
+                                    actions.setShowDetails(true);
+                                }}
                             />
                         </div>
                     ) : (

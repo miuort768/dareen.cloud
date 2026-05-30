@@ -62,7 +62,7 @@ export const TeacherDashboard = () => {
                             <ModernAnnouncements />
                             
                             {(stats.todayTimeline || []).length > 0 && (
-                                <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} />
+                                            <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                             )}
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -208,7 +208,7 @@ export const TeacherDashboard = () => {
                                     </div>
                                     <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
                                         <div className="p-3.5">
-                                            <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} />
+                                <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                                         </div>
                                     </div>
                                 </section>

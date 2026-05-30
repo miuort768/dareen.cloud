@@ -1,5 +1,6 @@
 import { ListTodo, History, Clock, Calendar, Activity as ActivityIcon } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface Activity {
     id: string;
@@ -16,6 +17,7 @@ interface RecentActivityFeedProps {
 }
 
 export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps) => {
+    const navigate = useNavigate();
     const activities: Activity[] = [
         ...sessions.slice(0, 5).map(s => ({
             id: `s-${s.id}`,
@@ -103,7 +105,7 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
             </div>
 
             <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${color}20` }}>
-                <button className="w-full h-11 rounded-2xl text-white text-[10px] font-bold transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: color }}>
+                <button onClick={() => navigate('/settings')} className="w-full h-11 rounded-2xl text-white text-[10px] font-bold transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: color }}>
                     عرض سجل النظام الكامل
                 </button>
             </div>

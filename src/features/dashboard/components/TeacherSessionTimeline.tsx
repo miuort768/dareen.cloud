@@ -12,9 +12,10 @@ interface TimelineSession {
 interface TeacherSessionTimelineProps {
     sessions: TimelineSession[];
     onStudentClick?: (student: { id: string; name: string }) => void;
+    onSessionStart?: (sessionId: string) => void;
 }
 
-export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSessionTimelineProps) => {
+export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStart }: TeacherSessionTimelineProps) => {
     if (!sessions || sessions.length === 0) return null;
 
     const sortedSessions = [...sessions].sort((a, b) => a.time.localeCompare(b.time));
@@ -104,7 +105,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
 
                             {/* Hover play overlay */}
                             {isOngoing && (
-                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-700/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
+                                <button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-700/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
                                     <div className="w-9 h-9 bg-white text-indigo-600 rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>

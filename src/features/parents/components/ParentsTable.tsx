@@ -10,6 +10,7 @@ interface ParentsTableProps {
     onSelectParent: (parent: Parent) => void;
     onEdit: (parent: Parent) => void;
     onDelete: (id: string) => void;
+    onViewParent?: (parent: Parent) => void;
 }
 
 export const ParentsTable: React.FC<ParentsTableProps> = ({
@@ -19,7 +20,8 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
     showDetails,
     onSelectParent,
     onEdit,
-    onDelete
+    onDelete,
+    onViewParent
 }) => {
     return (
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
@@ -115,7 +117,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                                     >
                                                         <Trash2 size={13} />
                                                     </button>
-                                                    <button className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all rounded-none">
+                                                    <button onClick={() => onViewParent?.(parent)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all rounded-none">
                                                         <ArrowUpRight size={13} />
                                                     </button>
                                         </div>

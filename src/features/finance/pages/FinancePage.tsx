@@ -58,7 +58,12 @@ export const Finance = () => {
                             <Plus size={13} />
                             تسجيل معاملة
                         </button>
-                        <button className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/30 text-white transition-all rounded-none shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.2)' }}>
+                        <button onClick={() => {
+                            const csv = [['التاريخ','الوصف','النوع','المبلغ','الرصيد'].join(','), ...state.filteredTransactions.map(t => [t.date, t.description, t.type, t.amount, t.balance].join(','))].join('\n');
+                            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a'); a.href = url; a.download = 'finance-report.csv'; a.click(); URL.revokeObjectURL(url);
+                        }} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/30 text-white transition-all rounded-none shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.2)' }}>
                             <Download size={14} />
                         </button>
                     </div>
