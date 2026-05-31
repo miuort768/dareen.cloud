@@ -241,7 +241,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         className="custom-scrollbar"
                         style={{ height: '100%', width: '100%' }}
                         components={{
-                            Footer: () => <div className="h-8" />
+                            Footer: () => <div className="h-4" />
                         }}
                         atBottomStateChange={(atBottom) => {
                             setShowScrollBottom(!atBottom);
@@ -252,11 +252,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             
                             return (
                                 <div 
-                                    className={cn(
-                                        "flex w-full mb-2 px-3 md:px-10 lg:px-20",
-                                        index === 0 && "pt-6",
-                                        isMe ? "justify-start" : "justify-end"
-                                    )}
+                    className={cn(
+                        "flex w-full mb-1 px-3 md:px-10 lg:px-20",
+                        index === 0 && "pt-4",
+                        isMe ? "justify-start" : "justify-end"
+                    )}
                                 >
                                     <div className={cn(
                                         "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
@@ -306,7 +306,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
+                        className="absolute bottom-20 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
