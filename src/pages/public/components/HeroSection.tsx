@@ -41,7 +41,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 </span>
                             </h1>
                             <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                منصة تعليم عن بعد رائدة في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية أونلاين في الرياض وجدة ودبي وأبوظبي والكويت والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج السعودية والقطرية والعمانية والبحرينية والخليجية مع نخبة من أفضل المعلمين.
+                                منصة تعليم عن بعد رائدة في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية أونلاين، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة من أفضل المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
