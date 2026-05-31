@@ -43,12 +43,9 @@ export const PublicFooter = () => {
                         </h3>
                         <ul className="space-y-3">
                             {[
-                                { name: 'من نحن', path: '/about' },
                                 { name: 'الدورات', path: '/courses' },
-                                { name: 'المدونة', path: '/blog' },
-                                { name: 'الكتب', path: '/books' },
+                                { name: 'من نحن', path: '/about' },
                                 { name: 'اتصل بنا', path: '/contact' },
-                                { name: 'الوظائف', path: '/jobs' },
                             ].map((link, idx) => (
                                 <li key={idx}>
                                     <Link
