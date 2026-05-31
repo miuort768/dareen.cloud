@@ -40,7 +40,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-xs text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
                                 أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
