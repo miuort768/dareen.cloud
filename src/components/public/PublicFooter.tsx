@@ -19,7 +19,7 @@ export const PublicFooter = () => {
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 lg:gap-6 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-6 mb-10">
                     {/* Brand */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
@@ -62,48 +62,7 @@ export const PublicFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Services */}
-                    <div>
-                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-amber-500"></span>
-                            خدماتنا
-                        </h3>
-                        <ul className="space-y-3">
-                            {[
-                                { name: 'دروس خصوصية أونلاين في الكويت', path: '/courses?curriculum=kuwait' },
-                                { name: 'دروس خصوصية في السعودية', path: '/courses?curriculum=saudi' },
-                                { name: 'دروس خصوصية في الرياض', path: '/courses?curriculum=saudi' },
-                                { name: 'دروس خصوصية في جدة', path: '/courses?curriculum=saudi' },
-                                { name: 'دروس خصوصية في قطر', path: '/courses?curriculum=qatar' },
-                                { name: 'دروس خصوصية في الدوحة', path: '/courses?curriculum=qatar' },
-                                { name: 'دروس خصوصية في الريان', path: '/courses?curriculum=qatar' },
-                                { name: 'دروس خصوصية في الوكرة', path: '/courses?curriculum=qatar' },
-                                { name: 'دروس خصوصية في الإمارات', path: '/courses?curriculum=uae' },
-                                { name: 'دروس خصوصية في دبي', path: '/courses?curriculum=uae' },
-                                { name: 'دروس خصوصية في أبوظبي', path: '/courses?curriculum=uae' },
-                                { name: 'دروس خصوصية في عمان', path: '/courses?curriculum=oman' },
-                                { name: 'دروس خصوصية في مسقط', path: '/courses?curriculum=oman' },
-                                { name: 'دروس خصوصية في صحار', path: '/courses?curriculum=oman' },
-                                { name: 'دروس خصوصية في صلالة', path: '/courses?curriculum=oman' },
-                                { name: 'دروس خصوصية في السيب', path: '/courses?curriculum=oman' },
-                                { name: 'دروس خصوصية في البحرين', path: '/courses?curriculum=bahrain' },
-                                { name: 'دروس خصوصية في المنامة', path: '/courses?curriculum=bahrain' },
-                                { name: 'دروس خصوصية في المحرق', path: '/courses?curriculum=bahrain' },
-                                { name: 'دروس خصوصية في الرفاع', path: '/courses?curriculum=bahrain' },
-                                { name: 'تحفيظ قرآن عن بعد للأطفال', path: '/courses?type=summaries' },
-                                { name: 'تأسيس الأطفال في القراءة والكتابة', path: '/courses?type=foundation' },
-                            ].map((link, idx) => (
-                                <li key={idx}>
-                                    <Link
-                                        to={link.path}
-                                        className="text-gray-400 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors flex items-center gap-2 text-sm"
-                                    >
-                                        <span className="text-amber-500">›</span> {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+
 
                     {/* Contact */}
                     <div>
