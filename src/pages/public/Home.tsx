@@ -121,7 +121,7 @@ export const Home = () => {
 
   return (
     <div className="min-h-full bg-[#F8F8FC] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-500">
-      <SEO title="دارين السابعة | منصة تعليم عن بعد في السعودية والكويت والخليج" description="تعليم عن بعد في السعودية، الكويت، الإمارات، قطر، وعمان والبحرين. دروس خصوصية أونلاين في الرياضيات والعلوم واللغة العربية والإنجليزية، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، ومراجعات للمناهج السعودية والكويتية والقطرية والعمانية والبحرينية مع أفضل المعلمين في الدوحة والريان ومسقط وصلالة والمنامة. احجز حصة تجريبية مجانية." url="https://dareen.cloud/" image="/hero-child.png" keywords="دارين السابعة, تعليم عن بعد, منصة تعليمية, دروس خصوصية الكويت, مدرس خصوصي كورسات السعودية, تحفيظ قرآن, مناهج خليجية, تأسيس أطفال, مراجعات نهائية, قدرات تحصيلي, اونلاين" breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
+      <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <MobileHeader />
 
