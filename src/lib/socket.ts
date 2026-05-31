@@ -7,16 +7,19 @@ import { io, Socket } from 'socket.io-client';
 class SocketService {
     private socket: Socket | null = null;
 
+    private activeRooms: Set<string> = new Set();
+
     connect() {
         const token = localStorage.getItem('auth_token');
-        
+        if (!token) return null;
+
         if (!this.socket) {
             const origin = window.location.origin;
             this.socket = io(origin, {
                 path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
-                auth: { token: token || 'guest' },
+                auth: { token },
                 reconnection: true,
                 reconnectionAttempts: 5,
                 reconnectionDelay: 1000,
@@ -25,12 +28,9 @@ class SocketService {
             });
 
             this.socket.on('connect', () => {
-                if (token) {
-                    const decoded = this.decodeToken(token);
-                    if (decoded?.id) {
-                        this.socket?.emit('join_personal_room', decoded.id);
-                    }
-                }
+                this.activeRooms.forEach(roomId => {
+                    this.socket?.emit('join_conversation', roomId);
+                });
             });
 
             this.socket.on('connect_error', (err) => {
@@ -43,10 +43,9 @@ class SocketService {
                 console.error('❌ Socket connection error:', err.message);
             });
         } else {
-            // Force reconnect if token changed to ensure server updates rooms
             const currentToken = (this.socket.auth as { token?: string })?.token;
             if (currentToken !== token) {
-                this.socket.auth = { token: token || 'guest' };
+                this.socket.auth = { token };
                 if (this.socket.connected) {
                     this.socket.disconnect().connect();
                 }
@@ -55,34 +54,27 @@ class SocketService {
         return this.socket;
     }
 
-    private decodeToken(token: string) {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        } catch {
-            return null;
-        }
-    }
-
     getSocket() {
-        return this.socket || this.connect() || {
-            on: () => { }, off: () => { }, emit: () => { }, id: 'offline'
-        } as Partial<Socket>;
+        if (this.socket?.connected) return this.socket;
+        const s = this.connect();
+        if (!s) {
+            console.warn('⚠️ Socket not available — user may be offline or unauthenticated');
+        }
+        return s;
     }
 
     joinConversation(id: string) {
-        this.getSocket().emit('join_conversation', id);
+        this.activeRooms.add(id);
+        this.getSocket()?.emit('join_conversation', id);
     }
 
     leaveConversation(id: string) {
-        this.getSocket().emit('leave_conversation', id);
+        this.activeRooms.delete(id);
+        this.getSocket()?.emit('leave_conversation', id);
     }
 
     disconnect() {
+        this.activeRooms.clear();
         if (this.socket) {
             this.socket.disconnect();
             this.socket = null;

@@ -15,6 +15,8 @@ import type { User } from '../../../types/auth';
 interface ChatWindowProps {
     selectedConv: Conversation;
     messages: ChatMessage[];
+    isLoadingMessages?: boolean;
+    isMessagesError?: boolean;
     newMessage: string;
     setNewMessage: (val: string) => void;
     handleSendMessage: (e: React.FormEvent) => void;
@@ -33,6 +35,8 @@ interface ChatWindowProps {
 export const ChatWindow: React.FC<ChatWindowProps> = ({
     selectedConv,
     messages,
+    isLoadingMessages,
+    isMessagesError,
     newMessage,
     setNewMessage,
     handleSendMessage,
@@ -52,6 +56,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const typingUsers = useChatStore(s => s.typingUsers);
+    const lastTypingEmitRef = useRef(0);
 
     // Safer and more efficient message sorting + Searching
     const filteredMessages = useMemo(() => {
@@ -89,13 +94,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             }
         }
     }, [selectedConv, messages, markAsRead, currentUser?.id]);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            scrollToBottom();
-        }, 150);
-        return () => clearTimeout(timer);
-    }, [messages.length, selectedConv.id, scrollToBottom]);
 
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
@@ -222,68 +220,82 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
             {/* Messages - Virtualized Scroll for Performance */}
             <div className="flex-1 relative z-10">
-                <Virtuoso
-                    ref={virtuosoRef}
-                    data={filteredMessages}
-                    initialTopMostItemIndex={filteredMessages.length - 1}
-                    followOutput="smooth"
-                    className="custom-scrollbar"
-                    style={{ height: '100%', width: '100%' }}
-                    components={{
-                        Footer: () => <div className="h-8" />
-                    }}
-                    atBottomStateChange={(atBottom) => {
-                        setShowScrollBottom(!atBottom);
-                    }}
-                    itemContent={(index, msg) => {
-                        const isMe = String(msg.senderId) === String(currentUser?.id);
-                        const isGroup = selectedConv.isGroup;
-                        
-                        return (
-                            <div 
-                                className={cn(
-                                    "flex w-full mb-2 px-3 md:px-10 lg:px-20",
-                                    index === 0 && "pt-6",
-                                    isMe ? "justify-start" : "justify-end"
-                                )}
-                            >
-                                <div className={cn(
-                                    "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
-                                    isMe 
-                                        ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tr-none mr-2" 
-                                        : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tl-none ml-2"
-                                )}>
-                                    {isGroup && !isMe && (
-                                        <span className="block text-[12.5px] font-normal text-[#e542a3] mb-0.5 text-right">
-                                            {msg.senderName}
-                                        </span>
+                {isMessagesError ? (
+                    <div className="flex items-center justify-center h-full text-slate-400 dark:text-slate-500 text-sm px-4">
+                        تعذر تحميل الرسائل. حاول مرة أخرى.
+                    </div>
+                ) : isLoadingMessages ? (
+                    <div className="flex items-center justify-center h-full">
+                        <div className="w-8 h-8 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+                    </div>
+                ) : filteredMessages.length === 0 ? (
+                    <div className="flex items-center justify-center h-full text-slate-400 dark:text-slate-500 text-sm px-4">
+                        لا توجد رسائل بعد. ابدأ المحادثة الآن.
+                    </div>
+                ) : (
+                    <Virtuoso
+                        ref={virtuosoRef}
+                        data={filteredMessages}
+                        initialTopMostItemIndex={filteredMessages.length - 1}
+                        followOutput="smooth"
+                        className="custom-scrollbar"
+                        style={{ height: '100%', width: '100%' }}
+                        components={{
+                            Footer: () => <div className="h-8" />
+                        }}
+                        atBottomStateChange={(atBottom) => {
+                            setShowScrollBottom(!atBottom);
+                        }}
+                        itemContent={(index, msg) => {
+                            const isMe = String(msg.senderId) === String(currentUser?.id);
+                            const isGroup = selectedConv.isGroup;
+                            
+                            return (
+                                <div 
+                                    className={cn(
+                                        "flex w-full mb-2 px-3 md:px-10 lg:px-20",
+                                        index === 0 && "pt-6",
+                                        isMe ? "justify-start" : "justify-end"
                                     )}
-
-                                    <div className="text-[14.2px] text-[#111b21] dark:text-[#e9edef] leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
-                                        {msg.content}
-                                    </div>
-                                    
-                                    <div className="flex items-center justify-end gap-1 mt-1">
-                                        <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
-                                            {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
-                                                ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
-                                                : '--:--'}
-                                        </span>
-                                        {isMe && (
-                                            <div className="flex">
-                                                {msg.readAt ? (
-                                                    <CheckCheck size={14} className="text-[#53bdeb]" />
-                                                ) : (
-                                                    <CheckCheck size={14} className="text-[#8696a0]" />
-                                                )}
-                                            </div>
+                                >
+                                    <div className={cn(
+                                        "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
+                                        isMe 
+                                            ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tr-none mr-2" 
+                                            : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tl-none ml-2"
+                                    )}>
+                                        {isGroup && !isMe && (
+                                            <span className="block text-[12.5px] font-normal text-[#e542a3] mb-0.5 text-right">
+                                                {msg.senderName}
+                                            </span>
                                         )}
+
+                                        <div className="text-[14.2px] text-[#111b21] dark:text-[#e9edef] leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
+                                            {msg.content}
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-end gap-1 mt-1">
+                                            <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
+                                                {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
+                                                    ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
+                                                    : '--:--'}
+                                            </span>
+                                            {isMe && (
+                                                <div className="flex">
+                                                    {msg.readAt ? (
+                                                        <CheckCheck size={14} className="text-[#53bdeb]" />
+                                                    ) : (
+                                                        <CheckCheck size={14} className="text-[#8696a0]" />
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    }}
-                />
+                            );
+                        }}
+                    />
+                )}
             </div>
 
             {/* Scroll to Bottom Button */}
@@ -318,16 +330,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             
                             // Throttled typing indicator
                             if (currentUser && selectedConv.id) {
-                                // Only emit if it's been more than 2s or if it's the first character
                                 const now = Date.now();
-                                const w = window as { _lastTypingEmit?: number };
-                                const lastSent = w._lastTypingEmit || 0;
+                                const lastSent = lastTypingEmitRef.current;
                                 if (now - lastSent > 2000 || (val.length > 0 && lastSent === 0)) {
                                     setTyping(selectedConv.id, val.length > 0, currentUser.name);
-                                    w._lastTypingEmit = val.length > 0 ? now : 0;
+                                    lastTypingEmitRef.current = val.length > 0 ? now : 0;
                                 } else if (val.length === 0) {
                                     setTyping(selectedConv.id, false, currentUser.name);
-                                    w._lastTypingEmit = 0;
+                                    lastTypingEmitRef.current = 0;
                                 }
                             }
                         }}

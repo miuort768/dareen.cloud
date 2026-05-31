@@ -142,7 +142,7 @@ export const Chat: React.FC = () => {
         }
     };
 
-    const { data: messages = [] } = useMessages(selectedConv?.id);
+    const { data: messages = [], isLoading: isLoadingMessages, isError: isMessagesError } = useMessages(selectedConv?.id);
 
     return (
         <div 
@@ -184,6 +184,8 @@ export const Chat: React.FC = () => {
                     <ChatWindow
                         selectedConv={selectedConv}
                         messages={messages}
+                        isLoadingMessages={isLoadingMessages}
+                        isMessagesError={isMessagesError}
                         newMessage={newMessage}
                         setNewMessage={setNewMessage}
                         handleSendMessage={handleSendMessage}
@@ -222,8 +224,8 @@ export const Chat: React.FC = () => {
                         </div>
                         
                         <div className="absolute bottom-10 flex items-center gap-2 text-slate-400 dark:text-slate-600">
-                             <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                             <span className="text-[10px] font-medium uppercase tracking-widest">النظام متصل وآمن</span>
+                             <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]", useChatStore(s => s.isConnected) ? "bg-emerald-500" : "bg-rose-500")}></div>
+                             <span className="text-[10px] font-medium uppercase tracking-widest">{useChatStore(s => s.isConnected) ? "النظام متصل وآمن" : "غير متصل"}</span>
                         </div>
                     </div>
                 )}

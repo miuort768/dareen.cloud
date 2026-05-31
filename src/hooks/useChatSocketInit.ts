@@ -30,8 +30,8 @@ export const useChatSocketInit = () => {
     const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
     
     const setLiveSession = useChatStore(s => s.setLiveSession);
+    const setIsConnected = useChatStore(s => s.setIsConnected);
     const activeConversationId = useChatStore(s => s.activeConversationId);
-    // Since activeConversationId from hook can be stale inside socket callbacks, use a ref
     const activeConvRef = useRef(activeConversationId);
 
     useEffect(() => {
@@ -144,9 +144,8 @@ export const useChatSocketInit = () => {
                     sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
                         body: message.content,
                         tag: message.conversationId,
-                        // @ts-expect-error - renotify not in TS NotificationOptions types
-                        renotify: true
-                    });
+                        renotify: true,
+                    } as NotificationOptions & { renotify: boolean });
                 }
             }
         };
@@ -168,6 +167,12 @@ export const useChatSocketInit = () => {
             setLiveSession(null);
         };
 
+        const handleConnect = () => setIsConnected(true);
+        const handleDisconnect = () => setIsConnected(false);
+
+        setIsConnected(socket.connected);
+        socket.on('connect', handleConnect);
+        socket.on('disconnect', handleDisconnect);
         socket.on('new_message', handleNewMessage);
         socket.on('typing', handleTyping);
         socket.on('new_conversation', handleNewConversation);
@@ -175,6 +180,8 @@ export const useChatSocketInit = () => {
         socket.on('session_ended', handleSessionEnded);
 
         return () => {
+            socket.off('connect', handleConnect);
+            socket.off('disconnect', handleDisconnect);
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
             socket.off('new_conversation', handleNewConversation);
@@ -183,6 +190,6 @@ export const useChatSocketInit = () => {
             
             Object.values(typingTimeouts).forEach(timeout => clearTimeout(timeout));
         };
-    }, [isAuthenticated, currentUser, queryClient, setLiveSession]);
+    }, [isAuthenticated, currentUser, queryClient, setLiveSession, setIsConnected]);
 
 };

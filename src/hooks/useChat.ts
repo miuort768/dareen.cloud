@@ -46,11 +46,12 @@ export const useChat = (userId?: string) => {
 
     const totalUnreadCount = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0);
     const prevCount = useRef(totalUnreadCount);
-    if (totalUnreadCount !== prevCount.current) {
-        prevCount.current = totalUnreadCount;
-        useChatStore.getState().setTotalUnreadCount(totalUnreadCount);
-        useUnreadStore.getState().setTotalUnreadCount(totalUnreadCount);
-    }
+    useEffect(() => {
+        if (totalUnreadCount !== prevCount.current) {
+            prevCount.current = totalUnreadCount;
+            useUnreadStore.getState().setTotalUnreadCount(totalUnreadCount);
+        }
+    }, [totalUnreadCount]);
 
     // Fetch available users
     const { data: availableUsers = [] } = useQuery<ChatUser[]>({

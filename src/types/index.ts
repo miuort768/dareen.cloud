@@ -98,21 +98,7 @@ export interface StudentInvoice {
     notes: string;
 }
 
-export interface User {
-    id: string;
-    name: string;
-    username: string;
-    password?: string; // Only for admins stored in localStorage
-    role: 'admin' | 'teacher' | 'parent' | 'student' | 'chat_user';
-    teacherName?: string;
-    permissions: string[];
-    avatar?: string;
-}
-
-export interface AuthResponse {
-    token: string;
-    user: User;
-}
+export type { User } from './auth';
 
 export interface PaginatedResponse<T> {
     data: T[];
@@ -147,7 +133,6 @@ export interface Evaluation {
 export interface LiveSession {
     teacherId: string;
     teacherName: string;
-    teacherSocketId: string;
     subject?: string;
     type?: string;
     sessionId?: string;
