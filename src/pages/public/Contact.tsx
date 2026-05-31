@@ -53,7 +53,7 @@ export const Contact = () => {
 
     return (
         <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
-            <SEO title="اتصل بنا | دارين السابعة - دروس خصوصية أونلاين في الكويت والخليج" description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في الكويت والسعودية وقطر والإمارات وعمان. احجز حصة تجريبية مجانية عبر واتساب." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
+            <SEO title="اتصل بنا | دارين السابعة - دروس خصوصية أونلاين في السعودية والكويت والخليج" description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في السعودية والكويت والإمارات وقطر وعمان والبحرين. احجز حصة تجريبية مجانية عبر واتساب." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
             <MobileHeader />
 
             <main className="flex-grow md:pt-28 pb-2 relative overflow-hidden">

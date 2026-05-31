@@ -75,7 +75,7 @@ export const Courses = () => {
 
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
-      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج الكويتية والسعودية والقطرية والإماراتية والعمانية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية، وقدرات تحصيلي مع نخبة المعلمين الخبراء في الخليج." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
+      <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 

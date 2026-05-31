@@ -31,17 +31,17 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                                <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليم عن بعد رائدة في الكويت والخليج</span>
+                                <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
-                                <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
+                                <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في السعودية، الكويت، الامارات، قطر، وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والريان ومسقط وصلالة والمنامة والمحرق</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-indigo-600 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
                             <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                منصة تعليم عن بعد رائدة في الكويت، السعودية، قطر، الإمارات وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة من أفضل المعلمين.
+                                منصة تعليم عن بعد رائدة في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية أونلاين في الرياض وجدة ودبي وأبوظبي والكويت والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج السعودية والقطرية والعمانية والبحرينية والخليجية مع نخبة من أفضل المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
