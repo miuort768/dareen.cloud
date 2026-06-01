@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+
 import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star } from 'lucide-react';
 import { api } from '../lib/api';
@@ -158,6 +158,272 @@ export const AdminBlog = () => {
                 </div>
             </div>
 
+            {/* Inline Form */}
+            {isModalOpen && currentPost && (
+                <div className="bg-white dark:bg-slate-900 w-full overflow-hidden border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
+                    <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
+                        <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
+                        <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all" aria-label="إغلاق"><X size={18} /></button>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">عنوان المقال</label>
+                                <input
+                                    required
+                                    type="text"
+                                    value={currentPost.title}
+                                    onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    placeholder="مثال: أفضل نصائح الدراسة..."
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الرابط المختصر (Slug)</label>
+                                <div className="relative">
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <input
+                                        required
+                                        type="text"
+                                        value={currentPost.slug}
+                                        onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        dir="ltr"
+                                        placeholder="أفضل-نصائح-الدراسة"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التصنيف</label>
+                                <div className="relative">
+                                    <Tag className="absolute right-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <input
+                                        type="text"
+                                        value={currentPost.category}
+                                        onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-10 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                        placeholder="مثل: نصائح دراسية"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكاتب</label>
+                                <input
+                                    type="text"
+                                    value={currentPost.author}
+                                    onChange={(e) => setCurrentPost({ ...currentPost, author: e.target.value })}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التاريخ</label>
+                                <input
+                                    type="date"
+                                    value={currentPost.date?.split('T')[0]}
+                                    onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="p-4 rounded-2xl" style={{ backgroundColor: '#E11D4808', border: '1px solid #E11D4815' }}>
+                            <p className="text-[10px] font-bold mb-4" style={{ color: '#E11D48' }}>تصنيف تعليمي — سيظهر في صفحة المواد</p>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
+                                    <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        <option value="notes">ملخصات</option>
+                                        <option value="solutions">حلول</option>
+                                        <option value="summaries">مراجعات</option>
+                                        <option value="foundation">تأسيس</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المنهج</label>
+                                    <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        <option value="kuwait">الكويت</option>
+                                        <option value="qatar">قطر</option>
+                                        <option value="uae">الإمارات</option>
+                                        <option value="saudi">السعودية</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المرحلة</label>
+                                    <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        <option value="primary">ابتدائي</option>
+                                        <option value="middle">متوسط</option>
+                                        <option value="secondary">ثانوي</option>
+                                        <option value="basic">أساسي (عمان)</option>
+                                        <option value="preparatory">إعدادي (مصر)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الصف</label>
+                                    <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الفصل</label>
+                                    <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        <option value="1">الفصل الأول</option>
+                                        <option value="2">الفصل الثاني</option>
+                                        <option value="">بدون</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المادة</label>
+                                    <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                        <option value="arabic">عربي</option>
+                                        <option value="math">رياضيات</option>
+                                        <option value="islamic">إسلامية</option>
+                                        <option value="english">إنجليزي</option>
+                                        <option value="science">علوم</option>
+                                        <option value="physics">فيزياء</option>
+                                        <option value="chemistry">كيمياء</option>
+                                        <option value="biology">أحياء</option>
+                                        <option value="history">تاريخ</option>
+                                        <option value="geography">جغرافيا</option>
+                                        <option value="social">اجتماعيات</option>
+                                        <option value="computer">حاسب آلي</option>
+                                        <option value="stats">إحصاء</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رابط الصورة الرئيسية</label>
+                            <div className="relative">
+                                <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                <input
+                                    type="url"
+                                    value={currentPost.coverImage}
+                                    onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                    dir="ltr"
+                                    placeholder="https://..."
+                                />
+                            </div>
+                            {currentPost.coverImage && (
+                                <div className="mt-2 h-32 w-full border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
+                                    <img
+                                        src={currentPost.coverImage}
+                                        alt="معاينة"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';
+                                        }}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
+                                <div className="relative">
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <input
+                                        type="url"
+                                        value={currentPost.downloadLink || ''}
+                                        onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        dir="ltr"
+                                        placeholder="https://..."
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
+                                <div className="relative">
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <input
+                                        type="url"
+                                        value={currentPost.watchLink || ''}
+                                        onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        dir="ltr"
+                                        placeholder="https://..."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={currentPost.isNew || false}
+                                    onChange={(e) => setCurrentPost({ ...currentPost, isNew: e.target.checked })}
+                                    className="w-4 h-4 rounded border-slate-300 text-[#E11D48] focus:ring-[#E11D48]"
+                                />
+                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                    <Star size={12} className="text-amber-500" /> جديد
+                                </span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
+                            <input
+                                type="text"
+                                value={currentPost.keywords}
+                                onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                placeholder="دراسة, نصائح, تفوق"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
+                            <textarea
+                                rows={2}
+                                value={currentPost.excerpt}
+                                onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none rounded-xl outline-none"
+                                placeholder="وصف قصير يظهر في نتائج البحث..."
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">محتوى المقال (كود HTML)</label>
+                            <textarea
+                                rows={10}
+                                required
+                                value={currentPost.content}
+                                onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                placeholder="اكتب محتوى المقال هنا..."
+                            />
+                        </div>
+
+                        <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 flex justify-end gap-3 rounded-xl">
+                            <button
+                                type="button"
+                                onClick={() => setIsModalOpen(false)}
+                                className="px-5 py-2.5 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl"
+                            >
+                                إلغاء
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={submitting}
+                                onClick={handleSubmit}
+                                className="flex items-center gap-2 px-6 py-2.5 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 shadow-sm active:scale-95 rounded-xl"
+                            >
+                                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
+                                <span className="text-xs">نشر المقال</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            )}
+
             {/* Posts Grid */}
             {loading ? (
                 <div className="flex items-center justify-center py-20">
@@ -201,274 +467,7 @@ export const AdminBlog = () => {
             </div>
         </div>
 
-        {/* Modal Form */}
-        {isModalOpen && currentPost && document.getElementById('admin-modal-root') && createPortal(
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60">
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
-                        <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
-                            <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all" aria-label="إغلاق"><X size={18} /></button>
-                        </div>
 
-                        <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">عنوان المقال</label>
-                                    <input
-                                        required
-                                        type="text"
-                                        value={currentPost.title}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
-                                        placeholder="مثال: أفضل نصائح الدراسة..."
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الرابط المختصر (Slug)</label>
-                                    <div className="relative">
-                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                        <input
-                                            required
-                                            type="text"
-                                            value={currentPost.slug}
-                                            onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                            dir="ltr"
-                                            placeholder="أفضل-نصائح-الدراسة"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التصنيف</label>
-                                    <div className="relative">
-                                        <Tag className="absolute right-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                        <input
-                                            type="text"
-                                            value={currentPost.category}
-                                            onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-10 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
-                                            placeholder="مثل: نصائح دراسية"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكاتب</label>
-                                    <input
-                                        type="text"
-                                        value={currentPost.author}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, author: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التاريخ</label>
-                                    <input
-                                        type="date"
-                                        value={currentPost.date?.split('T')[0]}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="p-4 rounded-2xl" style={{ backgroundColor: '#E11D4808', border: '1px solid #E11D4815' }}>
-                                <p className="text-[10px] font-bold mb-4" style={{ color: '#E11D48' }}>تصنيف تعليمي — سيظهر في صفحة المواد</p>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
-                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            <option value="notes">ملخصات</option>
-                                            <option value="solutions">حلول</option>
-                                            <option value="summaries">مراجعات</option>
-                                            <option value="foundation">تأسيس</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المنهج</label>
-                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            <option value="kuwait">الكويت</option>
-                                            <option value="qatar">قطر</option>
-                                            <option value="uae">الإمارات</option>
-                                            <option value="saudi">السعودية</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المرحلة</label>
-                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            <option value="primary">ابتدائي</option>
-                                            <option value="middle">متوسط</option>
-                                            <option value="secondary">ثانوي</option>
-                                            <option value="basic">أساسي (عمان)</option>
-                                            <option value="preparatory">إعدادي (مصر)</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">الصف</label>
-                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">الفصل</label>
-                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            <option value="1">الفصل الأول</option>
-                                            <option value="2">الفصل الثاني</option>
-                                            <option value="">بدون</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-slate-400 block mb-1">المادة</label>
-                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                            <option value="arabic">عربي</option>
-                                            <option value="math">رياضيات</option>
-                                            <option value="islamic">إسلامية</option>
-                                            <option value="english">إنجليزي</option>
-                                            <option value="science">علوم</option>
-                                            <option value="physics">فيزياء</option>
-                                            <option value="chemistry">كيمياء</option>
-                                            <option value="biology">أحياء</option>
-                                            <option value="history">تاريخ</option>
-                                            <option value="geography">جغرافيا</option>
-                                            <option value="social">اجتماعيات</option>
-                                            <option value="computer">حاسب آلي</option>
-                                            <option value="stats">إحصاء</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رابط الصورة الرئيسية</label>
-                                <div className="relative">
-                                    <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                    <input
-                                        type="url"
-                                        value={currentPost.coverImage}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                        dir="ltr"
-                                        placeholder="https://..."
-                                    />
-                                </div>
-                                {currentPost.coverImage && (
-                                    <div className="mt-2 h-32 w-full border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
-                                        <img
-                                            src={currentPost.coverImage}
-                                            alt="معاينة"
-                                            className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
-                                    <div className="relative">
-                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                        <input
-                                            type="url"
-                                            value={currentPost.downloadLink || ''}
-                                            onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                            dir="ltr"
-                                            placeholder="https://..."
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
-                                    <div className="relative">
-                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                        <input
-                                            type="url"
-                                            value={currentPost.watchLink || ''}
-                                            onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                            dir="ltr"
-                                            placeholder="https://..."
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={currentPost.isNew || false}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, isNew: e.target.checked })}
-                                        className="w-4 h-4 rounded border-slate-300 text-[#E11D48] focus:ring-[#E11D48]"
-                                    />
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                                        <Star size={12} className="text-amber-500" /> جديد
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
-                                <input
-                                    type="text"
-                                    value={currentPost.keywords}
-                                    onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
-                                    placeholder="دراسة, نصائح, تفوق"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
-                                <textarea
-                                    rows={2}
-                                    value={currentPost.excerpt}
-                                    onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none rounded-xl outline-none"
-                                    placeholder="وصف قصير يظهر في نتائج البحث..."
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">محتوى المقال (كود HTML)</label>
-                                <textarea
-                                    rows={10}
-                                    required
-                                    value={currentPost.content}
-                                    onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
-                                    placeholder="اكتب محتوى المقال هنا..."
-                                />
-                            </div>
-                        </form>
-
-                        <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 flex justify-end gap-3">
-                            <button
-                                type="button"
-                                onClick={() => setIsModalOpen(false)}
-                                className="px-5 py-2.5 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl"
-                            >
-                                إلغاء
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={submitting}
-                                onClick={handleSubmit}
-                                className="flex items-center gap-2 px-6 py-2.5 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 shadow-sm active:scale-95 rounded-xl"
-                            >
-                                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
-                                <span className="text-xs">نشر المقال</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>,
-                document.getElementById('admin-modal-root')!
-            )}
         </>
     );
 };

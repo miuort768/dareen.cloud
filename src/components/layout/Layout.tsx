@@ -89,7 +89,6 @@ export const Layout = () => {
             </div>
 
             {!isChatOnly && <BottomNav />}
-            <div id="admin-modal-root" />
         </div>
     );
 };
