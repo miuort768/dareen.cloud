@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star } from 'lucide-react';
 import { api } from '../lib/api';
@@ -201,7 +202,7 @@ export const AdminBlog = () => {
         </div>
 
         {/* Modal Form */}
-        {isModalOpen && currentPost && (
+        {isModalOpen && currentPost && createPortal(
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-2xl">
                         <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
@@ -465,7 +466,8 @@ export const AdminBlog = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
