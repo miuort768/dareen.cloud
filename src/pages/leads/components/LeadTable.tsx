@@ -33,11 +33,8 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                         <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                             {lead.studentName?.charAt(0) || 'ع'}
                                         </div>
-                                        <div>
-                                            <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{lead.studentName || 'عميل بدون اسم'}</h4>
-                                            <p className="text-[8px] text-slate-400 font-medium mt-0.5">
-                                                {new Date(lead.createdAt).toLocaleDateString('ar-EG')}
-                                            </p>
+                                        <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1">
+                                            <h4 className="font-bold text-xs text-emerald-700 dark:text-emerald-300">{lead.studentName || 'عميل بدون اسم'}</h4>
                                         </div>
                                     </div>
                                 </td>
@@ -116,7 +113,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                 <tr className="bg-amber-50/30 dark:bg-amber-950/10">
                                     <td colSpan={6} className="px-5 py-2.5 border-b border-slate-100 dark:border-slate-800/80">
                                         <div className="flex items-start gap-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400 font-medium max-w-full">
-                                            <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest shrink-0 mt-0.5">ملاحظات:</span>
+                                            <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 tracking-widest shrink-0 mt-0.5">ملاحظات</span>
                                             <span>{lead.notes}</span>
                                         </div>
                                     </td>

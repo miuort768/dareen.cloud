@@ -81,6 +81,8 @@ export const Header = () => {
                 return { title: 'الإقفال الشهري', subtitle: 'إدارة الإقفال الشهري والتقارير.' };
             case '/leads':
                 return { title: 'العملاء المحتملين', subtitle: 'إدارة طلبات التسجيل والمهتمين.' };
+            case '/trial-sessions':
+                return { title: 'جلسات المراجعة', subtitle: 'تسجيل ومتابعة جلسات الطلاب غير المقيدين.' };
             case '/admin':
                 if (path.includes('/blog')) return { title: 'إدارة المدونة', subtitle: 'إدارة مقالات المدونة والكتب.' };
                 if (path.includes('/jobs')) return { title: 'طلبات التوظيف', subtitle: 'إدارة طلبات التوظيف المقدمة.' };

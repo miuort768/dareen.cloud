@@ -158,7 +158,7 @@ export const Leads: React.FC = () => {
                             <Filter size={14} className="text-white/70 hidden md:block shrink-0" />
                             <div className="relative w-full md:w-auto">
                                 <select className="w-full md:w-auto appearance-none bg-white/15 border border-white/20 px-3 py-2 text-[11px] font-bold outline-none cursor-pointer focus:border-white/40 text-white" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
-                                    <option value="all">كل الحالات</option>
+                                    <option value="all" className="text-slate-900">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
                                 <ChevronDown className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-white/50" size={12} />
@@ -167,13 +167,17 @@ export const Leads: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Table (desktop) / Cards (mobile) */}
+                {/* Table (desktop) / Cards (mobile) OR Add form */}
                 <div>
-                    <LeadTable filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
-                    <LeadCards filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
+                    {isAddModalOpen ? (
+                        <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
+                    ) : (
+                        <>
+                            <LeadTable filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
+                            <LeadCards filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
+                        </>
+                    )}
                 </div>
-
-                <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
 
                 {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
             </div>

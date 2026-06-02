@@ -30,11 +30,10 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                 {lead.studentName?.charAt(0) || 'ع'}
                             </div>
-                            <div className="min-w-0">
-                                <h4 className="font-bold text-sm text-slate-900 dark:text-white leading-tight truncate">
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1">
+                                <h4 className="font-bold text-sm text-emerald-700 dark:text-emerald-300 leading-tight truncate">
                                     {lead.studentName || 'عميل بدون اسم'}
                                 </h4>
-                                <span className="text-[9px] text-slate-400 font-medium">{new Date(lead.createdAt).toLocaleDateString('ar-EG')}</span>
                             </div>
                         </div>
                         <div className="flex gap-0.5 shrink-0">
@@ -65,7 +64,8 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
 
                     {lead.notes && (
                         <div className="mx-4 mb-3 bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/20 px-3 py-2 rounded-none">
-                            <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{lead.notes}</p>
+                            <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 tracking-widest ml-2">ملاحظات</span>
+                            <span className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{lead.notes}</span>
                         </div>
                     )}
 

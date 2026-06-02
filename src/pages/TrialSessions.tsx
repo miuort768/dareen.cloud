@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
+import { socketService } from '../lib/socket';
 import { PageContainer } from '../components/layout/PageContainer';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -66,13 +67,6 @@ export const TrialSessions = () => {
     queryFn: () => api.get<Record<string, unknown>[]>('/teachers')
   });
 
-  const { data: availability = [] } = useQuery({
-    queryKey: ['teacher-availability'],
-    queryFn: () => api.get<{ teacherId: string; dayOfWeek: number; startTime: string; endTime: string; isAvailable: number }[]>('/teacher-availability')
-  });
-
-  const dayOfWeek = form.date ? new Date(form.date + 'T12:00:00').getDay() : null;
-
   const { data: stats } = useQuery({
     queryKey: ['trial-sessions-stats'],
     queryFn: () => api.get<{ total: number; completed: number; pending: number; cancelled: number }>('/trial-sessions/stats')
@@ -80,31 +74,37 @@ export const TrialSessions = () => {
 
   const addMutation = useMutation({
     mutationFn: (data: Record<string, unknown>) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['teacher-availability'] }); setShowModal(false); setEditingId(null); resetForm(); }
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); },
+    onError: (err: Error) => alert('حدث خطأ أثناء حفظ الجلسة: ' + err.message)
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/trial-sessions/${id}`),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); }
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); },
+    onError: (err: Error) => alert('حدث خطأ أثناء الحذف: ' + err.message)
   });
 
   const convertMutation = useMutation({
     mutationFn: (id: string) => api.post(`/trial-sessions/${id}/convert`),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); }
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); },
+    onError: (err: Error) => alert('حدث خطأ أثناء تحويل الجلسة: ' + err.message)
   });
+
+  useEffect(() => {
+    const socket = socketService.getSocket();
+    const handleUpdate = () => {
+      queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
+      queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] });
+    };
+    socket.on('trial_session_updated', handleUpdate);
+    return () => { socket.off('trial_session_updated', handleUpdate); };
+  }, [queryClient]);
 
   const resetForm = () => setForm({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
 
   const openEdit = (t: TrialSession) => {
     setForm({ studentName: t.studentName, parentPhone: t.parentPhone, subject: t.subject || '', teacherId: t.teacherId || '', teacherName: t.teacherName || '', date: t.date, time: t.time || '', notes: t.notes || '' });
     setEditingId(t.id); setShowModal(true);
-  };
-
-  const isTeacherAvailable = (teacherId: string, day: number | null, time: string) => {
-    if (day === null || !time) return null;
-    const slots = availability.filter((a: { teacherId: string; dayOfWeek: number; isAvailable: number }) => a.teacherId === teacherId && a.dayOfWeek === day && a.isAvailable === 1);
-    if (slots.length === 0) return false;
-    return slots.some((s: { startTime: string; endTime: string }) => time >= s.startTime && time <= s.endTime);
   };
 
   const filtered = trials.filter((t: TrialSession) => {
@@ -131,11 +131,11 @@ export const TrialSessions = () => {
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم ولي الأمر..." className="w-full pr-9 pl-3 py-2 bg-white/15 border border-white/20 text-[11px] font-bold text-white placeholder:text-white/50 focus:outline-none focus:border-white/40 rounded-none" />
           </div>
           <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-white/15 border border-white/20 text-[11px] font-bold text-white focus:outline-none focus:border-white/40 rounded-none">
-            <option value="">جميع الحالات</option>
-            <option value="pending">قيد الانتظار</option>
-            <option value="completed">تمت</option>
-            <option value="cancelled">ملغية</option>
-            <option value="converted">تم التسجيل</option>
+            <option value="" className="text-slate-900 dark:text-slate-200">جميع الحالات</option>
+            <option value="pending" className="text-slate-900 dark:text-slate-200">قيد الانتظار</option>
+            <option value="completed" className="text-slate-900 dark:text-slate-200">تمت</option>
+            <option value="cancelled" className="text-slate-900 dark:text-slate-200">ملغية</option>
+            <option value="converted" className="text-slate-900 dark:text-slate-200">تم التسجيل</option>
           </select>
           <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2 bg-white text-[#2563EB] text-[11px] font-bold transition-all shadow-sm active:scale-95 rounded-none">
             <Plus size={14} /> جلسة مراجعة
@@ -148,29 +148,60 @@ export const TrialSessions = () => {
       filtered.length === 0 ? <div className="text-center py-16 bg-white dark:bg-slate-900 shadow-sm border border-slate-100/50 dark:border-slate-800/50 rounded-none"><BookOpen size={32} className="mx-auto mb-3 text-slate-200 dark:text-slate-700" /><p className="text-xs font-bold text-slate-400">لا توجد جلسات مراجعة</p></div> :
       <div className="space-y-3">
         {filtered.map((t: TrialSession) => (
-          <div key={t.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none p-4 shadow-sm">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <h3 className="text-sm font-medium text-slate-900 dark:text-white truncate">{t.studentName}</h3>
-                  <span className={cn("text-[10px] font-bold px-2 py-0.5 rounded-none", statusBg[t.status] || statusBg.pending)} style={{ backgroundColor: t.status === 'completed' ? '#22C55E12' : t.status === 'pending' ? '#F59E0B12' : t.status === 'cancelled' ? '#F43F5E12' : t.status === 'converted' ? '#2563EB12' : '#F59E0B12' }}>{statusLabels[t.status]}</span>
+          <div key={t.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-50 dark:border-slate-800/50">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                  {t.studentName?.charAt(0) || 'ط'}
                 </div>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400 font-bold">
-                  <span className="flex items-center gap-1"><div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}><Phone size={9} style={{ color: '#2563EB' }} /></div>{t.parentPhone}</span>
-                  {t.subject && <span className="flex items-center gap-1"><div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}><BookOpen size={9} style={{ color: '#8B5CF6' }} /></div>{t.subject}</span>}
-                  {t.teacherName && <span className="flex items-center gap-1"><div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: '#F59E0B12' }}><GraduationCap size={9} style={{ color: '#F59E0B' }} /></div>{t.teacherName}</span>}
-                  <span className="flex items-center gap-1"><div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: '#22C55E12' }}><Calendar size={9} style={{ color: '#22C55E' }} /></div>{t.date}</span>
-                  {t.time && <span className="flex items-center gap-1"><div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: '#38BDF812' }}><Clock size={9} style={{ color: '#38BDF8' }} /></div>{t.time}</span>}
+                <div>
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">{t.studentName}</h3>
+                  <span className={cn("text-[9px] font-bold", statusBg[t.status] || statusBg.pending)}>{statusLabels[t.status]}</span>
                 </div>
-                {t.notes && <p className="text-[11px] font-bold text-slate-400 mt-1">{t.notes}</p>}
               </div>
-              <div className="flex items-center gap-1 shrink-0">
+              <div className="flex items-center gap-1">
                 {t.status === 'pending' && (
-                  <button onClick={() => convertMutation.mutate(t.id)} className="p-2 rounded-none bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all" title="تحويل لطالب مقيد"><ArrowLeftRight size={14} /></button>
+                  <button onClick={() => convertMutation.mutate(t.id)} disabled={convertMutation.isPending} className="w-7 h-7 flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل لطالب مقيد"><ArrowLeftRight size={13} /></button>
                 )}
-                <button onClick={() => openEdit(t)} className="p-2 rounded-none bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all" aria-label="تعديل"><X size={14} className="rotate-45" /></button>
-                <button onClick={() => setConfirmId(t.id)} className="p-2 rounded-none bg-rose-50 dark:bg-rose-900/20 text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all" aria-label="حذف"><Trash size={14} /></button>
+                <button onClick={() => openEdit(t)} className="w-7 h-7 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all" aria-label="تعديل"><X size={13} className="rotate-45" /></button>
+                <button onClick={() => setConfirmId(t.id)} className="w-7 h-7 flex items-center justify-center bg-rose-50 dark:bg-rose-900/20 text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all" aria-label="حذف"><Trash size={13} /></button>
               </div>
+            </div>
+            <div className="px-4 py-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  <Phone size={11} className="text-blue-500 shrink-0" />
+                  <span className="truncate">{t.parentPhone}</span>
+                </div>
+                {t.subject && (
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                    <BookOpen size={11} className="text-purple-500 shrink-0" />
+                    <span className="truncate">{t.subject}</span>
+                  </div>
+                )}
+                {t.teacherName && (
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                    <GraduationCap size={11} className="text-amber-500 shrink-0" />
+                    <span className="truncate">{t.teacherName}</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                  <Calendar size={11} className="text-emerald-500 shrink-0" />
+                  <span>{t.date}</span>
+                </div>
+                {t.time && (
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                    <Clock size={11} className="text-sky-500 shrink-0" />
+                    <span>{t.time}</span>
+                  </div>
+                )}
+              </div>
+              {t.notes && (
+                <div className="mt-2 bg-amber-50/30 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/20 px-3 py-1.5">
+                  <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 tracking-widest ml-1.5">ملاحظات</span>
+                  <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">{t.notes}</span>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -185,33 +216,25 @@ export const TrialSessions = () => {
           </div>
           <form onSubmit={e => { e.preventDefault(); addMutation.mutate(form); }} className="p-5 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
               <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">المعلمة</label>
-                <div className="relative">
-                  <select value={form.teacherName} onChange={e => {
-                    const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
-                    setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
-                  }} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30 appearance-none">
-                    <option value="">اختر معلمة</option>
-                    {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => {
-                      const avail = form.date && form.time ? isTeacherAvailable(t.id, dayOfWeek, form.time) : null;
-                      return <option key={t.id} value={t.name} disabled={avail === false}>{t.name}{avail === true ? ' ✓' : avail === false ? ' (غير متاحة)' : ''}</option>;
-                    })}
-                  </select>
-                  {form.teacherId && form.date && form.time && (
-                    <div className={`absolute left-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[8px] font-bold px-1.5 py-0.5 rounded ${isTeacherAvailable(form.teacherId, dayOfWeek, form.time) ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
-                      {isTeacherAvailable(form.teacherId, dayOfWeek, form.time) ? 'متاحة' : 'غير متاحة'}
-                    </div>
-                  )}
-                </div>
+                <select value={form.teacherName} onChange={e => {
+                  const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
+                  setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
+                }} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 appearance-none">
+                  <option value="" className="text-slate-900 dark:text-slate-200">اختر معلمة</option>
+                  {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
+                    <option key={t.id} value={t.name} className="text-slate-900 dark:text-slate-200">{t.name}</option>
+                  ))}
+                </select>
               </div>
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
-              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+              <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
             </div>
-            <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
-            <button type="submit" className="w-full py-3 bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm active:scale-95 rounded-none">{editingId ? 'تحديث' : 'إضافة جلسة مراجعة'}</button>
+            <div><label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30" /></div>
+            <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm active:scale-95 rounded-none disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إضافة جلسة مراجعة'}</button>
           </form>
         </div>
       </div>}
@@ -223,7 +246,7 @@ export const TrialSessions = () => {
           <div className="p-6"><p className="text-sm font-bold text-slate-700 dark:text-slate-300">هل أنت متأكد من الحذف؟</p></div>
           <div className="flex border-t border-slate-100 dark:border-slate-800">
             <button onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">إلغاء</button>
-            <button onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} className="flex-1 py-3 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 border-r border-slate-100 dark:border-slate-800">حذف</button>
+            <button onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 border-r border-slate-100 dark:border-slate-800 disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
           </div>
         </div>
       </div>}

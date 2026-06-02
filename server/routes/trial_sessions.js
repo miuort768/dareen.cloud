@@ -7,6 +7,11 @@ const { createTrialSessionSchema, updateTrialSessionSchema } = require('../utils
 
 router.use(authMiddleware);
 
+const emitTrialUpdate = (req) => {
+    const io = req.app.get('socketio');
+    if (io) io.to('admin_room').emit('trial_session_updated');
+};
+
 router.get('/', async (req, res) => {
     try {
         const trials = await req.db.all('SELECT * FROM trial_sessions ORDER BY created_at DESC');
@@ -42,6 +47,7 @@ router.post('/', validate(createTrialSessionSchema), async (req, res) => {
             [id, studentName, parentPhone, subject, teacherId || null, teacherName || null, date, time, notes || '', createdAt]
         );
         const trial = await req.db.get('SELECT * FROM trial_sessions WHERE id = ?', [id]);
+        emitTrialUpdate(req);
         res.status(201).json(trial);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -56,6 +62,7 @@ router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
             [studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes, req.params.id]
         );
         const trial = await req.db.get('SELECT * FROM trial_sessions WHERE id = ?', [req.params.id]);
+        emitTrialUpdate(req);
         res.json(trial);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -65,6 +72,7 @@ router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
 router.delete('/:id', checkRole(['admin']), async (req, res) => {
     try {
         await req.db.run('DELETE FROM trial_sessions WHERE id = ?', [req.params.id]);
+        emitTrialUpdate(req);
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
