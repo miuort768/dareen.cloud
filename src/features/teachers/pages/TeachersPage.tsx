@@ -286,13 +286,13 @@ export const Teachers = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
 
                 {/* Header Section */}
-                <div className="shadow-sm px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-none" style={{ backgroundColor: '#8B5CF6' }}>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                            <Presentation size={24} />
+                <div className="shadow-sm px-4 md:px-8 py-4 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6" style={{ backgroundColor: '#8B5CF6' }}>
+                    <div className="flex items-center gap-3 md:gap-4">
+                        <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                            <Presentation size={20} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">إدارة المعلمات</h1>
+                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight">إدارة المعلمات</h1>
                             <p className="text-[10px] font-bold text-white/70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
                                 <span className="text-[9px] font-bold text-white/60">{teachers.length} معلمة</span>
@@ -306,7 +306,7 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-bold transition-all shadow-sm active:scale-95 rounded-none",
+                                "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-[10px] md:text-[11px] font-bold transition-all shadow-sm active:scale-95",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
                                 : "bg-white text-[#8B5CF6] hover:bg-white/90"
@@ -365,6 +365,7 @@ export const Teachers = () => {
                                 onDelete={setDeletingTeacherId}
                                 onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
                                 onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
+                                onNotify={(teacher) => setNotifyingTeacher(teacher)}
                                 selectedId={selectedTeacher?.id}
                                 studentCounts={studentCounts}
                             />

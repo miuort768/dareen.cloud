@@ -89,7 +89,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                             <p className="text-[8px] font-medium text-slate-400 uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
                             <p className="text-[7px] text-slate-400 font-normal max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل دارين السابعة</p>
                         </div>
-                        <div className="p-1.5 bg-white border border-slate-100">
+                        <div className="p-1.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
                             <QRCodeSVG 
                                 value={`dareen-teacher://${teacher.id}`}
                                 size={40}

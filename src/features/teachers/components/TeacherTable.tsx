@@ -1,4 +1,4 @@
-import { Edit, Trash2, GraduationCap, MessageCircle, BookOpen, Users } from 'lucide-react';
+import { Edit, Trash2, GraduationCap, MessageCircle, BookOpen, Users, Bell } from 'lucide-react';
 import type { Teacher } from '../types';
 import { cn } from '../../../lib/utils';
 
@@ -8,11 +8,12 @@ interface TeacherTableProps {
     onDelete: (id: string) => void;
     onSelect: (teacher: Teacher) => void;
     onChat: (id: string) => void;
+    onNotify: (teacher: Teacher) => void;
     selectedId?: string;
     studentCounts: Record<string, number>;
 }
 
-export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, selectedId, studentCounts }: TeacherTableProps) => {
+export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, onNotify, selectedId, studentCounts }: TeacherTableProps) => {
     if (teachers.length === 0) {
         return (
             <div className="py-24 text-center opacity-40">
@@ -51,7 +52,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                                <div className="w-9 h-9 flex items-center justify-center font-bold text-sm shadow-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                     {teacher.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -79,6 +80,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
                                                 <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-emerald-500 rounded-none transition-all" title="تعديل"><Edit size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-amber-50 hover:text-amber-500 rounded-none transition-all" title="إشعار"><Bell size={14} /></button>
                                                 <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-blue-500 rounded-none transition-all" title="مراسلة"><MessageCircle size={14} /></button>
                                                 <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 rounded-none transition-all" title="حذف"><Trash2 size={14} /></button>
                                             </div>
@@ -106,7 +108,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                    <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                         {teacher.name.charAt(0)}
                                     </div>
                                     <div>
@@ -133,6 +135,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
 
                             <div className="flex items-center gap-2 pt-1">
                                 <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 rounded-none bg-[#8B5CF6] text-white font-bold text-[10px] shadow-sm active:scale-95 transition-all">مراسلة</button>
+                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-9 h-9 flex items-center justify-center rounded-none shadow-sm transition-all" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}><Bell size={14} /></button>
                                 <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100/50 dark:border-slate-700 text-slate-400 hover:text-emerald-500 rounded-none shadow-sm transition-all"><Edit size={14} /></button>
                                 <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center rounded-none shadow-sm transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash2 size={14} /></button>
                             </div>

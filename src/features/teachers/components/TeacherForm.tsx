@@ -63,13 +63,21 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
-            {/* Header Section */}
-            <div className="bg-slate-950 px-6 py-6 flex items-center justify-between gap-6 border-b border-white/5">
-                <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[var(--primary-color,#2563EB)] text-white flex items-center justify-center rounded-xl shadow-sm">
-                        {initialData ? <Edit size={20} /> : <Plus size={20} />}
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+            <div className="p-5 bg-slate-950 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#8B5CF6] text-white flex items-center justify-center shadow-sm">
+                        {editId ? <Edit3 size={18} /> : <Plus size={18} />}
                     </div>
+                    <div>
+                        <h3 className="text-base font-bold text-white uppercase tracking-tighter">{editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
+                        <p className="text-[8px] font-medium text-slate-400 uppercase tracking-widest mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
+                    </div>
+                </div>
+                <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white/10 transition-all">
+                    <X size={18} />
+                </button>
+            </div>
                     <div>
                         <h3 className="text-sm md:text-lg font-medium text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
                         <p className="text-[9px] text-slate-500 font-normal uppercase tracking-[0.2em] mt-0.5">
@@ -90,7 +98,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 pb-2 border-b border-slate-50 dark:border-slate-800">
-                        <div className="w-6 h-6 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
+                        <div className="w-6 h-6 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30">
                             <Info size={12} className="text-[var(--primary-color,#2563EB)]" />
                         </div>
                         <h4 className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest">بيانات التعريف الأساسية</h4>
@@ -112,7 +120,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                     type="number"
                                     value={formData.price}
                                     onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-xl text-[11px] font-medium transition-all"
+                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white text-[11px] font-medium transition-all"
                                     placeholder="0.00"
                                 />
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-medium text-emerald-500 uppercase">ج.م</span>
@@ -122,7 +130,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800/50">
+                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50">
                     <label 
                         onClick={() => setEnableLogin(!enableLogin)}
                         className="flex items-center gap-3 cursor-pointer group mb-6"
@@ -148,7 +156,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#8B5CF6] text-[11px] font-medium font-mono dark:text-white"
                                         placeholder="اسم المستخدم"
                                     />
                                 </div>
@@ -164,7 +172,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] rounded-xl text-[11px] font-medium font-mono tracking-widest"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#8B5CF6] text-[11px] font-medium font-mono tracking-widest dark:text-white"
                                         placeholder="كلمة المرور"
                                     />
                                 </div>
@@ -176,7 +184,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 <div className="flex items-center justify-end pt-4 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-[var(--primary-color,#2563EB)] text-white text-[11px] font-medium uppercase tracking-[0.2em] hover:opacity-90 rounded-lg flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-8 py-3 bg-[#8B5CF6] text-white text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-[#7C3AED] flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
@@ -199,7 +207,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#2563EB)] dark:text-white rounded-xl text-[11px] font-medium transition-all",
+                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#8B5CF6] dark:text-white text-[11px] font-medium transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}

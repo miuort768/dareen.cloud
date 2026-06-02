@@ -19,7 +19,7 @@ const StatCard = ({ label, value, icon: Icon }: { label: string; value: string |
     const { color } = statSettings[label] || { color: '#8B5CF6' };
     return (
         <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
-            <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                 <Icon size={20} />
             </div>
             <div className="min-w-0">
