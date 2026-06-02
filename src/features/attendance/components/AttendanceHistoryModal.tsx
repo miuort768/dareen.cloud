@@ -96,7 +96,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     return (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
             <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-none shadow-sm border border-slate-100/50 dark:border-slate-800/50 animate-in zoom-in-95 max-h-[90vh] flex flex-col overflow-hidden">
-                <div className="p-5 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center bg-[#172554] text-white">
+                <div className="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-[#00542F] text-white">
                     <div>
                         <h3 className="text-sm font-bold flex items-center gap-2">
                             <Clock size={18} />
@@ -154,12 +154,12 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 type="date"
                                                 value={editingSession.date}
                                                 onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
-                                                className="px-3 py-2 text-[10px] font-bold border border-slate-200 dark:border-slate-700 rounded-none bg-white dark:bg-slate-900 outline-none focus:border-[#2563EB] transition-all"
+                                                className="px-3 py-2 text-[10px] font-bold border border-slate-200 dark:border-slate-700 rounded-none bg-white dark:bg-slate-900 outline-none focus:border-[#8B5CF6] transition-all"
                                             />
                                             <select
                                                 value={editingSession.status}
                                                 onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
-                                                className="px-3 py-2 text-[10px] font-bold border border-slate-200 dark:border-slate-700 rounded-none bg-white dark:bg-slate-900 outline-none focus:border-[#2563EB] transition-all"
+                                                className="px-3 py-2 text-[10px] font-bold border border-slate-200 dark:border-slate-700 rounded-none bg-white dark:bg-slate-900 outline-none focus:border-[#8B5CF6] transition-all"
                                             >
                                                 <option value="completed">حضور</option>
                                                 <option value="cancelled">غياب</option>
@@ -222,7 +222,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 <div className="flex gap-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <button
                                                         onClick={() => setEditingSession(session)}
-                                                        className="p-2 rounded-none transition-all shadow-sm active:scale-95" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}
+                                                        className="p-2 rounded-none transition-all shadow-sm active:scale-95" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}
                                                         title="تعديل"
                                                     >
                                                         <Edit2 size={14} />
@@ -252,10 +252,10 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                     )}
                 </div>
 
-                <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50">
+                <div className="p-5 border-t border-slate-200 dark:border-slate-700">
                     <button
                         onClick={onClose}
-                        className="w-full bg-[#172554] text-white font-bold py-3 text-sm rounded-none shadow-sm hover:bg-blue-900 transition-all active:scale-95"
+                        className="w-full bg-[#00542F] text-white font-bold py-3 text-sm rounded-none shadow-sm hover:bg-[#004028] transition-all active:scale-95"
                     >
                         إغلاق
                     </button>

@@ -3,7 +3,7 @@ import { api } from '../../../lib/api';
 import { attendanceService } from '../services/attendanceService';
 import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser, ScheduleSlot } from '../types';
 
-export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
+export const useAttendance = (currentUser: GlobalUser | null, date: string, dateRange?: { start: string; end: string }) => {
     const [students, setStudents] = useState<Student[]>([]);
     const [allSessions, setAllSessions] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
@@ -130,6 +130,20 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         };
     }, [allSessions, date]);
 
+    const periodStats = useMemo(() => {
+        if (!dateRange) return null;
+        const { start, end } = dateRange;
+        const rangeSessions = allSessions.filter(s => {
+            return s.date >= start && s.date <= end;
+        });
+        return {
+            completed: rangeSessions.filter(s => s.status === 'completed').length,
+            cancelled: rangeSessions.filter(s => s.status === 'cancelled').length,
+            scheduled: rangeSessions.filter(s => s.status === 'scheduled').length,
+            total: rangeSessions.length
+        };
+    }, [allSessions, dateRange]);
+
     const teacherData = useMemo(() => {
         const nameToMatch = (currentUser?.teacherName || currentUser?.name || '').trim().toLowerCase();
         const tidToMatch = currentUser?.id;
@@ -179,6 +193,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         updateEnrollmentNotes,
         requestReschedule,
         stats,
+        periodStats,
         ...teacherData,
         uniqueTeachers,
         refresh: fetchAll

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Users, Search, BookOpen, Activity } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Users, Search, BookOpen, Activity, History } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
@@ -12,6 +12,7 @@ import { AttendanceFilters } from '../features/attendance/components/AttendanceF
 import { AdminSessionCard } from '../features/attendance/components/AdminSessionCard';
 import { TeacherStudentCard } from '../features/attendance/components/TeacherStudentCard';
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal';
+import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters';
 import { RescheduleModal } from '../features/attendance/components/RescheduleModal';
 import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
@@ -21,14 +22,14 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
     </div>
 );
 
-const SectionTitle = ({ icon: Icon, label, sub, color = '#2563EB' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
+const SectionTitle = ({ icon: Icon, label, sub, color = '#8B5CF6' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
     <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
             <Icon size={16} />
@@ -47,7 +48,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700',
+            'flex items-center justify-center gap-2 bg-[#8B5CF6] hover:bg-violet-700',
             'text-white text-xs font-bold px-4 py-2.5 rounded-none transition-all shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
@@ -68,6 +69,45 @@ export const Attendance = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
     const [filterTeacher, setFilterTeacher] = useState<string>('all');
+    const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today');
+    const [customStartDate, setCustomStartDate] = useState('');
+    const [customEndDate, setCustomEndDate] = useState('');
+
+    const dateRange = useMemo(() => {
+        const d = new Date(date);
+        switch (periodFilter) {
+            case 'today':
+                return { start: date, end: date };
+            case 'week': {
+                const day = d.getDay();
+                const diff = day === 0 ? 6 : day - 1;
+                const mon = new Date(d);
+                mon.setDate(d.getDate() - diff);
+                const sun = new Date(d);
+                sun.setDate(mon.getDate() + 6);
+                return { start: mon.toLocaleDateString('en-CA'), end: sun.toLocaleDateString('en-CA') };
+            }
+            case 'month':
+                return {
+                    start: new Date(d.getFullYear(), d.getMonth(), 1).toLocaleDateString('en-CA'),
+                    end: new Date(d.getFullYear(), d.getMonth() + 1, 0).toLocaleDateString('en-CA')
+                };
+            case 'custom':
+                return { start: customStartDate || date, end: customEndDate || date };
+            default:
+                return { start: date, end: date };
+        }
+    }, [date, periodFilter, customStartDate, customEndDate]);
+
+    const periodLabel = useMemo(() => {
+        switch (periodFilter) {
+            case 'today': return 'اليوم';
+            case 'week': return 'الأسبوع';
+            case 'month': return 'الشهر';
+            case 'custom': return 'الفترة';
+            default: return 'اليوم';
+        }
+    }, [periodFilter]);
 
     const {
         students,
@@ -78,16 +118,18 @@ export const Attendance = () => {
         updateEnrollmentNotes,
         requestReschedule,
         stats,
+        periodStats,
         matchedEnrollments,
         uniqueTeachers,
         refresh,
         teacherStats
-    } = useAttendance(currentUser, date);
+    } = useAttendance(currentUser, date, dateRange);
 
     const [rescheduleData, setRescheduleData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
 
     // Modals state
     const [secureModalData, setSecureModalData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
+    const [isLogging, setIsLogging] = useState(false);
     const [historyStudent, setHistoryStudent] = useState<{ id: string, name: string, grade?: string, subject?: string, curriculum?: string } | null>(null);
     const [deletingSlot, setDeletingSlot] = useState<{ student: Student, enrollment: Enrollment, slotIndex: number } | null>(null);
     const [logDate, setLogDate] = useState(new Date().toLocaleDateString('en-CA'));
@@ -107,7 +149,8 @@ export const Attendance = () => {
     };
 
     const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
-        if (!secureModalData || !logDate) return;
+        if (!secureModalData || !logDate || isLogging) return;
+        setIsLogging(true);
         const { student, enrollment } = secureModalData;
 
         const now = new Date();
@@ -154,6 +197,19 @@ export const Attendance = () => {
         } else {
             showNotification('فشل تسجيل الحصة', 'error');
         }
+        setIsLogging(false);
+    };
+
+    const handleViewHistory = (studentId: string, studentName: string, grade?: string, subject?: string) => {
+        const foundStudent = students.find(s => s.id === studentId);
+        const enrollment = foundStudent?.enrollments?.find(e => e.subject === subject);
+        setHistoryStudent({
+            id: studentId,
+            name: studentName,
+            grade,
+            subject,
+            curriculum: enrollment?.curriculum
+        });
     };
 
     const handleUpdateStatus = async (id: string, status: Session['status']) => {
@@ -197,9 +253,10 @@ export const Attendance = () => {
             />
 
             <AttendanceStats
-                stats={stats}
+                stats={periodStats ? { ...stats, todayCompleted: periodStats.completed, todayCancelled: periodStats.cancelled, todayScheduled: periodStats.scheduled } : stats}
                 teacherStats={teacherStats}
                 isTeacher={isTeacher}
+                periodLabel={periodLabel}
             />
 
             {isTeacher && (
@@ -272,6 +329,12 @@ export const Attendance = () => {
                     filterTeacher={filterTeacher}
                     onTeacherChange={setFilterTeacher}
                     uniqueTeachers={uniqueTeachers}
+                    periodFilter={periodFilter}
+                    onPeriodChange={setPeriodFilter}
+                    customStartDate={customStartDate}
+                    customEndDate={customEndDate}
+                    onCustomStartChange={setCustomStartDate}
+                    onCustomEndChange={setCustomEndDate}
                 />
             )}
 
@@ -279,8 +342,8 @@ export const Attendance = () => {
                 {isTeacher ? (
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden rounded-none">
-                            <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100/50 dark:border-slate-800/50">
-                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" color="#2563EB" />
+                                    <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700">
+                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" color="#8B5CF6" />
                                 <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
@@ -337,7 +400,7 @@ export const Attendance = () => {
 
                             return (
                                 <SectionCard key={teacher} className="p-0 overflow-hidden rounded-none">
-                                    <div className="bg-white dark:bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-100/50 dark:border-slate-800/50">
+                                    <div className="bg-white dark:bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-200 dark:border-slate-700">
                                         <div className="flex items-center gap-3">
                                             <div className="w-8 h-8 rounded-none flex items-center justify-center text-xs font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                 {teacher.charAt(0)}
@@ -368,25 +431,26 @@ export const Attendance = () => {
                                                         session={session}
                                                         stats={{ used: enrollment.sessionsUsed, total: enrollment.sessionsTotal }}
                                                         onUpdateStatus={handleUpdateStatus}
+                                                        onViewHistory={handleViewHistory}
                                                         studentGrade={student.grade}
                                                     />
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm rounded-none p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 rounded-none flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                                                <div className="w-10 h-10 rounded-none flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-100/50 dark:border-slate-700">
+                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-200 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
                                                                         <p className="text-[9px] font-bold text-[#64748B] flex items-center gap-1">
-                                                                            <BookOpen size={10} style={{ color: '#2563EB' }} />
+                                                                            <BookOpen size={10} style={{ color: '#8B5CF6' }} />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
@@ -416,17 +480,25 @@ export const Attendance = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                disabled={isLogging}
+                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                disabled={isLogging}
+                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 غياب
                                                             </button>
                                                         </div>
+                                                        <button
+                                                            onClick={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}
+                                                            className="w-full py-2.5 bg-[#8B5CF6] hover:bg-violet-700 text-white font-bold text-[10px] rounded-none transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                                                        >
+                                                            <History size={14} /> سجل الطالب
+                                                        </button>
                                                     </div>
                                                 );
                                             }

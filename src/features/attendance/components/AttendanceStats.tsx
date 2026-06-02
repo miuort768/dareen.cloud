@@ -7,6 +7,7 @@ interface AttendanceStatsProps {
     stats: IStats;
     teacherStats?: ITeacherStats;
     isTeacher: boolean;
+    periodLabel?: string;
 }
 
 const StatItem = ({ title, value, icon: Icon, subLabel, color = '#2563EB' }: { title: string, value: number, icon: LucideIcon, subLabel?: string, color?: string }) => (
@@ -26,13 +27,13 @@ const StatItem = ({ title, value, icon: Icon, subLabel, color = '#2563EB' }: { t
     </div>
 );
 
-export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher }) => {
+export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher, periodLabel }) => {
     if (isTeacher && teacherStats) {
         return (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-4" dir="rtl">
                 <StatItem title="الحصص المتوقعة" value={teacherStats.expected} icon={Calendar} color="#8B5CF6" />
                 <StatItem title="الحصص المنعقدة" value={teacherStats.used} icon={CheckCircle2} color="#10B981" />
-                <StatItem title="نسبة الإنجاز" value={teacherStats.rate} icon={TrendingUp} subLabel="%" color="#2563EB" />
+                <StatItem title="نسبة الإنجاز" value={teacherStats.rate} icon={TrendingUp} subLabel="%" color="#8B5CF6" />
                 <StatItem title="الحصص المتبقية" value={teacherStats.remaining} icon={Clock} subLabel="حصة" color="#F59E0B" />
             </div>
         );
@@ -40,10 +41,10 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-4" dir="rtl">
-            <StatItem title="مجدولة (اليوم)" value={stats.todayScheduled} icon={Calendar} color="#8B5CF6" />
-            <StatItem title="حضور (اليوم)" value={stats.todayCompleted} icon={CheckCircle2} color="#10B981" />
-            <StatItem title="غياب (اليوم)" value={stats.todayCancelled} icon={XCircle} color="#F43F5E" />
-            <StatItem title="إجمالي المنفذة" value={stats.totalCompleted} icon={Activity} color="#2563EB" />
+            <StatItem title={`حضور (${periodLabel || 'اليوم'})`} value={stats.todayCompleted} icon={CheckCircle2} color="#10B981" />
+            <StatItem title={`غياب (${periodLabel || 'اليوم'})`} value={stats.todayCancelled} icon={XCircle} color="#F43F5E" />
+            <StatItem title={`مجدولة (${periodLabel || 'اليوم'})`} value={stats.todayScheduled} icon={Calendar} color="#8B5CF6" />
+            <StatItem title="إجمالي الكل" value={stats.totalCompleted} icon={Activity} color="#F59E0B" />
         </div>
     );
 };
