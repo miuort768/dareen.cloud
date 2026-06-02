@@ -9,6 +9,9 @@ interface StudentFormProps {
     onCancel?: () => void;
 }
 
+const GRADE_OPTIONS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
+const CURRICULUM_OPTIONS = ['المنهج السعودي', 'المنهج المصري', 'المنهج السوري', 'المنهج الكويتي', 'المنهج الإماراتي', 'المنهج الفلسطيني', 'منهج دبلوما', 'منهج أمريكي', 'منهج بريطاني', 'أخرى'];
+
 export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProps) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -47,15 +50,15 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
             <div className="bg-slate-900 dark:bg-black px-6 py-8 flex items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#2563EB] text-white flex items-center justify-center shadow-sm rounded-xl">
+                    <div className="w-12 h-12 bg-[#2563EB] text-white flex items-center justify-center shadow-sm">
                         {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
                     </div>
                     <div>
-                        <h3 className="text-xl font-normal text-white tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
+                        <h3 className="text-xl font-bold text-white tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
                         <p className="text-[10px] text-slate-400 font-normal uppercase tracking-widest mt-1">
                             {initialData ? 'أرشفة وتحديث السجل' : 'فتح سجل أكاديمي جديد'}
                         </p>
@@ -65,7 +68,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <button 
                         type="button" 
                         onClick={onCancel}
-                        className="w-10 h-10 flex items-center justify-center text-slate-400 hover:bg-white/10 transition-all rounded-lg"
+                        className="w-10 h-10 flex items-center justify-center text-slate-400 hover:bg-white/10 transition-all"
                     >
                         <X size={20} />
                     </button>
@@ -76,16 +79,16 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3 pb-3 border-b border-slate-50 dark:border-slate-800">
-                        <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30 rounded-xl">
+                        <div className="w-8 h-8 flex items-center justify-center bg-blue-50 dark:bg-blue-900/30">
                             <Info size={16} className="text-[#2563EB]" />
                         </div>
-                        <h4 className="text-xs font-normal text-slate-800 dark:text-white uppercase tracking-tight">بيانات التعريف الأساسية</h4>
+                        <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-tight">بيانات التعريف الأساسية</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <FormInput label="الاسم الكامل" icon={UserIcon} value={formData.name} onChange={(val: string) => setFormData({ ...formData, name: val })} required placeholder="مثال: محمد أحمد" />
-                        <FormInput label="المرحلة الدراسية" icon={GraduationCap} value={formData.grade} onChange={(val: string) => setFormData({ ...formData, grade: val })} required placeholder="مثال: الصف الأول" />
-                        <FormInput label="المنهج الدراسي" icon={Tag} value={formData.curriculum} onChange={(val: string) => setFormData({ ...formData, curriculum: val })} placeholder="مثال: المنهج الكويتي" />
+                        <SelectField label="المرحلة الدراسية" icon={GraduationCap} value={formData.grade} onChange={(val: string) => setFormData({ ...formData, grade: val })} required options={GRADE_OPTIONS} placeholder="اختر المرحلة" />
+                        <SelectField label="المنهج الدراسي" icon={Tag} value={formData.curriculum} onChange={(val: string) => setFormData({ ...formData, curriculum: val })} options={CURRICULUM_OPTIONS} placeholder="اختر المنهج" />
                         <FormInput label="هاتف ولي الأمر" icon={Phone} type="tel" value={formData.parentPhone} onChange={(val: string) => setFormData({ ...formData, parentPhone: val })} required placeholder="05XXXXXXXX" dir="ltr" />
                         <FormInput label="هاتف الطالب" icon={Phone} type="tel" value={formData.studentPhone} onChange={(val: string) => setFormData({ ...formData, studentPhone: val })} placeholder="05XXXXXXXX" dir="ltr" />
                         <FormInput label="سعر الحصة الافتراضي" icon={DollarSign} type="number" value={formData.sessionPrice} onChange={(val: string) => setFormData({ ...formData, sessionPrice: val })} required placeholder="0.00" />
@@ -93,12 +96,12 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border border-transparent rounded-2xl">
+                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border border-transparent">
                     <div className="flex items-center gap-3 mb-6">
                         <div className="w-8 h-8 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/30">
                             <Shield size={16} className="text-emerald-500" />
                         </div>
-                        <h4 className="text-xs font-normal text-slate-800 dark:text-white uppercase tracking-tight">إدارة الوصول للمنصة</h4>
+                        <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-tight">إدارة الوصول للمنصة</h4>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -109,7 +112,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                                 <input
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] text-xs font-normal font-mono rounded-xl"
+                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] text-xs font-normal font-mono dark:text-white"
                                     placeholder="اسم مستخدم فريد"
                                 />
                             </div>
@@ -122,7 +125,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] text-xs font-normal font-mono tracking-widest rounded-xl"
+                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] text-xs font-normal font-mono tracking-widest dark:text-white"
                                     placeholder={initialData ? "••••••••" : "كلمة مرور قوية"}
                                 />
                             </div>
@@ -139,7 +142,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <textarea
                         value={formData.notes}
                         onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] dark:text-white text-xs font-normal min-h-[120px] transition-all rounded-xl"
+                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] dark:text-white text-xs font-normal min-h-[120px] transition-all"
                         placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
                     />
                 </div>
@@ -147,7 +150,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="flex items-center justify-end pt-6 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-10 py-3 bg-[#2563EB] text-white text-[11px] font-normal uppercase tracking-widest hover:bg-blue-700 flex items-center gap-2 shadow-sm active:scale-95 transition-all rounded-lg"
+                        className="px-10 py-3 bg-[#2563EB] text-white text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={16} />
                         {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}
@@ -157,6 +160,30 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         </div>
     );
 };
+
+const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => (
+    <div className="space-y-2">
+        <label className="text-[10px] font-normal text-slate-400 uppercase mr-1">{label}</label>
+        <div className="relative group">
+            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#2563EB] transition-colors z-10" size={14} />}
+            <select
+                required={required}
+                value={value}
+                onChange={e => onChange(e.target.value)}
+                className={cn(
+                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] dark:text-white text-xs font-normal appearance-none",
+                    Icon && "pr-10",
+                    !value && "text-slate-400"
+                )}
+            >
+                <option value="" disabled>{placeholder || 'اختر...'}</option>
+                {options.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                ))}
+            </select>
+        </div>
+    </div>
+);
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-2">
@@ -170,7 +197,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] dark:text-white text-xs font-normal transition-all rounded-xl",
+                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#2563EB] dark:text-white text-xs font-normal transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}

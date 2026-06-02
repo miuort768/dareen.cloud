@@ -1,4 +1,4 @@
-import { Edit, Trash, GraduationCap } from 'lucide-react';
+import { Edit, Trash, GraduationCap, Bell } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
 
@@ -8,11 +8,12 @@ interface StudentTableProps {
     onSelect: (student: Student) => void;
     onEdit: (student: Student) => void;
     onDelete: (id: string) => void;
+    onNotify: (student: Student) => void;
     showDetails: boolean;
     isTeacherView: boolean;
 }
 
-export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete }: StudentTableProps) => {
+export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, onNotify }: StudentTableProps) => {
     return (
         <div className="w-full">
             {/* Desktop View */}
@@ -48,7 +49,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                                <div className="w-9 h-9 flex items-center justify-center font-bold text-sm shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -90,8 +91,9 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2">
-                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-500 transition-all rounded-none" title="تعديل"><Edit size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-500 transition-all rounded-none" title="حذف"><Trash size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-500 transition-all" title="تعديل"><Edit size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-500 transition-all" title="إشعار"><Bell size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-500 transition-all" title="حذف"><Trash size={14} /></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -121,7 +123,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                    <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                         {student.name.charAt(0)}
                                     </div>
                                     <div>
@@ -130,8 +132,9 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                     </div>
                                 </div>
                                 <div className="flex gap-1">
-                                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 flex items-center justify-center rounded-none shadow-sm transition-all"><Edit size={14} /></button>
-                                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 rounded-none shadow-sm transition-all flex items-center justify-center" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 flex items-center justify-center shadow-sm transition-all"><Edit size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center shadow-sm transition-all" style={{ backgroundColor: '#F59E0B12', color: '#F59E0B' }}><Bell size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 shadow-sm transition-all flex items-center justify-center" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash size={14} /></button>
                                 </div>
                             </div>
                             

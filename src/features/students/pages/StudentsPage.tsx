@@ -4,10 +4,11 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { Search, AlertCircle, Plus, TrendingUp, Download, Upload, Trash2 } from 'lucide-react';
+import { Search, AlertCircle, Plus, TrendingUp, Download, Upload, Trash2, BookOpen, GraduationCap } from 'lucide-react';
 
 // Shared Components
 import { PageLoader } from '../../../components/ui/PageLoader';
+import { SendNotificationModal } from '../../../shared/components/SendNotificationModal';
 // Feature Components
 import { StudentStats } from '../components/StudentStats';
 import { StudentForm } from '../components/StudentForm';
@@ -34,15 +35,25 @@ export const Students = () => {
     const showNotification = useShowNotification();
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [filterGrade, setFilterGrade] = useState('');
+    const [filterCurriculum, setFilterCurriculum] = useState('');
+    const [notifyingStudent, setNotifyingStudent] = useState<Student | null>(null);
     const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
 
+    // Unique values for filters
+    const uniqueGrades = [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[];
+    const uniqueCurriculums = [...new Set(allStudents.map(s => s.curriculum).filter(Boolean))].sort() as string[];
+
     // Instant Local Filtering
-    const students = allStudents.filter(student =>
-        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.parentPhone?.includes(searchTerm) ||
-        student.studentPhone?.includes(searchTerm) ||
-        student.grade.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const students = allStudents.filter(student => {
+        const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            student.parentPhone?.includes(searchTerm) ||
+            student.studentPhone?.includes(searchTerm) ||
+            student.grade.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesGrade = !filterGrade || student.grade === filterGrade;
+        const matchesCurriculum = !filterCurriculum || student.curriculum === filterCurriculum;
+        return matchesSearch && matchesGrade && matchesCurriculum;
+    });
 
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
@@ -146,6 +157,26 @@ export const Students = () => {
         showNotification(`تمت إضافة ${amount} حصة بنجاح`, 'success');
     };
 
+    const handleSendStudentNotification = async (message: string) => {
+        if (!notifyingStudent) return;
+        try {
+            await api.post('/notifications', {
+                receiverId: notifyingStudent.id,
+                senderName: 'الإدارة',
+                title: 'تنبيه من الإدارة',
+                message,
+                type: 'info',
+                time: new Date().toISOString(),
+                read: false
+            });
+            showNotification('تم إرسال التنبيه للطالب بنجاح', 'success');
+        } catch {
+            showNotification('فشل إرسال التنبيه', 'error');
+        } finally {
+            setNotifyingStudent(null);
+        }
+    };
+
     if (loading) {
         return <PageLoader />;
     }
@@ -154,25 +185,14 @@ export const Students = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="relative z-10 mx-auto px-2 space-y-4">
 
-                {showAddForm && (
-<div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm p-5 md:p-6 rounded-none">
-                        <StudentForm
-                            initialData={editId ? allStudents.find(s => s.id === editId) : null}
-                            teachers={teachers}
-                            onSubmit={handleAddOrUpdateStudent}
-                            onCancel={() => { setShowAddForm(false); setEditId(null); }}
-                        />
-                    </div>
-                )}
-
-                <div className="shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-none" style={{ backgroundColor: '#2563EB' }}>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                            <TrendingUp size={22} />
+                <div className="shadow-sm px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ backgroundColor: '#2563EB' }}>
+                    <div className="flex items-center gap-3 md:gap-4">
+                        <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                            <TrendingUp size={20} />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">إدارة الطلاب</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
+                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight">إدارة الطلاب</h1>
+                            <p className="text-[9px] md:text-[10px] font-bold text-white/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -183,29 +203,70 @@ export const Students = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full md:w-52 border text-white placeholder:text-white/50 text-[10px] font-bold px-8 py-1.5 outline-none transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.2)' }}
+                                className="w-full md:w-52 border text-white placeholder:text-white/50 text-[9px] md:text-[10px] font-bold px-7 py-1 outline-none transition-all" style={{ backgroundColor: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.2)' }}
                             />
                         </div>
-                        <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1.5 bg-white hover:bg-white/90 text-[#2563EB] text-[10px] font-bold px-3 py-1.5 transition-all active:scale-[0.97] rounded-none shadow-sm"><Plus size={13} /> إضافة</button>
+                        <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1 bg-white hover:bg-white/90 text-[#2563EB] text-[9px] md:text-[10px] font-bold px-2 md:px-3 py-1 md:py-1.5 transition-all active:scale-[0.97] shadow-sm"><Plus size={11} /> إضافة</button>
                     </div>
                 </div>
 
+                {showAddForm && (
+                    <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 shadow-sm p-4 md:p-6">
+                        <StudentForm
+                            initialData={editId ? allStudents.find(s => s.id === editId) : null}
+                            teachers={teachers}
+                            onSubmit={handleAddOrUpdateStudent}
+                            onCancel={() => { setShowAddForm(false); setEditId(null); }}
+                        />
+                    </div>
+                )}
+
                 {isDeletingAll && (
-                    <div className="border border-rose-200 dark:border-rose-800/50 bg-rose-50 dark:bg-rose-950/30 p-4 flex items-center justify-between rounded-none">
+                    <div className="border border-rose-200 dark:border-rose-800/50 bg-rose-50 dark:bg-rose-950/30 p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <AlertCircle size={18} className="text-rose-500" />
                             <span className="text-xs font-bold text-rose-700 dark:text-rose-300">هل أنت متأكد من حذف جميع الطلاب؟</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-rose-600 text-white text-[10px] font-bold hover:bg-rose-700 transition-all rounded-none">تأكيد الحذف</button>
-                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 transition-all rounded-none">إلغاء</button>
+                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-rose-600 text-white text-[10px] font-bold hover:bg-rose-700 transition-all">تأكيد الحذف</button>
+                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 transition-all">إلغاء</button>
                         </div>
                     </div>
                 )}
 
-                <div className="p-5 md:p-6 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none">
+                {/* Filter Bar */}
+                <div className="flex flex-wrap items-center gap-3 p-3 md:p-4 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm">
+                    <div className="flex items-center gap-1.5">
+                        <GraduationCap size={14} className="text-slate-400" />
+                        <select
+                            value={filterGrade}
+                            onChange={e => setFilterGrade(e.target.value)}
+                            className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-[11px] font-bold px-2 py-1.5 outline-none focus:border-[#2563EB]"
+                        >
+                            <option value="">المرحلة الدراسية (الكل)</option>
+                            {uniqueGrades.map(g => (
+                                <option key={g} value={g}>{g}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <BookOpen size={14} className="text-slate-400" />
+                        <select
+                            value={filterCurriculum}
+                            onChange={e => setFilterCurriculum(e.target.value)}
+                            className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-[11px] font-bold px-2 py-1.5 outline-none focus:border-[#2563EB]"
+                        >
+                            <option value="">المنهج (الكل)</option>
+                            {uniqueCurriculums.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                <div className="p-5 md:p-6 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm">
                     <div className="flex items-center gap-3 mb-5">
-                        <div className="w-8 h-8 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: '#22C55E12', color: '#22C55E' }}>
+                        <div className="w-8 h-8 flex items-center justify-center shadow-sm" style={{ backgroundColor: '#22C55E12', color: '#22C55E' }}>
                             <TrendingUp size={16} />
                         </div>
                         <h2 className="text-sm font-bold text-[#0F172A] dark:text-white">إحصائيات الطلاب</h2>
@@ -213,7 +274,7 @@ export const Students = () => {
                     <StudentStats
                         totalStudents={allStudents.length}
                         activeEnrollments={activeEnrollments}
-                        uniqueGrades={uniqueGrades}
+                        uniqueGrades={uniqueGrades.length}
                         averageSessionsPerStudent={averageSessions}
                     />
                 </div>
@@ -267,6 +328,7 @@ export const Students = () => {
                             onEdit={handleEditStudent}
                             onDelete={(id) => setDeletingId(id)}
                             onSelect={(student) => { setSelectedStudent(student); setShowDetails(true); }}
+                            onNotify={(student) => setNotifyingStudent(student)}
                             selectedId={selectedStudent?.id}
                             teachers={teachers}
                         />
@@ -285,6 +347,14 @@ export const Students = () => {
                     </div>
                 )}
             </div>
+
+            <SendNotificationModal
+                isOpen={!!notifyingStudent}
+                title="إرسال إشعار للطالب"
+                recipientName={notifyingStudent?.name || ''}
+                onSend={handleSendStudentNotification}
+                onClose={() => setNotifyingStudent(null)}
+            />
 
             <ConfirmModal
                 isOpen={!!deletingId}

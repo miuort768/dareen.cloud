@@ -50,13 +50,14 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 ">
-            <div className="bg-white dark:bg-gray-900 w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm rounded-2xl animate-in fade-in zoom-in duration-300">
-                <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                    <div>
-                        <h3 className="font-medium text-xl text-gray-900 dark:text-white">سجل الدوام الكامل</h3>
-                        <p className="text-xs font-normal text-gray-500 mt-1">للطالب: {student.name}</p>
-                    </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors rounded-lg">
+            <div className="bg-white dark:bg-gray-900 w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm animate-in fade-in zoom-in duration-300">
+                {/* Header */}
+                <div className="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between" dir="rtl">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-sm">
+                            <Clock size={18} />
+                        </div>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <X size={24} className="text-gray-400" />
                     </button>
                 </div>
@@ -72,7 +73,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                             <p className="font-normal">لا يوجد سجل حصص لهذا الطالب</p>
                         </div>
                     ) : (
-                        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+                        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden">
                             <table className="w-full text-sm text-right">
                                 <thead className="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-normal">
                                     <tr>
@@ -94,9 +95,9 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                                             <td className="p-4 font-mono">{session.time}</td>
                                             <td className="p-4">
                                                 <span className={cn(
-                                                    "px-2 py-1 text-[10px] font-medium uppercase tracking-widest rounded-lg",
-                                                    session.status === 'completed' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
-                                                        "bg-rose-50 text-rose-600 border border-rose-100"
+                                                    "px-2 py-1 text-[10px] font-medium uppercase tracking-widest",
+                                                    session.status === 'completed' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800" :
+                                                        "bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-800"
                                                 )}>
                                                     {session.status === 'completed' ? 'حضور' : 'غياب'}
                                                 </span>
