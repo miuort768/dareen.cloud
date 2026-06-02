@@ -19,7 +19,7 @@ const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: Reac
             <input
                 {...props}
                 className={cn(
-                    "w-full pl-4 pr-12 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none text-xs font-normal transition-all focus:border-blue-600 rounded-xl dark:text-white",
+                    "w-full pl-4 pr-12 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none text-xs font-normal transition-all focus:border-blue-600 dark:text-white",
                     props.className
                 )}
             />
@@ -34,13 +34,13 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     onSubmit
 }) => {
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden">
             {/* Header Accent */}
             <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600" />
             
             <div className="p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-xl">
+                    <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white">
                         <ShieldCheck size={18} />
                     </div>
                     <div>
@@ -68,7 +68,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                     <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                         <button
                             type="submit"
-                            className="group flex items-center gap-3 bg-slate-950 hover:bg-blue-600 text-white px-10 py-4 font-medium text-[10px] uppercase tracking-[0.2em] transition-all rounded-xl shadow-sm active:scale-95"
+                            className="group flex items-center gap-3 bg-slate-950 hover:bg-blue-600 text-white px-10 py-4 font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95"
                         >
                             <Save size={14} className="group-hover:rotate-12 transition-transform" />
                             {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

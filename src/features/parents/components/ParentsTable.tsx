@@ -1,4 +1,4 @@
-import { Edit, Trash2, Users, Phone, Mail, ArrowUpRight } from 'lucide-react';
+import { Edit, Trash2, Users, Phone, Mail, ArrowUpRight, MessageCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
 
@@ -59,7 +59,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                            <div className="w-10 h-10 flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                 {parent.name.charAt(0)}
                                             </div>
                                             <div>
@@ -107,17 +107,26 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                         <div className="flex items-center justify-center gap-1">
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all rounded-none"
+                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all"
                                                     >
                                                         <Edit size={13} />
                                                     </button>
+                                                    <a
+                                                        href={`https://wa.me/${parent.phone.replace(/[^0-9]/g, '')}`}
+                                                        target="_blank" rel="noopener noreferrer"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-500 transition-all"
+                                                        title="واتساب"
+                                                    >
+                                                        <MessageCircle size={13} />
+                                                    </a>
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all rounded-none"
+                                                        className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all"
                                                     >
                                                         <Trash2 size={13} />
                                                     </button>
-                                                    <button onClick={() => onViewParent?.(parent)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all rounded-none">
+                                                    <button onClick={() => onViewParent?.(parent)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
                                                         <ArrowUpRight size={13} />
                                                     </button>
                                         </div>
@@ -155,7 +164,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                         >
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                    <div className="w-12 h-12 flex items-center justify-center font-bold text-base shadow-sm" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                         {parent.name.charAt(0)}
                                     </div>
                                     <div>
@@ -167,8 +176,9 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 shadow-sm transition-all rounded-none"><Edit size={13} /></button>
-                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center shadow-sm transition-all rounded-none" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash2 size={13} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 shadow-sm transition-all"><Edit size={13} /></button>
+                                    <a href={`https://wa.me/${parent.phone.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-400 hover:text-emerald-500 shadow-sm transition-all"><MessageCircle size={13} /></a>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 flex items-center justify-center shadow-sm transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}><Trash2 size={13} /></button>
                                 </div>
                             </div>
 
@@ -177,7 +187,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                     <span className="text-[9px] font-bold text-[#64748B]">الأبناء</span>
                                     <div className="flex -space-x-2 space-x-reverse">
                                         {children.slice(0, 3).map((_, i) => (
-                                            <div key={i} className="w-5 h-5 rounded-full" style={{ backgroundColor: '#2563EB20', border: '1px solid #2563EB40' }} />
+                                            <div key={i} className="w-5 h-5" style={{ backgroundColor: '#2563EB20', border: '1px solid #2563EB40' }} />
                                         ))}
                                     </div>
                                 </div>
