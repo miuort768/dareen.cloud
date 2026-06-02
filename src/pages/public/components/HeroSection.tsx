@@ -118,10 +118,10 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                     
                 </div>
                 
-                <div className="hidden md:grid w-full mt-0 md:mt-0 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
+                <div className="hidden md:grid w-full mt-0 md:mt-0 bg-gradient-to-r from-indigo-900 to-indigo-950 dark:from-indigo-900 dark:to-indigo-950 border-y border-indigo-800/50 dark:border-indigo-800/50 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/30 dark:divide-indigo-800/30">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-indigo-900 dark:hover:bg-indigo-900 transition-colors flex flex-row justify-between items-center gap-2 group">
-                            <p className="text-[10px] lg:text-[11px] font-black text-amber-400 leading-tight flex-1">
+                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-white/5 transition-colors flex flex-row justify-between items-center gap-2 group">
+                            <p className="text-[10px] lg:text-[11px] font-black text-white leading-tight flex-1">
                                 {text}
                             </p>
                             <a 
@@ -129,7 +129,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`سجل الآن: ${text}`}
-                                className="shrink-0 px-2.5 py-1 bg-amber-500 text-indigo-950 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-amber-400 transition-colors shadow-sm whitespace-nowrap"
+                                className="shrink-0 px-2.5 py-1 bg-white text-indigo-950 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-gray-100 transition-colors shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن
                             </a>
