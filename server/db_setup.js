@@ -883,7 +883,7 @@ async function setupDatabase() {
     }
 
     // 5. Drop dead tables (replaced by is_dismissed flag and is_archived flag respectively)
-    const deadTables = ['completed_sessions', 'dismissed_notifications'];
+    const deadTables = ['dismissed_notifications'];
     for (const table of deadTables) {
         try { await db.exec(`DROP TABLE IF EXISTS ${table}`); console.log(`  ✓ Dropped dead table: ${table}`); } catch (e) { }
     }

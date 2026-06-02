@@ -94,6 +94,19 @@ export const Appointments = () => {
         return () => { mountedRef.current = false; };
     }, [currentUser]);
 
+    // Poll for completed sessions every 15s so teacher/admin stay in sync
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            try {
+                const sessions = await api.get<string[]>('/appointments/completed-sessions');
+                if (mountedRef.current) setCompletedSessionIds(sessions || []);
+            } catch {
+                // silent — will retry next cycle
+            }
+        }, 15000);
+        return () => clearInterval(interval);
+    }, []);
+
     const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
@@ -204,7 +217,7 @@ export const Appointments = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">قائمة المواعيد الدراسية</h1>
-                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
+                        <p className="text-[11px] font-bold text-slate-400 dark:text-slate-300 mt-0.5">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
                     </div>
                 </div>
                 {/* Quick stats inline */}
@@ -225,7 +238,7 @@ export const Appointments = () => {
             </div>
 
             {/* Filters Strip */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl mb-4">
                 <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100/50 dark:border-slate-800/50">
                     <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
@@ -254,7 +267,7 @@ export const Appointments = () => {
                             placeholder="ابحث باسم الطالب أو المادة..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#8B5CF6] bg-slate-50 dark:bg-slate-800 transition-all placeholder:text-slate-400 text-slate-700 dark:text-white rounded-xl"
+                            className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#8B5CF6] bg-slate-50 dark:bg-slate-800 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-white rounded-xl"
                         />
                         {searchTerm && (
                             <button onClick={() => setSearchTerm('')} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors" aria-label="مسح البحث">
@@ -337,7 +350,7 @@ export const Appointments = () => {
                                                 </div>
                                                 <div className="flex items-center gap-1.5">
                                                     <ShieldCheck size={10} className="shrink-0" style={{ color: '#10B981' }} />
-                                                    <span className="text-[9px] font-bold text-slate-400 truncate">{nextSession.teacherName}</span>
+                                                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-300 truncate">{nextSession.teacherName}</span>
                                                 </div>
                                             </div>
 
@@ -368,7 +381,7 @@ export const Appointments = () => {
                                 <Calendar size={28} style={{ color: '#8B5CF6' }} />
                             </div>
                             <h3 className="font-bold text-slate-600 dark:text-white text-base mb-1">لا توجد مواعيد</h3>
-                            <p className="text-slate-400 text-xs font-bold max-w-xs">لا توجد مواعيد متطابقة مع معايير البحث</p>
+                            <p className="text-slate-400 dark:text-slate-300 text-xs font-bold max-w-xs">لا توجد مواعيد متطابقة مع معايير البحث</p>
                         </div>
                     )}
                 </div>
