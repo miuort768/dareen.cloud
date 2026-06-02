@@ -69,7 +69,6 @@ export const Students = () => {
 
     // Calculate Stats
     const activeEnrollments = allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0);
-    const uniqueGrades = new Set(allStudents.map(s => s.grade)).size;
     const totalExpectedSessions = allStudents.reduce((acc, s) => 
         acc + (s.enrollments?.reduce((enAcc, en) => enAcc + (en.sessionsTotal || 0), 0) || 0), 0
     );
