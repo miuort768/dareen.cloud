@@ -1,12 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    Clock, 
+import {
+    Clock,
     Search,
     Video,
     X,
     CalendarDays,
-    Share2,
+    Printer,
     Loader2
 } from 'lucide-react';
 import { useCurrentUser } from '../../../context/AppContext';
@@ -15,7 +15,6 @@ import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 
-// Interfaces
 interface Student {
     id: string;
     name: string;
@@ -92,11 +91,11 @@ export const Schedule = () => {
     const [filterDay, setFilterDay] = useState<string>('all');
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
-    const [sharedLink] = useState(() => window.location.href);
-    const [showSharedModal, setShowSharedModal] = useState(false);
     const [loading, setLoading] = useState(true);
+    const printRef = useRef<HTMLDivElement>(null);
 
     const isToday = (day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
+    const todayDayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
 
     const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter(e => e.day === day);
 
@@ -163,6 +162,10 @@ export const Schedule = () => {
         });
     }, [allEvents, searchTerm, filterDay]);
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
             <div className="w-8 h-8 border-2 border-slate-200 border-t-[#2563EB] rounded-full animate-spin" />
@@ -175,9 +178,9 @@ export const Schedule = () => {
             <div className="max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
-                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-none" style={{ backgroundColor: '#2563EB' }}>
+                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-none bg-blue-600 dark:bg-blue-800">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0 bg-white/15">
                             <CalendarDays size={22} className="text-white" />
                         </div>
                         <div>
@@ -195,15 +198,29 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-none px-8 outline-none focus:border-white/50 transition-all"
+                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-none px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
+
+                        {/* Today Filter */}
+                        <button
+                            onClick={() => setFilterDay(prev => prev === todayDayName ? 'all' : todayDayName)}
+                            className={cn(
+                                "h-9 px-2.5 text-[10px] font-bold rounded-none transition-all active:scale-95 flex items-center gap-1.5 border",
+                                filterDay === todayDayName
+                                    ? "bg-white/25 border-white/30 text-white"
+                                    : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-white"
+                            )}
+                        >
+                            <Clock size={12} />
+                            <span className="hidden sm:inline">اليوم</span>
+                        </button>
 
                         {/* Day Filter */}
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-3 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none outline-none focus:border-white/50 transition-all"
+                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none outline-none focus:border-white/50 transition-all"
                         >
                             <option value="all" className="text-slate-900">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -211,36 +228,37 @@ export const Schedule = () => {
                             ))}
                         </select>
 
+                        {/* Print Button */}
                         <button
-                            onClick={() => setShowSharedModal(true)}
+                            onClick={handlePrint}
                             className="h-9 px-4 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
                         >
-                            <Share2 size={13} />
-                            مشاركة
+                            <Printer size={13} />
+                            طباعة
                         </button>
                     </div>
                 </div>
 
-                {/* Live Classes */}
-                <LiveClasses />
+                {/* Live Classes — only for system admin */}
+                {currentUser?.role === 'admin' && <LiveClasses />}
 
                 {/* Schedule Grid */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none mt-4">
+                <div ref={printRef} id="printable-schedule" className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none mt-4">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
                             <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-700">
-                                <div className="p-3 text-[9px] font-bold text-white/70 border-l border-slate-700 bg-[#0F172A]">
+                                <div className="sticky right-0 z-10 p-3 text-[9px] font-bold text-white/70 border-l border-slate-700 bg-slate-800 dark:bg-slate-950">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-[10px] font-bold text-center border-l border-slate-700 last:border-l-0 bg-[#0F172A]",
+                                        "p-3 text-[10px] font-bold text-center border-l border-slate-700 last:border-l-0 bg-slate-800 dark:bg-slate-950",
                                         isToday(day) ? "text-white" : "text-white/70"
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-none inline-block animate-pulse" style={{ backgroundColor: '#2563EB' }} />
+                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-none inline-block animate-pulse bg-blue-500" />
                                         )}
                                     </div>
                                 ))}
@@ -256,7 +274,7 @@ export const Schedule = () => {
                                         "grid grid-cols-[80px_repeat(7,1fr)]",
                                         slotIdx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50/30 dark:bg-slate-950/20"
                                     )}>
-                                        <div className="p-2 text-[9px] font-bold text-slate-400 border-l border-b border-slate-100/50 dark:border-slate-800/50 flex items-center justify-center h-full">
+                                        <div className="sticky right-0 z-10 p-2 text-[9px] font-bold text-slate-400 border-l border-b border-slate-100/50 dark:border-slate-800/50 flex items-center justify-center h-full bg-inherit">
                                             <Clock size={10} className="ml-1 inline" />
                                             {slot.label}
                                         </div>
@@ -274,7 +292,7 @@ export const Schedule = () => {
                                                     <div
                                                         key={`${day}-${slot.hour}`}
                                                         onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
-                                                        className="p-1.5 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[65px]"
+                                                        className="p-1.5 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
                                                         style={{ backgroundColor: `${color}08` }}
                                                     >
                                                         <div className="absolute top-0 right-0 w-full h-0.5" style={{ backgroundColor: color }} />
@@ -296,7 +314,7 @@ export const Schedule = () => {
                                             return (
                                                 <div
                                                     key={`${day}-${slot.hour}`}
-                                                    className="p-2 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 min-h-[65px]"
+                                                    className="p-2 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 min-h-[72px]"
                                                 >
                                                     {!isEmpty && (
                                                         <div className="text-[7px] font-bold text-slate-300 text-center">—</div>
@@ -311,7 +329,7 @@ export const Schedule = () => {
                     </div>
 
                     {/* Legend */}
-                    <div className="border-t border-slate-100/50 dark:border-slate-800/50 p-4 flex flex-wrap items-center gap-4 bg-slate-50/50 dark:bg-slate-950/20">
+                    <div className="border-t border-slate-100/50 dark:border-slate-800/50 p-4 flex flex-wrap items-center gap-4 bg-slate-50/50 dark:bg-slate-950/20 no-print">
                         <span className="text-[9px] font-bold text-slate-400">دليل الألوان:</span>
                         {uniqueTeachers.map((teacher, idx) => {
                             const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
@@ -340,7 +358,7 @@ export const Schedule = () => {
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
                     <div className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-none" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 text-white flex items-center justify-between rounded-none" style={{ backgroundColor: '#2563EB' }}>
+                        <div className="p-4 text-white flex items-center justify-between rounded-none bg-blue-600 dark:bg-blue-800">
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
@@ -379,7 +397,7 @@ export const Schedule = () => {
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2 rounded-none" style={{ backgroundColor: '#2563EB' }}
+                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2 rounded-none bg-blue-600 dark:bg-blue-700"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
@@ -395,39 +413,47 @@ export const Schedule = () => {
                 </div>
             )}
 
-            {/* Shared Link Modal */}
-            {showSharedModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-md shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-none" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 text-white flex items-center justify-between rounded-none" style={{ backgroundColor: '#2563EB' }}>
-                            <h3 className="text-sm font-bold flex items-center gap-2">
-                                <Share2 size={16} />
-                                مشاركة الجدول
-                            </h3>
-                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-none">
-                                <X size={16} />
-                            </button>
-                        </div>
-                        <div className="p-5">
-                            <p className="text-xs font-bold text-slate-500 mb-4">يمكنك نسخ الرابط ومشاركته مع أولياء الأمور</p>
-                            <div className="flex gap-2">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    value={sharedLink}
-                                    className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white outline-none rounded-none"
-                                />
-                                <button
-                                    onClick={() => { navigator.clipboard.writeText(sharedLink); setShowSharedModal(false); }}
-                                    className="h-10 px-4 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 rounded-none" style={{ backgroundColor: '#2563EB' }}
-                                >
-                                    نسخ
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Print styles injected inline */}
+            <style>{`
+                @media print {
+                    body * {
+                        visibility: hidden;
+                    }
+                    #printable-schedule,
+                    #printable-schedule * {
+                        visibility: visible;
+                    }
+                    #printable-schedule {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        margin: 0;
+                        padding: 0;
+                        border: none !important;
+                        box-shadow: none !important;
+                        overflow: visible !important;
+                    }
+                    #printable-schedule .no-print {
+                        display: none !important;
+                    }
+                    #printable-schedule [class*="grid"] {
+                        transform: scale(0.65);
+                        transform-origin: top center;
+                        width: 153%;
+                    }
+                    #printable-schedule [class*="grid"] > div {
+                        font-size: 9px !important;
+                    }
+                    #printable-schedule [class*="min-h-["] {
+                        min-height: 40px !important;
+                    }
+                    @page {
+                        size: landscape;
+                        margin: 1cm;
+                    }
+                }
+            `}</style>
         </div>
     );
 };

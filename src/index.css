@@ -832,37 +832,22 @@ html, body {
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
+      width: 100% !important;
       margin: 0;
       padding: 0;
-      border: none;
-      box-shadow: none;
+      border: none !important;
+      box-shadow: none !important;
       overflow: visible !important;
-      transform: scale(0.60);
-      /* Scale down to 60% */
-      transform-origin: top center;
-      /* Anchor to top center */
-      width: 166%;
-      /* Compensate width for scale (100 / 0.60) */
     }
 
-    /* Compact table for print */
-    #printable-schedule table th,
-    #printable-schedule table td {
-      padding: 2px !important;
-      /* Minimal padding */
-      font-size: 10px !important;
-      /* Smaller text */
-      height: auto !important;
-      /* Allow height to shrink */
+    #printable-schedule .no-print {
+      display: none !important;
     }
 
-    #printable-schedule table td>div {
+    #printable-schedule [class*="min-h-["] {
       min-height: 40px !important;
-      /* Smaller cell min-height */
     }
 
-    /* Ensure table fits on page landscape mostly */
     @page {
       size: landscape;
       margin: 1cm;
