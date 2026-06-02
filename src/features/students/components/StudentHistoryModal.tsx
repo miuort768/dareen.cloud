@@ -57,6 +57,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                         <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-sm">
                             <Clock size={18} />
                         </div>
+                    </div>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <X size={24} className="text-gray-400" />
                     </button>
