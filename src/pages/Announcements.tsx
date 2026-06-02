@@ -76,10 +76,10 @@ export const Announcements = () => {
 
             if (editingAnnouncement) {
                 await api.put(`/announcements/${editingAnnouncement.id}`, payload);
-                showNotification('�� ����� ������� �����', 'success');
+                showNotification('تم تحديث الإعلان بنجاح', 'success');
             } else {
                 await api.post('/announcements', payload);
-                showNotification('�� ��� ������� �����', 'success');
+                showNotification('تم نشر الإعلان بنجاح', 'success');
             }
 
             setIsModalOpen(false);
@@ -142,14 +142,14 @@ export const Announcements = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2">
             
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
                         <Megaphone size={22} style={{ color: '#2563EB' }} />
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">الإعلانات</h1>
-                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة الإعلانات والتنبيهات</p>
+                        <p className="text-[11px] font-bold text-slate-400 dark:text-slate-300 mt-0.5">إدارة الإعلانات والتنبيهات</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ export const Announcements = () => {
                                         </div>
                                         <div>
                                             <span className="text-[10px] font-bold inline-flex items-center px-2 py-0.5 rounded-lg mb-0.5" style={{ backgroundColor: `${styles.color}12`, color: styles.color }}>{styles.label}</span>
-                                            <p className="font-bold text-[9px] text-slate-400">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
+                                            <p className="font-bold text-[9px] text-slate-400 dark:text-slate-300">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
                                         </div>
                                     </div>
                                     
@@ -235,7 +235,7 @@ export const Announcements = () => {
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: '#2563EB12' }}>
                             <ArrowLeftRight size={22} style={{ color: '#2563EB' }} />
                         </div>
-                        <h3 className="text-sm font-bold text-slate-400">لا توجد إعلانات بعد</h3>
+                        <h3 className="text-sm font-bold text-slate-400 dark:text-slate-300">لا توجد إعلانات بعد</h3>
                     </div>
                 )}
             </div>
@@ -262,7 +262,7 @@ export const Announcements = () => {
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs rounded-xl outline-none focus:border-[#2563EB] dark:text-white transition-all"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs rounded-xl outline-none focus:border-[#2563EB] dark:text-white transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
                                     placeholder="أدخل عنوان الإعلان..."
                                 />
                             </div>
@@ -315,7 +315,7 @@ export const Announcements = () => {
                                     rows={4}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs rounded-xl outline-none focus:border-[#2563EB] dark:text-white transition-all leading-relaxed resize-none"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-xs rounded-xl outline-none focus:border-[#2563EB] dark:text-white transition-all leading-relaxed resize-none placeholder:text-slate-400 dark:placeholder:text-slate-500"
                                     placeholder="أكتب محتوى الإعلان هنا..."
                                 />
                             </div>
