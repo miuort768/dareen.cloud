@@ -13,7 +13,7 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
         <div className="space-y-4">
             <div className="shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-none" style={{ backgroundColor: '#00542F' }}>
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                    <div className="w-12 h-12 flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                         <Award size={22} />
                     </div>
                     <div>

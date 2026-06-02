@@ -145,10 +145,10 @@ const awardPoints = async (tx, { studentId, amount, action }) => {
             try { badges = JSON.parse(student.badges || '[]'); } catch(e) {}
             
             const milestones = [
-                { threshold: 100, name: 'مجتهد', color: 'blue' },
-                { threshold: 500, name: 'بطل المعهد', color: 'amber' },
-                { threshold: 1000, name: 'البروفيسور', color: 'emerald' },
-                { threshold: 2500, name: 'أسطورة دارين', color: 'rose' }
+                { threshold: 500, name: 'شاطر ومجتهد', color: 'emerald' },
+                { threshold: 1500, name: 'العبقري / العبقرية', color: 'blue' },
+                { threshold: 2500, name: 'بطل المعهد', color: 'violet' },
+                { threshold: 3500, name: 'جوكر المعهد', color: 'amber' }
             ];
 
             let badgeAdded = false;

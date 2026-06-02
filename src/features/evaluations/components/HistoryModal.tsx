@@ -22,7 +22,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
     return (
         <div className="fixed inset-0 bg-slate-900/50  flex items-center justify-center p-4 z-[10001] md:animate-in md:fade-in">
             <div className="bg-white dark:bg-slate-900 shadow-sm w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100/50 dark:border-slate-800/50 mt-20 md:mt-0 rounded-none">
-                <div className="p-5 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center bg-[#172554] text-white">
+                <div className="p-5 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center bg-[#00542F] text-white">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 flex items-center justify-center rounded-none" style={{ backgroundColor: '#ffffff15' }}>
                             <User size={18} style={{ color: '#ffffff' }} />
@@ -76,7 +76,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                 </div>
 
                 <div className="p-4 border-t border-slate-100/50 dark:border-slate-800/50 flex justify-center bg-white dark:bg-slate-900">
-                    <button onClick={onClose} className="px-8 py-2.5 bg-[#172554] hover:bg-[#0f1d3d] text-white font-bold text-xs transition-all shadow-sm rounded-none">إغلاق</button>
+                    <button onClick={onClose} className="px-8 py-2.5 bg-[#00542F] hover:bg-[#004028] text-white font-bold text-xs transition-all shadow-sm rounded-none">إغلاق</button>
                 </div>
             </div>
         </div>

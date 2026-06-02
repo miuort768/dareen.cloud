@@ -12,11 +12,10 @@ interface ChildProfile {
 }
 
 const getLevel = (points: number) => {
-    if (points >= 2500) return { name: 'أسطورة دارين - Darin Legend', color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-500', next: null };
-    if (points >= 1000) return { name: 'البروفيسور - The Professor', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-500', next: 2500 };
-    if (points >= 500) return { name: 'بطل الأكاديمية', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-500', next: 1000 };
-    if (points >= 100) return { name: 'المجتهد - Diligent Student', color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-500', next: 500 };
-    return { name: 'القارئ المكتشف - Explorer Reader', color: 'text-gray-600', bg: 'bg-gray-50', border: 'border-gray-500', next: 100 };
+    if (points >= 3000) return { name: 'جوكر المعهد', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-500', next: null };
+    if (points >= 2000) return { name: 'بطل المعهد', color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-500', next: 3000 };
+    if (points >= 1000) return { name: 'العبقري / العبقرية', color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-500', next: 2000 };
+    return { name: 'شاطر ومجتهد', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-500', next: 1000 };
 };
 
 export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfiles: ChildProfile[] }) => {

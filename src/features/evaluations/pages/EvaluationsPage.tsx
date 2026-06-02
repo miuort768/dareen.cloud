@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { Navigate } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { useCurrentUser } from '../../../context/AppContext';
@@ -13,6 +14,7 @@ export const Evaluations = () => {
     const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [historyModalStudent, setHistoryModalStudent] = useState<Student | null>(null);
     const [formData, setFormData] = useState({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
@@ -67,6 +69,8 @@ export const Evaluations = () => {
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
             const payload = { ...formData, teacherId: currentUser?.id, teacherName: currentUser?.teacherName || currentUser?.name };
             await api.post('/evaluations', payload);
@@ -75,16 +79,33 @@ export const Evaluations = () => {
             fetchData();
         } catch (error) {
             console.error('Error submitting evaluation', error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm('هل أنت متأكد من حذف هذا التقييم؟ سيتم خصم النقاط من الطالب.')) return;
+        if (!window.confirm('هل أنت متأكد من حذف هذا التقييم؟ سيتم خصم النقاط من الطالب.')) return;
         try { await api.delete(`/evaluations/${id}`); fetchData(); }
         catch (error) { console.error('Error deleting evaluation', error); }
     };
 
+    const sortedStudents = useMemo(() => {
+        if (!teacherStudents.length) return [];
+        const filtered = teacherStudents.filter(s =>
+            !searchTerm ||
+            (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (s.grade || '').toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        if (currentUser?.role === 'admin') {
+            return [...filtered].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+        }
+        return filtered;
+    }, [teacherStudents, searchTerm, currentUser]);
+
     const totalXP = useMemo(() => evaluations.reduce((sum, ev) => sum + (ev.points || 0), 0), [evaluations]);
+
+    if (currentUser?.role === 'teacher') return <Navigate to="/" replace />;
 
     if (isLoading) return (
         <div className="space-y-4 p-6">
@@ -104,11 +125,7 @@ export const Evaluations = () => {
                 />
                 <div className="px-2 md:px-0">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                        {teacherStudents.filter(s =>
-                            !searchTerm ||
-                            (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            (s.grade || '').toLowerCase().includes(searchTerm.toLowerCase())
-                        ).map((student) => (
+                        {sortedStudents.map((student) => (
                             <EvaluationCard
                                 key={student.id}
                                 student={student}
@@ -118,13 +135,13 @@ export const Evaluations = () => {
                                 onViewHistory={setHistoryModalStudent}
                             />
                         ))}
-                        {teacherStudents.length === 0 && (
+                        {sortedStudents.length === 0 && (
                             <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none">
                                 <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-none" style={{ backgroundColor: '#00542F08', border: '2px dashed', borderColor: '#00542F30' }}>
                                     <User size={36} style={{ color: '#00542F' }} />
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-700 dark:text-white mb-1">لا يوجد طلاب مسجلون حالياً</h3>
-                                <p className="text-sm font-medium text-slate-400 max-w-xs">بمجرد تعيين طلاب لكِ، سيظهرون هنا تلقائياً.</p>
+                                <h3 className="text-lg font-bold text-slate-700 dark:text-white mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون حالياً'}</h3>
+                                <p className="text-sm font-medium text-slate-400 max-w-xs">{searchTerm ? 'حاول استخدام كلمات بحث مختلفة.' : 'سيظهر الطلاب هنا بمجرد تسجيلهم في النظام.'}</p>
                             </div>
                         )}
                     </div>
@@ -134,6 +151,7 @@ export const Evaluations = () => {
                     formData={formData}
                     students={students}
                     teacherStudents={teacherStudents}
+                    isSubmitting={isSubmitting}
                     onClose={() => { setIsModalOpen(false); resetForm(); }}
                     onChange={setFormData}
                     onSubmit={onSubmit}

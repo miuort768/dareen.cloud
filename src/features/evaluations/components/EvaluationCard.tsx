@@ -27,8 +27,8 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
             </div>
 
             <div className="p-4 flex items-center gap-3 border-b border-slate-50 dark:border-slate-800">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
-                    <User size={18} style={{ color: '#2563EB' }} />
+                <div className="w-11 h-11 flex items-center justify-center shrink-0" style={{ backgroundColor: '#8B5CF612' }}>
+                    <User size={18} style={{ color: '#8B5CF6' }} />
                 </div>
                 <div className="min-w-0 flex-1">
                     <h4 className="font-medium text-sm text-slate-900 dark:text-white truncate">{student.name}</h4>
@@ -36,7 +36,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                         <BookOpen size={8} className="shrink-0" />{student.grade}</p>
                 </div>
                 <div className="shrink-0 text-center">
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-none" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>{totalStudentXP} XP</span>
+                    <span className="text-[9px] font-bold px-2 py-0.5 dark:text-amber-400 rounded-none" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>{totalStudentXP} XP</span>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                             <p className="text-[8px] text-slate-400 mt-1.5">{format(new Date(lastEval.created_at || lastEval.date), 'dd/MM/yyyy')}</p>
                         </div>
                         <div className="flex items-center gap-1.5">
-                            <TrendingUp size={10} style={{ color: '#2563EB' }} />
+                            <TrendingUp size={10} style={{ color: '#8B5CF6' }} />
                             <span className="text-[9px] text-slate-400 font-normal">{studentEvals.length} تقييم مسجل</span>
                         </div>
                     </div>

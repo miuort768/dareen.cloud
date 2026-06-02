@@ -124,6 +124,9 @@ export const Sidebar = () => {
         // Explicitly allow Forum for Teachers
         if (item.id === 'forum' && currentUser.role === 'teacher') return true;
 
+        // Hide evaluations from teachers
+        if (item.id === 'evaluations' && currentUser.role === 'teacher') return false;
+
         // Specific page access
         return currentUser.permissions?.includes(item.id);
     });

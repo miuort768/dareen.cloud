@@ -82,6 +82,10 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
     const isStudentAccess = currentUser.role === 'student' && permission.startsWith('student_');
     const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard';
 
+    const isTeacherBlockedFromEval = currentUser.role === 'teacher' && permission === 'evaluations';
+
+    if (isTeacherBlockedFromEval) return <Navigate to="/" replace />;
+
     if (!hasExplicitPermission && !isParentAccess && !isStudentAccess && !isTeacherDashboard) {
       return <Navigate to="/" replace />;
     }

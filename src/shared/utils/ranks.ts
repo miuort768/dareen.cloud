@@ -14,13 +14,10 @@ export interface RankInfo {
 }
 
 export const STUDENT_RANKS: Rank[] = [
-    { name: 'برعم ناشئ', minPoints: 0, color: '#94a3b8', icon: '🌱', badgeColor: 'bg-slate-500' },
-    { name: 'طالب مجتهد', minPoints: 101, color: '#10b981', icon: '✍️', badgeColor: 'bg-emerald-500' },
-    { name: 'طالب مميز', minPoints: 301, color: '#3b82f6', icon: '🌟', badgeColor: 'bg-blue-500' },
-    { name: 'نجم ساطع', minPoints: 701, color: '#f59e0b', icon: '✨', badgeColor: 'bg-amber-500' },
-    { name: 'فارس العلم', minPoints: 1501, color: '#ef4444', icon: '⚔️', badgeColor: 'bg-rose-500' },
-    { name: 'طالب مثالي', minPoints: 3001, color: '#8b5cf6', icon: '🏆', badgeColor: 'bg-violet-500' },
-    { name: 'سفير دارين', minPoints: 10001, color: '#000000', icon: '👑', badgeColor: 'bg-black' },
+    { name: 'شاطر ومجتهد', minPoints: 0, color: '#10b981', icon: '⭐', badgeColor: 'bg-emerald-500' },
+    { name: 'العبقري / العبقرية', minPoints: 1000, color: '#3b82f6', icon: '💡', badgeColor: 'bg-blue-500' },
+    { name: 'بطل المعهد', minPoints: 2000, color: '#8b5cf6', icon: '🏅', badgeColor: 'bg-violet-500' },
+    { name: 'جوكر المعهد', minPoints: 3000, color: '#f59e0b', icon: '👑', badgeColor: 'bg-amber-500' },
 ];
 
 export const TEACHER_RANKS: Rank[] = [
