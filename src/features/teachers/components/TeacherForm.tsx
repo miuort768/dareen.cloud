@@ -78,22 +78,6 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                     <X size={18} />
                 </button>
             </div>
-                    <div>
-                        <h3 className="text-sm md:text-lg font-medium text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
-                        <p className="text-[9px] text-slate-500 font-normal uppercase tracking-[0.2em] mt-0.5">
-                            {initialData ? 'تحديث السجل الأكاديمي' : 'فتح سجل كادر جديد'}
-                        </p>
-                    </div>
-                </div>
-                <button 
-                    type="button" 
-                    onClick={onCancel}
-                    className="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white/10 rounded-lg transition-all"
-                >
-                    <X size={18} />
-                </button>
-            </div>
-
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Basic Info Section */}
                 <div className="space-y-4">
