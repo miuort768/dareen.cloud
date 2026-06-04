@@ -202,7 +202,7 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-0 prose-p:text-justify"
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
                         />
                     )}
