@@ -198,13 +198,13 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-0"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
                         />
                     )}
 
                     {/* Share & CTA */}
-                    <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-0 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-3">
                             <span className="font-bold text-gray-900 dark:text-white text-sm">شارك</span>
                             <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center hover:opacity-80 transition-all text-white" title="واتساب">
