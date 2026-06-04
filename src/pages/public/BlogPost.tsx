@@ -96,7 +96,7 @@ export const BlogPost = () => {
     const hashStr = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; } return Math.abs(h); };
 
     const colorWords = (text: string) => {
-        const colors = ['#E11D48', '#2563EB', '#059669', '#D97706', '#7C3AED', '#0891B2'];
+        const colors = ['#7F09C8', '#179013'];
         return text.split(/(\s+)/).map(word => {
             if (word.length < 2 || /^\s+$/.test(word)) return word;
             const h = hashStr(word);
