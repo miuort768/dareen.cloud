@@ -39,34 +39,6 @@ export const BlogPost = () => {
         };
     }, [slug]);
 
-    const contentParts = (() => {
-        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
-        if (hasHtml) {
-            const match = post.content.match(/<\/p>/i);
-            if (match) {
-                const idx = match.index! + match[0].length;
-                return { first: post.content.slice(0, idx), rest: post.content.slice(idx) };
-            }
-            return { first: post.content, rest: '' };
-        }
-        const parts = post.content.split(/\n\n/);
-        return { first: parts[0], rest: parts.slice(1).join('\n\n') };
-    })();
-
-    const processContent = (text: string) => {
-        const lines = text.split('\n');
-        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
-        const processed = lines.map((line: string) => {
-            const trimmed = line.trim();
-            const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-            if (imgRegex.test(trimmed)) {
-                return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
-            }
-            return line;
-        });
-        return hasHtml ? processed.join('\n') : processed.join('<br/>');
-    };
-
     const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();
         if (countdown) return;
@@ -102,6 +74,34 @@ export const BlogPost = () => {
             </div>
         );
     }
+
+    const contentParts = (() => {
+        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+        if (hasHtml) {
+            const match = post.content.match(/<\/p>/i);
+            if (match) {
+                const idx = match.index! + match[0].length;
+                return { first: post.content.slice(0, idx), rest: post.content.slice(idx) };
+            }
+            return { first: post.content, rest: '' };
+        }
+        const parts = post.content.split(/\n\n/);
+        return { first: parts[0], rest: parts.slice(1).join('\n\n') };
+    })();
+
+    const processContent = (text: string) => {
+        const lines = text.split('\n');
+        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+        const processed = lines.map((line: string) => {
+            const trimmed = line.trim();
+            const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+            if (imgRegex.test(trimmed)) {
+                return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
+            }
+            return line;
+        });
+        return hasHtml ? processed.join('\n') : processed.join('<br/>');
+    };
 
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
