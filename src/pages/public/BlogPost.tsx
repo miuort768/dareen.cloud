@@ -142,7 +142,7 @@ export const BlogPost = () => {
             </script>
             <MobileHeader />
 
-            <main className="flex-grow pt-3 md:pt-32 pb-8 md:pb-20 relative">
+            <main className="flex-grow pt-3 md:pt-32 pb-6 md:pb-10 relative">
                 {/* Article Header */}
                 <header className="container mx-auto px-4 max-w-4xl mb-6 md:mb-12">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 md:gap-0 mb-3 md:mb-6">
