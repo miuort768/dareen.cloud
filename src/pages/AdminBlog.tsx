@@ -465,7 +465,7 @@ export const AdminBlog = () => {
             )}
 
             {/* Posts Grid */}
-            {loading ? (
+            {isModalOpen ? null : loading ? (
                 <div className="flex items-center justify-center py-20">
                     <div className="w-10 h-10 rounded-full border-2 border-slate-200 border-t-[#E11D48] animate-spin" />
                 </div>
