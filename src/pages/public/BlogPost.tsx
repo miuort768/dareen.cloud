@@ -42,13 +42,18 @@ export const BlogPost = () => {
     const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();
         if (countdown) return;
+        const popup = window.open('', '_blank', 'noopener,noreferrer');
         setCountdown({ type, seconds: 9 });
         timerRef.current = setInterval(() => {
             setCountdown(prev => {
                 if (!prev || prev.seconds <= 1) {
                     if (timerRef.current) clearInterval(timerRef.current);
                     timerRef.current = null;
-                    window.open(url, '_blank', 'noopener,noreferrer');
+                    if (popup && !popup.closed) {
+                        popup.location.href = url;
+                    } else {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                    }
                     return null;
                 }
                 return { ...prev, seconds: prev.seconds - 1 };
