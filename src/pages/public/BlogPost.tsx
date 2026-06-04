@@ -39,6 +39,34 @@ export const BlogPost = () => {
         };
     }, [slug]);
 
+    const contentParts = (() => {
+        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+        if (hasHtml) {
+            const match = post.content.match(/<\/p>/i);
+            if (match) {
+                const idx = match.index! + match[0].length;
+                return { first: post.content.slice(0, idx), rest: post.content.slice(idx) };
+            }
+            return { first: post.content, rest: '' };
+        }
+        const parts = post.content.split(/\n\n/);
+        return { first: parts[0], rest: parts.slice(1).join('\n\n') };
+    })();
+
+    const processContent = (text: string) => {
+        const lines = text.split('\n');
+        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+        const processed = lines.map((line: string) => {
+            const trimmed = line.trim();
+            const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+            if (imgRegex.test(trimmed)) {
+                return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
+            }
+            return line;
+        });
+        return hasHtml ? processed.join('\n') : processed.join('<br/>');
+    };
+
     const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();
         if (countdown) return;
@@ -142,29 +170,13 @@ export const BlogPost = () => {
                 {/* Article Content */}
                 <article className="container mx-auto px-4 max-w-3xl">
                     <div 
-                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
-                        dangerouslySetInnerHTML={{ 
-                            __html: sanitizeHTML(
-                                (() => {
-                                    const lines = post.content.split('\n');
-                                    const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
-                                    const processed = lines.map((line: string) => {
-                                        const trimmed = line.trim();
-                                        const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-                                        if (imgRegex.test(trimmed)) {
-                                            return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
-                                        }
-                                        return line;
-                                    });
-                                    return hasHtml ? processed.join('\n') : processed.join('<br/>');
-                                })()
-                            )
-                        }}
+                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none"
+                        dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
                     />
                     
                     {/* Download & Watch Buttons */}
                     {(post.downloadLink || post.watchLink) && (
-                        <div className="flex flex-wrap gap-3 mb-8 justify-center">
+                        <div className="flex flex-wrap gap-3 my-8 justify-center">
                             {post.downloadLink && (
                                 <button onClick={(e) => handleCountdownClick('download', post.downloadLink!, e)}
                                     disabled={countdown !== null && countdown.type !== 'download'}
@@ -182,6 +194,13 @@ export const BlogPost = () => {
                                 </button>
                             )}
                         </div>
+                    )}
+                    
+                    {contentParts.rest && (
+                        <div 
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
+                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
+                        />
                     )}
 
                     {/* Share & CTA */}
