@@ -186,7 +186,7 @@ export const BlogPost = () => {
                 {/* Article Content */}
                 <article className="container mx-auto px-4 max-w-3xl">
                     <div 
-                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none"
+                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none prose-p:text-justify"
                         dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
                     />
                     
@@ -214,7 +214,7 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-0"
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-0 prose-p:text-justify"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
                         />
                     )}
