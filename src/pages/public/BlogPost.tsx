@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
@@ -83,9 +83,9 @@ export const BlogPost = () => {
                     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://dareen.cloud/books/${post.slug}` }
                 })}
             </script>
-            <PublicNavbar />
+            <MobileHeader />
 
-            <main className="flex-grow pt-24 md:pt-32 pb-20 relative">
+            <main className="flex-grow pt-14 md:pt-32 pb-20 relative">
                 {/* Article Header */}
                 <header className="container mx-auto px-4 max-w-4xl mb-12">
                     <Link to="/books" className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-bold text-sm mb-8">
