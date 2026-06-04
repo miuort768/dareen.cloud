@@ -4,7 +4,7 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
+import { Calendar, User, ArrowRight, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
 import DOMPurify from 'dompurify';
 
@@ -136,10 +136,22 @@ export const BlogPost = () => {
                     
                     {/* Share & CTA */}
                     <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-4">
-                            <span className="font-bold text-gray-900 dark:text-white">شارك المقال:</span>
-                            <button onClick={() => { if (navigator.share) { navigator.share({ title: post.title, url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); alert('تم نسخ الرابط'); } }} className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 transition-colors">
-                                <Share2 size={18} />
+                        <div className="flex items-center gap-3">
+                            <span className="font-bold text-gray-900 dark:text-white text-sm">شارك المقال:</span>
+                            <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all" title="واتساب">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 6.5a8.5 8.5 0 0 1-3.5 16.2"/><path d="M3 21l1.7-5.9a8.5 8.5 0 1 1 5.8 5.8L3 21z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+                            </a>
+                            <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all" title="فيسبوك">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            </a>
+                            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-sky-50 dark:bg-sky-900/30 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all" title="تويتر">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.7 16.4L20 4"/><path d="M4 20l6.5-8.8"/><path d="M14.5 8.8L20 4"/></svg>
+                            </a>
+                            <a href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-sky-50 dark:bg-sky-900/30 flex items-center justify-center hover:bg-sky-600 hover:text-white transition-all" title="تيليجرام">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.2 4.2L2.8 12.9c-.8.3-.7 1.5.1 1.7l5.1 1.4 2 6.3c.3.9 1.4.9 1.7 0L21.2 4.2z"/><path d="M11.9 15.7l6.5-6.5"/><path d="M9 21l3.4-5.8"/></svg>
+                            </a>
+                            <button onClick={() => { navigator.clipboard.writeText(window.location.href).then(() => { const btn = document.activeElement as HTMLElement; const orig = btn?.innerHTML; if (btn) { btn.innerHTML = 'تم'; setTimeout(() => { if (btn) btn.innerHTML = orig || ''; }, 1500); } }).catch(() => { if (navigator.share) { navigator.share({ title: post.title, url: window.location.href }); } }); }} className="w-9 h-9 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center hover:bg-gray-800 dark:hover:bg-slate-600 hover:text-white transition-all" title="نسخ الرابط">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                             </button>
                         </div>
                         
