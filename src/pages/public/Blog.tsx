@@ -373,7 +373,7 @@ export const Blog = () => {
                   <ArrowLeft size={14} /><span>تغيير المادة</span>
                 </button>
                 )}
-                <button onClick={() => setView('types')} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-indigo-950 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
+                <button onClick={() => setView('types')} className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-indigo-950 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
                   <Library size={14} /><span>الرئيسية</span>
                 </button>
               </div>
@@ -399,8 +399,8 @@ export const Blog = () => {
                   return (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                     className={`flex items-start gap-4 bg-white dark:bg-slate-900 ${isMore ? '' : 'rounded-2xl'} border border-slate-100 dark:border-slate-800 p-4 shadow-sm active:scale-[0.98] transition-all`}>
-                    <div className={`w-20 h-20 ${isMore ? '' : 'rounded-xl'} overflow-hidden bg-slate-50 dark:bg-slate-800 shrink-0 shadow-sm`}>
-                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="80" height="80" loading="lazy" className="w-full h-full object-cover" />
+                    <div className={`${isMore ? 'w-24 h-16' : 'w-20 h-20'} ${isMore ? '' : 'rounded-xl'} overflow-hidden bg-slate-50 dark:bg-slate-800 shrink-0 shadow-sm`}>
+                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width={isMore ? 96 : 80} height={isMore ? 64 : 80} loading="lazy" className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">
                       {!isMore && (
@@ -596,7 +596,7 @@ export const Blog = () => {
                   <ArrowLeft size={14} /><span>تغيير المادة</span>
                 </button>
                 )}
-                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
+                <button onClick={() => setView('types')} className="w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
                   <Library size={14} /><span>الرئيسية</span>
                 </button>
               </div>

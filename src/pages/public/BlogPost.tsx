@@ -179,7 +179,7 @@ export const BlogPost = () => {
                     />
                     
                     {/* Download & Watch Buttons */}
-                        <div className="flex flex-wrap gap-3 my-8 justify-center min-h-[56px]">
+                        <div className={`flex flex-wrap gap-3 justify-center ${post.downloadLink || post.watchLink ? 'my-8' : 'my-4'}`}>
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
