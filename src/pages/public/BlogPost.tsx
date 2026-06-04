@@ -119,17 +119,19 @@ export const BlogPost = () => {
                         className="prose prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
                         dangerouslySetInnerHTML={{ 
                             __html: sanitizeHTML(
-                                post.content
-                                    .split('\n')
-                                    .map((line: string) => {
+                                (() => {
+                                    const lines = post.content.split('\n');
+                                    const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+                                    const processed = lines.map((line: string) => {
                                         const trimmed = line.trim();
                                         const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
                                         if (imgRegex.test(trimmed)) {
-                                            return `<img src="${trimmed}" alt="" class="w-full h-auto rounded-none shadow-lg my-8" />`;
+                                            return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
                                         }
                                         return line;
-                                    })
-                                    .join('<br/>')
+                                    });
+                                    return hasHtml ? processed.join('\n') : processed.join('<br/>');
+                                })()
                             )
                         }}
                     />
