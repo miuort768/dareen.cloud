@@ -94,6 +94,18 @@ export const BlogPost = () => {
         return { first: parts[0], rest: parts.slice(1).join('\n\n') };
     })();
 
+    const hashStr = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; } return Math.abs(h); };
+
+    const colorWords = (text: string) => {
+        const colors = ['#E11D48', '#2563EB', '#059669', '#D97706', '#7C3AED', '#0891B2'];
+        return text.split(/(\s+)/).map(word => {
+            if (word.length < 2 || /^\s+$/.test(word)) return word;
+            const h = hashStr(word);
+            if (h % 15 < 1) return `<span style="color:${colors[h % colors.length]};font-weight:700">${word}</span>`;
+            return word;
+        }).join('');
+    };
+
     const processContent = (text: string) => {
         const lines = text.split('\n');
         const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
@@ -103,7 +115,7 @@ export const BlogPost = () => {
             if (imgRegex.test(trimmed)) {
                 return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
             }
-            return line;
+            return hasHtml ? line : colorWords(line);
         });
         return hasHtml ? processed.join('\n') : processed.join('<br/>');
     };
