@@ -502,7 +502,7 @@ export const Blog = () => {
 
                 <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
                   {view === 'types'
-                    ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في الخليج'
+                    ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت و قطر والامارات والسعودية'
                     : view === 'curriculums'
                       ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                       : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
