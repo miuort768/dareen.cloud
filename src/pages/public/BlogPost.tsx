@@ -196,7 +196,7 @@ export const BlogPost = () => {
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
+                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
                                     <Download size={16} />
                                     <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `تحميل الملف (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : 'تحميل الملف'}</span>
                                 </button>
@@ -204,7 +204,7 @@ export const BlogPost = () => {
                             {post.watchLink && (
                                 <button onClick={(e) => handleButtonClick('watch', post.watchLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'watch'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-red-600 text-white'}`}>
+                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-red-600 text-white'}`}>
                                     <Eye size={16} />
                                     <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `مشاهدة الملف (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : 'مشاهدة الملف'}</span>
                                 </button>
