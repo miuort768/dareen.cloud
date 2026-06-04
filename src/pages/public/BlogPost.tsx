@@ -159,7 +159,7 @@ export const BlogPost = () => {
                     {/* Share & CTA */}
                     <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-3">
-                            <span className="font-bold text-gray-900 dark:text-white text-sm">شارك المقال:</span>
+                            <span className="font-bold text-gray-900 dark:text-white text-sm">شارك المقال</span>
                             <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all" title="واتساب">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 6.5a8.5 8.5 0 0 1-3.5 16.2"/><path d="M3 21l1.7-5.9a8.5 8.5 0 1 1 5.8 5.8L3 21z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
                             </a>
