@@ -15,6 +15,9 @@ export interface BlogPost {
     grade?: string;
     term?: string;
     subject?: string;
+    downloadLink?: string;
+    watchLink?: string;
+    isNew?: boolean;
 }
 
 export const blogPosts: BlogPost[] = [

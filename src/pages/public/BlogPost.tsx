@@ -4,7 +4,7 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Loader2 } from 'lucide-react';
+import { Calendar, User, ArrowRight, Loader2, Download, Eye } from 'lucide-react';
 import { api } from '../../lib/api';
 import DOMPurify from 'dompurify';
 
@@ -136,6 +136,26 @@ export const BlogPost = () => {
                         }}
                     />
                     
+                    {/* Download & Watch Buttons */}
+                    {(post.downloadLink || post.watchLink) && (
+                        <div className="flex flex-wrap gap-3 mb-8">
+                            {post.downloadLink && (
+                                <a href={post.downloadLink} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg">
+                                    <Download size={16} />
+                                    <span>تحميل الملف</span>
+                                </a>
+                            )}
+                            {post.watchLink && (
+                                <a href={post.watchLink} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg">
+                                    <Eye size={16} />
+                                    <span>مشاهدة الشرح</span>
+                                </a>
+                            )}
+                        </div>
+                    )}
+
                     {/* Share & CTA */}
                     <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-3">
