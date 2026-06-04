@@ -42,7 +42,7 @@ export const BlogPost = () => {
     const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();
         if (countdown) return;
-        setCountdown({ type, seconds: 10 });
+        setCountdown({ type, seconds: 9 });
         timerRef.current = setInterval(() => {
             setCountdown(prev => {
                 if (!prev || prev.seconds <= 1) {
