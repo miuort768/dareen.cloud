@@ -1,10 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Moon, Sun } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { cn } from '../../lib/utils';
 
 export const FloatingActions = () => {
+    const location = useLocation();
+    const isBooksPage = location.pathname.startsWith('/books');
     const { adminPhone, telegramHandle } = useSettingsStore();
     const [theme, setTheme] = useDarkMode();
     const whatsappNumber = typeof adminPhone === 'string' ? adminPhone.replace(/\D/g, '') : '';
@@ -38,7 +41,7 @@ export const FloatingActions = () => {
 
     return (
         <>
-            <div className="fixed top-[75%] md:top-1/2 -translate-y-1/2 right-4 md:right-6 z-[9999] flex flex-col gap-2 md:gap-3">
+            <div className={cn("fixed top-[75%] md:top-1/2 -translate-y-1/2 right-4 md:right-6 z-[9999] flex flex-col gap-2 md:gap-3", isBooksPage && "hidden md:flex")}>
                 <AnimatePresence>
                     {actions.map((action, index) => (
                         <motion.div
