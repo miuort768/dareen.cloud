@@ -190,7 +190,7 @@ export const BlogPost = () => {
                                     disabled={countdown !== null && countdown.type !== 'watch'}
                                     className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'watch' ? 'bg-[#057022] text-white' : 'bg-red-600 text-white'}`}>
                                     <Eye size={16} />
-                                    <span>{countdown?.type === 'watch' ? `مشاهدة الشرح (${countdown.seconds})` : 'مشاهدة الشرح'}</span>
+                                    <span>{countdown?.type === 'watch' ? `مشاهدة الملف (${countdown.seconds})` : 'مشاهدة الملف'}</span>
                                 </button>
                             )}
                         </div>
