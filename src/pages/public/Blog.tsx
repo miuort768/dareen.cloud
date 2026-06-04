@@ -90,6 +90,9 @@ const subjectsMap: Record<string, { id: string; name: string; gradient: string }
 subjectsMap.basic = subjectsMap.middle;
 subjectsMap.preparatory = subjectsMap.middle;
 
+const subjectNameMap: Record<string, string> = {};
+Object.values(subjectsMap).forEach(arr => arr.forEach(s => { if (!subjectNameMap[s.id]) subjectNameMap[s.id] = s.name; }));
+
 type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
 
 interface GridItem {
@@ -398,7 +401,7 @@ export const Blog = () => {
                       <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="80" height="80" loading="lazy" className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg">{post.subject || post.category}</span>
+                      <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg">{subjectNameMap[post.subject] || post.category}</span>
                       <h2 className="text-sm font-black text-slate-900 dark:text-white leading-snug mt-1.5 line-clamp-2">{post.title}</h2>
                       <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">{post.date?.split('T')[0]}</p>
                     </div>
@@ -608,7 +611,7 @@ export const Blog = () => {
                           <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
                           <div className="absolute top-3 right-3 z-10">
-                            <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{post.subject || post.category}</span>
+                            <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
                           </div>
                         </div>
                         <div className="p-4 flex flex-col flex-1">
