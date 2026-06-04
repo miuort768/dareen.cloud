@@ -93,18 +93,6 @@ export const BlogPost = () => {
         return { first: parts[0], rest: parts.slice(1).join('\n\n') };
     })();
 
-    const hashStr = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; } return Math.abs(h); };
-
-    const colorWords = (text: string) => {
-        const colors = ['#7F09C8', '#179013'];
-        return text.split(/(\s+)/).map(word => {
-            if (word.length < 2 || /^\s+$/.test(word)) return word;
-            const h = hashStr(word);
-            if (h % 15 < 1) return `<span style="color:${colors[h % colors.length]};font-weight:700">${word}</span>`;
-            return word;
-        }).join('');
-    };
-
     const processContent = (text: string) => {
         const lines = text.split('\n');
         const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
@@ -114,7 +102,7 @@ export const BlogPost = () => {
             if (imgRegex.test(trimmed)) {
                 return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
             }
-            return hasHtml ? line : colorWords(line);
+            return line;
         });
         return hasHtml ? processed.join('\n') : processed.join('<br/>');
     };
@@ -172,7 +160,7 @@ export const BlogPost = () => {
                     </div>
 
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-2 md:mb-4">
-                        <span dangerouslySetInnerHTML={{ __html: colorWords(post.title) }} />
+                        {post.title}
                     </h1>
                 </header>
 
@@ -186,7 +174,7 @@ export const BlogPost = () => {
                 {/* Article Content */}
                 <article className="container mx-auto px-4 max-w-3xl">
                     <div 
-                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none prose-p:text-justify"
+                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none prose-p:text-justify text-[#7F09C8] dark:text-[#179013]"
                         dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
                     />
                     
