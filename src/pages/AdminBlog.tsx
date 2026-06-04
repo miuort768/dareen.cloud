@@ -454,27 +454,27 @@ export const AdminBlog = () => {
                     <p className="text-sm font-bold text-slate-400">لا توجد مقالات بعد! أضف أول مقال الآن</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredPosts.map(post => (
-                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm group overflow-hidden rounded-2xl">
-                            <div className="relative h-40 overflow-hidden">
-                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl">
+                            <div className="relative h-36 overflow-hidden">
+                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                 <div className="absolute top-2 right-2">
                                     <span className="text-[10px] font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: '#E11D48', color: '#FFFFFF' }}>{post.category}</span>
                                 </div>
                             </div>
-                            <div className="p-5">
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-2 line-clamp-2 min-h-[3rem] text-sm">{post.title}</h3>
-                                <div className="flex items-center gap-3 text-[10px] font-bold text-slate-500 mb-4">
+                            <div className="p-3">
+                                <h3 className="font-bold text-slate-900 dark:text-white mb-1 line-clamp-2 text-sm">{post.title}</h3>
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2">
                                     <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
                                     <div className="flex items-center gap-1"><User size={12} /> {post.author}</div>
                                 </div>
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-100/50 dark:border-slate-800/50">
+                                <div className="flex items-center justify-between pt-2 border-t border-slate-100/50 dark:border-slate-800/50">
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleOpenModal(post)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#2563EB' }} aria-label="تعديل"><Edit2 size={16} /></button>
-                                        <button onClick={() => handleDelete(post.id)} className="p-2 rounded-xl transition-all active:scale-90" style={{ color: '#E11D48' }} aria-label="حذف"><Trash2 size={16} /></button>
+                                        <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl" style={{ color: '#2563EB' }} aria-label="تعديل"><Edit2 size={14} /></button>
+                                        <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl" style={{ color: '#E11D48' }} aria-label="حذف"><Trash2 size={14} /></button>
                                     </div>
-                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 transition-all active:scale-90" style={{ color: '#94A3B8' }}><ExternalLink size={16} /></a>
+                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-1.5" style={{ color: '#94A3B8' }}><ExternalLink size={14} /></a>
                                 </div>
                             </div>
                         </div>
