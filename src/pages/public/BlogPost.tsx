@@ -155,7 +155,7 @@ export const BlogPost = () => {
                         </Link>
                     </div>
 
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-4 md:mb-8">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-2 md:mb-4">
                         {post.title}
                     </h1>
                 </header>
