@@ -118,7 +118,7 @@ export const BlogPost = () => {
                             <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-black text-xs px-3 py-1.5 uppercase tracking-widest">{post.category}</span>
                             <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium">
                                 <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
-                                <div className="flex items-center gap-1.5"><User size={14} /> <span className="text-gray-700 dark:text-gray-200 font-bold">{post.author}</span></div>
+                                <div className="flex items-center gap-1.5"><User size={14} className="text-blue-900 dark:text-blue-300" /> <span className="text-blue-900 dark:text-blue-300 font-bold">{post.author}</span></div>
                             </div>
                         </div>
                         <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 md:px-0 md:py-0 bg-gray-900 md:bg-transparent dark:bg-white md:dark:bg-transparent text-white md:text-gray-500 dark:text-gray-900 md:dark:text-slate-400 hover:bg-red-600 md:hover:bg-transparent dark:hover:bg-red-500 md:dark:hover:bg-transparent hover:text-white md:hover:text-red-600 dark:hover:text-white md:dark:hover:text-red-600 transition-all font-bold text-sm rounded-xl md:rounded-none">
