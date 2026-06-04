@@ -196,6 +196,17 @@ export const Blog = () => {
         url="https://dareen.cloud/books"
         image="/dareen_books_banner.png"
         breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المكتبة', item: '/books' }]} />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'المكتبة التعليمية - دارين السابعة',
+          description: 'مكتبة دارين السابعة التعليمية: كتب، مذكرات، ملخصات، واختبارات للمناهج الخليجية',
+          url: 'https://dareen.cloud/books',
+          mainEntity: { '@type': 'ItemList', itemListElement: [] },
+          publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+        })}
+      </script>
       <MobileHeader />
 
       {/* ─── Mobile Layout ─── */}
@@ -265,7 +276,7 @@ export const Blog = () => {
 
             {/* Selection Grid */}
             <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800">
-              <h1 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
+              <h2 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
                 {view === 'types' ? (
                   <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
                 ) : view === 'curriculums' ? (
@@ -273,7 +284,7 @@ export const Blog = () => {
                 ) : (
                   <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
                 )}
-              </h1>
+              </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5 leading-relaxed">
                 {view === 'types'
                   ? 'اختر ما تريد من كتب او مذكرات مجانا'
@@ -395,11 +406,11 @@ export const Blog = () => {
                       : `المواد — ${termLabel}`}
                 </span>
               </div>
-              <h1 className="text-[17px] font-black text-indigo-950">
+              <h2 className="text-[17px] font-black text-indigo-950">
                 {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الصف الدراسي</span></>)
                   : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الترم</span></>)
                     : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المادة</span></>)}
-              </h1>
+              </h2>
               <p className="text-[10px] text-slate-500 font-medium mt-1">
                 {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
                   : view === 'terms' ? 'اختر الترم الدراسي'
@@ -610,11 +621,11 @@ export const Blog = () => {
                         : `المواد — ${termLabel}`}
                   </span>
                 </div>
-                <h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 mb-3">
+                <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50 mb-3">
                   {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">الصف الدراسي</span></>)
                     : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">الترم</span></>)
                       : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المادة</span></>)}
-                </h1>
+                </h2>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
                   {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
                     : view === 'terms' ? 'اختر الترم الدراسي'

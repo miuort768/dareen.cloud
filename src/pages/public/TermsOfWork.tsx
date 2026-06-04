@@ -12,7 +12,17 @@ export const TermsOfWork = () => {
                 title="قوانين العمل | دارين السابعة"
                 description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
                 url="https://dareen.cloud/terms-of-work"
+                breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'قوانين العمل', item: '/terms-of-work' }]}
             />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'قوانين العمل - دارين السابعة',
+                    description: 'قوانين وسياسات العمل في دارين السابعة للمعلمين والموظفين',
+                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+                })}
+            </script>
             <MobileHeader />
 
             {/* Hero Section */}

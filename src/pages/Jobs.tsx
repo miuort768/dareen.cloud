@@ -4,6 +4,7 @@ import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User,
 import { api } from '../lib/api';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
+import { SEO } from '../components/SEO';
 
 const subjects = [
     'القرآن الكريم',
@@ -151,6 +152,17 @@ export const Jobs = () => {
 
     return (
         <div className="min-h-screen bg-[#fafafa] font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
+            <SEO title="التوظيف | دارين السابعة - انضمي إلى فريقنا" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن." url="https://dareen.cloud/jobs" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'التوظيف', item: '/jobs' }]} />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'التوظيف في دارين السابعة',
+                    description: 'فرص عمل وانضمام إلى فريق دارين السابعة للتعليم والتدريب',
+                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' },
+                    breadcrumb: { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://dareen.cloud/' }, { '@type': 'ListItem', position: 2, name: 'التوظيف', item: 'https://dareen.cloud/jobs' }] }
+                })}
+            </script>
             <MobileHeader />
 
             {/* Hero Banner */}

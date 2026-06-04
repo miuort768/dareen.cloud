@@ -12,6 +12,7 @@ const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const cors = require('cors');
 const compression = require('compression');
+const prerender = require('prerender-node');
 
 const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
@@ -167,7 +168,6 @@ app.get('/robots.txt', (req, res) => {
 Allow: /
 Disallow: /dashboard
 Disallow: /admin
-Disallow: /login
 Disallow: /api/
 Disallow: /chat
 Disallow: /settings
@@ -363,6 +363,22 @@ async function startServer() {
                 details: isDev ? err.message : undefined 
             });
         });
+
+        // Prerender middleware: serves fully-rendered HTML to search engine crawlers
+        // (Googlebot, Bingbot, etc.) via prerender.io service.
+        // Regular users get the normal SPA behavior unaffected.
+        app.use(prerender
+            .set('prerenderToken', process.env.PRERENDER_TOKEN)
+            .crawlerUserAgents([
+                'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
+                'twitterbot', 'rogerbot', 'linkedinbot', 'embedly',
+                'baiduspider', 'pinterestbot', 'slackbot-likex', 'vkshare',
+                'w3c_validator', 'redditbot', 'applebot', 'whatsapp',
+                'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
+                'ahrefsbot', 'dotbot'
+            ])
+            .whitelist(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*'])
+        );
 
         // The SPA catch-all handler: serve index.html for all non-asset routes
         // so React Router handles routing. Use 404 status for unknown paths to

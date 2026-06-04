@@ -14,7 +14,17 @@ export const RefundPolicy = () => {
                 title="سياسة الاسترداد والاسترجاع | دارين السابعة"
                 description="سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة. تعرف على شروط الاسترجاع، إلغاء الحصص، وآلية استرداد المبالغ المدفوعة."
                 url="https://dareen.cloud/refund-policy"
+                breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'سياسة الاسترداد', item: '/refund-policy' }]}
             />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'سياسة الاسترداد والاسترجاع - دارين السابعة',
+                    description: 'سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة',
+                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+                })}
+            </script>
             <MobileHeader />
 
             {/* Hero Section */}

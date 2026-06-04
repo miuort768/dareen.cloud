@@ -14,6 +14,16 @@ export const PrivacyPolicy = () => {
                 url="https://dareen.cloud/privacy-policy"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'سياسة الخصوصية', item: '/privacy-policy' }]}
             />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'سياسة الخصوصية والأمان - دارين السابعة',
+                    description: 'سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد',
+                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' },
+                    about: { '@type': 'Thing', name: 'سياسة الخصوصية وحماية البيانات' }
+                })}
+            </script>
             <MobileHeader />
 
             {/* Hero Section */}

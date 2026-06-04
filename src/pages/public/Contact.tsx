@@ -54,6 +54,15 @@ export const Contact = () => {
     return (
         <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
             <SEO title="اتصل بنا | دارين السابعة - دروس خصوصية أونلاين في السعودية والكويت والخليج" description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في السعودية والكويت والإمارات وقطر وعمان والبحرين. احجز حصة تجريبية مجانية عبر واتساب." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'ContactPage',
+                    name: 'اتصل بنا - دارين السابعة',
+                    description: 'تواصل مع فريق دارين السابعة للاستفسار عن خدمات التعليم عن بعد',
+                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud', telephone: '+965XXXXXXXX', email: 'miuort768@gmail.com', contactPoint: { '@type': 'ContactPoint', telephone: '+965XXXXXXXX', contactType: 'customer service', availableLanguage: ['Arabic', 'English'] } }
+                })}
+            </script>
             <MobileHeader />
 
             <main className="flex-grow md:pt-28 pb-2 relative overflow-hidden">

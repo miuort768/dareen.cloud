@@ -32,6 +32,28 @@
   <!-- Preload critical hero image -->
   <link rel="preload" as="image" href="/hero-child.webp" type="image/webp" fetchpriority="high" />
 
+  <!-- Preconnect to prerender.io for crawler rendering -->
+  <link rel="preconnect" href="https://service.prerender.io" />
+  <link rel="dns-prefetch" href="https://service.prerender.io" />
+
+  <!-- Website Schema with Sitelinks Search -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "دارين السابعة للتعليم والتدريب",
+      "url": "https://dareen.cloud/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://dareen.cloud/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -53,6 +75,21 @@
   <meta name="format-detection" content="telephone=no" />
 
   <title>دارين السابعة للتعليم والتدريب</title>
+
+  <!-- Open Graph Fallback (overridden by per-page SEO component after JS loads) -->
+  <meta property="og:title" content="دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج" />
+  <meta property="og:description" content="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." />
+  <meta property="og:image" content="https://dareen.cloud/dareen_logo_new.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://dareen.cloud/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="دارين السابعة" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج" />
+  <meta name="twitter:description" content="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية." />
+  <meta name="twitter:image" content="https://dareen.cloud/dareen_logo_new.jpg" />
 </head>
 
 <body>

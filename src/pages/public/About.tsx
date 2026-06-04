@@ -8,6 +8,15 @@ export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO title="من نحن | دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج" description="منصة دارين السابعة للتعليم عن بعد في الكويت، السعودية، قطر، الإمارات وعمان والبحرين. نوفر دروس خصوصية أونلاين في الدوحة والريان ومسقط وصلالة والمنامة والمحرق، تحفيظ قرآن، تأسيس أطفال، ومراجعات للمناهج الخليجية والبحرينية مع أفضل المعلمين المعتمدين. احجز حصة تجريبية مجانية." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'من نحن', item: '/about' }]} />
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'AboutPage',
+                    name: 'من نحن - دارين السابعة',
+                    description: 'منصة دارين السابعة للتعليم عن بعد في الكويت والخليج',
+                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+                })}
+            </script>
             <MobileHeader />
 
             {/* Hero Section */}
