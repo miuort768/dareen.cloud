@@ -17,7 +17,7 @@ interface BlogPost {
     author: string;
     date: string;
     // حقول التصنيف التعليمي
-    contentType: string;   // notes | solutions | summaries | foundation
+    contentType: string;   // notes | solutions | more | foundation
     curriculum: string;    // kuwait | qatar | uae | saudi
     level: string;         // primary | middle | secondary | basic | preparatory
     grade: string;         // 1-12
@@ -236,9 +236,9 @@ export const AdminBlog = () => {
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
                                     <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
-                                        <option value="notes">ملخصات</option>
-                                        <option value="solutions">حلول</option>
-                                        <option value="summaries">مراجعات</option>
+                                        <option value="notes">مذكرات</option>
+                                        <option value="solutions">حل كتب</option>
+                                        <option value="more">المزيد</option>
                                         <option value="foundation">تأسيس</option>
                                     </select>
                                 </div>

@@ -19,7 +19,7 @@ const types = [
   { id: 'foundation', name: 'التأسيس', gradient: 'from-amber-500 to-orange-600', icon: Zap },
   { id: 'solutions', name: 'حل الكتب', gradient: 'from-emerald-500 to-teal-600', icon: CheckCircle },
   { id: 'notes', name: 'المذكرات', gradient: 'from-violet-500 to-purple-600', icon: FileText },
-  { id: 'summaries', name: 'ملخصات', gradient: 'from-rose-500 to-pink-600', icon: AlignLeft },
+  { id: 'more', name: 'المزيد', gradient: 'from-rose-500 to-pink-600', icon: AlignLeft },
 ];
 
 const curriculums = [
@@ -161,9 +161,14 @@ export const Blog = () => {
     return true;
   }) : posts;
 
+  const directTypes = ['foundation', 'more'];
+  const isDirectType = directTypes.includes(selectedType);
+
   const goBack = () => {
-    if (view === 'results') setView('subjects');
-    else if (view === 'subjects') setView('terms');
+    if (view === 'results') {
+      if (isDirectType) setView('types');
+      else setView('subjects');
+    } else if (view === 'subjects') setView('terms');
     else if (view === 'terms') setView('classrooms');
     else if (view === 'classrooms') setView('grades');
     else if (view === 'grades') setView('curriculums');
@@ -301,8 +306,13 @@ export const Blog = () => {
                   onClick={() => {
                     setSearchParams(prev => {
                       const next = new URLSearchParams(prev);
-                      if (view === 'types') { next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k)); }
-                      else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
+                      if (view === 'types') {
+                        if (directTypes.includes(item.id)) {
+                          next.set('type', item.id); next.set('view', 'results'); ['curriculum','level','grade','term','subject'].forEach(k => next.delete(k));
+                        } else {
+                          next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k));
+                        }
+                      } else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
                       else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
                       return next;
                     });
@@ -339,7 +349,7 @@ export const Blog = () => {
               <div className="flex items-center gap-1.5 mb-3 text-[11px] font-bold text-slate-400 dark:text-slate-500 flex-wrap">
                 {[
                   { label: 'الرئيسية', onClick: () => setView('types') },
-                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
+                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
                   ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
                   ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
                   ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
@@ -355,9 +365,11 @@ export const Blog = () => {
               </div>
 
               <div className="flex gap-2">
+                {!isDirectType && (
                 <button onClick={goBack} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-slate-800 dark:bg-slate-700 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
                   <ArrowLeft size={14} /><span>تغيير المادة</span>
                 </button>
+                )}
                 <button onClick={() => setView('types')} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-indigo-950 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
                   <Library size={14} /><span>الرئيسية</span>
                 </button>
@@ -503,8 +515,13 @@ export const Blog = () => {
                         onClick={() => {
                           setSearchParams(prev => {
                             const next = new URLSearchParams(prev);
-                            if (view === 'types') { next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k)); }
-                            else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
+                            if (view === 'types') {
+                              if (directTypes.includes(item.id)) {
+                                next.set('type', item.id); next.set('view', 'results'); ['curriculum','level','grade','term','subject'].forEach(k => next.delete(k));
+                              } else {
+                                next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k));
+                              }
+                            } else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
                             else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
                             return next;
                           });
@@ -542,7 +559,7 @@ export const Blog = () => {
               <div className="flex items-center gap-2 mb-6 text-xs sm:text-sm font-bold text-slate-400 flex-wrap">
                 {[
                   { label: 'الرئيسية', onClick: () => setView('types') },
-                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
+                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
                   ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
                   ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
                   ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
@@ -558,9 +575,11 @@ export const Blog = () => {
               </div>
 
               <div className="flex gap-2 mb-8">
+                {!isDirectType && (
                 <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-black rounded-xl transition-all">
                   <ArrowLeft size={14} /><span>تغيير المادة</span>
                 </button>
+                )}
                 <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
                   <Library size={14} /><span>الرئيسية</span>
                 </button>
