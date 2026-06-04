@@ -18,6 +18,7 @@ export interface BlogPost {
     downloadLink?: string;
     watchLink?: string;
     isNew?: boolean;
+    views?: number;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -141,4 +142,4 @@ export const blogPosts: BlogPost[] = [
         category: 'الخليج',
         keywords: 'دروس خصوصية قطر, مدرس خصوصي الدوحة, منهج قطري, دروس خصوصية عمان, منهج عماني, مدرس خصوصي مسقط, دروس خصوصية البحرين, منهج بحريني, تعليم عن بعد قطر, مناهج خليجية'
     }
-];
+].map(p => ({ ...p, views: p.views ?? Math.floor(Math.random() * 500) + 50 }));

@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -394,19 +394,32 @@ export const Blog = () => {
               </div>
             ) : (
               <div className="space-y-3">
-                {filteredPosts.map((post, i) => (
+                {filteredPosts.map((post, i) => {
+                  const isMore = selectedType === 'more';
+                  return (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                    className="flex items-start gap-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm active:scale-[0.98] transition-all">
-                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800 shrink-0 shadow-sm">
+                    className={`flex items-start gap-4 bg-white dark:bg-slate-900 ${isMore ? '' : 'rounded-2xl'} border border-slate-100 dark:border-slate-800 p-4 shadow-sm active:scale-[0.98] transition-all`}>
+                    <div className={`w-20 h-20 ${isMore ? '' : 'rounded-xl'} overflow-hidden bg-slate-50 dark:bg-slate-800 shrink-0 shadow-sm`}>
                       <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="80" height="80" loading="lazy" className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg">{subjectNameMap[post.subject] || post.category}</span>
-                      <h2 className="text-sm font-black text-slate-900 dark:text-white leading-snug mt-1.5 line-clamp-2">{post.title}</h2>
-                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">{post.date?.split('T')[0]}</p>
+                      {!isMore && (
+                        <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg">{subjectNameMap[post.subject] || post.category}</span>
+                      )}
+                      <h2 className={`text-sm font-black leading-snug mt-1.5 line-clamp-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>{post.title}</h2>
+                      {isMore && post.excerpt && (
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">{post.excerpt}</p>
+                      )}
+                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                        {post.date?.split('T')[0]}
+                        {isMore && (
+                          <span className="mr-2 inline-flex items-center gap-0.5"><Flame size={10} className="text-orange-500" />{post.views ?? 0}</span>
+                        )}
+                      </p>
                     </div>
                   </Link>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -603,32 +616,47 @@ export const Blog = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {filteredPosts.map((post, i) => (
+                  {filteredPosts.map((post, i) => {
+                    const isMore = selectedType === 'more';
+                    return (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                        className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
-                        <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
-                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                        className={`group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 ${isMore ? '' : 'rounded-2xl overflow-hidden'} shadow-sm hover:shadow-xl ${isMore ? '' : 'hover:shadow-indigo-500/5'} transition-all duration-500 h-full flex flex-col`}>
+                        <div className={`relative aspect-video ${isMore ? '' : 'overflow-hidden'} bg-slate-50 dark:bg-slate-800/30`}>
+                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full object-cover ${isMore ? '' : 'group-hover:scale-105 transition-transform duration-700'}`} />
                           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
-                          <div className="absolute top-3 right-3 z-10">
-                            <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
-                          </div>
+                          {!isMore && (
+                            <div className="absolute top-3 right-3 z-10">
+                              <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
+                            </div>
+                          )}
                         </div>
                         <div className="p-4 flex flex-col flex-1">
                           <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
                             <span className="flex items-center gap-1"><Calendar size={12} /><span>{post.date?.split('T')[0]}</span></span>
-                            <span className="flex items-center gap-1"><User size={12} /><span>{post.author}</span></span>
+                            {isMore ? (
+                              <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" /><span>{post.views ?? 0}</span></span>
+                            ) : (
+                              <span className="flex items-center gap-1"><User size={12} /><span>{post.author}</span></span>
+                            )}
                           </div>
-                          <h2 className="text-sm sm:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2">{post.title}</h2>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                          <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                            <span>اقرأ المقال</span>
-                            <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                          </div>
+                          <h2 className={`text-sm sm:text-base font-heading font-black leading-snug mb-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors'}`}>{post.title}</h2>
+                          {isMore ? (
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
+                          ) : (
+                            <>
+                              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
+                              <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                                <span>اقرأ المقال</span>
+                                <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                              </div>
+                            </>
+                          )}
                         </div>
                       </Link>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>

@@ -26,6 +26,7 @@ interface BlogPost {
     downloadLink: string;
     watchLink: string;
     isNew: boolean;
+    views: number;
 }
 
 export const AdminBlog = () => {
@@ -82,6 +83,7 @@ export const AdminBlog = () => {
                 downloadLink: '',
                 watchLink: '',
                 isNew: false,
+                views: 0,
             });
             setContentPart1('');
             setContentPart2('');
