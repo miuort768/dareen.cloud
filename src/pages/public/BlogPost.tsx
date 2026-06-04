@@ -121,7 +121,7 @@ export const BlogPost = () => {
                                 <div className="flex items-center gap-1.5"><User size={14} className="text-blue-900 dark:text-blue-300" /> <span className="text-blue-900 dark:text-blue-300 font-bold">{post.author}</span></div>
                             </div>
                         </div>
-                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 md:px-0 md:py-0 bg-gray-900 md:bg-transparent dark:bg-white md:dark:bg-transparent text-white md:text-gray-500 dark:text-gray-900 md:dark:text-slate-400 hover:bg-red-600 md:hover:bg-transparent dark:hover:bg-red-500 md:dark:hover:bg-transparent hover:text-white md:hover:text-red-600 dark:hover:text-white md:dark:hover:text-red-600 transition-all font-bold text-sm rounded-xl md:rounded-none">
+                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all font-bold text-sm rounded-xl">
                             <ArrowRight size={16} />
                             <span>العودة لجميع المقالات</span>
                         </Link>
