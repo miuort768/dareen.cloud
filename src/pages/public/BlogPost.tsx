@@ -17,7 +17,7 @@ export const BlogPost = () => {
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);
-    const [countdown, setCountdown] = useState<{ type: 'download' | 'watch'; seconds: number } | null>(null);
+    const [buttonState, setButtonState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -39,24 +39,23 @@ export const BlogPost = () => {
         };
     }, [slug]);
 
-    const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
+    const handleButtonClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();
-        if (countdown) return;
-        const popup = window.open('', '_blank', 'noopener,noreferrer');
-        setCountdown({ type, seconds: 9 });
+        if (buttonState?.type === type && buttonState.phase === 'ready') {
+            window.open(url, '_blank', 'noopener,noreferrer');
+            setButtonState(null);
+            return;
+        }
+        if (buttonState) return;
+        setButtonState({ type, phase: 'counting', seconds: 9 });
         timerRef.current = setInterval(() => {
-            setCountdown(prev => {
-                if (!prev || prev.seconds <= 1) {
+            setButtonState(prev => {
+                if (!prev || prev.seconds! <= 1) {
                     if (timerRef.current) clearInterval(timerRef.current);
                     timerRef.current = null;
-                    if (popup && !popup.closed) {
-                        popup.location.href = url;
-                    } else {
-                        window.open(url, '_blank', 'noopener,noreferrer');
-                    }
-                    return null;
+                    return { type, phase: 'ready' };
                 }
-                return { ...prev, seconds: prev.seconds - 1 };
+                return { ...prev, seconds: prev.seconds! - 1 };
             });
         }, 1000);
     };
@@ -195,19 +194,19 @@ export const BlogPost = () => {
                     {(post.downloadLink || post.watchLink) && (
                         <div className="flex flex-wrap gap-3 my-8 justify-center">
                             {post.downloadLink && (
-                                <button onClick={(e) => handleCountdownClick('download', post.downloadLink!, e)}
-                                    disabled={countdown !== null && countdown.type !== 'download'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'download' ? 'bg-[#057022] text-white' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
+                                <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
+                                    disabled={buttonState !== null && buttonState.type !== 'download'}
+                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
                                     <Download size={16} />
-                                    <span>{countdown?.type === 'download' ? `تحميل الملف (${countdown.seconds})` : 'تحميل الملف'}</span>
+                                    <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `تحميل الملف (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : 'تحميل الملف'}</span>
                                 </button>
                             )}
                             {post.watchLink && (
-                                <button onClick={(e) => handleCountdownClick('watch', post.watchLink!, e)}
-                                    disabled={countdown !== null && countdown.type !== 'watch'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'watch' ? 'bg-[#057022] text-white' : 'bg-red-600 text-white'}`}>
+                                <button onClick={(e) => handleButtonClick('watch', post.watchLink!, e)}
+                                    disabled={buttonState !== null && buttonState.type !== 'watch'}
+                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-red-600 text-white'}`}>
                                     <Eye size={16} />
-                                    <span>{countdown?.type === 'watch' ? `مشاهدة الملف (${countdown.seconds})` : 'مشاهدة الملف'}</span>
+                                    <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `مشاهدة الملف (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : 'مشاهدة الملف'}</span>
                                 </button>
                             )}
                         </div>
