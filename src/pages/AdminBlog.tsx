@@ -33,6 +33,7 @@ export const AdminBlog = () => {
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [filterType, setFilterType] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
     const [submitting, setSubmitting] = useState(false);
@@ -118,8 +119,9 @@ export const AdminBlog = () => {
     };
 
     const filteredPosts = posts.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchTerm.toLowerCase())
+        (post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
+        (!filterType || post.contentType === filterType)
     );
 
     return (
@@ -145,7 +147,7 @@ export const AdminBlog = () => {
                 </button>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 shadow-sm flex items-center gap-4 rounded-2xl">
+            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 shadow-sm space-y-4 rounded-2xl">
                 <div className="relative flex-grow">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2" size={20} style={{ color: '#94A3B8' }} />
                     <input
@@ -155,6 +157,21 @@ export const AdminBlog = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-12 py-3 focus:border-[#E11D48] transition-all font-bold text-sm rounded-xl outline-none"
                     />
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                    {[
+                        { key: '', label: 'الكل', color: '#64748B' },
+                        { key: 'foundation', label: 'التأسيس', color: '#7C3AED' },
+                        { key: 'solutions', label: 'حل الكتب', color: '#2563EB' },
+                        { key: 'notes', label: 'المذكرات', color: '#059669' },
+                        { key: 'more', label: 'المزيد', color: '#D97706' },
+                    ].map(btn => (
+                        <button key={btn.key} onClick={() => setFilterType(btn.key)}
+                            className={`px-4 py-2 text-xs font-bold rounded-xl transition-all active:scale-95 ${filterType === btn.key ? 'text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                            style={filterType === btn.key ? { backgroundColor: btn.color } : undefined}>
+                            {btn.label}
+                        </button>
+                    ))}
                 </div>
             </div>
 
