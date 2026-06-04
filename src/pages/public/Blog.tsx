@@ -398,24 +398,28 @@ export const Blog = () => {
                   const isMore = selectedType === 'more';
                   return (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                    className={`flex items-start gap-4 bg-white dark:bg-slate-900 ${isMore ? '' : 'rounded-2xl'} border border-slate-100 dark:border-slate-800 p-4 shadow-sm active:scale-[0.98] transition-all`}>
-                    <div className={`${isMore ? 'w-24 h-16' : 'w-20 h-20'} ${isMore ? '' : 'rounded-xl'} overflow-hidden bg-slate-50 dark:bg-slate-800 shrink-0 shadow-sm`}>
-                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width={isMore ? 96 : 80} height={isMore ? 64 : 80} loading="lazy" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="min-w-0 flex-1">
+                    className={`group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm active:scale-[0.98] transition-all h-full flex flex-col ${isMore ? '' : 'rounded-2xl'}`}>
+                    <div className={`relative aspect-video bg-slate-50 dark:bg-slate-800/30 ${isMore ? '' : 'overflow-hidden rounded-t-2xl'}`}>
+                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className="w-full h-full object-cover" />
                       {!isMore && (
-                        <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-lg">{subjectNameMap[post.subject] || post.category}</span>
+                        <div className="absolute top-3 right-3 z-10">
+                          <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
+                        </div>
                       )}
-                      <h2 className={`text-sm font-black leading-snug mt-1.5 line-clamp-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>{post.title}</h2>
-                      {isMore && post.excerpt && (
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">{post.excerpt}</p>
-                      )}
-                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
-                        {post.date?.split('T')[0]}
+                    </div>
+                    <div className="p-4 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
+                        <span className="flex items-center gap-1">{post.date?.split('T')[0]}</span>
                         {isMore && (
-                          <span className="mr-2 inline-flex items-center gap-0.5"><Flame size={10} className="text-orange-500" />{post.views ?? 0}</span>
+                          <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" />{post.views ?? 0}</span>
                         )}
-                      </p>
+                      </div>
+                      <h2 className={`text-sm font-black leading-snug line-clamp-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>{post.title}</h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1 mt-2">{post.excerpt}</p>
+                      <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                        <span>اقرأ المقال</span>
+                        <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                      </div>
                     </div>
                   </Link>
                   );
@@ -641,17 +645,11 @@ export const Blog = () => {
                             )}
                           </div>
                           <h2 className={`text-sm sm:text-base font-heading font-black leading-snug mb-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors'}`}>{post.title}</h2>
-                          {isMore ? (
-                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                          ) : (
-                            <>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                              <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                                <span>اقرأ المقال</span>
-                                <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                              </div>
-                            </>
-                          )}
+                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
+                          <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                            <span>اقرأ المقال</span>
+                            <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                          </div>
                         </div>
                       </Link>
                     </div>
