@@ -4,14 +4,17 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Loader2, Download, Eye } from 'lucide-react';
+import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle } from 'lucide-react';
 import { api } from '../../lib/api';
+import { useSettingsStore } from '../../store/settingsStore';
 import DOMPurify from 'dompurify';
 
 const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
+    const { adminPhone } = useSettingsStore();
+    const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -180,9 +183,15 @@ export const BlogPost = () => {
                             </button>
                         </div>
                         
-                        <Link to="/courses" className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-sm uppercase tracking-widest shadow-lg hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all">
-                            ابدأ التعلم الآن
-                        </Link>
+                        <div className="flex items-center gap-3">
+                            <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن ' + post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-4 bg-green-600 text-white font-black text-sm rounded-xl hover:bg-green-700 transition-all shadow-lg">
+                                <MessageCircle size={18} />
+                                <span>لدي سؤال؟</span>
+                            </a>
+                            <Link to="/courses" className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-sm uppercase tracking-widest shadow-lg hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all">
+                                ابدأ التعلم الآن
+                            </Link>
+                        </div>
                     </div>
                 </article>
             </main>
