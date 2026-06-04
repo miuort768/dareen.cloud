@@ -28,16 +28,17 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
-            contentType, curriculum, level, grade, term, subject
+            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink
         } = req.body;
         const id = uuidv4();
 
         await req.db.run(
-            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [id, slug, title, excerpt, content, coverImage, category, keywords, author,
              date || new Date().toISOString(),
              contentType || null, curriculum || null, level || null,
-             grade || null, term || null, subject || null]
+             grade || null, term || null, subject || null,
+             downloadLink || null, watchLink || null]
         );
 
         res.status(201).json({ id, title, slug });
@@ -53,14 +54,15 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
-            contentType, curriculum, level, grade, term, subject
+            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink
         } = req.body;
 
         await req.db.run(
-            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ? WHERE id = ?`,
+            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ? WHERE id = ?`,
             [title, slug, excerpt, content, coverImage, category, keywords, author, date,
              contentType || null, curriculum || null, level || null,
-             grade || null, term || null, subject || null, req.params.id]
+             grade || null, term || null, subject || null,
+             downloadLink || null, watchLink || null, req.params.id]
         );
 
         res.json({ success: true });

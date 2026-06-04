@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -17,6 +17,8 @@ export const BlogPost = () => {
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);
+    const [countdown, setCountdown] = useState<{ type: 'download' | 'watch'; seconds: number } | null>(null);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -32,7 +34,27 @@ export const BlogPost = () => {
             }
         };
         fetchPost();
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
     }, [slug]);
+
+    const handleCountdownClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
+        e.preventDefault();
+        if (countdown) return;
+        setCountdown({ type, seconds: 10 });
+        timerRef.current = setInterval(() => {
+            setCountdown(prev => {
+                if (!prev || prev.seconds <= 1) {
+                    if (timerRef.current) clearInterval(timerRef.current);
+                    timerRef.current = null;
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                    return null;
+                }
+                return { ...prev, seconds: prev.seconds - 1 };
+            });
+        }, 1000);
+    };
 
     if (loading) {
         return (
@@ -91,17 +113,18 @@ export const BlogPost = () => {
             <main className="flex-grow pt-3 md:pt-32 pb-8 md:pb-20 relative">
                 {/* Article Header */}
                 <header className="container mx-auto px-4 max-w-4xl mb-6 md:mb-12">
-                    <Link to="/books" className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-bold text-sm mb-3 md:mb-8">
-                        <ArrowRight size={16} />
-                        <span>العودة لجميع المقالات</span>
-                    </Link>
-                    
-                    <div className="mb-3 md:mb-6 flex flex-wrap gap-4 items-center">
-                        <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-black text-xs px-3 py-1.5 uppercase tracking-widest">{post.category}</span>
-                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium">
-                            <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
-                            <div className="flex items-center gap-1.5"><User size={14} /> <span>{post.author}</span></div>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 md:gap-0 mb-3 md:mb-6">
+                        <div className="order-2 md:order-1 flex flex-wrap gap-4 items-center">
+                            <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-black text-xs px-3 py-1.5 uppercase tracking-widest">{post.category}</span>
+                            <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium">
+                                <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
+                                <div className="flex items-center gap-1.5"><User size={14} /> <span className="text-gray-700 dark:text-gray-200 font-bold">{post.author}</span></div>
+                            </div>
                         </div>
+                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 md:px-0 md:py-0 bg-gray-900 md:bg-transparent dark:bg-white md:dark:bg-transparent text-white md:text-gray-500 dark:text-gray-900 md:dark:text-slate-400 hover:bg-red-600 md:hover:bg-transparent dark:hover:bg-red-500 md:dark:hover:bg-transparent hover:text-white md:hover:text-red-600 dark:hover:text-white md:dark:hover:text-red-600 transition-all font-bold text-sm rounded-xl md:rounded-none">
+                            <ArrowRight size={16} />
+                            <span>العودة لجميع المقالات</span>
+                        </Link>
                     </div>
 
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-4 md:mb-8">
@@ -143,18 +166,20 @@ export const BlogPost = () => {
                     {(post.downloadLink || post.watchLink) && (
                         <div className="flex flex-wrap gap-3 mb-8">
                             {post.downloadLink && (
-                                <a href={post.downloadLink} target="_blank" rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg">
+                                <button onClick={(e) => handleCountdownClick('download', post.downloadLink!, e)}
+                                    disabled={countdown !== null && countdown.type !== 'download'}
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
                                     <Download size={16} />
-                                    <span>تحميل الملف</span>
-                                </a>
+                                    <span>{countdown?.type === 'download' ? `تحميل الملف (${countdown.seconds})` : 'تحميل الملف'}</span>
+                                </button>
                             )}
                             {post.watchLink && (
-                                <a href={post.watchLink} target="_blank" rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg">
+                                <button onClick={(e) => handleCountdownClick('watch', post.watchLink!, e)}
+                                    disabled={countdown !== null && countdown.type !== 'watch'}
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
                                     <Eye size={16} />
-                                    <span>مشاهدة الشرح</span>
-                                </a>
+                                    <span>{countdown?.type === 'watch' ? `مشاهدة الشرح (${countdown.seconds})` : 'مشاهدة الشرح'}</span>
+                                </button>
                             )}
                         </div>
                     )}
