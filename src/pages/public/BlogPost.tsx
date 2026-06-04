@@ -166,8 +166,8 @@ export const BlogPost = () => {
 
                 {/* Hero Image */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
-                    <div className="w-full aspect-[2/1] md:aspect-[3/1] bg-gray-100 dark:bg-slate-900 rounded-xl overflow-hidden shadow-xl flex items-center justify-center">
-                        <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+                    <div className="w-full bg-gray-100 dark:bg-slate-900 rounded-xl overflow-hidden shadow-xl">
+                        <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full h-auto" />
                     </div>
                 </div>
 
