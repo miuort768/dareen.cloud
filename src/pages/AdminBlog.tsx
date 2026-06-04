@@ -261,7 +261,7 @@ export const AdminBlog = () => {
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
-                                    <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.contentType} onChange={e => { const v = e.target.value; setCurrentPost(prev => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
                                         <option value="notes">مذكرات</option>
                                         <option value="solutions">حل كتب</option>
                                         <option value="more">المزيد</option>
@@ -270,7 +270,8 @@ export const AdminBlog = () => {
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">المنهج</label>
-                                    <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                        <option value="">بدون تحديد</option>
                                         <option value="kuwait">الكويت</option>
                                         <option value="qatar">قطر</option>
                                         <option value="uae">الإمارات</option>
@@ -279,7 +280,8 @@ export const AdminBlog = () => {
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">المرحلة</label>
-                                    <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                        <option value="">بدون تحديد</option>
                                         <option value="primary">ابتدائي</option>
                                         <option value="middle">متوسط</option>
                                         <option value="secondary">ثانوي</option>
@@ -289,21 +291,23 @@ export const AdminBlog = () => {
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">الصف</label>
-                                    <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                        <option value="">بدون تحديد</option>
                                         {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
                                     </select>
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">الفصل</label>
-                                    <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                        <option value="">بدون</option>
                                         <option value="1">الفصل الأول</option>
                                         <option value="2">الفصل الثاني</option>
-                                        <option value="">بدون</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-slate-400 block mb-1">المادة</label>
-                                    <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                        <option value="">بدون تحديد</option>
                                         <option value="arabic">عربي</option>
                                         <option value="math">رياضيات</option>
                                         <option value="islamic">إسلامية</option>
