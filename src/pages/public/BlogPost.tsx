@@ -180,7 +180,7 @@ export const BlogPost = () => {
                             {post.downloadLink && (
                                 <button onClick={(e) => handleCountdownClick('download', post.downloadLink!, e)}
                                     disabled={countdown !== null && countdown.type !== 'download'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-12 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'download' ? 'bg-[#057022] text-white' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
+                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'download' ? 'bg-[#057022] text-white' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900'}`}>
                                     <Download size={16} />
                                     <span>{countdown?.type === 'download' ? `تحميل الملف (${countdown.seconds})` : 'تحميل الملف'}</span>
                                 </button>
@@ -188,7 +188,7 @@ export const BlogPost = () => {
                             {post.watchLink && (
                                 <button onClick={(e) => handleCountdownClick('watch', post.watchLink!, e)}
                                     disabled={countdown !== null && countdown.type !== 'watch'}
-                                    className={`inline-flex items-center gap-2 px-6 md:px-12 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'watch' ? 'bg-[#057022] text-white' : 'bg-red-600 text-white'}`}>
+                                    className={`inline-flex items-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${countdown?.type === 'watch' ? 'bg-[#057022] text-white' : 'bg-red-600 text-white'}`}>
                                     <Eye size={16} />
                                     <span>{countdown?.type === 'watch' ? `مشاهدة الشرح (${countdown.seconds})` : 'مشاهدة الشرح'}</span>
                                 </button>
