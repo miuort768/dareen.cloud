@@ -34,6 +34,8 @@ export const AdminBlog = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('');
+    const [contentPart1, setContentPart1] = useState('');
+    const [contentPart2, setContentPart2] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
     const [submitting, setSubmitting] = useState(false);
@@ -57,6 +59,9 @@ export const AdminBlog = () => {
     const handleOpenModal = (post: BlogPost | null = null) => {
         if (post) {
             setCurrentPost(post);
+            const parts = post.content.split('\n\n').filter(Boolean);
+            setContentPart1(parts[0] || '');
+            setContentPart2(parts.slice(1).join('\n\n'));
         } else {
             setCurrentPost({
                 title: '',
@@ -78,6 +83,8 @@ export const AdminBlog = () => {
                 watchLink: '',
                 isNew: false,
             });
+            setContentPart1('');
+            setContentPart2('');
         }
         setIsModalOpen(true);
     };
@@ -100,13 +107,15 @@ export const AdminBlog = () => {
             return;
         }
 
+        const postData = { ...currentPost, content: contentPart1 + (contentPart2 ? '\n\n' + contentPart2 : '') };
+
         try {
             setSubmitting(true);
             if (currentPost.id) {
-                await api.put(`/blog/${currentPost.id}`, currentPost);
+                await api.put(`/blog/${currentPost.id}`, postData);
                 showNotification('تم تحديث المقال بنجاح', 'success');
             } else {
-                await api.post('/blog', currentPost);
+                await api.post('/blog', postData);
                 showNotification('تم نشر المقال بنجاح', 'success');
             }
             setIsModalOpen(false);
@@ -340,38 +349,7 @@ export const AdminBlog = () => {
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
-                                <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                    <input
-                                        type="url"
-                                        value={currentPost.downloadLink || ''}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                        dir="ltr"
-                                        placeholder="https://..."
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
-                                <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
-                                    <input
-                                        type="url"
-                                        value={currentPost.watchLink || ''}
-                                        onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
-                                        dir="ltr"
-                                        placeholder="https://..."
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-4 flex-wrap">
                             <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -409,14 +387,59 @@ export const AdminBlog = () => {
 
                         <div>
                             <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">محتوى المقال (كود HTML)</label>
-                            <textarea
-                                rows={10}
-                                required
-                                value={currentPost.content}
-                                onChange={(e) => setCurrentPost({ ...currentPost, content: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
-                                placeholder="اكتب محتوى المقال هنا..."
-                            />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الأول</span>
+                                    <textarea
+                                        rows={10}
+                                        required
+                                        value={contentPart1}
+                                        onChange={(e) => setContentPart1(e.target.value)}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                        placeholder="الجزء الأول من المحتوى..."
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-4">
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
+                                        <div className="relative">
+                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                            <input
+                                                type="url"
+                                                value={currentPost.downloadLink || ''}
+                                                onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
+                                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                                dir="ltr"
+                                                placeholder="https://..."
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
+                                        <div className="relative">
+                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                            <input
+                                                type="url"
+                                                value={currentPost.watchLink || ''}
+                                                onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
+                                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                                dir="ltr"
+                                                placeholder="https://..."
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الثاني</span>
+                                        <textarea
+                                            rows={6}
+                                            value={contentPart2}
+                                            onChange={(e) => setContentPart2(e.target.value)}
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                            placeholder="الجزء الثاني من المحتوى..."
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 flex justify-end gap-3 rounded-xl">
