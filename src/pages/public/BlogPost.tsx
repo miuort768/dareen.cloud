@@ -173,7 +173,7 @@ export const BlogPost = () => {
                     </div>
 
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-2 md:mb-4">
-                        {post.title}
+                        <span dangerouslySetInnerHTML={{ __html: colorWords(post.title) }} />
                     </h1>
                 </header>
 
