@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // JWT_SECRET startup validation
@@ -378,6 +379,42 @@ async function startServer() {
         ]);
         prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
         app.use(prerender);
+
+        // OG tag injection for blog post pages: serves index.html with correct OG tags
+        // so social media crawlers (WhatsApp, Facebook, Twitter) see the article image/title/desc.
+        // Requires the React build to exist at ../dist/index.html (created by 'npm run build').
+        app.get('/books/:slug', async (req, res, next) => {
+            try {
+                const post = req.db ? await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]) : null;
+                if (post) {
+                    const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8');
+                    const esc = (s) => s.replace(/"/g, '&quot;');
+                    const absImage = post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`;
+                    const pageUrl = `https://dareen.cloud/books/${post.slug}`;
+                    const fullTitle = `${post.title} | دارين السابعة للتعليم والتدريب`;
+                    const excerpt = esc(post.excerpt);
+                    const safeTitle = esc(fullTitle);
+
+                    const modified = html
+                        .replace(/<title>.*?<\/title>/, `<title>${fullTitle}</title>`)
+                        .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${excerpt}"`)
+                        .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${safeTitle}"`)
+                        .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${excerpt}"`)
+                        .replace(/<meta property="og:image" content=".*?"/, `<meta property="og:image" content="${absImage}"`)
+                        .replace(/<meta property="og:url" content=".*?"/, `<meta property="og:url" content="${pageUrl}"`)
+                        .replace(/<meta property="og:type" content=".*?"/, `<meta property="og:type" content="article"`)
+                        .replace(/<meta name="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${safeTitle}"`)
+                        .replace(/<meta name="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${excerpt}"`)
+                        .replace(/<meta name="twitter:image" content=".*?"/, `<meta name="twitter:image" content="${absImage}"`);
+
+                    res.send(modified);
+                    return;
+                }
+            } catch (err) {
+                console.error('OG injection error:', err);
+            }
+            next();
+        });
 
         // The SPA catch-all handler: serve index.html for all non-asset routes
         // so React Router handles routing. Use 404 status for unknown paths to
