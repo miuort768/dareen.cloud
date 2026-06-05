@@ -302,7 +302,7 @@ export const Blog = () => {
             </div>
 
             {/* Selection Grid */}
-            <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800">
+            <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-violet-100/50 dark:border-slate-800">
               <h2 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
                 {view === 'types' ? (
                   <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
@@ -351,18 +351,6 @@ export const Blog = () => {
                   {item.sub && <span className="text-[11px] text-white/70 font-bold">{item.sub}</span>}
                 </button>
               ))}
-
-              <button onClick={goBack}
-                className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 active:scale-[0.97] transition-all shadow-sm">
-                <ArrowLeft size={20} />
-                <span className="text-sm font-black">العودة</span>
-              </button>
-
-              <Link to="/courses"
-                className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white active:scale-[0.97] transition-all shadow-lg">
-                <Sparkles size={20} />
-                <span className="text-sm font-black">الدورات</span>
-              </Link>
             </div>
           </div>
         ) : view === 'results' ? (
