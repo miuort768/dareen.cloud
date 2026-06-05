@@ -463,22 +463,24 @@ export const Blog = () => {
                         <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-3 flex-1">{post.excerpt}</p>
                         <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
                         <div className="flex flex-col gap-2">
-                          {post.downloadLink && (
-                            <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
-                              disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                              <Download size={14} />
-                              <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
-                            </button>
-                          )}
-                          {post.watchLink && (
-                            <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
-                              disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                              <Eye size={14} />
-                              <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
-                            </button>
-                          )}
+                          <div className="flex gap-2">
+                            {post.downloadLink && (
+                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
+                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
+                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Download size={14} />
+                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
+                              </button>
+                            )}
+                            {post.watchLink && (
+                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
+                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
+                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Eye size={14} />
+                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
+                              </button>
+                            )}
+                          </div>
                           <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
                             <span>اقرأ المقال</span>
@@ -726,7 +728,7 @@ export const Blog = () => {
                     return isFoundation ? (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <div className="group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5 transition-all duration-500 h-full flex flex-col relative">
-                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
+                      <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
                         <div className="p-5 flex flex-col flex-1">
                           <div className="flex items-center gap-2 mb-3">
                             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black text-white bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm">
@@ -751,23 +753,25 @@ export const Blog = () => {
                           )}
                           <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
                           <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
-                          <div className="flex flex-col gap-2 mt-0">
-                            {post.downloadLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
-                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Download size={14} />
-                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
-                              </button>
-                            )}
-                            {post.watchLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
-                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Eye size={14} />
-                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
-                              </button>
-                            )}
+                          <div className="flex flex-col gap-2">
+                            <div className="flex gap-2">
+                              {post.downloadLink && (
+                                <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
+                                  disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
+                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                  <Download size={14} />
+                                  <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
+                                </button>
+                              )}
+                              {post.watchLink && (
+                                <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
+                                  disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
+                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                  <Eye size={14} />
+                                  <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
+                                </button>
+                              )}
+                            </div>
                             <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                               className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
                               <span>اقرأ المقال</span>
