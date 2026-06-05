@@ -398,6 +398,26 @@ export const AdminBlog = () => {
                             </div>
                         </div>
 
+                        {currentPost.contentType === 'foundation' && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-[10px] font-bold text-slate-400 block mb-1">رابط المصدر</label>
+                                <div className="relative">
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <input type="url" value={currentPost.source || ''} onChange={e => setCurrentPost({ ...currentPost, source: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        dir="ltr" placeholder="https://..." />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] font-bold text-slate-400 block mb-1">حجم الملف</label>
+                                <input type="text" value={currentPost.fileSize || ''} onChange={e => setCurrentPost({ ...currentPost, fileSize: e.target.value })}
+                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    placeholder="2.5 MB" />
+                            </div>
+                        </div>
+                        )}
+
                         <div>
                             <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رابط الصورة الرئيسية</label>
                             <div className="relative">

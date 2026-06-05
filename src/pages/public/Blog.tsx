@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame, Sun, Moon, Send } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame, Sun, Moon, Send, Download, Eye, ExternalLink } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -125,6 +125,36 @@ export const Blog = () => {
   const selectedGrade = searchParams.get('grade') || '';
   const selectedTerm = searchParams.get('term') || '';
   const selectedSubject = searchParams.get('subject') || '';
+  const [foundationBtnState, setFoundationBtnState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
+  const foundationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const handleFoundationButtonClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (foundationBtnState?.type === type && foundationBtnState.phase === 'ready') {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setFoundationBtnState(null);
+      return;
+    }
+    if (foundationBtnState) return;
+    setFoundationBtnState({ type, phase: 'counting', seconds: 9 });
+    foundationTimerRef.current = setInterval(() => {
+      setFoundationBtnState(prev => {
+        if (!prev || prev.seconds! <= 1) {
+          if (foundationTimerRef.current) clearInterval(foundationTimerRef.current);
+          foundationTimerRef.current = null;
+          return { type, phase: 'ready' };
+        }
+        return { ...prev, seconds: prev.seconds! - 1 };
+      });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (foundationTimerRef.current) clearInterval(foundationTimerRef.current);
+    };
+  }, []);
 
   const setView = useCallback((v: ViewType) => {
     setSearchParams(prev => {
@@ -402,9 +432,50 @@ export const Blog = () => {
             ) : (
               <div className="space-y-3">
                 {filteredPosts.map((post, i) => {
-                  const isCoursesStyle = selectedType === 'more' || selectedType === 'foundation';
-                  const badgeGradient = selectedType === 'foundation' ? 'from-amber-500 to-orange-600' : 'from-rose-500 to-pink-600';
-                  return (
+                  const isFoundation = selectedType === 'foundation';
+                  const isCoursesStyle = selectedType === 'more';
+                  return isFoundation ? (
+                  <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden transition-all h-full flex flex-col">
+                      <div className="p-4 flex flex-col flex-1 gap-2.5">
+                        <h3 className="text-sm font-black leading-snug text-slate-900 dark:text-white">{post.title}</h3>
+                        {post.source && (
+                          <a href={post.source} target="_blank" rel="noopener noreferrer"
+                            className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 hover:underline truncate"
+                            onClick={(e) => e.stopPropagation()}>
+                            <ExternalLink size={12} className="shrink-0" />
+                            <span className="truncate" dir="ltr">{post.source}</span>
+                          </a>
+                        )}
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3">{post.excerpt}</p>
+                        {post.fileSize && (
+                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400">
+                            <FileText size={12} />
+                            <span>حجم الملف: {post.fileSize}</span>
+                          </div>
+                        )}
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {post.downloadLink && (
+                            <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
+                              disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
+                              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-gray-900 dark:bg-[#B31768] text-white active:scale-[0.98]">
+                              <Download size={13} />
+                              <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
+                            </button>
+                          )}
+                          {post.watchLink && (
+                            <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
+                              disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
+                              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-red-600 text-white active:scale-[0.98]">
+                              <Eye size={13} />
+                              <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  ) : (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                     className="group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden active:scale-[0.98] transition-all h-full flex flex-col">
                     {!isCoursesStyle && (
@@ -637,9 +708,51 @@ export const Blog = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {filteredPosts.map((post, i) => {
-                    const isCoursesStyle = selectedType === 'more' || selectedType === 'foundation';
-                    const badgeGradient = selectedType === 'foundation' ? 'from-amber-500 to-orange-600' : 'from-rose-500 to-pink-600';
-                    return (
+                    const isFoundation = selectedType === 'foundation';
+                    const isCoursesStyle = selectedType === 'more';
+                    const badgeGradient = 'from-rose-500 to-pink-600';
+                    return isFoundation ? (
+                    <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
+                      <div className="bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm transition-all duration-500 h-full flex flex-col">
+                        <div className="p-4 flex flex-col flex-1 gap-2.5">
+                          <h3 className="text-sm sm:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug">{post.title}</h3>
+                          {post.source && (
+                            <a href={post.source} target="_blank" rel="noopener noreferrer"
+                              className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 hover:underline truncate"
+                              onClick={(e) => e.stopPropagation()}>
+                              <ExternalLink size={12} className="shrink-0" />
+                              <span className="truncate" dir="ltr">{post.source}</span>
+                            </a>
+                          )}
+                          <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 flex-1">{post.excerpt}</p>
+                          {post.fileSize && (
+                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400">
+                              <FileText size={12} />
+                              <span>حجم الملف: {post.fileSize}</span>
+                            </div>
+                          )}
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            {post.downloadLink && (
+                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
+                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
+                                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-gray-900 dark:bg-[#B31768] text-white active:scale-[0.98]">
+                                <Download size={13} />
+                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
+                              </button>
+                            )}
+                            {post.watchLink && (
+                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
+                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
+                                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-red-600 text-white active:scale-[0.98]">
+                                <Eye size={13} />
+                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    ) : (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                         className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">

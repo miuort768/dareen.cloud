@@ -30,18 +30,20 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
             contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
-            showButtons, downloadButtonText, watchButtonText
+            showButtons, downloadButtonText, watchButtonText,
+            source, fileSize
         } = req.body;
         const id = uuidv4();
 
         await req.db.run(
-            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink, show_buttons, download_button_text, watch_button_text) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink, show_buttons, download_button_text, watch_button_text, source, file_size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [id, slug, title, excerpt, content, coverImage, category, keywords, author,
              date || new Date().toISOString(),
              contentType || null, curriculum || null, level || null,
              grade || null, term || null, subject || null,
              downloadLink || null, watchLink || null,
-             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null]
+             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null,
+             source || null, fileSize || null]
         );
 
         res.status(201).json({ id, title, slug });
@@ -58,16 +60,18 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
             contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
-            showButtons, downloadButtonText, watchButtonText
+            showButtons, downloadButtonText, watchButtonText,
+            source, fileSize
         } = req.body;
 
         await req.db.run(
-            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ?, show_buttons = ?, download_button_text = ?, watch_button_text = ? WHERE id = ?`,
+            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ?, show_buttons = ?, download_button_text = ?, watch_button_text = ?, source = ?, file_size = ? WHERE id = ?`,
             [title, slug, excerpt, content, coverImage, category, keywords, author, date,
              contentType || null, curriculum || null, level || null,
              grade || null, term || null, subject || null,
              downloadLink || null, watchLink || null,
              showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null,
+             source || null, fileSize || null,
              req.params.id]
         );
 

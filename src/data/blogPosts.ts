@@ -20,6 +20,8 @@ export interface BlogPost {
     showButtons?: boolean;
     downloadButtonText?: string;
     watchButtonText?: string;
+    source?: string;
+    fileSize?: string;
     isNew?: boolean;
     views?: number;
 }
