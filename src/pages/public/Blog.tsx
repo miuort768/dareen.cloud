@@ -436,7 +436,7 @@ export const Blog = () => {
                   const isCoursesStyle = selectedType === 'more';
                   return isFoundation ? (
                   <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden transition-all h-full flex flex-col relative">
+                    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm transition-all h-full flex flex-col relative">
                       <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
                       <div className="p-4 flex flex-col flex-1">
                         <div className="flex items-center gap-2 mb-2.5">
@@ -727,7 +727,7 @@ export const Blog = () => {
                     const badgeGradient = 'from-rose-500 to-pink-600';
                     return isFoundation ? (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <div className="group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5 transition-all duration-500 h-full flex flex-col relative">
+                      <div className="group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 shadow-sm hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5 transition-all duration-500 h-full flex flex-col relative">
                       <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
                         <div className="p-5 flex flex-col flex-1">
                           <div className="flex items-center gap-2 mb-3">
