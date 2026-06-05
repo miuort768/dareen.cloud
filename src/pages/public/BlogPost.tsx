@@ -4,12 +4,30 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle, Play } from 'lucide-react';
+import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle, Play, BookOpen, GraduationCap, School, Tag } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import DOMPurify from 'dompurify';
 
 const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
+
+const curriculumNames: Record<string, string> = {
+  kuwait: 'منهج كويتي', qatar: 'منهج قطري', uae: 'منهج إماراتي', saudi: 'منهج سعودي',
+};
+const levelNames: Record<string, string> = {
+  primary: 'ابتدائي', middle: 'متوسط', secondary: 'ثانوي', basic: 'أساسي', preparatory: 'إعدادي',
+};
+const subjectNames: Record<string, string> = {
+  arabic: 'عربي', math: 'رياضيات', islamic: 'إسلامية', english: 'إنجليزي', science: 'علوم',
+  physics: 'فيزياء', chemistry: 'كيمياء', biology: 'أحياء', history: 'تاريخ', geography: 'جغرافيا',
+  social: 'اجتماعيات', computer: 'حاسب آلي', stats: 'إحصاء',
+};
+const termNames: Record<string, string> = { '1': 'الفصل الأول', '2': 'الفصل الثاني' };
+const gradeNames: Record<string, string> = {
+  '1': 'الأول', '2': 'الثاني', '3': 'الثالث', '4': 'الرابع', '5': 'الخامس',
+  '6': 'السادس', '7': 'السابع', '8': 'الثامن', '9': 'التاسع',
+  '10': 'العاشر', '11': 'الحادي عشر', '12': 'الثاني عشر',
+};
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -162,6 +180,15 @@ export const BlogPost = () => {
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-2 md:mb-4">
                         {post.title}
                     </h1>
+                    {(post.curriculum || post.level || post.grade || post.term || post.subject) && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {post.curriculum && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 text-[11px] font-bold rounded-lg border border-sky-200/50 dark:border-sky-500/20"><BookOpen size={12} />{curriculumNames[post.curriculum] || post.curriculum}</span>}
+                        {post.level && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold rounded-lg border border-emerald-200/50 dark:border-emerald-500/20"><GraduationCap size={12} />{levelNames[post.level] || post.level}</span>}
+                        {post.grade && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 text-[11px] font-bold rounded-lg border border-indigo-200/50 dark:border-indigo-500/20"><School size={12} />الصف {gradeNames[post.grade] || post.grade}</span>}
+                        {post.term && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-bold rounded-lg border border-amber-200/50 dark:border-amber-500/20"><Tag size={12} />{termNames[post.term] || post.term}</span>}
+                        {post.subject && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 text-[11px] font-bold rounded-lg border border-rose-200/50 dark:border-rose-500/20"><BookOpen size={12} />{subjectNames[post.subject] || post.subject}</span>}
+                    </div>
+                    )}
                 </header>
 
                 {/* Hero Image */}
