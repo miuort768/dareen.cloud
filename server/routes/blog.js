@@ -29,17 +29,19 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
-            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink
+            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
+            showButtons, downloadButtonText, watchButtonText
         } = req.body;
         const id = uuidv4();
 
         await req.db.run(
-            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink, show_buttons, download_button_text, watch_button_text) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [id, slug, title, excerpt, content, coverImage, category, keywords, author,
              date || new Date().toISOString(),
              contentType || null, curriculum || null, level || null,
              grade || null, term || null, subject || null,
-             downloadLink || null, watchLink || null]
+             downloadLink || null, watchLink || null,
+             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null]
         );
 
         res.status(201).json({ id, title, slug });
@@ -55,15 +57,18 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
-            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink
+            contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
+            showButtons, downloadButtonText, watchButtonText
         } = req.body;
 
         await req.db.run(
-            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ? WHERE id = ?`,
+            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ?, show_buttons = ?, download_button_text = ?, watch_button_text = ? WHERE id = ?`,
             [title, slug, excerpt, content, coverImage, category, keywords, author, date,
              contentType || null, curriculum || null, level || null,
              grade || null, term || null, subject || null,
-             downloadLink || null, watchLink || null, req.params.id]
+             downloadLink || null, watchLink || null,
+             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null,
+             req.params.id]
         );
 
         res.json({ success: true });

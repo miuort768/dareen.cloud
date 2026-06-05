@@ -26,6 +26,9 @@ interface BlogPost {
     subject: string;       // arabic | math | physics ...
     downloadLink: string;
     watchLink: string;
+    showButtons: boolean;
+    downloadButtonText: string;
+    watchButtonText: string;
     isNew: boolean;
     views: number;
 }
@@ -93,6 +96,9 @@ export const AdminBlog = () => {
                 subject: 'arabic',
                 downloadLink: '',
                 watchLink: '',
+                showButtons: true,
+                downloadButtonText: '',
+                watchButtonText: '',
                 isNew: false,
                 views: 0,
             });
@@ -470,6 +476,15 @@ export const AdminBlog = () => {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-4">
+                                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">إظهار أزرار التحميل والمشاهدة</span>
+                                        <button type="button" onClick={() => setCurrentPost({ ...currentPost, showButtons: !currentPost.showButtons })}
+                                            className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+                                            <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'left-0.5 translate-x-6' : 'left-0.5'}`} />
+                                        </button>
+                                    </div>
+                                    {currentPost.showButtons && (
+                                        <>
                                     <div>
                                         <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
                                         <div className="relative">
@@ -483,6 +498,10 @@ export const AdminBlog = () => {
                                                 placeholder="https://..."
                                             />
                                         </div>
+                                        <label className="block text-[10px] font-bold text-slate-400 mt-2 mb-1.5">نص زر التحميل</label>
+                                        <input type="text" value={currentPost.downloadButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, downloadButtonText: e.target.value })}
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm text-right rounded-xl outline-none"
+                                            placeholder="تحميل الملف" />
                                     </div>
                                     <div>
                                         <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
@@ -497,7 +516,13 @@ export const AdminBlog = () => {
                                                 placeholder="https://..."
                                             />
                                         </div>
+                                        <label className="block text-[10px] font-bold text-slate-400 mt-2 mb-1.5">نص زر المشاهدة</label>
+                                        <input type="text" value={currentPost.watchButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, watchButtonText: e.target.value })}
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm text-right rounded-xl outline-none"
+                                            placeholder="مشاهدة الملف" />
                                     </div>
+                                    </>
+                                    )}
                                     <div className="flex-1">
                                         <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الثاني</span>
                                         <textarea

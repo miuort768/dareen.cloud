@@ -17,6 +17,9 @@ export interface BlogPost {
     subject?: string;
     downloadLink?: string;
     watchLink?: string;
+    showButtons?: boolean;
+    downloadButtonText?: string;
+    watchButtonText?: string;
     isNew?: boolean;
     views?: number;
 }

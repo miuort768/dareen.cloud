@@ -447,6 +447,9 @@ async function setupDatabase() {
     await addColumnIfNotExists('blog_posts', 'downloadLink', 'TEXT');
     await addColumnIfNotExists('blog_posts', 'watchLink', 'TEXT');
     await addColumnIfNotExists('blog_posts', 'views', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('blog_posts', 'show_buttons', 'INTEGER DEFAULT 1');
+    await addColumnIfNotExists('blog_posts', 'download_button_text', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'watch_button_text', 'TEXT');
     await addColumnIfNotExists('leads', 'curriculum', 'TEXT');
 
     // Create unique index for parent username separately (SQLite restriction)
