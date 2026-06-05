@@ -432,20 +432,35 @@ export const Blog = () => {
             ) : (
               <div className="space-y-3">
                 {filteredPosts.map((post, i) => {
-                  const isFoundation = selectedType === 'foundation';
+                  const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
                   const isCoursesStyle = selectedType === 'more';
-                  return isFoundation ? (
+                  const cardStyle = selectedType === 'foundation'
+                    ? {
+                        gradient: 'from-amber-500 to-orange-600',
+                        badge: 'مذكرة تأسيسية',
+                        icon: Zap,
+                        sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300',
+                        fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20',
+                      }
+                    : {
+                        gradient: 'from-violet-500 to-purple-600',
+                        badge: 'مذكرة',
+                        icon: FileText,
+                        sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300',
+                        fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20',
+                      };
+                  return isFoundationStyle ? (
                   <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                     <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm transition-all h-full flex flex-col relative">
-                      <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
+                      <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
                       <div className="p-4 flex flex-col flex-1">
                         <div className="flex items-center gap-2 mb-2.5">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black text-white bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm">
-                            <Zap size={10} />
-                            مذكرة تأسيسية
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black text-white bg-gradient-to-r ${cardStyle.gradient} shadow-sm`}>
+                            <cardStyle.icon size={10} />
+                            {cardStyle.badge}
                           </span>
                           {(post.fileSize || post.file_size) && (
-                            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-50 dark:bg-amber-500/10 text-[9px] font-bold text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20">
+                            <span className={`shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full ${cardStyle.fileSizeBadge} text-[9px] font-bold border`}>
                               <FileText size={10} />
                               {post.fileSize || post.file_size}
                             </span>
@@ -454,7 +469,7 @@ export const Blog = () => {
                         <h3 className="text-sm font-black leading-snug text-slate-900 dark:text-white mb-2">{post.title}</h3>
                         {post.source && (
                           <a href={post.source} target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-[10px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors w-fit mb-2.5"
+                            className={`inline-flex items-center gap-1.5 text-[10px] font-bold ${cardStyle.sourceText} transition-colors w-fit mb-2.5`}
                             onClick={(e) => e.stopPropagation()}>
                             <ExternalLink size={11} />
                             <span className="truncate max-w-[180px]" dir="ltr">{post.source}</span>
@@ -722,21 +737,38 @@ export const Blog = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {filteredPosts.map((post, i) => {
-                    const isFoundation = selectedType === 'foundation';
+                    const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
                     const isCoursesStyle = selectedType === 'more';
                     const badgeGradient = 'from-rose-500 to-pink-600';
-                    return isFoundation ? (
+                    const cardStyle = selectedType === 'foundation'
+                      ? {
+                          gradient: 'from-amber-500 to-orange-600',
+                          badge: 'مذكرة تأسيسية',
+                          icon: Zap,
+                          hoverShadow: 'hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5',
+                          sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300',
+                          fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20',
+                        }
+                      : {
+                          gradient: 'from-violet-500 to-purple-600',
+                          badge: 'مذكرة',
+                          icon: FileText,
+                          hoverShadow: 'hover:shadow-xl hover:shadow-violet-500/5 dark:hover:shadow-violet-500/5',
+                          sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300',
+                          fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20',
+                        };
+                    return isFoundationStyle ? (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <div className="group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 shadow-sm hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5 transition-all duration-500 h-full flex flex-col relative">
-                      <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
+                      <div className={`group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 shadow-sm ${cardStyle.hoverShadow} transition-all duration-500 h-full flex flex-col relative`}>
+                      <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
                         <div className="p-5 flex flex-col flex-1">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black text-white bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm">
-                              <Zap size={11} />
-                              مذكرة تأسيسية
+                            <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black text-white bg-gradient-to-r ${cardStyle.gradient} shadow-sm`}>
+                              <cardStyle.icon size={11} />
+                              {cardStyle.badge}
                             </span>
                           {(post.fileSize || post.file_size) && (
-                            <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 text-[10px] font-bold text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20">
+                            <span className={`shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full ${cardStyle.fileSizeBadge} text-[10px] font-bold border`}>
                               <FileText size={11} />
                               {post.fileSize || post.file_size}
                             </span>
@@ -745,7 +777,7 @@ export const Blog = () => {
                           <h3 className="text-base sm:text-lg font-heading font-black text-slate-900 dark:text-slate-50 leading-snug mb-2">{post.title}</h3>
                           {post.source && (
                             <a href={post.source} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors w-fit mb-3"
+                              className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${cardStyle.sourceText} transition-colors w-fit mb-3`}
                               onClick={(e) => e.stopPropagation()}>
                               <ExternalLink size={12} />
                               <span className="truncate max-w-[200px]" dir="ltr">{post.source}</span>
