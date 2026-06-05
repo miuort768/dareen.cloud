@@ -425,10 +425,17 @@ export const Blog = () => {
                       </div>
                       <h2 className="text-sm font-black leading-snug line-clamp-2 text-slate-900 dark:text-white">{post.title}</h2>
                       <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1 mt-2">{post.excerpt}</p>
-                      <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                        <span>اقرأ المقال</span>
-                        <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                      </div>
+                      {isCoursesStyle ? (
+                        <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
+                          <ArrowLeft size={14} />
+                          <span>اقرأ المقال</span>
+                        </div>
+                      ) : (
+                        <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                          <span>اقرأ المقال</span>
+                          <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                        </div>
+                      )}
                     </div>
                   </Link>
                   );
@@ -652,10 +659,17 @@ export const Blog = () => {
                           </div>
                           <h2 className="text-sm sm:text-base font-heading font-black leading-snug mb-2 text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.title}</h2>
                           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                          <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                            <span>اقرأ المقال</span>
-                            <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                          </div>
+                          {isCoursesStyle ? (
+                            <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
+                              <ArrowLeft size={14} />
+                              <span>اقرأ المقال</span>
+                            </div>
+                          ) : (
+                            <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                              <span>اقرأ المقال</span>
+                              <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                            </div>
+                          )}
                         </div>
                       </Link>
                     </div>
