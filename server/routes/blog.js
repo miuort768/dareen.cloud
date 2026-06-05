@@ -5,10 +5,22 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 
+const mapPost = (post) => post ? {
+    ...post,
+    fileSize: post.file_size,
+    showButtons: post.show_buttons === 1 || post.show_buttons === true,
+    downloadButtonText: post.download_button_text,
+    watchButtonText: post.watch_button_text,
+    file_size: undefined,
+    show_buttons: undefined,
+    download_button_text: undefined,
+    watch_button_text: undefined,
+} : post;
+
 router.get('/', async (req, res) => {
     try {
         const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC');
-        res.json(posts);
+        res.json(posts.map(mapPost));
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch blog posts');
     }
@@ -19,7 +31,7 @@ router.get('/:slug', async (req, res) => {
         await req.db.run('UPDATE blog_posts SET views = COALESCE(views, 0) + 1 WHERE slug = ?', [req.params.slug]);
         const post = await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]);
         if (!post) return res.status(404).json({ error: 'Post not found' });
-        res.json(post);
+        res.json(mapPost(post));
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch blog post');
     }

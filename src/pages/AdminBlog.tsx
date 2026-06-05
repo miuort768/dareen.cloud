@@ -59,7 +59,13 @@ export const AdminBlog = () => {
         try {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog');
-            setPosts(data);
+            setPosts(data.map(post => ({
+                ...post,
+                fileSize: post.fileSize || post.file_size,
+                showButtons: post.showButtons ?? (post.show_buttons === 1 || post.show_buttons === true),
+                downloadButtonText: post.downloadButtonText || post.download_button_text,
+                watchButtonText: post.watchButtonText || post.watch_button_text,
+            })));
             setLoading(false);
         } catch {
             showNotification('حدث خطأ في تحميل المقالات', 'error');
@@ -503,8 +509,6 @@ export const AdminBlog = () => {
                                             <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'left-0.5 translate-x-6' : 'left-0.5'}`} />
                                         </button>
                                     </div>
-                                    {currentPost.showButtons && (
-                                        <>
                                     <div>
                                         <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
                                         <div className="relative">
@@ -541,8 +545,6 @@ export const AdminBlog = () => {
                                             className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm text-right rounded-xl outline-none"
                                             placeholder="مشاهدة الملف" />
                                     </div>
-                                    </>
-                                    )}
                                     <div className="flex-1">
                                         <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الثاني</span>
                                         <textarea

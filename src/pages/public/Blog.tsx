@@ -436,41 +436,53 @@ export const Blog = () => {
                   const isCoursesStyle = selectedType === 'more';
                   return isFoundation ? (
                   <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden transition-all h-full flex flex-col">
-                      <div className="p-4 flex flex-col flex-1 gap-2.5">
-                        <h3 className="text-sm font-black leading-snug text-slate-900 dark:text-white">{post.title}</h3>
+                    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden transition-all h-full flex flex-col relative">
+                      <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
+                      <div className="p-4 flex flex-col flex-1">
+                        <div className="flex items-center gap-2 mb-2.5">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black text-white bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm">
+                            <Zap size={10} />
+                            مذكرة تأسيسية
+                          </span>
+                          {(post.fileSize || post.file_size) && (
+                            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-50 dark:bg-amber-500/10 text-[9px] font-bold text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20">
+                              <FileText size={10} />
+                              {post.fileSize || post.file_size}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-sm font-black leading-snug text-slate-900 dark:text-white mb-2">{post.title}</h3>
                         {post.source && (
                           <a href={post.source} target="_blank" rel="noopener noreferrer"
-                            className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 hover:underline truncate"
+                            className="inline-flex items-center gap-1.5 text-[10px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors w-fit mb-2.5"
                             onClick={(e) => e.stopPropagation()}>
-                            <ExternalLink size={12} className="shrink-0" />
-                            <span className="truncate" dir="ltr">{post.source}</span>
+                            <ExternalLink size={11} />
+                            <span className="truncate max-w-[180px]" dir="ltr">{post.source}</span>
                           </a>
                         )}
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3">{post.excerpt}</p>
-                        {post.fileSize && (
-                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400">
-                            <FileText size={12} />
-                            <span>حجم الملف: {post.fileSize}</span>
-                          </div>
-                        )}
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-3 flex-1">{post.excerpt}</p>
+                        <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
+                        <div className="flex flex-col gap-2">
                           {post.downloadLink && (
                             <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
                               disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-gray-900 dark:bg-[#B31768] text-white active:scale-[0.98]">
-                              <Download size={13} />
+                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                              <Download size={14} />
                               <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
                             </button>
                           )}
                           {post.watchLink && (
                             <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
                               disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-red-600 text-white active:scale-[0.98]">
-                              <Eye size={13} />
+                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                              <Eye size={14} />
                               <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
                             </button>
                           )}
+                          <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
+                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
+                            <span>اقرأ المقال</span>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -713,41 +725,53 @@ export const Blog = () => {
                     const badgeGradient = 'from-rose-500 to-pink-600';
                     return isFoundation ? (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <div className="bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm transition-all duration-500 h-full flex flex-col">
-                        <div className="p-4 flex flex-col flex-1 gap-2.5">
-                          <h3 className="text-sm sm:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug">{post.title}</h3>
+                      <div className="group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5 transition-all duration-500 h-full flex flex-col relative">
+                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-600" />
+                        <div className="p-5 flex flex-col flex-1">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black text-white bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm">
+                              <Zap size={11} />
+                              مذكرة تأسيسية
+                            </span>
+                          {(post.fileSize || post.file_size) && (
+                            <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 text-[10px] font-bold text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20">
+                              <FileText size={11} />
+                              {post.fileSize || post.file_size}
+                            </span>
+                          )}
+                          </div>
+                          <h3 className="text-base sm:text-lg font-heading font-black text-slate-900 dark:text-slate-50 leading-snug mb-2">{post.title}</h3>
                           {post.source && (
                             <a href={post.source} target="_blank" rel="noopener noreferrer"
-                              className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1 hover:underline truncate"
+                              className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors w-fit mb-3"
                               onClick={(e) => e.stopPropagation()}>
-                              <ExternalLink size={12} className="shrink-0" />
-                              <span className="truncate" dir="ltr">{post.source}</span>
+                              <ExternalLink size={12} />
+                              <span className="truncate max-w-[200px]" dir="ltr">{post.source}</span>
                             </a>
                           )}
-                          <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 flex-1">{post.excerpt}</p>
-                          {post.fileSize && (
-                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400">
-                              <FileText size={12} />
-                              <span>حجم الملف: {post.fileSize}</span>
-                            </div>
-                          )}
-                          <div className="flex flex-wrap gap-2 mt-1">
+                          <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
+                          <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
+                          <div className="flex flex-col gap-2 mt-0">
                             {post.downloadLink && (
                               <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
                                 disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-gray-900 dark:bg-[#B31768] text-white active:scale-[0.98]">
-                                <Download size={13} />
+                                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Download size={14} />
                                 <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
                               </button>
                             )}
                             {post.watchLink && (
                               <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
                                 disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-black text-[11px] rounded-xl transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap bg-red-600 text-white active:scale-[0.98]">
-                                <Eye size={13} />
+                                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Eye size={14} />
                                 <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
                               </button>
                             )}
+                            <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
+                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
+                              <span>اقرأ المقال</span>
+                            </Link>
                           </div>
                         </div>
                       </div>

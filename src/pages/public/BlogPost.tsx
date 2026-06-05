@@ -179,14 +179,14 @@ export const BlogPost = () => {
                     />
                     
                     {/* Download & Watch Buttons */}
-                        {post.showButtons !== false && (post.downloadLink || post.watchLink) && (
+                        {(post.showButtons !== false && post.show_buttons !== 0) && (post.downloadLink || post.watchLink) && (
                         <div className="flex flex-wrap gap-3 justify-center my-8">
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-[11px] sm:text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-gray-900 dark:bg-[#B31768] text-white dark:text-white'}`}>
                                     <Download size={16} />
-                                    <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.downloadButtonText || 'تحميل الملف'}</span>
+                                    <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || post.download_button_text || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل الملف'}</span>
                                 </button>
                             )}
                             {post.watchLink && (
@@ -194,7 +194,7 @@ export const BlogPost = () => {
                                     disabled={buttonState !== null && buttonState.type !== 'watch'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-[11px] sm:text-sm rounded-xl hover:bg-red-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-[#057022] text-white' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-[#047857] text-white ring-2 ring-[#047857] ring-offset-2' : 'bg-red-600 text-white'}`}>
                                     <Eye size={16} />
-                                    <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `${post.watchButtonText || 'مشاهدة الملف'} (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.watchButtonText || 'مشاهدة الملف'}</span>
+                                    <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'} (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'}</span>
                                 </button>
                             )}
                         </div>
