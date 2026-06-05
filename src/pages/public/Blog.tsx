@@ -275,7 +275,7 @@ export const Blog = () => {
                   <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
                     برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
                   </p>
-                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">أفضل الكتب والملخصات و نماذج الامتحانات</p>
+                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">أفضل الكتب والملخصات</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
@@ -402,26 +402,26 @@ export const Blog = () => {
             ) : (
               <div className="space-y-3">
                 {filteredPosts.map((post, i) => {
-                  const isMore = selectedType === 'more';
+                  const isCoursesStyle = selectedType === 'more' || selectedType === 'foundation';
+                  const badgeGradient = selectedType === 'foundation' ? 'from-amber-500 to-orange-600' : 'from-rose-500 to-pink-600';
                   return (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                    className={`group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm active:scale-[0.98] transition-all h-full flex flex-col ${isMore ? '' : 'rounded-2xl'}`}>
-                    <div className={`relative aspect-video bg-slate-50 dark:bg-slate-800/30 ${isMore ? '' : 'overflow-hidden rounded-t-2xl'}`}>
-                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className="w-full h-full object-cover" />
-                      {!isMore && (
-                        <div className="absolute top-3 right-3 z-10">
-                          <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
-                        </div>
-                      )}
+                    className="group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden active:scale-[0.98] transition-all h-full flex flex-col">
+                    <div className={`relative ${isCoursesStyle ? 'h-32' : 'aspect-video'} overflow-hidden bg-slate-50 dark:bg-slate-800/30`}>
+                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'object-cover'}`} />
+                      <div className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-slate-900' : 'from-black/40'} to-transparent`} />
+                      <div className="absolute top-3 right-3 z-10">
+                        <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400'}`}>{subjectNameMap[post.subject] || post.category}</span>
+                      </div>
                     </div>
                     <div className="p-4 flex flex-col flex-1">
                       <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
                         <span className="flex items-center gap-1">{post.date?.split('T')[0]}</span>
-                        {isMore && (
+                        {isCoursesStyle && (
                           <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" />{post.views ?? 0}</span>
                         )}
                       </div>
-                      <h2 className={`text-sm font-black leading-snug line-clamp-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-white'}`}>{post.title}</h2>
+                      <h2 className="text-sm font-black leading-snug line-clamp-2 text-slate-900 dark:text-white">{post.title}</h2>
                       <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1 mt-2">{post.excerpt}</p>
                       <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
                         <span>اقرأ المقال</span>
@@ -628,30 +628,27 @@ export const Blog = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {filteredPosts.map((post, i) => {
-                    const isMore = selectedType === 'more';
+                    const isCoursesStyle = selectedType === 'more' || selectedType === 'foundation';
+                    const badgeGradient = selectedType === 'foundation' ? 'from-amber-500 to-orange-600' : 'from-rose-500 to-pink-600';
                     return (
                     <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                        className={`group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 ${isMore ? '' : 'rounded-2xl overflow-hidden'} shadow-sm hover:shadow-xl ${isMore ? '' : 'hover:shadow-indigo-500/5'} transition-all duration-500 h-full flex flex-col`}>
-                        <div className={`relative aspect-video ${isMore ? '' : 'overflow-hidden'} bg-slate-50 dark:bg-slate-800/30`}>
-                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full object-cover ${isMore ? '' : 'group-hover:scale-105 transition-transform duration-700'}`} />
-                          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
-                          {!isMore && (
-                            <div className="absolute top-3 right-3 z-10">
-                              <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
-                            </div>
-                          )}
+                        className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
+                        <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-slate-50 dark:bg-slate-800/30`}>
+                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15] group-hover:scale-[1.25]' : 'object-cover group-hover:scale-105'}`} />
+                          <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-slate-900' : 'from-black/40'} to-transparent`} />
+                          <div className="absolute top-3 right-3 z-10">
+                            <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400'}`}>{subjectNameMap[post.subject] || post.category}</span>
+                          </div>
                         </div>
                         <div className="p-4 flex flex-col flex-1">
                           <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
                             <span className="flex items-center gap-1"><Calendar size={12} /><span>{post.date?.split('T')[0]}</span></span>
-                            {isMore ? (
+                            {isCoursesStyle && (
                               <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" /><span>{post.views ?? 0}</span></span>
-                            ) : (
-                              <span className="flex items-center gap-1"><User size={12} /><span>{post.author}</span></span>
                             )}
                           </div>
-                          <h2 className={`text-sm sm:text-base font-heading font-black leading-snug mb-2 ${isMore ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors'}`}>{post.title}</h2>
+                          <h2 className="text-sm sm:text-base font-heading font-black leading-snug mb-2 text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.title}</h2>
                           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
                           <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
                             <span>اقرأ المقال</span>
