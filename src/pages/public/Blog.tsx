@@ -426,7 +426,7 @@ export const Blog = () => {
                       <h2 className="text-sm font-black leading-snug line-clamp-2 text-slate-900 dark:text-white">{post.title}</h2>
                       <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1 mt-2">{post.excerpt}</p>
                       {isCoursesStyle ? (
-                        <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
+                        <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
                           <ArrowLeft size={14} />
                           <span>اقرأ المقال</span>
                         </div>
@@ -660,7 +660,7 @@ export const Blog = () => {
                           <h2 className="text-sm sm:text-base font-heading font-black leading-snug mb-2 text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.title}</h2>
                           <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
                           {isCoursesStyle ? (
-                            <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
+                            <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
                               <ArrowLeft size={14} />
                               <span>اقرأ المقال</span>
                             </div>
