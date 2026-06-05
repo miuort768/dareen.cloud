@@ -275,7 +275,7 @@ export const Blog = () => {
                   <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
                     برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
                   </p>
-                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">دروس خصوصية أونلاين</p>
+                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">أفضل الكتب والملخصات و نماذج الامتحانات</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
