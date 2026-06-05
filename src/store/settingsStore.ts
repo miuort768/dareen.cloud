@@ -25,6 +25,8 @@ interface SettingsState {
     telegramHandle: string;
     heroBanners: string;
     reminderMinutesBefore: number;
+    libraryWhatsapp: string;
+    libraryTelegram: string;
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
@@ -51,6 +53,8 @@ interface SettingsState {
     setTelegramHandle: (handle: string) => Promise<void>;
     setHeroBanners: (banners: string) => Promise<void>;
     setReminderMinutesBefore: (minutes: number) => Promise<void>;
+    setLibraryWhatsapp: (phone: string) => Promise<void>;
+    setLibraryTelegram: (handle: string) => Promise<void>;
 }
 
 // Global CSS Theme injector
@@ -133,6 +137,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     autoFreezeThreshold: 3,
     telegramHandle: 'dareen_app',
     reminderMinutesBefore: 30,
+    libraryWhatsapp: '',
+    libraryTelegram: '',
     heroBanners: JSON.stringify([
         "انضم إلى أفضل منصة تعليمية",
         "تأسيس قوي لجميع المراحل",
@@ -196,6 +202,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 if (settings.reminder_minutes_before !== undefined && settings.reminder_minutes_before !== null) {
                     updates.reminderMinutesBefore = Number(settings.reminder_minutes_before);
                 }
+                if (settings.library_whatsapp !== undefined && settings.library_whatsapp !== null) updates.libraryWhatsapp = String(settings.library_whatsapp);
+                if (settings.library_telegram !== undefined && settings.library_telegram !== null) updates.libraryTelegram = String(settings.library_telegram);
 
                 set({ ...updates, isSettingsLoading: false });
             } else {
@@ -303,6 +311,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setReminderMinutesBefore: async (minutes) => {
         set({ reminderMinutesBefore: minutes });
         await updateSettingOnApi('reminder_minutes_before', String(minutes));
+    },
+    setLibraryWhatsapp: async (phone) => {
+        set({ libraryWhatsapp: phone });
+        await updateSettingOnApi('library_whatsapp', phone);
+    },
+    setLibraryTelegram: async (handle) => {
+        set({ libraryTelegram: handle });
+        await updateSettingOnApi('library_telegram', handle);
     }
 }));
 

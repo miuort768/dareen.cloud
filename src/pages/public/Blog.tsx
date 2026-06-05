@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame, Sun, Moon, Send } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -196,6 +196,20 @@ export const Blog = () => {
     fetchPosts();
   }, []);
 
+  // Independent dark mode for library page
+  const [libraryTheme, setLibraryTheme] = useState(() => {
+    try { return localStorage.getItem('library-theme') || 'light'; }
+    catch { return 'light'; }
+  });
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(libraryTheme);
+    try { localStorage.setItem('library-theme', libraryTheme); } catch {}
+  }, [libraryTheme]);
+
+  const { libraryWhatsapp, libraryTelegram } = useSettingsStore();
+
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
@@ -236,16 +250,21 @@ export const Blog = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center">
-                  <div className="w-4 h-4 rounded-full border-2 border-slate-400 dark:border-slate-500 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full" />
-                  </div>
-                </div>
-                <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center relative">
-                  <div className="w-3 h-3 rounded-full bg-amber-400 absolute -top-0.5 -right-0.5 border-2 border-white dark:border-slate-800" />
-                  <Bell size={16} className="text-slate-600 dark:text-slate-400" />
-                </div>
+              <div className="flex items-center gap-2">
+                <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-green-50 dark:hover:bg-green-900/30 transition-all">
+                  <MessageCircle size={16} className="text-green-600 dark:text-green-400" />
+                </a>
+                <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-sky-50 dark:hover:bg-sky-900/30 transition-all">
+                  <Send size={16} className="text-sky-600 dark:text-sky-400" />
+                </a>
+                <button onClick={() => setLibraryTheme(t => t === 'dark' ? 'light' : 'dark')}
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                  {libraryTheme === 'dark' ? <Sun size={16} className="text-amber-500" /> : <Moon size={16} className="text-slate-600 dark:text-slate-400" />}
+                </button>
               </div>
             </div>
 

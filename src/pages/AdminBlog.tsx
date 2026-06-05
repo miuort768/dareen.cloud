@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 
 import { useShowNotification } from '../context/AppContext';
-import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star, Settings, MessageCircle, Send } from 'lucide-react';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
+import { useSettingsStore } from '../store/settingsStore';
 
 interface BlogPost {
     id: string;
@@ -40,6 +41,16 @@ export const AdminBlog = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
     const [submitting, setSubmitting] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
+    const [libraryWhatsapp, setLibraryWhatsapp] = useState('');
+    const [libraryTelegram, setLibraryTelegram] = useState('');
+    const [savingSettings, setSavingSettings] = useState(false);
+    const { libraryWhatsapp: savedWhatsapp, libraryTelegram: savedTelegram, setLibraryWhatsapp: saveWhatsapp, setLibraryTelegram: saveTelegram } = useSettingsStore();
+
+    useEffect(() => {
+        if (savedWhatsapp) setLibraryWhatsapp(savedWhatsapp);
+        if (savedTelegram) setLibraryTelegram(savedTelegram);
+    }, [savedWhatsapp, savedTelegram]);
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -157,6 +168,59 @@ export const AdminBlog = () => {
                     <span className="text-xs">إضافة مقال</span>
                 </button>
             </div>
+
+            <button onClick={() => setShowSettings(s => !s)}
+                className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs"
+            >
+                <Settings size={14} />
+                <span>إعدادات المكتبة</span>
+            </button>
+
+            {showSettings && (
+                <div className="bg-white dark:bg-slate-900 p-5 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl space-y-4">
+                    <h3 className="font-black text-sm text-slate-900 dark:text-white">إعدادات صفحة المكتبة</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رقم واتساب المكتبة</label>
+                            <input type="text" value={libraryWhatsapp}
+                                onChange={(e) => setLibraryWhatsapp(e.target.value)}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                placeholder="مثال: 201234567890"
+                                dir="ltr"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">معرف تليجرام المكتبة</label>
+                            <input type="text" value={libraryTelegram}
+                                onChange={(e) => setLibraryTelegram(e.target.value)}
+                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                placeholder="مثال: dareen_app"
+                                dir="ltr"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-end gap-3">
+                        <button onClick={() => { setShowSettings(false); setLibraryWhatsapp(savedWhatsapp); setLibraryTelegram(savedTelegram); }}
+                            className="px-4 py-2 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl text-xs"
+                        >إلغاء</button>
+                        <button onClick={async () => {
+                            setSavingSettings(true);
+                            try {
+                                await saveWhatsapp(libraryWhatsapp);
+                                await saveTelegram(libraryTelegram);
+                                showNotification('تم حفظ إعدادات المكتبة', 'success');
+                                setShowSettings(false);
+                            } catch { showNotification('حدث خطأ في الحفظ', 'error'); }
+                            finally { setSavingSettings(false); }
+                        }}
+                            disabled={savingSettings}
+                            className="px-5 py-2 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 rounded-xl text-xs"
+                        >
+                            {savingSettings ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 shadow-sm space-y-4 rounded-2xl">
                 <div className="relative flex-grow">
