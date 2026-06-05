@@ -407,13 +407,15 @@ export const Blog = () => {
                   return (
                   <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                     className="group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden active:scale-[0.98] transition-all h-full flex flex-col">
-                    <div className={`relative ${isCoursesStyle ? 'h-32' : 'aspect-video'} overflow-hidden bg-slate-50 dark:bg-slate-800/30`}>
-                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'object-cover'}`} />
-                      <div className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-slate-900' : 'from-black/40'} to-transparent`} />
+                    {!isCoursesStyle && (
+                    <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
+                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className="w-full h-full object-cover" />
+                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
                       <div className="absolute top-3 right-3 z-10">
-                        <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400'}`}>{subjectNameMap[post.subject] || post.category}</span>
+                        <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
                       </div>
                     </div>
+                    )}
                     <div className="p-4 flex flex-col flex-1">
                       <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
                         <span className="flex items-center gap-1">{post.date?.split('T')[0]}</span>
