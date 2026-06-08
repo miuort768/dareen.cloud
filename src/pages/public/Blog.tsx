@@ -346,7 +346,7 @@ export const Blog = () => {
                 <div className="relative shrink-0">
                   <div className="absolute inset-0 bg-violet-200/50 dark:bg-violet-800/30 rounded-full blur-xl" />
                   <div className="relative w-[90px]">
-                    <img src="/hero-child.png" alt="طفل يدرس على منصة دارين" width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" />
+                    <img src="/hero-child.png" alt="طفل يدرس على منصة دارين" width="90" height="90" loading="lazy" className="w-full h-auto object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>

@@ -223,11 +223,11 @@ async function startServer() {
         const rateLimit = require('express-rate-limit');
         const limiter = rateLimit({
             windowMs: 15 * 60 * 1000, // 15 minutes
-            max: process.env.NODE_ENV === 'development' ? 100000 : 50000, // High limits for scalability
+            max: process.env.NODE_ENV === 'development' ? 100000 : 3000,
             message: { error: 'Too many requests, please try again later.' },
-            standardHeaders: true, // Return rate limit info in headers
-            legacyHeaders: false, // Disable X-RateLimit-* headers
-            skip: (req) => req.path === '/health' // Skip health checks
+            standardHeaders: true,
+            legacyHeaders: false,
+            skip: (req) => req.path === '/health'
         });
         app.use('/api/', limiter);
 
@@ -388,24 +388,26 @@ async function startServer() {
                 const post = req.db ? await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]) : null;
                 if (post) {
                     const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8');
-                    const esc = (s) => s.replace(/"/g, '&quot;');
-                    const absImage = post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`;
+                    const esc = require('escape-html');
+                    const absImage = post.coverImage ? (post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`) : '';
                     const pageUrl = `https://dareen.cloud/books/${post.slug}`;
                     const fullTitle = `${post.title} | دارين السابعة للتعليم والتدريب`;
-                    const excerpt = esc(post.excerpt);
+                    const excerpt = esc(post.excerpt || '');
                     const safeTitle = esc(fullTitle);
+                    const safeImage = esc(absImage);
+                    const safeUrl = esc(pageUrl);
 
                     const modified = html
-                        .replace(/<title>.*?<\/title>/, `<title>${fullTitle}</title>`)
+                        .replace(/<title>.*?<\/title>/, `<title>${safeTitle}</title>`)
                         .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${excerpt}"`)
                         .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${safeTitle}"`)
                         .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${excerpt}"`)
-                        .replace(/<meta property="og:image" content=".*?"/, `<meta property="og:image" content="${absImage}"`)
-                        .replace(/<meta property="og:url" content=".*?"/, `<meta property="og:url" content="${pageUrl}"`)
+                        .replace(/<meta property="og:image" content=".*?"/, `<meta property="og:image" content="${safeImage}"`)
+                        .replace(/<meta property="og:url" content=".*?"/, `<meta property="og:url" content="${safeUrl}"`)
                         .replace(/<meta property="og:type" content=".*?"/, `<meta property="og:type" content="article"`)
                         .replace(/<meta name="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${safeTitle}"`)
                         .replace(/<meta name="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${excerpt}"`)
-                        .replace(/<meta name="twitter:image" content=".*?"/, `<meta name="twitter:image" content="${absImage}"`);
+                        .replace(/<meta name="twitter:image" content=".*?"/, `<meta name="twitter:image" content="${safeImage}"`);
 
                     res.send(modified);
                     return;

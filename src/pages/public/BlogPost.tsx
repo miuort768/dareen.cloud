@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -111,19 +111,21 @@ export const BlogPost = () => {
         return { first: parts[0], rest: parts.slice(1).join('\n\n') };
     })();
 
-    const processContent = (text: string) => {
-        const lines = text.split('\n');
-        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
-        const processed = lines.map((line: string) => {
-            const trimmed = line.trim();
-            const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-            if (imgRegex.test(trimmed)) {
-                return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
-            }
-            return line;
-        });
-        return hasHtml ? processed.join('\n') : processed.join('<br/>');
-    };
+    const processContent = useMemo(() => {
+        return (text: string) => {
+            const lines = text.split('\n');
+            const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+            const processed = lines.map((line: string) => {
+                const trimmed = line.trim();
+                const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+                if (imgRegex.test(trimmed)) {
+                    return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
+                }
+                return line;
+            });
+            return hasHtml ? processed.join('\n') : processed.join('<br/>');
+        };
+    }, [post.content]);
 
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
