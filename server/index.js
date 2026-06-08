@@ -18,6 +18,7 @@ const http = require('http');
 const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 const monitoringMiddleware = require('./middleware/monitoring');
+const correlationIdMiddleware = require('./middleware/correlationId');
 const { setupDatabase } = require('./db_setup');
 const { getDb } = require('./utils/db');
 const logger = require('./utils/logger');
@@ -43,6 +44,7 @@ const appointmentsRouter = require('./routes/appointments');
 const { pushRouter, sendPushToUser } = require('./routes/push');
 const leadsRouter = require('./routes/leads');
 const blogRouter = require('./routes/blog');
+const uploadRouter = require('./routes/upload');
 const liveRouter = require('./routes/live');
 const trialSessionsRouter = require('./routes/trial_sessions');
 const teacherAvailabilityRouter = require('./routes/teacher_availability');
@@ -99,6 +101,7 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false
 }));
 
+app.use(correlationIdMiddleware);
 app.use(monitoringMiddleware);
 app.use(express.json({ limit: '10mb' }));
 
@@ -151,6 +154,10 @@ async function startServer() {
 
         apiRouter.use('/auth', authRouter);
         apiRouter.use('/blog', blogRouter);
+        apiRouter.use('/upload', uploadRouter);
+        apiRouter.get('/docs', (req, res) => {
+            res.json(require('./utils/apiDocs'));
+        });
 
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {

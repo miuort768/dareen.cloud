@@ -2,9 +2,37 @@ const jwt = require('jsonwebtoken');
 const { getDb } = require('../utils/db');
 const { v4: uuidv4 } = require('uuid');
 
+const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
+    const counts = new Map();
+    return (socket, eventName, ...args) => {
+        const key = `${socket.id}:${eventName}`;
+        const now = Date.now();
+        const entry = counts.get(key);
+        if (!entry || now - entry.windowStart > windowMs) {
+            counts.set(key, { count: 1, windowStart: now });
+            return true;
+        }
+        entry.count++;
+        if (entry.count > maxPerWindow) {
+            console.warn(`[SOCKET-RATE] ${socket.id} exceeded ${eventName} (${entry.count}/${maxPerWindow})`);
+            socket.emit('error_message', { message: 'طلبات كثيرة جداً. حاول ببطء.' });
+            return false;
+        }
+        return true;
+    };
+};
+
+const wrapEvent = (handler, limiter) => {
+    return function (...args) {
+        if (!limiter(this, handler.name || 'unknown', ...args)) return;
+        handler.call(this, ...args);
+    };
+};
+
 module.exports = (io, app) => {
     const activeSessions = new Map();
     app.set('activeSessions', activeSessions);
+    const rateLimit = socketRateLimiter(30, 10000);
 
     io.use((socket, next) => {
         const token = socket.handshake.auth.token || socket.handshake.query.token;
@@ -41,6 +69,7 @@ module.exports = (io, app) => {
 
         socket.on('join_conversation', async (conversationId) => {
             if (!conversationId || !userId) return;
+            if (!rateLimit(socket, 'join_conversation')) return;
             try {
                 const db = await getDb();
                 const member = await db.get(
@@ -68,6 +97,7 @@ module.exports = (io, app) => {
         const typingThrottle = new Map();
         socket.on('typing', (data) => {
             if (!data?.conversationId || !userId) return;
+            if (!rateLimit(socket, 'typing')) return;
             const key = `${userId}:${data.conversationId}`;
             const now = Date.now();
             const last = typingThrottle.get(key);
@@ -79,6 +109,7 @@ module.exports = (io, app) => {
         const drawingThrottle = new Map();
         socket.on('drawing', (data) => {
             if (!data?.conversationId || !userId) return;
+            if (!rateLimit(socket, 'drawing')) return;
             const key = `${userId}:${data.conversationId}`;
             const now = Date.now();
             const last = drawingThrottle.get(key);
@@ -89,11 +120,13 @@ module.exports = (io, app) => {
 
         socket.on('whiteboard_state', (data) => {
             if (!data?.conversationId || !userId) return;
+            if (!rateLimit(socket, 'whiteboard_state')) return;
             socket.to(data.conversationId).emit('whiteboard_state', data);
         });
 
         socket.on('clear_whiteboard', (data) => {
             if (!data?.conversationId || !userId) return;
+            if (!rateLimit(socket, 'clear_whiteboard')) return;
             socket.to(data.conversationId).emit('clear_whiteboard', data);
         });
 
@@ -132,9 +165,15 @@ module.exports = (io, app) => {
             socket.to(data.conversationId).emit('student_joined', data);
         });
 
-        socket.on('student_request', (data) => {
-            socket.to(data.conversationId).emit('student_request', data);
-        });
+            socket.on('student_request', (data) => {
+                if (!rateLimit(socket, 'student_request')) return;
+                socket.to(data.conversationId).emit('student_request', data);
+            });
+
+            socket.on('teacher_signal', (data) => {
+                if (!rateLimit(socket, 'teacher_signal')) return;
+                socket.to(`user_${data.studentId}`).emit('teacher_signal', data);
+            });
 
         socket.on('teacher_signal', (data) => {
             socket.to(`user_${data.studentId}`).emit('teacher_signal', data);

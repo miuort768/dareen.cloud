@@ -1,0 +1,8 @@
+const { v4: uuidv4 } = require('uuid');
+
+module.exports = (req, res, next) => {
+    const id = req.headers['x-request-id'] || uuidv4().slice(0, 8);
+    req.requestId = id;
+    res.setHeader('X-Request-ID', id);
+    next();
+};
