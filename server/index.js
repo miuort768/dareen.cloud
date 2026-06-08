@@ -141,16 +141,16 @@ async function startServer() {
             standardHeaders: true,
             legacyHeaders: false,
         });
+        const apiRouter = express.Router();
+        const { authMiddleware, checkRole } = require('./middleware/auth');
+        const { isAdmin } = require('./middleware/permissions');
+
         apiRouter.use('/auth/login', strictLimiter);
         apiRouter.use('/auth/register', strictLimiter);
         apiRouter.use('/auth/forgot-password', strictLimiter);
         apiRouter.use('/auth/reset-password', strictLimiter);
         apiRouter.use('/auth/verify', moderateLimiter);
         apiRouter.use('/public-chat', moderateLimiter);
-
-        const apiRouter = express.Router();
-        const { authMiddleware, checkRole } = require('./middleware/auth');
-        const { isAdmin } = require('./middleware/permissions');
 
         apiRouter.use('/auth', authRouter);
         apiRouter.use('/blog', blogRouter);
