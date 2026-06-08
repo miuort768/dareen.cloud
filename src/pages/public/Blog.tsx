@@ -1,119 +1,23 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User, ChevronLeft, Library, Sparkles, Bell, BookCheck, Headset, MessageCircle, ShieldCheck, Star, Play, Flame, Sun, Moon, Send, Download, Eye, ExternalLink } from 'lucide-react';
+import { Sun, Moon, Send, BookOpen, Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
-import { cn } from '../../lib/utils';
 import { useSettingsStore } from '../../store/settingsStore';
-
-const gradeNames: Record<string, string> = {
-  '1': 'الأول', '2': 'الثاني', '3': 'الثالث', '4': 'الرابع', '5': 'الخامس',
-  '6': 'السادس', '7': 'السابع', '8': 'الثامن', '9': 'التاسع',
-  '10': 'العاشر', '11': 'الحادي عشر', '12': 'الثاني عشر',
-};
-
-const types = [
-  { id: 'foundation', name: 'التأسيس', gradient: 'from-amber-500 to-orange-600', icon: Zap },
-  { id: 'solutions', name: 'حل الكتب', gradient: 'from-emerald-500 to-teal-600', icon: CheckCircle },
-  { id: 'notes', name: 'المذكرات', gradient: 'from-violet-500 to-purple-600', icon: FileText },
-  { id: 'more', name: 'المزيد', gradient: 'from-rose-500 to-pink-600', icon: AlignLeft },
-];
-
-const curriculums = [
-  { id: 'kuwait', name: 'منهج كويتي', gradient: 'from-sky-500 to-blue-600', icon: Building2 },
-  { id: 'qatar', name: 'منهج قطري', gradient: 'from-red-500 to-rose-600', icon: Anchor },
-  { id: 'uae', name: 'منهج إماراتي', gradient: 'from-green-500 to-emerald-600', icon: Building },
-  { id: 'saudi', name: 'منهج سعودي', gradient: 'from-emerald-600 to-green-700', icon: Palmtree },
-];
-
-const gradesMap: Record<string, { id: string; name: string; sub: string; gradient: string; icon: React.ElementType }[]> = {
-  kuwait: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', gradient: 'from-sky-400 to-sky-600', icon: School },
-    { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', gradient: 'from-sky-600 to-blue-700', icon: GraduationCap },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-blue-700 to-indigo-800', icon: GraduationCap },
-  ],
-  qatar: [
-    { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', gradient: 'from-red-400 to-red-600', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-red-700 to-rose-800', icon: GraduationCap },
-  ],
-  uae: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', gradient: 'from-green-400 to-emerald-600', icon: School },
-    { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', gradient: 'from-emerald-600 to-green-700', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-green-700 to-teal-800', icon: GraduationCap },
-  ],
-  saudi: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', gradient: 'from-emerald-400 to-emerald-600', icon: School },
-    { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', gradient: 'from-emerald-600 to-green-700', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-green-700 to-teal-800', icon: GraduationCap },
-  ],
-};
-
-const subjectsMap: Record<string, { id: string; name: string; gradient: string }[]> = {
-  primary: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-teal-500 to-teal-700' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-amber-500 to-amber-700' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-blue-500 to-blue-700' },
-    { id: 'science', name: 'علوم', gradient: 'from-green-500 to-green-700' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-indigo-500 to-indigo-700' },
-    { id: 'social', name: 'اجتماعيات', gradient: 'from-orange-500 to-orange-700' },
-  ],
-  middle: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-teal-500 to-teal-700' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-amber-500 to-amber-700' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-blue-500 to-blue-700' },
-    { id: 'physics', name: 'فيزياء', gradient: 'from-yellow-500 to-yellow-700' },
-    { id: 'chemistry', name: 'كيمياء', gradient: 'from-purple-500 to-purple-700' },
-    { id: 'biology', name: 'أحياء', gradient: 'from-green-600 to-green-800' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-indigo-500 to-indigo-700' },
-    { id: 'history', name: 'تاريخ', gradient: 'from-stone-500 to-stone-700' },
-    { id: 'geography', name: 'جغرافيا', gradient: 'from-cyan-500 to-cyan-700' },
-  ],
-  secondary: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-teal-500 to-teal-700' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-amber-500 to-amber-700' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-blue-500 to-blue-700' },
-    { id: 'physics', name: 'فيزياء', gradient: 'from-yellow-500 to-yellow-700' },
-    { id: 'chemistry', name: 'كيمياء', gradient: 'from-purple-500 to-purple-700' },
-    { id: 'biology', name: 'أحياء', gradient: 'from-green-600 to-green-800' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-indigo-500 to-indigo-700' },
-    { id: 'computer', name: 'حاسب آلي', gradient: 'from-slate-500 to-slate-700' },
-    { id: 'stats', name: 'إحصاء', gradient: 'from-rose-500 to-rose-700' },
-    { id: 'history', name: 'تاريخ', gradient: 'from-stone-500 to-stone-700' },
-    { id: 'geography', name: 'جغرافيا', gradient: 'from-cyan-500 to-cyan-700' },
-  ],
-  basic: [],
-  preparatory: [],
-};
-subjectsMap.basic = subjectsMap.middle;
-subjectsMap.preparatory = subjectsMap.middle;
-
-const subjectNameMap: Record<string, string> = {};
-Object.values(subjectsMap).forEach(arr => arr.forEach(s => { if (!subjectNameMap[s.id]) subjectNameMap[s.id] = s.name; }));
-
-type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
-
-interface GridItem {
-    id: string;
-    name: string;
-    gradient?: string;
-    sub?: string;
-    icon: React.ElementType;
-    [key: string]: unknown;
-}
-
-const classroomsMap: Record<string, Record<string, string[]>> = {
-  kuwait: { primary: ['1', '2', '3', '4', '5'], middle: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-  qatar: { basic: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-  uae: { primary: ['1', '2', '3', '4', '5'], preparatory: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-  saudi: { primary: ['1', '2', '3', '4', '5', '6'], middle: ['7', '8', '9'], secondary: ['10', '11', '12'] },
-};
+import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes, ViewType, subjectNameMap } from '../../components/blog/LibraryConfig';
+import { FoundationCard, RegularCard } from '../../components/blog/BlogCard';
+import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb';
+import { LoadMore } from '../../components/blog/LoadMore';
+import { LoadingState, EmptyState } from '../../components/blog/BlogStates';
+import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection';
+import { SelectionGrid } from '../../components/blog/SelectionGrid';
 
 export const Blog = () => {
   const navigate = useNavigate();
-  const { adminPhone } = useSettingsStore();
+  const { adminPhone, libraryWhatsapp, libraryTelegram } = useSettingsStore();
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);
@@ -154,9 +58,7 @@ export const Blog = () => {
   };
 
   useEffect(() => {
-    return () => {
-      if (foundationTimerRef.current) clearInterval(foundationTimerRef.current);
-    };
+    return () => { if (foundationTimerRef.current) clearInterval(foundationTimerRef.current); };
   }, []);
 
   const setView = useCallback((v: ViewType) => {
@@ -171,12 +73,13 @@ export const Blog = () => {
       return next;
     });
   }, [setSearchParams]);
+
   const setSelectedType = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('type', id); return n; }); }, [setSearchParams]);
   const setSelectedCurriculum = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('curriculum', id); return n; }); }, [setSearchParams]);
   const setSelectedLevel = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('level', id); return n; }); }, [setSearchParams]);
-  const setSelectedGrade = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', id); return n; }); }, [setSearchParams]);
-  const setSelectedTerm = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', id); return n; }); }, [setSearchParams]);
-  const setSelectedSubject = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', id); return n; }); }, [setSearchParams]);
+  const setSelectedGrade = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', id); n.set('view', 'terms'); n.delete('subject'); return n; }); }, [setSearchParams]);
+  const setSelectedTerm = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', id); n.set('view', 'subjects'); return n; }); }, [setSearchParams]);
+  const setSelectedSubject = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', id); n.set('view', 'results'); return n; }); }, [setSearchParams]);
 
   const currentTypeName = types.find(t => t.id === selectedType)?.name || '';
   const currentCurriculumName = curriculums.find(c => c.id === selectedCurriculum)?.name || '';
@@ -197,14 +100,11 @@ export const Blog = () => {
     return true;
   }) : posts;
 
-  const directTypes = ['foundation', 'more'];
   const isDirectType = directTypes.includes(selectedType);
 
   const goBack = () => {
-    if (view === 'results') {
-      if (isDirectType) setView('types');
-      else setView('subjects');
-    } else if (view === 'subjects') setView('terms');
+    if (view === 'results') setView(isDirectType ? 'types' : 'subjects');
+    else if (view === 'subjects') setView('terms');
     else if (view === 'terms') setView('classrooms');
     else if (view === 'classrooms') setView('grades');
     else if (view === 'grades') setView('curriculums');
@@ -222,11 +122,8 @@ export const Blog = () => {
         setPosts(res.posts.length > 0 ? res.posts : staticPosts);
         setTotalPages(res.totalPages || 1);
         setPage(1);
-      } catch {
-        setPosts(staticPosts);
-      } finally {
-        setLoading(false);
-      }
+      } catch { setPosts(staticPosts); }
+      finally { setLoading(false); }
     };
     fetchPosts();
   }, []);
@@ -240,39 +137,46 @@ export const Blog = () => {
       setPosts(prev => [...prev, ...res.posts]);
       setPage(nextPage);
       setTotalPages(res.totalPages);
-    } catch {
-      // silent fail
-    } finally {
-      setLoadingMore(false);
-    }
+    } catch {} finally { setLoadingMore(false); }
   };
 
-  // Independent dark mode for library page
   const [libraryTheme, setLibraryTheme] = useState(() => {
-    try { return localStorage.getItem('library-theme') || 'light'; }
-    catch { return 'light'; }
+    try { return localStorage.getItem('library-theme') || 'light'; } catch { return 'light'; }
   });
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(libraryTheme);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(libraryTheme);
     try { localStorage.setItem('library-theme', libraryTheme); } catch {}
   }, [libraryTheme]);
 
-  const { libraryWhatsapp, libraryTelegram } = useSettingsStore();
+  const breadcrumbItems = [
+    { label: 'الرئيسية', onClick: () => setView('types') },
+    ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? () => setView('types') : () => setView('curriculums') }] : []),
+    ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
+    ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
+    ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
+  ];
+
+  const renderPostCard = (post: typeof staticPosts[0], i: number) => {
+    const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
+    const isCoursesStyle = selectedType === 'more';
+    const cardStyle = selectedType === 'foundation'
+      ? { gradient: 'from-amber-500 to-orange-600', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300', fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20' }
+      : { gradient: 'from-violet-500 to-purple-600', badge: 'مذكرة', icon: FileText, sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300', fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20' };
+    if (isFoundationStyle) return <FoundationCard key={post.id} post={post} cardStyle={cardStyle} foundationBtnState={foundationBtnState} handleButtonClick={handleFoundationButtonClick} i={i} />;
+    return <RegularCard key={post.id} post={post} isCoursesStyle={isCoursesStyle} i={i} />;
+  };
 
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
-        url="https://dareen.cloud/books"
-        image="/dareen_books_banner.png"
+        url="https://dareen.cloud/books" image="/dareen_books_banner.png"
         breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'المكتبة', item: '/books' }]} />
       <script type="application/ld+json">
         {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
+          '@context': 'https://schema.org', '@type': 'CollectionPage',
           name: 'المكتبة التعليمية - دارين السابعة',
           description: 'مكتبة دارين السابعة التعليمية: كتب، مذكرات، ملخصات، واختبارات للمناهج الخليجية',
           url: 'https://dareen.cloud/books',
@@ -282,11 +186,10 @@ export const Blog = () => {
       </script>
       <MobileHeader />
 
-      {/* ─── Mobile Layout ─── */}
+      {/* Mobile */}
       <main className="md:hidden pb-0 px-3 relative flex-1 bg-[#F8F8FC] dark:bg-slate-950">
         {isHeroView ? (
           <div className="pb-6">
-            {/* Top header bar */}
             <div className="flex items-center justify-between mb-5 mt-2">
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -302,10 +205,7 @@ export const Blog = () => {
                 <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                   target="_blank" rel="noopener noreferrer"
                   className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-green-50 dark:hover:bg-green-900/30 transition-all">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4">
-                    <rect width="24" height="24" rx="12" fill="#25D366"/>
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24" className="w-4 h-4"><rect width="24" height="24" rx="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
@@ -319,26 +219,16 @@ export const Blog = () => {
               </div>
             </div>
 
-            {/* Hero Banner */}
             <div className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl overflow-hidden mb-6 shadow-sm border border-violet-100/50 dark:border-slate-800">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">
-                    برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span>
-                  </p>
+                  <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span></p>
                   <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">أفضل الكتب والملخصات</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
-                    <Link to="/courses" className="bg-indigo-600 text-white text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-1 w-full">
-                      <Play className="w-3 h-3 fill-white" />
-                      تصفح الدورات
-                    </Link>
-                    <a
-                      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center block"
-                    >
+                    <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+                      target="_blank" rel="noopener noreferrer"
+                      className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center block">
                       طلب حصة مجانية
                     </a>
                   </div>
@@ -351,618 +241,55 @@ export const Blog = () => {
                 </div>
               </div>
             </div>
-
-            {/* Selection Grid */}
-            <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-violet-100/50 dark:border-slate-800">
-              <h2 className="text-xl font-black text-indigo-950 dark:text-indigo-100 leading-tight">
-                {view === 'types' ? (
-                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الخدمة</span></>
-                ) : view === 'curriculums' ? (
-                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المنهج</span></>
-                ) : (
-                  <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المرحلة</span></>
-                )}
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5 leading-relaxed">
-                {view === 'types'
-                  ? 'اختر ما تريد من كتب او مذكرات مجانا'
-                  : view === 'curriculums'
-                  ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {gridItems.map((item: GridItem, i: number) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setSearchParams(prev => {
-                      const next = new URLSearchParams(prev);
-                      if (view === 'types') {
-                        if (directTypes.includes(item.id)) {
-                          next.set('type', item.id); next.set('view', 'results'); ['curriculum','level','grade','term','subject'].forEach(k => next.delete(k));
-                        } else {
-                          next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k));
-                        }
-                      } else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
-                      else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
-                      return next;
-                    });
-                  }}
-                  className={cn(
-                    "relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl text-white overflow-hidden shadow-lg active:scale-[0.97] transition-all",
-                    "bg-gradient-to-br", item.gradient
-                  )}
-                >
-                  <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                    <item.icon size={20} />
-                  </div>
-                  <span className="text-sm font-black text-center leading-tight">{item.name}</span>
-                  {item.sub && <span className="text-[11px] text-white/70 font-bold">{item.sub}</span>}
-                </button>
-              ))}
-            </div>
+            <MobileHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
           </div>
         ) : view === 'results' ? (
           <div className="pb-6">
-            <div className="bg-gradient-to-br from-violet-50/80 via-white to-indigo-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-5 mb-5 shadow-sm border border-violet-100/50 dark:border-slate-800 mt-1">
-              <div className="flex items-center gap-1.5 mb-3 text-[11px] font-bold text-slate-400 dark:text-slate-500 flex-wrap">
-                {[
-                  { label: 'الرئيسية', onClick: () => setView('types') },
-                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
-                  ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
-                  ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
-                  ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
-                ].map((crumb, i, arr) => (
-                  <span key={i} className="flex items-center gap-1">
-                    {i > 0 && <ChevronLeft size={10} className="text-slate-300 dark:text-slate-600" />}
-                    <button onClick={crumb.onClick}
-                      className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600 dark:text-indigo-400 font-black' : 'text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-colors'}
-                    >{crumb.label}</button>
-                  </span>
-                ))}
-                {selectedSubject && <><ChevronLeft size={10} className="text-slate-300 dark:text-slate-600" /><span className="text-indigo-600 dark:text-indigo-400 font-black">{currentSubjectName}</span></>}
-              </div>
-
-              <div className="flex gap-2">
-                {!isDirectType && (
-                <button onClick={goBack} className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-slate-800 dark:bg-slate-700 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
-                  <ArrowLeft size={14} /><span>تغيير المادة</span>
-                </button>
-                )}
-                <button onClick={() => setView('types')} className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-indigo-950 text-white text-[11px] font-bold rounded-2xl transition-all shadow-sm">
-                  <Library size={14} /><span>الرئيسية</span>
-                </button>
-              </div>
-            </div>
-
-            {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
-                <Loader2 className="w-10 h-10 text-indigo-600 dark:text-indigo-400 animate-spin mb-4" />
-                <span className="text-xs font-bold text-slate-400 dark:text-slate-500">جاري التحميل...</span>
-              </div>
-            ) : filteredPosts.length === 0 ? (
-              <div className="text-center py-20">
-                <div className="w-16 h-16 rounded-3xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700">
-                  <BookOpen size={24} className="text-slate-300 dark:text-slate-600" />
-                </div>
-                <p className="text-slate-500 dark:text-slate-400 font-black text-base mb-1">لا يوجد محتوى بعد</p>
-                <p className="text-slate-400 dark:text-slate-500 text-xs font-medium">سيتم إضافة المحتوى قريباً لهذا التصنيف</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {filteredPosts.map((post, i) => {
-                  const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
-                  const isCoursesStyle = selectedType === 'more';
-                  const cardStyle = selectedType === 'foundation'
-                    ? {
-                        gradient: 'from-amber-500 to-orange-600',
-                        badge: 'مذكرة تأسيسية',
-                        icon: Zap,
-                        sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300',
-                        fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20',
-                      }
-                    : {
-                        gradient: 'from-violet-500 to-purple-600',
-                        badge: 'مذكرة',
-                        icon: FileText,
-                        sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300',
-                        fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20',
-                      };
-                  return isFoundationStyle ? (
-                  <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm transition-all h-full flex flex-col relative">
-                      <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
-                      <div className="p-4 flex flex-col flex-1">
-                        <div className="flex items-center gap-2 mb-2.5">
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black text-white bg-gradient-to-r ${cardStyle.gradient} shadow-sm`}>
-                            <cardStyle.icon size={10} />
-                            {cardStyle.badge}
-                          </span>
-                          {(post.fileSize || post.file_size) && (
-                            <span className={`shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full ${cardStyle.fileSizeBadge} text-[9px] font-bold border`}>
-                              <FileText size={10} />
-                              {post.fileSize || post.file_size}
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="text-sm font-black leading-snug text-slate-900 dark:text-white mb-2">{post.title}</h3>
-                        {post.source && (
-                          <a href={post.source} target="_blank" rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-1.5 text-[10px] font-bold ${cardStyle.sourceText} transition-colors w-fit mb-2.5`}
-                            onClick={(e) => e.stopPropagation()}>
-                            <ExternalLink size={11} />
-                            <span className="truncate max-w-[180px]" dir="ltr">{post.source}</span>
-                          </a>
-                        )}
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-3 flex-1">{post.excerpt}</p>
-                        <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
-                        <div className="flex flex-col gap-2">
-                          <div className="flex gap-2">
-                              {post.downloadLink && (
-                                <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, post.id, e)}
-                                  disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
-                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                  <Download size={14} />
-                                  <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
-                                </button>
-                              )}
-                              {post.watchLink && (
-                                <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, post.id, e)}
-                                  disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
-                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                  <Eye size={14} />
-                                  <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
-                                  </button>
-                              )}
-                          </div>
-                          <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
-                            <span>اقرأ المقال</span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  ) : (
-                  <Link key={post.id} to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                    className="group block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden active:scale-[0.98] transition-all h-full flex flex-col">
-                    {!isCoursesStyle && (
-                    <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
-                      <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" className="w-full h-full object-cover" />
-                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
-                      <div className="absolute top-3 right-3 z-10">
-                        <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{subjectNameMap[post.subject] || post.category}</span>
-                      </div>
-                    </div>
-                    )}
-                    <div className="p-4 flex flex-col flex-1">
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
-                        <span className="flex items-center gap-1">{post.date?.split('T')[0]}</span>
-                        {isCoursesStyle && (
-                          <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" />{post.views ?? 0}</span>
-                        )}
-                      </div>
-                      <h2 className="text-sm font-black leading-snug line-clamp-2 text-slate-900 dark:text-white">{post.title}</h2>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1 mt-2">{post.excerpt}</p>
-                      {isCoursesStyle ? (
-                        <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
-                          <ArrowLeft size={14} />
-                          <span>اقرأ المقال</span>
-                        </div>
-                      ) : (
-                        <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                          <span>اقرأ المقال</span>
-                          <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                  );
-                })}
-              </div>
-              {page < totalPages && (
-                <div className="flex justify-center mt-6">
-                  <button onClick={loadMore} disabled={loadingMore}
-                    className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-lg">
-                    {loadingMore ? <Loader2 size={16} className="animate-spin" /> : null}
-                    <span>{loadingMore ? 'جاري التحميل...' : 'تحميل المزيد'}</span>
-                  </button>
-                </div>
-              )}
+            <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} isMobile />
+            {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
+              <div className="space-y-3">{filteredPosts.map((post, i) => renderPostCard(post, i))}</div>
             )}
+            <LoadMore page={page} totalPages={totalPages} loading={loadingMore} onLoadMore={loadMore} />
           </div>
         ) : (
-          <div className="pb-6">
-            <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-[32px] p-5 mb-6 shadow-sm border border-violet-100/50 mt-2 text-center">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full shadow-sm mb-3">
-                <BookOpen size={10} className="text-violet-600" />
-                <span className="text-[9px] font-black text-violet-600">
-                  {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                    : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
-                      : `المواد — ${termLabel}`}
-                </span>
-              </div>
-              <h2 className="text-[17px] font-black text-indigo-950">
-                {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الصف الدراسي</span></>)
-                  : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">الترم</span></>)
-                    : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">المادة</span></>)}
-              </h2>
-              <p className="text-[10px] text-slate-500 font-medium mt-1">
-                {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
-                  : view === 'terms' ? 'اختر الترم الدراسي'
-                    : `${filteredPosts.length} نتيجة متاحة`}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2.5">
-              {view === 'classrooms' && currentClassrooms.map((cls, i) => (
-                <button key={cls} onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', cls); n.set('view', 'terms'); n.delete('subject'); return n; }); }}
-                  className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-sm active:scale-[0.97] transition-all">
-                  <GraduationCap size={18} />
-                  <span className="text-[10px] font-black text-center">الصف {gradeNames[cls] || cls}</span>
-                </button>
-              ))}
-
-              {view === 'terms' && (
-                <>
-                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '1'); n.set('view', 'subjects'); return n; }); }}
-                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-sm active:scale-[0.97] transition-all">
-                    <BookOpen size={18} />
-                    <span className="text-[10px] font-black">ترم أول</span>
-                  </button>
-                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '2'); n.set('view', 'subjects'); return n; }); }}
-                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-sm active:scale-[0.97] transition-all">
-                    <BookOpen size={18} />
-                    <span className="text-[10px] font-black">ترم ثاني</span>
-                  </button>
-                </>
-              )}
-
-              {view === 'subjects' && currentSubjects.map((subj, i) => (
-                <button key={subj.id} onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', subj.id); n.set('view', 'results'); return n; }); window.scrollTo(0, 0); }}
-                  className={cn("flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br text-white shadow-sm active:scale-[0.97] transition-all", subj.gradient)}>
-                  <span className="text-[10px] font-black text-center">{subj.name}</span>
-                </button>
-              ))}
-
-              <button onClick={goBack}
-                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 shadow-sm active:scale-[0.97] transition-all">
-                <ArrowLeft size={16} />
-                <span className="text-[10px] font-black">العودة</span>
-              </button>
-            </div>
-          </div>
+          <SelectionGrid view={view} gridItems={gridItems} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
+            currentCurriculum={selectedCurriculum} currentLevel={selectedLevel} selectedGrade={selectedGrade} termLabel={termLabel}
+            currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
+            filteredCount={filteredPosts.length} goBack={goBack}
+            onSelectType={setSelectedType} onSelectCurriculum={setSelectedCurriculum} onSelectLevel={setSelectedLevel}
+            onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} isMobile />
         )}
       </main>
 
-      {/* ─── Desktop Layout ─── */}
+      {/* Desktop */}
       <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
           <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-indigo-200/20 to-transparent" />
         </div>
-
         <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
           {isHeroView ? (
-            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
-              <div className="w-full lg:w-[55%] text-center lg:text-right">
-                <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
-                  <BookOpen size={13} className="text-indigo-600 dark:text-indigo-400" />
-                  <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">
-                    {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
-                  </span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  {view === 'types' ? (
-                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">دارين</span> التعليمية</>
-                  ) : view === 'curriculums' ? (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المنهج</span></>
-                  ) : (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المرحلة</span></>
-                  )}
-                </h1>
-
-                <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
-                  {view === 'types'
-                    ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت و قطر والامارات والسعودية'
-                    : view === 'curriculums'
-                      ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                      : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-                </p>
-
-                <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                  {gridItems.map((item: GridItem, i: number) => (
-                    <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
-                      <button
-                        onClick={() => {
-                          setSearchParams(prev => {
-                            const next = new URLSearchParams(prev);
-                            if (view === 'types') {
-                              if (directTypes.includes(item.id)) {
-                                next.set('type', item.id); next.set('view', 'results'); ['curriculum','level','grade','term','subject'].forEach(k => next.delete(k));
-                              } else {
-                                next.set('type', item.id); next.set('view', 'curriculums'); ['level','grade','term','subject'].forEach(k => next.delete(k));
-                              }
-                            } else if (view === 'curriculums') { next.set('curriculum', item.id); next.set('view', 'grades'); ['grade','term','subject'].forEach(k => next.delete(k)); }
-                            else { next.set('level', item.id); next.set('view', 'classrooms'); ['term','subject'].forEach(k => next.delete(k)); }
-                            return next;
-                          });
-                        }}
-                        className={cn(
-                          "relative w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl text-white overflow-hidden transition-all duration-300 active:scale-[0.97] shadow-lg",
-                          "bg-gradient-to-br", item.gradient
-                        )}
-                      >
-                        <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors duration-300" />
-                        <item.icon size={20} className="relative z-10" />
-                        <span className="relative z-10 text-xs sm:text-sm font-black text-center leading-tight">{item.name}</span>
-                        {item.sub && <span className="relative z-10 text-[9px] text-white/70 font-bold">{item.sub}</span>}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-left-8 duration-700 delay-300">
-                <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center">
-                  <div className="absolute inset-4 border border-dashed border-indigo-500/15 rounded-full" />
-                  <div className="absolute inset-12 border border-dashed border-purple-500/8 rounded-full" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/8 to-purple-600/8 rounded-full blur-3xl" />
-                  <picture>
-                    <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
-                    <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
-                    <img src="/dareen_books_portal_v3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
-                      className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.15)]" />
-                  </picture>
-                </div>
-              </div>
-            </div>
+            <DesktopHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
           ) : view === 'results' ? (
             <div className="max-w-6xl mx-auto">
-              <div className="flex items-center gap-2 mb-6 text-xs sm:text-sm font-bold text-slate-400 flex-wrap">
-                {[
-                  { label: 'الرئيسية', onClick: () => setView('types') },
-                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
-                  ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
-                  ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
-                  ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
-                ].map((crumb, i, arr) => (
-                  <span key={i} className="flex items-center gap-2">
-                    {i > 0 && <ChevronLeft size={12} className="text-slate-300" />}
-                    <button onClick={crumb.onClick}
-                      className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}
-                    >{crumb.label}</button>
-                  </span>
-                ))}
-                {selectedSubject && <><ChevronLeft size={12} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
-              </div>
-
-              <div className="flex gap-2 mb-8">
-                {!isDirectType && (
-                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-black rounded-xl transition-all">
-                  <ArrowLeft size={14} /><span>تغيير المادة</span>
-                </button>
-                )}
-                <button onClick={() => setView('types')} className="w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
-                  <Library size={14} /><span>الرئيسية</span>
-                </button>
-              </div>
-
-              {loading ? (
-                <div className="flex flex-col items-center justify-center py-24">
-                  <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-4" />
-                  <span className="text-xs font-black text-slate-400">جاري التحميل...</span>
-                </div>
-              ) : filteredPosts.length === 0 ? (
-                <div className="text-center py-24 animate-in fade-in duration-500">
-                  <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
-                    <BookOpen size={28} className="text-slate-300 dark:text-slate-600" />
+              <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} />
+              {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {filteredPosts.map((post, i) => renderPostCard(post, i))}
                   </div>
-                  <p className="text-slate-500 font-black text-lg mb-1">لا يوجد محتوى بعد</p>
-                  <p className="text-slate-400 text-sm font-medium">سيتم إضافة المحتوى قريباً لهذا التصنيف</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {filteredPosts.map((post, i) => {
-                    const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
-                    const isCoursesStyle = selectedType === 'more';
-                    const badgeGradient = 'from-rose-500 to-pink-600';
-                    const cardStyle = selectedType === 'foundation'
-                      ? {
-                          gradient: 'from-amber-500 to-orange-600',
-                          badge: 'مذكرة تأسيسية',
-                          icon: Zap,
-                          hoverShadow: 'hover:shadow-xl hover:shadow-amber-500/5 dark:hover:shadow-amber-500/5',
-                          sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300',
-                          fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20',
-                        }
-                      : {
-                          gradient: 'from-violet-500 to-purple-600',
-                          badge: 'مذكرة',
-                          icon: FileText,
-                          hoverShadow: 'hover:shadow-xl hover:shadow-violet-500/5 dark:hover:shadow-violet-500/5',
-                          sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300',
-                          fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20',
-                        };
-                    return isFoundationStyle ? (
-                    <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <div className={`group bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 shadow-sm ${cardStyle.hoverShadow} transition-all duration-500 h-full flex flex-col relative`}>
-                      <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
-                        <div className="p-5 flex flex-col flex-1">
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black text-white bg-gradient-to-r ${cardStyle.gradient} shadow-sm`}>
-                              <cardStyle.icon size={11} />
-                              {cardStyle.badge}
-                            </span>
-                          {(post.fileSize || post.file_size) && (
-                            <span className={`shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full ${cardStyle.fileSizeBadge} text-[10px] font-bold border`}>
-                              <FileText size={11} />
-                              {post.fileSize || post.file_size}
-                            </span>
-                          )}
-                          </div>
-                          <h3 className="text-base sm:text-lg font-heading font-black text-slate-900 dark:text-slate-50 leading-snug mb-2">{post.title}</h3>
-                          {post.source && (
-                            <a href={post.source} target="_blank" rel="noopener noreferrer"
-                              className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${cardStyle.sourceText} transition-colors w-fit mb-3`}
-                              onClick={(e) => e.stopPropagation()}>
-                              <ExternalLink size={12} />
-                              <span className="truncate max-w-[200px]" dir="ltr">{post.source}</span>
-                            </a>
-                          )}
-                          <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
-                          <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
-                          <div className="flex flex-col gap-2">
-                            <div className="flex gap-2">
-                              {post.downloadLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, post.id, e)}
-                                disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
-                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Download size={14} />
-                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
-                              </button>
-                            )}
-                            {post.watchLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, post.id, e)}
-                                disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
-                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Eye size={14} />
-                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
-                              </button>
-                            )}
-                          </div>
-                          <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
-                            <span>اقرأ المقال</span>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    ) : (
-                    <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                        className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
-                        <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-slate-50 dark:bg-slate-800/30`}>
-                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'object-cover group-hover:scale-105'}`} />
-                          <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-slate-900' : 'from-black/40'} to-transparent`} />
-                          <div className="absolute top-3 right-3 z-10">
-                            <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400'}`}>{subjectNameMap[post.subject] || post.category}</span>
-                          </div>
-                        </div>
-                        <div className="p-4 flex flex-col flex-1">
-                          <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
-                            <span className="flex items-center gap-1"><Calendar size={12} /><span>{post.date?.split('T')[0]}</span></span>
-                            {isCoursesStyle && (
-                              <span className="flex items-center gap-0.5"><Flame size={12} className="text-orange-500" /><span>{post.views ?? 0}</span></span>
-                            )}
-                          </div>
-                          <h2 className="text-sm sm:text-base font-heading font-black leading-snug mb-2 text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.title}</h2>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                          {isCoursesStyle ? (
-                            <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]">
-                              <ArrowLeft size={14} />
-                              <span>اقرأ المقال</span>
-                            </div>
-                          ) : (
-                            <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                              <span>اقرأ المقال</span>
-                              <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                    );
-                  })}
-                </div>
-                {page < totalPages && (
-                  <div className="flex justify-center mt-8">
-                    <button onClick={loadMore} disabled={loadingMore}
-                      className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-lg">
-                      {loadingMore ? <Loader2 size={16} className="animate-spin" /> : null}
-                      <span>{loadingMore ? 'جاري التحميل...' : 'تحميل المزيد'}</span>
-                    </button>
-                  </div>
-                )}
+                  <LoadMore page={page} totalPages={totalPages} loading={loadingMore} onLoadMore={loadMore} />
+                </>
               )}
             </div>
           ) : (
-            <>
-              <div className="text-center max-w-3xl mx-auto mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-2xl mb-4">
-                  <BookOpen size={14} className="text-indigo-600 dark:text-indigo-400" />
-                  <span className="text-[11px] font-bold text-indigo-600 dark:text-indigo-300">
-                    {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                      : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
-                        : `المواد — ${termLabel}`}
-                  </span>
-                </div>
-                <h2 className="text-2xl font-black text-slate-900 dark:text-slate-50 mb-3">
-                  {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">الصف الدراسي</span></>)
-                    : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">الترم</span></>)
-                      : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المادة</span></>)}
-                </h2>
-                <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-                  {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
-                    : view === 'terms' ? 'اختر الترم الدراسي'
-                      : `${filteredPosts.length} نتيجة متاحة`}
-                </p>
-              </div>
-
-              <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                  {view === 'classrooms' && currentClassrooms.map((cls, i) => (
-                    <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', cls); n.set('view', 'terms'); n.delete('subject'); return n; }); }}
-                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white border border-white/5 shadow-lg active:scale-[0.97] transition-all">
-                        <GraduationCap size={24} />
-                        <span className="text-sm font-black text-center">الصف {gradeNames[cls] || cls}</span>
-                      </button>
-                    </div>
-                  ))}
-
-                  {view === 'terms' && (
-                    <>
-                      <div className="animate-in zoom-in-95 duration-500">
-                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '1'); n.set('view', 'subjects'); return n; }); }}
-                          className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg active:scale-[0.97] transition-all">
-                          <BookOpen size={24} />
-                          <span className="text-sm font-black">ترم أول</span>
-                        </button>
-                      </div>
-                      <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: '60ms' }}>
-                  <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', '2'); n.set('view', 'subjects'); return n; }); }}
-                          className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-lg active:scale-[0.97] transition-all">
-                          <BookOpen size={24} />
-                          <span className="text-sm font-black">ترم ثاني</span>
-                        </button>
-                      </div>
-                    </>
-                  )}
-
-                  {view === 'subjects' && currentSubjects.map((subj, i) => (
-                    <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-                      <button onClick={() => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', subj.id); n.set('view', 'results'); return n; }); window.scrollTo(0, 0); }}
-                        className={cn("w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br text-white shadow-lg active:scale-[0.97] transition-all", subj.gradient)}>
-                        <span className="text-sm font-black text-center">{subj.name}</span>
-                      </button>
-                    </div>
-                  ))}
-
-                  <div className="animate-in zoom-in-95 duration-500">
-                    <button onClick={goBack}
-                      className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 shadow-sm active:scale-[0.97] transition-all">
-                      <ArrowLeft size={22} />
-                      <span className="text-sm font-black">العودة</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </>
+            <SelectionGrid view={view} gridItems={gridItems} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
+              currentCurriculum={selectedCurriculum} currentLevel={selectedLevel} selectedGrade={selectedGrade} termLabel={termLabel}
+              currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
+              filteredCount={filteredPosts.length} goBack={goBack}
+              onSelectType={setSelectedType} onSelectCurriculum={setSelectedCurriculum} onSelectLevel={setSelectedLevel}
+              onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} />
           )}
         </div>
       </main>

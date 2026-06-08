@@ -39,3 +39,18 @@ module.exports.resetMetrics = () => {
     metrics.slow = [];
     metrics.errors = 0;
 };
+
+module.exports.adminNotifyOnError = (limitPerMinute = 10) => {
+    let counter = 0;
+    let lastReset = Date.now();
+    return (err, req, res, next) => {
+        const now = Date.now();
+        if (now - lastReset > 60000) { counter = 0; lastReset = now; }
+        counter++;
+        if (counter <= limitPerMinute) {
+            const logger = require('../utils/logger');
+            logger.error('Auto-notified error', err, { path: req.path, method: req.method });
+        }
+        next(err);
+    };
+};

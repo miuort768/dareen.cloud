@@ -124,14 +124,26 @@ async function startServer() {
         });
         app.use('/api/', limiter);
 
-        const authLimiter = rateLimit({
+        const strictLimiter = rateLimit({
             windowMs: 15 * 60 * 1000,
             max: 20,
-            message: { error: 'محاولات تسجيل دخول كثيرة. حاول بعد 15 دقيقة.' },
+            message: { error: 'محاولات كثيرة. حاول بعد 15 دقيقة.' },
             standardHeaders: true,
             legacyHeaders: false,
         });
-        apiRouter.use('/auth/login', authLimiter);
+        const moderateLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 100,
+            message: { error: 'محاولات كثيرة. حاول بعد 15 دقيقة.' },
+            standardHeaders: true,
+            legacyHeaders: false,
+        });
+        apiRouter.use('/auth/login', strictLimiter);
+        apiRouter.use('/auth/register', strictLimiter);
+        apiRouter.use('/auth/forgot-password', strictLimiter);
+        apiRouter.use('/auth/reset-password', strictLimiter);
+        apiRouter.use('/auth/verify', moderateLimiter);
+        apiRouter.use('/public-chat', moderateLimiter);
 
         const apiRouter = express.Router();
         const { authMiddleware, checkRole } = require('./middleware/auth');
@@ -226,10 +238,13 @@ async function startServer() {
         app.use((err, req, res, next) => {
             const isDev = process.env.NODE_ENV === 'development';
             logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
-            res.status(500).json({
-                error: 'Internal Server Error',
-                message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
-                details: isDev ? err.message : undefined
+            const { adminNotifyOnError } = require('./middleware/monitoring');
+            adminNotifyOnError()(err, req, res, () => {
+                res.status(500).json({
+                    error: 'Internal Server Error',
+                    message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
+                    details: isDev ? err.message : undefined
+                });
             });
         });
 
