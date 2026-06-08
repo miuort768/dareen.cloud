@@ -2,23 +2,25 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-// JWT_SECRET startup validation
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your-super-secret-jwt-key-change-this-in-production') {
     console.error('FATAL: JWT_SECRET is not set or is still the default value. Set a strong secret in server/.env');
     process.exit(1);
 }
 
 const express = require('express');
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
 const cors = require('cors');
 const compression = require('compression');
 const prerender = require('prerender-node');
+const helmet = require('helmet');
+const { Server } = require('socket.io');
+const http = require('http');
 
 const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
-const helmet = require('helmet');
+const monitoringMiddleware = require('./middleware/monitoring');
 const { setupDatabase } = require('./db_setup');
+const { getDb } = require('./utils/db');
+const logger = require('./utils/logger');
 
 const { authRouter } = require('./routes/auth');
 const { studentRouter } = require('./routes/students');
@@ -44,52 +46,35 @@ const blogRouter = require('./routes/blog');
 const liveRouter = require('./routes/live');
 const trialSessionsRouter = require('./routes/trial_sessions');
 const teacherAvailabilityRouter = require('./routes/teacher_availability');
-const { v4: uuidv4 } = require('uuid');
-
-
-
-const { getDb } = require('./utils/db');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Global Compression (Lightning Fast Responses)
 app.use(compression());
+
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'https://dareen.cloud',
+    'https://www.dareen.cloud'
+].filter(Boolean);
+
+if (process.env.NODE_ENV !== 'production') {
+    allowedOrigins.push(
+        'http://localhost:3001', 'http://localhost:5173',
+        'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'
+    );
+}
+
 app.use(cors({
-    origin: function (origin, callback) {
-        const isProd = process.env.NODE_ENV === 'production';
-        const allowedOrigins = [
-            process.env.FRONTEND_URL,
-            'https://dareen.cloud',
-            'https://www.dareen.cloud'
-        ];
-        
-        if (!isProd) {
-            allowedOrigins.push(
-                'http://localhost:3001',
-                'http://localhost:5173',
-                'http://localhost:5174',
-                'http://localhost:5175',
-                'http://localhost:5176'
-            );
-        }
-
-        const filteredOrigins = allowedOrigins.filter(Boolean); // Remove undefined/null
-
-        // Allow requests with no origin (same-origin via Nginx proxy)
+    origin: (origin, callback) => {
         if (!origin) return callback(null, true);
-
-        if (filteredOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            console.log('Blocked by CORS:', origin); // Log blocked origins
-            callback(new Error('Not allowed by CORS'));
-        }
+        if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+        console.log('Blocked by CORS:', origin);
+        callback(new Error('Not allowed by CORS'));
     },
     credentials: true
 }));
 
-// WWW → non-www canonical redirect
 app.use((req, res, next) => {
     const host = req.headers.host;
     if (host && host.startsWith('www.')) {
@@ -98,89 +83,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// Health check endpoint
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Automated SEO Sitemap Generator — includes blog posts from DB
-app.get('/sitemap.xml', async (req, res) => {
-    try {
-        const baseUrl = 'https://dareen.cloud';
-        const date = new Date().toISOString().split('T')[0];
-        
-        const routes = [
-            { url: '/', priority: '1.0', changefreq: 'daily' },
-            { url: '/courses', priority: '0.9', changefreq: 'weekly' },
-            { url: '/about', priority: '0.8', changefreq: 'monthly' },
-            { url: '/contact', priority: '0.8', changefreq: 'monthly' },
-            { url: '/books', priority: '0.9', changefreq: 'weekly' },
-            { url: '/jobs', priority: '0.5', changefreq: 'weekly' },
-            { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
-            { url: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
-            { url: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
-            { url: '/terms-of-work', priority: '0.3', changefreq: 'yearly' },
-            { url: '/login', priority: '0.5', changefreq: 'monthly' }
-        ];
-
-        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-        
-        routes.forEach(route => {
-            xml += '  <url>\n';
-            xml += `    <loc>${baseUrl}${route.url}</loc>\n`;
-            xml += `    <lastmod>${date}</lastmod>\n`;
-            xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
-            xml += `    <priority>${route.priority}</priority>\n`;
-            xml += '  </url>\n';
-        });
-
-        // Add blog posts from DB
-        try {
-            const db = await getDb();
-            const posts = await db.all("SELECT slug, date FROM blog_posts");
-            posts.forEach((post) => {
-                const postDate = post.date ? post.date.split('T')[0] : date;
-                xml += '  <url>\n';
-                xml += `    <loc>${baseUrl}/books/${post.slug}</loc>\n`;
-                xml += `    <lastmod>${postDate}</lastmod>\n`;
-                xml += '    <changefreq>monthly</changefreq>\n';
-                xml += '    <priority>0.7</priority>\n';
-                xml += '  </url>\n';
-            });
-        } catch (dbErr) {
-            console.warn('Could not fetch blog posts for sitemap:', dbErr.message);
-        }
-        
-        xml += '</urlset>';
-
-        res.header('Content-Type', 'application/xml');
-        res.send(xml);
-    } catch (err) {
-        console.error('Sitemap generation error:', err);
-        res.status(500).end();
-    }
-});
-
-// Automated SEO Robots.txt
-app.get('/robots.txt', (req, res) => {
-    res.type('text/plain');
-    res.send(`User-agent: *
-Allow: /
-Disallow: /dashboard
-Disallow: /admin
-Disallow: /api/
-Disallow: /chat
-Disallow: /settings
-Disallow: /teacher/
-Disallow: /profile
-Disallow: /classroom
-
-Sitemap: https://dareen.cloud/sitemap.xml
-`);
-});
-
-// Production-Grade Security Headers with Helmet
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
@@ -193,36 +99,23 @@ app.use(helmet({
     crossOriginEmbedderPolicy: false
 }));
 
-// Performance Monitoring Middleware
-app.use((req, res, next) => {
-    const start = Date.now();
-    res.on('finish', () => {
-        const duration = Date.now() - start;
-        if (duration > 500) {
-            console.warn(`[PERF WARNING] Slow request: ${req.method} ${req.path} took ${duration}ms`);
-        }
-    });
-    next();
-});
-
+app.use(monitoringMiddleware);
 app.use(express.json({ limit: '10mb' }));
+
+require('./routes/seo')(app);
 
 async function startServer() {
     try {
-        const db = await getDb();
+        await getDb();
         console.log('Database initialized successfully');
-
-        // Run DB Setup/Migration on start
         await setupDatabase();
 
         app.use(dbMiddleware);
-
         app.set('trust proxy', 1);
 
-        // Security: Rate Limiting - Optimized for High Traffic
         const rateLimit = require('express-rate-limit');
         const limiter = rateLimit({
-            windowMs: 15 * 60 * 1000, // 15 minutes
+            windowMs: 15 * 60 * 1000,
             max: process.env.NODE_ENV === 'development' ? 100000 : 3000,
             message: { error: 'Too many requests, please try again later.' },
             standardHeaders: true,
@@ -231,26 +124,29 @@ async function startServer() {
         });
         app.use('/api/', limiter);
 
-        const logger = require('./utils/logger');
+        const authLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 20,
+            message: { error: 'محاولات تسجيل دخول كثيرة. حاول بعد 15 دقيقة.' },
+            standardHeaders: true,
+            legacyHeaders: false,
+        });
+        apiRouter.use('/auth/login', authLimiter);
 
-        // Setup API Routes
         const apiRouter = express.Router();
-
         const { authMiddleware, checkRole } = require('./middleware/auth');
+        const { isAdmin } = require('./middleware/permissions');
 
         apiRouter.use('/auth', authRouter);
         apiRouter.use('/blog', blogRouter);
 
-        // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {
                 const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    [
-                        'maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 
-                        'notifications_enabled', 'auto_backup',
-                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-                        'reminder_minutes_before', 'library_whatsapp', 'library_telegram'
-                    ]);
+                    ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
+                     'notifications_enabled', 'auto_backup', 'chatbot_enabled',
+                     'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
+                     'reminder_minutes_before', 'library_whatsapp', 'library_telegram']);
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);
                 res.json(settingsMap);
@@ -259,17 +155,12 @@ async function startServer() {
             }
         });
 
-        // Public Chat (Guest accessible)
         apiRouter.use('/public-chat', publicChatRouter);
 
-        // Public Job Applications
         const jobsRouter = require('./routes/jobs');
         apiRouter.use('/jobs', jobsRouter);
 
-        // Apply authentication to ALL other API routes
         apiRouter.use(authMiddleware);
-
-        // Deep Sanitization & Auditing for Authenticated Requests
         apiRouter.use(sanitizeInput);
         apiRouter.use(activityAuditor);
 
@@ -281,12 +172,11 @@ async function startServer() {
         apiRouter.use('/student-portal', studentPortalRouter);
         apiRouter.use('/sessions', sessionRouter);
         apiRouter.use('/notifications', (req, res, next) => {
-            // Inject sendPushToUser into notification router context if needed
             req.sendPushToUser = sendPushToUser;
             notificationRouter(req, res, next);
         });
-        apiRouter.use('/system', checkRole(['admin']), systemRouter);
-        apiRouter.use('/finance', checkRole(['admin']), financeRouter);
+        apiRouter.use('/system', isAdmin, systemRouter);
+        apiRouter.use('/finance', isAdmin, financeRouter);
         apiRouter.use('/tasks', tasksRouter);
         apiRouter.use('/active-sessions', activeSessionsRouter);
         apiRouter.use('/chat', chatRouter);
@@ -298,51 +188,34 @@ async function startServer() {
         apiRouter.use('/trial-sessions', trialSessionsRouter);
         apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
 
-
-        // Compatibility middleware for invoices inside API
-        apiRouter.use('/studentInvoices', checkRole(['admin']), (req, res, next) => {
-            if (req.url === '' || req.url === '/') {
-                req.url = '/student';
-            } else {
-                req.url = '/student' + req.url;
-            }
+        apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
+            req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;
             invoiceRouter(req, res, next);
         });
 
-        apiRouter.use('/invoices', checkRole(['admin']), (req, res, next) => {
-            if (req.url === '' || req.url === '/') {
-                req.url = '/teacher';
-            } else if (req.url.startsWith('/teacher') || req.url.startsWith('/student')) {
-                // If the user already put /teacher or /student (e.g. /invoices/student), leave it
-            } else {
-                // otherwise default to teacher
-                req.url = '/teacher' + req.url;
-            }
+        apiRouter.use('/invoices', isAdmin, (req, res, next) => {
+            if (req.url === '' || req.url === '/') req.url = '/teacher';
+            else if (!req.url.startsWith('/teacher') && !req.url.startsWith('/student')) req.url = '/teacher' + req.url;
             invoiceRouter(req, res, next);
         });
 
-        // Compatibility for /users inside API (Admin only)
-        apiRouter.use('/users', checkRole(['admin']), (req, res, next) => {
+        apiRouter.use('/users', isAdmin, (req, res, next) => {
             req.url = '/users' + req.url;
             systemRouter(req, res, next);
         });
 
-        // API 404 handler (Issue S34)
         apiRouter.use((req, res) => {
             res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
         });
 
-        // Serve static files from the React app with long-term caching
         app.use(express.static(path.join(__dirname, '../dist'), {
-            maxAge: '1y', // Cache for 1 year (for hashed files like those from Vite)
+            maxAge: '1y',
             immutable: true,
             index: false,
-            setHeaders: (res, path) => {
-                if (path.endsWith('.html')) {
-                    // Don't cache HTML files as they contain references to new assets
+            setHeaders: (res, filePath) => {
+                if (filePath.endsWith('.html')) {
                     res.setHeader('Cache-Control', 'no-cache');
-                } else if (path.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
-                    // Aggressive caching for assets
+                } else if (filePath.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
                     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
                 }
             }
@@ -350,24 +223,16 @@ async function startServer() {
 
         app.use('/api', apiRouter);
 
-        // Global Error Handler
         app.use((err, req, res, next) => {
             const isDev = process.env.NODE_ENV === 'development';
-            logger.error('Unhandled Server Error', err, { 
-                path: req.path,
-                user: req.user?.username || 'Guest'
-            });
-            
-            res.status(500).json({ 
-                error: 'Internal Server Error', 
+            logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
+            res.status(500).json({
+                error: 'Internal Server Error',
                 message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
-                details: isDev ? err.message : undefined 
+                details: isDev ? err.message : undefined
             });
         });
 
-        // Prerender middleware: serves fully-rendered HTML to search engine crawlers
-        // (Googlebot, Bingbot, etc.) via prerender.io service.
-        // Regular users get the normal SPA behavior unaffected.
         prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
         prerender.set('crawlerUserAgents', [
             'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
@@ -380,418 +245,40 @@ async function startServer() {
         prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
         app.use(prerender);
 
-        // OG tag injection for blog post pages: serves index.html with correct OG tags
-        // so social media crawlers (WhatsApp, Facebook, Twitter) see the article image/title/desc.
-        // Requires the React build to exist at ../dist/index.html (created by 'npm run build').
-        app.get('/books/:slug', async (req, res, next) => {
-            try {
-                const post = req.db ? await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]) : null;
-                if (post) {
-                    const html = fs.readFileSync(path.join(__dirname, '../dist/index.html'), 'utf-8');
-                    const esc = require('escape-html');
-                    const absImage = post.coverImage ? (post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`) : '';
-                    const pageUrl = `https://dareen.cloud/books/${post.slug}`;
-                    const fullTitle = `${post.title} | دارين السابعة للتعليم والتدريب`;
-                    const excerpt = esc(post.excerpt || '');
-                    const safeTitle = esc(fullTitle);
-                    const safeImage = esc(absImage);
-                    const safeUrl = esc(pageUrl);
-
-                    const modified = html
-                        .replace(/<title>.*?<\/title>/, `<title>${safeTitle}</title>`)
-                        .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${excerpt}"`)
-                        .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${safeTitle}"`)
-                        .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${excerpt}"`)
-                        .replace(/<meta property="og:image" content=".*?"/, `<meta property="og:image" content="${safeImage}"`)
-                        .replace(/<meta property="og:url" content=".*?"/, `<meta property="og:url" content="${safeUrl}"`)
-                        .replace(/<meta property="og:type" content=".*?"/, `<meta property="og:type" content="article"`)
-                        .replace(/<meta name="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${safeTitle}"`)
-                        .replace(/<meta name="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${excerpt}"`)
-                        .replace(/<meta name="twitter:image" content=".*?"/, `<meta name="twitter:image" content="${safeImage}"`);
-
-                    res.send(modified);
-                    return;
-                }
-            } catch (err) {
-                console.error('OG injection error:', err);
-            }
-            next();
-        });
-
-        // The SPA catch-all handler: serve index.html for all non-asset routes
-        // so React Router handles routing. Use 404 status for unknown paths to
-        // signal to search engines that the page doesn't exist.
         const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs']);
         app.get(/(.*)/, (req, res) => {
             const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');
-            const status = isKnown ? 200 : 404;
-            res.status(status).sendFile(path.join(__dirname, '../dist/index.html'));
+            res.status(isKnown ? 200 : 404).sendFile(path.join(__dirname, '../dist/index.html'));
         });
 
-        const http = require('http');
-        const { Server } = require('socket.io');
         const server = http.createServer(app);
         const io = new Server(server, {
             path: '/api/socket.io',
             cors: {
-                origin: function (origin, callback) {
-                    const isProd = process.env.NODE_ENV === 'production';
-                    const allowedOrigins = [
-                        process.env.FRONTEND_URL,
-                        'https://dareen.cloud',
-                        'https://www.dareen.cloud'
-                    ];
-                    if (!isProd) {
-                        allowedOrigins.push(
-                            'http://localhost:3001',
-                            'http://localhost:5173',
-                            'http://localhost:5174',
-                            'http://localhost:5175',
-                            'http://localhost:5176'
-                        );
-                    }
-                    const filtered = allowedOrigins.filter(Boolean);
-                    if (!origin || filtered.indexOf(origin) !== -1) {
-                        callback(null, true);
-                    } else {
-                        callback(new Error('Not allowed by CORS'));
-                    }
+                origin: (origin, callback) => {
+                    if (!origin || allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+                    callback(new Error('Not allowed by CORS'));
                 },
                 methods: ["GET", "POST"]
             },
             pingTimeout: 60000,
             pingInterval: 25000
         });
-
-        const activeSessions = new Map(); // studentId -> sessionData
-
-        // Make io accessible to routers
         app.set('socketio', io);
-        app.set('activeSessions', activeSessions);
 
-
-
-        const jwt = require('jsonwebtoken');
-
-
-        // Socket.io Middleware for Authentication
-        io.use((socket, next) => {
-            const token = socket.handshake.auth.token || socket.handshake.query.token;
-            if (!token) return next(new Error('Authentication error'));
-
-            try {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                socket.data.user = decoded;
-                next();
-            } catch (err) {
-                next(new Error('Authentication error'));
-            }
-        });
-
-
-        io.on('connection', (socket) => {
-            const user = socket.data.user;
-            const userId = user?.id;
-
-            console.log(`🔌 Socket Connected: ${socket.id} (User: ${user?.name || 'Anonymous'}, ID: ${userId})`);
-
-            if (userId) {
-                const userRoom = `user_${userId}`;
-                socket.join(userRoom);
-                if (user?.role === 'admin' || user?.permissions?.includes('*')) {
-                    socket.join('admin_room');
-                }
-                console.log(`   ✅ Joined Personal Room: ${userRoom}`);
-
-                if (user?.role === 'student' || user?.role === 'user') {
-                    const activeSession = activeSessions.get(String(userId));
-                    if (activeSession) {
-                        console.log(`   💎 [IO] Re-sending persistent session invite to student ${userId}`);
-                        socket.emit('session_invite', activeSession);
-                    }
-                }
-            }
-
-            socket.on('join_conversation', async (conversationId) => {
-                if (!conversationId || !userId) return;
-                try {
-                    const db = await getDb();
-                    const member = await db.get(
-                        'SELECT 1 FROM chat_members WHERE conversationId = ? AND userId = ?',
-                        [conversationId, userId]
-                    );
-                    if (member || user?.role === 'admin') {
-                        socket.join(conversationId);
-                        console.log(`   👥 User ${userId} joined room: ${conversationId}`);
-                    } else {
-                        console.log(`   ⛔ User ${userId} denied join to room: ${conversationId}`);
-                    }
-                } catch (err) {
-                    console.error(`   ❌ Error verifying conversation membership:`, err);
-                }
-            });
-
-            socket.on('leave_conversation', (conversationId) => {
-                socket.leave(conversationId);
-                console.log(`   🚶 User ${userId} left room: ${conversationId}`);
-            });
-
-            // Note: do NOT register two 'disconnect' handlers for same socket.
-            // The main disconnect handler is below at the end of io.on('connection')
-
-            socket.on('join_personal_room', (id) => {
-                if (id === userId) {
-                    socket.join(`user_${id}`);
-                    console.log(`   🔄 Re-joined Personal Room: user_${id}`);
-                }
-            });
-
-            const typingThrottle = new Map();
-            socket.on('typing', (data) => {
-                if (!data?.conversationId || !userId) return;
-                const key = `${userId}:${data.conversationId}`;
-                const now = Date.now();
-                const last = typingThrottle.get(key);
-                if (last && now - last < 2000) return;
-                typingThrottle.set(key, now);
-                socket.to(data.conversationId).emit('typing', data);
-            });
-
-            // Collaborative Whiteboard events
-            const drawingThrottle = new Map();
-            socket.on('drawing', (data) => {
-                if (!data?.conversationId || !userId) return;
-                const key = `${userId}:${data.conversationId}`;
-                const now = Date.now();
-                const last = drawingThrottle.get(key);
-                if (last && now - last < 200) return;
-                drawingThrottle.set(key, now);
-                socket.to(data.conversationId).emit('drawing', data);
-            });
-
-            socket.on('whiteboard_state', (data) => {
-                if (!data?.conversationId || !userId) return;
-                socket.to(data.conversationId).emit('whiteboard_state', data);
-            });
-
-            socket.on('clear_whiteboard', (data) => {
-                if (!data?.conversationId || !userId) return;
-                socket.to(data.conversationId).emit('clear_whiteboard', data);
-            });
-
-            // Simple-Peer Meeting Signals (New System)
-            const isTeacherOrAdmin = user?.role === 'teacher' || user?.role === 'admin' || user?.permissions?.includes('*');
-
-            socket.on('teacher_ready', (data) => {
-                if (!isTeacherOrAdmin) return;
-                socket.to(data.conversationId).emit('teacher_ready', data);
-                io.in(data.conversationId).emit('meeting_started', {
-                    conversationId: data.conversationId,
-                    teacherId: data.teacherId,
-                    teacherName: data.teacherName,
-                    type: data.type
-                });
-                console.log(`   ✅ Teacher ready in room ${data.conversationId}`);
-            });
-
-            socket.on('teacher_stopped', async (data) => {
-                if (!isTeacherOrAdmin) return;
-                try {
-                    const sessionId = data.conversationId?.replace(/^live_session_/, '');
-                    if (sessionId) {
-                        const db = await getDb();
-                        const result = await db.run(
-                            'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
-                            [sessionId, userId]
-                        );
-                        if (result.changes === 0) {
-                            console.log(`   ⚠️ No live session found to end: ${sessionId}`);
-                        }
-                    }
-                    socket.to(data.conversationId).emit('teacher_stopped', data);
-                    io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
-                    console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
-                } catch (err) {
-                    console.error('[Live] Failed to end session in DB:', err);
-                }
-            });
-
-
-            socket.on('student_joined', (data) => {
-                // Student joined, request teacher status
-                socket.to(data.conversationId).emit('student_joined', data);
-                console.log(`   👋 Student ${data.studentId} joined room ${data.conversationId}`);
-            });
-
-            socket.on('student_request', (data) => {
-                // Student sends WebRTC offer to teacher
-                socket.to(data.conversationId).emit('student_request', data);
-                console.log(`   📞 Student ${data.studentId} requesting connection`);
-            });
-
-            socket.on('teacher_signal', (data) => {
-                // Teacher sends WebRTC answer to specific student
-                socket.to(`user_${data.studentId}`).emit('teacher_signal', data);
-                console.log(`   📡 Teacher sending signal to student ${data.studentId}`);
-            });
-
-            // --- New: Direct Session Invites ---
-            socket.on('call_student', async (data) => {
-                if (!isTeacherOrAdmin) return;
-                const studentIdStr = String(data.studentId);
-                const targetRoom = `user_${studentIdStr}`;
-
-                try {
-                    const db = await getDb();
-                    const student = await db.get('SELECT id, parentPhone FROM students WHERE id = ?', [studentIdStr]);
-                    if (!student) {
-                        console.log(`   ⛔ call_student: Student ${studentIdStr} not found`);
-                        socket.emit('error_message', { message: 'الطالب غير موجود في النظام' });
-                        return;
-                    }
-
-                    const sessionData = {
-                        teacherId: user.id,
-                        teacherName: user.name,
-                        teacherSocketId: socket.id, 
-                        subject: data.subject,
-                        type: data.type || 'video',
-                        sessionId: data.sessionId,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    activeSessions.set(studentIdStr, sessionData);
-                    // Auto-expire session invite after 5 minutes
-                    const timeoutId = setTimeout(() => {
-                        if (activeSessions.get(studentIdStr)?.teacherSocketId === socket.id) {
-                            activeSessions.delete(studentIdStr);
-                        }
-                    }, 300000);
-                    sessionData._timeoutId = timeoutId;
-                    io.to(targetRoom).emit('session_invite', sessionData);
-
-                    // --- 🔔 Also create a persistent database notification ---
-                    try {
-                        // Create notification for student
-                        const studentNotifId = uuidv4();
-                        const msg = `بدأت المعلمة ${user.name} حصة ${data.subject} الآن. يمكنك الانضمام مباشرة!`;
-                        
-                        await db.run(
-                            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                            [studentNotifId, user.id, studentIdStr, user.name, 'حصة مباشرة بدأت!', msg, 'live', new Date().toISOString(), 0, '/student-dashboard']
-                        );
-                        io.to(targetRoom).emit('notification', { id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', time: new Date().toISOString() });
-
-                        // Find Parent and create notification for them too
-                        if (student.parentPhone) {
-                            const parent = await db.get('SELECT id FROM users WHERE phone = ? AND role = ?', [student.parentPhone, 'parent']);
-                            if (parent) {
-                                const parentNotifId = uuidv4();
-                                const parentMsg = `بدأت الحصة المباشرة لابنكم/ابنتكم في مادة ${data.subject} مع المعلمة ${user.name}.`;
-                                await db.run(
-                                    `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                                    [parentNotifId, user.id, parent.id, user.name, 'تنبيه حصة مباشرة لابنكم', parentMsg, 'live', new Date().toISOString(), 0, '/parent-dashboard']
-                                );
-                                io.to(`user_${parent.id}`).emit('notification', { id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', time: new Date().toISOString() });
-                            }
-                        }
-                    } catch (err) {
-                        console.error('Error creating live session notifications:', err);
-                    }
-                } catch (err) {
-                    console.error('Error in call_student:', err);
-                }
-            });
-
-
-            socket.on('end_session', (data) => {
-                if (!isTeacherOrAdmin) return;
-                const studentIdStr = String(data.studentId);
-                const session = activeSessions.get(studentIdStr);
-                if (session && session.teacherSocketId !== socket.id && !user?.permissions?.includes('*')) return;
-                activeSessions.delete(studentIdStr);
-                io.to(`user_${studentIdStr}`).emit('session_ended', { teacherId: user.id });
-            });
-
-            socket.on('disconnect', () => {
-                console.log(`🔌 Socket Disconnected: ${socket.id}`);
-                activeSessions.forEach((session, studentId) => {
-                    if (session.teacherSocketId === socket.id) {
-                        console.log(`   🧹 Cleaning up abandoned session for student ${studentId}`);
-                        if (session._timeoutId) clearTimeout(session._timeoutId);
-                        activeSessions.delete(studentId);
-                        io.to(`user_${studentId}`).emit('session_ended', { teacherId: user.id });
-                    }
-                });
-            });
-
-        });
-
-        // ─── Reminder Scheduler: Check upcoming sessions every 60 seconds ───
-        const startReminderScheduler = () => {
-            const CHECK_INTERVAL = 60 * 1000;
-
-            setInterval(async () => {
-                try {
-                    const db = await getDb();
-                    const settings = await db.get(`SELECT value FROM system_settings WHERE key = 'reminder_minutes_before'`);
-                    const minutesBefore = parseInt(settings?.value) || 30;
-
-                    const targetDate = new Date(Date.now() + minutesBefore * 60 * 1000);
-                    const targetToday = targetDate.toISOString().split('T')[0];
-                    const targetTime = `${String(targetDate.getHours()).padStart(2, '0')}:${String(targetDate.getMinutes()).padStart(2, '0')}`;
-
-                    const upcoming = await db.all(
-                        `SELECT s.*, st.parentPhone FROM sessions s LEFT JOIN students st ON st.id = s.studentId WHERE s.date = ? AND s.time = ? AND s.status = 'scheduled'`,
-                        [targetToday, targetTime]
-                    );
-
-                    for (const session of upcoming) {
-                        const notifId = uuidv4();
-                        const title = 'تذكير بالحصة القادمة';
-                        const message = `موعد حصة ${session.subject} مع ${session.teacherName} بعد ${minutesBefore} دقيقة`;
-
-                        if (session.parentPhone) {
-                            const parents = await db.all('SELECT id FROM parents WHERE phone = ?', [session.parentPhone]);
-                            for (const parent of parents) {
-                                const existing = await db.get(
-                                    'SELECT id FROM notifications WHERE receiverId = ? AND title = ? AND message = ? AND date(time) = date(?)',
-                                    [parent.id, title, message, new Date().toISOString()]
-                                );
-                                if (!existing) {
-                                    await db.run(
-                                        `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                                        [notifId, 'system', parent.id, 'النظام', title, message, 'warning', new Date().toISOString(), 0, '/parent-dashboard']
-                                    );
-                                    const io = app.get('socketio');
-                                    if (io) {
-                                        io.to(`user_${parent.id}`).emit('notification', { id: notifId, title, message, type: 'warning', time: new Date().toISOString() });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (err) {
-                    console.error('[ReminderScheduler] Error:', err.message);
-                }
-            }, CHECK_INTERVAL);
-            console.log(`⏰ Reminder scheduler started (checking every ${CHECK_INTERVAL / 1000}s)`);
-        };
+        require('./socket/handler')(io, app);
+        require('./socket/reminderScheduler')(app);
 
         const serverInstance = server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
-            startReminderScheduler();
         });
 
-        // Graceful Shutdown
         const shutdown = async (signal) => {
             console.log(`${signal} received. Shutting down gracefully...`);
             serverInstance.close(async () => {
-                console.log('HTTP server closed.');
                 try {
                     const db = await getDb();
                     await db.close();
-                    console.log('Database connection closed.');
                     process.exit(0);
                 } catch (err) {
                     console.error('Error during database closure:', err);
@@ -803,10 +290,7 @@ async function startServer() {
         process.on('SIGTERM', () => shutdown('SIGTERM'));
         process.on('SIGINT', () => shutdown('SIGINT'));
         process.on('unhandledRejection', (reason, promise) => {
-            console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-            if (typeof logger !== 'undefined') {
-                logger.error('Unhandled Rejection:', reason);
-            }
+            logger.error('Unhandled Rejection:', reason);
         });
 
     } catch (err) {
@@ -816,4 +300,3 @@ async function startServer() {
 }
 
 startServer();
-

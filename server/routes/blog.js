@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const { blogPostSchema, validate } = require('./blog.validation');
 
 const mapPost = (post) => post ? {
     ...post,
@@ -49,14 +50,14 @@ router.get('/:slug', async (req, res) => {
     }
 });
 
-router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), validate(blogPostSchema), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
             contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
             showButtons, downloadButtonText, watchButtonText,
             source, fileSize
-        } = req.body;
+        } = req.validatedBody;
         const id = uuidv4();
 
         await req.db.run(
@@ -79,14 +80,14 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     }
 });
 
-router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), validate(blogPostSchema), async (req, res) => {
     try {
         const {
             title, slug, excerpt, content, coverImage, category, keywords, author, date,
             contentType, curriculum, level, grade, term, subject, downloadLink, watchLink,
             showButtons, downloadButtonText, watchButtonText,
             source, fileSize
-        } = req.body;
+        } = req.validatedBody;
 
         await req.db.run(
             `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ?, show_buttons = ?, download_button_text = ?, watch_button_text = ?, source = ?, file_size = ? WHERE id = ?`,
