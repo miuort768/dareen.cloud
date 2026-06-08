@@ -75,7 +75,7 @@
     "typescript-eslint": "^8.22.0",
     "vite": "^5.2.0",
     "vite-plugin-image-optimizer": "^2.0.3",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "keywords": [
     "education",
