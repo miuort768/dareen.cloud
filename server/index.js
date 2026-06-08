@@ -138,9 +138,9 @@ app.get('/sitemap.xml', async (req, res) => {
         // Add blog posts from DB
         try {
             const db = await getDb();
-            const posts = await db.all('SELECT slug, updated_at FROM blog_posts WHERE status = ? OR status IS NULL', ['published']);
+            const posts = await db.all("SELECT slug, date FROM blog_posts");
             posts.forEach((post) => {
-                const postDate = post.updated_at ? post.updated_at.split('T')[0] : date;
+                const postDate = post.date ? post.date.split('T')[0] : date;
                 xml += '  <url>\n';
                 xml += `    <loc>${baseUrl}/books/${post.slug}</loc>\n`;
                 xml += `    <lastmod>${postDate}</lastmod>\n`;

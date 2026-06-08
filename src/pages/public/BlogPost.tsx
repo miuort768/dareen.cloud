@@ -145,7 +145,7 @@ export const BlogPost = () => {
                     '@type': 'Article',
                     headline: post.title,
                     description: post.excerpt,
-                    image: post.coverImage.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage}`,
+                    image: post.coverImage?.startsWith('http') ? post.coverImage : `https://dareen.cloud${post.coverImage || ''}`,
                     datePublished: post.date,
                     dateModified: post.date,
                     author: { '@type': 'Person', name: post.author },
@@ -201,7 +201,7 @@ export const BlogPost = () => {
                 {/* Article Content */}
                 <article className="container mx-auto px-4 max-w-3xl">
                     <div 
-                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none prose-p:text-justify text-[#7F09C8] dark:text-[#179013]"
+                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none prose-p:text-justify text-slate-800 dark:text-slate-200"
                         dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
                     />
                     
@@ -229,7 +229,7 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify"
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-slate-800 dark:text-slate-200"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
                         />
                     )}

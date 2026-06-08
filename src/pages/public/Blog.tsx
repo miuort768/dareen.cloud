@@ -117,6 +117,9 @@ export const Blog = () => {
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const view = (searchParams.get('view') as ViewType) || 'types';
   const selectedType = searchParams.get('type') || '';
@@ -125,25 +128,25 @@ export const Blog = () => {
   const selectedGrade = searchParams.get('grade') || '';
   const selectedTerm = searchParams.get('term') || '';
   const selectedSubject = searchParams.get('subject') || '';
-  const [foundationBtnState, setFoundationBtnState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
+  const [foundationBtnState, setFoundationBtnState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number; postId: string } | null>(null);
   const foundationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const handleFoundationButtonClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
+  const handleFoundationButtonClick = (type: 'download' | 'watch', url: string, postId: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (foundationBtnState?.type === type && foundationBtnState.phase === 'ready') {
+    if (foundationBtnState?.postId === postId && foundationBtnState?.type === type && foundationBtnState.phase === 'ready') {
       window.open(url, '_blank', 'noopener,noreferrer');
       setFoundationBtnState(null);
       return;
     }
     if (foundationBtnState) return;
-    setFoundationBtnState({ type, phase: 'counting', seconds: 9 });
+    setFoundationBtnState({ type, phase: 'counting', seconds: 9, postId });
     foundationTimerRef.current = setInterval(() => {
       setFoundationBtnState(prev => {
         if (!prev || prev.seconds! <= 1) {
           if (foundationTimerRef.current) clearInterval(foundationTimerRef.current);
           foundationTimerRef.current = null;
-          return { type, phase: 'ready' };
+          return { type, phase: 'ready', postId };
         }
         return { ...prev, seconds: prev.seconds! - 1 };
       });
@@ -185,7 +188,7 @@ export const Blog = () => {
   const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
 
   const filteredPosts = view === 'results' ? posts.filter(p => {
-    if (selectedType && p.contentType !== selectedType) return false;
+    if (selectedType && p.contentType && p.contentType !== selectedType) return false;
     if (selectedCurriculum && p.curriculum !== selectedCurriculum) return false;
     if (selectedLevel && p.level !== selectedLevel) return false;
     if (selectedGrade && p.grade !== selectedGrade) return false;
@@ -215,8 +218,10 @@ export const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const data = await api.get<typeof staticPosts>('/blog');
-        setPosts(data.length > 0 ? data : staticPosts);
+        const res = await api.get<{ posts: typeof staticPosts; total: number; page: number; totalPages: number }>('/blog?page=1&limit=12');
+        setPosts(res.posts.length > 0 ? res.posts : staticPosts);
+        setTotalPages(res.totalPages || 1);
+        setPage(1);
       } catch {
         setPosts(staticPosts);
       } finally {
@@ -225,6 +230,22 @@ export const Blog = () => {
     };
     fetchPosts();
   }, []);
+
+  const loadMore = async () => {
+    if (loadingMore || page >= totalPages) return;
+    setLoadingMore(true);
+    try {
+      const nextPage = page + 1;
+      const res = await api.get<{ posts: typeof staticPosts; total: number; page: number; totalPages: number }>(`/blog?page=${nextPage}&limit=12`);
+      setPosts(prev => [...prev, ...res.posts]);
+      setPage(nextPage);
+      setTotalPages(res.totalPages);
+    } catch {
+      // silent fail
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   // Independent dark mode for library page
   const [libraryTheme, setLibraryTheme] = useState(() => {
@@ -479,22 +500,22 @@ export const Blog = () => {
                         <div className="border-t border-slate-100 dark:border-slate-800/50 pt-3" />
                         <div className="flex flex-col gap-2">
                           <div className="flex gap-2">
-                            {post.downloadLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
-                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Download size={14} />
-                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
-                              </button>
-                            )}
-                            {post.watchLink && (
-                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
-                                disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                <Eye size={14} />
-                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
-                              </button>
-                            )}
+                              {post.downloadLink && (
+                                <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, post.id, e)}
+                                  disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
+                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                  <Download size={14} />
+                                  <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
+                                </button>
+                              )}
+                              {post.watchLink && (
+                                <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, post.id, e)}
+                                  disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
+                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                  <Eye size={14} />
+                                  <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
+                                  </button>
+                              )}
                           </div>
                           <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
@@ -541,6 +562,15 @@ export const Blog = () => {
                   );
                 })}
               </div>
+              {page < totalPages && (
+                <div className="flex justify-center mt-6">
+                  <button onClick={loadMore} disabled={loadingMore}
+                    className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-lg">
+                    {loadingMore ? <Loader2 size={16} className="animate-spin" /> : null}
+                    <span>{loadingMore ? 'جاري التحميل...' : 'تحميل المزيد'}</span>
+                  </button>
+                </div>
+              )}
             )}
           </div>
         ) : (
@@ -788,25 +818,25 @@ export const Blog = () => {
                           <div className="flex flex-col gap-2">
                             <div className="flex gap-2">
                               {post.downloadLink && (
-                                <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, e)}
-                                  disabled={foundationBtnState !== null && foundationBtnState.type !== 'download'}
-                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                  <Download size={14} />
-                                  <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' ? `تحميل (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'تحميل'}</span>
-                                </button>
-                              )}
-                              {post.watchLink && (
-                                <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, e)}
-                                  disabled={foundationBtnState !== null && foundationBtnState.type !== 'watch'}
-                                  className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
-                                  <Eye size={14} />
-                                  <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' ? `مشاهدة (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' ? 'جاهز ✓' : 'مشاهدة'}</span>
-                                </button>
-                              )}
-                            </div>
-                            <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                              className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
-                              <span>اقرأ المقال</span>
+                              <button onClick={(e) => handleFoundationButtonClick('download', post.downloadLink, post.id, e)}
+                                disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
+                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Download size={14} />
+                                <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
+                              </button>
+                            )}
+                            {post.watchLink && (
+                              <button onClick={(e) => handleFoundationButtonClick('watch', post.watchLink, post.id, e)}
+                                disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
+                                className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                <Eye size={14} />
+                                <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
+                              </button>
+                            )}
+                          </div>
+                          <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
+                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
+                            <span>اقرأ المقال</span>
                             </Link>
                           </div>
                         </div>
@@ -849,6 +879,15 @@ export const Blog = () => {
                     );
                   })}
                 </div>
+                {page < totalPages && (
+                  <div className="flex justify-center mt-8">
+                    <button onClick={loadMore} disabled={loadingMore}
+                      className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-lg">
+                      {loadingMore ? <Loader2 size={16} className="animate-spin" /> : null}
+                      <span>{loadingMore ? 'جاري التحميل...' : 'تحميل المزيد'}</span>
+                    </button>
+                  </div>
+                )}
               )}
             </div>
           ) : (

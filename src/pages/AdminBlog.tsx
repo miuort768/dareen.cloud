@@ -58,7 +58,7 @@ export const AdminBlog = () => {
     const fetchPosts = useCallback(async () => {
         try {
             setLoading(true);
-            const data = await api.get<BlogPost[]>('/blog');
+            const data = await api.get<BlogPost[]>('/blog?all=true');
             setPosts(data.map(post => ({
                 ...post,
                 fileSize: post.fileSize || post.file_size,
@@ -404,7 +404,7 @@ export const AdminBlog = () => {
                             </div>
                         </div>
 
-                        {currentPost.contentType === 'foundation' && (
+                        {(currentPost.contentType === 'foundation' || currentPost.contentType === 'notes') && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="text-[10px] font-bold text-slate-400 block mb-1">رابط المصدر</label>
@@ -570,7 +570,6 @@ export const AdminBlog = () => {
                             <button
                                 type="submit"
                                 disabled={submitting}
-                                onClick={handleSubmit}
                                 className="flex items-center gap-2 px-6 py-2.5 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 shadow-sm active:scale-95 rounded-xl"
                             >
                                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}

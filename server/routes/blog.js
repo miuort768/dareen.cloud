@@ -19,16 +19,28 @@ const mapPost = (post) => post ? {
 
 router.get('/', async (req, res) => {
     try {
-        const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC');
-        res.json(posts.map(mapPost));
+        if (req.query.all === 'true') {
+            const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC');
+            return res.json(posts.map(mapPost));
+        }
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 12));
+        const offset = (page - 1) * limit;
+        const total = await req.db.get('SELECT COUNT(*) as count FROM blog_posts');
+        const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC LIMIT ? OFFSET ?', [limit, offset]);
+        res.json({ posts: posts.map(mapPost), total: total.count, page, totalPages: Math.ceil(total.count / limit) });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch blog posts');
     }
 });
 
+const isBot = (ua) => /bot|crawl|spider|scraper|facebook|twitter|whatsapp|google|bing|yahoo|slurp|duckduck/i.test(ua || '');
+
 router.get('/:slug', async (req, res) => {
     try {
-        await req.db.run('UPDATE blog_posts SET views = COALESCE(views, 0) + 1 WHERE slug = ?', [req.params.slug]);
+        if (!isBot(req.headers['user-agent'])) {
+            await req.db.run('UPDATE blog_posts SET views = COALESCE(views, 0) + 1 WHERE slug = ?', [req.params.slug]);
+        }
         const post = await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]);
         if (!post) return res.status(404).json({ error: 'Post not found' });
         res.json(mapPost(post));
