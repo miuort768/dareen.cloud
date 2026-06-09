@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     LiveKitRoom,
@@ -99,7 +99,7 @@ const ClassroomVideoLayout = ({ isTeacher }: { isTeacher: boolean }) => {
         <div className="flex-1 flex flex-col p-4 gap-4 bg-black">
             <div className="flex-1 flex gap-4 justify-center items-center">
                 {tracks.map((track) => (
-                    <div key={track.participant.identity + track.source} className="w-full h-full max-w-5xl rounded-none overflow-hidden border border-white/10 relative">
+                    <div key={track.participant.identity + track.source} className="w-full h-full max-w-5xl rounded-2xl overflow-hidden border border-white/10 relative">
                         <ParticipantTile trackRef={track} />
                         {track.source === Track.Source.ScreenShare && (
                             <div className="absolute top-4 right-4 bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-medium shadow-sm">
@@ -133,6 +133,7 @@ export const Classroom = () => {
     const [token, setToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isWhiteboardOpen, setIsWhiteboardOpen] = useState(false);
+    const hasLeftRef = useRef(false);
 
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
     const roomName = `live_session_${id}`;
@@ -188,6 +189,7 @@ export const Classroom = () => {
 
     const handleLeave = useCallback(async () => {
         if (!await confirm('هل أنت متأكد من مغادرة الفصل؟')) return;
+        hasLeftRef.current = true;
         if (isTeacher) {
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
             await endSessionInDb();
@@ -199,6 +201,7 @@ export const Classroom = () => {
     useEffect(() => {
         if (!isTeacher) return;
         const handleBeforeUnload = () => {
+            if (hasLeftRef.current) return;
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
             navigator.sendBeacon(`${API_BASE_URL}/live/end/${id}`, '{}');
         };
@@ -252,10 +255,10 @@ export const Classroom = () => {
                 <p className="font-medium text-xl mb-2">تعذر الاتصال بخادم البث المباشر</p>
                 <p className="text-slate-400 text-sm mb-8 max-w-md">تأكد من أن خادم LiveKit شغال على المنفذ 7880. للدعم الفني، تواصل مع مسؤول النظام.</p>
                 <div className="flex gap-3">
-                    <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-none font-medium text-sm transition-colors">
+                    <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-xl font-medium text-sm transition-colors">
                         العودة
                     </button>
-                    <button onClick={() => window.location.reload()} className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-none font-medium text-sm transition-colors">
+                    <button onClick={() => window.location.reload()} className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-medium text-sm transition-colors">
                         إعادة المحاولة
                     </button>
                 </div>
