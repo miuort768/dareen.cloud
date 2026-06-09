@@ -15,15 +15,15 @@ import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import { HowToSubscribe } from './components/HowToSubscribe';
 import {
-  Play, BookOpen, Trophy,
-  Video, Star, Download,
+  Play, Trophy,
+  Video, Star, Download, GraduationCap, Headphones, BadgeCheck,
   ChevronLeft, Users
 } from 'lucide-react';
 
 const quickFeatures = [
-  { icon: BookOpen, label: 'دروس خصوصية أونلاين', desc: 'مع نخبة معلمين للمناهج الخليجية', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
+  { icon: GraduationCap, label: 'دروس خصوصية', desc: 'مع نخبة معلمين للمناهج الخليجية', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
   { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي، قطري وعماني', color: 'text-sky-600', colorDark: 'dark:text-sky-400', bg: 'bg-sky-50', bgDark: 'dark:bg-sky-900/30', border: 'border-sky-100', borderDark: 'dark:border-sky-900/50' },
-  { icon: Video, label: 'تحفيظ قرآن عن بعد', desc: 'تجويد وإتقان مع قراء مجازين', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
+  { icon: Video, label: 'تحفيظ قرآن', desc: 'تجويد وإتقان مع قراء مجازين', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
   { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية لمتابعة المستوى', color: 'text-amber-600', colorDark: 'dark:text-amber-400', bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', border: 'border-amber-100', borderDark: 'dark:border-amber-900/50' },
 ];
 
@@ -31,7 +31,7 @@ const getFilteredCourses = (category: string) =>
   category === 'all' ? COURSES : COURSES.filter(c => c.category === category);
 
 const heroSlides = [
-  { title: 'منصة دارين', subtitle: 'دروس خصوصية أونلاين', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم في الكويت والخليج.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين السابعة للتعليم عن بعد في الكويت' },
+  { title: 'منصة دارين', subtitle: 'دروس خصوصية', desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.', image: '/hero-child.png', alt: 'طفل يدرس على منصة دارين السابعة للتعليم عن بعد في الكويت' },
   { title: 'دورات تفاعلية', subtitle: 'تعلم بأحدث الأساليب', desc: 'دروس خصوصية تفاعلية في جميع المواد للمناهج الكويتية والخليجية.', image: '/teacher-foundation.png', alt: 'معلم خصوصي يشرح درس أونلاين لطالب في الكويت' },
   { title: 'مستقبل مشرق', subtitle: 'مع نخبة المعلمين', desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج في الرياضيات والعلوم واللغات.', image: '/dareen_books_portal_v3.png', alt: 'مكتبة دارين السابعة التعليمية - كتب ومواد دراسية للمناهج الخليجية' },
 ];
@@ -103,7 +103,7 @@ export const Home = () => {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'دارين السابعة - منصة تعليم عن بعد',
-    description: 'منصة تعليم عن بعد رائدة في الكويت والخليج. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية.',
+    description: 'منصة تعليم عن بعد رائدة في الكويت والخليج. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية.',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.8',
@@ -121,7 +121,7 @@ export const Home = () => {
 
   return (
     <div className="min-h-full bg-[#F8F8FC] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-500">
-      <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
+      <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج" description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن." url="https://dareen.cloud/" image="/hero-child.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <MobileHeader />
 
@@ -131,7 +131,7 @@ export const Home = () => {
         {/* Mobile Nav Buttons */}
         <div className="flex gap-1.5 mt-2 mb-3">
           <Link to="/trial-sessions" className="flex-1 bg-gradient-to-l from-violet-600 to-indigo-600 text-white text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-indigo-600/30">
-            <BookOpen className="w-2.5 h-2.5 shrink-0" />
+            <Headphones className="w-2.5 h-2.5 shrink-0" />
             طلب حصة مجانية
           </Link>
           <Link to="/books" className="flex-1 bg-gradient-to-l from-violet-600 to-indigo-600 text-white text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-indigo-600/30">
@@ -146,7 +146,7 @@ export const Home = () => {
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                   <h1 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة</span>}</h1>
+                   <h1 className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-blue-600 dark:text-blue-400"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-blue-500 -mt-0.5" /></span>}</h1>
                   <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-0.5">{slide.subtitle}</p>
                   <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
