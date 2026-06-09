@@ -129,7 +129,7 @@ export const Home = () => {
       <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
 
         {/* Mobile Nav Buttons */}
-        <div className="flex gap-1.5 mb-3">
+        <div className="flex gap-1.5 mt-2 mb-3">
           <Link to="/courses" className="flex-1 bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:bg-indigo-100/80 dark:hover:bg-indigo-900/60 active:scale-[0.97] border border-indigo-100/50 dark:border-indigo-800/50">
             <BookOpen className="w-2.5 h-2.5 shrink-0" />
             الدورات
