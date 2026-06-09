@@ -22,7 +22,7 @@ export async function startLiveSession(params: {
   // 2. إذا كان هناك طالب معين، أرسل له إشعار عبر Socket
   if (params.targetStudentId && res.id) {
     const socket = socketService.getSocket();
-    if (socket.connected) {
+    if (socket?.connected) {
       socket.emit('call_student', {
         studentId: params.targetStudentId,
         subject: params.subject,

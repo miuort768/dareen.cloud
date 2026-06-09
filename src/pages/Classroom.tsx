@@ -22,7 +22,7 @@ import { cn } from '../lib/utils';
 import { API_BASE_URL } from '../config/api';
 
 // --- Custom Top Bar Component ---
-const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpen }: { isTeacher: boolean; onLeave: () => void; toggleWhiteboard: () => void; isWhiteboardOpen: boolean }) => {
+const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpen }: { isTeacher: boolean; onLeave: () => void; toggleWhiteboard: () => void; isWhiteboardOpen: boolean; roomName?: string }) => {
     const connectionState = useConnectionState();
     const room = useRoomContext();
     const [participantCount, setParticipantCount] = useState(0);
@@ -177,6 +177,7 @@ export const Classroom = () => {
             socket.off('connect', onConnect);
             if (socket.connected) {
                 socket.emit('leave_conversation', roomName);
+                socketService.leaveConversation(roomName);
             }
         };
     }, [roomName]);
@@ -192,10 +193,9 @@ export const Classroom = () => {
         hasLeftRef.current = true;
         if (isTeacher) {
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
-            await endSessionInDb();
         }
         navigate(-1);
-    }, [isTeacher, roomName, endSessionInDb, navigate]);
+    }, [isTeacher, roomName, navigate]);
 
     // End session when teacher closes the tab
     useEffect(() => {
@@ -203,7 +203,13 @@ export const Classroom = () => {
         const handleBeforeUnload = () => {
             if (hasLeftRef.current) return;
             socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
-            navigator.sendBeacon(`${API_BASE_URL}/live/end/${id}`, '{}');
+            const token = localStorage.getItem('auth_token');
+            fetch(`${API_BASE_URL}/live/end/${id}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: '{}',
+                keepalive: true,
+            }).catch(() => {});
         };
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -278,7 +284,6 @@ export const Classroom = () => {
             >
                 <ClassroomTopBar 
                     isTeacher={isTeacher} 
-                    roomName={roomName} 
                     onLeave={handleLeave} 
                     toggleWhiteboard={toggleWhiteboard}
                     isWhiteboardOpen={isWhiteboardOpen}

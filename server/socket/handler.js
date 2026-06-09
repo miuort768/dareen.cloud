@@ -70,6 +70,10 @@ module.exports = (io, app) => {
         socket.on('join_conversation', async (conversationId) => {
             if (!conversationId || !userId) return;
             if (!rateLimit(socket, 'join_conversation')) return;
+            if (conversationId.startsWith('live_session_')) {
+                socket.join(conversationId);
+                return;
+            }
             try {
                 const db = await getDb();
                 const member = await db.get(
@@ -175,10 +179,6 @@ module.exports = (io, app) => {
                 socket.to(`user_${data.studentId}`).emit('teacher_signal', data);
             });
 
-        socket.on('teacher_signal', (data) => {
-            socket.to(`user_${data.studentId}`).emit('teacher_signal', data);
-        });
-
         socket.on('call_student', async (data) => {
             if (!isTeacherOrAdmin) return;
             const studentIdStr = String(data.studentId);
@@ -246,7 +246,7 @@ module.exports = (io, app) => {
             io.to(`user_${studentIdStr}`).emit('session_ended', { teacherId: user.id });
         });
 
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async () => {
             console.log(`🔌 Socket Disconnected: ${socket.id}`);
             activeSessions.forEach((session, studentId) => {
                 if (session.teacherSocketId === socket.id) {
@@ -255,6 +255,15 @@ module.exports = (io, app) => {
                     io.to(`user_${studentId}`).emit('session_ended', { teacherId: user.id });
                 }
             });
+            try {
+                const db = await getDb();
+                await db.run(
+                    'UPDATE live_sessions SET status = "ended" WHERE teacherId = ? AND status = "active"',
+                    [userId]
+                );
+            } catch (err) {
+                console.error('[Live] Failed to end sessions on disconnect:', err);
+            }
         });
     });
 

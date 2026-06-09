@@ -25,7 +25,7 @@ export const SessionCallAlert = () => {
         const audio = notificationAudioRef.current;
 
         const socket = socketService.getSocket();
-        if (!socket || currentUser?.role !== 'student') return;
+        if (!socket || (currentUser?.role !== 'student' && currentUser?.role !== 'parent')) return;
 
         const handleInvite = (data: CallData) => {
             setCallData(data);
