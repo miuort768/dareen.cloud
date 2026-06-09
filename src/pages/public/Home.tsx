@@ -16,7 +16,7 @@ import { HeroSection } from './components/HeroSection';
 import { HowToSubscribe } from './components/HowToSubscribe';
 import {
   Play, BookOpen, Trophy,
-  Video, Star,
+  Video, Star, Download,
   ChevronLeft, Users
 } from 'lucide-react';
 
@@ -128,33 +128,18 @@ export const Home = () => {
       {/* ─── Mobile App Content ─── */}
       <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
 
-        {/* Mobile Hero Box */}
-        <section className="bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl overflow-hidden mb-3 shadow-lg shadow-indigo-600/20 border border-indigo-500/30">
-          <div className="p-5 text-white">
-            <p className="text-[10px] font-bold text-indigo-200/80 mb-1 tracking-wider">منصة دارين السابعة</p>
-            <h2 className="text-[22px] font-black leading-tight mb-1 text-white">دروس خصوصية أونلاين</h2>
-            <p className="text-[10px] text-indigo-100/80 leading-relaxed mb-4 max-w-[250px]">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم في الكويت والخليج.</p>
-            <div className="flex gap-2">
-              <Link to="/courses" className="flex-1 bg-white text-indigo-900 text-[10px] font-bold px-4 py-2.5 rounded-full flex items-center justify-center gap-1 shadow-lg active:scale-[0.97] transition-all">
-                <Play className="w-3 h-3 fill-indigo-900" />
-                تصفح الدورات
-              </Link>
-              <Link to="/login" className="flex-1 bg-white/10 border border-white/20 text-white text-[10px] font-bold px-4 py-2.5 rounded-full text-center hover:bg-white/20 active:scale-[0.97] transition-all">
-                تسجيل الدخول
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Mobile Nav Rectangle */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 px-3 py-2 mb-3 flex items-center justify-center gap-1">
-          <Link to="/courses" className="px-5 py-2 rounded-full text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all">
+        {/* Mobile Nav Buttons */}
+        <div className="flex gap-2 mb-3">
+          <Link to="/courses" className="flex-1 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.97] text-white text-[10px] font-bold px-2 py-3 rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-1.5 transition-all">
+            <BookOpen className="w-3.5 h-3.5 shrink-0" />
             الدورات
           </Link>
-          <Link to="/books" className="px-5 py-2 rounded-full text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all">
-            المكتبة
+          <Link to="/books" className="flex-1 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.97] text-white text-[10px] font-bold px-2 py-3 rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-1.5 transition-all">
+            <Download className="w-3.5 h-3.5 shrink-0" />
+            تحميل مذكرات مجانية
           </Link>
-          <Link to="/about" className="px-5 py-2 rounded-full text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all">
+          <Link to="/about" className="flex-1 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.97] text-white text-[10px] font-bold px-2 py-3 rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-1.5 transition-all">
+            <Users className="w-3.5 h-3.5 shrink-0" />
             من نحن
           </Link>
         </div>
