@@ -1,4 +1,3 @@
-import React from 'react';
 import { Receipt, X, Activity as ActivityIcon, Printer } from 'lucide-react';
 import { SectionTitle, PrimaryBtn, SecondaryBtn } from './ClosingUI';
 import { CURRENCY_SYMBOL } from '../../../config/constants';

@@ -13,7 +13,7 @@ const SocketInitLayer = lazy(() => import('./components/ui/SocketInitLayer').the
 const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
 const NotFound = lazy(() => import('./pages/public/NotFound').then(m => ({ default: m.NotFound })));
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
-const Settings = lazy(() => import('./pages/Settings'));
+const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
 const ParentDashboard = lazy(() => import('./pages/ParentDashboard').then(m => ({ default: m.ParentDashboard })));
 const StudentDashboard = lazy(() => import('./pages/StudentDashboard').then(m => ({ default: m.StudentDashboard })));
 const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard').then(m => ({ default: m.TeacherDashboard })));
