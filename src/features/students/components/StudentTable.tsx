@@ -17,7 +17,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
     return (
         <div className="w-full">
             {/* Desktop View */}
-            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none">
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-[#0F172A]">
@@ -61,12 +61,12 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-none" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-2xl" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                 {student.grade}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-[11px] rounded-none" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                            <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-[11px] rounded-2xl" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
                                                 {student.enrollments?.length || 0}
                                             </span>
                                         </td>
@@ -77,7 +77,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                         </td>
                                         <td className="px-6 py-4 min-w-[140px]">
                                             <div className="flex items-center gap-3">
-                                                <div className="flex-1 bg-slate-100 dark:bg-slate-800 h-1.5 overflow-hidden rounded-none">
+                                                <div className="flex-1 bg-slate-100 dark:bg-slate-800 h-1.5 overflow-hidden rounded-2xl">
                                                     <div 
                                                         className={cn(
                                                             "h-full transition-all duration-1000",
@@ -117,7 +117,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                             key={student.id} 
                             onClick={() => onSelect(student)} 
                             className={cn(
-                                "bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 shadow-sm active:scale-[0.98] transition-all relative overflow-hidden rounded-none",
+                                "bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-5 shadow-sm active:scale-[0.98] transition-all relative overflow-hidden rounded-2xl",
                                 hasLowBalance ? "border-rose-200 dark:border-rose-800" : ""
                             )}
                         >
@@ -139,15 +139,15 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                             </div>
                             
                             <div className="grid grid-cols-3 gap-3 mb-4">
-                                <div className="p-2 text-center rounded-none" style={{ backgroundColor: '#2563EB12' }}>
+                                <div className="p-2 text-center rounded-2xl" style={{ backgroundColor: '#2563EB12' }}>
                                     <span className="text-[8px] font-bold text-[#2563EB] block mb-1">العقود</span>
                                     <span className="text-xs font-black text-[#2563EB]">{student.enrollments?.length || 0}</span>
                                 </div>
-                                <div className="p-2 text-center rounded-none" style={{ backgroundColor: '#22C55E12' }}>
+                                <div className="p-2 text-center rounded-2xl" style={{ backgroundColor: '#22C55E12' }}>
                                     <span className="text-[8px] font-bold text-[#22C55E] block mb-1">المستخدم</span>
                                     <span className="text-xs font-black text-[#22C55E]">{totalUsed}</span>
                                 </div>
-                                <div className="p-2 text-center rounded-none" style={{ backgroundColor: '#F59E0B12' }}>
+                                <div className="p-2 text-center rounded-2xl" style={{ backgroundColor: '#F59E0B12' }}>
                                     <span className="text-[8px] font-bold text-[#F59E0B] block mb-1">الرصيد</span>
                                     <span className={cn("text-xs font-black", hasLowBalance ? "text-rose-500" : "text-[#F59E0B]")}>{totalExpected - totalUsed}</span>
                                 </div>
@@ -158,7 +158,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                     <span>معدل الاستهلاك</span>
                                     <span className="font-mono">{progress}%</span>
                                 </div>
-                                <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 overflow-hidden rounded-none">
+                                <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 overflow-hidden rounded-2xl">
                                     <div 
                                         className={cn(
                                             "h-full transition-all",

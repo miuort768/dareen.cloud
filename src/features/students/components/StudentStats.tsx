@@ -18,8 +18,8 @@ const statSettings: Record<string, { color: string }> = {
 const StatItem = ({ label, value, icon: Icon }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
     const { color } = statSettings[label] || { color: '#2563EB' };
     return (
-        <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
-            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+        <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-2xl dark:brightness-[0.65]" style={{ backgroundColor: color }}>
+            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm rounded-2xl" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                 <Icon size={20} />
             </div>
             <div className="min-w-0">
