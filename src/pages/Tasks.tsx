@@ -11,8 +11,7 @@ import {
     Rocket,
     ClipboardList,
     Sparkles,
-    ShieldCheck,
-    ArrowUpRight
+    ShieldCheck
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -63,8 +62,8 @@ export const Tasks = () => {
         description: '',
         priority: 'medium',
         dueDate: new Date().toISOString().split('T')[0],
-                category: 'عام'
-            });
+        category: 'عام'
+    });
 
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -77,7 +76,7 @@ export const Tasks = () => {
                 description: '',
                 priority: 'medium',
                 dueDate: new Date().toISOString().split('T')[0],
-        category: 'عام'
+                category: 'عام'
             });
         } catch (error) {
             console.error("Error adding task:", error);
@@ -125,279 +124,257 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2 space-y-3">
-            
-            {/* ?? Header Canvas (Premium Royal Purple) ?? */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-4 md:px-6 py-4 mb-4">
-                {/* Decorative Background Elements */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
+            <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
 
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex flex-col items-start">
-                        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-3">
-                            <Sparkles size={10} className="text-indigo-400" />
-                            <span className="text-[8px] font-medium text-indigo-400 uppercase tracking-widest">مركز القيادة</span>
+                {/* Hero */}
+                <div className="relative bg-gradient-to-br from-violet-50 via-violet-100/50 to-white dark:from-slate-800 dark:via-slate-800/80 dark:to-slate-900 rounded-2xl overflow-hidden mb-2 shadow-sm border border-violet-100/50 dark:border-slate-700/50">
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
+                        <div className="flex flex-col items-start">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 border border-indigo-200/50 dark:border-indigo-700/30 rounded-full mb-3">
+                                <Sparkles size={10} className="text-indigo-600 dark:text-indigo-400" />
+                                <span className="text-[9px] font-bold text-indigo-700 dark:text-indigo-300">مركز القيادة</span>
+                            </div>
+                            <h1 className="text-xl font-black text-slate-800 dark:text-white leading-tight mb-1">
+                                مركز التحكم بالمهام
+                            </h1>
+                            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                                تتبع وإدارة جميع المهام الخاصة بك <span className="text-indigo-600 dark:text-indigo-400">في مكان واحد</span>
+                            </p>
                         </div>
-                        
-                        <h1 className="text-xl md:text-3xl font-medium text-white uppercase tracking-tighter mb-2 drop-shadow-sm">
-                            مركز التحكم بالمهام
-                        </h1>
-                        <p className="text-[10px] md:text-xs font-normal text-slate-400 uppercase tracking-widest max-w-lg leading-relaxed">
-                            تتبع وإدارة جميع المهام الخاصة بك <span className="text-indigo-500">في مكان واحد</span>
-                        </p>
-                    </div>
-
-                    <div className="flex items-center md:items-center">
                         <button
                             onClick={() => setShowAddForm(true)}
-                            className="group relative inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 font-medium text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
+                            className="group relative inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 font-bold text-[10px] uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-2xl shadow-sm"
                         >
                             <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
                             إضافة مهمة جديدة
-                            <div className="absolute inset-0 border border-white/20 translate-x-1 translate-y-1 -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                         </button>
                     </div>
                 </div>
-            </div>
 
-            {/* ?? Analytics Grid (Glassmorphism Style) ?? */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 px-4">
-                {[
-                    { label: 'مهام معلقة', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', border: 'border-amber-500/20' },
-                    { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-500', bg: 'bg-indigo-500/5', border: 'border-indigo-500/20' },
-                    { label: 'نسبة الإنجاز', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', border: 'border-emerald-500/20' },
-                    { label: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, color: 'text-purple-500', bg: 'bg-purple-500/5', border: 'border-purple-500/20' }
-                ].map((stat, i) => (
-                    <div key={i} className={cn(
-                        "relative bg-white dark:bg-slate-900 border p-4 overflow-hidden transition-all hover:-translate-y-1",
-                        stat.border
-                    )}>
-                        <div className="absolute -right-3 -bottom-3 opacity-[0.03] rotate-12 group-hover:rotate-0 transition-all duration-500">
-                            <stat.icon size={80} />
-                        </div>
-                        <div className="relative z-10">
-                            <div className={cn("w-8 h-8 rounded-none flex items-center justify-center mb-3 border", stat.border, stat.bg)}>
+                {/* Stats */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                        { label: 'مهام معلقة', value: stats.pending, icon: Clock, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10', border: 'border-amber-200/50 dark:border-amber-500/20' },
+                        { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10', border: 'border-indigo-200/50 dark:border-indigo-500/20' },
+                        { label: 'نسبة الإنجاز', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-500/10', border: 'border-emerald-200/50 dark:border-emerald-500/20' },
+                        { label: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-500/10', border: 'border-purple-200/50 dark:border-purple-500/20' }
+                    ].map((stat, i) => (
+                        <div key={i} className={cn(
+                            "bg-white dark:bg-slate-800 border rounded-2xl p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md",
+                            stat.border
+                        )}>
+                            <div className={cn("w-9 h-9 rounded-2xl flex items-center justify-center mb-3 border", stat.border, stat.bg)}>
                                 <stat.icon size={14} className={stat.color} />
                             </div>
-                            <h3 className="text-xl font-medium text-slate-800 dark:text-white tracking-tighter mb-0.5">{stat.value}</h3>
-                            <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                            <h3 className="text-xl font-black text-slate-800 dark:text-white tracking-tight mb-0.5">{stat.value}</h3>
+                            <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</p>
                         </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* ?? Search & Filters (Sharp & Minimal) ?? */}
-            <div className="px-4 flex flex-col md:flex-row gap-3 items-center">
-                <div className="relative flex-1 w-full">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-indigo-500" size={15} />
-                    <input 
-                        type="text" 
-                        placeholder="بحث عن مهمة محددة..." 
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 py-3 px-4 pr-12 text-xs font-normal text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-widest"
-                    />
-                </div>
-
-                <div className="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar">
-                    {['high', 'medium', 'low', 'all'].map(p => (
-                        <button 
-                            key={p}
-                            onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
-                            className={cn(
-                                "px-4 py-3 border-2 font-medium text-[9px] uppercase tracking-[0.2em] transition-all whitespace-nowrap min-w-[80px]",
-                                filterPriority === p 
-                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-500/20" 
-                                    : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-indigo-200 dark:hover:border-indigo-900"
-                            )}
-                        >
-                            {p === 'all' ? 'الكل' : p === 'high' ? 'عالية' : p === 'medium' ? 'متوسطة' : 'منخفضة'}
-                        </button>
                     ))}
                 </div>
-            </div>
 
-            {/* ?? Tasks Canvas (High Contrast Cards) ?? */}
-            <div className="px-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                {filteredTasks.length > 0 ? (
-                    filteredTasks.map(task => {
-                        const isHigh = task.priority === 'high';
-                        const isCompleted = task.status === 'completed';
-
-                        return (
-                            <div 
-                                key={task.id}
+                {/* Search & Filters */}
+                <div className="flex flex-col md:flex-row gap-3 items-center">
+                    <div className="relative flex-1 w-full">
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                        <input
+                            type="text"
+                            placeholder="ابحث عن مهمة..."
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-4 pr-10 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
+                        />
+                    </div>
+                    <div className="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar">
+                        {['all', 'high', 'medium', 'low'].map(p => (
+                            <button
+                                key={p}
+                                onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                                 className={cn(
-                                    "relative group bg-white dark:bg-slate-900 border-2 transition-all duration-500 flex flex-col p-5",
-                                    isHigh && !isCompleted ? "border-rose-500/20 bg-rose-50/5" : "border-slate-100 dark:border-slate-800",
-                                    isCompleted && "opacity-60 grayscale border-slate-50 dark:border-slate-900 shadow-none"
+                                    "px-4 py-2.5 font-bold text-[10px] uppercase tracking-wider transition-all whitespace-nowrap rounded-2xl border shadow-sm",
+                                    filterPriority === p
+                                        ? "bg-indigo-600 border-indigo-600 text-white shadow-indigo-200 dark:shadow-indigo-900/30"
+                                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                                 )}
                             >
-                                {/* Priority Indicator Bar */}
-                                <div className={cn(
-                                    "absolute top-0 right-0 w-1 h-full",
-                                    task.priority === 'high' ? "bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]" : 
-                                    task.priority === 'medium' ? "bg-amber-500" : "bg-indigo-400"
-                                )}></div>
-
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="space-y-1.5">
-                                        <div className="flex items-center gap-2">
-                                            {isCompleted && <CheckCircle2 size={14} className="text-emerald-500" />}
-                                            <h3 className={cn(
-                                                "text-sm font-medium tracking-tight text-slate-800 dark:text-slate-100",
-                                                isCompleted && "line-through opacity-50"
-                                            )}>
-                                                {task.title}
-                                            </h3>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-[9px] font-medium text-slate-400 uppercase tracking-widest">
-                                            <Calendar size={12} className="text-indigo-500" />
-                                            <span>الموعد النهائي: {task.dueDate}</span>
-                                        </div>
-                                    </div>
-                                    <div className={cn(
-                                        "px-2 py-1 text-[8px] font-medium uppercase tracking-widest border",
-                                        task.priority === 'high' ? "text-rose-600 border-rose-200 bg-rose-50 dark:bg-rose-900/10 dark:border-rose-900/30" : 
-                                        task.priority === 'medium' ? "text-amber-600 border-amber-200 bg-amber-50 dark:bg-amber-900/10 dark:border-amber-900/30" : 
-                                        "text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-900/10 dark:border-indigo-900/30"
-                                    )}>
-                                        {task.priority === 'high' ? 'أولوية عالية' : task.priority === 'medium' ? 'متوسطة' : 'عادي'}
-                                    </div>
-                                </div>
-
-                                <p className="text-slate-500 dark:text-slate-400 text-[11px] font-medium leading-relaxed mb-6 line-clamp-3">
-                                    {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
-                                </p>
-
-                                {/* Action Console */}
-                                <div className="mt-auto pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                                    <div className="flex gap-3">
-                                        {task.status !== 'completed' ? (
-                                            <button 
-                                                onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
-                                                className={cn(
-                                                    "group flex items-center gap-1.5 text-[9px] font-medium uppercase tracking-[0.2em] transition-all",
-                                                    task.status === 'pending' ? "text-indigo-500 hover:text-indigo-600" : "text-emerald-500 hover:text-emerald-600"
-                                                )}
-                                            >
-                                                {task.status === 'pending' ? <Rocket size={13} /> : <CheckCircle2 size={13} />}
-                                                {task.status === 'pending' ? 'بدء التنفيذ' : 'اكتملت المهمة'}
-                                                <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                                            </button>
-                                        ) : (
-                                            <button 
-                                                onClick={() => updateTaskStatus(task.id, 'pending')}
-                                                className="text-[9px] font-medium text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors"
-                                            >
-                                                إعادة إلى المعلقة
-                                            </button>
-                                        )}
-                                    </div>
-                                    <button 
-                                        onClick={() => deleteTask(task.id)}
-                                        className="text-slate-300 hover:text-rose-500 transition-all hover:scale-110"
-                                    >
-                                        <Trash2 size={15} />
-                                    </button>
-                                </div>
-                            </div>
-                        )
-                    })
-                ) : (
-                    <div className="col-span-full py-14 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 dark:border-slate-800">
-                            <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center mx-auto mb-4 border border-indigo-100 dark:border-indigo-800">
-                            <ClipboardList size={24} className="text-indigo-500" />
-                        </div>
-                        <h2 className="text-lg font-medium text-slate-800 dark:text-white uppercase tracking-tighter mb-1">قائمة المهام</h2>
-                        <p className="text-[9px] text-slate-400 font-normal uppercase tracking-widest">لم يتم العثور على مهام تطابق معايير البحث</p>
-                    </div>
-                )}
-            </div>
-
-            {/* ?? Premium Add Modal ?? */}
-            {showAddForm && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-2xl bg-slate-950/60 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-slate-900 rounded-none border-t-8 border-indigo-600 w-full max-w-lg shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
-                        <div className="p-5 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 bg-indigo-600 text-white flex items-center justify-center">
-                                    <Plus size={16} />
-                                </div>
-                                <div>
-                                    <h3 className="text-base font-medium text-slate-800 dark:text-white uppercase tracking-tighter">إنشاء مهمة جديدة</h3>
-                                    <p className="text-[8px] text-slate-400 font-normal uppercase tracking-[0.2em]">بروتوكول تشغيل جديد</p>
-                                </div>
-                            </div>
-                            <button onClick={() => setShowAddForm(false)} className="text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
-                                <span className="text-xl font-light">×</span>
+                                {p === 'all' ? 'الكل' : p === 'high' ? 'عالية' : p === 'medium' ? 'متوسطة' : 'منخفضة'}
                             </button>
-                        </div>
-                        
-                        <form onSubmit={handleAddTask} className="p-6 space-y-5">
-                            <div className="space-y-4">
-                                <div className="space-y-1.5">
-                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                        <Sparkles size={10} className="text-indigo-500" /> عنوان المهمة
-                                    </label>
-                                    <input 
-                                        required
-                                        type="text" 
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-3 px-4 text-sm font-normal text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-600 transition-all"
-                                        value={newTask.title}
-                                        onChange={e => setNewTask({...newTask, title: e.target.value})}
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-1.5">
-                                        <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest">درجة الأولوية</label>
-                                        <select 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-3 px-4 text-xs font-normal text-slate-800 dark:text-white cursor-pointer"
-                                            value={newTask.priority}
-                                            onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
-                                        >
-                                            <option value="low">منخفضة</option>
-                                            <option value="medium">متوسطة</option>
-                                            <option value="high">عالية</option>
-                                        </select>
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest">تاريخ التسليم</label>
-                                        <input 
-                                            type="date" 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-3 px-4 text-xs font-normal text-slate-800 dark:text-white"
-                                            value={newTask.dueDate}
-                                            onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-1.5">
-                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                        <ShieldCheck size={10} className="text-indigo-500" /> وصف المهمة
-                                    </label>
-                                    <textarea 
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-3 px-4 text-xs font-normal text-slate-800 dark:text-white h-24 resize-none"
-                                        value={newTask.description}
-                                        onChange={e => setNewTask({...newTask, description: e.target.value})}
-                                    ></textarea>
-                                </div>
-                            </div>
-
-                            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 font-medium text-xs uppercase tracking-[0.3em] transition-all shadow-sm shadow-indigo-500/20 active:scale-95">
-                                إنشاء مهمة جديدة
-                            </button>
-                        </form>
+                        ))}
                     </div>
                 </div>
-            )}
+
+                {/* Task Cards */}
+                <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+                    {filteredTasks.length > 0 ? (
+                        filteredTasks.map(task => {
+                            const isCompleted = task.status === 'completed';
+
+                            const priorityBadge = task.priority === 'high'
+                                ? { text: 'عالية', colors: 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 border-rose-200/50 dark:border-rose-500/20' }
+                                : task.priority === 'medium'
+                                ? { text: 'متوسطة', colors: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200/50 dark:border-amber-500/20' }
+                                : { text: 'منخفضة', colors: 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200/50 dark:border-indigo-500/20' };
+
+                            return (
+                                <div
+                                    key={task.id}
+                                    className={cn(
+                                        "bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl p-5 shadow-sm transition-all hover:shadow-md",
+                                        isCompleted && "opacity-60"
+                                    )}
+                                >
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div className="space-y-1.5 flex-1 min-w-0">
+                                            <div className="flex items-center gap-2">
+                                                {isCompleted && <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />}
+                                                <h3 className={cn(
+                                                    "text-sm font-bold text-slate-800 dark:text-slate-100 leading-tight",
+                                                    isCompleted && "line-through opacity-50"
+                                                )}>
+                                                    {task.title}
+                                                </h3>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                                <Calendar size={11} className="text-slate-400" />
+                                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">الموعد: {task.dueDate}</span>
+                                            </div>
+                                        </div>
+                                        <div className={cn(
+                                            "px-2.5 py-1 text-[8px] font-bold uppercase tracking-wider rounded-full border shrink-0",
+                                            priorityBadge.colors
+                                        )}>
+                                            {priorityBadge.text}
+                                        </div>
+                                    </div>
+
+                                    <p className="text-slate-500 dark:text-slate-400 text-[11px] font-medium leading-relaxed mb-4 line-clamp-2">
+                                        {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
+                                    </p>
+
+                                    <div className="pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                                        <div className="flex gap-2">
+                                            {task.status !== 'completed' ? (
+                                                <button
+                                                    onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
+                                                    className={cn(
+                                                        "inline-flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-2xl border transition-all shadow-sm",
+                                                        task.status === 'pending'
+                                                            ? "text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-700/50 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20"
+                                                            : "text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-700/50 bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20"
+                                                    )}
+                                                >
+                                                    {task.status === 'pending' ? <Rocket size={12} /> : <CheckCircle2 size={12} />}
+                                                    {task.status === 'pending' ? 'بدء التنفيذ' : 'اكتملت'}
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => updateTaskStatus(task.id, 'pending')}
+                                                    className="inline-flex items-center gap-1 px-3 py-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-wider hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                                                >
+                                                    <RefreshCcw size={12} />
+                                                    إعادة
+                                                </button>
+                                            )}
+                                        </div>
+                                        <button
+                                            onClick={() => deleteTask(task.id)}
+                                            className="w-8 h-8 rounded-2xl flex items-center justify-center text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+                                        >
+                                            <Trash2 size={14} />
+                                        </button>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <div className="col-span-full py-14 text-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm">
+                            <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-100 dark:border-indigo-700/30">
+                                <ClipboardList size={22} className="text-indigo-600 dark:text-indigo-400" />
+                            </div>
+                            <h2 className="text-base font-black text-slate-800 dark:text-white mb-1">قائمة المهام</h2>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
+                        </div>
+                    )}
+                </div>
+
+                {/* Add Modal */}
+                {showAddForm && (
+                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-xl bg-black/40 animate-in fade-in duration-300">
+                        <div className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-lg shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                            <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-9 h-9 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm">
+                                        <Plus size={16} className="text-white" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm font-bold text-slate-800 dark:text-white">إنشاء مهمة جديدة</h3>
+                                        <p className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setShowAddForm(false)} className="w-8 h-8 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+                                    <span className="text-lg font-bold">×</span>
+                                </button>
+                            </div>
+
+                            <form onSubmit={handleAddTask} className="p-5 space-y-4">
+                                <div className="space-y-3">
+                                    <div className="space-y-1.5">
+                                        <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                                            <Sparkles size={10} className="text-indigo-600 dark:text-indigo-400" /> عنوان المهمة
+                                        </label>
+                                        <input
+                                            required
+                                            type="text"
+                                            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition-all"
+                                            value={newTask.title}
+                                            onChange={e => setNewTask({...newTask, title: e.target.value})}
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1.5">
+                                            <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">درجة الأولوية</label>
+                                            <select
+                                                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                value={newTask.priority}
+                                                onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
+                                            >
+                                                <option value="low">منخفضة</option>
+                                                <option value="medium">متوسطة</option>
+                                                <option value="high">عالية</option>
+                                            </select>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">تاريخ التسليم</label>
+                                            <input
+                                                type="date"
+                                                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                value={newTask.dueDate}
+                                                onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                                            <ShieldCheck size={10} className="text-indigo-600 dark:text-indigo-400" /> وصف المهمة
+                                        </label>
+                                        <textarea
+                                            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 dark:text-white h-24 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                            value={newTask.description}
+                                            onChange={e => setNewTask({...newTask, description: e.target.value})}
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 font-bold text-xs uppercase tracking-wider transition-all rounded-2xl shadow-sm shadow-indigo-200 dark:shadow-indigo-900/30 active:scale-[0.98]">
+                                    إنشاء مهمة جديدة
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
 };
-
