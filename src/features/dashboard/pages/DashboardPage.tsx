@@ -55,7 +55,7 @@ export const Dashboard = () => {
     return (
         <div className={cn(
             "min-h-full pb-24 overflow-x-hidden relative",
-            "bg-[#F8FAFC]",
+            "bg-[#F8F8FC]",
             "dark:bg-slate-950"
         )} dir="rtl">
 

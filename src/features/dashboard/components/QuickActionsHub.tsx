@@ -39,7 +39,7 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="relative overflow-hidden rounded-none p-5 shadow-sm transition-all duration-300 active:scale-[0.98] hover:shadow-md group dark:brightness-[0.65]"
+                    className="relative overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-300 active:scale-[0.98] hover:shadow-md group dark:brightness-[0.65]"
                     style={{ backgroundColor: action.color }}
                 >
                     {/* Content */}

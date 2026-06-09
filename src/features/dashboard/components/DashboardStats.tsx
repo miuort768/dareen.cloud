@@ -47,7 +47,7 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
     <div
       ref={ref}
       className={cn(
-        "relative p-4 rounded-none",
+        "relative p-4 rounded-2xl",
         "shadow-sm",
         "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
         "flex items-center gap-3 dark:brightness-[0.65]",

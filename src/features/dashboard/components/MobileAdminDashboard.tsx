@@ -113,7 +113,7 @@ export const MobileAdminDashboard = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="pb-4 text-right overflow-x-hidden relative bg-[#F8FAFC] dark:bg-slate-950"
+            className="pb-4 text-right overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950"
             dir="rtl"
         >
 
@@ -433,7 +433,7 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
         variants={fadeUpItem}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className="rounded-none p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all w-full dark:brightness-[0.65]"
+        className="rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all w-full dark:brightness-[0.65]"
         style={{ backgroundColor: color }}
     >
         <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
