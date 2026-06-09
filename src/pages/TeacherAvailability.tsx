@@ -120,7 +120,7 @@ export const TeacherAvailability = () => {
   const getSlotsForDay = (day: number) => editingSlots.find(s => s.dayOfWeek === day);
 
   return (
-    <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+    <div className="min-h-full pb-24 overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
       <div className="mx-auto px-2 sm:px-4 space-y-4 max-w-[1400px]">
 
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
