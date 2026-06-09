@@ -371,3 +371,6 @@ export const Students = () => {
     );
 };
 
+export default Students;
+
+

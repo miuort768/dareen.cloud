@@ -1,6 +1,7 @@
 import { cn } from '../../lib/utils';
 import { ChevronLeft, ArrowLeft, GraduationCap, BookOpen } from 'lucide-react';
-import { gradeNames, ViewType, GridItem } from './LibraryConfig';
+import { gradeNames } from './LibraryConfig';
+import type { ViewType, GridItem } from './LibraryConfig';
 import { useSearchParams } from 'react-router-dom';
 
 interface SelectionGridProps {

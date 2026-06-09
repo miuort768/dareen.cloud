@@ -167,3 +167,5 @@ export const Evaluations = () => {
         </div>
     );
 };
+
+export default Evaluations;

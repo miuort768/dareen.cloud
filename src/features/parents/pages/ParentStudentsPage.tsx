@@ -107,3 +107,5 @@ export const ParentStudents = () => {
         </div>
     );
 };
+
+export default ParentStudents;

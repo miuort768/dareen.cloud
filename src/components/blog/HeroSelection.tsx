@@ -1,7 +1,8 @@
 import { BookOpen, Play } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { ViewType, GridItem, directTypes } from './LibraryConfig';
+import { directTypes } from './LibraryConfig';
+import type { ViewType, GridItem } from './LibraryConfig';
 
 interface HeroSelectionProps {
     view: ViewType;
