@@ -28,21 +28,21 @@ export const RefundPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-16 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8] dark:bg-slate-950">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white md:bg-[#FDFCF8] dark:md:bg-slate-950 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
-                        <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
-                        <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">السياسات المالية</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 md:bg-indigo-50/60 dark:md:bg-indigo-500/10 backdrop-blur-sm border border-violet-200/50 md:border-indigo-100 dark:md:border-indigo-500/20 rounded-full mb-3">
+                        <Sparkles size={12} className="text-indigo-600 dark:text-indigo-400" />
+                        <span className="text-[9px] md:text-[10px] font-black text-indigo-600 dark:text-indigo-300">السياسات المالية</span>
                     </div>
 
-                    <h1 className="text-xl md:text-5xl font-black text-gray-900 dark:text-white mb-3 leading-tight font-heading">
+                    <h1 className="text-[18px] md:text-5xl font-black text-indigo-950 md:text-gray-900 dark:text-white mb-1 md:mb-3 leading-tight font-heading">
                         سياسة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-900 dark:from-blue-400 dark:to-indigo-400 inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
