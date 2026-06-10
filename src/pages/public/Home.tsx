@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 const quickFeatures = [
-  { icon: GraduationCap, label: 'دروس خصوصية', desc: 'مع نخبة معلمين للمناهج الخليجية', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
+  { icon: GraduationCap, label: 'دروس خصوصية فردية اونلاين', desc: 'مع نخبة معلمين للمناهج الخليجية', color: 'text-violet-600', colorDark: 'dark:text-violet-400', bg: 'bg-violet-50', bgDark: 'dark:bg-violet-900/30', border: 'border-violet-100', borderDark: 'dark:border-violet-900/50' },
   { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي، قطري وعماني', color: 'text-sky-600', colorDark: 'dark:text-sky-400', bg: 'bg-sky-50', bgDark: 'dark:bg-sky-900/30', border: 'border-sky-100', borderDark: 'dark:border-sky-900/50' },
   { icon: Video, label: 'تحفيظ قرآن', desc: 'تجويد وإتقان مع قراء مجازين', color: 'text-emerald-600', colorDark: 'dark:text-emerald-400', bg: 'bg-emerald-50', bgDark: 'dark:bg-emerald-900/30', border: 'border-emerald-100', borderDark: 'dark:border-emerald-900/50' },
   { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية لمتابعة المستوى', color: 'text-amber-600', colorDark: 'dark:text-amber-400', bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', border: 'border-amber-100', borderDark: 'dark:border-amber-900/50' },
