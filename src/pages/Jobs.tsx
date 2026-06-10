@@ -166,7 +166,7 @@ export const Jobs = () => {
             <MobileHeader />
 
             {/* Hero Banner */}
-            <section className="relative pt-14 md:pt-28 pb-4 md:pb-12 overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700">
+            <section className="relative pt-2 md:pt-28 pb-4 md:pb-12 overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700">
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-10 right-10 w-64 h-64 bg-white/5 rounded-full blur-[80px]" />
                     <div className="absolute bottom-10 left-10 w-48 h-48 bg-white/5 rounded-full blur-[60px]" />
