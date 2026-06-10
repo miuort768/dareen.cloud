@@ -130,10 +130,10 @@ export const Home = () => {
 
         {/* Mobile Nav Buttons */}
         <div className="flex gap-1.5 mt-2 mb-3">
-          <Link to="/trial-sessions" className="flex-1 bg-gradient-to-l from-violet-600 to-indigo-600 text-white text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-indigo-600/30">
+          <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gradient-to-l from-violet-600 to-indigo-600 text-white text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-indigo-600/30">
             <Headphones className="w-2.5 h-2.5 shrink-0" />
             طلب حصة مجانية
-          </Link>
+          </a>
           <Link to="/books" className="flex-1 bg-gradient-to-l from-violet-600 to-indigo-600 text-white text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-indigo-600/30">
             <Download className="w-2.5 h-2.5 shrink-0" />
             تحميل مذكرات مجانية
