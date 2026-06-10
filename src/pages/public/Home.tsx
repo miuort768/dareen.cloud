@@ -184,16 +184,14 @@ export const Home = () => {
 
         {/* Quick Features */}
         <section className="mb-4">
-          <div className="grid grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-3 max-w-[360px] mx-auto">
             {quickFeatures.map((f, i) => (
-              <div key={i} className={`flex items-center gap-2 p-2 bg-white dark:bg-slate-900 rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}>
-                <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
-                  <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
+              <div key={i} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                <div className={`w-11 h-11 ${f.bg} ${f.bgDark} rounded-2xl flex items-center justify-center mb-3`}>
+                  <f.icon className={`${f.color} ${f.colorDark}`} size={22} />
                 </div>
-                <div className="min-w-0">
-                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight mb-0">{f.label}</span>
-                  <span className="text-[6px] text-slate-400 font-medium block leading-tight">{f.desc}</span>
-                </div>
+                <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">{f.label}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
