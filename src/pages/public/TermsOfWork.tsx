@@ -41,7 +41,7 @@ export const TermsOfWork = () => {
                     </h1>
 
                     <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
-                        السياسات والإجراءات المنظمة لعمل المعلمين والموظفين في منصتنا التعليمية
+                        لائحة العمل | السياسات والإجراءات المنظمة لعمل الكادر التعليمي .
                     </p>
                 </div>
             </section>
@@ -229,13 +229,13 @@ export const TermsOfWork = () => {
                     </p>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-8 relative overflow-hidden group rounded-2xl mt-8">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-3 relative overflow-hidden group rounded-2xl mt-8">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-600/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات؟</h2>
-                            <p className="text-gray-500 mb-8 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
+                            <p className="text-gray-500 mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
                                 href={`https://wa.me/2${adminPhone}`}
