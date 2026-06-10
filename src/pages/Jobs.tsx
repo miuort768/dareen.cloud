@@ -228,7 +228,7 @@ export const Jobs = () => {
                         className="bg-white shadow-xl shadow-slate-200/50 border border-slate-100"
                     >
                         {/* Progress Steps */}
-                        <div className="p-6 md:p-8 border-b border-slate-100 bg-slate-50/50">
+                        <div className="p-3 md:p-8 border-b border-slate-100 bg-slate-50/50">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-sm font-black text-slate-900">تقديم طلب التوظيف</h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
@@ -240,7 +240,7 @@ export const Jobs = () => {
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
-                            <p className="text-xs font-bold text-primary-600 mb-3 md:hidden">{steps.find(s => s.id === step)?.title}</p>
+                            <p className="text-xs font-bold text-primary-600 mb-0 md:hidden">{steps.find(s => s.id === step)?.title}</p>
                             <div className="hidden md:grid grid-cols-4 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
@@ -257,7 +257,7 @@ export const Jobs = () => {
                         </div>
 
                         <form onSubmit={(e) => { e.preventDefault(); if (step < totalSteps) nextStep(); }} onKeyDown={handleKeyDown}>
-                            <div className="p-6 md:p-8">
+                            <div className="p-3 md:p-8">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={step}
