@@ -196,7 +196,7 @@ export const Jobs = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-white/80 text-xs md:text-base max-w-lg leading-relaxed font-medium"
+                                className="text-white/80 text-xs md:text-base max-w-lg leading-relaxed font-medium mb-4 md:mb-0"
                             >
                                 نبحث عن معلمات متميزات للتدريس أون لاين.<br /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
                             </motion.p>
