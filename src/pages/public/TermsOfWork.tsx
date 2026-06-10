@@ -26,21 +26,21 @@ export const TermsOfWork = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-16 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-[#FDFCF8]">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white md:bg-[#FDFCF8] rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-4">
-                        <Briefcase size={14} className="text-indigo-600" />
-                        <span className="text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white text-indigo-600 md:text-gray-900 border border-violet-200/50 md:border-gray-100 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
+                        <Briefcase size={12} className="text-indigo-600" />
+                        <span className="text-[9px] md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
                     </div>
 
-                    <h1 className="text-xl md:text-5xl font-black text-gray-900 mb-3 leading-tight font-heading">
+                    <h1 className="text-[18px] md:text-5xl font-black text-indigo-950 md:text-gray-900 mb-1 md:mb-3 leading-tight font-heading">
                         قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
                         السياسات والإجراءات المنظمة لعمل المعلمين والموظفين في منصتنا التعليمية
                     </p>
                 </div>
