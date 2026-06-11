@@ -3,6 +3,32 @@ import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 export const FAQSection = () => {
     return (
         <section className="py-4 md:py-6 bg-[#F8F8FC] dark:bg-slate-950 relative overflow-hidden transition-colors duration-500" id="faq">
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] dark:opacity-[0.02]">
+                <svg className="w-full h-full" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="islamic-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+                            <circle cx="60" cy="60" r="55" fill="none" stroke="currentColor" strokeWidth="0.8" className="text-indigo-900" />
+                            <circle cx="60" cy="60" r="40" fill="none" stroke="currentColor" strokeWidth="0.6" className="text-indigo-800" />
+                            <circle cx="60" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-indigo-700" />
+                            <polygon points="60,8 72,40 108,40 78,60 88,96 60,76 32,96 42,60 12,40 48,40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-indigo-600" />
+                            <polygon points="60,18 68,45 95,45 73,60 80,88 60,72 40,88 47,60 25,45 52,45" fill="none" stroke="currentColor" strokeWidth="0.3" className="text-indigo-400" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#islamic-pattern)" />
+                </svg>
+            </div>
+            <div className="absolute top-10 left-10 w-32 h-32 opacity-[0.03] dark:opacity-[0.015] pointer-events-none">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 0 L122 78 L200 78 L138 128 L160 200 L100 150 L40 200 L62 128 L0 78 L78 78 Z" fill="currentColor" className="text-indigo-800" />
+                </svg>
+            </div>
+            <div className="absolute bottom-10 right-10 w-40 h-40 opacity-[0.025] dark:opacity-[0.01] pointer-events-none">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 15 C130 15 155 40 155 70 C155 100 130 125 100 125 C70 125 45 100 45 70 C45 40 70 15 100 15 Z" stroke="currentColor" strokeWidth="1.5" className="text-indigo-700" />
+                    <path d="M100 35 C120 35 135 50 135 70 C135 90 120 105 100 105 C80 105 65 90 65 70 C65 50 80 35 100 35 Z" stroke="currentColor" strokeWidth="1" className="text-indigo-500" />
+                    <path d="M100 50 L110 65 L128 65 L115 78 L120 96 L100 85 L80 96 L85 78 L72 65 L90 65 Z" fill="currentColor" className="text-indigo-600" />
+                </svg>
+            </div>
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-100 dark:border-slate-700 rounded-full mb-2 mx-auto shadow-sm">
