@@ -14,6 +14,7 @@ import { Testimonials } from './components/Testimonials';
 import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import { HowToSubscribe } from './components/HowToSubscribe';
+import { AppDownloadSection } from './components/AppDownloadSection';
 import {
   Play, Trophy,
   Video, Star, Download, GraduationCap, Headphones, BadgeCheck,
@@ -303,6 +304,9 @@ export const Home = () => {
           <div style={{ contentVisibility: 'auto' }}>
             <FAQSection />
           </div>
+          <div style={{ contentVisibility: 'auto' }}>
+            <AppDownloadSection />
+          </div>
         </div>
       </main>
 
@@ -326,6 +330,9 @@ export const Home = () => {
         </div>
         <div style={{ contentVisibility: 'auto' }}>
           <FAQSection />
+        </div>
+        <div style={{ contentVisibility: 'auto' }}>
+          <AppDownloadSection />
         </div>
       </div>
 
