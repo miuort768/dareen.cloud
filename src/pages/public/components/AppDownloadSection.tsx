@@ -1,6 +1,31 @@
-import { Smartphone, Store } from 'lucide-react';
+import { Smartphone, Store, Monitor } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
 
 export const AppDownloadSection = () => {
+    const deferredPrompt = useRef<any>(null);
+    const [pwaInstalled, setPwaInstalled] = useState(false);
+
+    useEffect(() => {
+        const handler = (e: Event) => {
+            e.preventDefault();
+            deferredPrompt.current = e;
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        window.addEventListener('appinstalled', () => setPwaInstalled(true));
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handler);
+            window.removeEventListener('appinstalled', () => setPwaInstalled(true));
+        };
+    }, []);
+
+    const handlePwaInstall = async () => {
+        if (!deferredPrompt.current) return;
+        deferredPrompt.current.prompt();
+        const result = await deferredPrompt.current.userChoice;
+        if (result.outcome === 'accepted') setPwaInstalled(true);
+        deferredPrompt.current = null;
+    };
+
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 dark:from-slate-900 dark:via-indigo-950 dark:to-purple-950 py-6 md:py-10">
             <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -48,6 +73,18 @@ export const AppDownloadSection = () => {
                                 <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
                             </div>
                         </a>
+                        {!pwaInstalled && (
+                        <button
+                            onClick={handlePwaInstall}
+                            className="hidden md:inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-white/10 border border-white/20 text-white font-black text-sm rounded-xl shadow-lg hover:bg-white/20 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
+                        >
+                            <Monitor className="w-5 h-5" />
+                            <div className="text-right">
+                                <div className="text-[8px] text-white/60 font-medium leading-tight">حمله على</div>
+                                <div className="text-sm font-black leading-tight -mt-0.5">الكمبيوتر</div>
+                            </div>
+                        </button>
+                        )}
                     </div>
                     <div className="flex items-center justify-center gap-6 mt-5">
                         <div className="flex items-center gap-1.5 text-white/60">

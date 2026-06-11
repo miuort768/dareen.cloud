@@ -287,6 +287,9 @@ export const Home = () => {
         {/* Existing Sections (restyled layout) */}
         <div className="space-y-4">
           <div style={{ contentVisibility: 'auto' }}>
+            <AppDownloadSection />
+          </div>
+          <div style={{ contentVisibility: 'auto' }}>
             <WhyChooseUs />
           </div>
           <div style={{ contentVisibility: 'auto' }}>
@@ -304,15 +307,15 @@ export const Home = () => {
           <div style={{ contentVisibility: 'auto' }}>
             <FAQSection />
           </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <AppDownloadSection />
-          </div>
         </div>
       </main>
 
       {/* ─── Desktop content (unchanged) ─── */}
       <div className="hidden md:block">
         <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
+        <div style={{ contentVisibility: 'auto' }}>
+          <AppDownloadSection />
+        </div>
         <div style={{ contentVisibility: 'auto' }}>
           <WhyChooseUs />
         </div>
@@ -330,9 +333,6 @@ export const Home = () => {
         </div>
         <div style={{ contentVisibility: 'auto' }}>
           <FAQSection />
-        </div>
-        <div style={{ contentVisibility: 'auto' }}>
-          <AppDownloadSection />
         </div>
       </div>
 
