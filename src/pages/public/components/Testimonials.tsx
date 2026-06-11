@@ -14,9 +14,7 @@ interface TestimonialsProps {
 
 export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
     return (
-        <section className="py-4 md:py-6 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
-            <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
-            <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
+        <section className="py-4 md:py-6 bg-[#F8F8FC] dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
 
             <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
             <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
@@ -35,7 +33,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="max-w-6xl mx-auto">
                     <div className="lg:hidden">
                         <div className="relative group">
-                            <div className="p-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[140px]">
+                            <div className="p-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm rounded-2xl relative overflow-hidden flex flex-col min-h-[140px]">
                                 <Quote size={30} className="text-indigo-500/10 absolute -top-1 -left-1" />
                                 
                                 <div className="relative z-10 flex flex-col h-full flex-grow">
@@ -67,7 +65,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                             return (
                                 <div 
                                     key={index} 
-                                    className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
+                                    className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col rounded-2xl
                                         ${isLarge 
                                             ? 'lg:col-span-2 bg-[#064E3B] border-[#064E3B] text-white p-6' 
                                             : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'

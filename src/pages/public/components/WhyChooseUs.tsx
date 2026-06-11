@@ -1,4 +1,4 @@
-import { ShieldCheck, Lightbulb, Heart, Star, Users, BookOpen, Award, CheckCircle, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft } from 'lucide-react';
 
 const features = [
   {
@@ -41,7 +41,7 @@ const featureIcons = [ShieldCheck, Lightbulb, Heart];
 
 export const WhyChooseUs = () => {
   return (
-    <section className="relative overflow-hidden bg-[#F7F7FA] dark:bg-slate-950 py-4 md:py-10">
+    <section className="relative overflow-hidden bg-[#F8F8FC] dark:bg-slate-950 py-4 md:py-10">
       {/* Background decorative blobs */}
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-300/20 dark:bg-violet-500/5 rounded-full blur-[100px]" />
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300/20 dark:bg-indigo-500/5 rounded-full blur-[100px]" />
@@ -121,69 +121,51 @@ export const WhyChooseUs = () => {
           </div>
         </div>
 
-        {/* ─── Desktop Layout (old design) ─── */}
-        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-0 pb-4 md:pb-6">
-          <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-indigo-600 to-indigo-950 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-            <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
-              <Lightbulb className="w-6 h-6 text-white" />
-            </div>
-            <div className="relative z-10">
-              <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
-              <p className="text-xs text-indigo-50 leading-relaxed">دروس خصوصية تفاعلية أونلاين للمناهج الخليجية تنمي مهارات الفهم والتفكير الإبداعي.</p>
-            </div>
-          </div>
+        {/* ─── Desktop Layout ─── */}
+        <div className="hidden md:grid grid-cols-3 gap-4 max-w-6xl mx-auto pb-4 md:pb-6">
+          {features.map((f, i) => {
+            const Icon = featureIcons[i];
+            return (
+              <div key={f.title} className={`relative p-6 bg-white dark:bg-slate-900/50 rounded-2xl shadow-sm border ${f.border} ${f.borderDark} flex items-start gap-4 group hover:shadow-md transition-all`}>
+                {f.ribbon && (
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[#6C4BFF] to-[#4A2DDB] text-white text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                    <Star size={8} className="fill-yellow-300 text-yellow-300" />
+                    الأكثر تميزاً
+                  </div>
+                )}
+                <div className={`w-14 h-14 rounded-2xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
+                  <Icon className={`${f.color} ${f.colorDark}`} size={24} />
+                </div>
+                <div>
+                  <h3 className={`text-base font-black ${f.color} ${f.colorDark} mb-1`}>{f.title}</h3>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">{f.desc}</p>
+                </div>
+              </div>
+            );
+          })}
 
-          <div className="p-6 bg-gradient-to-br from-purple-600 to-purple-800 rounded-none shadow-xl text-white relative overflow-hidden flex items-center gap-4">
-            <div className="absolute top-0 left-0 w-16 h-16 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30">
-              <Heart className="w-6 h-6 text-white fill-white" />
-            </div>
-            <div className="relative z-10">
-              <h3 className="text-base font-bold mb-1">بيئة آمنة ومحفزة</h3>
-              <p className="text-xs text-white/90 leading-relaxed">فصول افتراضية آمنة لدروس التقوية الأونلاين في الكويت، تشجع الطالب على التفاعل والمشاركة.</p>
-            </div>
-          </div>
-
-          <div className="relative p-7 bg-white dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm flex items-center gap-5 group/card overflow-hidden">
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
-            <div className="absolute top-0 right-0 w-8 h-8 bg-indigo-50 dark:bg-indigo-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-2 left-10 opacity-[0.08] dark:opacity-[0.15] rotate-12 transition-transform group-hover/card:-translate-y-2">
-              <img src="/dareen_logo_new.jpg" alt="شعار دارين السابعة" width="48" height="48" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
-              <BookOpen size={64} className="text-black dark:text-white" />
-            </div>
-            <div className="relative z-10 w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
-              <CheckCircle className="w-7 h-7" />
-            </div>
-            <div className="relative z-10 text-right">
-              <h3 className="text-base font-black text-slate-900 dark:text-white mb-1">نتائج مضمونة</h3>
-              <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">متابعة وتعزيز مستمرين مع تقارير أسبوعية لمستوى الطالب في المواد الدراسية المختلفة.</p>
-            </div>
-          </div>
-
-          <div className="md:col-span-2 p-6 md:p-8 bg-black rounded-none shadow-2xl text-white relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="md:col-span-3 p-6 md:p-8 bg-gradient-to-br from-violet-600 to-indigo-950 rounded-2xl shadow-lg text-white relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">
               <div className="flex-1 text-center lg:text-right">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/50 border border-white/10 rounded-full mb-2 mx-auto lg:mx-0">
-                  <Award size={16} className="text-amber-500" />
-                  <span className="text-xs font-bold text-gray-300">التميز التعليمي</span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 border border-white/20 rounded-full mb-3 mx-auto lg:mx-0">
+                  <Award size={16} className="text-amber-300" />
+                  <span className="text-xs font-bold text-white/90">التميز التعليمي</span>
                 </div>
                 <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
                 <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">نخبة من المعلمين المبدعين لتدريس المناهج الكويتية والخليجية. تعليم عن بعد، تحفيظ قرآن، وتأسيس في الرياضيات والعلوم واللغة العربية والإنجليزية.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
-                <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-indigo-400/30">
-                  <Users className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
+                <div className="p-6 bg-white/10 border border-white/10 rounded-2xl text-center group-hover:bg-white/15 transition-all duration-300">
+                  <Users className="w-8 h-8 text-indigo-300 mx-auto mb-3" />
                   <div className="text-3xl font-black text-white">+70</div>
-                  <div className="text-xs text-gray-400 font-bold">معلم خبير</div>
+                  <div className="text-xs text-white/60 font-bold">معلم خبير</div>
                 </div>
-                <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-purple-600/30">
-                  <Star className="w-8 h-8 text-purple-500 mx-auto mb-3" />
+                <div className="p-6 bg-white/10 border border-white/10 rounded-2xl text-center group-hover:bg-white/15 transition-all duration-300">
+                  <Star className="w-8 h-8 text-purple-300 mx-auto mb-3" />
                   <div className="text-3xl font-black text-white">+10</div>
-                  <div className="text-xs text-gray-400 font-bold">سنوات خبرة</div>
+                  <div className="text-xs text-white/60 font-bold">سنوات خبرة</div>
                 </div>
               </div>
             </div>

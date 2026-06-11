@@ -29,11 +29,10 @@ export const MasarSection = () => {
             {/* ─── Desktop version ─── */}
             <section className="hidden md:block py-4 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81] shadow-[0_30px_60px_-15px_rgba(30,27,75,0.4)] overflow-hidden border border-white/5 relative rounded-none">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81] shadow-[0_30px_60px_-15px_rgba(30,27,75,0.4)] overflow-hidden border border-white/5 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute right-0 top-0 w-80 h-80 bg-indigo-600/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
-                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
                         </div>
                         <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
                             <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-l border-white/10 group">
@@ -61,12 +60,12 @@ export const MasarSection = () => {
                                     حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <Link to="/books" className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-none font-black text-lg shadow-2xl shadow-indigo-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
+                                    <Link to="/books" className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-black text-lg shadow-2xl shadow-indigo-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
                                         <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
                                         <span>تحميل مذكرة</span>
                                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                     </Link>
-                                    <a href={`https://wa.me/2${adminPhone}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-none font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
+                                    <a href={`https://wa.me/2${adminPhone}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
                                         <MessageCircle className="w-6 h-6" />
                                         <span>تواصل معنا</span>
                                     </a>

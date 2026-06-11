@@ -2,19 +2,7 @@ import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 
 export const FAQSection = () => {
     return (
-        <section className="py-4 md:py-6 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 15% 50%, #6366F1 0%, transparent 40%), radial-gradient(circle at 85% 50%, #8B5CF6 0%, transparent 40%)',
-                    filter: 'blur(80px)'
-                }}>
-            </div>
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                style={{
-                    backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                    backgroundSize: '200px 200px'
-                }}>
-            </div>
+        <section className="py-4 md:py-6 bg-[#F8F8FC] dark:bg-slate-950 relative overflow-hidden transition-colors duration-500" id="faq">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-100 dark:border-slate-700 rounded-full mb-2 mx-auto shadow-sm">
@@ -59,7 +47,7 @@ export const FAQSection = () => {
                     ].map((item, idx) => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20 object-contain opacity-20" />];
                         return (
-                            <div key={idx} className="relative bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl overflow-hidden group hover:border-indigo-100 dark:hover:border-indigo-800 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/20">
+                            <div key={idx} className="relative bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden group hover:border-indigo-100 dark:hover:border-indigo-800 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/20">
                                 <div className="absolute -bottom-4 -left-4 text-gray-400 dark:text-gray-500 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>

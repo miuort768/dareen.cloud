@@ -9,45 +9,30 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: HeroSectionProps) => {
     return (
-        <>
-            <div className="hero-blob bg-indigo-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
-            <div className="hero-blob bg-purple-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
-
-            <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
-                        filter: 'blur(70px)'
-                    }}>
-                </div>
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                    style={{
-                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                        backgroundSize: '200px 200px'
-                    }}>
-                </div>
-                <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6">
+        <section className="relative pt-6 pb-6 md:pt-8 md:pb-8 overflow-hidden bg-[#F8F8FC] dark:bg-slate-950">
+            <div className="container mx-auto px-4">
+                <div className="max-w-6xl mx-auto bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl shadow-sm border border-violet-100/50 dark:border-slate-800 overflow-hidden">
+                    <div className="flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6 p-6 md:p-10">
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-indigo-900/30 border border-violet-200/50 dark:border-indigo-800 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
                                 <span className="text-indigo-900 dark:text-indigo-300 font-bold text-[10px] sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
                             </div>
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-indigo-950 dark:text-white leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في السعودية، الكويت، الامارات، قطر، وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والريان ومسقط وصلالة والمنامة والمحرق</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-indigo-600 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-xs text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
+                            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
                                 أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-indigo-950 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-black transition-all flex items-center justify-center gap-2 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-bold text-base sm:text-lg shadow-lg hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     aria-label="تصفح الدورات التعليمية"
                                 >
                                     <span>تصفح الدورات</span>
@@ -55,7 +40,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 </Link>
                                 <button
                                     onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
                                     aria-label="شاهد دليل الاستخدام"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center group-hover:scale-110 transition">
@@ -94,7 +79,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                             <div className="relative w-full max-w-[220px] lg:max-w-[375px] aspect-auto lg:aspect-[4/5] flex items-center justify-center">
                                 <div className="absolute inset-[2%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
                                 <div className="absolute inset-[4%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
-                                
+
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                     <picture>
                                         <source srcSet="/hero-child.webp" type="image/webp" />
@@ -115,28 +100,27 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-                
-                <div className="hidden md:grid w-full mt-0 md:mt-0 bg-gradient-to-r from-indigo-900 to-indigo-950 dark:from-indigo-900 dark:to-indigo-950 border-y border-indigo-800/50 dark:border-indigo-800/50 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/30 dark:divide-indigo-800/30">
+
+                <div className="hidden md:grid grid-cols-4 gap-3 mt-4 max-w-6xl mx-auto">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-white/5 transition-colors flex flex-row justify-between items-center gap-2 group">
-                            <p className="text-[10px] lg:text-[11px] font-black text-white leading-tight flex-1">
+                        <div key={idx} className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-gray-100/80 dark:border-slate-800 flex items-center justify-between gap-2 group hover:shadow-md transition-all">
+                            <p className="text-[10px] lg:text-[11px] font-black text-slate-800 dark:text-white leading-tight flex-1">
                                 {text}
                             </p>
-                            <a 
+                            <a
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`سجل الآن: ${text}`}
-                                className="shrink-0 px-2.5 py-1 bg-white text-indigo-950 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-gray-100 transition-colors shadow-sm whitespace-nowrap"
+                                className="shrink-0 px-2.5 py-1 bg-indigo-600 text-white font-bold text-[9px] lg:text-[10px] rounded-xl hover:bg-indigo-700 transition-all shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن
                             </a>
                         </div>
                     ) : null)}
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 };

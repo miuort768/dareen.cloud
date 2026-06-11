@@ -7,11 +7,10 @@ interface HowItWorksProps {
 
 export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
     return (
-        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-[#F7F8FC] dark:bg-slate-950 scroll-mt-32">
+        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-[#F8F8FC] dark:bg-slate-950 scroll-mt-32">
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-500/[0.05] dark:bg-indigo-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
                 <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-emerald-500/[0.03] dark:bg-emerald-500/[0.06] blur-[100px] rounded-full"></div>
-                <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
@@ -105,7 +104,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative px-8 py-3.5 bg-slate-900 dark:bg-slate-800 text-white font-black text-sm rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
+                            className="group relative px-8 py-3.5 bg-slate-900 dark:bg-slate-800 text-white font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
