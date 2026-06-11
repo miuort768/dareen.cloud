@@ -102,9 +102,9 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                     </div>
                 </div>
 
-                <div className="hidden md:grid grid-cols-4 gap-3 mt-4 max-w-6xl mx-auto">
+                <div className="hidden md:grid grid-cols-4 gap-2 mt-3 max-w-6xl mx-auto">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-gray-100/80 dark:border-slate-800 flex items-center justify-between gap-2 group hover:shadow-md transition-all">
+                        <div key={idx} className="bg-white dark:bg-slate-900 rounded-2xl p-2 shadow-sm border border-gray-100/80 dark:border-slate-800 flex items-center justify-between gap-1 group hover:shadow-md transition-all">
                             <p className="text-[10px] lg:text-[11px] font-black text-slate-800 dark:text-white leading-tight flex-1">
                                 {text}
                             </p>
