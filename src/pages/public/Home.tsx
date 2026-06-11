@@ -15,6 +15,7 @@ import { FAQSection } from './components/FAQSection';
 import { HeroSection } from './components/HeroSection';
 import { HowToSubscribe } from './components/HowToSubscribe';
 import { AppDownloadSection } from './components/AppDownloadSection';
+import { StatsCounter } from './components/StatsCounter';
 import {
   Play, Trophy,
   Video, Star, Download, GraduationCap, Headphones, BadgeCheck,
@@ -284,6 +285,8 @@ export const Home = () => {
         </section>
 
 
+        <StatsCounter />
+
         {/* Existing Sections (restyled layout) */}
         <div className="space-y-4">
           <div style={{ contentVisibility: 'auto' }}>
@@ -313,9 +316,7 @@ export const Home = () => {
       {/* ─── Desktop content (unchanged) ─── */}
       <div className="hidden md:block">
         <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
-        <div style={{ contentVisibility: 'auto' }}>
-          <AppDownloadSection />
-        </div>
+        <StatsCounter />
         <div style={{ contentVisibility: 'auto' }}>
           <WhyChooseUs />
         </div>
@@ -333,6 +334,9 @@ export const Home = () => {
         </div>
         <div style={{ contentVisibility: 'auto' }}>
           <FAQSection />
+        </div>
+        <div style={{ contentVisibility: 'auto' }}>
+          <AppDownloadSection />
         </div>
       </div>
 
