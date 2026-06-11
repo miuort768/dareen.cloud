@@ -28,108 +28,95 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     return (
         <>
             {/* Desktop version */}
-            <section className="hidden md:block pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
-                <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-emerald-500/30 z-20"></div>
-                <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-emerald-500/30 z-20"></div>
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
-                        filter: 'blur(70px)'
-                    }}>
-                </div>
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                    style={{
-                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                        backgroundSize: '200px 200px'
-                    }}>
-                </div>
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
-                        <div className="w-full lg:w-1/2 text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 rounded-full mb-6 mx-auto">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span className="text-emerald-900 dark:text-emerald-300 font-bold text-xs">برامج تحفيظ متميزة</span>
-                            </div>
-                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black dark:text-white leading-tight font-heading">
-                                رحلتك مع <span className="text-emerald-600 relative inline-block">
-                                    كتاب الله
-                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                        <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
-                                    </svg>
-                                </span> تبدأ بخطوة
-                            </h2>
-                            <p className="text-gray-600 dark:text-slate-400 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
-                                منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
-                                <a
-                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group rounded-xl"
-                                >
-                                    <span>ابدأ الحفظ الآن</span>
-                                    <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                                </a>
-                                <Link
-                                    to="/courses"
-                                    onClick={() => window.scrollTo(0, 0)}
-                                    className="px-10 py-4 bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 font-bold text-lg hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center rounded-xl"
-                                >
-                                    <Sparkles size={20} className="ml-2" />
-                                    تصفح المزيد
-                                </Link>
-                            </div>
-                            <div className="items-center justify-center gap-4 inline-flex">
-                                <div className="flex -space-x-3 space-x-reverse">
-                                    {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden shadow-sm">
-                                            <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="40" height="40" />
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-[#F8F8FC] dark:bg-slate-950 transition-colors duration-500">
+                <div className="container mx-auto px-4 md:px-8 relative z-10">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-emerald-100 via-emerald-50 to-white dark:from-slate-800 dark:via-slate-800 dark:to-slate-900 rounded-2xl shadow-sm border border-emerald-100/80 dark:border-emerald-900/30 overflow-hidden">
+                        <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center p-6 md:p-10">
+                            <div className="w-full lg:w-1/2 text-center">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800 rounded-full mb-4 mx-auto">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span className="text-emerald-900 dark:text-emerald-300 font-bold text-xs">برامج تحفيظ متميزة</span>
+                                </div>
+                                <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-black dark:text-white leading-tight font-heading">
+                                    رحلتك مع <span className="text-emerald-600 relative inline-block">
+                                        كتاب الله
+                                        <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        </svg>
+                                    </span> تبدأ بخطوة
+                                </h2>
+                                <p className="text-gray-500 dark:text-slate-400 text-xs lg:text-sm leading-relaxed mb-6 max-w-xl mx-auto font-medium">
+                                    منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
+                                    <a
+                                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-8 py-3.5 bg-emerald-600 text-white font-bold text-sm shadow-lg hover:bg-emerald-700 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                    >
+                                        <span>ابدأ الحفظ الآن</span>
+                                        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                    </a>
+                                    <Link
+                                        to="/courses"
+                                        onClick={() => window.scrollTo(0, 0)}
+                                        className="px-8 py-3.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 font-bold text-sm hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center rounded-xl"
+                                    >
+                                        <Sparkles size={16} className="ml-2" />
+                                        تصفح المزيد
+                                    </Link>
+                                </div>
+                                <div className="items-center justify-center gap-4 inline-flex">
+                                    <div className="flex -space-x-3 space-x-reverse">
+                                        {[1, 2, 3].map(i => (
+                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden shadow-sm">
+                                                <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="40" height="40" />
+                                            </div>
+                                        ))}
+                                        <div className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300 shadow-sm">+5k</div>
+                                    </div>
+                                    <div className="h-8 w-px bg-emerald-200/50 dark:bg-emerald-800/50"></div>
+                                    <div className="text-right">
+                                        <div className="text-sm font-bold text-black dark:text-white flex items-center gap-1">
+                                            4.9/5
+                                            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                                         </div>
-                                    ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300 shadow-sm">+5k</div>
-                                </div>
-                                <div className="h-8 w-px bg-emerald-200/50 dark:bg-emerald-800/50 mx-2"></div>
-                                <div className="text-right">
-                                    <div className="text-sm font-bold text-black dark:text-white">4.9/5 تقييم ممتاز</div>
-                                    <div className="text-xs text-gray-500 dark:text-slate-400">من قبل آلاف الطلاب</div>
+                                        <div className="text-xs text-gray-500 dark:text-slate-400 font-medium">من قبل آلاف الطلاب</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
-                            <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
-                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12 rounded-xl">
-                                        <Clock className="w-6 h-6" />
+                            <div className="w-full lg:w-1/2 flex justify-center py-4 lg:py-0">
+                                <div className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
+                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3 rounded-xl">
+                                            <Clock className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">أوقات مرنة</h3>
+                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">اختر مواعيدك المفضلة</p>
                                     </div>
-                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">أوقات مرنة</h3>
-                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">اختر مواعيدك المفضلة</p>
+                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3 rounded-xl">
+                                            <ClipboardCheck className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">متابعة دقيقة</h3>
+                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">تقارير إنجاز أسبوعية</p>
+                                    </div>
+                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3 rounded-xl">
+                                            <Mic className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
+                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">نخبة الحفاظ المبدعون</p>
+                                    </div>
+                                    <Link to="/contact" className="p-4 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-lg text-white flex flex-col items-center text-center transition-all hover:scale-105 cursor-pointer">
+                                        <div className="w-11 h-11 bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
+                                            <Sparkles className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
+                                        <p className="text-white/80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
+                                    </Link>
                                 </div>
-                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12 rounded-xl">
-                                        <ClipboardCheck className="w-6 h-6" />
-                                    </div>
-                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">متابعة دقيقة</h3>
-                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">تقارير إنجاز أسبوعية</p>
-                                </div>
-                                <div className="relative p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110 rounded-xl">
-                                        <Mic className="w-6 h-6" />
-                                    </div>
-                                    <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
-                                    <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight">نخبة الحفاظ المبدعون</p>
-                                </div>
-                                <Link to="/contact" className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-2xl shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
-                                    <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform rounded-xl">
-                                        <Sparkles className="w-6 h-6" />
-                                    </div>
-                                    <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
-                                    <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
-                                </Link>
                             </div>
                         </div>
                     </div>
