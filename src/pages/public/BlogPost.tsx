@@ -97,24 +97,27 @@ export const BlogPost = () => {
         );
     }
 
+    const content = post.content || '';
     const contentParts = (() => {
-        const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+        if (!content) return { first: '', rest: '' };
+        const hasHtml = /<[a-z][\s\S]*>/i.test(content);
         if (hasHtml) {
-            const match = post.content.match(/<\/p>/i);
+            const match = content.match(/<\/p>/i);
             if (match) {
                 const idx = match.index! + match[0].length;
-                return { first: post.content.slice(0, idx), rest: post.content.slice(idx) };
+                return { first: content.slice(0, idx), rest: content.slice(idx) };
             }
-            return { first: post.content, rest: '' };
+            return { first: content, rest: '' };
         }
-        const parts = post.content.split(/\n\n/);
+        const parts = content.split(/\n\n/);
         return { first: parts[0], rest: parts.slice(1).join('\n\n') };
     })();
 
     const processContent = useMemo(() => {
         return (text: string) => {
+            if (!text) return '';
             const lines = text.split('\n');
-            const hasHtml = /<[a-z][\s\S]*>/i.test(post.content);
+            const hasHtml = /<[a-z][\s\S]*>/i.test(text);
             const processed = lines.map((line: string) => {
                 const trimmed = line.trim();
                 const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
@@ -196,7 +199,7 @@ export const BlogPost = () => {
                 {/* Hero Image */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
                     <div className="w-full bg-gray-100 dark:bg-slate-900 overflow-hidden shadow-xl">
-                        <img src={post.coverImage} alt={post.title} loading="lazy" decoding="async" className="w-full h-auto" />
+                        <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
                     </div>
                 </div>
 
