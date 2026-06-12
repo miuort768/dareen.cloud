@@ -335,9 +335,6 @@ export const Home = () => {
         <div style={{ contentVisibility: 'auto' }}>
           <FAQSection />
         </div>
-        <div style={{ contentVisibility: 'auto' }}>
-          <AppDownloadSection />
-        </div>
       </div>
 
       <footer>
