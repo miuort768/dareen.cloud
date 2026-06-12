@@ -23,9 +23,6 @@ export const MobileHeader = () => {
       </div>
       <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2">
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0">
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-indigo-600" />}
-          </button>
           <Link to="/" className="flex items-center gap-2">
           <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
             <GraduationCap className="w-6 h-6 text-white" />
@@ -37,7 +34,11 @@ export const MobileHeader = () => {
           </div>
         </Link>
         </div>
-        <div className="relative ml-1">
+        <div className="flex items-center gap-1">
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className="w-9 h-9 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0">
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+          </button>
+          <div className="relative">
           <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center">
             {menuOpen ? <X className="w-5 h-5 text-slate-600 dark:text-slate-300" /> : <Menu className="w-5 h-5 text-slate-600 dark:text-slate-300" />}
           </button>
@@ -54,6 +55,7 @@ export const MobileHeader = () => {
               </Link>
             </div>
           )}
+        </div>
         </div>
       </header>
     </>
