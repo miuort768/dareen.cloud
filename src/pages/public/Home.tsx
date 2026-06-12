@@ -285,8 +285,6 @@ export const Home = () => {
         </section>
 
 
-        <StatsCounter />
-
         {/* Existing Sections (restyled layout) */}
         <div className="space-y-4">
           <div style={{ contentVisibility: 'auto' }}>
