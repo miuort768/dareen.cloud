@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -10,6 +10,22 @@ import { useSettingsStore } from '../../store/settingsStore';
 import DOMPurify from 'dompurify';
 
 const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
+
+// Plain function outside component — avoids Rules of Hooks violation
+const processContent = (text: string): string => {
+    if (!text) return '';
+    const lines = text.split('\n');
+    const hasHtml = /<[a-z][\s\S]*>/i.test(text);
+    const processed = lines.map((line: string) => {
+        const trimmed = line.trim();
+        const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+        if (imgRegex.test(trimmed)) {
+            return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
+        }
+        return line;
+    });
+    return hasHtml ? processed.join('\n') : processed.join('<br/>');
+};
 
 const curriculumNames: Record<string, string> = {
   kuwait: 'منهج كويتي', qatar: 'منهج قطري', uae: 'منهج إماراتي', saudi: 'منهج سعودي',
@@ -113,22 +129,7 @@ export const BlogPost = () => {
         return { first: parts[0], rest: parts.slice(1).join('\n\n') };
     })();
 
-    const processContent = useMemo(() => {
-        return (text: string) => {
-            if (!text) return '';
-            const lines = text.split('\n');
-            const hasHtml = /<[a-z][\s\S]*>/i.test(text);
-            const processed = lines.map((line: string) => {
-                const trimmed = line.trim();
-                const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-                if (imgRegex.test(trimmed)) {
-                    return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
-                }
-                return line;
-            });
-            return hasHtml ? processed.join('\n') : processed.join('<br/>');
-        };
-    }, [post.content]);
+
 
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
