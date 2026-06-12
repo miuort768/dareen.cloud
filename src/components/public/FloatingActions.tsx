@@ -35,7 +35,8 @@ export const FloatingActions = () => {
             icon: theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />,
             label: theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي',
             color: 'bg-indigo-600',
-            onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+            onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+            hideMobile: true
         }
     ];
 
@@ -46,6 +47,7 @@ export const FloatingActions = () => {
                     {actions.map((action, index) => (
                         <motion.div
                             key={action.id}
+                            className={action.hideMobile ? 'hidden md:block relative group' : 'relative group'}
                             initial={{ opacity: 0, scale: 0.5, x: 20 }}
                             animate={{ opacity: 1, scale: 1, x: 0 }}
                             transition={{ 
@@ -54,7 +56,6 @@ export const FloatingActions = () => {
                                 damping: 20,
                                 delay: index * 0.1 
                             }}
-                            className="relative group"
                         >
                             {/* Hover Label */}
                             <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 overflow-hidden pointer-events-none">
