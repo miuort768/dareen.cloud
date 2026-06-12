@@ -186,7 +186,7 @@ export const BlogPost = () => {
                     <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-2 md:mb-4">
                         {post.title}
                     </h1>
-                    {(post.curriculum || post.level || post.grade || post.term || post.subject) && (
+                    {['notes', 'solutions'].includes(post.contentType || '') && (post.curriculum || post.level || post.grade || post.term || post.subject) && (
                     <div className="flex flex-wrap gap-2 mb-4">
                         {post.curriculum && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 text-[11px] font-bold rounded-lg border border-sky-200/50 dark:border-sky-500/20"><BookOpen size={12} />{curriculumNames[post.curriculum] || post.curriculum}</span>}
                         {post.level && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold rounded-lg border border-emerald-200/50 dark:border-emerald-500/20"><GraduationCap size={12} />{levelNames[post.level] || post.level}</span>}
