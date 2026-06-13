@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal } from 'lucide-react';
+import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart } from 'lucide-react';
 import { useSettingsStore } from '../../../store/settingsStore';
 
 export const HowToSubscribe = () => {
@@ -14,7 +14,7 @@ export const HowToSubscribe = () => {
     }, []);
 
     const formatTime = (d: Date) =>
-        d.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', hour12: true });
+        d.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Africa/Cairo' });
 
     const steps = [
         {
@@ -52,7 +52,11 @@ export const HowToSubscribe = () => {
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
                 <div className="flex items-center justify-between mb-6 px-1">
-                    <span className="text-[13px] font-bold text-slate-900 dark:text-white">{formatTime(time)}</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-[13px] font-black text-indigo-600 dark:text-indigo-400">{formatTime(time)}</span>
+                        <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500">بتوقيت أم الدنيا</span>
+                        <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
+                    </div>
                     <div className="flex items-center gap-1.5">
                         <Signal size={14} className="text-slate-700 dark:text-slate-300" />
                         <Wifi size={14} className="text-slate-700 dark:text-slate-300" />
