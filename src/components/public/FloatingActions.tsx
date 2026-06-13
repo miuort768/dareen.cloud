@@ -42,7 +42,7 @@ export const FloatingActions = () => {
 
     return (
         <>
-            <div className={cn("fixed top-[75%] md:top-1/2 -translate-y-1/2 right-4 md:right-6 z-[9999] flex flex-col gap-2 md:gap-3", isBooksPage && "hidden md:flex")}>
+            <div className={cn("fixed top-[75%] md:top-1/2 -translate-y-1/2 left-4 md:right-6 z-[9999] flex flex-col gap-2 md:gap-3", isBooksPage && "hidden md:flex")}>
                 <AnimatePresence>
                     {actions.map((action, index) => (
                         <motion.div
@@ -58,9 +58,9 @@ export const FloatingActions = () => {
                             }}
                         >
                             {/* Hover Label */}
-                            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 overflow-hidden pointer-events-none">
+                            <div className="absolute left-full ml-4 md:right-full md:mr-4 top-1/2 -translate-y-1/2 overflow-hidden pointer-events-none">
                                 <motion.div 
-                                    className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-slate-800/50 shadow-xl opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300"
+                                    className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-slate-800/50 shadow-xl opacity-0 group-hover:opacity-100 -translate-x-4 md:translate-x-4 group-hover:translate-x-0 transition-all duration-300"
                                 >
                                     <span className="text-[10px] font-black text-slate-800 dark:text-white whitespace-nowrap uppercase tracking-wider">
                                         {action.label}
