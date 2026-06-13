@@ -102,7 +102,7 @@ export const Courses = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-[1.15] tracking-tight"
+              className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-2 md:mb-4 leading-[1.15] tracking-tight"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
                 دورات
