@@ -40,7 +40,7 @@ export const AppDownloadSection = () => {
                             <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-black dark:text-white leading-tight font-heading">
                                 حمل التطبيق الآن
                             </h2>
-                            <p className="text-gray-500 dark:text-slate-400 text-xs lg:text-sm leading-relaxed mb-6 max-w-xl mx-auto font-medium">
+                            <p className="text-gray-500 dark:text-slate-400 text-[11px] lg:text-xs leading-relaxed mb-6 max-w-xl mx-auto font-medium">
                                 أفضل مدرسة افتراضية عربية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                             </p>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
