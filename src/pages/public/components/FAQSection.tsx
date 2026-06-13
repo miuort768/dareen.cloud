@@ -84,7 +84,7 @@ export const FAQSection = () => {
                                             {item.q}
                                         </h3>
                                         <span className="w-6 h-6 rounded-full bg-slate-400 dark:bg-slate-500 flex items-center justify-center transform group-open:rotate-180 transition-all duration-300">
-                                            <ChevronDown size={14} className="text-black" />
+                                            <ChevronDown size={14} className="text-white" />
                                         </span>
                                     </summary>
                                     <div className="px-4 pb-4 pt-0">
