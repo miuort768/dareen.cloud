@@ -97,11 +97,10 @@ export const Contact = () => {
                                 href={card.href}
                                 target={card.href !== '#' ? '_blank' : undefined}
                                 rel="noopener noreferrer"
-                                className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 hover:border-indigo-200/50 dark:hover:border-indigo-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl hover:shadow-gray-200/60 dark:hover:shadow-black/30 hover:-translate-y-1"
+                                className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 via-indigo-600/0 to-indigo-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0 transition-all duration-500 group-hover:scale-110", card.gradient)}>
+                                <div className="flex items-center gap-4">
+                                    <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
                                         <card.icon size={20} />
                                     </div>
                                     <div className="flex-grow min-w-0">
