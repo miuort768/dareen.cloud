@@ -114,7 +114,7 @@ export const HowToSubscribe = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between w-full px-6 py-4 bg-gradient-to-l from-[#6C4BFF] to-indigo-700 rounded-2xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all group"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-[#6C4BFF] to-indigo-700 rounded-2xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all group"
                 >
                     <span className="text-white text-[13px] font-black">احجز حصتك المجانية الآن</span>
                     <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
