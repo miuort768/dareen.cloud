@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart } from 'lucide-react';
+import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart, Gift } from 'lucide-react';
 import { useSettingsStore } from '../../../store/settingsStore';
 
 export const HowToSubscribe = () => {
@@ -120,6 +120,7 @@ export const HowToSubscribe = () => {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-[#6C4BFF] to-indigo-700 rounded-2xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all group"
                 >
+                    <Gift size={16} className="text-white/90" />
                     <span className="text-white text-[13px] font-black">احجز حصتك المجانية الآن</span>
                     <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
                         <ArrowLeft size={16} className="text-white" />
