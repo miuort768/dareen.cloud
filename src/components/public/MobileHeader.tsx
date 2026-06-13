@@ -24,8 +24,9 @@ export const MobileHeader = () => {
       <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
-          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20">
-            <GraduationCap className="w-6 h-6 text-white" />
+          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
+            <GraduationCap className="w-6 h-6 text-white relative z-10" />
           </div>
           <div>
             <p className="text-[15px] font-black text-indigo-950 dark:text-indigo-100 leading-tight">دارين السابعة</p>
