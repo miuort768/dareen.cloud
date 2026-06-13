@@ -141,7 +141,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-8 md:py-10 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
+            <section className="py-4 md:py-6 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
                 {/* Visual Separator */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
