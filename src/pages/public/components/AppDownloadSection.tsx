@@ -37,7 +37,7 @@ export const AppDownloadSection = () => {
                                 <Smartphone size={14} className="text-indigo-600 dark:text-indigo-300" />
                                 <span className="text-indigo-900 dark:text-indigo-300 font-bold text-xs">تطبيق دارين السابعة</span>
                             </div>
-                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-black dark:text-white leading-tight font-heading">
+                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-2 text-black dark:text-white leading-tight font-heading">
                                 حمل التطبيق الآن
                             </h2>
                             <p className="text-gray-500 dark:text-slate-400 text-[11px] lg:text-xs leading-relaxed mb-6 max-w-xl mx-auto font-medium">
@@ -117,7 +117,7 @@ export const AppDownloadSection = () => {
                             <span className="text-indigo-700 dark:text-indigo-300 font-bold text-[11px] tracking-wide">تطبيق دارين السابعة</span>
                         </div>
                     </div>
-                    <div className="text-center mb-5">
+                    <div className="text-center mb-2">
                         <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] dark:text-white font-heading">
                             حمل التطبيق الآن
                         </h2>
