@@ -92,7 +92,7 @@ export const About = () => {
                                     <div className="space-y-4">
                                         <div className="h-48 bg-indigo-700 rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
                                             <Target size={24} className="mb-4 text-white/90" />
-                                            <h4 className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">أهداف محققة</h4>
+                                            <h4 className="font-black text-xl text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                             <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="تدريس فعال" width="400" height="320" loading="lazy" decoding="async" />
