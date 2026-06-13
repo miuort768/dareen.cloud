@@ -207,10 +207,10 @@ export const Home = () => {
         </div>
 
         {/* Latest Courses */}
-        <section className="mb-4">
+        <section className="mb-4 px-1">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-[15px] font-black text-slate-900 dark:text-white">أحدث الدورات</h2>
-            <Link to="/courses" className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+            <h2 className="text-[17px] font-black text-slate-900 dark:text-white">أحدث الدورات</h2>
+            <Link to="/courses" className="text-[12px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
               عرض الكل
               <ChevronLeft className="w-3.5 h-3.5" />
             </Link>
