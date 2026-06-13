@@ -52,10 +52,10 @@ export const HowToSubscribe = () => {
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
                 <div className="flex items-center justify-between mb-6 px-1">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-3">
                         <span className="text-[13px] font-black text-indigo-600 dark:text-indigo-400">{formatTime(time)}</span>
-                        <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500">بتوقيت أم الدنيا</span>
-                        <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
+                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500">بتوقيت أم الدنيا</span>
+                        <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
                     </div>
                     <div className="flex items-center gap-1.5">
                         <Signal size={14} className="text-slate-700 dark:text-slate-300" />
