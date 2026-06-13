@@ -85,7 +85,7 @@ export const Contact = () => {
                             </span>
                         </h1>
                         <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-                            فريقنا جاهز للرد على جميع استفساراتك ومساعدتك في الانضمام إلى عالم دارين التعليمي.
+                            فريقنا جاهز للرد على جميع استفساراتك<br className="md:hidden" /> ومساعدتك في الانضمام إلى عالم دارين التعليمي.
                         </p>
                     </div>
 
