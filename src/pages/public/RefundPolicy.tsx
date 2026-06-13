@@ -49,7 +49,7 @@ export const RefundPolicy = () => {
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:py-10 bg-white dark:bg-slate-950">
+            <section className="py-8 md:pb-8 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* General Principles */}
