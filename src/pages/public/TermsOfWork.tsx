@@ -47,7 +47,7 @@ export const TermsOfWork = () => {
             </section>
 
             {/* Content Section */}
-            <section className="py-4 md:py-20 bg-white">
+            <section className="py-4 md:pb-8 bg-white">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
