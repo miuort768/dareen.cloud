@@ -231,6 +231,16 @@ export const Courses = () => {
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
                   </a>
+
+                  {/* Hidden SEO keywords for this course */}
+                  {course.seoKeywords && (
+                    <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
+                      <h2>الكلمات المفتاحية - {course.title}</h2>
+                      <p>{course.seoKeywords.short}</p>
+                      <h3>كلمات مفتاحية طويلة - {course.title}</h3>
+                      <p>{course.seoKeywords.long}</p>
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
