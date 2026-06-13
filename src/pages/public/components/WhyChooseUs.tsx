@@ -3,7 +3,7 @@ import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft } from 'lu
 const features = [
   {
     title: 'نتائج مضمونة',
-    desc: 'متابعة دقيقة مع تقارير أسبوعية لتحسين المستوى في الرياضيات والعلوم واللغة العربية للطلاب في الكويت ودول الخليج.',
+    desc: 'متابعة دقيقة مع تقارير أسبوعية لتحسين مستوى الطالب.',
     color: 'text-emerald-500',
     colorDark: 'dark:text-emerald-400',
     bg: 'bg-emerald-50',
@@ -50,11 +50,13 @@ export const WhyChooseUs = () => {
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-4 md:mb-6">
-          <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4">
-            لماذا{' '}
+          <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2">
+            <Star size={24} className="text-amber-500 fill-amber-500 shrink-0" />
+            <span>لماذا{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">
               تختارنا؟
-            </span>
+            </span></span>
+            <Star size={24} className="text-amber-500 fill-amber-500 shrink-0" />
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
             أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.

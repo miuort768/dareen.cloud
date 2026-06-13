@@ -23,7 +23,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-indigo-600" />
-                        <span className="text-[9px] font-black  text-indigo-700 dark:text-indigo-300">آراء يعتز بها</span>
+                        <span className="text-[9px] font-black  text-indigo-700 dark:text-white">آراء يعتز بها</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-black dark:text-white mb-3 font-heading leading-tight">
                         ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
@@ -47,7 +47,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     </div>
                                     
                                     <div className="flex-grow">
-                                        <p className="text-gray-600 dark:text-slate-300 text-xs leading-relaxed font-medium italic">
+                                        <p className="text-gray-600 dark:text-white text-xs leading-relaxed font-medium italic">
                                             "{reviews[currentIndex].content}"
                                         </p>
                                     </div>
@@ -86,7 +86,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     </div>
                                     
                                     <div>
-                                        <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-sm text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
+                                        <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-sm text-white/90' : 'text-[11px] text-gray-600 dark:text-white'}`}>
                                             "{review.content}"
                                         </p>
                                     </div>

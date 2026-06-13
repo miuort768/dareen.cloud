@@ -1,25 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones, Moon } from 'lucide-react';
+import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
-
-const FloatingBtns = ({ phone }: { phone: string }) => (
-    <div className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 flex-col gap-3 z-50">
-        <a href={`https://wa.me/${phone}`} target="_blank" rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center" aria-label="تواصل معنا عبر واتساب">
-            <MessageCircle size={22} />
-        </a>
-        <a href="https://t.me/daren_school" target="_blank" rel="noopener noreferrer"
-            className="w-12 h-12 rounded-full bg-[#0088CC] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center" title="تيليجرام">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-            </svg>
-        </a>
-        <button onClick={() => document.documentElement.classList.toggle('dark')}
-            className="w-12 h-12 rounded-full bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all flex items-center justify-center" title="الوضع الليلي">
-            <Moon size={22} />
-        </button>
-    </div>
-);
 
 export const MasarSection = () => {
     const { adminPhone } = useSettingsStore();
@@ -56,9 +37,15 @@ export const MasarSection = () => {
                                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-3 font-heading leading-tight">
                                     <span className="text-white">مركز</span> <span className="text-white bg-indigo-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(79,70,229,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
                                 </h2>
-                                <p className="text-gray-300 text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed mb-6 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
+                                <p className="text-gray-300 text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
                                     حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                                 </p>
+                                <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-white/90">الكويت</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-white/90">السعودية</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-white/90">الإمارات</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-white/90">قطر</span>
+                                </div>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                     <Link to="/books" className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-black text-lg shadow-2xl shadow-indigo-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
                                         <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
@@ -165,9 +152,6 @@ export const MasarSection = () => {
                     </div>
                 </div>
             </section>
-
-            {/* Floating Buttons - desktop only */}
-            <FloatingBtns phone={adminPhone} />
         </>
     );
 };

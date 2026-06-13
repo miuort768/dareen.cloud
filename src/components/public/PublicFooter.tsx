@@ -135,8 +135,8 @@ export const PublicFooter = () => {
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
                             
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                            <span className="relative z-10 text-[10px] font-bold text-gray-300 dark:text-gray-400 tracking-wide">تصميم وتطوير</span>
-                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-amber-300 dark:from-indigo-400 dark:to-amber-400 group-hover:from-indigo-200 dark:group-hover:from-indigo-300 group-hover:to-amber-200 dark:group-hover:to-amber-300 transition-colors">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-[10px] font-bold text-gray-300 dark:text-gray-400 tracking-wide font-heading">تصميم وتطوير</span>
+                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-amber-300 dark:from-indigo-400 dark:to-amber-400 group-hover:from-indigo-200 dark:group-hover:from-indigo-300 group-hover:to-amber-200 dark:group-hover:to-amber-300 transition-colors font-heading">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                         </div>
                     </div>

@@ -83,8 +83,8 @@ export const FAQSection = () => {
                                         <h3 className="text-xs md:text-sm font-black text-black dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                                             {item.q}
                                         </h3>
-                                        <span className="w-6 h-6 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center transform group-open:rotate-180 group-open:bg-indigo-600 dark:group-open:bg-indigo-500 group-open:text-white transition-all duration-300">
-                                            <ChevronDown size={14} className="text-gray-400 dark:text-slate-300 group-open:text-white" />
+                                        <span className="w-6 h-6 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50 flex items-center justify-center transform group-open:rotate-180 group-open:bg-emerald-500 transition-all duration-300">
+                                            <ChevronDown size={14} className="text-black" />
                                         </span>
                                     </summary>
                                     <div className="px-4 pb-4 pt-0">
