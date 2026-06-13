@@ -58,8 +58,9 @@ export const WhyChooseUs = () => {
             </span></span>
             <Star size={24} className="text-amber-500 fill-amber-500 shrink-0" />
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
-            أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
+          <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium">
+            <span className="hidden md:inline">أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.</span>
+            <span className="md:hidden">أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين. دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.</span>
           </p>
         </div>
 
