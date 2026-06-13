@@ -147,8 +147,8 @@ export const About = () => {
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-600/10 mb-4">
-                            <span className="text-[10px] font-black text-indigo-600">دستورنا التعليمي</span>
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-l from-[#1B1464] to-[#2D1B8E] rounded-full mb-4 shadow-lg shadow-indigo-900/20">
+                            <span className="text-[9px] font-black text-white">دستورنا التعليمي</span>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 font-heading">
                             القيم التي <span className="text-indigo-600">تُحدد هويتنا</span>
@@ -159,51 +159,51 @@ export const About = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
                         {/* Value 1 - Honesty */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-indigo-600/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-indigo-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-sm">
-                                <Shield className="w-8 h-8" />
+                        <div className="group bg-gradient-to-br from-white to-indigo-50/50 dark:from-slate-900 dark:to-indigo-950/20 p-6 md:p-8 rounded-2xl border border-indigo-100/50 dark:border-indigo-900/30 hover:border-indigo-300/50 dark:hover:border-indigo-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-indigo-500/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 via-indigo-600/0 to-indigo-600/5 dark:to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500">
+                                <Shield className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الأمانة</h3>
-                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
+                            <h3 className="text-lg md:text-xl font-black text-gray-900 dark:text-white mb-3 font-heading">الأمانة</h3>
+                            <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل أبنائكم.
                             </p>
                         </div>
 
                         {/* Value 2 - Innovation */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-amber-500/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-amber-500 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center mb-8 group-hover:bg-amber-500 group-hover:text-white transition-all duration-500 shadow-sm">
-                                <Lightbulb className="w-8 h-8" />
+                        <div className="group bg-gradient-to-br from-white to-amber-50/50 dark:from-slate-900 dark:to-amber-950/20 p-6 md:p-8 rounded-2xl border border-amber-100/50 dark:border-amber-900/30 hover:border-amber-300/50 dark:hover:border-amber-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-amber-500/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-amber-600/0 via-amber-600/0 to-amber-600/5 dark:to-amber-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center mb-6 shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 group-hover:scale-110 transition-all duration-500">
+                                <Lightbulb className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الابتكار</h3>
-                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
+                            <h3 className="text-lg md:text-xl font-black text-gray-900 dark:text-white mb-3 font-heading">الابتكار</h3>
+                            <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.
                             </p>
                         </div>
 
                         {/* Value 3 - Excellence */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-emerald-500/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-emerald-500 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mb-8 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-500 shadow-sm">
-                                <Award className="w-8 h-8" />
+                        <div className="group bg-gradient-to-br from-white to-emerald-50/50 dark:from-slate-900 dark:to-emerald-950/20 p-6 md:p-8 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30 hover:border-emerald-300/50 dark:hover:border-emerald-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-emerald-500/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/0 via-emerald-600/0 to-emerald-600/5 dark:to-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/30 group-hover:scale-110 transition-all duration-500">
+                                <Award className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">التميز</h3>
-                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
+                            <h3 className="text-lg md:text-xl font-black text-gray-900 dark:text-white mb-3 font-heading">التميز</h3>
+                            <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.
                             </p>
                         </div>
 
                         {/* Value 4 - Building Generations */}
-                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-rose-500/30 transition-all duration-500 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-0 bg-rose-500 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-rose-50 dark:bg-rose-900/30 text-rose-600 flex items-center justify-center mb-8 group-hover:bg-rose-500 group-hover:text-white transition-all duration-500 shadow-sm">
-                                <Compass className="w-8 h-8" />
+                        <div className="group bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-900 dark:to-rose-950/20 p-6 md:p-8 rounded-2xl border border-rose-100/50 dark:border-rose-900/30 hover:border-rose-300/50 dark:hover:border-rose-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-rose-500/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-rose-600/0 via-rose-600/0 to-rose-600/5 dark:to-rose-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white flex items-center justify-center mb-6 shadow-lg shadow-rose-500/20 group-hover:shadow-rose-500/30 group-hover:scale-110 transition-all duration-500">
+                                <Compass className="w-7 h-7" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">بناء الجيل</h3>
-                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
+                            <h3 className="text-lg md:text-xl font-black text-gray-900 dark:text-white mb-3 font-heading">بناء الجيل</h3>
+                            <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نركز على صقل شخصية الطالب ومهاراته القيادية ليكون منارة للتغيير الإيجابي في المجتمع.
                             </p>
                         </div>
