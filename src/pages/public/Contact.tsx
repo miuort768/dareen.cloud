@@ -78,7 +78,7 @@ export const Contact = () => {
                             <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
                             <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-3">
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-1 md:mb-3">
                             تواصل مع{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">
                                 دارين السابعة
