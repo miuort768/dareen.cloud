@@ -96,7 +96,7 @@ export const WhyChooseUs = () => {
                 <span className="text-[9px] font-bold text-white/80">التميز التعليمي</span>
               </div>
               <h3 className="text-lg font-black text-white font-heading mb-2">بيئة تعليمية متطورة</h3>
-              <p className="text-[11px] text-white/70 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
+              <p className="text-[9px] text-white/70 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
                 نخبة من المعلمين المتخصصين في تدريس المناهج الكويتية والخليجية لضمان تفوق طفلك في الرياضيات والعلوم واللغات.
               </p>
               <a
