@@ -21,15 +21,15 @@ export const HowToSubscribe = () => {
             num: '01',
             icon: Users,
             title: 'اختر الخدمة',
-            desc: 'اختر المادة والمرحلة من مناهج الكويت والخليج',
+            desc: 'حدد النظام التعليمي المناسب',
             boxBg: 'bg-gradient-to-br from-[#1B1464] to-[#2D1B8E]',
             boxShadow: 'shadow-indigo-900/20',
         },
         {
             num: '02',
             icon: Star,
-            title: 'حصص مجانية',
-            desc: 'حصة تجريبية مجانية مع معلمينا الخبراء',
+            title: 'حصة مجانية',
+            desc: 'استمتع بالتجريب أولاً',
             boxBg: 'bg-gradient-to-br from-emerald-500 to-emerald-600',
             boxShadow: 'shadow-emerald-500/20',
         },
@@ -37,7 +37,7 @@ export const HowToSubscribe = () => {
             num: '03',
             icon: Sparkles,
             title: 'اشترك الآن',
-            desc: 'اختر الباقة المناسبة مع متابعة أسبوعية وتقارير دورية',
+            desc: 'تواصل لحجز مقعدك',
             boxBg: 'bg-gradient-to-br from-[#6C4BFF] to-[#4A2DDB]',
             boxShadow: 'shadow-purple-500/20',
         },
@@ -90,6 +90,21 @@ export const HowToSubscribe = () => {
                             <h3 className="text-[11px] font-black text-slate-900 dark:text-white mb-0.5">{s.title}</h3>
                             {/* Desc */}
                             <p className="text-[7px] text-slate-400 dark:text-slate-500 font-medium leading-tight">{s.desc}</p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Mobile text list under cards */}
+                <div className="md:hidden space-y-3 mb-6 px-1">
+                    {steps.map((s, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                            <div className={`w-7 h-7 rounded-lg ${s.boxBg} flex items-center justify-center shadow-sm shrink-0`}>
+                                <s.icon size={12} className="text-white" />
+                            </div>
+                            <div>
+                                <span className="text-[11px] font-black text-slate-900 dark:text-white">{s.title}</span>
+                                <p className="text-[9px] text-slate-500 dark:text-slate-400">{s.desc}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
