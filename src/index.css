@@ -1038,10 +1038,9 @@ html, body {
   0% { transform: translateX(-150%) skewX(-25deg); }
   100% { transform: translateX(150%) skewX(-25deg); }
 }
-@media (min-width: 1024px) {
-  .animate-shine {
-    animation: shine-effect 3s infinite linear;
-  }
+
+.animate-shine {
+  animation: shine-effect 3s infinite linear;
 }
 
 /* RTL Marquee Animation */
