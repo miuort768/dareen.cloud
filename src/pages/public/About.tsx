@@ -32,7 +32,7 @@ export const About = () => {
                         <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">دارين السابعة | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-[1.6] md:leading-tight relative">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-[1.1] md:leading-tight relative">
                         <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                         <span aria-hidden="true">نحن لا نُدرّس فقط،<br className="md:hidden" /><span className="hidden md:inline"> </span></span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
@@ -154,7 +154,7 @@ export const About = () => {
                             القيم التي <span className="text-indigo-600">تُحدد هويتنا</span>
                         </h2>
                         <div className="h-1 w-20 bg-amber-500 mx-auto mb-6"></div>
-                        <p className="text-gray-500 dark:text-slate-400 max-w-none mx-auto text-xs md:text-sm leading-relaxed font-medium">
+                        <p className="text-gray-500 dark:text-slate-400 max-w-none mx-auto text-[9px] md:text-sm leading-relaxed font-medium">
                             الالتزام الراسخ بهذه القيم هو ما يصنع الفرق الحقيقي في رحلة نجاح طلابنا.
                         </p>
                     </div>
