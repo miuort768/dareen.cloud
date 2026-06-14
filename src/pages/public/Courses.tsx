@@ -92,7 +92,7 @@ export const Courses = () => {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-2 md:mb-6"
             >
               <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
               <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">استكشف مسيرتك التعليمية</span>
@@ -137,7 +137,7 @@ export const Courses = () => {
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 w-5 h-5 group-focus-within:text-indigo-500 transition-colors" />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
+            <div className="flex flex-wrap justify-center gap-2 mt-6 md:hidden">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}
