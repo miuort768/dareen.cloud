@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart, Gift } from 'lucide-react';
+import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart, Gift, CreditCard, Clock, Hash } from 'lucide-react';
 import { useSettingsStore } from '../../../store/settingsStore';
 
 export const HowToSubscribe = () => {
@@ -21,7 +21,7 @@ export const HowToSubscribe = () => {
             num: '01',
             icon: Users,
             title: 'اختر الخدمة',
-            desc: 'حدد النظام التعليمي المناسب',
+            desc: 'حدد النظام التعليمي',
             boxBg: 'bg-gradient-to-br from-[#1B1464] to-[#2D1B8E]',
             boxShadow: 'shadow-indigo-900/20',
         },
@@ -98,16 +98,22 @@ export const HowToSubscribe = () => {
                     ))}
                 </div>
 
-                {/* Mobile text list under cards */}
+                {/* Mobile perks list under cards */}
                 <div className="md:hidden space-y-3 mb-6 px-1">
-                    {steps.map((s, i) => (
+                    {[
+                        { icon: 'CreditCard', title: 'الدفع', desc: 'بوسائل دفع محلية مناسبة' },
+                        { icon: 'Clock', title: 'مواعيد مرنة', desc: 'في الوقت المناسب لك' },
+                        { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
+                    ].map((item, i) => (
                         <div key={i} className="flex items-center gap-3">
-                            <div className={`w-7 h-7 rounded-lg ${s.boxBg} flex items-center justify-center shadow-sm shrink-0`}>
-                                <s.icon size={12} className="text-white" />
+                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#1B1464] to-[#2D1B8E] flex items-center justify-center shadow-sm shrink-0">
+                                {item.icon === 'CreditCard' && <CreditCard size={12} className="text-white" />}
+                                {item.icon === 'Clock' && <Clock size={12} className="text-white" />}
+                                {item.icon === 'Hash' && <Hash size={12} className="text-white" />}
                             </div>
                             <div>
-                                <span className="text-[11px] font-black text-slate-900 dark:text-white">{s.title}</span>
-                                <p className="text-[9px] text-slate-500 dark:text-slate-400">{s.desc}</p>
+                                <span className="text-[11px] font-black text-slate-900 dark:text-white">{item.title}</span>
+                                <p className="text-[9px] text-slate-500 dark:text-slate-400">{item.desc}</p>
                             </div>
                         </div>
                     ))}

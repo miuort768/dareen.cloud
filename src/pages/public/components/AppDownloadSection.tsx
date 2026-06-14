@@ -75,11 +75,11 @@ export const AppDownloadSection = () => {
                                 {!pwaInstalled && (
                                 <button
                                     onClick={handlePwaInstall}
-                                    className="hidden md:inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 font-bold text-sm hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-700 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all rounded-xl"
+                                    className="hidden md:inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold text-sm hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-700 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all rounded-xl"
                                 >
                                     <Monitor className="w-5 h-5" />
                                     <div className="text-right">
-                                        <div className="text-[8px] text-gray-500 dark:text-slate-400 font-medium leading-tight">حمله على</div>
+                                        <div className="text-[8px] text-gray-500 dark:text-white/70 font-medium leading-tight">حمله على</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">الكمبيوتر</div>
                                     </div>
                                 </button>

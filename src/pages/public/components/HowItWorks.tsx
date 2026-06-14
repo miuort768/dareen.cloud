@@ -1,4 +1,4 @@
-import { Users, Star, Zap, ArrowLeft } from 'lucide-react';
+import { Users, Star, Zap, ArrowLeft, Gift } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface HowItWorksProps {
@@ -108,6 +108,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
+                                <Gift size={16} />
                                 <span>احجز حصتك المجانية الآن</span>
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                             </div>
