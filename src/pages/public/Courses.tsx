@@ -137,7 +137,7 @@ export const Courses = () => {
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 w-5 h-5 group-focus-within:text-indigo-500 transition-colors" />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2 mt-6 md:hidden">
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}

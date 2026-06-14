@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, LogIn, Sun, Moon } from 'lucide-react';
+import { Menu, X, GraduationCap, LogIn, Sun, Moon, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 
@@ -9,11 +9,11 @@ export const MobileHeader = () => {
   const [theme, setTheme] = useDarkMode();
 
   const navItems = [
-    { label: 'الرئيسية', path: '/' },
-    { label: 'الدورات', path: '/courses' },
-    { label: 'المكتبة', path: '/books' },
-    { label: 'من نحن', path: '/about' },
-    { label: 'اتصل بنا', path: '/contact' },
+    { label: 'الرئيسية', path: '/', icon: Home },
+    { label: 'الدورات', path: '/courses', icon: BookOpen },
+    { label: 'المكتبة', path: '/books', icon: Book },
+    { label: 'من نحن', path: '/about', icon: Info },
+    { label: 'اتصل بنا', path: '/contact', icon: Phone },
   ];
 
   return (
@@ -46,7 +46,8 @@ export const MobileHeader = () => {
           {menuOpen && (
             <div className="absolute top-12 left-0 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden z-50 min-w-[180px]">
               {navItems.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[12px] font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0 whitespace-nowrap">
+                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-[12px] font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0 whitespace-nowrap">
+                  <item.icon size={16} className="shrink-0" />
                   {item.label}
                 </Link>
               ))}
