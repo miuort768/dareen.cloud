@@ -385,6 +385,15 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            phone TEXT NOT NULL,
+            subject TEXT,
+            message TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         CREATE TABLE IF NOT EXISTS teacher_availability (
             id TEXT PRIMARY KEY,
             teacherId TEXT NOT NULL,

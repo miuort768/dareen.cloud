@@ -91,6 +91,7 @@ export const Sidebar = () => {
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
         { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
+        { name: 'رسائل التواصل', href: '/admin-contacts', id: 'admin_contacts', icon: MessageSquare },
     ];
 
     // Filter navigation based on permissions

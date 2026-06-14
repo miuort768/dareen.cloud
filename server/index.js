@@ -179,6 +179,9 @@ async function startServer() {
         const jobsRouter = require('./routes/jobs');
         apiRouter.use('/jobs', jobsRouter);
 
+        const contactRouter = require('./routes/contact');
+        apiRouter.use('/contact', contactRouter);
+
         apiRouter.use(authMiddleware);
         apiRouter.use(sanitizeInput);
         apiRouter.use(activityAuditor);

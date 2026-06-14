@@ -56,6 +56,7 @@ import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidge
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
+const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 
 
 
@@ -262,6 +263,7 @@ function App() {
 
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
             <Route path="admin-jobs" element={<ProtectedRoute permission="admin"><AdminJobs /></ProtectedRoute>} />
+            <Route path="admin-contacts" element={<ProtectedRoute permission="admin"><AdminContacts /></ProtectedRoute>} />
             
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />

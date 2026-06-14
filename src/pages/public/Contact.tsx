@@ -12,10 +12,21 @@ export const Contact = () => {
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
     const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setFormState('submitting');
-        setTimeout(() => setFormState('success'), 1500);
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            if (!res.ok) throw new Error('Failed');
+            setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });
+            setFormState('success');
+        } catch {
+            setFormState('idle');
+        }
     };
 
     const contactCards = [
@@ -74,7 +85,7 @@ export const Contact = () => {
 
                     {/* ── Hero Header ── */}
                     <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-1 md:mb-5">
                             <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
                             <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">نحن في خدمتك</span>
                         </div>
@@ -144,7 +155,6 @@ export const Contact = () => {
                                         <div className="space-y-1.5">
                                             <label className="text-[10px] font-black text-gray-400  block">الاسم الكامل</label>
                                             <input
-                                                required
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
@@ -157,8 +167,10 @@ export const Contact = () => {
                                             <input
                                                 required
                                                 type="tel"
+                                                inputMode="numeric"
+                                                pattern="[0-9+\s]*"
                                                 value={formData.phone}
-                                                onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                                                onChange={e => setFormData(p => ({ ...p, phone: e.target.value.replace(/[^0-9+\s]/g, '') }))}
                                                 className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-none px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all text-left placeholder:text-gray-300"
                                                 placeholder="+965 XXXX XXXX"
                                                 dir="ltr"
@@ -187,7 +199,6 @@ export const Contact = () => {
                                     <div className="space-y-1.5">
                                         <label className="text-[10px] font-black text-gray-400  block">رسالتك</label>
                                         <textarea
-                                            required
                                             rows={4}
                                             value={formData.message}
                                             onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
