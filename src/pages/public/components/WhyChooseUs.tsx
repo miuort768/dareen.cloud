@@ -51,12 +51,10 @@ export const WhyChooseUs = () => {
         {/* Section Header */}
         <div className="text-center mb-4 md:mb-6">
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2">
-            <Star size={24} className="text-amber-500 fill-amber-500 shrink-0" />
-            <span>لماذا{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB]">
+            <span>لماذا{' '}</span>
+            <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-[#6C4BFF] to-[#4A2DDB] text-white text-xl md:text-4xl inline-block">
               تختارنا؟
-            </span></span>
-            <Star size={24} className="text-amber-500 fill-amber-500 shrink-0" />
+            </span>
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium">
             <span className="hidden md:inline">أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.</span>
