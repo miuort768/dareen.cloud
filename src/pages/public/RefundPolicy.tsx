@@ -28,9 +28,9 @@ export const RefundPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white md:bg-[#FDFCF8] dark:md:bg-slate-950 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-violet-950 dark:via-violet-900/30 dark:to-slate-900 md:bg-[#FDFCF8] dark:md:bg-slate-950 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 dark:border-violet-900/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 dark:bg-blue-400/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-gold/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 md:bg-indigo-50/60 dark:md:bg-indigo-500/10 backdrop-blur-sm border border-violet-200/50 md:border-indigo-100 dark:md:border-indigo-500/20 rounded-full mb-3">
@@ -42,25 +42,25 @@ export const RefundPolicy = () => {
                         سياسة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-900 dark:from-blue-400 dark:to-indigo-400 inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[8px] md:text-lg text-slate-500 md:text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:pb-8 bg-white dark:bg-slate-950">
+            <section className="py-4 md:pb-8 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* General Principles */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-blue-50 rounded-none flex items-center justify-center shrink-0">
-                                <ShieldCheck className="w-6 h-6 text-blue-600" />
+                            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-none flex items-center justify-center shrink-0">
+                                <ShieldCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">مبادئ عامة</h2>
-                                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-2">مبادئ عامة</h2>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-slate-400 leading-relaxed">
                                     في دارين السابعة، نسعى لتقديم خدمة تعليمية متميزة. تهدف هذه السياسة إلى ضمان الشفافية والعدالة لكل من الطالب والمعهد فيما يخص الرسوم المدفوعة وإجراءات الإلغاء.
                                 </p>
                             </div>
@@ -70,22 +70,22 @@ export const RefundPolicy = () => {
                     {/* Refund Eligibility */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-emerald-50 rounded-none flex items-center justify-center shrink-0">
-                                <CreditCard className="w-6 h-6 text-emerald-600" />
+                            <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 rounded-none flex items-center justify-center shrink-0">
+                                <CreditCard className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">حالات طلب الاسترداد</h2>
-                                <div className="space-y-4 text-gray-600">
-                                    <div className="p-4 bg-emerald-50/50 border-r-4 border-emerald-500">
-                                        <h3 className="font-bold text-gray-800 mb-1">قبل بدء الدورة:</h3>
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">حالات طلب الاسترداد</h2>
+                                <div className="space-y-4 text-gray-600 dark:text-slate-400">
+                                    <div className="p-4 bg-emerald-50/50 dark:bg-emerald-900/20 border-r-4 border-emerald-500">
+                                        <h3 className="font-bold text-gray-800 dark:text-slate-200 mb-1">قبل بدء الدورة:</h3>
                                         <p>يمكن استرداد كامل المبلغ المدفوع (بعد خصم رسوم التحويل البنكي إن وجدت) إذا تم تقديم طلب الاسترداد قبل 48 ساعة على الأقل من موعد أول حصة.</p>
                                     </div>
-                                    <div className="p-4 bg-amber-50/50 border-r-4 border-amber-500">
-                                        <h3 className="font-bold text-gray-800 mb-1">بعد الحصة الأولى (التجريبية):</h3>
+                                    <div className="p-4 bg-amber-50/50 dark:bg-amber-900/20 border-r-4 border-amber-500">
+                                        <h3 className="font-bold text-gray-800 dark:text-slate-200 mb-1">بعد الحصة الأولى (التجريبية):</h3>
                                         <p>إذا كانت الدورة تتيح حصة تجريبية ولم يرغب الطالب في الاستمرار، يمكنه طلب استرداد باقي المبلغ المدفوع في غضون 24 ساعة من انتهاء الحصة الأولى.</p>
                                     </div>
-                                    <div className="p-4 bg-gray-50 border-r-4 border-gray-400">
-                                        <h3 className="font-bold text-gray-800 mb-1">خلال الدورة:</h3>
+                                    <div className="p-4 bg-gray-50 dark:bg-slate-800/50 border-r-4 border-gray-400">
+                                        <h3 className="font-bold text-gray-800 dark:text-slate-200 mb-1">خلال الدورة:</h3>
                                         <p>لا يتم استرداد الرسوم بمجرد تجاوز الحصة الثانية إلا في حالات الظروف القهرية التي يقدرها المعهد، مع خصم قيمة الحصص التي تم تقديمها بالفعل.</p>
                                     </div>
                                 </div>
@@ -96,12 +96,12 @@ export const RefundPolicy = () => {
                     {/* Cancellation Rules */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-red-50 rounded-none flex items-center justify-center shrink-0">
-                                <CalendarX className="w-6 h-6 text-red-600" />
+                            <div className="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-none flex items-center justify-center shrink-0">
+                                <CalendarX className="w-6 h-6 text-red-600 dark:text-red-400" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">سياسة إلغاء الحصص</h2>
-                                <div className="space-y-4 text-gray-600">
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">سياسة إلغاء الحصص</h2>
+                                <div className="space-y-4 text-gray-600 dark:text-slate-400">
                                     <ul className="list-disc list-inside space-y-3 mr-4">
                                         <li><span className="font-bold">إلغاء الطالب:</span> يجب إخطار المعهد بالإلغاء قبل 24 ساعة من موعد الحصة. في حال الإلغاء المفاجئ، يتم احتساب الحصة كأنها تم تقديمها.</li>
                                         <li><span className="font-bold">إلغاء المعهد:</span> في حال اعتذار المعلم، يلتزم المعهد بتعويض الحصة في موعد آخر يناسب الطالب أو تمديد صلاحية الباقة.</li>
@@ -115,12 +115,12 @@ export const RefundPolicy = () => {
                     {/* Processing Time */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-indigo-50 rounded-none flex items-center justify-center shrink-0">
-                                <Clock className="w-6 h-6 text-indigo-600" />
+                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center shrink-0">
+                                <Clock className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">إجراءات الاسترداد المالي</h2>
-                                <div className="space-y-2 text-gray-600 leading-relaxed">
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">إجراءات الاسترداد المالي</h2>
+                                <div className="space-y-2 text-gray-600 dark:text-slate-400 leading-relaxed">
                                     <p>تستغرق عملية معالجة طلب الاسترداد من <span className="font-bold">5 إلى 10 أيام عمل</span> بعد الموافقة على الطلب. يتم إعادة المبلغ إلى نفس وسيلة الدفع التي تم استخدامها في عملية الشراء الأصلية.</p>
                                 </div>
                             </div>
@@ -144,20 +144,20 @@ export const RefundPolicy = () => {
                     </div>
 
                     {/* Last Update */}
-                    <div className="mb-4 md:mb-6 text-center border-t border-gray-100 pt-6">
-                        <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">
+                    <div className="mb-4 md:mb-6 text-center border-t border-gray-100 dark:border-slate-700 pt-6">
+                        <p className="text-sm text-gray-400 dark:text-slate-500 font-bold uppercase tracking-widest">
                             آخر تحديث للسياسة: فبراير 2026
                         </p>
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-indigo-600 to-indigo-500 border border-indigo-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-indigo-500/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-white mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>
-                            <p className="text-rose-100 mb-8 max-w-md mx-auto">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
+                            <p className="text-indigo-100 mb-8 max-w-md mx-auto">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
 
                             <a
                                 href={`https://wa.me/${whatsappNumber}`}
