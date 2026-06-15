@@ -9,11 +9,18 @@ import { cn } from '../../lib/utils';
 export const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const isAuthenticated = useIsAuthenticated();
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const location = useLocation();
+
+    useEffect(() => {
+        const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const navItems = [
         { name: 'الرئيسية', path: '/' },
@@ -101,8 +108,8 @@ export const PublicNavbar = () => {
                         {/* Dark Mode Toggle Removed from here */}
 
 
-                        {isAuthenticated && (
-                            <div className="hidden md:flex border-l border-gray-100 dark:border-slate-800 pl-4 h-8 items-center">
+                        {isAuthenticated && isDesktop && (
+                            <div className="border-l border-gray-100 dark:border-slate-800 pl-4 h-8 items-center flex">
                                 <NotificationDropdown />
                             </div>
                         )}

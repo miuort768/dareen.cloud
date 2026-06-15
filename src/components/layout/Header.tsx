@@ -11,6 +11,7 @@ export const Header = () => {
     const location = useLocation();
     const currentUser = useCurrentUser();
     const [headerVisible, setHeaderVisible] = useState(true);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
     const lastScrollY = useRef(0);
 
     useEffect(() => {
@@ -27,6 +28,12 @@ export const Header = () => {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const getPageTitle = (path: string) => {
@@ -138,9 +145,11 @@ export const Header = () => {
                     <Sun size={18} />
                 </button>
 
-                <div className="shrink-0">
-                    <NotificationDropdown />
-                </div>
+                {isDesktop && (
+                    <div className="shrink-0">
+                        <NotificationDropdown />
+                    </div>
+                )}
 
                 <Link
                     to={currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-dashboard' : currentUser?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard'}

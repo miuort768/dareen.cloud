@@ -61,12 +61,27 @@ export const NotificationDropdown = () => {
             }
         };
 
+        const startPolling = () => window.setInterval(fetchNotifications, 3000);
+        const stopPolling = (id: number) => clearInterval(id);
+
         fetchNotifications();
+        let intervalId = startPolling();
 
-        // Refresh every 3 seconds for a more real-time feel
-        const intervalId = setInterval(fetchNotifications, 3000);
+        const onVisibilityChange = () => {
+            if (document.hidden) {
+                stopPolling(intervalId);
+            } else {
+                fetchNotifications();
+                intervalId = startPolling();
+            }
+        };
 
-        return () => clearInterval(intervalId);
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        return () => {
+            stopPolling(intervalId);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+        };
     }, [currentUser, showNotification]);
 
     const dropdownRef = useRef<HTMLDivElement>(null);

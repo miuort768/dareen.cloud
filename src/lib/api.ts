@@ -66,8 +66,19 @@ class ApiClient {
             this.refreshing = null;
 
             if (refreshed) {
+                const newToken = localStorage.getItem('auth_token');
                 const retryHeaders = { ...init?.headers as Record<string, string>, ...this.getAuthHeader() };
-                const retryRes = await this.fetchWithProgress(url, { ...init, headers: retryHeaders });
+                let retryBody = init?.body;
+                if (retryBody && typeof retryBody === 'string' && newToken) {
+                    try {
+                        const parsed = JSON.parse(retryBody);
+                        if (parsed && typeof parsed === 'object' && parsed.token) {
+                            parsed.token = newToken;
+                            retryBody = JSON.stringify(parsed);
+                        }
+                    } catch { }
+                }
+                const retryRes = await this.fetchWithProgress(url, { ...init, headers: retryHeaders, body: retryBody });
                 if (retryRes.ok) {
                     const text = await retryRes.text();
                     return text ? JSON.parse(text) : {} as T;
