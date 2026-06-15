@@ -27,9 +27,9 @@ export const PrivacyPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white md:bg-white dark:md:bg-slate-950 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-violet-950 dark:via-violet-900/30 dark:to-slate-900 md:bg-white dark:md:bg-slate-950 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 dark:border-violet-900/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 dark:bg-blue-400/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-gold/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 md:bg-indigo-50/60 dark:md:bg-indigo-500/10 backdrop-blur-sm border border-violet-200/50 md:border-indigo-100 dark:md:border-indigo-500/20 rounded-full mb-3">
@@ -48,7 +48,7 @@ export const PrivacyPolicy = () => {
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:pb-8 bg-white dark:bg-slate-950">
+            <section className="py-4 md:pb-8 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
@@ -74,9 +74,9 @@ export const PrivacyPolicy = () => {
                             </div>
                             <div>
                                 <h2 className="text-2xl font-black text-gray-900 mb-3">المعلومات التي نجمعها</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <div className="space-y-2 text-gray-600 dark:text-slate-400 text-[9px] md:text-sm">
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">1. المعلومات الشخصية:</h3>
+                                        <h3 className="font-bold text-gray-900 dark:text-white mb-2">1. المعلومات الشخصية:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>الاسم الكامل</li>
                                             <li>عنوان البريد الإلكتروني</li>
@@ -114,8 +114,8 @@ export const PrivacyPolicy = () => {
                                 <Eye className="w-6 h-6 text-indigo-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">كيف نستخدم معلوماتك</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">كيف نستخدم معلوماتك</h2>
+                                <div className="space-y-2 text-gray-600 dark:text-slate-400 text-[9px] md:text-sm">
                                     <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>تقديم وتحسين خدماتنا التعليمية</li>
@@ -138,8 +138,8 @@ export const PrivacyPolicy = () => {
                                 <Lock className="w-6 h-6 text-red-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">حماية البيانات</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">حماية البيانات</h2>
+                                <div className="space-y-2 text-gray-600 dark:text-slate-400 text-[9px] md:text-sm">
                                     <p>نتخذ إجراءات أمنية صارمة لحماية معلوماتك الشخصية، بما في ذلك:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>تشفير البيانات أثناء النقل والتخزين</li>
@@ -160,8 +160,8 @@ export const PrivacyPolicy = () => {
                                 <UserCheck className="w-6 h-6 text-amber-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">مشاركة المعلومات</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">مشاركة المعلومات</h2>
+                                <div className="space-y-2 text-gray-600 dark:text-slate-400 text-[9px] md:text-sm">
                                     <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك فقط في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>مع المعلمين المعنيين لتقديم الخدمات التعليمية</li>
@@ -176,9 +176,9 @@ export const PrivacyPolicy = () => {
 
                     {/* User Rights */}
                     <div className="mb-4">
-                        <div className="bg-gray-50 border border-gray-100 p-8 rounded-none">
-                            <h2 className="text-2xl font-black text-gray-900 mb-4">حقوقك</h2>
-                            <div className="space-y-2 text-gray-600">
+                        <div className="bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 p-8 rounded-none">
+                            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-4">حقوقك</h2>
+                            <div className="space-y-2 text-gray-600 dark:text-slate-400 text-[9px] md:text-sm">
                                 <p>لديك الحق في:</p>
                                 <ul className="list-disc list-inside space-y-1 mr-4">
                                     <li>الوصول إلى معلوماتك الشخصية ومراجعتها</li>
@@ -187,33 +187,33 @@ export const PrivacyPolicy = () => {
                                     <li>الاعتراض على معالجة بياناتك في ظروف معينة</li>
                                     <li>سحب موافقتك في أي وقت</li>
                                 </ul>
-                                <p className="mt-4 font-bold">للاستفسارات أو طلبات الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف.</p>
+                                <p className="mt-4 font-bold text-[10px] md:text-base dark:text-slate-300">للاستفسارات أو طلبات الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف.</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Updates */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-gray-900 mb-4">التحديثات على هذه السياسة</h2>
-                        <p className="text-gray-600 leading-relaxed">
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-4">التحديثات على هذه السياسة</h2>
+                        <p className="text-gray-600 dark:text-slate-400 text-[10px] md:text-base leading-relaxed">
                             قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإخطارك بأي تغييرات جوهرية عن طريق نشر السياسة الجديدة على هذه الصفحة وتحديث تاريخ "آخر تحديث" أدناه.
                         </p>
-                        <p className="text-sm text-gray-400 mt-4 font-bold">
+                        <p className="text-sm text-gray-400 dark:text-slate-500 mt-4 font-bold">
                             آخر تحديث: 21 يناير 2026
                         </p>
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-indigo-600 to-indigo-500 border border-indigo-500 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-indigo-500/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-white mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-rose-100 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <p className="text-indigo-100 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
-                                href={`https://wa.me/2${adminPhone}`}
+                                href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-4 bg-indigo-600 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-indigo-700 transition-all group relative overflow-hidden shadow-lg border border-white/20"

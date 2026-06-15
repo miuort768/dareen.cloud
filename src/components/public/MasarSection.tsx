@@ -52,7 +52,7 @@ export const MasarSection = () => {
                                         <span>تحميل مذكرة</span>
                                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                     </Link>
-                                    <a href={`https://wa.me/2${adminPhone}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
+                                    <a href={`https://wa.me/${adminPhone}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
                                         <MessageCircle className="w-6 h-6" />
                                         <span>تواصل معنا</span>
                                     </a>
@@ -118,7 +118,7 @@ export const MasarSection = () => {
                                 <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                             </Link>
                             <a
-                                href={`https://wa.me/2${adminPhone}`}
+                                href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full py-3.5 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-3 rounded-2xl"

@@ -248,7 +248,7 @@ export const TermsOfService = () => {
                             <p className="text-gray-500 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
-                                href={`https://wa.me/2${adminPhone}`}
+                                href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-4 bg-gray-900 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-emerald-600 transition-all group relative overflow-hidden"

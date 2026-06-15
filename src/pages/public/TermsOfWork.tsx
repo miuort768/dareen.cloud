@@ -26,21 +26,21 @@ export const TermsOfWork = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white md:bg-[#FDFCF8] rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-violet-950 dark:via-violet-900/30 dark:to-slate-900 md:bg-[#FDFCF8] dark:md:bg-slate-900 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 dark:border-violet-900/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white text-indigo-600 md:text-gray-900 border border-violet-200/50 md:border-gray-100 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-slate-800/80 dark:md:bg-slate-800 text-indigo-600 md:text-gray-900 dark:md:text-slate-200 border border-violet-200/50 dark:border-violet-800/50 md:border-gray-100 dark:md:border-slate-700 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
                         <Briefcase size={12} className="text-indigo-600" />
                         <span className="text-[9px] md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
                     </div>
 
-                    <h1 className="text-[18px] md:text-5xl font-black text-indigo-950 md:text-gray-900 mb-1 md:mb-3 leading-tight font-heading">
+                    <h1 className="text-[18px] md:text-5xl font-black text-indigo-950 md:text-gray-900 dark:text-white mb-1 md:mb-3 leading-tight font-heading">
                         قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
-                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
                         لائحة العمل | السياسات والإجراءات المنظمة لعمل الكادر التعليمي .
                     </p>
                 </div>
@@ -238,7 +238,7 @@ export const TermsOfWork = () => {
                             <p className="text-gray-500 mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
-                                href={`https://wa.me/2${adminPhone}`}
+                                href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-4 bg-indigo-600 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all"
