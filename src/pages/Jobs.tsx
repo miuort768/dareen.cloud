@@ -151,8 +151,8 @@ export const Jobs = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#fafafa] font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
-            <SEO title="التوظيف | دارين السابعة - انضمي إلى فريقنا" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن." url="https://dareen.cloud/jobs" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'التوظيف', item: '/jobs' }]} />
+        <div className="min-h-screen bg-[#fafafa] dark:bg-slate-900 font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
+            <SEO title="التوظيف | دارين السابعة - خطوة لتكون من العائلة" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن." url="https://dareen.cloud/jobs" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'التوظيف', item: '/jobs' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({
                     '@context': 'https://schema.org',
@@ -181,7 +181,7 @@ export const Jobs = () => {
                                 className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-white/10 border border-white/20 rounded-full mb-3 md:mb-4 backdrop-blur-sm"
                             >
                                 <Sparkles size={10} className="text-amber-300" />
-                                <span className="text-[8px] md:text-[10px] font-black text-white/90">انضمي إلى فريقنا</span>
+                                 <span className="text-[8px] md:text-[10px] font-black text-white/90">خطوة لتكون من العائلة</span>
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -225,18 +225,18 @@ export const Jobs = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="bg-white shadow-xl shadow-slate-200/50 border border-slate-100"
+                        className="bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-700"
                     >
                         {/* Progress Steps */}
-                        <div className="p-3 md:p-8 border-b border-slate-100 bg-slate-50/50">
+                        <div className="p-3 md:p-8 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm font-black text-slate-900">تقديم طلب التوظيف</h2>
+                                <h2 className="text-sm font-black text-slate-900 dark:text-white">تقديم طلب التوظيف</h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary-500' : step > s.id ? 'bg-emerald-400' : 'bg-slate-300'}`} />
                                                     ))}
                                                 </div>
-                                                <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full hidden md:inline-block">
+                                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full hidden md:inline-block">
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
@@ -245,10 +245,10 @@ export const Jobs = () => {
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30 scale-110' : step > s.id ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-400'}`}>
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30 scale-110' : step > s.id ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
                                                 {step > s.id ? <CheckCircle2 size={14} /> : s.id}
                                             </div>
-                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-emerald-400' : 'bg-slate-200'}`} />}
+                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-emerald-400' : 'bg-slate-200 dark:bg-slate-700'}`} />}
                                         </div>
                                         <span className={`text-[10px] font-bold transition-colors text-center ${step === s.id ? 'text-primary-600' : 'text-slate-400'}`}>{s.title}</span>
                                     </div>
@@ -270,11 +270,11 @@ export const Jobs = () => {
                                         {step === 1 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                                                    <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
                                                         <User size={16} className="text-primary-500" />
                                                         المعلومات الشخصية
                                                     </h3>
-                                                    <p className="text-[10px] text-slate-400 font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
+                                                    <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['name'] = el} icon={User} label="الاسم" name="name" value={form.name} onChange={handleChange} placeholder="الاسم الكامل" required autoComplete="name" />
                                                 <InputField ref={el => inputRefs.current['phone'] = el} icon={Phone} label="رقم الهاتف" name="phone" value={form.phone} onChange={handleChange} placeholder="مثال: 96512345678" type="tel" required inputMode="numeric" autoComplete="tel" />
@@ -285,11 +285,11 @@ export const Jobs = () => {
                                         {step === 2 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                                                    <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
                                                         <GraduationCap size={16} className="text-primary-500" />
                                                         المؤهلات والوظيفة
                                                     </h3>
-                                                    <p className="text-[10px] text-slate-400 font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
+                                                    <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['position'] = el} icon={Briefcase} label="الوظيفة المطلوبة" name="position" value={form.position} onChange={handleChange} placeholder="معلمة رياضيات - معلمة لغة عربية ..." required autoComplete="organization-title" />
                                                 <InputField ref={el => inputRefs.current['qualification'] = el} icon={GraduationCap} label="المؤهل العلمي" name="qualification" value={form.qualification} onChange={handleChange} placeholder="بكالوريوس - ماجستير ..." required />
@@ -300,11 +300,11 @@ export const Jobs = () => {
                                         {step === 3 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                                                    <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
                                                         <BookMarked size={16} className="text-primary-500" />
                                                         المادة التي تدرسها
                                                     </h3>
-                                                    <p className="text-[10px] text-slate-400 font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
+                                                    <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
                                                 </div>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                                     {subjects.map(s => (
@@ -312,22 +312,22 @@ export const Jobs = () => {
                                                             key={s}
                                                             onClick={() => setForm(prev => ({ ...prev, subject: s }))}
                                                             className={`flex items-center gap-3 p-3 md:p-4 border-2 cursor-pointer transition-all min-h-[52px] ${
-                                                                form.subject === s
-                                                                    ? 'border-primary-500 bg-primary-50'
-                                                                    : 'border-slate-200 bg-slate-50 hover:border-slate-300:border-slate-600'
+                                                                 form.subject === s
+                                                                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                                                     : 'border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 hover:border-slate-300 dark:hover:border-slate-500'
                                                             }`}
                                                         >
                                                             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                                                                form.subject === s
-                                                                    ? 'border-primary-500'
-                                                                    : 'border-slate-300'
+                                                                 form.subject === s
+                                                                     ? 'border-primary-500'
+                                                                     : 'border-slate-300 dark:border-slate-600'
                                                             }`}>
                                                                 {form.subject === s && <div className="w-2.5 h-2.5 rounded-full bg-primary-500" />}
                                                             </div>
                                                             <span className={`text-sm font-bold leading-tight ${
-                                                                form.subject === s
-                                                                    ? 'text-primary-700'
-                                                                    : 'text-slate-600'
+                                                                 form.subject === s
+                                                                     ? 'text-primary-700 dark:text-primary-300'
+                                                                     : 'text-slate-600 dark:text-slate-300'
                                                             }`}>{s}</span>
                                                         </label>
                                                     ))}
@@ -338,16 +338,16 @@ export const Jobs = () => {
                                         {step === 4 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                                                    <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
                                                         <Award size={16} className="text-primary-500" />
                                                         الخبرات
                                                     </h3>
-                                                    <p className="text-[10px] text-slate-400 font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
+                                                    <p className="text-[10px] text-slate-400 dark:text-slate-400 font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['graduationYear'] = el} icon={Calendar} label="سنة التخرج" name="graduationYear" value={form.graduationYear} onChange={handleChange} placeholder="مثال: 2020" type="number" />
                                                 <InputField ref={el => inputRefs.current['onlineYears'] = el} icon={Globe} label="سنوات الخبرة في التدريس أون لاين" name="onlineYears" value={form.onlineYears} onChange={handleChange} placeholder="عدد السنوات" />
                                                 <div className="space-y-2">
-                                                    <label className="flex items-center gap-2 text-[10px] font-black text-slate-500">
+                                                    <label className="flex items-center gap-2 text-[10px] font-black text-slate-500 dark:text-slate-400">
                                                         <BookOpen size={12} className="text-primary-500 shrink-0" />
                                                         المناهج التي قمت بتدريسها
                                                     </label>
@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                        className="w-full bg-slate-50 border border-slate-200 p-4 min-h-[90px] text-sm font-normal text-slate-800 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 transition-all placeholder:text-slate-400 resize-none"
+                                                            className="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 p-4 min-h-[90px] text-sm font-normal text-slate-800 dark:text-slate-200 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -369,13 +369,13 @@ export const Jobs = () => {
                             </div>
 
                             {/* Actions */}
-                            <div className="p-6 md:p-8 border-t border-slate-100 bg-slate-50/50">
+                            <div className="p-6 md:p-8 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
                                 <div className="flex items-center justify-between gap-3">
                                     <button
                                         type="button"
                                         onClick={prevStep}
                                         disabled={step === 1}
-                                        className="px-5 py-3 bg-white border border-slate-200 text-slate-600 font-black text-xs transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-slate-50:bg-slate-700"
+                                        className="px-5 py-3 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-black text-xs transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-600"
                                     >
                                         <ChevronRight size={14} />
                                         السابق
@@ -432,21 +432,21 @@ export const Jobs = () => {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="bg-white border-2 border-rose-200 p-8 max-w-sm w-full text-center shadow-2xl relative"
+                            className="bg-white dark:bg-slate-800 border-2 border-rose-200 dark:border-rose-800 p-8 max-w-sm w-full text-center shadow-2xl relative"
                             onClick={e => e.stopPropagation()}
                         >
                             <button
                                 type="button"
                                 onClick={() => setErrorMsg('')}
-                                className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600:text-slate-300 transition-colors"
+                                className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                             >
                                 <X size={16} />
                             </button>
-                            <div className="w-16 h-16 bg-rose-100 flex items-center justify-center mx-auto mb-5 border-2 border-rose-200">
+                            <div className="w-16 h-16 bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center mx-auto mb-5 border-2 border-rose-200 dark:border-rose-800">
                                 <AlertTriangle size={32} className="text-rose-500" />
                             </div>
-                            <h3 className="text-lg font-black text-slate-900 mb-2">عذراً</h3>
-                            <p className="text-sm text-slate-500 font-medium leading-relaxed">{errorMsg}</p>
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">عذراً</h3>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{errorMsg}</p>
                             <button
                                 type="button"
                                 onClick={() => setErrorMsg('')}
@@ -477,7 +477,7 @@ interface InputFieldProps {
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
     <div className="space-y-1.5">
-        <label className="flex items-center gap-2 text-[10px] font-black text-slate-500">
+        <label className="flex items-center gap-2 text-[10px] font-black text-slate-500 dark:text-slate-400">
             <Icon size={12} className="text-primary-500 shrink-0" />
             {label}
             {required && <span className="text-rose-400">*</span>}
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-slate-50 border border-slate-200 py-3 px-4 text-sm font-normal text-slate-800 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 transition-all placeholder:text-slate-400"
+            className="w-full bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 py-3 px-4 text-sm font-normal text-slate-800 dark:text-slate-200 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
         />
     </div>
 ));
