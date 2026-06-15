@@ -126,7 +126,8 @@ export const Login = () => {
                                 {typedText}
                                 <span className="inline-block w-[5px] h-7 bg-emerald-600 mr-2 animate-pulse align-middle"></span>
                             </h2>
-                            <p className="text-[rgb(var(--text-muted))] text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
+                            <p className="text-indigo-600 dark:text-indigo-400 text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
+                            <p className="text-[rgb(var(--text-muted))] text-sm font-bold mt-2">نحو مستقبل مشرق بالتميز والإبداع</p>
                         </div>
 
                         {/* Organized Stats - Sharp & Static */}
