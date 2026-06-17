@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
@@ -19,6 +20,7 @@ import { cn } from '../lib/utils';
 
 export const TeacherDashboard = () => {
     const currentUser = useCurrentUser();
+    const navigate = useNavigate();
 
     const {
         stats,
@@ -106,7 +108,7 @@ export const TeacherDashboard = () => {
             </div>
 
             {/* ─── Mobile version (app-style with tabs) ─── */}
-            <div className="block md:hidden min-h-full pb-28 overflow-x-hidden relative bg-[#F7F8FC] font-sans overscroll-contain" dir="rtl">
+            <div className="block md:hidden min-h-full pb-28 overflow-x-hidden relative bg-[#F7F8FC] dark:bg-slate-900 font-sans overscroll-contain" dir="rtl">
                 {/* Sticky app bar */}
                 <div className="sticky top-0 z-30 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
                     <div className="absolute inset-0 bg-purple-400/10 rounded-full blur-[60px] pointer-events-none" />
@@ -142,7 +144,7 @@ export const TeacherDashboard = () => {
                             <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-xl py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
                                 <Users size={11} className="text-blue-200 shrink-0" />
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-white font-black text-sm">{stats.totalStudents || 0}</span>
+                                    <span className="text-white font-black text-sm">{stats.studentsCount || 0}</span>
                                     <span className="text-white/50 text-[7px] font-medium">طلاب</span>
                                 </div>
                             </div>
@@ -180,18 +182,18 @@ export const TeacherDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">البث المباشر</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">البث المباشر</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
                                 </div>
                             </section>
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#F5A623] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">الإعلانات</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الإعلانات</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                     <div className="p-3.5"><ModernAnnouncements /></div>
                                 </div>
                             </section>
@@ -204,9 +206,9 @@ export const TeacherDashboard = () => {
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
                                         <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
-                                        <h2 className="text-[#1E1E2F] text-[13px] font-black">حصص اليوم</h2>
+                                        <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">حصص اليوم</h2>
                                     </div>
-                                    <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                         <div className="p-3.5">
                                 <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                                         </div>
@@ -214,9 +216,9 @@ export const TeacherDashboard = () => {
                                 </section>
                             ) : (
                                 <div className="py-12 text-center">
-                                    <Calendar size={36} className="mx-auto text-slate-200 mb-3" />
-                                    <p className="text-slate-400 font-bold text-[13px]">لا توجد حصص اليوم</p>
-                                    <p className="text-slate-300 text-[10px] mt-1">استمتع بيومك!</p>
+                                    <Calendar size={36} className="mx-auto text-slate-200 dark:text-slate-700 mb-3" />
+                                    <p className="text-slate-400 dark:text-slate-500 font-bold text-[13px]">لا توجد حصص اليوم</p>
+                                    <p className="text-slate-300 dark:text-slate-600 text-[10px] mt-1">استمتع بيومك!</p>
                                 </div>
                             )}
                         </>
@@ -227,9 +229,9 @@ export const TeacherDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">الإنجازات</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">الإنجازات</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                     <div className="p-3.5">
                                         <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
                                     </div>
@@ -238,9 +240,9 @@ export const TeacherDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-rose-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">المهام والطلبات</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">المهام والطلبات</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                     <div className="p-3.5">
                                         <TasksAndRequests tasks={tasks} />
                                     </div>
@@ -249,9 +251,9 @@ export const TeacherDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-amber-400 rounded-full" />
-                                    <h2 className="text-[#1E1E2F] text-[13px] font-black">أعلى حضور</h2>
+                                    <h2 className="text-[#1E1E2F] dark:text-white text-[13px] font-black">أعلى حضور</h2>
                                 </div>
-                                <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+                                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                     <div className="p-3.5">
                                         <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
                                     </div>
