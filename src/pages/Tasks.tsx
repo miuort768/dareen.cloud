@@ -11,7 +11,9 @@ import {
     Rocket,
     ClipboardList,
     Sparkles,
-    ShieldCheck
+    ShieldCheck,
+    ChevronDown,
+    X
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -124,11 +126,11 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
+        <div className="min-h-full pb-20 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
 
                 {/* Hero */}
-                <div className="relative bg-gradient-to-br from-violet-50 via-violet-100/50 to-white dark:from-slate-800 dark:via-slate-800/80 dark:to-slate-900 rounded-2xl overflow-hidden mb-2 shadow-sm border border-violet-100/50 dark:border-slate-700/50">
+                <div className="relative bg-gradient-to-br from-violet-50 via-violet-100/50 to-white dark:from-slate-900 dark:via-slate-900/80 dark:to-slate-950 rounded-2xl overflow-hidden mb-2 shadow-sm border border-violet-100/50 dark:border-slate-700/50">
                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
                         <div className="flex flex-col items-start">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 border border-indigo-200/50 dark:border-indigo-700/30 rounded-full mb-3">
@@ -164,11 +166,15 @@ export const Tasks = () => {
                             "bg-white dark:bg-slate-800 border rounded-2xl p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md",
                             stat.border
                         )}>
-                            <div className={cn("w-9 h-9 rounded-2xl flex items-center justify-center mb-3 border", stat.border, stat.bg)}>
-                                <stat.icon size={14} className={stat.color} />
+                            <div className="flex items-center gap-4">
+                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center border shrink-0", stat.border, stat.bg)}>
+                                    <stat.icon size={24} className={stat.color} />
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{stat.value}</h3>
+                                    <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-black text-slate-800 dark:text-white tracking-tight mb-0.5">{stat.value}</h3>
-                            <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</p>
                         </div>
                     ))}
                 </div>
@@ -185,7 +191,7 @@ export const Tasks = () => {
                             className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-4 pr-10 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
                         />
                     </div>
-                    <div className="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar">
+                    <div className="grid grid-cols-4 gap-2 w-full md:flex md:w-auto">
                         {['all', 'high', 'medium', 'low'].map(p => (
                             <button
                                 key={p}
@@ -278,9 +284,9 @@ export const Tasks = () => {
                                         </div>
                                         <button
                                             onClick={() => deleteTask(task.id)}
-                                            className="w-8 h-8 rounded-2xl flex items-center justify-center text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+                                            className="w-10 h-10 rounded-2xl flex items-center justify-center text-rose-500 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-all"
                                         >
-                                            <Trash2 size={14} />
+                                            <Trash2 size={18} />
                                         </button>
                                     </div>
                                 </div>
@@ -311,8 +317,8 @@ export const Tasks = () => {
                                         <p className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
                                     </div>
                                 </div>
-                                <button onClick={() => setShowAddForm(false)} className="w-8 h-8 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
-                                    <span className="text-lg font-bold">×</span>
+                                <button onClick={() => setShowAddForm(false)} className="p-3 bg-red-500 rounded-xl text-black hover:bg-red-600 transition-colors">
+                                    <X size={22} />
                                 </button>
                             </div>
 
@@ -334,15 +340,18 @@ export const Tasks = () => {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1.5">
                                             <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">درجة الأولوية</label>
-                                            <select
-                                                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                                value={newTask.priority}
-                                                onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
-                                            >
-                                                <option value="low">منخفضة</option>
-                                                <option value="medium">متوسطة</option>
-                                                <option value="high">عالية</option>
-                                            </select>
+                                            <div className="relative">
+                                                <ChevronDown size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                                                <select
+                                                    className="appearance-none w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl py-2.5 pr-4 pl-8 text-xs font-bold text-slate-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                    value={newTask.priority}
+                                                    onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
+                                                >
+                                                    <option value="low">منخفضة</option>
+                                                    <option value="medium">متوسطة</option>
+                                                    <option value="high">عالية</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div className="space-y-1.5">
                                             <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">تاريخ التسليم</label>
