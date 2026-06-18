@@ -124,7 +124,7 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
+        <div className="min-h-full pb-24 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
 
                 {/* Hero */}
