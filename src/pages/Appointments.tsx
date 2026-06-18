@@ -207,7 +207,7 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+        <div className="min-h-full pb-24 relative" dir="rtl">
     <div className="hidden md:block max-w-[1600px] mx-auto px-2">
 
             {/* Header */}
