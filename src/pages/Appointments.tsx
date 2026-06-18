@@ -9,6 +9,7 @@ import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { PageLoader } from '../components/ui/PageLoader';
+import { MobileAppointments } from '../features/appointments/components/MobileAppointments';
 
 // Interfaces
 interface Student {
@@ -207,7 +208,7 @@ export const Appointments = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-    <div className="max-w-[1600px] mx-auto px-2">
+    <div className="hidden md:block max-w-[1600px] mx-auto px-2">
 
             {/* Header */}
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -455,6 +456,9 @@ export const Appointments = () => {
                     )}
                 </AnimatePresence>
             </div>
+        </div>
+        <div className="block md:hidden">
+            <MobileAppointments />
         </div>
         </div>
     );

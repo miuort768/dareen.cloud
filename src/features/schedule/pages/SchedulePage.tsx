@@ -14,6 +14,7 @@ import { cn } from '../../../lib/utils';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
+import { MobileSchedule } from '../components/MobileSchedule';
 
 interface Student {
     id: string;
@@ -175,7 +176,7 @@ export const Schedule = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-2">
+            <div className="hidden md:block max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
                 <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-none bg-blue-600 dark:bg-blue-800">
@@ -352,6 +353,10 @@ export const Schedule = () => {
                         <Loader2 className="animate-spin text-blue-600" size={24} />
                     </div>
                 )}
+            </div>
+
+            <div className="block md:hidden">
+                <MobileSchedule />
             </div>
 
             {/* Event Details Modal */}

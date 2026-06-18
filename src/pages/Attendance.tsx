@@ -15,6 +15,7 @@ import { AttendanceHistoryModal } from '../features/attendance/components/Attend
 import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters';
 import { RescheduleModal } from '../features/attendance/components/RescheduleModal';
 import { useAttendance } from '../features/attendance/hooks/useAttendance';
+import { MobileAttendance } from '../features/attendance/components/MobileAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 
@@ -240,7 +241,7 @@ export const Attendance = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-2 space-y-4">
+            <div className="hidden md:block max-w-[1600px] mx-auto px-2 space-y-4">
             
             <AttendanceHeader
                 date={date}
@@ -558,6 +559,9 @@ export const Attendance = () => {
                     }}
                 />
             )}
+            </div>
+            <div className="block md:hidden">
+                <MobileAttendance />
             </div>
         </div>
     );
