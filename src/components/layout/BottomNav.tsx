@@ -13,12 +13,14 @@ export const BottomNav = () => {
     const currentUser = useCurrentUser();
   const activeConversationId = useUnreadStore(s => s.activeConversationId);
 
-  const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;
+  const isChatPage = location.pathname.includes('/chat');
   const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
+  const isSchedule = location.pathname.includes('/schedule');
+  const isTasks = location.pathname.includes('/tasks');
   // student-dashboard has its own embedded mobile nav
   const isStudentDash = location.pathname.includes('/student-dashboard');
 
-  if (isChatActive || isDashboard || isStudentDash) return null;
+  if (isChatPage || isDashboard || isSchedule || isTasks || isStudentDash) return null;
 
   const handleNav = (path: string) => {
     triggerHaptic('light');
