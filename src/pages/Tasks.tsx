@@ -126,7 +126,7 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-20 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
+        <div className="min-h-full pb-6 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
 
                 {/* Hero */}
@@ -135,7 +135,7 @@ export const Tasks = () => {
                         <div className="flex flex-col items-start">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 border border-indigo-200/50 dark:border-indigo-700/30 rounded-full mb-3">
                                 <Sparkles size={10} className="text-indigo-600 dark:text-indigo-400" />
-                                <span className="text-[9px] font-bold text-indigo-700 dark:text-indigo-300">مركز القيادة</span>
+                                <span className="text-[9px] font-bold text-indigo-700 dark:text-white">مركز القيادة</span>
                             </div>
                             <h1 className="text-xl font-black text-slate-800 dark:text-white leading-tight mb-1">
                                 مركز التحكم بالمهام
