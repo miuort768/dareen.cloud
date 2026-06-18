@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
     GraduationCap,
     LayoutDashboard,
@@ -44,13 +44,6 @@ export const Sidebar = () => {
     const activeConversationId = useUnreadStore(s => s.activeConversationId);
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
-    const location = useLocation();
-    const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
-
-    // Close mobile menu on dashboard pages
-    useEffect(() => {
-        if (isDashboard) setMobileMenuOpen(false);
-    }, [isDashboard]);
 
     // Persist collapsed state
     useEffect(() => {
@@ -279,8 +272,8 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            {/* Mobile Bottom Navigation - Hidden on dashboard pages (has own tab bar) */}
-            {!isDashboard && <div className={cn(
+            {/* Mobile Bottom Navigation - Redesigned to match image */}
+            <div className={cn(
                 "lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)] overflow-hidden max-w-full transition-transform duration-300",
                 activeConversationId ? "translate-y-[100%]" : "translate-y-0"
             )}>
@@ -328,9 +321,10 @@ export const Sidebar = () => {
                 >
                     <Menu size={22} strokeWidth={2} />
                 </button>
-            </div>}
+            </div>
 
-            {!isDashboard && <div className={cn(
+            {/* Mobile Full Menu Overlay - Modern Sheet Design */}
+            <div className={cn(
                 "fixed inset-0 z-[110] bg-gray-950/40 backdrop-blur-md lg:hidden transition-all duration-500 overflow-hidden",
                 mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             )}>
@@ -409,7 +403,7 @@ export const Sidebar = () => {
                         </div>
                     </div>
                 </div>
-            </div>}
+            </div>
 
             <SessionCallAlert />
         </>
