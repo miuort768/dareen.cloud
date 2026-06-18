@@ -64,7 +64,7 @@ export const Layout = () => {
                 {(!isChatOnly && !location.pathname.includes('/chat') && !location.pathname.includes('/student-dashboard')) && <Header />}
 
                 <main className={cn(
-                    "flex-1 overflow-x-hidden custom-scrollbar relative max-w-full w-full",
+                    "flex-1 overflow-x-hidden overflow-y-auto custom-scrollbar relative max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat') || location.pathname.includes('/student-dashboard'))
                         ? "p-0"
                         : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 z-10"
@@ -76,7 +76,7 @@ export const Layout = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            className="h-full max-w-full overflow-x-hidden"
+                            className="h-full max-w-full"
                         >
                             <ErrorBoundary>
                                 <Suspense fallback={<PageLoader />}>
