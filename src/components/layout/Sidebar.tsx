@@ -349,9 +349,9 @@ export const Sidebar = () => {
                         </div>
                         <button
                             onClick={() => setMobileMenuOpen(false)}
-                            className="p-1.5 bg-gray-50 dark:bg-gray-900 rounded-none text-gray-400 hover:text-red-500 transition-colors"
+                            className="p-3 bg-red-500 rounded-xl text-black hover:bg-red-600 transition-colors"
                         >
-                            <X size={18} />
+                            <X size={22} />
                         </button>
                     </div>
 
