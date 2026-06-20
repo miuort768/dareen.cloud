@@ -13,6 +13,11 @@ import { StudentQuickBrief } from '../features/dashboard/components/StudentQuick
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
+import { NextSessionHero } from '../features/dashboard/components/NextSessionHero';
+import { QuickActions } from '../features/dashboard/components/QuickActions';
+import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
+import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot';
+import { AttendanceChart } from '../features/dashboard/components/AttendanceChart';
 import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, BookOpen, ClipboardList, CheckSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -27,7 +32,8 @@ export const TeacherDashboard = () => {
         tasks,
         loading,
         rawSessions,
-        lowBalanceStudents
+        lowBalanceStudents,
+        focusStudents
     } = useDashboardData(currentUser);
 
     const [briefingStudent, setBriefingStudent] = useState<Record<string, unknown> | null>(null);
@@ -48,6 +54,9 @@ export const TeacherDashboard = () => {
         return <PageLoader />;
     }
 
+    const timeline = stats.todayTimeline || [];
+    const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
+
     return (
         <>
             {/* ─── Desktop version ─── */}
@@ -56,15 +65,33 @@ export const TeacherDashboard = () => {
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 max-w-[1600px] mx-auto px-4 space-y-6">
                     <DashboardHeader isTeacher={true} currentUser={currentUser} />
+
+                    {nextSession && (
+                        <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                    )}
+
+                    <QuickActions navigate={navigate} onStartSession={() => {
+                        if (nextSession) navigate(`/classroom/${nextSession.id}`);
+                    }} />
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div className="lg:col-span-8">
+                            <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
+                        </div>
+                        <div className="lg:col-span-4">
+                            <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
+                        </div>
+                    </div>
+
                     <DashboardStats stats={stats} isTeacher={true} />
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-8 space-y-6">
                             <LiveClasses />
                             <ModernAnnouncements />
-                            
-                            {(stats.todayTimeline || []).length > 0 && (
-                                            <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+
+                            {timeline.length > 0 && (
+                                <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                             )}
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -74,6 +101,7 @@ export const TeacherDashboard = () => {
                         </div>
 
                         <div className="lg:col-span-4 space-y-6">
+                            <AttendanceChart rate={stats.attendanceRate} />
                             <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
                         </div>
                     </div>
@@ -179,6 +207,13 @@ export const TeacherDashboard = () => {
                 <div className="px-3 pt-3 space-y-3.5">
                     {activeTab === 'home' && (
                         <>
+                            {nextSession && (
+                                <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                            )}
+                            <QuickActions navigate={navigate} onStartSession={() => {
+                                if (nextSession) navigate(`/classroom/${nextSession.id}`);
+                            }} />
+                            <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#6C4BFF] rounded-full" />
@@ -202,7 +237,7 @@ export const TeacherDashboard = () => {
 
                     {activeTab === 'schedule' && (
                         <>
-                            {(stats.todayTimeline || []).length > 0 ? (
+                            {timeline.length > 0 ? (
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
                                         <div className="w-1 h-4 bg-[#3478F6] rounded-full" />
@@ -210,7 +245,7 @@ export const TeacherDashboard = () => {
                                     </div>
                                     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-slate-900/50 overflow-hidden">
                                         <div className="p-3.5">
-                                <TeacherSessionTimeline sessions={stats.todayTimeline || []} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+                                <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                                         </div>
                                     </div>
                                 </section>
@@ -226,6 +261,10 @@ export const TeacherDashboard = () => {
 
                     {activeTab === 'reports' && (
                         <>
+                            <div className="grid grid-cols-2 gap-3">
+                                <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
+                                <AttendanceChart rate={stats.attendanceRate} />
+                            </div>
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-[#18C76F] rounded-full" />
