@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft } from 'lucide-react';
 
 const features = [
@@ -63,11 +64,11 @@ export const WhyChooseUs = () => {
         </div>
 
         {/* ─── Mobile Layout ─── */}
-        <div className="md:hidden space-y-4">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="md:hidden space-y-4">
           {features.map((f, i) => {
             const Icon = featureIcons[i];
             return (
-              <div key={f.title} className={`relative flex items-center gap-4 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border ${f.border} ${f.borderDark} shadow-sm ${f.glow}`}>
+              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className={`relative flex items-center gap-4 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border ${f.border} ${f.borderDark} shadow-sm ${f.glow}`}>
                 {f.ribbon && (
                   <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[#6C4BFF] to-[#4A2DDB] text-white text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-yellow-300 text-yellow-300" />
@@ -81,7 +82,7 @@ export const WhyChooseUs = () => {
                   <h3 className={`text-sm font-black ${f.color} ${f.colorDark}`}>{f.title}</h3>
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">{f.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
 
@@ -120,14 +121,14 @@ export const WhyChooseUs = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ─── Desktop Layout ─── */}
-        <div className="hidden md:grid grid-cols-3 gap-4 max-w-6xl mx-auto pb-4 md:pb-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="hidden md:grid grid-cols-3 gap-4 max-w-6xl mx-auto pb-4 md:pb-6">
           {features.map((f, i) => {
             const Icon = featureIcons[i];
             return (
-              <div key={f.title} className={`relative p-6 bg-white dark:bg-slate-900/50 rounded-2xl shadow-sm border ${f.border} ${f.borderDark} flex items-start gap-4 group hover:shadow-md transition-all`}>
+              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className={`relative p-6 bg-white dark:bg-slate-900/50 rounded-2xl shadow-sm border ${f.border} ${f.borderDark} flex items-start gap-4 group hover:shadow-md transition-all`}>
                 {f.ribbon && (
                   <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[#6C4BFF] to-[#4A2DDB] text-white text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-yellow-300 text-yellow-300" />
@@ -141,7 +142,7 @@ export const WhyChooseUs = () => {
                   <h3 className={`text-base font-black ${f.color} ${f.colorDark} mb-1`}>{f.title}</h3>
                   <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">{f.desc}</p>
                 </div>
-              </div>
+                              </motion.div>
             );
           })}
 
@@ -171,7 +172,7 @@ export const WhyChooseUs = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

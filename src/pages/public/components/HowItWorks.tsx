@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Users, Star, Zap, ArrowLeft, Gift } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
@@ -48,7 +49,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         </svg>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 md:gap-4">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.15 } } }} className="grid grid-cols-3 gap-2 md:gap-4">
                         {[
                             {
                                 id: '01',
@@ -72,7 +73,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                 color: 'from-indigo-600 to-indigo-500'
                             }
                         ].map((step) => (
-                            <div key={step.id} className="relative group flex flex-col items-center">
+                            <motion.div key={step.id} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="relative group flex flex-col items-center">
                                 <div className={cn(
                                     "w-[55px] h-[55px] md:w-[90px] md:h-[90px] rounded-[30%] flex items-center justify-center text-white shadow-xl mb-4 md:mb-6 relative transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br",
                                     step.color
@@ -95,9 +96,9 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                 </div>
                                 
                                 <div className="hidden md:block absolute top-[45px] -right-2 w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 group-last:hidden"></div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
 
                     <div className="mt-10 flex justify-center">
                         <a

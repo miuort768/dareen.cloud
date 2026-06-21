@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react';
 
@@ -87,36 +88,38 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 </div>
                             </div>
                             <div className="w-full lg:w-1/2 flex justify-center py-4 lg:py-0">
-                                <div className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
-                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3 rounded-xl">
                                             <Clock className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-black dark:text-white text-xs mb-1">أوقات مرنة</h3>
                                         <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">اختر مواعيدك المفضلة</p>
-                                    </div>
-                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    </motion.div>
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-black dark:text-white text-xs mb-1">متابعة دقيقة</h3>
                                         <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">تقارير إنجاز أسبوعية</p>
-                                    </div>
-                                    <div className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    </motion.div>
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
                                         <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">نخبة الحفاظ المبدعون</p>
-                                    </div>
-                                    <Link to="/contact" className="p-4 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-lg text-white flex flex-col items-center text-center transition-all hover:scale-105 cursor-pointer">
-                                        <div className="w-11 h-11 bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
-                                            <Sparkles className="w-5 h-5" />
-                                        </div>
-                                        <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
-                                        <p className="text-white/80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
-                                    </Link>
-                                </div>
+                                    </motion.div>
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
+                                        <Link to="/contact" className="p-4 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-lg text-white flex flex-col items-center text-center transition-all hover:scale-105 cursor-pointer">
+                                            <div className="w-11 h-11 bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
+                                                <Sparkles className="w-5 h-5" />
+                                            </div>
+                                            <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
+                                            <p className="text-white/80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
+                                        </Link>
+                                    </motion.div>
+                                </motion.div>
                             </div>
                         </div>
                     </div>
@@ -203,36 +206,36 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     </div>
 
                     {/* Feature Cards 2x2 */}
-                    <div className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
-                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }} className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-amber-50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-3">
                                 <ClipboardCheck size={22} className="text-[#F5A623] dark:text-amber-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">متابعة دقيقة</h3>
                             <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        </motion.div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-[#6C4BFF] dark:text-purple-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">أوقات مرنة</h3>
                             <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
-                        </div>
-                        <div className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
+                        </motion.div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
                                 <Sparkles size={22} className="text-white" />
                             </div>
                             <h3 className="font-black text-white text-[13px] mb-1">جرب مجانًا</h3>
                             <p className="text-white/80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
-                        </div>
-                        <div className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        </motion.div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mb-3">
                                 <Mic size={22} className="text-[#08B26A] dark:text-emerald-400" />
                             </div>
                             <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">معلمون مجازون</h3>
                             <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
 
                 </div>
             </section>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { MobileHeader } from '../../components/public/MobileHeader';
@@ -185,26 +186,37 @@ export const Home = () => {
         </section>
 
         {/* Quick Features */}
-        <section className="mb-4">
-          <div className="grid grid-cols-2 gap-1.5">
-            {quickFeatures.map((f, i) => (
-              <div key={i} className={`flex items-center gap-2 p-2 ${f.bg} ${f.bgDark} rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}>
-                <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
-                  <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight mb-0">{f.label}</span>
-                  <span className="text-[6px] text-slate-400 font-medium block leading-tight">{f.desc}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <AnimateOnScroll>
+          <section className="mb-4">
+            <div className="grid grid-cols-2 gap-1.5">
+              {quickFeatures.map((f, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className={`flex items-center gap-2 p-2 ${f.bg} ${f.bgDark} rounded-xl shadow-sm border ${f.border} ${f.borderDark} transition-all`}
+                >
+                  <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.bgDark} flex items-center justify-center shrink-0`}>
+                    <f.icon className={`${f.color} ${f.colorDark}`} size={20} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-black text-slate-800 dark:text-white block leading-tight mb-0">{f.label}</span>
+                    <span className="text-[6px] text-slate-400 font-medium block leading-tight">{f.desc}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        </AnimateOnScroll>
 
         {/* How to Subscribe */}
-        <div className="mb-4">
-            <HowToSubscribe />
-        </div>
+        <AnimateOnScroll>
+          <div className="mb-4">
+              <HowToSubscribe />
+          </div>
+        </AnimateOnScroll>
 
         {/* Latest Courses */}
         <section className="px-1">
@@ -287,51 +299,79 @@ export const Home = () => {
 
         {/* Existing Sections (restyled layout) */}
         <div className="space-y-4">
-          <div style={{ contentVisibility: 'auto' }}>
-            <AppDownloadSection />
-          </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <WhyChooseUs />
-          </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <QuranSection whatsappNumber={whatsappNumber} />
-          </div>
+          <AnimateOnScroll animation="slideRight">
+            <div style={{ contentVisibility: 'auto' }}>
+              <AppDownloadSection />
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll>
+            <div style={{ contentVisibility: 'auto' }}>
+              <WhyChooseUs />
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll>
+            <div style={{ contentVisibility: 'auto' }}>
+              <QuranSection whatsappNumber={whatsappNumber} />
+            </div>
+          </AnimateOnScroll>
           <div className="hidden" style={{ contentVisibility: 'auto' }}>
             <HowItWorks whatsappNumber={whatsappNumber} />
           </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <Testimonials reviews={reviews} currentIndex={currentIndex} />
-          </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <MasarSection />
-          </div>
-          <div style={{ contentVisibility: 'auto' }}>
-            <FAQSection />
-          </div>
+          <AnimateOnScroll animation="slideLeft">
+            <div style={{ contentVisibility: 'auto' }}>
+              <Testimonials reviews={reviews} currentIndex={currentIndex} />
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll>
+            <div style={{ contentVisibility: 'auto' }}>
+              <MasarSection />
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll>
+            <div style={{ contentVisibility: 'auto' }}>
+              <FAQSection />
+            </div>
+          </AnimateOnScroll>
         </div>
       </main>
 
       {/* ─── Desktop content (unchanged) ─── */}
       <div className="hidden md:block">
-        <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
-        <StatsCounter />
+        <AnimateOnScroll animation="scaleIn" duration={0.7}>
+          <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <StatsCounter />
+        </AnimateOnScroll>
         <div style={{ contentVisibility: 'auto' }}>
-          <WhyChooseUs />
+          <AnimateOnScroll>
+            <WhyChooseUs />
+          </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
-          <QuranSection whatsappNumber={whatsappNumber} />
+          <AnimateOnScroll>
+            <QuranSection whatsappNumber={whatsappNumber} />
+          </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
-          <HowItWorks whatsappNumber={whatsappNumber} />
+          <AnimateOnScroll>
+            <HowItWorks whatsappNumber={whatsappNumber} />
+          </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
-          <Testimonials reviews={reviews} currentIndex={currentIndex} />
+          <AnimateOnScroll animation="slideLeft">
+            <Testimonials reviews={reviews} currentIndex={currentIndex} />
+          </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
-          <MasarSection />
+          <AnimateOnScroll>
+            <MasarSection />
+          </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
-          <FAQSection />
+          <AnimateOnScroll>
+            <FAQSection />
+          </AnimateOnScroll>
         </div>
       </div>
 

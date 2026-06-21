@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 
 export const FAQSection = () => {
@@ -40,7 +41,7 @@ export const FAQSection = () => {
                     </h2>
                     <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
                 </div>
-                <div className="max-w-2xl mx-auto space-y-3">
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }} className="max-w-2xl mx-auto space-y-3">
                     {[
                         {
                             q: "كيف يتم الدراسة في المعهد ؟",
@@ -73,7 +74,7 @@ export const FAQSection = () => {
                     ].map((item, idx) => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20 object-contain opacity-20" />];
                         return (
-                            <div key={idx} className="relative bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden group hover:border-indigo-100 dark:hover:border-indigo-800 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/20">
+                            <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden group hover:border-indigo-100 dark:hover:border-indigo-800 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/20">
                                 <div className="absolute -bottom-4 -left-4 text-gray-400 dark:text-gray-500 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>
@@ -93,11 +94,11 @@ export const FAQSection = () => {
                                             {item.a}
                                         </p>
                                     </div>
-                                </details>
-                            </div>
-                        );
-                    })}
-                </div>
+                                    </details>
+                                </motion.div>
+                            );
+                        })}
+                    </motion.div>
             </div>
         </section>
     );
