@@ -1,8 +1,10 @@
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart, ArrowLeft } from 'lucide-react';
 import { SEO } from '../../components/SEO';
+import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const About = () => {
     return (
@@ -27,6 +29,7 @@ export const About = () => {
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
+                    <AnimateOnScroll animation="fadeUp">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                         <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
                         <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">دارين السابعة | ريادة تعليمية</span>
@@ -41,38 +44,40 @@ export const About = () => {
                     <p className="text-xs md:text-base text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-relaxed mb-8 px-4 font-medium">
                         في دارين السابعة، منصة تعليم عن بعد رائدة في السعودية والكويت والخليج، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي في السعودية، الكويت، الإمارات، قطر وعمان والبحرين لتقديم دروس خصوصية أونلاين، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس أطفال وفق المناهج الخليجية.
                     </p>
+                    </AnimateOnScroll>
 
-                    <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-                        <div className="flex flex-col items-center">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="flex flex-wrap justify-center gap-8 md:gap-12">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
                             <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Award size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">10+</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">سنوات تميز</span>
-                        </div>
+                        </motion.div>
 
-                        <div className="flex flex-col items-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
                             <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Users size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">5k+</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">طالب فخور</span>
-                        </div>
+                        </motion.div>
 
-                        <div className="flex flex-col items-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
                             <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 rounded-none flex items-center justify-center text-amber-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Heart size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">100%</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">ثقة وتفاني</span>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Our Story & Impact */}
             <section className="py-6 md:py-8 relative overflow-hidden bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 relative z-10">
+                    <AnimateOnScroll animation="fadeUp">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
 
                         {/* Interactive Visual Side */}
@@ -115,8 +120,8 @@ export const About = () => {
                                 بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                             </p>
 
-                            <div className="space-y-4">
-                                <div className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
+                            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="space-y-4">
+                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
                                     <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-none shadow-sm flex items-center justify-center text-indigo-600 shrink-0">
                                         <Zap size={24} />
                                     </div>
@@ -124,19 +129,20 @@ export const About = () => {
                                         <h3 className="text-lg font-black text-gray-900 dark:text-white mb-1">رؤية الابتكار</h3>
                                         <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                                     </div>
-                                </div>
-                                <div className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
+                                </motion.div>
+                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
                                     <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-none shadow-sm flex items-center justify-center text-amber-600 shrink-0">
                                         <BookOpen size={24} />
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-black text-gray-900 dark:text-white mb-1">رسالة التمكين</h3>
-                                        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">تقديم تجربة تعليمية قيميّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
+                                        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">تقديم تجربة تعليمية قيمّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
                                     </div>
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
                         </div>
-                    </div>
+                        </div>
+                    </AnimateOnScroll>
                 </div>
             </section>
 
@@ -146,6 +152,7 @@ export const About = () => {
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
+                    <AnimateOnScroll animation="fadeUp">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-l from-[#1B1464] to-[#2D1B8E] rounded-full mb-4 shadow-lg shadow-indigo-900/20">
                             <span className="text-[9px] font-black text-white">دستورنا التعليمي</span>
@@ -159,9 +166,9 @@ export const About = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
                         {/* Value 1 - Honesty */}
-                        <div className="group bg-gradient-to-br from-white to-indigo-50/50 dark:from-slate-900 dark:to-indigo-950/20 p-6 md:p-8 rounded-2xl border border-indigo-100/50 dark:border-indigo-900/30 hover:border-indigo-300/50 dark:hover:border-indigo-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-indigo-500/10">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-indigo-50/50 dark:from-slate-900 dark:to-indigo-950/20 p-6 md:p-8 rounded-2xl border border-indigo-100/50 dark:border-indigo-900/30 hover:border-indigo-300/50 dark:hover:border-indigo-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-indigo-500/10">
                             <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 via-indigo-600/0 to-indigo-600/5 dark:to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500 shrink-0">
@@ -172,10 +179,10 @@ export const About = () => {
                             <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل أبنائكم.
                             </p>
-                        </div>
+                        </motion.div>
 
                         {/* Value 2 - Innovation */}
-                        <div className="group bg-gradient-to-br from-white to-amber-50/50 dark:from-slate-900 dark:to-amber-950/20 p-6 md:p-8 rounded-2xl border border-amber-100/50 dark:border-amber-900/30 hover:border-amber-300/50 dark:hover:border-amber-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-amber-500/10">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-amber-50/50 dark:from-slate-900 dark:to-amber-950/20 p-6 md:p-8 rounded-2xl border border-amber-100/50 dark:border-amber-900/30 hover:border-amber-300/50 dark:hover:border-amber-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-amber-500/10">
                             <div className="absolute inset-0 bg-gradient-to-br from-amber-600/0 via-amber-600/0 to-amber-600/5 dark:to-amber-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 group-hover:scale-110 transition-all duration-500 shrink-0">
@@ -186,10 +193,10 @@ export const About = () => {
                             <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.
                             </p>
-                        </div>
+                        </motion.div>
 
                         {/* Value 3 - Excellence */}
-                        <div className="group bg-gradient-to-br from-white to-emerald-50/50 dark:from-slate-900 dark:to-emerald-950/20 p-6 md:p-8 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30 hover:border-emerald-300/50 dark:hover:border-emerald-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-emerald-500/10">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-emerald-50/50 dark:from-slate-900 dark:to-emerald-950/20 p-6 md:p-8 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30 hover:border-emerald-300/50 dark:hover:border-emerald-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-emerald-500/10">
                             <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/0 via-emerald-600/0 to-emerald-600/5 dark:to-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/30 group-hover:scale-110 transition-all duration-500 shrink-0">
@@ -200,10 +207,10 @@ export const About = () => {
                             <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.
                             </p>
-                        </div>
+                        </motion.div>
 
                         {/* Value 4 - Building Generations */}
-                        <div className="group bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-900 dark:to-rose-950/20 p-6 md:p-8 rounded-2xl border border-rose-100/50 dark:border-rose-900/30 hover:border-rose-300/50 dark:hover:border-rose-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-rose-500/10">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-900 dark:to-rose-950/20 p-6 md:p-8 rounded-2xl border border-rose-100/50 dark:border-rose-900/30 hover:border-rose-300/50 dark:hover:border-rose-700/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-rose-500/10">
                             <div className="absolute inset-0 bg-gradient-to-br from-rose-600/0 via-rose-600/0 to-rose-600/5 dark:to-rose-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white flex items-center justify-center shadow-lg shadow-rose-500/20 group-hover:shadow-rose-500/30 group-hover:scale-110 transition-all duration-500 shrink-0">
@@ -214,8 +221,9 @@ export const About = () => {
                             <p className="text-xs md:text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نركز على صقل شخصية الطالب ومهاراته القيادية ليكون منارة للتغيير الإيجابي في المجتمع.
                             </p>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
+                    </AnimateOnScroll>
                 </div>
             </section>
 
@@ -229,6 +237,7 @@ export const About = () => {
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
+                    <AnimateOnScroll animation="fadeUp">
                         {/* The Professional Container */}
                         <div className="relative group overflow-hidden">
                             {/* Animated Border/Glow effect */}
@@ -315,6 +324,7 @@ export const About = () => {
                                 </div>
                             </div>
                         </div>
+                    </AnimateOnScroll>
                     </div>
                 </div>
             </section>

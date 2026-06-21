@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -5,6 +6,7 @@ import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, Sparkles } from
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
+import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const Contact = () => {
     const { adminPhone } = useSettingsStore();
@@ -84,6 +86,7 @@ export const Contact = () => {
                 <div className="container mx-auto px-4 relative z-10 max-w-5xl">
 
                     {/* ── Hero Header ── */}
+                    <AnimateOnScroll animation="fadeUp">
                     <div className="text-center mb-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-1 md:mb-5">
                             <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
@@ -99,31 +102,34 @@ export const Contact = () => {
                             فريقنا جاهز للرد على جميع استفساراتك<br className="md:hidden" /> ومساعدتك في الانضمام إلى عالم دارين التعليمي.
                         </p>
                     </div>
+                    </AnimateOnScroll>
 
                     {/* ── Contact Info Cards ── */}
-                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {contactCards.map((card) => (
-                            <a
-                                key={card.title}
-                                href={card.href}
-                                target={card.href !== '#' ? '_blank' : undefined}
-                                rel="noopener noreferrer"
-                                className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
-                                        <card.icon size={20} />
+                            <motion.div key={card.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
+                                <a
+                                    href={card.href}
+                                    target={card.href !== '#' ? '_blank' : undefined}
+                                    rel="noopener noreferrer"
+                                    className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
+                                            <card.icon size={20} />
+                                        </div>
+                                        <div className="flex-grow min-w-0">
+                                            <p className="text-[9px] font-black text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
+                                            <p className="text-sm font-bold text-gray-800 dark:text-white truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                        </div>
                                     </div>
-                                    <div className="flex-grow min-w-0">
-                                        <p className="text-[9px] font-black text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
-                                        <p className="text-sm font-bold text-gray-800 dark:text-white truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
 
                     {/* ── Contact Form Card ── */}
+                    <AnimateOnScroll animation="fadeUp">
                     <div className="bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800 rounded-none overflow-hidden shadow-xl shadow-gray-200/40 dark:shadow-black/40">
                         {/* Top accent bar */}
                         <div className="h-1.5 bg-gradient-to-r from-indigo-600 via-purple-500 to-amber-500" />
@@ -241,6 +247,7 @@ export const Contact = () => {
                             </div>
                         )}
                     </div>
+                    </AnimateOnScroll>
 
                 </div>
             </main>

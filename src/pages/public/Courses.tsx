@@ -6,6 +6,7 @@ import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { COURSES, CATEGORIES } from '../../data/courses';
+import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 const parseStudentCount = (s: string) => {
   const n = parseFloat(s.replace(/[kK]/, ''));
@@ -87,45 +88,29 @@ export const Courses = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-          <div className="text-center mb-6 md:mb-8">
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-2 md:mb-6"
-            >
-              <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
-              <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">استكشف مسيرتك التعليمية</span>
-            </motion.div>
+                        <AnimateOnScroll animation="fadeUp">
+                        <div className="text-center mb-6 md:mb-8">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-2 md:mb-6">
+                                <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
+                                <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">استكشف مسيرتك التعليمية</span>
+                            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-2 md:mb-4 leading-[1.15] tracking-tight"
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-                دورات
-              </span>{' '}
-              دارين السابعة
-            </motion.h1>
+                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-2 md:mb-4 leading-[1.15] tracking-tight">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                                    دورات
+                                </span>{' '}
+                                دارين السابعة
+                            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed font-medium"
-            >
-              برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
-            </motion.p>
-          </div>
+                            <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed font-medium">
+                                برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
+                            </p>
+                        </div>
+                        </AnimateOnScroll>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="max-w-4xl mx-auto mb-10"
-          >
+                        <AnimateOnScroll animation="fadeUp">
+                        <div className="max-w-4xl mx-auto mb-10"
+                        >
             <div className="relative group">
               <input
                 type="text"
@@ -152,15 +137,17 @@ export const Courses = () => {
                   <span>{cat.label}</span>
                 </button>
               ))}
-            </div>
-          </motion.div>
+                        </div>
+                            </div>
+                    </AnimateOnScroll>
 
           {filteredCourses.length > 0 ? (
             <motion.div
               key={activeCategory + searchQuery}
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6"
             >
               {filteredCourses.map((course) => (
@@ -247,7 +234,8 @@ export const Courses = () => {
           ) : (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               className="text-center py-20"
             >
               <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
