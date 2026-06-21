@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -105,14 +104,14 @@ export const Contact = () => {
                     </AnimateOnScroll>
 
                     {/* ── Contact Info Cards ── */}
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {contactCards.map((card) => (
-                            <motion.div key={card.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
+                            <AnimateOnScroll key={card.title} animation="fadeUp" delay={0.05} duration={0.4}>
                                 <a
                                     href={card.href}
                                     target={card.href !== '#' ? '_blank' : undefined}
                                     rel="noopener noreferrer"
-                                    className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"
+                                    className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm block"
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
@@ -124,9 +123,9 @@ export const Contact = () => {
                                         </div>
                                     </div>
                                 </a>
-                            </motion.div>
+                            </AnimateOnScroll>
                         ))}
-                    </motion.div>
+                    </div>
 
                     {/* ── Contact Form Card ── */}
                     <AnimateOnScroll animation="fadeUp">
