@@ -1,4 +1,4 @@
-import { TrendingUp, Award, AlertCircle, Clock } from 'lucide-react';
+import { TrendingUp, Award, AlertCircle, Clock, Star } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
@@ -14,76 +14,55 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none h-full flex flex-col overflow-hidden shadow-sm transition-all">
-            <div className="p-6 md:p-7 flex flex-col h-full">
-                {/* Header Row */}
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <TrendingUp size={20} />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-xs md:text-sm text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
-                                {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
-                            </h3>
-                            <p className="text-[9px] font-medium text-slate-400 dark:text-slate-500 mt-0.5 uppercase tracking-tight">مؤشرات الأداء المهني</p>
-                        </div>
-                    </div>
-                    {isTeacher && (
-                        <div className="p-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none shadow-sm">
-                             <RankBadge rank={rank} size="sm" />
-                        </div>
-                    )}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-700">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Star size={12} className="text-amber-500" />
+                    {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
+                </h3>
+                {isTeacher && (
+                    <RankBadge rank={rank} size="sm" />
+                )}
+            </div>
+
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-4 mb-3 text-white">
+                <div className="flex items-center gap-1.5 mb-2">
+                    <Award size={12} className="text-indigo-200" />
+                    <span className="text-[9px] font-bold text-indigo-100">
+                        {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
+                    </span>
                 </div>
-
-                {/* Main Hero Metric */}
-                <div className="flex-1 flex flex-col items-center justify-center py-8 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/60 rounded-none mb-6 relative overflow-hidden group">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Award size={14} className="text-indigo-600 dark:text-indigo-400" />
-                        <span className="text-[9px] font-medium text-indigo-600 dark:text-indigo-400 uppercase">
-                            {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
-                        </span>
-                    </div>
-                    <div className="flex items-baseline gap-2 relative z-10">
-                        <h2 className="text-3xl md:text-4xl font-medium text-slate-900 dark:text-white tabular-nums">
-                            {isTeacher ? (stats.monthNetProfit || 0).toLocaleString() : stats.expectedCollection.toLocaleString()}
-                        </h2>
-                        <span className="text-sm font-medium text-slate-400 dark:text-slate-500 uppercase">ج.م</span>
-                    </div>
-                    
-                    {isTeacher && (
-                        <div className="mt-6 px-4 py-1.5 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none border border-slate-900 dark:border-slate-700 shadow-sm transition-all hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white">
-                            <span className="text-[10px] font-medium">{stats.teacherPoints || 0} XP EXPERTISE</span>
-                        </div>
-                    )}
+                <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black tabular-nums">
+                        {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
+                    </span>
+                    <span className="text-[10px] font-bold text-indigo-200">ج.م</span>
                 </div>
-
-                {/* Bottom Alert Counters */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-r-4 border-r-rose-600 rounded-none flex flex-col gap-2 relative shadow-sm hover:border-rose-600/30 transition-all">
-                        <div className="flex items-center justify-between">
-                            <div className="w-8 h-8 bg-rose-50 text-rose-600 rounded-none flex items-center justify-center border border-rose-100 dark:bg-rose-500/10 dark:border-rose-500/20">
-                                <AlertCircle size={14} />
-                            </div>
-                            <span className="text-[8px] font-medium text-rose-600 uppercase">منتهي</span>
-                        </div>
-                        <div className="flex items-baseline gap-1">
-                            <span className="text-xl font-medium text-slate-900 dark:text-white tabular-nums">{expiredCount}</span>
-                            <span className="text-[9px] text-slate-400 dark:text-slate-500 font-normal uppercase">طلاب</span>
-                        </div>
+                {isTeacher && (
+                    <div className="mt-2.5 inline-flex items-center gap-1 px-2.5 py-1 bg-white/15 backdrop-blur-sm rounded-lg text-[9px] font-bold text-white">
+                        <Award size={10} />
+                        {stats.teacherPoints || 0} XP
                     </div>
+                )}
+            </div>
 
-                    <div className="p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-r-4 border-r-amber-500 rounded-none flex flex-col gap-2 relative shadow-sm hover:border-amber-500/30 transition-all">
-                        <div className="flex items-center justify-between">
-                            <div className="w-8 h-8 bg-amber-50 text-amber-500 rounded-none flex items-center justify-center border border-amber-100 dark:bg-amber-500/10 dark:border-amber-500/20">
-                                <Clock size={14} />
-                            </div>
-                            <span className="text-[8px] font-medium text-amber-500 uppercase">مستحق قريب</span>
-                        </div>
-                        <div className="flex items-baseline gap-1">
-                            <span className="text-xl font-medium text-slate-900 dark:text-white tabular-nums">{lowCount}</span>
-                            <span className="text-[9px] text-slate-400 dark:text-slate-500 font-normal uppercase">طلاب</span>
-                        </div>
+            <div className="grid grid-cols-2 gap-2.5">
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-100 dark:border-rose-500/20">
+                    <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-500/20 flex items-center justify-center">
+                        <AlertCircle size={13} className="text-rose-500" />
+                    </div>
+                    <div>
+                        <span className="text-lg font-black text-rose-700 dark:text-rose-300 tabular-nums">{expiredCount}</span>
+                        <p className="text-[8px] font-bold text-rose-500">منتهي</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-100 dark:border-amber-500/20">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+                        <Clock size={13} className="text-amber-500" />
+                    </div>
+                    <div>
+                        <span className="text-lg font-black text-amber-700 dark:text-amber-300 tabular-nums">{lowCount}</span>
+                        <p className="text-[8px] font-bold text-amber-500">مستحق</p>
                     </div>
                 </div>
             </div>

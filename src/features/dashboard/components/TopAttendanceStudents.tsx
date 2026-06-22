@@ -1,4 +1,4 @@
-import { Trophy, TrendingUp, User } from 'lucide-react';
+import { Trophy, TrendingUp, User, Medal } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useMemo } from 'react';
 
@@ -11,8 +11,8 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     const topPresentStudents = useMemo(() => {
         const studentStats: Record<string, { name: string; count: number }> = {};
         const now = new Date();
-        const currentMonth = now.toISOString().slice(0, 7); // YYYY-MM
-        
+        const currentMonth = now.toISOString().slice(0, 7);
+
         sessions.forEach(s => {
             const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase());
             const isThisMonth = s.date?.startsWith(currentMonth);
@@ -33,87 +33,70 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
 
     const totalMonthSessions = useMemo(() => {
         const currentMonth = new Date().toISOString().slice(0, 7);
-        return sessions.filter(s => 
-            ['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase()) && 
+        return sessions.filter(s =>
+            ['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase()) &&
             s.date?.startsWith(currentMonth)
         ).length;
     }, [sessions]);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full overflow-hidden transition-all" dir="rtl">
-            {/* Header Section */}
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <Trophy size={20} />
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-medium text-slate-900 dark:text-white uppercase tracking-tight leading-tight">الأكثر حضوراً</h3>
-                        <p className="text-[9px] font-medium text-amber-500 mt-0.5 uppercase tracking-tight flex items-center gap-1.5">
-                            قادة الحضور والالتزام
-                        </p>
-                    </div>
-                </div>
-                <div className="w-8 h-8 rounded-none border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400">
-                    <TrendingUp size={16} />
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 h-full flex flex-col">
+            <div className="flex items-center justify-between mb-3">
+                <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <Medal size={12} className="text-amber-500" />
+                    الأكثر حضوراً
+                </h3>
+                <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center">
+                    <TrendingUp size={13} className="text-amber-500" />
                 </div>
             </div>
 
-            {/* Students List */}
-            <div className="space-y-2 flex-1 overflow-y-auto pr-1">
+            <div className="flex-1 space-y-2 overflow-y-auto">
                 {topPresentStudents.length > 0 ? (
                     topPresentStudents.map((stu, i) => (
-                        <div 
-                            key={i} 
+                        <div
+                            key={i}
                             onClick={() => onStudentClick?.({ id: stu.name, name: stu.name })}
-                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 hover:border-amber-500/50 transition-all rounded-none group relative overflow-hidden cursor-pointer"
+                            className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-600 hover:border-amber-300 dark:hover:border-amber-500/30 transition-all cursor-pointer"
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="relative">
-                                    <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-700 text-slate-400">
-                                        <User size={18} />
-                                    </div>
-                                    <div className={cn(
-                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-medium border border-slate-200 dark:border-slate-700 shadow-sm",
-                                        i === 0 ? "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/30" :
-                                        i === 1 ? "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500" :
-                                        i === 2 ? "bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-500/20 dark:text-orange-400 dark:border-orange-500/30" : "bg-white text-slate-500 dark:bg-slate-800 dark:text-slate-400"
-                                    )}>
-                                        {i + 1}
-                                    </div>
+                            <div className="flex items-center gap-2.5">
+                                <div className={cn(
+                                    "w-8 h-8 rounded-lg flex items-center justify-center text-[9px] font-black",
+                                    i === 0 ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400" :
+                                    i === 1 ? "bg-slate-200 text-slate-700 dark:bg-slate-600 dark:text-slate-200" :
+                                    i === 2 ? "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400" :
+                                    "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500"
+                                )}>
+                                    {i + 1}
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className="font-medium text-xs text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
-                                    <p className="text-[8px] font-normal text-slate-400 uppercase mt-0.5">أداء متميز</p>
+                                    <p className="text-[11px] font-bold text-slate-800 dark:text-slate-100 truncate">{stu.name}</p>
+                                    <p className="text-[8px] font-medium text-slate-400 dark:text-slate-500">أداء متميز</p>
                                 </div>
                             </div>
-                            
                             <div className="text-left">
-                                <div className="text-xl font-medium text-slate-900 dark:text-white tabular-nums leading-none">{stu.count}</div>
-                                <div className="text-[8px] font-medium text-amber-500 uppercase mt-1">حصة</div>
+                                <span className="text-lg font-black text-slate-900 dark:text-white tabular-nums">{stu.count}</span>
+                                <span className="text-[8px] font-bold text-amber-500 mr-1">حصة</span>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="flex flex-col items-center justify-center py-16 opacity-40">
-                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none flex items-center justify-center mb-4">
-                            <User size={24} className="text-slate-300" />
+                    <div className="flex flex-col items-center justify-center py-10 opacity-50">
+                        <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center mb-2">
+                            <User size={18} className="text-slate-300 dark:text-slate-500" />
                         </div>
-                        <p className="text-[9px] font-medium text-slate-400 uppercase">لا توجد سجلات حالياً</p>
+                        <p className="text-[10px] font-bold text-slate-400">لا توجد سجلات حالياً</p>
                     </div>
                 )}
             </div>
 
-            {/* Footer Summary */}
-            <div className="mt-6">
-                <div className="bg-indigo-600 dark:bg-indigo-700 border border-indigo-500 rounded-none p-4 text-white flex items-center justify-between shadow-sm transition-transform hover:translate-y-[-2px]">
-                    <div>
-                        <h4 className="text-[9px] font-medium uppercase opacity-80 mb-0.5">إجمالي حصص الشهر</h4>
-                        <p className="text-xl font-medium tabular-nums leading-none">{totalMonthSessions}</p>
-                    </div>
-                    <div className="w-9 h-9 bg-white/10 rounded-none flex items-center justify-center border border-white/20">
-                        <TrendingUp size={18} />
-                    </div>
+            <div className="mt-3 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-white flex items-center justify-between">
+                <div>
+                    <p className="text-[8px] font-bold text-amber-100">إجمالي حصص الشهر</p>
+                    <p className="text-lg font-black tabular-nums">{totalMonthSessions}</p>
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                    <TrendingUp size={15} className="text-white" />
                 </div>
             </div>
         </div>
