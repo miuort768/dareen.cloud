@@ -225,7 +225,7 @@ export const Tasks = () => {
                                 <div
                                     key={task.id}
                                     className={cn(
-                                        "bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm transition-all hover:shadow-md relative overflow-hidden",
+                                        "bg-white dark:bg-slate-800 rounded-none p-5 shadow-sm transition-all hover:shadow-md relative overflow-hidden",
                                         isCompleted && "opacity-60",
                                         task.priority === 'high' ? "border-r-4 border-r-rose-500" : task.priority === 'medium' ? "border-r-4 border-r-amber-500" : "border-r-4 border-r-indigo-500"
                                     )}
