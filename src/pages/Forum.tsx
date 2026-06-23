@@ -6,7 +6,7 @@ import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
-import { confirm } from '../lib/confirmDialog';
+import { confirm, alert } from '../lib/confirmDialog';
 
 interface Comment {
     id: string;
@@ -511,7 +511,7 @@ export const Forum = () => {
                         <h4 className="text-white font-black text-base mb-1">إرشادات المنتدى</h4>
                         <p className="text-purple-100 text-[11px] font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
-                    <button onClick={() => window.alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين. الممنوع: الإساءة، المحتوى المسيء، الترويج، نشر معلومات شخصية.')} className="relative z-10 bg-white text-[#6C4BFF] px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-purple-50 transition-all shadow-lg active:scale-95">
+                    <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="relative z-10 bg-white text-[#6C4BFF] px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-purple-50 transition-all shadow-lg active:scale-95">
                         عرض الإرشادات
                     </button>
                 </div>
