@@ -126,7 +126,7 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-6 relative bg-[#F8F8FC] dark:bg-slate-950" dir="rtl">
+        <div className="min-h-full pb-6 relative bg-gradient-to-br from-indigo-50 via-violet-50 to-amber-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
 
                 {/* Hero */}
@@ -157,22 +157,22 @@ export const Tasks = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {[
-                        { label: 'مهام معلقة', value: stats.pending, icon: Clock, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10', border: 'border-amber-200/50 dark:border-amber-500/20' },
-                        { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10', border: 'border-indigo-200/50 dark:border-indigo-500/20' },
-                        { label: 'نسبة الإنجاز', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-500/10', border: 'border-emerald-200/50 dark:border-emerald-500/20' },
-                        { label: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-500/10', border: 'border-purple-200/50 dark:border-purple-500/20' }
+                        { label: 'مهام معلقة', value: stats.pending, icon: Clock, cardBg: 'bg-gradient-to-br from-amber-500 to-amber-600', iconBg: 'bg-white/20', textColor: 'text-white' },
+                        { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, cardBg: 'bg-gradient-to-br from-indigo-500 to-indigo-600', iconBg: 'bg-white/20', textColor: 'text-white' },
+                        { label: 'نسبة الإنجاز', value: `${stats.score}%`, icon: TrendingUp, cardBg: 'bg-gradient-to-br from-emerald-500 to-emerald-600', iconBg: 'bg-white/20', textColor: 'text-white' },
+                        { label: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, cardBg: 'bg-gradient-to-br from-purple-500 to-purple-600', iconBg: 'bg-white/20', textColor: 'text-white' }
                     ].map((stat, i) => (
                         <div key={i} className={cn(
-                            "bg-white dark:bg-slate-800 border rounded-2xl p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md",
-                            stat.border
+                            "rounded-2xl p-4 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl",
+                            stat.cardBg
                         )}>
                             <div className="flex items-center gap-4">
-                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center border shrink-0", stat.border, stat.bg)}>
-                                    <stat.icon size={24} className={stat.color} />
+                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center shrink-0", stat.iconBg)}>
+                                    <stat.icon size={24} className="text-white" />
                                 </div>
                                 <div className="min-w-0">
-                                    <h3 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{stat.value}</h3>
-                                    <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.label}</p>
+                                    <h3 className={cn("text-2xl font-black tracking-tight", stat.textColor)}>{stat.value}</h3>
+                                    <p className="text-[9px] font-bold text-white/80 uppercase tracking-wider">{stat.label}</p>
                                 </div>
                             </div>
                         </div>
@@ -182,13 +182,13 @@ export const Tasks = () => {
                 {/* Search & Filters */}
                 <div className="flex flex-col md:flex-row gap-3 items-center">
                     <div className="relative flex-1 w-full">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-indigo-400" size={14} />
                         <input
                             type="text"
                             placeholder="ابحث عن مهمة..."
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl py-3 px-4 pr-10 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
+                            className="w-full bg-white dark:bg-slate-800 border border-indigo-100 dark:border-indigo-700/30 rounded-2xl py-3 px-4 pr-10 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-2 w-full md:flex md:w-auto">
@@ -225,10 +225,17 @@ export const Tasks = () => {
                                 <div
                                     key={task.id}
                                     className={cn(
-                                        "bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl p-5 shadow-sm transition-all hover:shadow-md",
-                                        isCompleted && "opacity-60"
+                                        "bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm transition-all hover:shadow-md relative overflow-hidden",
+                                        isCompleted && "opacity-60",
+                                        task.priority === 'high' ? "border-r-4 border-r-rose-500" : task.priority === 'medium' ? "border-r-4 border-r-amber-500" : "border-r-4 border-r-indigo-500"
                                     )}
                                 >
+                                    {!isCompleted && (
+                                        <div className={cn(
+                                            "absolute top-0 left-0 w-24 h-24 -translate-x-12 -translate-y-12 rounded-full opacity-5",
+                                            task.priority === 'high' ? "bg-rose-500" : task.priority === 'medium' ? "bg-amber-500" : "bg-indigo-500"
+                                        )} />
+                                    )}
                                     <div className="flex justify-between items-start mb-3">
                                         <div className="space-y-1.5 flex-1 min-w-0">
                                             <div className="flex items-center gap-2">
@@ -293,12 +300,12 @@ export const Tasks = () => {
                             )
                         })
                     ) : (
-                        <div className="col-span-full py-14 text-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm">
-                            <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-100 dark:border-indigo-700/30">
-                                <ClipboardList size={22} className="text-indigo-600 dark:text-indigo-400" />
+                        <div className="col-span-full py-14 text-center bg-gradient-to-br from-indigo-50 via-violet-50 to-transparent dark:from-slate-800 dark:via-slate-800 dark:to-slate-800 border border-indigo-100 dark:border-indigo-700/30 rounded-2xl shadow-sm">
+                            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30">
+                                <ClipboardList size={24} className="text-white" />
                             </div>
                             <h2 className="text-base font-black text-slate-800 dark:text-white mb-1">قائمة المهام</h2>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
+                            <p className="text-[9px] font-bold text-indigo-400 uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
                         </div>
                     )}
                 </div>
