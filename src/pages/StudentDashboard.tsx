@@ -4,7 +4,7 @@ import {
     BookOpen, MessageSquare, Star, Award, Clock, Trophy, Sparkles,
     Search, Bell, ChevronLeft, Play, Users, Video, Target, GraduationCap,
     Headphones, Home, Library, User, MoreHorizontal, CheckCircle, TrendingUp,
-    Sun, Moon
+    Sun, Moon, Megaphone
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone } from '../context/AppContext';
@@ -46,6 +46,7 @@ const quickAccessItems = [
     { id: 'challenges', label: 'التحديات', icon: Trophy, color: '#A855F7', bg: '#FAF5FF' },
     { id: 'live', label: 'بث مباشر', icon: Video, color: '#F97316', bg: '#FFF7ED' },
     { id: 'consult', label: 'الاستشارات', icon: Headphones, color: '#10B981', bg: '#ECFDF5' },
+    { id: 'announcements', label: 'الإعلانات', icon: Megaphone, color: '#F97316', bg: '#FFF7ED' },
 ];
 
 // ─── Hero Slides ──────────────────────────────────────────
@@ -196,7 +197,7 @@ export const StudentDashboard = () => {
                             </button>
                             {/* Bell */}
                             <button
-                                onClick={() => navigate('/announcements')}
+                                onClick={() => navigate('/parent-announcements')}
                                 className="relative w-8 h-8 flex items-center justify-center text-[#64748B] dark:text-slate-400 hover:bg-[#F1F5F9] dark:hover:bg-slate-800 rounded-xl transition-colors"
                             >
                                 <Bell size={16} strokeWidth={1.5} />
@@ -288,7 +289,7 @@ export const StudentDashboard = () => {
 
             {/* ══════════════════ QUICK ACCESS ══════════════════ */}
             <div className="px-4 py-3">
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-6 gap-1.5">
                     {quickAccessItems.map((item) => {
                         const Icon = item.icon;
                         return (
@@ -298,6 +299,7 @@ export const StudentDashboard = () => {
                                 onClick={() => {
                                     if (item.id === 'courses') navigate('/schedule');
                                     else if (item.id === 'live') navigate('/chat');
+                                    else if (item.id === 'announcements') navigate('/parent-announcements');
                                     else if (item.id === 'consult') {
                                         const phone = adminPhone?.replace(/\D/g, '').replace(/^0/, '965');
                                         window.open(`https://wa.me/${phone}`, '_blank');
