@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     BookOpen, MessageSquare, Star, Award, Clock, Trophy, Sparkles,
     Search, Bell, ChevronLeft, Play, Users, Video, Target, GraduationCap,
-    Headphones, Home, Library, User, MoreHorizontal, CheckCircle, TrendingUp
+    Headphones, Home, Library, User, MoreHorizontal, CheckCircle, TrendingUp,
+    Sun, Moon
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone } from '../context/AppContext';
@@ -11,6 +12,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
+import { useDarkMode } from '../shared/hooks/useDarkMode';
 import { PageLoader } from '../components/ui/PageLoader';
 
 // ─── Types ───────────────────────────────────────────────
@@ -141,6 +143,7 @@ export const StudentDashboard = () => {
     const [activeNav, setActiveNav] = useState('home');
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
+    const [theme, setTheme] = useDarkMode();
     const heroTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
     // Auto-advance hero
@@ -205,42 +208,70 @@ export const StudentDashboard = () => {
     return (
         <div className="min-h-screen bg-[#F8F7FF] font-sans overflow-x-hidden" dir="rtl">
 
-            {/* ══════════════════ MOBILE HEADER ══════════════════ */}
-            <div className="sticky top-0 z-50 bg-gradient-to-br from-[#6C4BFF] via-[#5A3BFF] to-[#1B1464] shadow-lg shadow-purple-200/30">
-                <div className="relative z-10 px-4 pt-2 pb-2">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                <GraduationCap size={16} className="text-white" />
-                            </div>
-                            <div>
-                                <h1 className="text-white font-black text-sm leading-tight">الرئيسية</h1>
-                                <p className="text-white/50 text-[7px] font-medium">طالب</p>
-                            </div>
+            {/* ══════════════════ HEADER (glassmorphism, matches Layout Header style) ══════════════════ */}
+            <div className="sticky top-0 z-50 backdrop-blur-md header-nav shadow-sm shadow-black/10">
+                <div className="flex items-center justify-between px-3 md:px-5 py-2">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20 shrink-0">
+                            <GraduationCap size={16} className="text-white" />
                         </div>
-                        <div className="flex items-center gap-2">
-                            {/* Search */}
-                            <div className="relative">
-                                <Search size={16} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
-                                <input
-                                    type="text"
-                                    placeholder="ابحث..."
-                                    value={searchQuery}
-                                    onChange={e => setSearchQuery(e.target.value)}
-                                    className="w-36 bg-white/10 backdrop-blur-sm rounded-full py-1.5 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
-                                />
-                            </div>
-                            {/* Bell */}
-                            <button
-                                className="relative w-8 h-8 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm shrink-0"
-                                onClick={() => navigate('/announcements')}
-                            >
-                                <Bell size={15} className="text-white" />
-                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-1.5 border-white" />
-                            </button>
+                        <div className="min-w-0">
+                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight truncate">الرئيسية</h1>
+                            <p className="text-[9px] md:text-[10px] font-normal text-white/70 truncate">طالب</p>
                         </div>
                     </div>
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                        {/* Search */}
+                        <div className="relative hidden sm:block">
+                            <Search size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
+                            <input
+                                type="text"
+                                placeholder="ابحث..."
+                                value={searchQuery}
+                                onChange={e => setSearchQuery(e.target.value)}
+                                className="w-24 lg:w-36 bg-white/10 backdrop-blur-sm rounded-full py-1.5 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
+                            />
+                        </div>
+                        {/* Search icon (mobile) */}
+                        <button
+                            onClick={() => setShowSearch(!showSearch)}
+                            className="sm:hidden w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors"
+                        >
+                            <Search size={16} />
+                        </button>
+                        {/* Dark mode toggle */}
+                        <button
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            className="w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors shrink-0"
+                        >
+                            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                        </button>
+                        {/* Bell */}
+                        <button
+                            className="relative w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors shrink-0"
+                            onClick={() => navigate('/announcements')}
+                        >
+                            <Bell size={16} />
+                            <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border border-white" />
+                        </button>
+                    </div>
                 </div>
+                {/* Mobile search bar (expanded) */}
+                {showSearch && (
+                    <div className="sm:hidden px-3 pb-2">
+                        <div className="relative">
+                            <Search size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
+                            <input
+                                type="text"
+                                placeholder="ابحث..."
+                                value={searchQuery}
+                                onChange={e => setSearchQuery(e.target.value)}
+                                className="w-full bg-white/10 backdrop-blur-sm rounded-full py-2 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
+                                autoFocus
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* ══════════════════ HERO CAROUSEL ══════════════════ */}
