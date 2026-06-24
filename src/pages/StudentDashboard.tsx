@@ -166,7 +166,7 @@ export const StudentDashboard = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-screen bg-[#F8F7FF] font-sans overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden" dir="rtl">
 
             {/* ══════════════════ HEADER (glassmorphism, matches Admin Dashboard style) ══════════════════ */}
             <div className={cn(
@@ -250,7 +250,7 @@ export const StudentDashboard = () => {
                                     </button>
                                     <button
                                         onClick={() => navigate('/schedule')}
-                                        className="flex items-center gap-1.5 bg-white/80 text-[#3D1F8F] text-xs font-bold px-4 py-2 rounded-full border border-[#3D1F8F]/20 active:scale-95 transition-transform"
+                                        className="flex items-center gap-1.5 bg-white/80 dark:bg-white/10 text-[#3D1F8F] dark:text-white text-xs font-bold px-4 py-2 rounded-full border border-[#3D1F8F]/20 dark:border-white/20 active:scale-95 transition-transform"
                                     >
                                         استكشف الدورات
                                         <ChevronLeft size={12} />
@@ -260,13 +260,13 @@ export const StudentDashboard = () => {
 
                             {/* Hero Illustration */}
                             <div className="shrink-0 relative z-10">
-                                <div className="w-[110px] h-[120px] relative">
-                                    <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
+                                    <div className="w-[110px] h-[120px] relative">
+                                    <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
                                         {heroSlides[heroIndex].emoji}
                                     </div>
                                     {/* Floating badge */}
-                                    <div className="absolute -bottom-2 -right-2 bg-white rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
-                                        <span className="text-[9px] font-bold text-gray-700">🇰🇼</span>
+                                    <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-900 rounded-full px-2 py-1 shadow-lg dark:shadow-slate-900/50 flex items-center gap-1">
+                                        <span className="text-[9px] font-bold text-gray-700 dark:text-slate-300">🇰🇼</span>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +279,7 @@ export const StudentDashboard = () => {
                             <button
                                 key={i}
                                 onClick={() => setHeroIndex(i)}
-                                className={`rounded-full transition-all duration-300 ${i === heroIndex ? 'w-5 h-2 bg-[#7C3AED]' : 'w-2 h-2 bg-gray-300'}`}
+                                                className={`rounded-full transition-all duration-300 ${i === heroIndex ? 'w-5 h-2 bg-[#7C3AED]' : 'w-2 h-2 bg-gray-300 dark:bg-slate-600'}`}
                             />
                         ))}
                     </div>
@@ -311,7 +311,7 @@ export const StudentDashboard = () => {
                                 >
                                     <Icon size={22} style={{ color: item.color }} />
                                 </div>
-                                <span className="text-[10px] font-semibold text-gray-600 text-center leading-tight">
+                                <span className="text-[10px] font-semibold text-gray-600 dark:text-slate-400 text-center leading-tight">
                                     {item.label}
                                 </span>
                             </motion.button>
@@ -325,8 +325,8 @@ export const StudentDashboard = () => {
             {/* ══════════════════ CONTINUE LEARNING ══════════════════ */}
             <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-3">
-                    <button onClick={() => navigate('/schedule')} className="text-[#7C3AED] text-sm font-bold">عرض الكل</button>
-                    <h2 className="text-lg font-black text-gray-800">تابع تعلمك</h2>
+                    <button onClick={() => navigate('/schedule')} className="text-[#7C3AED] dark:text-purple-400 text-sm font-bold">عرض الكل</button>
+                    <h2 className="text-lg font-black text-gray-800 dark:text-white">تابع تعلمك</h2>
                 </div>
 
                 {enrollments.length > 0 ? (
@@ -341,7 +341,7 @@ export const StudentDashboard = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-3"
+                                    className="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center gap-3"
                                 >
                                     {/* Course Icon */}
                                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center shrink-0 shadow-md">
@@ -350,19 +350,19 @@ export const StudentDashboard = () => {
                                     {/* Info */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[10px] font-bold text-[#7C3AED] bg-purple-50 px-2 py-0.5 rounded-full">
+                                            <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">
                                                 متابعة
                                             </span>
-                                            <h3 className="text-sm font-black text-gray-800 truncate max-w-[140px]">
+                                            <h3 className="text-sm font-black text-gray-800 dark:text-white truncate max-w-[140px]">
                                                 {en.subject || 'دورة تعليمية'}
                                             </h3>
                                         </div>
-                                        <p className="text-[10px] text-gray-400 text-right mb-2">
+                                        <p className="text-[10px] text-gray-400 dark:text-slate-500 text-right mb-2">
                                             {en.level || `${used} من ${total} حصة`}
                                         </p>
                                         {/* Progress Bar */}
                                         <div className="relative">
-                                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                                 <motion.div
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${progress}%` }}
@@ -371,7 +371,7 @@ export const StudentDashboard = () => {
                                                 />
                                             </div>
                                             <div className="flex justify-between mt-1">
-                                                <span className="text-[10px] font-bold text-[#7C3AED]">{progress}%</span>
+                                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-400">{progress}%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -381,20 +381,20 @@ export const StudentDashboard = () => {
                     </div>
                 ) : (
                     /* Demo Card */
-                    <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-3">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center gap-3">
                         <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-400 to-blue-600 flex items-center justify-center shrink-0 shadow-md">
                             <span className="text-2xl">💻</span>
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                                <span className="text-[10px] font-bold text-[#7C3AED] bg-purple-50 px-2 py-0.5 rounded-full">
+                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">
                                     متابعة
                                 </span>
-                                <h3 className="text-sm font-black text-gray-800">أساسيات البرمجة</h3>
+                                <h3 className="text-sm font-black text-gray-800 dark:text-white">أساسيات البرمجة</h3>
                             </div>
-                            <p className="text-[10px] text-gray-400 text-right mb-2">المستوى المبتدئ</p>
+                            <p className="text-[10px] text-gray-400 dark:text-slate-500 text-right mb-2">المستوى المبتدئ</p>
                             <div className="relative">
-                                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: '60%' }}
@@ -402,7 +402,7 @@ export const StudentDashboard = () => {
                                         className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A78BFA] rounded-full"
                                     />
                                 </div>
-                                <span className="text-[10px] font-bold text-[#7C3AED] mt-1 block text-left">60%</span>
+                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-400 mt-1 block text-left">60%</span>
                             </div>
                         </div>
                     </div>
@@ -421,7 +421,7 @@ export const StudentDashboard = () => {
                         return (
                             <div
                                 key={idx}
-                                className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 flex flex-col items-center text-center gap-1"
+                                className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-slate-800 flex flex-col items-center text-center gap-1"
                             >
                                 <div
                                     className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -429,8 +429,8 @@ export const StudentDashboard = () => {
                                 >
                                     <Icon size={18} style={{ color: item.color }} />
                                 </div>
-                                <span className="text-sm font-black text-gray-800">{item.value}</span>
-                                <span className="text-[10px] text-gray-400 font-medium">{item.label}</span>
+                                <span className="text-sm font-black text-gray-800 dark:text-white">{item.value}</span>
+                                <span className="text-[10px] text-gray-400 dark:text-slate-500 font-medium">{item.label}</span>
                             </div>
                         );
                     })}
@@ -440,17 +440,17 @@ export const StudentDashboard = () => {
             {/* ══════════════════ ACTIVITY & POINTS ══════════════════ */}
             {pointLogs.length > 0 && (
                 <div className="px-4 py-3">
-                    <h2 className="text-lg font-black text-gray-800 mb-3 text-right">آخر النشاطات</h2>
+                    <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 text-right">آخر النشاطات</h2>
                     <div className="space-y-2">
                         {pointLogs.slice(0, 3).map((log, i) => (
                             <div
                                 key={i}
-                                className="bg-white rounded-2xl px-4 py-3 shadow-sm border border-gray-100 flex items-center justify-between"
+                                className="bg-white dark:bg-slate-900 rounded-2xl px-4 py-3 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center justify-between"
                             >
-                                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full">
                                     +{log.amount} نقطة
                                 </span>
-                                <span className="text-xs text-gray-600 font-medium">{log.action}</span>
+                                <span className="text-xs text-gray-600 dark:text-slate-400 font-medium">{log.action}</span>
                             </div>
                         ))}
                     </div>
@@ -469,7 +469,7 @@ export const StudentDashboard = () => {
                             href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 bg-white text-[#5B21B6] py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"
+                            className="flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-[#5B21B6] dark:text-purple-300 py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"
                         >
                             <MessageSquare size={16} />
                             تواصل الآن
@@ -509,7 +509,7 @@ const MobileBottomNav = ({
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40 dark:shadow-black/20">
             <div className="flex items-center justify-around h-[68px] px-2">
                 {navItems.map((item) => {
                     const Icon = item.icon;
@@ -535,12 +535,12 @@ const MobileBottomNav = ({
                                         size={22}
                                         className={`transition-all duration-200 ${isActive
                                             ? 'text-[#7C3AED]'
-                                            : 'text-gray-400'
+                                            : 'text-gray-400 dark:text-slate-500'
                                             }`}
                                         strokeWidth={isActive ? 2.5 : 1.5}
                                     />
                                     <span
-                                        className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#7C3AED]' : 'text-gray-400'}`}
+                                        className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#7C3AED]' : 'text-gray-400 dark:text-slate-500'}`}
                                     >
                                         {item.label}
                                     </span>

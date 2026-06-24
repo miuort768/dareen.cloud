@@ -26,7 +26,7 @@ const actions = [
     { 
         title: 'إعلان عام', 
         icon: Megaphone, 
-        href: '/announcements?action=new', 
+        href: '/announcements', 
         color: '#F97316',
         description: 'بث إعلان للمنصة بأكملها'
     }

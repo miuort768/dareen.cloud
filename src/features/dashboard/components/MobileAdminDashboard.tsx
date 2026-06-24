@@ -264,7 +264,7 @@ export const MobileAdminDashboard = ({
                                 <QuickLink icon={UserPlus} label="طالب جديد" color="#2563EB" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
                                 <QuickLink icon={FilePlus} label="فاتورة" color="#22C55E" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
                                 <QuickLink icon={Calendar} label="الجدول" color="#8B5CF6" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                                <QuickLink icon={Megaphone} label="إعلان" color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements?action=new'); }} />
+                                <QuickLink icon={Megaphone} label="لوحة الإعلانات" color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
                             </motion.div>
                         </motion.div>
                     )}
@@ -283,7 +283,7 @@ export const MobileAdminDashboard = ({
                                 <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="#2563EB" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
                                 <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="#22C55E" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
                                 <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} color="#8B5CF6" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                                <NavButton label="إعلان عام" subtext="بث عام" icon={Megaphone} color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements?action=new'); }} />
+                                <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
                                 <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} color="#38BDF8" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
                                 <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} color="#F59E0B" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
                             </motion.div>
