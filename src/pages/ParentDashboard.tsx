@@ -107,20 +107,24 @@ export const ParentDashboard = () => {
     // ── Active timer for parent ──
     const [activeTimers, setActiveTimers] = useState<Student[]>([]);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const pollIdRef = useRef(0);
     const [, setTimerTick] = useState(0);
 
     useEffect(() => {
         const poll = async () => {
+            const id = ++pollIdRef.current;
             try {
                 const token = localStorage.getItem('auth_token');
                 const res = await fetch('/api/active-sessions/my', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) return;
+                if (id !== pollIdRef.current) return;
                 const data: Student[] = await res.json();
                 setActiveTimers(data);
 
                 const students = await api.get<Student[]>('/parents/my-children');
+                if (id !== pollIdRef.current) return;
                 setChildren(students);
 
                 if (data.length > 0 && !timerTickRef.current) {
