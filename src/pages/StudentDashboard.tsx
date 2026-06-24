@@ -48,55 +48,6 @@ const quickAccessItems = [
     { id: 'consult', label: 'الاستشارات', icon: Headphones, color: '#10B981', bg: '#ECFDF5' },
 ];
 
-// ─── Course Filter Tabs ───────────────────────────────────
-const courseTabs = [
-    { id: 'all', label: 'الكل' },
-    { id: 'primary', label: 'المرحلة الابتدائية' },
-    { id: 'middle', label: 'المرحلة المتوسطة' },
-    { id: 'high', label: 'المرحلة الثانوية' },
-    { id: 'skills', label: 'مهارات عامة' },
-];
-
-// ─── Static Demo Courses ──────────────────────────────────
-const demoCourses = [
-    {
-        id: 1,
-        title: 'العلوم المتكاملة',
-        level: 'المرحلة المتوسطة',
-        students: '1.6K',
-        rating: 4.6,
-        badge: 'الأكثر مبيعاً',
-        badgeColor: '#22C55E',
-        emoji: '🧪',
-        gradient: 'from-emerald-400 to-teal-600',
-        tab: 'middle',
-    },
-    {
-        id: 2,
-        title: 'اللغة الإنجليزية',
-        level: 'المرحلة المتوسطة',
-        students: '1.8K',
-        rating: 4.7,
-        badge: 'جديد',
-        badgeColor: '#A855F7',
-        emoji: '🇬🇧',
-        gradient: 'from-blue-400 to-indigo-600',
-        tab: 'middle',
-    },
-    {
-        id: 3,
-        title: 'الرياضيات المتقدمة',
-        level: 'المرحلة الثانوية',
-        students: '2.5K',
-        rating: 4.8,
-        badge: 'الأكثر مبيعاً',
-        badgeColor: '#22C55E',
-        emoji: '📐',
-        gradient: 'from-amber-400 to-orange-600',
-        tab: 'high',
-    },
-];
-
 // ─── Hero Slides ──────────────────────────────────────────
 const heroSlides = [
     {
@@ -140,9 +91,7 @@ export const StudentDashboard = () => {
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [heroIndex, setHeroIndex] = useState(0);
-    const [activeTab, setActiveTab] = useState('all');
     const [activeNav, setActiveNav] = useState('home');
-    const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [theme, setTheme] = useDarkMode();
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -210,10 +159,6 @@ export const StudentDashboard = () => {
             attendanceRate: totalRecorded > 0 ? Math.round((totalAttendance / totalRecorded) * 100) : 0,
         };
     }, [sessions, enrollments]);
-
-    const filteredCourses = activeTab === 'all'
-        ? demoCourses
-        : demoCourses.filter(c => c.tab === activeTab);
 
     const currentEnrollment = enrollments[0];
     const headerScrolled = scrollY > 10;
@@ -375,112 +320,7 @@ export const StudentDashboard = () => {
                 </div>
             </div>
 
-            {/* ══════════════════ LATEST COURSES ══════════════════ */}
-            <div className="px-4 py-3">
-                {/* Section Header */}
-                <div className="flex items-center justify-between mb-3">
-                    <button
-                        className="flex items-center gap-1 text-[#7C3AED] text-sm font-bold"
-                        onClick={() => navigate('/schedule')}
-                    >
-                        <ChevronLeft size={16} />
-                        عرض الكل
-                    </button>
-                    <h2 className="text-lg font-black text-gray-800">أحدث الدورات</h2>
-                </div>
 
-                {/* Filter Tabs */}
-                <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar" style={{ scrollbarWidth: 'none' }}>
-                    {courseTabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-bold transition-all ${activeTab === tab.id
-                                ? 'bg-[#7C3AED] text-white shadow-md shadow-purple-200'
-                                : 'bg-white text-gray-600 border border-gray-200'
-                                }`}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Course Cards - Horizontal Scroll */}
-                <div className="flex gap-3 overflow-x-auto pt-3 pb-2 no-scrollbar" style={{ scrollbarWidth: 'none' }}>
-                    {/* Real enrollments first */}
-                    {enrollments.slice(0, 2).map((en, idx) => (
-                        <motion.div
-                            key={`enroll-${idx}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="shrink-0 w-[155px] bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100"
-                        >
-                            {/* Course Image */}
-                            <div className="h-[90px] bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center relative">
-                                <span className="text-4xl">📚</span>
-                                <div className="absolute top-2 right-2 bg-green-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">
-                                    مسجّل
-                                </div>
-                            </div>
-                            {/* Course Info */}
-                            <div className="p-3 space-y-1">
-                                <h3 className="text-xs font-black text-gray-800 line-clamp-1">{en.subject || 'دورة تعليمية'}</h3>
-                                <p className="text-[10px] text-gray-400">{en.level || 'عام'}</p>
-                                <div className="flex items-center justify-between pt-1">
-                                    <div className="flex items-center gap-0.5">
-                                        <Star size={10} className="text-amber-400" fill="#FBB12E" />
-                                        <span className="text-[10px] font-bold text-gray-600">4.8</span>
-                                    </div>
-                                    <div className="flex items-center gap-0.5">
-                                        <Users size={10} className="text-gray-400" />
-                                        <span className="text-[10px] text-gray-400">1.2K</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-
-                    {/* Demo courses */}
-                    {filteredCourses.map((course, idx) => (
-                        <motion.div
-                            key={course.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="shrink-0 w-[155px] bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100"
-                        >
-                            {/* Course Image */}
-                            <div className={`h-[90px] bg-gradient-to-br ${course.gradient} flex items-center justify-center relative`}>
-                                <span className="text-4xl">{course.emoji}</span>
-                                {course.badge && (
-                                    <div
-                                        className="absolute top-2 right-2 text-white text-[9px] font-black px-2 py-0.5 rounded-full"
-                                        style={{ backgroundColor: course.badgeColor }}
-                                    >
-                                        {course.badge}
-                                    </div>
-                                )}
-                            </div>
-                            {/* Course Info */}
-                            <div className="p-3 space-y-1">
-                                <h3 className="text-xs font-black text-gray-800 line-clamp-1">{course.title}</h3>
-                                <p className="text-[10px] text-gray-400">{course.level}</p>
-                                <div className="flex items-center justify-between pt-1">
-                                    <div className="flex items-center gap-0.5">
-                                        <Star size={10} className="text-amber-400" fill="#FBB12E" />
-                                        <span className="text-[10px] font-bold text-gray-600">{course.rating}</span>
-                                    </div>
-                                    <div className="flex items-center gap-0.5">
-                                        <Users size={10} className="text-gray-400" />
-                                        <span className="text-[10px] text-gray-400">{course.students}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
 
             {/* ══════════════════ CONTINUE LEARNING ══════════════════ */}
             <div className="px-4 py-3">
