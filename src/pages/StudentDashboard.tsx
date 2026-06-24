@@ -13,6 +13,7 @@ import { ar } from 'date-fns/locale';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
+import { cn } from '../lib/utils';
 import { PageLoader } from '../components/ui/PageLoader';
 
 // ─── Types ───────────────────────────────────────────────
@@ -144,7 +145,20 @@ export const StudentDashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [theme, setTheme] = useDarkMode();
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [scrollY, setScrollY] = useState(0);
     const heroTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(new Date()), 1005);
+        return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Auto-advance hero
     useEffect(() => {
@@ -202,76 +216,55 @@ export const StudentDashboard = () => {
         : demoCourses.filter(c => c.tab === activeTab);
 
     const currentEnrollment = enrollments[0];
+    const headerScrolled = scrollY > 10;
 
     if (isLoading) return <PageLoader />;
 
     return (
         <div className="min-h-screen bg-[#F8F7FF] font-sans overflow-x-hidden" dir="rtl">
 
-            {/* ══════════════════ HEADER (glassmorphism, matches Layout Header style) ══════════════════ */}
-            <div className="sticky top-0 z-50 backdrop-blur-md header-nav shadow-sm shadow-black/10">
-                <div className="flex items-center justify-between px-3 md:px-5 py-2">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-indigo-600/20 shrink-0">
-                            <GraduationCap size={16} className="text-white" />
+            {/* ══════════════════ HEADER (glassmorphism, matches Admin Dashboard style) ══════════════════ */}
+            <div className={cn(
+                "sticky top-0 z-[100] transition-all duration-500",
+                headerScrolled
+                    ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm border-b border-slate-100/50 dark:border-slate-800/50"
+                    : "bg-white dark:bg-slate-950 border-b border-transparent"
+            )}>
+                <div className="px-4 pt-3 pb-2">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] flex items-center justify-center text-white shadow-sm shadow-blue-200/40">
+                                <GraduationCap size={18} strokeWidth={1.5} />
+                            </div>
+                            <div>
+                                <h1 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">الرئيسية</h1>
+                                <p className="text-[9px] font-medium text-[#64748B] dark:text-slate-500">طالب</p>
+                            </div>
                         </div>
-                        <div className="min-w-0">
-                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight truncate">الرئيسية</h1>
-                            <p className="text-[9px] md:text-[10px] font-normal text-white/70 truncate">طالب</p>
+                        <div className="flex items-center gap-2">
+                            {/* Dark mode toggle */}
+                            <button
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                className="w-8 h-8 flex items-center justify-center text-[#64748B] dark:text-slate-400 hover:bg-[#F1F5F9] dark:hover:bg-slate-800 rounded-xl transition-colors"
+                            >
+                                {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
+                            </button>
+                            {/* Bell */}
+                            <button
+                                onClick={() => navigate('/announcements')}
+                                className="relative w-8 h-8 flex items-center justify-center text-[#64748B] dark:text-slate-400 hover:bg-[#F1F5F9] dark:hover:bg-slate-800 rounded-xl transition-colors"
+                            >
+                                <Bell size={16} strokeWidth={1.5} />
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900" />
+                            </button>
+                            {/* Live clock */}
+                            <div className="px-2.5 py-1.5 rounded-xl bg-[#F1F5F9]/70 dark:bg-slate-800/70 backdrop-blur-sm text-[#2563EB] dark:text-[#38BDF8] font-medium text-[9px] tabular-nums">
+                                <Clock size={12} strokeWidth={1.5} className="inline ml-1" />
+                                {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                        {/* Search */}
-                        <div className="relative hidden sm:block">
-                            <Search size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
-                            <input
-                                type="text"
-                                placeholder="ابحث..."
-                                value={searchQuery}
-                                onChange={e => setSearchQuery(e.target.value)}
-                                className="w-24 lg:w-36 bg-white/10 backdrop-blur-sm rounded-full py-1.5 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
-                            />
-                        </div>
-                        {/* Search icon (mobile) */}
-                        <button
-                            onClick={() => setShowSearch(!showSearch)}
-                            className="sm:hidden w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors"
-                        >
-                            <Search size={16} />
-                        </button>
-                        {/* Dark mode toggle */}
-                        <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors shrink-0"
-                        >
-                            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                        </button>
-                        {/* Bell */}
-                        <button
-                            className="relative w-8 h-8 flex items-center justify-center text-white/70 hover:bg-white/10 rounded-xl transition-colors shrink-0"
-                            onClick={() => navigate('/announcements')}
-                        >
-                            <Bell size={16} />
-                            <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border border-white" />
-                        </button>
                     </div>
                 </div>
-                {/* Mobile search bar (expanded) */}
-                {showSearch && (
-                    <div className="sm:hidden px-3 pb-2">
-                        <div className="relative">
-                            <Search size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
-                            <input
-                                type="text"
-                                placeholder="ابحث..."
-                                value={searchQuery}
-                                onChange={e => setSearchQuery(e.target.value)}
-                                className="w-full bg-white/10 backdrop-blur-sm rounded-full py-2 pr-8 pl-3 text-xs text-right text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-white/20 transition-all border border-white/10"
-                                autoFocus
-                            />
-                        </div>
-                    </div>
-                )}
             </div>
 
             {/* ══════════════════ HERO CAROUSEL ══════════════════ */}
