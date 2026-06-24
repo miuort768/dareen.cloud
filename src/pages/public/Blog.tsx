@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -15,6 +16,7 @@ import { LoadMore } from '../../components/blog/LoadMore';
 import { LoadingState, EmptyState } from '../../components/blog/BlogStates';
 import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection';
 import { SelectionGrid } from '../../components/blog/SelectionGrid';
+import { PageLoader } from '../../components/ui/PageLoader';
 
 export const Blog = () => {
   const navigate = useNavigate();
@@ -33,8 +35,14 @@ export const Blog = () => {
   const selectedGrade = searchParams.get('grade') || '';
   const selectedTerm = searchParams.get('term') || '';
   const selectedSubject = searchParams.get('subject') || '';
+  const [showSplash, setShowSplash] = useState(true);
   const [foundationBtnState, setFoundationBtnState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number; postId: string } | null>(null);
   const foundationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+      const timer = setTimeout(() => setShowSplash(false), 2000);
+      return () => clearTimeout(timer);
+  }, []);
 
   const handleFoundationButtonClick = (type: 'download' | 'watch', url: string, postId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -169,7 +177,9 @@ export const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
+    <>
+      {showSplash && createPortal(<PageLoader />, document.body)}
+      <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
@@ -296,5 +306,6 @@ export const Blog = () => {
       </main>
       <PublicFooter />
     </div>
+    </>
   );
 };
