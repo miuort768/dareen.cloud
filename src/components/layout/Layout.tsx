@@ -70,14 +70,14 @@ export const Layout = () => {
                         : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 z-10"
                 )}>
                     <AnimatePresence mode="wait">
-                        <motion.div
-                            key={location.pathname}
-                            variants={pageVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                            className="h-full max-w-full"
-                        >
+                            <motion.div
+                                key={location.pathname}
+                                variants={pageVariants}
+                                initial={false}
+                                animate="animate"
+                                exit="exit"
+                                className="h-full max-w-full"
+                            >
                             <ErrorBoundary>
                                 <Suspense fallback={<PageLoader />}>
                                     <Outlet />
