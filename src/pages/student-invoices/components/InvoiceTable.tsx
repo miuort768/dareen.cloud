@@ -33,7 +33,7 @@ const statusConfig = {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 rounded-none flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+  <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -54,7 +54,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
     <SectionCard className="hidden md:block overflow-hidden">
       <table className="w-full text-right text-sm border-collapse">
         <thead>
-          <tr className="bg-[#0F172A]">
+          <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
             {['اسم الطالب', 'البيان', 'المبلغ', 'الاستحقاق', 'الحالة', 'إجراءات'].map(h => (
               <th key={h} className={cn(
                 "px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent",
@@ -83,7 +83,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-center">
-                    <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-none" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
+                    <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-lg" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
                      <div className="w-1 h-1" style={{ backgroundColor: statusColors[inv.status] }} />
                     {statusConfig[inv.status].label}
                   </button>
@@ -100,8 +100,8 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
           )) : (
             <tr>
               <td colSpan={6} className="py-16 text-center">
-                <div className="w-10 h-10 rounded-none flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#2563EB12' }}>
-                  <FileText size={18} style={{ color: '#2563EB' }} />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
+                  <FileText size={18} style={{ color: '#8B5CF6' }} />
                 </div>
                 <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
               </td>
@@ -116,7 +116,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
       {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
         const sc = statusConfig[inv.status];
         return (
-          <div key={inv.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none">
+          <div key={inv.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
                     <span className="text-[10px] font-medium text-slate-500">{inv.dueDate}</span>
                   </div>
                 </div>
-                <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-none" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
+                <button onClick={() => toggleStatus(inv)} className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-lg" style={{ backgroundColor: `${statusColors[inv.status]}12`, color: statusColors[inv.status], borderColor: `${statusColors[inv.status]}30` }}>
                   <div className="w-1 h-1" style={{ backgroundColor: statusColors[inv.status] }} />
                   {sc.label}
                 </button>
@@ -154,8 +154,8 @@ export const InvoiceTable = ({ filteredInvoices, toggleStatus, handleEdit, setPr
         );
       }) : (
         <SectionCard className="py-16 text-center border-dashed border-slate-200 dark:border-slate-700">
-          <div className="w-10 h-10 rounded-none flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#2563EB12' }}>
-            <FileText size={18} style={{ color: '#2563EB' }} />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
+            <FileText size={18} style={{ color: '#8B5CF6' }} />
           </div>
           <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
         </SectionCard>

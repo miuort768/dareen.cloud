@@ -146,7 +146,7 @@ export const AttendanceReport = ({
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right">
                         <thead>
-                            <tr className="bg-[#0F172A] text-white">
+                            <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white">
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70">#</th>
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-right">اسم المعلمة</th>
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center">المتوقعة</th>

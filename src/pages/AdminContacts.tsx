@@ -61,10 +61,10 @@ export const AdminContacts = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="bg-[#1B1464] px-4 md:px-6 py-5 mb-6">
+            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl mx-4 mt-4 px-4 md:px-6 py-5 mb-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/15">
+                        <div className="w-12 h-12 flex items-center justify-center bg-white/15 rounded-xl">
                             <MessageSquare size={24} className="text-white" />
                         </div>
                         <div>
@@ -79,7 +79,7 @@ export const AdminContacts = () => {
                             placeholder="بحث..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-white/15 text-white placeholder:text-white/50 py-3 pr-12 pl-4 text-xs font-bold focus:outline-none border border-white/20"
+                            className="w-full bg-white/15 text-white placeholder:text-white/50 py-3 pr-12 pl-4 text-xs font-bold focus:outline-none border border-white/20 rounded-xl"
                         />
                     </div>
                 </div>
@@ -87,31 +87,31 @@ export const AdminContacts = () => {
 
             <div className="max-w-5xl mx-auto px-4 space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-slate-100/50" />)}</div>
+                    <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-slate-100/50 rounded-2xl" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-white border border-dashed border-slate-200 p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-indigo-50">
-                            <MessageSquare size={28} className="text-indigo-600" />
+                    <div className="bg-white border border-dashed border-slate-200 rounded-2xl p-16 text-center">
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-[#8B5CF612] rounded-xl">
+                            <MessageSquare size={28} className="text-[#6C4BFF]" />
                         </div>
                         <p className="text-sm font-bold text-slate-400">{search ? 'لا توجد نتائج' : 'لا توجد رسائل'}</p>
                     </div>
                 ) : (
                     filtered.map(msg => (
-                        <div key={msg.id} className="bg-white border border-slate-100/50 shadow-sm relative overflow-hidden group transition-all duration-300">
-                            <div className="h-1.5 w-full bg-gradient-to-r from-[#1B1464] to-[#2D1B8E]"></div>
+                        <div key={msg.id} className="bg-white border border-slate-100/50 shadow-sm relative overflow-hidden group transition-all duration-300 rounded-2xl">
+                            <div className="h-1.5 w-full bg-gradient-to-r from-[#6C4BFF] to-[#8B5CF6]"></div>
                             <div className="p-6 relative z-10">
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-2">
                                         <CheckCircle2 size={14} className="text-emerald-500" />
                                         <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-slate-400">رسالة واردة</span>
                                     </div>
-                                    <button onClick={() => setDeleteTarget(msg.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 transition-all" aria-label="حذف">
+                                    <button onClick={() => setDeleteTarget(msg.id)} className="p-1.5 text-slate-300 hover:text-rose-500 hover:bg-rose-50 transition-all rounded-xl" aria-label="حذف">
                                         <Trash2 size={14} />
                                     </button>
                                 </div>
 
-                                <div className="flex items-center gap-4 mb-4 p-4 bg-[#1B1464]">
-                                    <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center shrink-0">
+                                <div className="flex items-center gap-4 mb-4 p-4 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-xl">
+                                    <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center shrink-0 rounded-xl">
                                         <span className="text-base font-bold text-white">{(msg.name || '?')[0]}</span>
                                     </div>
                                     <div className="text-right">
@@ -122,8 +122,8 @@ export const AdminContacts = () => {
 
                                 <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 pt-4">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-indigo-50">
-                                            <Phone size={10} className="text-indigo-600" />
+                                        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-[#8B5CF612] rounded-lg">
+                                            <Phone size={10} className="text-[#6C4BFF]" />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">رقم الهاتف</p>
@@ -131,8 +131,8 @@ export const AdminContacts = () => {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-indigo-50">
-                                            <Calendar size={10} className="text-indigo-600" />
+                                        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-[#8B5CF612] rounded-lg">
+                                            <Calendar size={10} className="text-[#6C4BFF]" />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">التاريخ</p>
@@ -141,8 +141,8 @@ export const AdminContacts = () => {
                                     </div>
                                     {msg.message && (
                                         <div className="col-span-2 flex items-start gap-2 pt-3 border-t border-slate-50 mt-1">
-                                            <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-indigo-50">
-                                                <Mail size={10} className="text-indigo-600" />
+                                            <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-[#8B5CF612] rounded-lg">
+                                                <Mail size={10} className="text-[#6C4BFF]" />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">الرسالة</p>

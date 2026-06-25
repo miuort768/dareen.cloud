@@ -10,10 +10,10 @@ interface AttendanceStatsProps {
     periodLabel?: string;
 }
 
-const StatItem = ({ title, value, icon: Icon, subLabel, color = '#2563EB' }: { title: string, value: number, icon: LucideIcon, subLabel?: string, color?: string }) => (
-    <div className="rounded-none p-4 dark:brightness-[0.65]" style={{ backgroundColor: color }}>
+const StatItem = ({ title, value, icon: Icon, subLabel, color = '#6C4BFF' }: { title: string, value: number, icon: LucideIcon, subLabel?: string, color?: string }) => (
+    <div className="rounded-2xl p-4 dark:brightness-[0.65]" style={{ backgroundColor: color }}>
         <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
                 <Icon size={20} className="text-white" />
             </div>
             <div className="min-w-0">

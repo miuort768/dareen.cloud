@@ -55,22 +55,22 @@ export const FinancialReport = ({
                     value={netProfit}
                     subValue={monthNetProfit}
                     icon={DollarSign}
-                    color="#2563EB"
-                    subColor="#1D4ED8"
+                    color="#6C4BFF"
+                    subColor="#6C4BFF"
                 />
             </div>
 
             <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-                        <FileText size={16} style={{ color: '#2563EB' }} />
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+                        <FileText size={16} style={{ color: '#8B5CF6' }} />
                     </div>
                     <div>
                         <h3 className="text-xs font-bold text-slate-800 dark:text-white mb-1">ملخص التقرير المالي</h3>
                         <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 leading-relaxed">
                             تم تسجيل <span className="font-bold text-slate-700 dark:text-slate-200">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: '#059669' }}>{totalRevenue.toLocaleString()} ج.م</span>.
                             المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: '#E11D48' }}>{totalExpenses.toLocaleString()} ج.م</span>،
-                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: '#1D4ED8' }}>{netProfit.toLocaleString()} ج.م</span>.
+                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: '#6C4BFF' }}>{netProfit.toLocaleString()} ج.م</span>.
                         </p>
                     </div>
                 </div>

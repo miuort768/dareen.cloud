@@ -32,14 +32,14 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60  transition-all duration-300">
             {/* Reduced max-width to max-w-lg (roughly 25% smaller than 2xl/xl) */}
-            <div className="bg-white dark:bg-gray-900 w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div className="bg-white dark:bg-gray-900 w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
                 {/* Decoration */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
 
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800 no-print">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary-50 dark:bg-primary-900/30">
+                        <div className="p-2 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
                             <Printer size={24} className="text-primary-600" />
                         </div>
                         <div>
@@ -57,7 +57,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             />
                             <span className="text-xs font-normal text-gray-600 dark:text-gray-400">إخفاء المبالغ</span>
                         </label>
-                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors rounded-xl">
                             <X size={24} className="text-gray-400" />
                         </button>
                     </div>
@@ -84,7 +84,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <h1 className="text-3xl font-medium text-gray-900 dark:text-white uppercase mb-2">فاتورة</h1>
                             <p className="text-xs font-medium text-primary-600 font-mono">#{invoice.id.slice(0, 8).toUpperCase()}</p>
                             <div className={cn(
-                                "mt-2 inline-flex items-center gap-2 px-3 py-1 text-[10px] font-medium uppercase tracking-widest",
+                                "mt-2 inline-flex items-center gap-2 px-3 py-1 text-[10px] font-medium uppercase tracking-widest rounded-lg",
                                 invoice.status === 'paid' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
                                     invoice.status === 'pending' ? "bg-amber-50 text-amber-600 border border-amber-100" :
                                         "bg-rose-50 text-rose-600 border border-rose-100"
@@ -200,13 +200,13 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                 <div className="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 flex justify-end gap-3 no-print">
                     <button
                         onClick={onClose}
-                        className="px-6 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                        className="px-6 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors rounded-xl"
                     >
                         إغلاق
                     </button>
                     <button
                         onClick={handlePrint}
-                        className="px-6 py-2.5 bg-primary-600 text-white font-medium text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm shadow-primary-600/20 flex items-center gap-2"
+                        className="px-6 py-2.5 bg-primary-600 text-white font-medium text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm shadow-primary-600/20 flex items-center gap-2 rounded-xl"
                     >
                         <Printer size={16} />
                         طباعة

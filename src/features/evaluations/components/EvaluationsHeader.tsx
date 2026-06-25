@@ -11,10 +11,10 @@ interface EvaluationsHeaderProps {
 export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearchChange, onAddClick }: EvaluationsHeaderProps) => {
     return (
         <div className="space-y-4">
-            <div className="shadow-sm px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-none" style={{ backgroundColor: '#00542F' }}>
+            <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                        <Award size={22} />
+                    <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
+                        <Award size={22} className="text-white" />
                     </div>
                     <div>
                         <h1 className="text-lg font-bold text-white leading-tight">تقييم الطلاب والتحفيز</h1>
@@ -24,23 +24,23 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="px-3 py-1.5 flex items-center gap-1.5 rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                    <div className="px-3 py-1.5 flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-xl">
                         <p className="text-[9px] font-bold text-white/70">إجمالي النقاط:</p>
                         <p className="text-sm font-black text-white tabular-nums">{totalXP} <span className="text-[9px] font-bold text-white/70">XP</span></p>
                     </div>
                     {showAddButton && (
-                        <button onClick={onAddClick} className="flex items-center gap-1.5 bg-white hover:bg-white/90 text-[#00542F] font-bold text-[10px] px-3 py-2 shadow-sm active:scale-95 transition-all shrink-0 rounded-none">
+                        <button onClick={onAddClick} className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold text-[10px] px-3 py-2 shadow-sm active:scale-95 transition-all shrink-0 rounded-xl">
                             <Plus size={14} /><span className="hidden sm:inline whitespace-nowrap">تقييم جديد</span>
                         </button>
                     )}
                 </div>
             </div>
 
-            <div className="shadow-sm p-3 rounded-none" style={{ backgroundColor: '#00542F' }}>
+            <div className="bg-white/80 backdrop-blur-xl shadow-sm border border-white/20 p-3 rounded-2xl">
                 <div className="relative">
-                    <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none" />
-                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full pr-9 pl-9 py-2 text-[11px] font-bold text-white placeholder:text-white/50 outline-none transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }} />
-                    {searchTerm && <button onClick={() => onSearchChange('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"><X size={14} /></button>}
+                    <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6C4BFF]/40 pointer-events-none" />
+                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full pr-9 pl-9 py-2 text-[11px] font-bold text-slate-800 dark:text-white placeholder:text-slate-400 outline-none transition-all rounded-xl bg-[#6C4BFF]/5 border border-[#6C4BFF]/10 focus:border-[#6C4BFF]/30 focus:bg-white dark:focus:bg-slate-900" />
+                    {searchTerm && <button onClick={() => onSearchChange('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"><X size={14} /></button>}
                 </div>
             </div>
         </div>

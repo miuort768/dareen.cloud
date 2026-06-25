@@ -17,7 +17,7 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {teacherPerformance.map((perf, idx) => (
                 <SectionCard key={idx} className="p-5 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-none flex items-center justify-center font-bold text-lg" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                         {perf.name.charAt(0)}
                     </div>
                     <div className="flex-1">
@@ -28,11 +28,11 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} /></div>
+                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full"><div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} /></div>
                             </div>
                             <div className="space-y-1">
                                 <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-[#2563EB]" style={{ width: `${perf.documentationRate}%` }} /></div>
+                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full"><div className="h-full bg-[#6C4BFF]" style={{ width: `${perf.documentationRate}%` }} /></div>
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,7 @@ const statusStyle = (status: string) => {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 rounded-none flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+  <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -49,7 +49,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
     <SectionCard className="hidden md:block overflow-hidden">
       <table className="w-full text-right text-sm border-collapse">
         <thead>
-          <tr className="bg-[#0F172A]">
+          <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
             <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent">المعلمة</th>
             <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent">التخصص</th>
             <th className="px-4 py-3 text-[9px] font-bold text-white/70 tracking-wider border-b border-transparent text-center">المبلغ</th>
@@ -76,13 +76,13 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                     {inv.amount.toLocaleString()} ج.م
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className="inline-flex px-2 py-0.5 font-bold text-[10px] rounded-none" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
+                    <span className="inline-flex px-2 py-0.5 font-bold text-[10px] rounded-lg" style={{ backgroundColor: '#10B98112', color: '#059669', border: '1px solid #10B98120' }}>
                       {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-center">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-none" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
+                      <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-lg" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
                         <div className="w-1 h-1" style={{ backgroundColor: sc.color }} />
                         {inv.status}
                       </span>
@@ -101,7 +101,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
             }) : (
               <tr>
                 <td colSpan={!isTeacher ? 6 : 5} className="py-16 text-center">
-                  <div className="w-10 h-10 rounded-none flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
+<div className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2" style={{ backgroundColor: '#8B5CF612' }}>
                     <GraduationCap size={18} style={{ color: '#8B5CF6' }} />
                   </div>
                   <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
@@ -119,7 +119,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
         return (
           <div
             key={inv.id}
-            className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none"
+            className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl"
           >
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
@@ -143,7 +143,7 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
                     <span className="text-[11px] font-bold" style={{ color: '#059669' }}>{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-none" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
+                <span className="inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-lg" style={{ backgroundColor: `${sc.color}12`, color: sc.color, borderColor: `${sc.color}30` }}>
                   <div className="w-1 h-1" style={{ backgroundColor: sc.color }} />
                   {inv.status}
                 </span>

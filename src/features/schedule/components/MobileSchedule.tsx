@@ -68,7 +68,7 @@ const TIME_SLOTS = [
 ];
 
 const TEACHER_COLORS = [
-    '#2563EB', '#10B981', '#F59E0B', '#F43F5E', '#14B8A6', '#8B5CF6', '#F97316'
+    '#6C4BFF', '#10B981', '#F59E0B', '#F43F5E', '#14B8A6', '#8B5CF6', '#F97316'
 ];
 
 const fadeUp = {
@@ -203,7 +203,7 @@ export const MobileSchedule = () => {
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full"
             >
-                <div className="flex items-center gap-2.5 text-[#2563EB] font-medium text-xs">
+                <div className="flex items-center gap-2.5 text-[#6C4BFF] font-medium text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
                     ) : pullDistance > 55 ? (
@@ -223,7 +223,7 @@ export const MobileSchedule = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#2563EB] rounded-2xl transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-white shadow-sm"
+                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#6C4BFF] rounded-2xl transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-white shadow-sm"
                     />
                 </div>
             </div>
@@ -242,7 +242,7 @@ export const MobileSchedule = () => {
                                 className={cn(
                                     "px-3.5 py-2 rounded-2xl text-[10px] font-bold whitespace-nowrap transition-all border",
                                     isActive
-                                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-sm shadow-blue-200/40"
+                                        ? "bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white border-[#6C4BFF] shadow-sm shadow-purple-200/40"
                                         : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"
                                 )}
                             >
@@ -250,7 +250,7 @@ export const MobileSchedule = () => {
                                 {isToday && (
                                     <span className={cn(
                                         "mr-1.5 inline-block w-1.5 h-1.5 rounded-full",
-                                        isActive ? "bg-white" : "bg-[#2563EB]"
+                                        isActive ? "bg-white" : "bg-[#6C4BFF]"
                                     )} />
                                 )}
                             </motion.button>
@@ -263,11 +263,11 @@ export const MobileSchedule = () => {
             <motion.div {...fadeUp} className="px-4 pb-2">
                 <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-slate-100/50 dark:border-slate-800/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <CalendarDays size={14} className="text-[#2563EB]" strokeWidth={1.5} />
+                        <CalendarDays size={14} className="text-[#6C4BFF]" strokeWidth={1.5} />
                         <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{selectedDay}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <span className="text-lg font-black text-[#2563EB] tabular-nums">{totalToday}</span>
+                        <span className="text-lg font-black text-[#6C4BFF] tabular-nums">{totalToday}</span>
                         <span className="text-[8px] font-bold text-slate-400">حصة</span>
                     </div>
                 </div>
@@ -286,7 +286,7 @@ export const MobileSchedule = () => {
             <div className="px-4 space-y-1">
                 {loading ? (
                     <div className="py-16 text-center">
-                        <Loader2 size={24} className="animate-spin text-[#2563EB] mx-auto" strokeWidth={1.5} />
+                        <Loader2 size={24} className="animate-spin text-[#6C4BFF] mx-auto" strokeWidth={1.5} />
                     </div>
                 ) : filteredEvents.length > 0 ? (
                     TIME_SLOTS.map((slot, slotIdx) => {
@@ -377,11 +377,11 @@ export const MobileSchedule = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#2563EB08', borderRight: '3px solid #2563EB' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#6C4BFF08', borderRight: '3px solid #6C4BFF' }}>
                                         <div>
                                             <span className="text-[8px] font-bold text-slate-400">الطالب</span>
                                             <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
-                                            <span className="text-[9px] font-bold text-[#2563EB]">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
+                                            <span className="text-[9px] font-bold text-[#6C4BFF]">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
                                         </div>
                                         <User size={18} className="text-slate-300" strokeWidth={1.5} />
                                     </div>
@@ -417,7 +417,7 @@ export const MobileSchedule = () => {
                                                 if (res?.id) navigate(`/classroom/${res.id}`);
                                             } catch { setShowDetails(false); }
                                         }}
-                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[#2563EB] to-[#1D4ED8] text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-blue-200/30"
+                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-purple-200/30"
                                     >
                                         <Video size={14} strokeWidth={1.5} />
                                         بدء بث مباشر

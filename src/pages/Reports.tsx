@@ -47,7 +47,7 @@ export const Reports = () => {
             <ReportsHeader onExport={() => window.print()} />
 
             {/* ── Tab Selection ── */}
-            <div className="no-print bg-white dark:bg-slate-900 rounded-none border border-slate-100/50 dark:border-slate-800/50 p-1 flex overflow-x-auto no-scrollbar gap-1">
+            <div className="no-print bg-white dark:bg-slate-900 rounded-2xl border border-slate-100/50 dark:border-slate-800/50 p-1 flex overflow-x-auto no-scrollbar gap-1">
                 {tabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = state.activeReport === tab.id;
@@ -55,7 +55,7 @@ export const Reports = () => {
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-none text-[10px] font-normal transition-all whitespace-nowrap ${isActive ? 'bg-[#2563EB12] text-[#2563EB] shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-normal transition-all whitespace-nowrap ${isActive ? 'bg-[#8B5CF612] text-[#8B5CF6] shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
                         >
                             <Icon size={14} />
                             {tab.label}
@@ -71,12 +71,12 @@ export const Reports = () => {
                 {state.activeReport === 'overview' && (
                     <div className="space-y-6">
                         {/* Hero Card */}
-                        <div className="bg-white dark:bg-slate-900 rounded-none shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-5 md:p-6">
+                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 p-5 md:p-6">
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-                                            <BarChart3 size={16} style={{ color: '#2563EB' }} />
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+                                            <BarChart3 size={16} style={{ color: '#8B5CF6' }} />
                                         </div>
                                         <h2 className="text-base font-black text-slate-900 dark:text-white">ملخص الأداء العام</h2>
                                     </div>
@@ -84,9 +84,9 @@ export const Reports = () => {
                                         تقرير شامل يوضح الحالة الأكاديمية والمالية للمؤسسة. تم تحليل {state.totalEnrollments} اشتراك نشط عبر {uniqueSubjects} مادة مختلفة.
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-4 p-4 rounded-none border" style={{ backgroundColor: '#F8FAFC', borderColor: '#E2E8F0' }}>
+                                <div className="flex items-center gap-4 p-4 rounded-xl border" style={{ backgroundColor: '#F8FAFC', borderColor: '#E2E8F0' }}>
                                     <div>
-                                        <p className="text-[11px] font-bold" style={{ color: '#2563EB' }}>معدل الإنجاز</p>
+                                        <p className="text-[11px] font-bold" style={{ color: '#6C4BFF' }}>معدل الإنجاز</p>
                                         <p className="text-2xl font-black font-mono leading-none mt-1 text-slate-900 dark:text-white">{state.attendanceRate}%</p>
                                     </div>
                                     <div className="w-px h-10" style={{ backgroundColor: '#E2E8F0' }} />
@@ -108,11 +108,11 @@ export const Reports = () => {
                                         <button
                                             key={tab.id}
                                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                            className="border-0 p-5 transition-all group rounded-none shadow-sm hover:shadow-md active:scale-95"
+                                            className="border-0 p-5 transition-all group rounded-2xl shadow-sm hover:shadow-md active:scale-95"
                                             style={{ backgroundColor: `${color}10` }}
                                         >
                                         <div className="flex flex-col items-center text-center">
-                                            <div className="w-11 h-11 rounded-none flex items-center justify-center mb-3 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}25` }}>
+                                            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}25` }}>
                                                 <Icon size={20} style={{ color }} />
                                             </div>
                                             <p className="text-[11px] font-bold" style={{ color }}>{tab.label}</p>
@@ -126,8 +126,8 @@ export const Reports = () => {
                         {/* Mini Stats Squares */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
                             {[
-                                { label: 'الطلاب', value: state.totalStudents, icon: Users, color: '#2563EB' },
-                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: '#2563EB' },
+                                { label: 'الطلاب', value: state.totalStudents, icon: Users, color: '#6C4BFF' },
+                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: '#6C4BFF' },
                                 { label: 'المواد', value: uniqueSubjects, icon: Award, color: '#8B5CF6' },
                                 { label: 'الحصص', value: state.totalSessions, icon: Calendar, color: '#10B981' },
                                 { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, color: '#14B8A6' },
@@ -135,8 +135,8 @@ export const Reports = () => {
                                 { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: '#F43F5E' },
                                 { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: '#64748B' }
                             ].map((stat, i) => (
-                                <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none p-3 flex flex-col justify-between aspect-square">
-                                    <div className="w-7 h-7 rounded-none flex items-center justify-center" style={{ backgroundColor: `${stat.color}12` }}>
+                                <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl p-3 flex flex-col justify-between aspect-square">
+                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${stat.color}12` }}>
                                         <stat.icon size={14} style={{ color: stat.color }} />
                                     </div>
                                     <div className="mt-auto">
@@ -148,10 +148,10 @@ export const Reports = () => {
                         </div>
 
                         {/* Subject Distribution Cards */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm p-5">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-5">
                              <div className="flex items-center justify-between mb-5">
                                  <div className="flex items-center gap-2">
-                                     <div className="w-7 h-7 rounded-none flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+                                      <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
                                          <BarChart3 size={14} style={{ color: '#8B5CF6' }} />
                                      </div>
                                      <h3 className="text-[10px] font-bold text-slate-400">توزيع الاشتراكات حسب المادة</h3>
@@ -160,11 +160,11 @@ export const Reports = () => {
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {
-                                    const hexColors = ['#2563EB','#10B981','#8B5CF6','#F59E0B','#F43F5E','#2563EB'];
+                                    const hexColors = ['#6C4BFF','#10B981','#8B5CF6','#F59E0B','#F43F5E','#6C4BFF'];
                                     const color = hexColors[i];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-none border transition-all" style={{ backgroundColor: `${color}08`, borderColor: `${color}15` }}>
+                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-2xl border transition-all" style={{ backgroundColor: `${color}08`, borderColor: `${color}15` }}>
                                             <div className="flex items-center justify-between">
                                                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
                                                 <p className="text-[10px] font-black font-mono" style={{ color }}>{pct}%</p>

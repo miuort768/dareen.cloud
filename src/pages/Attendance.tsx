@@ -23,16 +23,16 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
     </div>
 );
 
-const SectionTitle = ({ icon: Icon, label, sub, color = '#8B5CF6' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
+const SectionTitle = ({ icon: Icon, label, sub, color = '#6C4BFF' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${color}12`, color }}>
             <Icon size={16} />
         </div>
         <div>
@@ -49,8 +49,8 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-[#8B5CF6] hover:bg-violet-700',
-            'text-white text-xs font-bold px-4 py-2.5 rounded-none transition-all shadow-sm active:scale-95',
+            'flex items-center justify-center gap-2 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed]',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -342,9 +342,9 @@ export const Attendance = () => {
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden rounded-none">
+                        <SectionCard className="p-0 overflow-hidden">
                                     <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700">
-                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" color="#8B5CF6" />
+                                <SectionTitle icon={Activity} label="حصص الطلاب المقررة" />
                                 <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
@@ -352,7 +352,7 @@ export const Attendance = () => {
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         placeholder="ابحث باسم الطالب أو المادة..."
-                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-blue-600 transition-all"
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:border-[#6C4BFF] transition-all"
                                     />
                                 </div>
                             </div>
@@ -381,7 +381,7 @@ export const Attendance = () => {
                                         />
                                     )) : (
                                         <div className="col-span-full py-16 text-center">
-                                            <Users className="mx-auto mb-2" size={32} style={{ color: '#64748B30' }} />
+                                            <Users className="mx-auto mb-2" size={32} style={{ color: '#6C4BFF20' }} />
                                             <p className="text-xs font-bold text-[#64748B]">لا يوجد طلاب متاحون</p>
                                         </div>
                                     )}
@@ -400,18 +400,18 @@ export const Attendance = () => {
                             if (filteredTStudents.length === 0) return null;
 
                             return (
-                                <SectionCard key={teacher} className="p-0 overflow-hidden rounded-none">
-                                    <div className="bg-white dark:bg-slate-900 px-5 py-3 flex items-center justify-between border-b border-slate-200 dark:border-slate-700">
+                                <SectionCard key={teacher} className="p-0 overflow-hidden">
+                                    <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] px-5 py-3 flex items-center justify-between border-b border-slate-200 dark:border-slate-700">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-none flex items-center justify-center text-xs font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: 'white' }}>
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="text-xs font-bold text-slate-800 dark:text-white">قائمة الطلاب: {teacher}</h3>
-                                                <p className="text-[9px] font-bold text-[#64748B] tracking-wider">إدارة الحصص والتحضير</p>
+                                                <h3 className="text-xs font-bold text-white">قائمة الطلاب: {teacher}</h3>
+                                                <p className="text-[9px] font-bold text-white/70 tracking-wider">إدارة الحصص والتحضير</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-bold px-3 py-1 rounded-none" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
+                                        <div className="text-[9px] font-bold px-3 py-1 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: 'white' }}>
                                             {filteredTStudents.length} طالب
                                         </div>
                                     </div>
@@ -438,26 +438,26 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm rounded-none p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 rounded-none flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                                                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-200 dark:border-slate-700">
+                                                                        <span className="text-[9px] font-bold text-[#64748B] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
                                                                         <p className="text-[9px] font-bold text-[#64748B] flex items-center gap-1">
-                                                                            <BookOpen size={10} style={{ color: '#8B5CF6' }} />
+                                                                            <BookOpen size={10} style={{ color: '#6C4BFF' }} />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-none uppercase animate-pulse" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>
+                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-lg uppercase animate-pulse" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>
                                                                 انتظار
                                                             </div>
                                                         </div>
@@ -467,10 +467,10 @@ export const Attendance = () => {
                                                                 <span>تغطية الحصص</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
-                                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-none overflow-hidden">
+                                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                                                                 <div
                                                                     className={cn(
-                                                                        "h-full transition-all duration-1000 rounded-none",
+                                                                        "h-full transition-all duration-1000 rounded-full",
                                                                         (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-rose-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                                                                     )}
                                                                     style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
@@ -482,21 +482,21 @@ export const Attendance = () => {
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 disabled={isLogging}
-                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-[#10B981] hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 disabled={isLogging}
-                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-none flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-[#F43F5E] hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 غياب
                                                             </button>
                                                         </div>
                                                         <button
                                                             onClick={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                                            className="w-full py-2.5 bg-[#8B5CF6] hover:bg-violet-700 text-white font-bold text-[10px] rounded-none transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                                                            className="w-full py-2.5 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed] text-white font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
                                                         >
                                                             <History size={14} /> سجل الطالب
                                                         </button>

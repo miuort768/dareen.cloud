@@ -13,14 +13,14 @@ interface ReportsStatsGridProps {
 }
 
 const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; sub?: string; gradient?: string; accent?: string }) => (
-    <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between shadow-sm", gradient)}>
+    <div className={cn("relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between shadow-sm", gradient)}>
         {/* Background icon */}
         <div className="absolute -left-3 -bottom-3 opacity-10">
             <Icon size={70} />
         </div>
         {/* Top row */}
         <div className="flex items-start justify-between mb-3">
-            <div className={cn("w-9 h-9 rounded-none flex items-center justify-center bg-white/20 ")}>
+            <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center bg-white/20 ")}>
                 <Icon size={18} className="text-white" />
             </div>
             <span className="text-[9px] font-medium text-white/60 uppercase tracking-widest text-left">{sub}</span>
@@ -52,7 +52,7 @@ export const ReportsStatsGrid = ({
                 value={totalStudents}
                 sub={`${totalEnrollments} اشتراك`}
                 icon={Users}
-                gradient="bg-gradient-to-br from-blue-600 to-blue-800"
+                gradient="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6]"
                 accent="bg-blue-300"
             />
             <StatCard

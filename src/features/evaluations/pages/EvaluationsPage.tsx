@@ -108,13 +108,13 @@ export const Evaluations = () => {
     if (currentUser?.role === 'teacher') return <Navigate to="/" replace />;
 
     if (isLoading) return (
-        <div className="space-y-4 p-6">
-            {[...Array(6)].map((_, i) => <div key={i} className="h-40 bg-slate-100 animate-pulse rounded-none" />)}
+        <div className="space-y-4 p-6 bg-[#F8F7FF] dark:bg-slate-950 min-h-full">
+            {[...Array(6)].map((_, i) => <div key={i} className="h-40 bg-white dark:bg-slate-900 animate-pulse rounded-2xl" />)}
         </div>
     );
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-[#F8F7FF] dark:bg-slate-950" dir="rtl">
             <div className="relative z-10 max-w-[1600px] mx-auto px-2">
                 <EvaluationsHeader
                     totalXP={totalXP}
@@ -136,9 +136,9 @@ export const Evaluations = () => {
                             />
                         ))}
                         {sortedStudents.length === 0 && (
-                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-none">
-                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-none" style={{ backgroundColor: '#00542F08', border: '2px dashed', borderColor: '#00542F30' }}>
-                                    <User size={36} style={{ color: '#00542F' }} />
+                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
+                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-2xl bg-[#6C4BFF]/5 border-2 border-dashed border-[#6C4BFF]/30">
+                                    <User size={36} className="text-[#6C4BFF]" />
                                 </div>
                                 <h3 className="text-lg font-bold text-slate-700 dark:text-white mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون حالياً'}</h3>
                                 <p className="text-sm font-medium text-slate-400 max-w-xs">{searchTerm ? 'حاول استخدام كلمات بحث مختلفة.' : 'سيظهر الطلاب هنا بمجرد تسجيلهم في النظام.'}</p>

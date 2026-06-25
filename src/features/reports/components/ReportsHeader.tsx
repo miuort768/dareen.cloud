@@ -11,8 +11,8 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
     return (
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#2563EB12' }}>
-                    <BarChart3 size={22} style={{ color: '#2563EB' }} />
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#8B5CF612' }}>
+                    <BarChart3 size={22} style={{ color: '#8B5CF6' }} />
                 </div>
                 <div>
                     <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">التحليلات والتقارير العامة</h1>
@@ -27,7 +27,7 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
                 </div>
                 <button
                     onClick={onExport}
-                    className="flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700 text-white text-[10px] font-bold px-4 py-2.5 rounded-xl shadow-sm active:scale-95 transition-all"
+                    className="flex items-center justify-center gap-2 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white text-[10px] font-bold px-4 py-2.5 rounded-xl shadow-sm active:scale-95 transition-all"
                 >
                     <Download size={14} />
                     <span className="hidden sm:inline">تصدير</span>

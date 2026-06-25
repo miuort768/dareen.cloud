@@ -13,9 +13,9 @@ interface TransactionsLogProps {
 const PAGE_SIZE = 15;
 
 const StatusBadge = ({ status }: { status: string }) => {
-    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 uppercase tracking-wide rounded-none"><CheckCircle2 size={9} /> معتمدة</span>;
-    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 uppercase tracking-wide rounded-none"><Clock size={9} /> مراجعة</span>;
-    return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 uppercase tracking-wide rounded-none"><X size={9} /> ملغاة</span>;
+    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 uppercase tracking-wide rounded-lg"><CheckCircle2 size={9} /> معتمدة</span>;
+    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 uppercase tracking-wide rounded-lg"><Clock size={9} /> مراجعة</span>;
+    return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 uppercase tracking-wide rounded-lg"><X size={9} /> ملغاة</span>;
 };
 
 export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: TransactionsLogProps) => {
@@ -28,12 +28,12 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
     if (page > totalPages && page !== 1) setPage(1);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl" dir="rtl">
 
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center rounded-none" style={{ backgroundColor: '#64748B12', color: '#64748B' }}>
+                    <div className="w-8 h-8 flex items-center justify-center rounded-xl" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                         <History size={15} />
                     </div>
                     <div>
@@ -45,7 +45,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                 </div>
                 <button
                     onClick={onDeleteAll}
-                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold transition-all uppercase tracking-widest shadow-sm rounded-none" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E', border: '1px solid #F43F5E30' }} 
+                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold transition-all uppercase tracking-widest shadow-sm rounded-xl" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E', border: '1px solid #F43F5E30' }} 
                     onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#F43F5E'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#F43F5E'; }}
                     onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#F43F5E12'; e.currentTarget.style.color = '#F43F5E'; e.currentTarget.style.borderColor = '#F43F5E30'; }}
                 >
@@ -58,7 +58,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
             <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-right">
                     <thead>
-                        <tr className="bg-[#0F172A]">
+                        <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
                             <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">#</th>
                             <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">النوع</th>
                             <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70">البيان</th>
@@ -77,7 +77,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                         <span className="text-[10px] font-medium text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <div className="w-8 h-8 flex items-center justify-center mx-auto rounded-none" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
+                                        <div className="w-8 h-8 flex items-center justify-center mx-auto rounded-xl" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
                                             {tx.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                                         </div>
                                     </td>
@@ -86,7 +86,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                         <p className="text-[9px] text-slate-400 font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className="inline-block px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide rounded-none" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#2563EB12', color: tx.type === 'income' ? '#059669' : '#2563EB' }}>
+                                        <span className="inline-block px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide rounded-lg" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#6C4BFF12', color: tx.type === 'income' ? '#059669' : '#6C4BFF' }}>
                                             {tx.category}
                                         </span>
                                     </td>
@@ -127,9 +127,9 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                     const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
                     return (
                         <div key={tx.id} className="p-4 flex items-center gap-3">
-                            <div className="w-10 h-10 flex items-center justify-center shrink-0 relative rounded-none" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
+                            <div className="w-10 h-10 flex items-center justify-center shrink-0 relative rounded-xl" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center" style={{ backgroundColor: '#0F172A', color: 'white' }}>{globalIdx}</span>
+                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-md" style={{ backgroundColor: '#6C4BFF', color: 'white' }}>{globalIdx}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">
@@ -166,7 +166,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <button
                             onClick={() => setPage(p => Math.max(1, p - 1))}
                             disabled={page === 1}
-                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-none"
+                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
                         >
                             <ChevronRight size={14} />
                         </button>
@@ -175,10 +175,10 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                 key={i}
                                 onClick={() => setPage(i + 1)}
                                 className={cn(
-                                    "w-8 h-8 text-[11px] font-medium border transition-all rounded-none",
+                                    "w-8 h-8 text-[11px] font-medium border transition-all rounded-xl",
                                     page === i + 1
-                                        ? "bg-slate-900 text-white border-slate-900"
-                                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-slate-400"
+                                        ? "bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white border-[#6C4BFF]"
+                                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-[#6C4BFF]"
                                 )}
                             >
                                 {i + 1}
@@ -188,7 +188,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <button
                             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                             disabled={page === totalPages}
-                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-none"
+                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
                         >
                             <ChevronLeft size={14} />
                         </button>

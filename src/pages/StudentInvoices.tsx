@@ -284,9 +284,9 @@ export const StudentInvoices = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="mx-auto px-2 space-y-4">
 
-                <div className="rounded-none px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ backgroundColor: '#2563EB' }}>
+                <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
                             <FileText size={22} className="text-white" />
                         </div>
                         <div>
@@ -294,7 +294,7 @@ export const StudentInvoices = () => {
                             <p className="text-[11px] font-bold text-white/70 mt-0.5">إدارة التدفقات النقدية والمستحقات الدراسية</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-none" style={{ backgroundColor: '#10B981', color: 'white' }}>
+                    <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl" style={{ backgroundColor: '#10B981', color: 'white' }}>
                         <Sparkles size={13} />
                         {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                     </div>
@@ -309,20 +309,20 @@ export const StudentInvoices = () => {
                     pendingCount={pendingCount}
                 />
 
-                <div className="rounded-none p-3" style={{ backgroundColor: '#2563EB' }}>
+                <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
                                 <input
                                     placeholder="بحث باسم الطالب أو البيان..."
-                                    className="w-full rounded-none px-9 py-2 text-xs font-bold outline-none text-white placeholder:text-white/50" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                                    className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-white placeholder:text-white/50" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
                             <select
-                                className="rounded-none px-3 py-2 text-xs font-bold outline-none text-white" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                                className="rounded-xl px-3 py-2 text-xs font-bold outline-none text-white" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
                             >

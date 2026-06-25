@@ -30,7 +30,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-[#0F172A]">
+                    <thead className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
                         <tr>
                             <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">الطالب</th>
                             <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">المبلغ</th>
@@ -57,7 +57,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-none",
+                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-xl",
                                             item.status === 'paid' ? "bg-emerald-600 text-white" : "text-rose-600 border border-rose-200 bg-rose-50"
                                         )}
                                     >

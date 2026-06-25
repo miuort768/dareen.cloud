@@ -45,10 +45,10 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
     return (
         <div className="px-0 mb-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none shadow-sm p-4">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-4">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-700">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-none flex items-center justify-center" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                             <SlidersHorizontal size={14} />
                         </div>
                         <div>
@@ -59,7 +59,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-none transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
+                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>
@@ -73,8 +73,8 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                 <button
                                     key={key}
                                     onClick={() => onPeriodChange(key)}
-                                    className={`px-3 py-1.5 text-[10px] font-bold rounded-none transition-all ${periodFilter === key ? 'text-white' : 'text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200'}`}
-                                    style={periodFilter === key ? { backgroundColor: '#8B5CF6' } : {}}
+                                                    className={`px-3 py-1.5 text-[10px] font-bold rounded-xl transition-all ${periodFilter === key ? 'text-white' : 'text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200'}`}
+                                                    style={periodFilter === key ? { backgroundColor: '#6C4BFF' } : {}}
                                 >
                                     {periodLabels[key]}
                                 </button>
@@ -85,12 +85,12 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-bold text-slate-500">من</span>
                                     <input type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-[10px] font-bold outline-none focus:border-[#8B5CF6] transition-all" />
+                                        className="px-2 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-bold outline-none focus:border-[#6C4BFF] transition-all" />
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-bold text-slate-500">إلى</span>
                                     <input type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-[10px] font-bold outline-none focus:border-[#8B5CF6] transition-all" />
+                                        className="px-2 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-bold outline-none focus:border-[#6C4BFF] transition-all" />
                                 </div>
                             </div>
                         )}
@@ -105,7 +105,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                             placeholder="اسم الطالب، المادة..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#8B5CF6] transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#6C4BFF] transition-all"
                         />
                     </div>
 
@@ -114,7 +114,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#8B5CF6] transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#6C4BFF] transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">جميع الحالات</option>
                             <option value="scheduled">مجدولة</option>
@@ -128,7 +128,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#8B5CF6] transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#6C4BFF] transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">كافة المعلمات</option>
                             {uniqueTeachers.map(teacher => (

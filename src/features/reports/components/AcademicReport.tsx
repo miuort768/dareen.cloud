@@ -28,7 +28,7 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
     </div>
 );
 
-const SectionHeader = ({ icon: Icon, label, sub, color = '#2563EB' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
+const SectionHeader = ({ icon: Icon, label, sub, color = '#8B5CF6' }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string; color?: string }) => (
     <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${color}12` }}>
             <Icon size={15} style={{ color }} />
@@ -143,7 +143,7 @@ export const AcademicReport = ({
             {/* ── ملخص إحصائيات التسجيلات ── */}
             <div className="grid grid-cols-3 gap-3">
                 {[
-                    { label: 'إجمالي الطلاب', value: totalStudents, icon: Users, color: '#2563EB' },
+                    { label: 'إجمالي الطلاب', value: totalStudents, icon: Users, color: '#6C4BFF' },
                     { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, color: '#10B981' },
                     { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, color: '#8B5CF6' },
                 ].map((item, i) => (
@@ -162,8 +162,8 @@ export const AcademicReport = ({
                 {/* Header */}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
                     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-                            <Activity size={15} style={{ color: '#2563EB' }} />
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+            <Activity size={15} style={{ color: '#8B5CF6' }} />
                         </div>
                         <div>
                             <p className="text-xs font-bold text-slate-800 dark:text-white">تقرير تقدم الطلاب</p>
@@ -179,7 +179,7 @@ export const AcademicReport = ({
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold outline-none focus:border-[#2563EB] transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold outline-none focus:border-[#6C4BFF] transition-all"
                         />
                     </div>
                 </div>
@@ -188,7 +188,7 @@ export const AcademicReport = ({
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right">
                         <thead>
-                            <tr className="bg-[#0F172A] text-white">
+                            <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white">
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70">#</th>
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-right">اسم الطالب</th>
                                 <th className="px-5 py-3 text-[9px] font-bold text-white/70 text-center">الصف</th>
@@ -211,14 +211,14 @@ export const AcademicReport = ({
                                         </td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[10px] font-black shrink-0" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                                <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[10px] font-black shrink-0" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <span className="text-xs font-bold text-slate-800 dark:text-white">{student.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-3 text-center">
-                                            <span className="inline-flex px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                            <span className="inline-flex px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                                 {student.grade}
                                             </span>
                                         </td>
@@ -258,9 +258,9 @@ export const AcademicReport = ({
                         const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
                         return (
                             <div key={student.id} className="p-4 flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 relative" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 relative" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
                                     {student.name.charAt(0)}
-                                    <span className="absolute -top-1 -right-1 text-[8px] font-bold text-white w-4 h-4 flex items-center justify-center rounded-full" style={{ backgroundColor: '#2563EB' }}>{globalIdx}</span>
+                                    <span className="absolute -top-1 -right-1 text-[8px] font-bold text-white w-4 h-4 flex items-center justify-center rounded-full" style={{ backgroundColor: '#8B5CF6' }}>{globalIdx}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
@@ -268,7 +268,7 @@ export const AcademicReport = ({
                                         <span className={cn("text-[10px] font-medium ml-2 shrink-0", textColor)}>{prog}%</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>{student.grade}</span>
+                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>{student.grade}</span>
                                         <span className="text-[9px] text-slate-400 font-normal">{student.usedSessions}/{student.totalSessions} حصة</span>
                                     </div>
                                     <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-xl overflow-hidden">
@@ -306,7 +306,7 @@ export const AcademicReport = ({
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className="w-8 h-8 text-[11px] font-bold rounded-xl border shadow-sm active:scale-95 transition-all"
-                                    style={page === i + 1 ? { backgroundColor: '#2563EB', borderColor: '#2563EB', color: '#FFFFFF' } : { backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#64748B' }}
+                                    style={page === i + 1 ? { backgroundColor: '#8B5CF6', borderColor: '#8B5CF6', color: '#FFFFFF' } : { backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', color: '#64748B' }}
                                 >
                                     {i + 1}
                                 </button>

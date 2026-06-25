@@ -41,11 +41,11 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
       <div
         key={i}
         className={cn(
-          'rounded-none p-3 flex items-center gap-3 dark:brightness-[0.65]'
+          'rounded-2xl p-3 flex items-center gap-3 dark:brightness-[0.65]'
         )}
         style={{ backgroundColor: s.color }}
       >
-        <div className="w-9 h-9 rounded-none flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
           <s.icon size={16} className="text-white" />
         </div>
         <div className="min-w-0">

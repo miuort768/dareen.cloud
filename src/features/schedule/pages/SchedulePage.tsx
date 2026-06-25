@@ -76,13 +76,13 @@ const TIME_SLOTS = [
 ];
 
 const ACCENT_COLORS = [
-    { color: '#2563EB', label: 'أزرق' },
+    { color: '#6C4BFF', label: 'بنفسجي' },
     { color: '#10B981', label: 'أخضر' },
     { color: '#F59E0B', label: 'عنبر' },
     { color: '#F43F5E', label: 'وردي' },
-    { color: '#2563EB', label: 'أزرق' },
     { color: '#14B8A6', label: 'زيتي' },
-    { color: '#8B5CF6', label: 'بنفسجي' },
+    { color: '#8B5CF6', label: 'بنفسجي فاتح' },
+    { color: '#F97316', label: 'برتقالي' },
 ];
 
 export const Schedule = () => {
@@ -169,7 +169,7 @@ export const Schedule = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
-            <div className="w-8 h-8 border-2 border-slate-200 border-t-[#2563EB] rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-slate-200 border-t-[#6C4BFF] rounded-full animate-spin" />
             <p className="text-[11px] font-bold text-slate-400">جاري تحميل الجدول...</p>
         </div>
     );
@@ -179,9 +179,9 @@ export const Schedule = () => {
             <div className="hidden md:block max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
-                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-none bg-blue-600 dark:bg-blue-800">
+                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-2xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-none flex items-center justify-center shrink-0 bg-white/15">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
                             <CalendarDays size={22} className="text-white" />
                         </div>
                         <div>
@@ -199,7 +199,7 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-none px-8 outline-none focus:border-white/50 transition-all"
+                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
 
@@ -207,7 +207,7 @@ export const Schedule = () => {
                         <button
                             onClick={() => setFilterDay(prev => prev === todayDayName ? 'all' : todayDayName)}
                             className={cn(
-                                "h-9 px-2.5 text-[10px] font-bold rounded-none transition-all active:scale-95 flex items-center gap-1.5 border",
+                                "h-9 px-2.5 text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5 border",
                                 filterDay === todayDayName
                                     ? "bg-white/25 border-white/30 text-white"
                                     : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-white"
@@ -221,7 +221,7 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none outline-none focus:border-white/50 transition-all"
+                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-xl outline-none focus:border-white/50 transition-all"
                         >
                             <option value="all" className="text-slate-900">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -232,7 +232,7 @@ export const Schedule = () => {
                         {/* Print Button */}
                         <button
                             onClick={handlePrint}
-                            className="h-9 px-4 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-none shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
+                            className="h-9 px-4 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-xl shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
                         >
                             <Printer size={13} />
                             طباعة
@@ -244,7 +244,7 @@ export const Schedule = () => {
                 {currentUser?.role === 'admin' && <LiveClasses />}
 
                 {/* Schedule Grid */}
-                <div ref={printRef} id="printable-schedule" className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-none mt-4">
+                <div ref={printRef} id="printable-schedule" className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl mt-4">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
@@ -259,7 +259,7 @@ export const Schedule = () => {
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-none inline-block animate-pulse bg-blue-500" />
+                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-[#6C4BFF]" />
                                         )}
                                     </div>
                                 ))}
@@ -362,13 +362,13 @@ export const Schedule = () => {
             {/* Event Details Modal */}
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-none" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 text-white flex items-center justify-between rounded-none bg-blue-600 dark:bg-blue-800">
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-2xl" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 text-white flex items-center justify-between bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
                             </h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-none">
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
                                 <X size={16} />
                             </button>
                         </div>
@@ -402,14 +402,14 @@ export const Schedule = () => {
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm hover:bg-blue-700 transition-all active:scale-95 flex items-center justify-center gap-2 rounded-none bg-blue-600 dark:bg-blue-700"
+                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed]"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-white dark:bg-slate-900 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 rounded-none"
+                                className="flex-1 h-10 bg-white dark:bg-slate-900 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 rounded-xl"
                             >
                                 عرض الطالب
                             </button>

@@ -62,7 +62,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
             <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden flex flex-col">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#10B98112', color: '#10B981' }}>
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                             <Calendar size={15} />
                         </div>
                         <div>
@@ -110,7 +110,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
             {/* ── Pie Chart ── */}
             <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm flex flex-col overflow-hidden">
                 <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                         <PieChartIcon size={15} />
                     </div>
                     <div>

@@ -24,14 +24,14 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
     return (
         <SectionCard>
             <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50 flex justify-between items-center">
-                <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} color="#2563EB" />
+                <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} />
                 <SecondaryBtn className="h-8 text-[10px]">
                     <Download size={14} /> تصدير PDF
                 </SecondaryBtn>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-[#0F172A]">
+                    <thead className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
                         <tr>
                             <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">المعلمة</th>
                             <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الحصص</th>
@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-none flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>
@@ -61,14 +61,14 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                         type="number"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 text-center font-bold text-[10px] outline-none focus:border-[#2563EB] rounded-none"
+                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 text-center font-bold text-[10px] outline-none focus:border-[#6C4BFF] rounded-xl"
                                         placeholder="0"
                                     />
                                 </td>
                                 <td className="px-4 py-4">
                                     <div className="flex flex-col items-center gap-1.5">
                                         <span className="font-bold text-xs text-emerald-600">{item.totalAmount.toLocaleString()} ج.م</span>
-                                        <button onClick={() => setSelectedTeacherForSlip(item)} className="text-[9px] font-bold text-[#2563EB] hover:underline flex items-center gap-1">
+                                        <button onClick={() => setSelectedTeacherForSlip(item)} className="text-[9px] font-bold text-[#6C4BFF] hover:underline flex items-center gap-1">
                                             <Receipt size={10} /> القسيمة
                                         </button>
                                     </div>
