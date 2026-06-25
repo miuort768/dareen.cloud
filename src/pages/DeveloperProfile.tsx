@@ -1,11 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, GraduationCap, Code, Target, Heart, MessageSquare, Send, ChevronLeft, Award, Star, Sparkles } from 'lucide-react';
+import { GraduationCap, Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
+import { PublicNavbar } from '../components/public/PublicNavbar';
 import { PublicFooter } from '../components/public/PublicFooter';
 
 export const DeveloperProfile = () => {
-    const navigate = useNavigate();
     const { adminPhone, telegramHandle } = useSettingsStore();
 
     const tgHandle = typeof telegramHandle === 'string' ? telegramHandle : '';
@@ -20,20 +19,10 @@ export const DeveloperProfile = () => {
 
     return (
         <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden" dir="rtl">
-            {/* Back Button */}
-            <div className="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800">
-                <div className="max-w-4xl mx-auto px-4 py-3">
-                    <button
-                        onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 text-[#7C3AED] dark:text-purple-400 text-sm font-bold hover:opacity-80 transition-opacity"
-                    >
-                        <ChevronLeft size={18} />
-                        رجوع
-                    </button>
-                </div>
-            </div>
+            {/* Public Navbar */}
+            <PublicNavbar />
 
-            <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+            <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-36 pb-8 space-y-12">
 
                 {/* ═══════════════ HERO ═══════════════ */}
                 <motion.div
