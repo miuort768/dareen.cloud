@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Users } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { api } from '../../../lib/api';
 import { PageLoader } from '../../../components/ui/PageLoader';
 import { ParentsStudentHeader } from '../components/ParentsStudentHeader';
@@ -61,28 +62,36 @@ export const ParentStudents = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="pt-6 md:pt-10 space-y-6 pb-24 md:animate-in md:fade-in md:duration-500" dir="rtl">
-            <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredStudents.map((student) => (
-                    <ParentStudentCard
-                        key={student.id as string}
-                        student={student}
-                        viewingAchievements={viewingAchievements}
-                        onViewDates={handleViewDates}
-                        onViewAttendance={handleViewAttendance}
-                        onViewAchievements={handleViewAchievements}
-                        onCloseAchievements={() => setViewingAchievements(null)}
-                        pointLogs={pointLogs}
-                    />
-                ))}
-                {filteredStudents.length === 0 && (
-                    <div className="col-span-full py-20 bg-gray-50 dark:bg-gray-800/20 text-center border border-dashed border-gray-200 dark:border-gray-800 md:animate-in md:slide-in-from-bottom md:duration-700">
-                        <Users size={48} className="mx-auto text-gray-300 mb-4" />
-                        <h3 className="text-lg font-medium text-gray-400 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
-                        <p className="text-xs text-gray-500 font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
-                    </div>
-                )}
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="bg-[#F8F7FF] dark:bg-slate-950 min-h-screen pb-24"
+            dir="rtl"
+        >
+            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
+                <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredStudents.map((student) => (
+                        <ParentStudentCard
+                            key={student.id as string}
+                            student={student}
+                            viewingAchievements={viewingAchievements}
+                            onViewDates={handleViewDates}
+                            onViewAttendance={handleViewAttendance}
+                            onViewAchievements={handleViewAchievements}
+                            onCloseAchievements={() => setViewingAchievements(null)}
+                            pointLogs={pointLogs}
+                        />
+                    ))}
+                    {filteredStudents.length === 0 && (
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-white dark:bg-slate-900/50 text-center border border-dashed border-gray-200 dark:border-slate-800 rounded-2xl">
+                            <Users size={48} className="mx-auto text-gray-300 dark:text-slate-700 mb-4" />
+                            <h3 className="text-lg font-medium text-gray-400 dark:text-slate-500 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
+                            <p className="text-xs text-gray-500 dark:text-slate-400 font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
+                        </motion.div>
+                    )}
+                </div>
             </div>
             <SessionsModal
                 viewingStudent={viewingStudent}
@@ -104,7 +113,7 @@ export const ParentStudents = () => {
                 childSessions={childSessions}
                 isSessionsLoading={isSessionsLoading}
             />
-        </div>
+        </motion.div>
     );
 };
 
