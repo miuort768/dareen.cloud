@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { GraduationCap, Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
-import { PublicNavbar } from '../components/public/PublicNavbar';
+import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
 
 export const DeveloperProfile = () => {
@@ -19,8 +19,8 @@ export const DeveloperProfile = () => {
 
     return (
         <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden" dir="rtl">
-            {/* Public Navbar */}
-            <PublicNavbar />
+            {/* Mobile Header (same as Home) */}
+            <MobileHeader />
 
             <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-36 pb-8 space-y-12">
 
