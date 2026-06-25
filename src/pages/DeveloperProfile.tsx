@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
@@ -6,6 +7,16 @@ import { PublicFooter } from '../components/public/PublicFooter';
 
 export const DeveloperProfile = () => {
     const { adminPhone, telegramHandle } = useSettingsStore();
+
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (e.button === 2) {
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
     const tgHandle = typeof telegramHandle === 'string' ? telegramHandle : '';
 
@@ -18,7 +29,8 @@ export const DeveloperProfile = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden select-none" dir="rtl">
+            <style>{`@media print { body { display: none !important; } }`}</style>
             {/* Mobile Header (same as Home) */}
             <MobileHeader />
 
