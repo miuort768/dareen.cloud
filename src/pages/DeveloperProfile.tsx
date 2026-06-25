@@ -22,26 +22,26 @@ export const DeveloperProfile = () => {
             {/* Mobile Header (same as Home) */}
             <MobileHeader />
 
-            <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-36 pb-8 space-y-12">
+            <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-36 pb-4 space-y-6">
 
                 {/* ═══════════════ HERO ═══════════════ */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center space-y-6"
+                    className="flex items-center gap-4"
                 >
-                    <div className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center shadow-xl shadow-purple-200 dark:shadow-purple-950">
-                        <Code size={44} className="text-white" />
+                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-700 flex items-center justify-center shadow-xl shadow-purple-200 dark:shadow-purple-950">
+                        <Code size={28} className="text-white" />
                     </div>
-                    <div className="space-y-2">
-                        <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white">
                             مستر احمد عبدالله
                         </h1>
-                        <p className="text-lg font-bold text-[#7C3AED] dark:text-purple-400">
+                        <p className="text-sm md:text-base font-bold text-[#7C3AED] dark:text-purple-400">
                             مؤسس منصة دارين السابعة
                         </p>
                     </div>
-                    <div className="flex justify-center gap-3 pt-2">
+                    <div className="flex gap-3 mr-auto">
                         <a
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
