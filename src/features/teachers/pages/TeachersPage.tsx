@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useUIStore } from '../../../store/uiStore';
 import { useAuthStore } from '../../../store/authStore';
 import { useTeachers } from '../hooks/useTeachers';
@@ -282,14 +283,19 @@ export const Teachers = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
-
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="bg-[#F8F7FF] dark:bg-slate-950 min-h-screen pb-24"
+            dir="rtl"
+        >
+            <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-6 md:pt-10">
                 {/* Header Section */}
-                <div className="shadow-sm px-4 md:px-8 py-4 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6" style={{ backgroundColor: '#8B5CF6' }}>
+                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl px-5 md:px-8 py-4 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-purple-500/20">
                     <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                            <Presentation size={20} />
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
+                            <Presentation size={20} className="text-white" />
                         </div>
                         <div>
                             <h1 className="text-sm md:text-lg font-bold text-white leading-tight">إدارة المعلمات</h1>
@@ -297,7 +303,7 @@ export const Teachers = () => {
                             <div className="hidden md:flex items-center gap-3 mt-2">
                                 <span className="text-[9px] font-bold text-white/60">{teachers.length} معلمة</span>
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                                <span className="text-[8px] font-bold px-2 py-0.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>نشطة</span>
+                                <span className="text-[8px] font-bold px-2 py-0.5 rounded-xl bg-white/15 backdrop-blur-sm text-white border border-white/10">نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -306,10 +312,10 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-[10px] md:text-[11px] font-bold transition-all shadow-sm active:scale-95",
+                                "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-[10px] md:text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
-                                : "bg-white text-[#8B5CF6] hover:bg-white/90"
+                                : "bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25"
                             )}
                         >
                             {showAddForm ? <X size={16} /> : <Plus size={16} />}
@@ -353,12 +359,13 @@ export const Teachers = () => {
                                 onSubmit={handleAddTeacher}
                                 initialData={editId ? teachers.find(t => t.id === editId) : null}
                                 onCancel={() => { setShowAddForm(false); setEditId(null); }}
+                                editId={editId}
                             />
                         </div>
                     )}
 
                     {!showDetails ? (
-                        <div className="px-0 animate-in fade-in duration-300">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-0">
                             <TeacherTable
                                 teachers={filteredTeachers}
                                 onEdit={handleEditTeacher}
@@ -369,9 +376,9 @@ export const Teachers = () => {
                                 selectedId={selectedTeacher?.id}
                                 studentCounts={studentCounts}
                             />
-                        </div>
+                        </motion.div>
                     ) : (
-                        <div className="px-0 animate-in slide-in-from-right-8 duration-500">
+                        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="px-0">
                             {selectedTeacher && (
                                 <TeacherDetails
                                     teacher={selectedTeacher}
@@ -388,7 +395,7 @@ export const Teachers = () => {
                                     isTeacherView={isTeacher}
                                 />
                             )}
-                        </div>
+                        </motion.div>
                     )}
                 </div>
 
@@ -422,8 +429,7 @@ export const Teachers = () => {
                     onClose={() => setSuccessModalData({ ...successModalData, isOpen: false })}
                 />
             </div>
-        </div>
+        </motion.div>
     );
 };
 export default Teachers;
-

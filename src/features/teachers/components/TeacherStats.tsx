@@ -8,36 +8,28 @@ interface TeacherStatsProps {
     averagePrice: number;
 }
 
-const statSettings: Record<string, { color: string }> = {
-  'إجمالي المعلمات': { color: '#8B5CF6' },
-  'عدد الطلاب': { color: '#22C55E' },
-  'التخصصات': { color: '#2563EB' },
-  'متوسط السعر': { color: '#F59E0B' },
-};
-
-const StatCard = ({ label, value, icon: Icon }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }> }) => {
-    const { color } = statSettings[label] || { color: '#8B5CF6' };
-    return (
-        <div className="flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-none dark:brightness-[0.65]" style={{ backgroundColor: color }}>
-            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                <Icon size={20} />
-            </div>
-            <div className="min-w-0">
-                <p className="text-[10px] font-bold text-white/70 leading-none">{label}</p>
-                <p className="text-2xl font-black text-white tabular-nums mt-1">{value}</p>
-            </div>
-        </div>
-    );
-};
+const statCards = [
+    { label: 'إجمالي المعلمات', icon: Users, gradient: 'from-[#6C4BFF] to-[#8B5CF6]' },
+    { label: 'عدد الطلاب', icon: UserPlus, gradient: 'from-emerald-500 to-teal-600' },
+    { label: 'التخصصات', icon: BookOpen, gradient: 'from-blue-500 to-blue-600' },
+    { label: 'متوسط السعر', icon: DollarSign, gradient: 'from-amber-500 to-orange-600' },
+];
 
 export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, averagePrice }: TeacherStatsProps) => {
+    const values = [totalTeachers, totalStudents, uniqueSubjects, `${averagePrice} ج.م`];
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 mb-8" dir="rtl">
-            <StatCard label="إجمالي المعلمات" value={totalTeachers} icon={Users} />
-            <StatCard label="عدد الطلاب" value={totalStudents} icon={UserPlus} />
-            <StatCard label="التخصصات" value={uniqueSubjects} icon={BookOpen} />
-            <StatCard label="متوسط السعر" value={`${averagePrice} ج.م`} icon={DollarSign} />
+            {statCards.map((s, i) => (
+                <div key={s.label} className={cn('flex items-center gap-3 p-4 rounded-2xl shadow-sm bg-gradient-to-br', s.gradient)}>
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
+                        <s.icon size={20} className="text-white" />
+                    </div>
+                    <div className="min-w-0">
+                        <p className="text-[10px] font-bold text-white/70 leading-none">{s.label}</p>
+                        <p className="text-2xl font-black text-white tabular-nums mt-1">{values[i]}</p>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };
-
