@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 
 export const PublicFooter = () => {
+    const navigate = useNavigate();
     const { adminPhone } = useSettingsStore();
 
     return (
@@ -130,7 +131,7 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 overflow-hidden group cursor-default">
+                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 overflow-hidden group cursor-pointer">
                             {/* Continuous Shine Effect */}
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
                             

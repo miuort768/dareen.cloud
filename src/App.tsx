@@ -55,6 +55,7 @@ import { FloatingActions } from './components/public/FloatingActions';
 import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidget';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
+const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
 const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 
@@ -221,6 +222,7 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/terms-of-work" element={<TermsOfWork />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/developer" element={<DeveloperProfile />} />
 
           {/* Protected App Routes */}
           {/* Protected App Routes */}
