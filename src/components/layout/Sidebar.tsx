@@ -78,7 +78,6 @@ export const Sidebar = () => {
         { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
         { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
-        { name: 'متاحات المعلمات', href: '/teacher-availability', id: 'teacher_availability', icon: Clock },
         { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
         { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student_invoices', icon: DollarSign },
@@ -91,7 +90,6 @@ export const Sidebar = () => {
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
         { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
-        { name: 'رسائل التواصل', href: '/admin-contacts', id: 'admin_contacts', icon: MessageSquare },
     ];
 
     // Filter navigation based on permissions

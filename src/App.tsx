@@ -36,7 +36,6 @@ const Forum = lazy(() => import('./pages/Forum').then(m => ({ default: m.Forum }
 const MonthlyClosing = lazy(() => import('./pages/MonthlyClosing').then(m => ({ default: m.MonthlyClosing })));
 const Leads = lazy(() => import('./pages/Leads').then(m => ({ default: m.Leads })));
 const TrialSessions = lazy(() => import('./pages/TrialSessions').then(m => ({ default: m.TrialSessions })));
-const TeacherAvailability = lazy(() => import('./pages/TeacherAvailability').then(m => ({ default: m.TeacherAvailability })));
 const Agenda = lazy(() => import('./pages/Agenda').then(m => ({ default: m.Agenda })));
 const Appointments = lazy(() => import('./pages/Appointments').then(m => ({ default: m.Appointments })));
 const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
@@ -57,7 +56,6 @@ const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
-const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 
 
 
@@ -252,7 +250,6 @@ function App() {
             <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
             <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
             <Route path="trial-sessions" element={<ProtectedRoute permission="trial_sessions"><TrialSessions /></ProtectedRoute>} />
-            <Route path="teacher-availability" element={<ProtectedRoute permission="teacher_availability"><TeacherAvailability /></ProtectedRoute>} />
             <Route path="student-invoices" element={<ProtectedRoute permission="student_invoices"><StudentInvoices /></ProtectedRoute>} />
             <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher_invoices"><TeacherInvoices /></ProtectedRoute>} />
             <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
@@ -265,7 +262,6 @@ function App() {
 
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
             <Route path="admin-jobs" element={<ProtectedRoute permission="admin"><AdminJobs /></ProtectedRoute>} />
-            <Route path="admin-contacts" element={<ProtectedRoute permission="admin"><AdminContacts /></ProtectedRoute>} />
             
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />

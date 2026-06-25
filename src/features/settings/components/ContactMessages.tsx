@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MessageSquare, Trash2, Phone, Mail, Calendar, Search, CheckCircle2 } from 'lucide-react';
-import { api } from '../lib/api';
-import { ConfirmModal } from '../shared/components/ConfirmModal';
+import { api } from '../../../lib/api';
+import { ConfirmModal } from '../../../shared/components/ConfirmModal';
 
 interface ContactMessage {
     id: string;
@@ -12,7 +12,7 @@ interface ContactMessage {
     created_at: string;
 }
 
-export const AdminContacts = () => {
+export const ContactMessages = () => {
     const [messages, setMessages] = useState<ContactMessage[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -60,44 +60,34 @@ export const AdminContacts = () => {
     });
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl mx-4 mt-4 px-4 md:px-6 py-5 mb-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/15 rounded-xl">
-                            <MessageSquare size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-black text-white">رسائل التواصل</h1>
-                            <p className="text-[10px] font-bold text-white/70">{messages.length} رسالة</p>
-                        </div>
-                    </div>
-                    <div className="relative w-full md:w-48">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50" size={16} />
-                        <input
-                            type="text"
-                            placeholder="بحث..."
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-white/15 text-white placeholder:text-white/50 py-3 pr-12 pl-4 text-xs font-bold focus:outline-none border border-white/20 rounded-xl"
-                        />
-                    </div>
+        <div className="p-4 space-y-4">
+            <div className="flex items-center gap-3">
+                <div className="relative flex-1 max-w-xs">
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <input
+                        type="text"
+                        placeholder="بحث في الرسائل..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl py-2.5 pr-10 pl-4 text-xs font-bold outline-none focus:border-[#6C4BFF] focus:ring-2 focus:ring-purple-200/50 dark:focus:ring-purple-700/50 transition-all"
+                    />
                 </div>
+                <span className="text-[11px] font-bold text-slate-400">{messages.length} رسالة</span>
             </div>
 
-            <div className="max-w-5xl mx-auto px-4 space-y-4">
-                {loading ? (
-                    <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-slate-100/50 rounded-2xl" />)}</div>
-                ) : filtered.length === 0 ? (
-                    <div className="bg-white border border-dashed border-slate-200 rounded-2xl p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-[#8B5CF612] rounded-xl">
-                            <MessageSquare size={28} className="text-[#6C4BFF]" />
-                        </div>
-                        <p className="text-sm font-bold text-slate-400">{search ? 'لا توجد نتائج' : 'لا توجد رسائل'}</p>
+            {loading ? (
+                <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-white h-28 animate-pulse border border-slate-100/50 rounded-2xl" />)}</div>
+            ) : filtered.length === 0 ? (
+                <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl p-16 text-center">
+                    <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-[#8B5CF612] rounded-xl">
+                        <MessageSquare size={28} className="text-[#6C4BFF]" />
                     </div>
-                ) : (
-                    filtered.map(msg => (
-                        <div key={msg.id} className="bg-white border border-slate-100/50 shadow-sm relative overflow-hidden group transition-all duration-300 rounded-2xl">
+                    <p className="text-sm font-bold text-slate-400">{search ? 'لا توجد نتائج' : 'لا توجد رسائل'}</p>
+                </div>
+            ) : (
+                <div className="space-y-3">
+                    {filtered.map(msg => (
+                        <div key={msg.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden group transition-all duration-300 rounded-2xl">
                             <div className="h-1.5 w-full bg-gradient-to-r from-[#6C4BFF] to-[#8B5CF6]"></div>
                             <div className="p-6 relative z-10">
                                 <div className="flex justify-between items-start mb-4">
@@ -120,14 +110,14 @@ export const AdminContacts = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 pt-4">
+                                <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] border-t border-slate-50 dark:border-slate-800 pt-4">
                                     <div className="flex items-center gap-2">
                                         <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-[#8B5CF612] rounded-lg">
                                             <Phone size={10} className="text-[#6C4BFF]" />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">رقم الهاتف</p>
-                                            <span className="text-[10px] font-bold text-slate-700 truncate block" dir="ltr">{msg.phone}</span>
+                                            <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate block" dir="ltr">{msg.phone}</span>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -136,26 +126,26 @@ export const AdminContacts = () => {
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">التاريخ</p>
-                                            <span className="text-[10px] font-bold text-slate-700 truncate block">{new Date(msg.created_at).toLocaleDateString('ar-EG')}</span>
+                                            <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate block">{new Date(msg.created_at).toLocaleDateString('ar-EG')}</span>
                                         </div>
                                     </div>
                                     {msg.message && (
-                                        <div className="col-span-2 flex items-start gap-2 pt-3 border-t border-slate-50 mt-1">
+                                        <div className="col-span-2 flex items-start gap-2 pt-3 border-t border-slate-50 dark:border-slate-800 mt-1">
                                             <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-[#8B5CF612] rounded-lg">
                                                 <Mail size={10} className="text-[#6C4BFF]" />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">الرسالة</p>
-                                                <p className="text-[10px] font-bold text-slate-600 leading-relaxed">{msg.message}</p>
+                                                <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 leading-relaxed">{msg.message}</p>
                                             </div>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </div>
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
 
             <ConfirmModal
                 isOpen={deleteTarget !== null}

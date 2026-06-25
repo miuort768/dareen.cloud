@@ -25,7 +25,6 @@ export const AVAILABLE_PERMISSIONS: Permission[] = [
     { id: 'tasks', label: 'المهام' },
     { id: 'evaluations', label: 'التقييمات والنقاط' },
     { id: 'trial_sessions', label: 'جلسات المراجعة' },
-    { id: 'teacher_availability', label: 'متاحات المعلمات' },
     { id: 'announcements', label: 'إدارة الإعلانات' },
 ];
 

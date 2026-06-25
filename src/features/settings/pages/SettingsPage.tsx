@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
     Settings as SettingsIcon, Palette, Users, Smartphone, Lock,
-    Shield, Activity, Sparkles
+    Shield, Activity, Sparkles, MessageSquare
 } from 'lucide-react';
 import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser } from '../../../context/AppContext';
 import { Skeleton } from '../../../components/ui/Skeleton';
@@ -19,8 +19,9 @@ import { SecureActionModal } from '../components/SecureActionModal';
 import { DeleteUserModal } from '../components/DeleteUserModal';
 import { MaintenanceModal } from '../components/MaintenanceModal';
 import { SuccessToast } from '../components/SuccessToast';
+import { ContactMessages } from '../components/ContactMessages';
 
-type TabId = 'general' | 'appearance' | 'users' | 'mobile' | 'policies' | 'advanced' | 'audit';
+type TabId = 'general' | 'appearance' | 'users' | 'mobile' | 'policies' | 'advanced' | 'audit' | 'messages';
 
 export const Settings = () => {
     const academyName = useAcademyName();
@@ -285,6 +286,7 @@ export const Settings = () => {
         { id: 'users', label: 'المستخدمون', icon: Users },
         { id: 'mobile', label: 'الموبايل', icon: Smartphone },
         { id: 'policies', label: 'السياسات', icon: Lock },
+        { id: 'messages', label: 'الرسائل', icon: MessageSquare },
         { id: 'advanced', label: 'الأرشيف', icon: Shield },
         { id: 'audit', label: 'السجلات', icon: Activity },
     ];
@@ -368,6 +370,8 @@ export const Settings = () => {
                     setSemesterName={setSemesterName} setSemesters={setSemesters}
                     setSecureAction={setSecureAction}
                 />;
+            case 'messages':
+                return <ContactMessages />;
             case 'audit':
                 return <AuditLogSection auditLogs={auditLogs} fetchLogs={fetchLogs} />;
             default:
@@ -377,9 +381,9 @@ export const Settings = () => {
 
     return (
         <div className="space-y-0 pb-24 min-h-full" dir="rtl">
-            <div className="bg-[#2563EB] px-4 md:px-6 py-5 flex items-center justify-between">
+            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
                         <SettingsIcon size={22} className="text-white" />
                     </div>
                     <div>
@@ -393,7 +397,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            <div className="bg-[#1D4ED8] px-1 py-1">
+            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] px-1 py-1">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button
@@ -402,7 +406,7 @@ export const Settings = () => {
                             className={cn(
                                 'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight',
                                 activeTab === tab.id
-                                    ? 'bg-white text-[#2563EB] shadow-sm'
+                                    ? 'bg-white text-[#6C4BFF] shadow-sm'
                                     : 'text-white/70 hover:text-white'
                             )}
                         >

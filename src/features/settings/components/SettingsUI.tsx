@@ -54,7 +54,7 @@ export const THEME_COLORS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-none shadow-sm p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm p-5',
         className
     )}>
         {children}
@@ -63,8 +63,8 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
-        <div className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-            <Icon size={16} style={{ color: '#2563EB' }} />
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+            <Icon size={16} style={{ color: '#8B5CF6' }} />
         </div>
         <div>
             <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
@@ -85,7 +85,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
             'px-3 py-2.5 text-sm font-bold text-slate-800 dark:text-white',
-            'focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10 transition-all',
+            'focus:outline-none focus:border-[#6C4BFF] focus:ring-2 focus:ring-purple-200/50 dark:focus:ring-purple-700/50 transition-all',
             props.className
         )}
     />
@@ -97,7 +97,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
             'px-3 py-2.5 text-sm font-bold text-slate-800 dark:text-white resize-none',
-            'focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/10 transition-all',
+            'focus:outline-none focus:border-[#6C4BFF] focus:ring-2 focus:ring-purple-200/50 dark:focus:ring-purple-700/50 transition-all',
             props.className
         )}
     />
@@ -110,7 +110,7 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
         onClick={onChange}
         className={cn(
             'w-11 h-6 rounded-full relative transition-all duration-300 shrink-0',
-            checked ? 'bg-[#2563EB]' : 'bg-slate-200 dark:bg-slate-700'
+            checked ? 'bg-[#8B5CF6]' : 'bg-slate-200 dark:bg-slate-700'
         )}
     >
         <div className={cn(
@@ -126,7 +126,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700',
+            'flex items-center justify-center gap-2 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]',
             'text-white text-xs font-bold px-4 py-2.5 shadow-sm active:scale-95 transition-all',
             className
         )}
@@ -173,8 +173,8 @@ export const ToggleRow = ({
 }: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
     <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100/50 dark:border-slate-800/50">
         <div className="flex items-center gap-3">
-            <div className="w-7 h-7 flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-                <Icon size={14} style={{ color: '#2563EB' }} />
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
+                <Icon size={14} style={{ color: '#8B5CF6' }} />
             </div>
             <div>
                 <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{label}</p>
