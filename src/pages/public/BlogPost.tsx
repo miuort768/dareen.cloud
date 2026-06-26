@@ -197,19 +197,19 @@ export const BlogPost = () => {
                     )}
                 </header>
 
-                {/* Hero Image */}
+                {/* Image + First Content Side by Side */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
-                    <div className="w-full bg-gray-100 dark:bg-slate-900 overflow-hidden shadow-xl">
-                        <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+                        <div className="w-full bg-gray-100 dark:bg-slate-900 overflow-hidden shadow-xl rounded-2xl">
+                            <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
+                        </div>
+                        <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none prose-p:text-justify text-slate-800 dark:text-slate-200"
+                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
+                        />
                     </div>
                 </div>
 
-                {/* Article Content */}
                 <article className="container mx-auto px-4 max-w-3xl">
-                    <div 
-                        className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none prose-p:text-justify text-slate-800 dark:text-slate-200"
-                        dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
-                    />
                     
                     {/* Download & Watch Buttons */}
                         {(post.showButtons !== false && post.show_buttons !== 0) && (post.downloadLink || post.watchLink) && (
