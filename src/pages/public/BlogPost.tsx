@@ -116,17 +116,8 @@ export const BlogPost = () => {
     const content = post.content || '';
     const contentParts = (() => {
         if (!content) return { first: '', rest: '' };
-        const hasHtml = /<[a-z][\s\S]*>/i.test(content);
-        if (hasHtml) {
-            const match = content.match(/<\/p>/i);
-            if (match) {
-                const idx = match.index! + match[0].length;
-                return { first: content.slice(0, idx), rest: content.slice(idx) };
-            }
-            return { first: content, rest: '' };
-        }
         const parts = content.split(/\n\n/);
-        return { first: parts[0], rest: parts.slice(1).join('\n\n') };
+        return { first: parts[0] || '', rest: parts.slice(1).join('\n\n') };
     })();
 
 
