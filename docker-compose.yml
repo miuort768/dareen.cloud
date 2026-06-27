@@ -16,6 +16,7 @@ services:
       - PORT=3001
       - NODE_ENV=production
       - DB_PATH=/database/database.sqlite
+      - DATABASE_URL=file:/database/dev.db
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - FRONTEND_URL=${FRONTEND_URL:-https://dareen.cloud}
       - LIVEKIT_API_KEY=${LIVEKIT_API_KEY:?LIVEKIT_API_KEY is required}

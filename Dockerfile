@@ -1,5 +1,5 @@
 # بناء الواجهة الأمامية (Frontend Build)
-FROM node:18-alpine AS frontend-builder
+FROM node:22-alpine AS frontend-builder
 
 WORKDIR /app
 
@@ -18,22 +18,27 @@ COPY . .
 RUN npm run build
 
 # بناء الخادم (Backend)
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
 # تثبيت متطلبات sqlite3 للنسخ Alpine
 RUN apk add --no-cache python3 make g++
 
-# نسخ ملفات حزم الخادم وتثبيت التبعيات
+# نسخ ملفات الحزم وتثبيت التبعيات
 COPY server/package*.json ./server/
-RUN cd server && npm install --production
+RUN cd server && npm install
+
+# نسخ السكيما وتوليد Prisma Client ثم إزالة devDeps
+COPY server/prisma ./server/prisma
+ENV DATABASE_URL=file:./prisma/dev.db
+RUN cd server && npx prisma generate && npm prune --production
+
+# نسخ بقية كود الخادم
+COPY server/ ./server/
 
 # نسخ الملفات المبنية من الواجهة الأمامية
 COPY --from=frontend-builder /app/dist ./dist
-
-# نسخ كود الخادم
-COPY server/ ./server/
 
 # إعداد المتغيرات البيئية
 ENV NODE_ENV=production

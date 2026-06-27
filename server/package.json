@@ -31,7 +31,6 @@
     "peer": "^1.0.2",
     "pg": "^8.22.0",
     "prerender-node": "^3.5.0",
-    "prisma": "^7.8.0",
     "socket.io": "^4.8.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
@@ -40,6 +39,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "prisma": "^7.8.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
