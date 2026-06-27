@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Edit, Trash, GraduationCap, Bell } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
@@ -13,7 +14,7 @@ interface StudentTableProps {
     isTeacherView: boolean;
 }
 
-export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, onNotify }: StudentTableProps) => {
+export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDelete, onNotify }: StudentTableProps) => {
     return (
         <div className="w-full">
             {/* Desktop View */}
@@ -181,5 +182,5 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
             )}
         </div>
     );
-};
+});
 

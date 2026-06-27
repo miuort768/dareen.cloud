@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useStudents } from '../hooks/useStudents';
 import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
@@ -41,19 +41,26 @@ export const Students = () => {
     const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
 
     // Unique values for filters
-    const uniqueGrades = [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[];
-    const uniqueCurriculums = [...new Set(allStudents.map(s => s.curriculum).filter(Boolean))].sort() as string[];
+    const uniqueGrades = useMemo(() =>
+        [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[],
+    [allStudents]);
+
+    const uniqueCurriculums = useMemo(() =>
+        [...new Set(allStudents.map(s => s.curriculum).filter(Boolean))].sort() as string[],
+    [allStudents]);
 
     // Instant Local Filtering
-    const students = allStudents.filter(student => {
-        const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            student.parentPhone?.includes(searchTerm) ||
-            student.studentPhone?.includes(searchTerm) ||
-            student.grade.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesGrade = !filterGrade || student.grade === filterGrade;
-        const matchesCurriculum = !filterCurriculum || student.curriculum === filterCurriculum;
-        return matchesSearch && matchesGrade && matchesCurriculum;
-    });
+    const students = useMemo(() =>
+        allStudents.filter(student => {
+            const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                student.parentPhone?.includes(searchTerm) ||
+                student.studentPhone?.includes(searchTerm) ||
+                student.grade.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesGrade = !filterGrade || student.grade === filterGrade;
+            const matchesCurriculum = !filterCurriculum || student.curriculum === filterCurriculum;
+            return matchesSearch && matchesGrade && matchesCurriculum;
+        }),
+    [allStudents, searchTerm, filterGrade, filterCurriculum]);
 
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
@@ -68,11 +75,17 @@ export const Students = () => {
     const loading = loadingStudents || loadingTeachers;
 
     // Calculate Stats
-    const activeEnrollments = allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0);
-    const totalExpectedSessions = allStudents.reduce((acc, s) => 
-        acc + (s.enrollments?.reduce((enAcc, en) => enAcc + (en.sessionsTotal || 0), 0) || 0), 0
-    );
-    const averageSessions = allStudents.length > 0 ? Math.round(totalExpectedSessions / allStudents.length) : 0;
+    const activeEnrollments = useMemo(() =>
+        allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0),
+    [allStudents]);
+    const totalExpectedSessions = useMemo(() =>
+        allStudents.reduce((acc, s) =>
+            acc + (s.enrollments?.reduce((enAcc, en) => enAcc + (en.sessionsTotal || 0), 0) || 0), 0
+        ),
+    [allStudents]);
+    const averageSessions = useMemo(() =>
+        allStudents.length > 0 ? Math.round(totalExpectedSessions / allStudents.length) : 0,
+    [allStudents.length, totalExpectedSessions]);
 
     // Handlers
     const handleAddOrUpdateStudent = (data: Omit<Student, 'id' | 'enrollments'>) => {

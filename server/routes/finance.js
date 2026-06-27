@@ -3,6 +3,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const cache = require('../utils/cache');
 
 router.use(authMiddleware, checkRole(['admin']));
 
@@ -37,6 +38,7 @@ router.post('/transactions', async (req, res) => {
             [id, type, category, amount, date, description || '', status]
         );
 
+        cache.del('finance:stats');
         const newTransaction = await req.db.get('SELECT * FROM manual_transactions WHERE id = ?', id);
         res.status(201).json(newTransaction);
     } catch (err) {
@@ -50,6 +52,7 @@ router.delete('/transactions/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await req.db.run('DELETE FROM manual_transactions WHERE id = ?', id);
+        cache.del('finance:stats');
         res.json({ message: 'Transaction deleted successfully' });
     } catch (err) {
         logger.error('Error deleting transaction', err, { id });
@@ -61,6 +64,7 @@ router.delete('/transactions/:id', async (req, res) => {
 router.delete('/transactions', async (req, res) => {
     try {
         await req.db.run('DELETE FROM manual_transactions');
+        cache.del('finance:stats');
         res.json({ message: 'All transactions deleted successfully' });
     } catch (err) {
         logger.error('Error deleting all transactions', err);
@@ -92,6 +96,7 @@ router.put('/fixed-expenses/:id', async (req, res) => {
 
     try {
         await req.db.run('UPDATE fixed_expenses SET amount = ? WHERE id = ?', [amount, id]);
+        cache.del('finance:stats');
         const updated = await req.db.get('SELECT * FROM fixed_expenses WHERE id = ?', id);
         res.json(updated);
     } catch (err) {
@@ -104,6 +109,7 @@ router.put('/fixed-expenses/:id', async (req, res) => {
 router.post('/fixed-expenses/reset', async (req, res) => {
     try {
         await req.db.run('UPDATE fixed_expenses SET amount = 0');
+        cache.del('finance:stats');
         const expenses = await req.db.all('SELECT * FROM fixed_expenses WHERE is_active = 1');
         res.json(expenses);
     } catch (err) {
@@ -117,6 +123,8 @@ router.post('/fixed-expenses/reset', async (req, res) => {
 // GET /api/finance/stats - Get aggregated financial stats using SQL
 router.get('/stats', async (req, res) => {
     try {
+        const cached = cache.get('finance:stats');
+        if (cached) return res.json(cached);
         const now = new Date();
         const currentMonth = now.toISOString().slice(0, 7); // YYYY-MM
 
@@ -197,7 +205,7 @@ router.get('/stats', async (req, res) => {
             WHERE is_active = 1
         `);
 
-        res.json({
+        const result = {
             totalIncome,
             monthIncome,
             totalExpenses,
@@ -207,7 +215,9 @@ router.get('/stats', async (req, res) => {
             profitMargin: totalIncome > 0 ? (((totalIncome - totalExpenses) / totalIncome) * 100).toFixed(1) : '0',
             monthlyData,
             pieData: pieDataRaw.filter(d => d.value > 0)
-        });
+        };
+        cache.set('finance:stats', result, 300000);
+        res.json(result);
 
     } catch (err) {
         logger.error('Error calculating finance stats', err);

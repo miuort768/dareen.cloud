@@ -4,6 +4,7 @@ const { getStudentEnrollments, withTransaction } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const cache = require('../utils/cache');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
@@ -386,11 +387,12 @@ router.post('/archive-month', async (req, res) => {
 // 4. Settings Routes
 router.get('/settings', async (req, res) => {
     try {
-        const settings = await req.db.all('SELECT * FROM system_settings');
+        const cached = cache.get('system:settings');
+        if (cached) return res.json(cached);
+        const settings = await req.db.all('SELECT key, value FROM system_settings');
         const settingsMap = {};
-        settings.forEach(s => {
-            settingsMap[s.key] = s.value;
-        });
+        settings.forEach(s => { settingsMap[s.key] = s.value; });
+        cache.set('system:settings', settingsMap, 60000);
         res.json(settingsMap);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -401,6 +403,7 @@ router.post('/settings', async (req, res) => {
     const { key, value } = req.body;
     try {
         await req.db.run('INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)', [key, String(value)]);
+        cache.del('system:settings');
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -410,11 +413,14 @@ router.post('/settings', async (req, res) => {
 // 5. User Management Routes
 router.get('/users', async (req, res) => {
     try {
+        const cached = cache.get('system:users');
+        if (cached) return res.json(cached);
         const users = await req.db.all('SELECT id, name, username, role, permissions FROM users');
         const parsedUsers = users.map(u => ({
             ...u,
             permissions: u.permissions ? JSON.parse(u.permissions) : []
         }));
+        cache.set('system:users', parsedUsers, 60000);
         res.json(parsedUsers);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -430,6 +436,7 @@ router.post('/users', async (req, res) => {
             'INSERT INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)',
             [id || require('uuid').v4(), name, username, hashedPassword, role || 'admin', JSON.stringify(permissions || [])]
         );
+        cache.del('system:users');
         res.status(201).json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -453,6 +460,7 @@ router.put('/users/:id', async (req, res) => {
                 [name, username, role, JSON.stringify(permissions), id]
             );
         }
+        cache.del('system:users');
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');

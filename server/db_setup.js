@@ -918,7 +918,52 @@ async function setupDatabase() {
         try { await db.exec(`DROP TABLE IF EXISTS ${table}`); console.log(`  ✓ Dropped dead table: ${table}`); } catch (e) { }
     }
 
-    // 6. Compound index for common notifications query pattern
+    // 6. Critical performance indexes for heavy query patterns
+    const criticalIndices = [
+        'CREATE INDEX IF NOT EXISTS idx_manual_transactions_type_status_date ON manual_transactions(type, status, date)',
+        'CREATE INDEX IF NOT EXISTS idx_sessions_status_date ON sessions(status, date)',
+        'CREATE INDEX IF NOT EXISTS idx_sessions_status ON sessions(status)',
+        'CREATE INDEX IF NOT EXISTS idx_student_invoices_student_date ON student_invoices(studentId, date)',
+        'CREATE INDEX IF NOT EXISTS idx_student_invoices_date ON student_invoices(date)',
+        'CREATE INDEX IF NOT EXISTS idx_student_invoices_dueDate ON student_invoices(dueDate)',
+        'CREATE INDEX IF NOT EXISTS idx_teacher_invoices_teacher_date ON teacher_invoices(teacherId, date)',
+        'CREATE INDEX IF NOT EXISTS idx_teacher_invoices_status ON teacher_invoices(status)',
+        'CREATE INDEX IF NOT EXISTS idx_teacher_invoices_date ON teacher_invoices(date)',
+        'CREATE INDEX IF NOT EXISTS idx_evaluations_student_date ON evaluations(studentId, date)',
+        'CREATE INDEX IF NOT EXISTS idx_evaluations_teacher_created ON evaluations(teacherId, created_at)',
+        'CREATE INDEX IF NOT EXISTS idx_tasks_user_created ON tasks(userId, created_at)',
+        'CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status)',
+        'CREATE INDEX IF NOT EXISTS idx_messages_conversation_timestamp ON messages(conversationId, timestamp)',
+        'CREATE INDEX IF NOT EXISTS idx_forum_posts_status_created ON forum_posts(status, created_at)',
+        'CREATE INDEX IF NOT EXISTS idx_points_log_student_timestamp ON points_log(studentId, timestamp)',
+        'CREATE INDEX IF NOT EXISTS idx_teacher_availability_teacher_day ON teacher_availability(teacherId, dayOfWeek)',
+        'CREATE INDEX IF NOT EXISTS idx_students_parentPhone ON students(parentPhone)',
+        'CREATE INDEX IF NOT EXISTS idx_students_grade ON students(grade)',
+        'CREATE INDEX IF NOT EXISTS idx_students_curriculum ON students(curriculum)',
+        'CREATE INDEX IF NOT EXISTS idx_teachers_subject ON teachers(subject)',
+        'CREATE INDEX IF NOT EXISTS idx_leads_status_priority ON leads(status, priority)',
+        'CREATE INDEX IF NOT EXISTS idx_trial_sessions_status_date ON trial_sessions(status, date)',
+        'CREATE INDEX IF NOT EXISTS idx_active_sessions_student_subject ON active_sessions(studentId, subject)',
+        'CREATE INDEX IF NOT EXISTS idx_blog_posts_subject ON blog_posts(subject)',
+        'CREATE INDEX IF NOT EXISTS idx_blog_posts_is_featured ON blog_posts(is_featured)',
+        'CREATE INDEX IF NOT EXISTS idx_fixed_expenses_is_active ON fixed_expenses(is_active)',
+        'CREATE INDEX IF NOT EXISTS idx_notifications_time ON notifications(time)',
+        'CREATE INDEX IF NOT EXISTS idx_job_applications_phone ON job_applications(phone)',
+        'CREATE INDEX IF NOT EXISTS idx_job_applications_contacted ON job_applications(contacted)',
+        'CREATE INDEX IF NOT EXISTS idx_announcements_isActive ON announcements(isActive)',
+        'CREATE INDEX IF NOT EXISTS idx_users_role ON users(role)',
+        'CREATE INDEX IF NOT EXISTS idx_whatsapp_templates_name ON whatsapp_templates(name)',
+        'CREATE INDEX IF NOT EXISTS idx_contact_messages_phone ON contact_messages(phone)',
+    ];
+
+    for (const idx of criticalIndices) {
+        try { await db.exec(idx); } catch (e) {
+            console.warn(`  ✗ Could not create index [${idx}]:`, e.message.substring(0, 100));
+        }
+    }
+    console.log(`  ✓ Created ${criticalIndices.length} performance indexes`);
+
+    // 7. Compound index for common notifications query pattern
     try {
         await db.exec('CREATE INDEX IF NOT EXISTS idx_notifications_receiver_dismissed_read ON notifications(receiverId, is_dismissed, read)');
         console.log('  ✓ Added compound index idx_notifications_receiver_dismissed_read');

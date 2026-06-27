@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -92,12 +92,14 @@ export const Leads: React.FC = () => {
         }
     });
 
-    const filteredLeads = leads.filter(l => {
-        if (showLost) return l.status === 'lost';
-        const matchesSearch = l.studentName.toLowerCase().includes(searchTerm.toLowerCase()) || l.phone.includes(searchTerm);
-        const matchesStatus = filterStatus === 'all' || l.status === filterStatus;
-        return matchesSearch && matchesStatus && l.status !== 'lost';
-    });
+    const filteredLeads = useMemo(() =>
+        leads.filter(l => {
+            if (showLost) return l.status === 'lost';
+            const matchesSearch = l.studentName.toLowerCase().includes(searchTerm.toLowerCase()) || l.phone.includes(searchTerm);
+            const matchesStatus = filterStatus === 'all' || l.status === filterStatus;
+            return matchesSearch && matchesStatus && l.status !== 'lost';
+        }),
+    [leads, showLost, searchTerm, filterStatus]);
 
     const handleMarkLost = (id: string) => setConfirmLeadId(id);
     const handleConfirmDelete = () => {

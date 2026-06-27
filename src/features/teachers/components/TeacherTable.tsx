@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Edit, Trash2, GraduationCap, MessageCircle, BookOpen, Users, Bell } from 'lucide-react';
 import type { Teacher } from '../types';
@@ -14,7 +15,7 @@ interface TeacherTableProps {
     studentCounts: Record<string, number>;
 }
 
-export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, onNotify, selectedId, studentCounts }: TeacherTableProps) => {
+export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat, onNotify, selectedId, studentCounts }: TeacherTableProps) => {
     if (teachers.length === 0) {
         return (
             <div className="py-24 text-center opacity-40">
@@ -148,5 +149,5 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, onN
             </div>
         </div>
     );
-};
+});
 

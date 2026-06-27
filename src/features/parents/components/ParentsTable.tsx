@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Edit, Trash2, Users, Phone, Mail, ArrowUpRight, MessageCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
@@ -13,7 +14,7 @@ interface ParentsTableProps {
     onViewParent?: (parent: Parent) => void;
 }
 
-export const ParentsTable: React.FC<ParentsTableProps> = ({
+export const ParentsTable = memo<ParentsTableProps>(({
     parents,
     students,
     selectedParentId,
@@ -202,4 +203,4 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
             </div>
         </div>
     );
-};
+});

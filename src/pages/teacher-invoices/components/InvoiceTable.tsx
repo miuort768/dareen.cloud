@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Edit, Trash2, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { SectionCard } from './InvoiceUI';
@@ -43,7 +44,7 @@ const ActionButton = ({ icon: Icon, onClick, title, hoverClass }: { icon: React.
   </button>
 );
 
-export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTeacher }: InvoiceTableProps) => (
+export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, isTeacher }: InvoiceTableProps) => (
   <>
     {/* ── Desktop table ── */}
     <SectionCard className="hidden md:block overflow-hidden">
@@ -167,4 +168,4 @@ export const InvoiceTable = ({ filteredInvoices, handleEdit, handleDelete, isTea
       )}
     </div>
   </>
-);
+));

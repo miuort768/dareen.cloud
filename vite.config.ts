@@ -35,7 +35,9 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           socket: ['socket.io-client'],
-          ui: ['lucide-react', 'framer-motion'],
+          motion: ['framer-motion'],
+          icons: ['lucide-react'],
+          date: ['date-fns'],
           query: ['@tanstack/react-query'],
           charts: ['recharts'],
           classroom: ['@livekit/components-react', 'livekit-client'],
