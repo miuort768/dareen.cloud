@@ -270,6 +270,79 @@ async function startServer() {
         prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
         app.use(prerender);
 
+        // Sitemap
+        app.get('/sitemap.xml', async (req, res) => {
+            try {
+                const posts = await req.db.all('SELECT slug, date FROM blog_posts ORDER BY date DESC');
+                const urls = [
+                    { loc: '/', priority: '1.0', changefreq: 'weekly' },
+                    { loc: '/courses', priority: '0.9', changefreq: 'weekly' },
+                    { loc: '/books', priority: '0.9', changefreq: 'daily' },
+                    { loc: '/about', priority: '0.6', changefreq: 'monthly' },
+                    { loc: '/contact', priority: '0.5', changefreq: 'monthly' },
+                    { loc: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/terms-of-work', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/jobs', priority: '0.5', changefreq: 'weekly' },
+                    ...posts.map(p => ({
+                        loc: `/books/${p.slug}`,
+                        priority: '0.8',
+                        changefreq: 'monthly',
+                        lastmod: p.date
+                    }))
+                ];
+                const xml = `<?xml version="1.0" encoding="UTF-8"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            ${urls.map(u => `
+            <url>
+                <loc>https://dareen.cloud${u.loc}</loc>
+                <priority>${u.priority}</priority>
+                <changefreq>${u.changefreq}</changefreq>
+                ${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}
+            </url>`).join('')}
+        </urlset>`;
+                res.header('Content-Type', 'application/xml');
+                res.send(xml);
+            } catch (err) {
+                res.status(500).send('Error generating sitemap');
+            }
+        });
+
+        // RSS Feed
+        app.get('/rss.xml', async (req, res) => {
+            try {
+                const posts = await req.db.all('SELECT slug, title, excerpt, coverImage, date, author, category, subject, curriculum FROM blog_posts ORDER BY date DESC LIMIT 50');
+                const items = posts.map(p => `
+                <item>
+                    <title><![CDATA[${p.title}]]></title>
+                    <link>https://dareen.cloud/books/${p.slug}</link>
+                    <guid>https://dareen.cloud/books/${p.slug}</guid>
+                    <description><![CDATA[${p.excerpt || ''}]]></description>
+                    <author>${p.author}</author>
+                    <category>${p.category || ''}${p.subject ? `, ${p.subject}` : ''}</category>
+                    <pubDate>${new Date(p.date).toUTCString()}</pubDate>
+                    ${p.coverImage ? `<enclosure url="https://dareen.cloud${p.coverImage}" type="image/jpeg" />` : ''}
+                </item>`).join('');
+                const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>دارين السابعة - المدونة</title>
+        <link>https://dareen.cloud/books</link>
+        <description>أحدث المقالات والموارد التعليمية من دارين السابعة للتعليم والتدريب</description>
+        <language>ar</language>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+        <atom:link href="https://dareen.cloud/rss.xml" rel="self" type="application/rss+xml" />
+        ${items}
+    </channel>
+</rss>`;
+                res.header('Content-Type', 'application/rss+xml; charset=utf-8');
+                res.send(xml);
+            } catch (err) {
+                res.status(500).send('Error generating RSS feed');
+            }
+        });
+
         const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/trial-sessions']);
         app.get(/(.*)/, (req, res) => {
             const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');

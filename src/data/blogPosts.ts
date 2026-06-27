@@ -17,13 +17,26 @@ export interface BlogPost {
     subject?: string;
     downloadLink?: string;
     watchLink?: string;
-    showButtons?: boolean;
+    showButtons?: boolean | number;
     downloadButtonText?: string;
     watchButtonText?: string;
     source?: string;
     fileSize?: string;
     isNew?: boolean;
     views?: number;
+    show_buttons?: number;
+    download_button_text?: string;
+    watch_button_text?: string;
+    // SEO fields
+    seoTitle?: string;
+    seoDescription?: string;
+    ogImage?: string;
+    focusKeyword?: string;
+    readingTime?: number;
+    canonicalUrl?: string;
+    robotsIndex?: boolean;
+    isFeatured?: boolean;
+    tags?: string;
 }
 
 export const blogPosts: BlogPost[] = [

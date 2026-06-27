@@ -31,6 +31,16 @@ interface BlogPost {
     watchButtonText: string;
     isNew: boolean;
     views: number;
+    // حقول SEO
+    seoTitle: string;
+    seoDescription: string;
+    ogImage: string;
+    focusKeyword: string;
+    readingTime: number;
+    canonicalUrl: string;
+    robotsIndex: boolean;
+    isFeatured: boolean;
+    tags: string;
 }
 
 export const AdminBlog = () => {
@@ -107,6 +117,16 @@ export const AdminBlog = () => {
                 watchButtonText: '',
                 isNew: false,
                 views: 0,
+                // SEO defaults
+                seoTitle: '',
+                seoDescription: '',
+                ogImage: '',
+                focusKeyword: '',
+                readingTime: 0,
+                canonicalUrl: '',
+                robotsIndex: true,
+                isFeatured: false,
+                tags: '',
             });
             setContentPart1('');
             setContentPart2('');
@@ -556,6 +576,55 @@ export const AdminBlog = () => {
                                         />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* SEO Settings */}
+                        <div className="p-4 rounded-2xl" style={{ backgroundColor: '#7C3AED08', border: '1px solid #7C3AED15' }}>
+                            <p className="text-[10px] font-bold mb-4" style={{ color: '#7C3AED' }}>⚙️ إعدادات SEO — ظهور المقال في محركات البحث</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">عنوان SEO (إذا اختلف عن عنوان المقال)</label>
+                                    <input type="text" value={currentPost.seoTitle || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoTitle: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الوصف في SEO</label>
+                                    <input type="text" value={currentPost.seoDescription || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoDescription: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">صورة OG (لمشاركة فيسبوك/واتساب)</label>
+                                    <input type="url" value={currentPost.ogImage || ''} onChange={(e) => setCurrentPost({ ...currentPost, ogImage: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الكلمة المفتاحية الأساسية (Focus Keyword)</label>
+                                    <input type="text" value={currentPost.focusKeyword || ''} onChange={(e) => setCurrentPost({ ...currentPost, focusKeyword: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الوسوم (Tags) — مفصولة بفواصل</label>
+                                    <input type="text" value={currentPost.tags || ''} onChange={(e) => setCurrentPost({ ...currentPost, tags: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">Canonical URL (إذا اختلف)</label>
+                                    <input type="url" value={currentPost.canonicalUrl || ''} onChange={(e) => setCurrentPost({ ...currentPost, canonicalUrl: e.target.value })}
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-6 mt-4">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" checked={currentPost.robotsIndex !== false} onChange={(e) => setCurrentPost({ ...currentPost, robotsIndex: e.target.checked })}
+                                        className="w-4 h-4 rounded border-slate-300 text-[#7C3AED] focus:ring-[#7C3AED]" />
+                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">السماح بفهرسة المقال (Index)</span>
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" checked={currentPost.isFeatured || false} onChange={(e) => setCurrentPost({ ...currentPost, isFeatured: e.target.checked })}
+                                        className="w-4 h-4 rounded border-slate-300 text-[#7C3AED] focus:ring-[#7C3AED]" />
+                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1"><Star size={12} className="text-amber-500" /> مقال مميز</span>
+                                </label>
                             </div>
                         </div>
 

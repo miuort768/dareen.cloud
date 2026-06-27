@@ -4,7 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle, Play, BookOpen, GraduationCap, School, Tag } from 'lucide-react';
+import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle, Play, BookOpen, GraduationCap, School, Tag, Clock } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import DOMPurify from 'dompurify';
@@ -12,7 +12,7 @@ import DOMPurify from 'dompurify';
 const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
 
 // Plain function outside component — avoids Rules of Hooks violation
-const processContent = (text: string): string => {
+const processContent = (text: string, alt?: string): string => {
     if (!text) return '';
     const lines = text.split('\n');
     const hasHtml = /<[a-z][\s\S]*>/i.test(text);
@@ -20,7 +20,7 @@ const processContent = (text: string): string => {
         const trimmed = line.trim();
         const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
         if (imgRegex.test(trimmed)) {
-            return `<img src="${trimmed}" alt="" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
+            return `<img src="${trimmed}" alt="${alt || ''}" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`;
         }
         return line;
     });
@@ -51,6 +51,7 @@ export const BlogPost = () => {
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);
+    const [relatedPosts, setRelatedPosts] = useState<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>([]);
     const [buttonState, setButtonState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -59,6 +60,10 @@ export const BlogPost = () => {
             try {
                 const data = await api.get<BlogPostType>(`/blog/${slug}`);
                 setPost(data);
+                try {
+                    const related = await api.get<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>(`/blog/${slug}/related`);
+                    setRelatedPosts(related);
+                } catch { /* ignore related errors */ }
             } catch (err) {
                 console.error('Failed to fetch blog post:', err);
                 const staticPost = staticPosts.find(p => p.slug === slug);
@@ -125,11 +130,12 @@ export const BlogPost = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
-                title={post.title}
-                description={post.excerpt}
-                keywords={post.keywords}
-                image={post.coverImage}
+                title={post.seoTitle || post.title}
+                description={post.seoDescription || post.excerpt}
+                keywords={post.focusKeyword || post.keywords}
+                image={post.ogImage || post.coverImage}
                 url={`https://dareen.cloud/books/${post.slug}`}
+                noindex={post.robotsIndex === false}
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
                     { name: 'المكتبة', item: '/books' },
@@ -165,6 +171,7 @@ export const BlogPost = () => {
                             <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-black text-xs px-3 py-1.5 uppercase tracking-widest">{post.category}</span>
                             <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium">
                                 <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
+                                {post.readingTime ? <div className="flex items-center gap-1.5"><Clock size={14} /> <span>{post.readingTime} دقيقة قراءة</span></div> : null}
                                 <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-black text-[11px] sm:text-xs px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg"><User size={12} className="inline" /> {post.author}</div>
                                 {/* Mobile share buttons below author */}
                                 <div className="flex items-center gap-2 md:hidden mt-2">
@@ -197,6 +204,13 @@ export const BlogPost = () => {
                         {post.subject && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 text-[11px] font-bold rounded-lg border border-rose-200/50 dark:border-rose-500/20"><BookOpen size={12} />{subjectNames[post.subject] || post.subject}</span>}
                     </div>
                     )}
+                    {post.tags && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {post.tags.split(',').map((tag: string, i: number) => (
+                            <span key={i} className="text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg">#{tag.trim()}</span>
+                        ))}
+                    </div>
+                    )}
                 </header>
 
                 {/* Image + First Content Side by Side */}
@@ -206,7 +220,7 @@ export const BlogPost = () => {
                             <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
                         </div>
                         <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none prose-p:text-justify text-slate-800 dark:text-slate-200"
-                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first)) }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first, post.title)) }}
                         />
                     </div>
                 </div>
@@ -238,7 +252,7 @@ export const BlogPost = () => {
                     {contentParts.rest && (
                         <div 
                             className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-[#E11D48] prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-slate-800 dark:text-slate-200"
-                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest)) }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest, post.title)) }}
                         />
                     )}
 
@@ -278,6 +292,27 @@ export const BlogPost = () => {
                         </div>
                     </div>
                 </article>
+
+                {/* Related Posts */}
+                {relatedPosts.length > 0 && (
+                <div className="container mx-auto px-4 max-w-5xl mt-16 mb-8">
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-6">مقالات ذات صلة</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {relatedPosts.map((rp) => (
+                            <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-slate-100 dark:border-slate-800">
+                                <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                                    <img src={rp.coverImage || ''} alt={rp.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                </div>
+                                <div className="p-4">
+                                    <p className="text-[10px] font-bold text-slate-400 mb-1">{rp.date}</p>
+                                    <h3 className="font-black text-sm text-slate-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2">{rp.title}</h3>
+                                    {rp.excerpt && <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">{rp.excerpt}</p>}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+                )}
             </main>
 
             <PublicFooter />

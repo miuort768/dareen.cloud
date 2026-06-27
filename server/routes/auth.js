@@ -8,6 +8,7 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 const logger = require('../utils/logger');
 const ResponseHandler = require('../utils/responseHandler');
 const { safeTable } = require('../utils/asyncHandler');
+const { prisma } = require('../utils/prisma');
 
 const router = express.Router();
 
@@ -37,25 +38,26 @@ router.post('/login', loginLimiter, async (req, res) => {
     }
 
     try {
-        let userData = await req.db.get(
-            'SELECT * FROM users WHERE username = ?',
-            [username]
-        );
+        let userData = null;
         let role = 'admin';
         let teacherName = null;
 
+        // 1. Try users table (Prisma)
+        userData = await prisma.user.findUnique({ where: { username } });
+        role = 'admin';
+
+        // 2. Try teachers (Prisma)
         if (!userData) {
-            userData = await req.db.get(
-                'SELECT * FROM teachers WHERE username = ? OR email = ?',
-                [username, username]
-            );
+            userData = await prisma.teacher.findFirst({
+                where: { OR: [{ username }, { email: username }], deletedAt: null }
+            });
             if (userData) {
                 role = 'teacher';
                 teacherName = userData.name;
             }
         }
 
-        // Try Chat Profiles
+        // 3. Try chat_profiles (SQLite until Phase 4)
         if (!userData) {
             userData = await req.db.get(
                 'SELECT * FROM chat_profiles WHERE username = ?',
@@ -66,23 +68,21 @@ router.post('/login', loginLimiter, async (req, res) => {
             }
         }
 
-        // Try Parents
+        // 4. Try parents (Prisma)
         if (!userData) {
-            userData = await req.db.get(
-                'SELECT * FROM parents WHERE username = ? OR phone = ?',
-                [username, username]
-            );
+            userData = await prisma.parent.findFirst({
+                where: { OR: [{ username }, { phone: username }], deletedAt: null }
+            });
             if (userData) {
                 role = 'parent';
             }
         }
 
-        // Try Students
+        // 5. Try students (Prisma)
         if (!userData) {
-            userData = await req.db.get(
-                'SELECT * FROM students WHERE username = ? OR studentPhone = ?',
-                [username, username]
-            );
+            userData = await prisma.student.findFirst({
+                where: { OR: [{ username }, { studentPhone: username }], deletedAt: null }
+            });
             if (userData) {
                 role = 'student';
             }
@@ -103,8 +103,6 @@ router.post('/login', loginLimiter, async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Fix: If logged in as a System User (from 'users' table) but role is 'teacher',
-        // try to find the linked Teacher entity to get the correct ID for data filtering.
         let parsedPermissions = [];
         if (userData.permissions) {
             if (typeof userData.permissions === 'string') {
@@ -123,9 +121,9 @@ router.post('/login', loginLimiter, async (req, res) => {
             id: userData.id,
             username: userData.username,
             role: role,
-            phone: userData.phone || null,
+            phone: userData.phone || userData.studentPhone || null,
             teacherName: teacherName,
-            token_version: userData.token_version || 1,
+            token_version: userData.tokenVersion || userData.token_version || 1,
             permissions: parsedPermissions
         };
 
@@ -140,14 +138,13 @@ router.post('/login', loginLimiter, async (req, res) => {
         }
 
         if (role === 'teacher' && !teacherName) {
-            // User found in 'users' table, not 'teachers'. Let's see if we can link them.
-            const linkedTeacher = await req.db.get('SELECT * FROM teachers WHERE username = ?', [username]);
+            const linkedTeacher = await prisma.teacher.findFirst({
+                where: { username, deletedAt: null }
+            });
             if (linkedTeacher) {
-                // Found a matching teacher! Use their ID so the frontend shows their data.
                 tokenPayload.id = linkedTeacher.id;
                 tokenPayload.teacherName = linkedTeacher.name;
-                teacherName = linkedTeacher.name; // Update for response
-                // We keep the permissions from the System User if they exist, or defaults
+                teacherName = linkedTeacher.name;
             }
         }
 
@@ -186,7 +183,6 @@ router.post('/login', loginLimiter, async (req, res) => {
 
 /**
  * POST /auth/verify
- * Verify if token is still valid
  */
 router.post('/verify', verifyLimiter, async (req, res) => {
     const { token } = req.body;
@@ -198,37 +194,50 @@ router.post('/verify', verifyLimiter, async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Fetch fresh user data from DB
         let userData = null;
         if (decoded.role === 'admin') {
-            userData = await req.db.get('SELECT id, name, username, role, permissions, token_version FROM users WHERE id = ?', [decoded.id]);
+            userData = await prisma.user.findUnique({
+                where: { id: decoded.id },
+                select: { id: true, name: true, username: true, role: true, permissions: true, tokenVersion: true }
+            });
         } else if (decoded.role === 'teacher') {
-            userData = await req.db.get('SELECT id, name, username, token_version FROM teachers WHERE id = ?', [decoded.id]);
-            if (userData) {
-                userData.role = 'teacher';
-                userData.teacherName = userData.name; // Crucial for data filtering
+            const teacher = await prisma.teacher.findUnique({
+                where: { id: decoded.id },
+                select: { id: true, name: true, username: true, tokenVersion: true }
+            });
+            if (teacher) {
+                userData = { ...teacher, role: 'teacher', teacherName: teacher.name };
             }
         } else if (decoded.role === 'chat_user') {
             userData = await req.db.get('SELECT id, name, username FROM chat_profiles WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'chat_user';
         } else if (decoded.role === 'parent') {
-            userData = await req.db.get('SELECT id, name, username, phone, token_version FROM parents WHERE id = ?', [decoded.id]);
-            if (userData) userData.role = 'parent';
+            const parent = await prisma.parent.findUnique({
+                where: { id: decoded.id },
+                select: { id: true, name: true, username: true, phone: true, tokenVersion: true }
+            });
+            if (parent) {
+                userData = { ...parent, role: 'parent' };
+            }
         } else if (decoded.role === 'student') {
-            userData = await req.db.get('SELECT id, name, username, studentPhone, token_version FROM students WHERE id = ?', [decoded.id]);
-            if (userData) userData.role = 'student';
+            const student = await prisma.student.findUnique({
+                where: { id: decoded.id },
+                select: { id: true, name: true, username: true, studentPhone: true, tokenVersion: true }
+            });
+            if (student) {
+                userData = { ...student, role: 'student' };
+            }
         }
 
         if (!userData) {
             return res.json({ valid: false });
         }
 
-        // Enforce token revocation check on token verification
-        if (decoded.token_version !== undefined && userData.token_version !== undefined && userData.token_version !== decoded.token_version) {
+        const tvField = userData.tokenVersion ?? userData.token_version;
+        if (decoded.token_version !== undefined && tvField !== undefined && tvField !== decoded.token_version) {
             return res.json({ valid: false, error: 'Session revoked' });
         }
 
-        // Add role-based default permissions if not present (crucial for teachers/chat users on reload)
         if (!userData.permissions || (Array.isArray(userData.permissions) && userData.permissions.length === 0)) {
             if (userData.role === 'admin') {
                 userData.permissions = ['*'];
@@ -243,7 +252,6 @@ router.post('/verify', verifyLimiter, async (req, res) => {
             }
         }
 
-        // Parse permissions if string safely
         if (userData.permissions && typeof userData.permissions === 'string') {
             try {
                 userData.permissions = JSON.parse(userData.permissions);
@@ -261,7 +269,6 @@ router.post('/verify', verifyLimiter, async (req, res) => {
 
 /**
  * POST /auth/refresh
- * Re-issue token if current one is still valid (used on 401 to avoid forced logout)
  */
 router.post('/refresh', async (req, res) => {
     const { token } = req.body;
@@ -282,12 +289,24 @@ router.post('/refresh', async (req, res) => {
 
 /**
  * POST /auth/logout-all
- * Invalidate all active sessions for this user
  */
 router.post('/logout-all', authMiddleware, logoutAllLimiter, async (req, res) => {
     try {
         const table = safeTable(req.user.role);
-        await req.db.run(`UPDATE ${table} SET token_version = token_version + 1 WHERE id = ?`, [req.user.id]);
+        if (['users', 'teachers', 'parents', 'students'].includes(table)) {
+            const prismaModel = {
+                users: 'user',
+                teachers: 'teacher',
+                parents: 'parent',
+                students: 'student'
+            }[table];
+            await prisma[prismaModel].update({
+                where: { id: req.user.id },
+                data: { tokenVersion: { increment: 1 } }
+            });
+        } else {
+            await req.db.run(`UPDATE ${table} SET token_version = token_version + 1 WHERE id = ?`, [req.user.id]);
+        }
         res.json({ success: true, message: 'Logged out from all devices.' });
     } catch (error) {
         logger.error('Logout-all error', error);

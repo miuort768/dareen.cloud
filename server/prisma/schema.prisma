@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ========== Phase 1: Core Domain ==========
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  username     String   @unique
+  password     String
+  role         String   @default("admin")
+  permissions  String?
+  tokenVersion Int      @default(1) @map("token_version")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Teacher {
+  id          String       @id @default(cuid())
+  name        String
+  phone1      String?
+  phone2      String?
+  subject     String?
+  price       Int          @default(0)
+  email       String?
+  username    String?      @unique
+  password    String?
+  points      Int          @default(0)
+  deletedAt   DateTime?    @map("deleted_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  enrollments Enrollment[]
+
+  @@index([email])
+  @@index([phone1])
+  @@map("teachers")
+}
+
+model Student {
+  id           String       @id @default(cuid())
+  name         String
+  grade        String?
+  parentPhone  String?      @map("parent_phone")
+  studentPhone  String?     @map("student_phone")
+  curriculum   String?
+  notes        String?
+  sessionPrice Int          @default(0) @map("session_price")
+  parentId     String?
+  parent       Parent?      @relation(fields: [parentId], references: [id], onDelete: SetNull)
+  totalPoints  Int          @default(0) @map("total_points")
+  badges       String?
+  username     String?      @unique
+  password     String?
+  deletedAt    DateTime?    @map("deleted_at")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+
+  enrollments Enrollment[]
+  pointsLogs  PointsLog[]
+
+  @@index([parentId])
+  @@index([studentPhone])
+  @@map("students")
+}
+
+model Parent {
+  id        String    @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  username  String?   @unique
+  password  String?
+  deletedAt DateTime? @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  students Student[]
+
+  @@index([phone])
+  @@map("parents")
+}
+
+model Enrollment {
+  id               Int      @id @default(autoincrement())
+  studentId        String
+  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId        String?
+  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherFallback  String?  @map("teacher")
+  subject          String?
+  curr             String?
+  sessionsTotal    Int      @default(0) @map("sessions_total")
+  sessionsUsed     Int      @default(0) @map("sessions_used")
+  schedule         String?
+  nextSessionNotes String?  @map("next_session_notes")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@map("enrollments")
+}
+
+model PointsLog {
+  id        String   @id @default(cuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  amount    Int
+  action    String
+  timestamp DateTime @default(now())
+
+  @@index([studentId])
+  @@map("points_log")
+}

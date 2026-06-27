@@ -1,10 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../utils/logger');
-const { getStudentEnrollments, getStudentsWithEnrollments, withTransaction } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createStudentSchema, updateStudentSchema } = require('../utils/validators');
+const { prisma } = require('../utils/prisma');
+
+const studentInclude = {
+    enrollments: true,
+    parent: { select: { id: true, name: true, phone: true } }
+};
+
+const mapEnrollment = (e) => ({
+    ...e,
+    schedule: typeof e.schedule === 'string' ? JSON.parse(e.schedule) : (e.schedule || [])
+});
+
+const mapStudent = (s, isTeacher = false) => {
+    const { password, ...safe } = s;
+    const enrollments = (s.enrollments || []).map(mapEnrollment);
+    if (isTeacher) {
+        const { sessionPrice, ...rest } = safe;
+        return { ...rest, sessionPrice: 0, enrollments: enrollments.map(e => { const { price, ...er } = e; return er; }) };
+    }
+    return { ...safe, enrollments };
+};
 
 // 1. Get all students
 router.get('/', authMiddleware, async (req, res) => {
@@ -14,86 +34,62 @@ router.get('/', authMiddleware, async (req, res) => {
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
         const isTeacher = req.user && req.user.role === 'teacher';
 
-        const mapStudent = (s) => {
-            // Always strip password hash from API responses
-            const { password: _, ...safeStudent } = s;
-            if (isTeacher) {
-                const { sessionPrice, ...restStudent } = safeStudent;
-                const enrollments = (s.enrollments || []).map(en => {
-                    const { price, ...restEnrollment } = en;
-                    return restEnrollment;
-                });
-                return { ...restStudent, sessionPrice: 0, enrollments };
-            }
-            return safeStudent;
-        };
-
         let teacherStudentIds = null;
         if (isTeacher) {
-            const enrollments = await req.db.all('SELECT studentId FROM enrollments WHERE teacherId = ?', [req.user.id]);
+            const enrollments = await prisma.enrollment.findMany({
+                where: { teacherId: req.user.id },
+                select: { studentId: true }
+            });
             teacherStudentIds = enrollments.map(e => e.studentId);
             if (teacherStudentIds.length === 0) {
                 return res.json(!isNaN(page) && !isNaN(limit) ? { data: [], total: 0, page, limit, totalPages: 0 } : []);
             }
         }
 
-        if (!isNaN(page) && !isNaN(limit)) {
-            const offset = (page - 1) * limit;
-            let whereClauses = [];
-            let params = [];
-
-            if (isTeacher) {
-                whereClauses.push(`id IN (${teacherStudentIds.map(() => '?').join(',')})`);
-                params.push(...teacherStudentIds);
-            }
-
-            if (q) {
-                whereClauses.push('(lower(name) LIKE ? OR parentPhone LIKE ? OR studentPhone LIKE ?)');
-                params.push(`%${q}%`, `%${q}%`, `%${q}%`);
-            }
-
-            const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
-            let querySql = `SELECT id FROM students${whereSql}`;
-            let countSql = `SELECT COUNT(*) as total FROM students${whereSql}`;
-
-            querySql += ' LIMIT ? OFFSET ?';
-            const studentIdsRaw = await req.db.all(querySql, [...params, limit, offset]);
-            const countResult = await req.db.get(countSql, params);
-
-            const studentIds = studentIdsRaw.map(s => s.id);
-            const studentsWithEnrollments = studentIds.length > 0
-                ? await getStudentsWithEnrollments(req.db, studentIds)
-                : [];
-
-            res.json({
-                data: studentsWithEnrollments.map(mapStudent),
-                total: countResult.total,
-                page,
-                limit,
-                totalPages: Math.ceil(countResult.total / limit)
-            });
-        } else {
-            let studentsWithEnrollments;
-            if (isTeacher) {
-                studentsWithEnrollments = await getStudentsWithEnrollments(req.db, teacherStudentIds);
-            } else {
-                studentsWithEnrollments = await getStudentsWithEnrollments(req.db);
-            }
-            res.json(studentsWithEnrollments.map(mapStudent));
+        const where = { deletedAt: null };
+        if (isTeacher && teacherStudentIds) {
+            where.id = { in: teacherStudentIds };
+        }
+        if (q) {
+            where.OR = [
+                { name: { contains: q, mode: 'insensitive' } },
+                { parentPhone: { contains: q } },
+                { studentPhone: { contains: q } }
+            ];
         }
 
+        if (!isNaN(page) && !isNaN(limit)) {
+            const [students, total] = await Promise.all([
+                prisma.student.findMany({
+                    where,
+                    include: studentInclude,
+                    skip: (page - 1) * limit,
+                    take: limit,
+                    orderBy: { name: 'asc' }
+                }),
+                prisma.student.count({ where })
+            ]);
+
+            res.json({
+                data: students.map(s => mapStudent(s, isTeacher)),
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit)
+            });
+        } else {
+            const students = await prisma.student.findMany({
+                where,
+                include: studentInclude,
+                orderBy: { name: 'asc' }
+            });
+            res.json(students.map(s => mapStudent(s, isTeacher)));
+        }
     } catch (err) {
         logger.error('Error fetching students', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-// Helper: strip password from student responses
-const stripPassword = (student) => {
-    if (!student) return student;
-    const { password: _, ...safe } = student;
-    return safe;
-};
 
 // 2. Add student
 router.post('/', validate(createStudentSchema), async (req, res) => {
@@ -102,43 +98,47 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
     const bcrypt = require('bcrypt');
 
     try {
-        const newStudent = await withTransaction(req.db, async (tx) => {
-            // Only hash if password is a real new value (not empty, not already hashed)
-            let hashedPassword = null;
-            if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
-                hashedPassword = await bcrypt.hash(password, 10);
-            }
+        let hashedPassword = null;
+        if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
+        const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
 
-            // Treat empty username as NULL for UNIQUE constraint safety
-            const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
-
-            await tx.run(
-                `INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [newId, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername, hashedPassword]
-            );
+        const student = await prisma.$transaction(async (tx) => {
+            await tx.student.create({
+                data: {
+                    id: newId, name, grade, parentPhone, studentPhone, curriculum, notes,
+                    sessionPrice: sessionPrice || 0, username: dbUsername, password: hashedPassword
+                }
+            });
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
                     let finalTeacherId = e.teacherId || null;
                     if (!finalTeacherId && e.teacher) {
-                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE name = ?', [e.teacher]);
-                        if (teacherRecord) finalTeacherId = teacherRecord.id;
+                        const teacher = await tx.teacher.findFirst({ where: { name: e.teacher } });
+                        if (teacher) finalTeacherId = teacher.id;
                     }
-
-                    await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule, nextSessionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [newId, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule), e.nextSessionNotes || null]
-                    );
+                    await tx.enrollment.create({
+                        data: {
+                            studentId: newId, teacher: e.teacher, teacherId: finalTeacherId,
+                            subject: e.subject, curr: e.curr,
+                            sessionsTotal: e.sessionsTotal || 0, sessionsUsed: e.sessionsUsed || 0,
+                            schedule: JSON.stringify(e.schedule || []), nextSessionNotes: e.nextSessionNotes || null
+                        }
+                    });
                 }
             }
 
-            const results = await getStudentsWithEnrollments(tx, [newId]);
-            return results[0];
+            return tx.student.findUnique({
+                where: { id: newId },
+                include: studentInclude
+            });
         });
 
-        res.status(201).json(stripPassword(newStudent));
+        res.status(201).json(mapStudent(student));
     } catch (err) {
-        if (err.message && err.message.includes('UNIQUE constraint failed: students.username')) {
+        if (err.code === 'P2002') {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
         }
         logger.error('Error adding student', err);
@@ -153,68 +153,63 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     const bcrypt = require('bcrypt');
 
     try {
-        const updatedStudent = await withTransaction(req.db, async (tx) => {
-            // 1. Update basic student info
-            logger.info(`Update attempt for student ${id}`, { body: JSON.stringify(req.body) });
-            const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
-            let query = `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ?, username = ?`;
-            let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername];
+        const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
 
-            // Only update password if it's a NEW plain-text password (not empty, not an old hash)
-            if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
-                const hashedPassword = await bcrypt.hash(password, 10);
-                query += `, password = ?`;
-                params.push(hashedPassword);
-            }
-
-            query += ` WHERE id = ?`;
-            params.push(id);
-
-            await tx.run(query, params);
-
-            // 2. Fetch existing enrollments to preserve their sessionsUsed and nextSessionNotes
-            const existingEnrollments = await tx.all('SELECT teacher, subject, sessionsUsed, nextSessionNotes FROM enrollments WHERE studentId = ?', [id]);
+        const student = await prisma.$transaction(async (tx) => {
+            // 1. Fetch existing enrollments to preserve sessionsUsed and nextSessionNotes
+            const existingEnrollments = await tx.enrollment.findMany({
+                where: { studentId: id },
+                select: { teacher: true, subject: true, sessionsUsed: true, nextSessionNotes: true }
+            });
             const preservedMap = {};
             existingEnrollments.forEach(en => {
-                const key = `${en.teacher.trim().toLowerCase()}-${en.subject.trim().toLowerCase()}`;
-                preservedMap[key] = {
-                    used: en.sessionsUsed,
-                    notes: en.nextSessionNotes
-                };
+                const key = `${(en.teacher || '').trim().toLowerCase()}-${(en.subject || '').trim().toLowerCase()}`;
+                preservedMap[key] = { used: en.sessionsUsed, notes: en.nextSessionNotes };
             });
 
+            // 2. Update basic student info
+            const data = { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice: sessionPrice || 0, username: dbUsername };
+            if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
+                data.password = await bcrypt.hash(password, 10);
+            }
+            await tx.student.update({ where: { id }, data });
+
             // 3. Re-sync enrollments
-            await tx.run('DELETE FROM enrollments WHERE studentId = ?', [id]);
+            await tx.enrollment.deleteMany({ where: { studentId: id } });
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
                     let finalTeacherId = e.teacherId || null;
                     if (!finalTeacherId && e.teacher) {
-                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))', [e.teacher]);
-                        if (teacherRecord) finalTeacherId = teacherRecord.id;
+                        const teacher = await tx.teacher.findFirst({ where: { name: { equals: e.teacher.trim(), mode: 'insensitive' } } });
+                        if (teacher) finalTeacherId = teacher.id;
                     }
 
-                    const matchKey = `${e.teacher.trim().toLowerCase()}-${e.subject.trim().toLowerCase()}`;
+                    const matchKey = `${(e.teacher || '').trim().toLowerCase()}-${(e.subject || '').trim().toLowerCase()}`;
                     const preservedData = preservedMap[matchKey] || {};
                     const preservedUsed = preservedData.used !== undefined ? preservedData.used : (e.sessionsUsed || 0);
                     const finalNotes = e.nextSessionNotes !== undefined ? e.nextSessionNotes : (preservedData.notes || null);
-                    
-                    logger.info(`Re-syncing enrollment for ${id}`, { subject: e.subject, notes: finalNotes });
 
-                    await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule, nextSessionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, preservedUsed, JSON.stringify(e.schedule), finalNotes]
-                    );
+                    await tx.enrollment.create({
+                        data: {
+                            studentId: id, teacher: e.teacher, teacherId: finalTeacherId,
+                            subject: e.subject, curr: e.curr,
+                            sessionsTotal: e.sessionsTotal || 0, sessionsUsed: preservedUsed,
+                            schedule: JSON.stringify(e.schedule || []), nextSessionNotes: finalNotes
+                        }
+                    });
                 }
             }
 
-            const results = await getStudentsWithEnrollments(tx, [id]);
-            return results[0];
+            return tx.student.findUnique({
+                where: { id },
+                include: studentInclude
+            });
         });
 
-        res.json(stripPassword(updatedStudent));
+        res.json(mapStudent(student));
     } catch (err) {
-        if (err.message && err.message.includes('UNIQUE constraint failed: students.username')) {
+        if (err.code === 'P2002') {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
         }
         logger.error('Error updating student', err);
@@ -222,13 +217,13 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     }
 });
 
-// 4. Delete student
+// 4. Delete student (soft delete)
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
-        await withTransaction(req.db, async (tx) => {
-            await tx.run('DELETE FROM enrollments WHERE studentId = ?', [id]);
-            await tx.run('DELETE FROM students WHERE id = ?', [id]);
+        await prisma.$transaction(async (tx) => {
+            await tx.enrollment.deleteMany({ where: { studentId: id } });
+            await tx.student.update({ where: { id }, data: { deletedAt: new Date() } });
         });
         res.json({ message: 'Deleted successfully' });
     } catch (err) {
@@ -237,12 +232,12 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
     }
 });
 
-// 5. Delete all students (admin only)
+// 5. Delete all students
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
-        await withTransaction(req.db, async (tx) => {
-            await tx.run('DELETE FROM enrollments');
-            await tx.run('DELETE FROM students');
+        await prisma.$transaction(async (tx) => {
+            await tx.enrollment.deleteMany();
+            await tx.student.updateMany({ data: { deletedAt: new Date() } });
         });
         res.json({ message: 'All students and enrollments deleted' });
     } catch (err) {
@@ -256,11 +251,10 @@ router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, asy
     const { studentId, enrollmentId } = req.params;
     const { isFrozen, frozenReason } = req.body;
     try {
-        await req.db.run(
-            'UPDATE enrollments SET isFrozen = ?, frozenReason = ? WHERE id = ? AND studentId = ?',
-            [isFrozen ? 1 : 0, frozenReason || null, enrollmentId, studentId]
-        );
-        const updated = await req.db.get('SELECT * FROM enrollments WHERE id = ?', [enrollmentId]);
+        const updated = await prisma.enrollment.update({
+            where: { id: parseInt(enrollmentId), studentId },
+            data: { nextSessionNotes: isFrozen ? `[مجمدة] ${frozenReason || ''}` : null }
+        });
         res.json(updated);
     } catch (err) {
         logger.error('Error updating freeze status', err);
@@ -269,5 +263,3 @@ router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, asy
 });
 
 module.exports = { studentRouter: router };
-
-

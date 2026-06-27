@@ -3,11 +3,18 @@ const router = express.Router();
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const logger = require('../utils/logger');
 const ResponseHandler = require('../utils/responseHandler');
+const { prisma } = require('../utils/prisma');
+
+const parentSelect = { id: true, name: true, phone: true, email: true, username: true };
 
 // 1. Get all parents
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
-        const parents = await req.db.all('SELECT * FROM parents ORDER BY name ASC');
+        const parents = await prisma.parent.findMany({
+            where: { deletedAt: null },
+            select: parentSelect,
+            orderBy: { name: 'asc' }
+        });
         res.json(parents);
     } catch (err) {
         logger.error('Error fetching parents', err);
@@ -26,14 +33,16 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { v4: uuidv4 } = require('uuid');
     const newId = id || uuidv4();
     try {
-        await req.db.run(
-            `INSERT INTO parents (id, name, phone, email, username, password) VALUES (?, ?, ?, ?, ?, ?)`,
-            [newId, name, phone, email || '', dbUsername, hashedPassword]
-        );
-        const newItem = await req.db.get('SELECT * FROM parents WHERE id = ?', [newId]);
+        await prisma.parent.create({
+            data: { id: newId, name, phone, email: email || '', username: dbUsername, password: hashedPassword }
+        });
+        const newItem = await prisma.parent.findUnique({
+            where: { id: newId },
+            select: parentSelect
+        });
         res.status(201).json(newItem);
     } catch (err) {
-        if (err.message.includes('UNIQUE constraint failed: parents.username')) {
+        if (err.code === 'P2002') {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.' });
         }
         logger.error('Error adding parent', err, { parent: name });
@@ -48,22 +57,18 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const bcrypt = require('bcrypt');
 
     try {
+        const data = { name, phone, email: email || '', username: username || phone };
         if (password && password.trim() !== '') {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            await req.db.run(
-                `UPDATE parents SET name = ?, phone = ?, email = ?, username = ?, password = ? WHERE id = ?`,
-                [name, phone, email || '', username || phone, hashedPassword, id]
-            );
-        } else {
-            await req.db.run(
-                `UPDATE parents SET name = ?, phone = ?, email = ?, username = ? WHERE id = ?`,
-                [name, phone, email || '', username || phone, id]
-            );
+            data.password = await bcrypt.hash(password, 10);
         }
-        const updated = await req.db.get('SELECT id, name, phone, email, username FROM parents WHERE id = ?', [id]);
+        await prisma.parent.update({ where: { id }, data });
+        const updated = await prisma.parent.findUnique({
+            where: { id },
+            select: parentSelect
+        });
         res.json(updated);
     } catch (err) {
-        if (err.message.includes('UNIQUE constraint failed: parents.username')) {
+        if (err.code === 'P2002') {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.' });
         }
         logger.error('Error updating parent', err, { id });
@@ -71,11 +76,11 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     }
 });
 
-// 4. Delete parent
+// 4. Delete parent (soft delete)
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM parents WHERE id = ?', [id]);
+        await prisma.parent.update({ where: { id }, data: { deletedAt: new Date() } });
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting parent', err, { id });
@@ -87,21 +92,23 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
 router.get('/my-children', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const parentPhone = req.user.phone;
-        const children = await req.db.all('SELECT * FROM students WHERE parentPhone = ?', [parentPhone]);
+        const children = await prisma.student.findMany({
+            where: { parentPhone, deletedAt: null },
+            include: {
+                enrollments: true
+            }
+        });
 
-        // Deep fetch enrollments for each child
-        const childrenWithData = await Promise.all(children.map(async (child) => {
-            const enrollments = await req.db.all('SELECT * FROM enrollments WHERE studentId = ?', [child.id]);
-            // Parse schedule JSON if it exists
-            const enrollmentsWithParsedData = enrollments.map(en => ({
-                ...en,
-                schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
-            }));
+        const childrenWithData = children.map(child => {
+            const { password: _, ...safe } = child;
             return {
-                ...child,
-                enrollments: enrollmentsWithParsedData
+                ...safe,
+                enrollments: (child.enrollments || []).map(en => ({
+                    ...en,
+                    schedule: typeof en.schedule === 'string' ? JSON.parse(en.schedule) : (en.schedule || [])
+                }))
             };
-        }));
+        });
 
         res.json(childrenWithData);
     } catch (err) {
@@ -110,14 +117,16 @@ router.get('/my-children', authMiddleware, checkRole(['parent', 'admin']), async
     }
 });
 
-// 6. Parent Portal: Get Child Sessions
+// 6. Parent Portal: Get Child Sessions (uses SQLite until Phase 2)
 router.get('/child-sessions/:studentId', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const { studentId } = req.params;
         const parentPhone = req.user.phone;
 
-        // Security check: ensure student belongs to parent
-        const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
+        const student = await prisma.student.findFirst({
+            where: { id: studentId, parentPhone, deletedAt: null },
+            select: { id: true }
+        });
         if (!student) return res.status(403).json({ error: 'Unauthorized' });
 
         const sessions = await req.db.all('SELECT * FROM sessions WHERE studentId = ? ORDER BY date DESC', [studentId]);
@@ -128,14 +137,16 @@ router.get('/child-sessions/:studentId', authMiddleware, checkRole(['parent', 'a
     }
 });
 
-// 7. Parent Portal: Get Child Invoices
+// 7. Parent Portal: Get Child Invoices (uses SQLite until Phase 3)
 router.get('/child-invoices/:studentId', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const { studentId } = req.params;
         const parentPhone = req.user.phone;
 
-        // Security check
-        const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
+        const student = await prisma.student.findFirst({
+            where: { id: studentId, parentPhone, deletedAt: null },
+            select: { id: true }
+        });
         if (!student) return res.status(403).json({ error: 'Unauthorized' });
 
         const invoices = await req.db.all('SELECT * FROM student_invoices WHERE studentId = ? ORDER BY date DESC', [studentId]);
@@ -147,4 +158,3 @@ router.get('/child-invoices/:studentId', authMiddleware, checkRole(['parent', 'a
 });
 
 module.exports = { parentRouter: router };
-

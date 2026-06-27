@@ -24,7 +24,17 @@ const blogPostSchema = z.object({
     downloadButtonText: z.string().max(100).optional().nullable(),
     watchButtonText: z.string().max(100).optional().nullable(),
     source: z.string().max(500).optional().nullable(),
-    fileSize: z.string().max(50).optional().nullable()
+    fileSize: z.string().max(50).optional().nullable(),
+    // SEO fields
+    seoTitle: z.string().max(200).optional().nullable(),
+    seoDescription: z.string().max(500).optional().nullable(),
+    ogImage: z.string().max(500).optional().nullable(),
+    focusKeyword: z.string().max(200).optional().nullable(),
+    readingTime: z.number().int().min(0).optional().default(0),
+    canonicalUrl: z.string().max(500).optional().nullable(),
+    robotsIndex: z.boolean().optional().default(true),
+    isFeatured: z.boolean().optional().default(false),
+    tags: z.string().max(1000).optional().nullable()
 });
 
 const validate = (schema) => (req, res, next) => {

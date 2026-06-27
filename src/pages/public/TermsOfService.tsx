@@ -12,6 +12,7 @@ export const TermsOfService = () => {
                 title="شروط الاستخدام والأحكام | دارين السابعة"
                 description="شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا."
                 url="https://dareen.cloud/terms-of-service"
+                image="/dareen_logo_new.jpg"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'شروط الاستخدام', item: '/terms-of-service' }]}
             />
             <script type="application/ld+json">
