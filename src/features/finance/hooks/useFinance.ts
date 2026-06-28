@@ -18,12 +18,15 @@ export const useFinance = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = await financeService.getFinanceData();
+            const [data, stats] = await Promise.all([
+                financeService.getFinanceData(),
+                financeService.getFinanceStats().catch(() => null),
+            ]);
             setSessions(data.sessions);
             setInvoices(data.invoices);
             setManualTransactions(data.transactions);
             setFixedExpenses(data.fixedExpenses);
-            setServerStats(data.stats);
+            setServerStats(stats as Record<string, unknown> | null);
         } catch (error) {
             console.error("Error fetching finance data", error);
         } finally {
