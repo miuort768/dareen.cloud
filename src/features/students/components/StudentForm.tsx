@@ -11,6 +11,7 @@ interface StudentFormProps {
 
 const GRADE_OPTIONS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
 const CURRICULUM_OPTIONS = ['المنهج السعودي', 'المنهج المصري', 'المنهج السوري', 'المنهج الكويتي', 'المنهج الإماراتي', 'المنهج الفلسطيني', 'منهج دبلوما', 'منهج أمريكي', 'منهج بريطاني', 'أخرى'];
+const CURRENCY_OPTIONS = ['KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'EGP', 'USD'];
 
 export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProps) => {
     const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         curriculum: '',
         notes: '',
         sessionPrice: '',
+        currency: 'KWD',
         username: '',
         password: ''
     });
@@ -35,6 +37,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 curriculum: initialData.curriculum || '',
                 notes: initialData.notes || '',
                 sessionPrice: String(initialData.sessionPrice || 0),
+                currency: initialData.currency || 'KWD',
                 username: initialData.username || '',
                 password: '' 
             });
@@ -92,6 +95,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                         <FormInput label="هاتف ولي الأمر" icon={Phone} type="tel" value={formData.parentPhone} onChange={(val: string) => setFormData({ ...formData, parentPhone: val })} required placeholder="05XXXXXXXX" dir="ltr" />
                         <FormInput label="هاتف الطالب" icon={Phone} type="tel" value={formData.studentPhone} onChange={(val: string) => setFormData({ ...formData, studentPhone: val })} placeholder="05XXXXXXXX" dir="ltr" />
                         <FormInput label="سعر الحصة الافتراضي" icon={DollarSign} type="number" value={formData.sessionPrice} onChange={(val: string) => setFormData({ ...formData, sessionPrice: val })} required placeholder="0.00" />
+                        <SelectField label="عملة الحصة" icon={DollarSign} value={formData.currency} onChange={(val: string) => setFormData({ ...formData, currency: val })} options={CURRENCY_OPTIONS} placeholder="اختر العملة" />
                     </div>
                 </div>
 

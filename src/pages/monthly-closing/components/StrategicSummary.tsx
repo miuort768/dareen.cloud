@@ -7,9 +7,10 @@ interface StrategicSummaryProps {
     totalProjectedIncome: number;
     totalActualCollections: number;
     totalTeacherPayout: number;
+    reportCurrency?: string;
 }
 
-export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout }) => {
+export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout, reportCurrency = 'KWD' }) => {
     return (
         <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
@@ -33,7 +34,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 <p className="text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {netProjectedProfit.toLocaleString()}
                                 </p>
-                                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">ج.م</span>
+                                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">{reportCurrency}</span>
                             </div>
                             <div className="mt-4 h-1 w-full bg-slate-900 overflow-hidden">
                                 <div className="h-full bg-emerald-500" style={{ width: `${totalProjectedIncome > 0 ? (netProjectedProfit / totalProjectedIncome) * 100 : 0}%` }}></div>
@@ -46,7 +47,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 <p className="text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {totalProjectedIncome.toLocaleString()}
                                 </p>
-                                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">ج.م</span>
+                                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">{reportCurrency}</span>
                             </div>
                             <div className="mt-4 h-1 w-full bg-slate-900"></div>
                         </div>
@@ -68,7 +69,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                             </div>
                             <div>
                                 <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">التزامات الرواتب</p>
-                                <p className="text-sm font-black">{totalTeacherPayout.toLocaleString()} ج.م</p>
+                                <p className="text-sm font-black">{totalTeacherPayout.toLocaleString()} {reportCurrency}</p>
                             </div>
                         </div>
                     </div>

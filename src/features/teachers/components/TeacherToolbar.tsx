@@ -1,4 +1,4 @@
-import { Search, Plus, X, Upload, Download, Trash2, Filter } from 'lucide-react';
+import { Search, Plus, X, Upload, Trash2, FileSpreadsheet, FileText } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface TeacherToolbarProps {
@@ -7,11 +7,12 @@ interface TeacherToolbarProps {
     showAddForm: boolean;
     onToggleAddForm: () => void;
     onImport: () => void;
-    onExport: () => void;
+    onExportExcel: () => void;
+    onExportPDF: () => void;
     onDeleteAll: () => void;
 }
 
-export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExport, onDeleteAll }: TeacherToolbarProps) => {
+export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExportExcel, onExportPDF, onDeleteAll }: TeacherToolbarProps) => {
     return (
         <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8" dir="rtl">
             {/* Search Input */}
@@ -45,8 +46,11 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     <button onClick={onImport} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] rounded-xl transition-all group shadow-sm" title="استيراد">
                         <Upload size={14} />
                     </button>
-                    <button onClick={onExport} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] rounded-xl transition-all group shadow-sm" title="تصدير">
-                        <Download size={14} />
+                    <button onClick={onExportExcel} className="w-10 h-10 flex items-center justify-center bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-xl transition-all group shadow-sm" title="Excel">
+                        <FileSpreadsheet size={14} />
+                    </button>
+                    <button onClick={onExportPDF} className="w-10 h-10 flex items-center justify-center bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all group shadow-sm" title="PDF">
+                        <FileText size={14} />
                     </button>
                     <button onClick={onDeleteAll} className="w-10 h-10 flex items-center justify-center bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-500 hover:bg-rose-500 hover:text-white hover:border-rose-500 rounded-xl transition-all group shadow-sm" title="تصفير">
                         <Trash2 size={14} />

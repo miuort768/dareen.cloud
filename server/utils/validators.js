@@ -18,6 +18,7 @@ const createStudentSchema = z.object({
     balance: z.number().or(z.string().transform(val => Number(val))).nullable().optional().default(0),
     username: z.string().nullable().optional().or(z.literal('')),
     password: z.string().nullable().optional().or(z.literal('')),
+    currency: z.string().optional(),
     enrollments: z.array(z.any()).nullable().optional()
 });
 
@@ -32,6 +33,7 @@ const createTeacherSchema = z.object({
     price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
     percentage: z.number().or(z.string().transform(val => Number(val))).optional(),
     color: z.string().optional(),
+    currency: z.string().optional(),
     username: z.string().optional().or(z.literal('')),
     password: z.string().optional().or(z.literal(''))
 });
@@ -63,6 +65,8 @@ const createSessionSchema = z.object({
     day: z.string().optional(),
     time: z.string().optional(),
     price: z.number().or(z.string().transform(val => Number(val))).default(0),
+    currency: z.string().optional(),
+    teacherCurrency: z.string().optional(),
     status: z.enum(['scheduled', 'completed', 'cancelled', 'pending']).default('scheduled')
 });
 
@@ -129,6 +133,7 @@ const createStudentInvoiceSchema = z.object({
     studentId: idSchema,
     studentName: z.string().min(1, "Student Name is required"),
     amount: z.number().or(z.string().transform(val => Number(val))),
+    currency: z.string().optional(),
     description: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional(),
@@ -144,6 +149,7 @@ const createTeacherInvoiceSchema = z.object({
     teacher: z.string().min(1, "Teacher Name is required"),
     specialization: z.string().optional().or(z.literal('')),
     amount: z.number().or(z.string().transform(val => Number(val))),
+    currency: z.string().optional(),
     status: z.enum(['pending', 'paid', 'reviewed', 'unpaid']).default('pending'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     paymentMethod: z.string().optional().or(z.literal('')),

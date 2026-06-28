@@ -279,7 +279,7 @@ export const MonthlyClosing: React.FC = () => {
                         />
                     )}
                     {activeTab === 'renewals' && <RenewalsCards renewalsData={renewalsData} />}
-                    {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} />}
+                    {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency="KWD" />}
                     {activeTab === 'teachers' && <TeacherPerformance teacherPerformance={teacherPerformance} />}
                     {activeTab === 'compensation' && <CompensationTable filteredSessions={filteredSessions} />}
                     {activeTab === 'summary' && (
@@ -288,6 +288,7 @@ export const MonthlyClosing: React.FC = () => {
                             totalProjectedIncome={totalProjectedIncome}
                             totalActualCollections={totalActualCollections}
                             totalTeacherPayout={totalTeacherPayout}
+                            reportCurrency="KWD"
                         />
                     )}
                 </div>

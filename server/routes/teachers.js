@@ -8,7 +8,7 @@ const { createTeacherSchema, updateTeacherSchema } = require('../utils/validator
 const ResponseHandler = require('../utils/responseHandler');
 const { prisma } = require('../utils/prisma');
 
-const teacherSelect = { id: true, name: true, phone1: true, phone2: true, subject: true, price: true, email: true, username: true };
+const teacherSelect = { id: true, name: true, phone1: true, phone2: true, subject: true, price: true, email: true, username: true, currency: true };
 
 // 1. Get all teachers
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
@@ -27,7 +27,7 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 
 // 2. Add teacher
 router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSchema), async (req, res) => {
-    const { id, name, phone1, phone2, subject, price, email, username, password } = req.body;
+    const { id, name, phone1, phone2, subject, price, email, username, password, currency } = req.body;
     const newId = id || `t_${require('crypto').randomBytes(4).toString('hex')}`;
 
     try {
@@ -39,7 +39,7 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSch
         const dbPassword = password && password.trim() !== '' ? await bcrypt.hash(password, 10) : null;
 
         await prisma.teacher.create({
-            data: { id: newId, name, phone1, phone2, subject, price: price || 0, email, username: dbUsername, password: dbPassword }
+            data: { id: newId, name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email, username: dbUsername, password: dbPassword }
         });
 
         const newTeacher = await prisma.teacher.findUnique({
@@ -59,11 +59,11 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSch
 // 3. Update teacher
 router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateTeacherSchema), async (req, res) => {
     const { id } = req.params;
-    const { name, phone1, phone2, subject, price, email, username, password } = req.body;
+    const { name, phone1, phone2, subject, price, email, username, password, currency } = req.body;
     try {
         const dbUsername = username && username.trim() !== '' ? username.trim() : null;
 
-        const data = { name, phone1, phone2, subject, price: price || 0, email, username: dbUsername };
+        const data = { name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email, username: dbUsername };
 
         if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
             data.password = await bcrypt.hash(password, 10);

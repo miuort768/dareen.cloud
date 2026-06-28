@@ -54,6 +54,7 @@ router.post('/teacher', validate(createTeacherInvoiceSchema), async (req, res) =
                 teacherName: body.teacher,
                 specialization: body.specialization || '',
                 amount: body.amount,
+                currency: body.currency || null,
                 paymentMethod: body.paymentMethod || '',
                 status: body.status || 'unpaid',
                 personalExpenses: body.personalExpenses ?? 0,
@@ -70,7 +71,7 @@ router.post('/teacher', validate(createTeacherInvoiceSchema), async (req, res) =
 
 router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res) => {
     const { id } = req.params;
-    const { teacher, specialization, amount, paymentMethod, status, personalExpenses, date } = req.body;
+    const { teacher, specialization, amount, currency, paymentMethod, status, personalExpenses, date } = req.body;
     try {
         const existing = await prisma.teacherInvoice.findUnique({ where: { id } });
         if (!existing) return res.status(404).json({ error: 'Invoice not found' });
@@ -81,6 +82,7 @@ router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res
                 teacherName: teacher,
                 specialization: specialization || '',
                 amount,
+                currency: currency || null,
                 paymentMethod: paymentMethod || '',
                 status: status || 'unpaid',
                 personalExpenses: personalExpenses ?? 0,
@@ -153,7 +155,8 @@ router.post('/student', validate(createStudentInvoiceSchema), async (req, res) =
         await prisma.studentInvoice.create({
             data: {
                 id, studentId: body.studentId, studentName: body.studentName || '',
-                amount: body.amount, description: body.description || '',
+                amount: body.amount, currency: body.currency || null,
+                description: body.description || '',
                 date: body.date, dueDate: body.dueDate || '',
                 status: body.status || 'unpaid', paymentMethod: body.paymentMethod || '',
                 notes: body.notes || '', items,
@@ -180,7 +183,8 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
             where: { id },
             data: {
                 studentId: body.studentId, studentName: body.studentName || '',
-                amount: body.amount, description: body.description || '',
+                amount: body.amount, currency: body.currency || null,
+                description: body.description || '',
                 date: body.date, dueDate: body.dueDate || '',
                 status: body.status || 'unpaid', paymentMethod: body.paymentMethod || '',
                 notes: body.notes || '', items,

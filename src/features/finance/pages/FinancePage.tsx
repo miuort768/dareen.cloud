@@ -77,6 +77,7 @@ export const Finance = () => {
                             totalFixedExpenses={state.totalFixedExpenses}
                             netProfit={state.netProfit}
                             monthProfit={state.monthIncome - state.monthExpenses}
+                            reportCurrency={state.reportCurrency as string}
                         />
                     </div>
 
@@ -93,6 +94,7 @@ export const Finance = () => {
                         monthlyData={state.monthlyData || []}
                         pieData={state.pieData || []}
                         totalExpenses={state.totalExpenses || 0}
+                        reportCurrency={state.reportCurrency as string}
                     />
 
                     <TransactionsLog

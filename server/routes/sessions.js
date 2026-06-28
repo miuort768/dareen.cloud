@@ -136,18 +136,40 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
             let teacherPrice = 0;
 
             if (!studentPrice && body.studentId) {
-                const student = await tx.student.findUnique({ where: { id: body.studentId }, select: { sessionPrice: true } });
-                if (student) studentPrice = student.sessionPrice;
+                const student = await tx.student.findUnique({ where: { id: body.studentId }, select: { sessionPrice: true, currency: true } });
+                if (student) {
+                    studentPrice = student.sessionPrice;
+                }
             }
 
             const teacherRow = body.teacherId
-                ? await tx.teacher.findUnique({ where: { id: body.teacherId }, select: { id: true, price: true } })
+                ? await tx.teacher.findUnique({ where: { id: body.teacherId }, select: { id: true, price: true, currency: true } })
                 : body.teacherName
-                    ? await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true } })
+                    ? await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true, currency: true } })
                     : null;
 
             const finalTeacherId = body.teacherId || (teacherRow ? teacherRow.id : null);
             if (teacherRow) teacherPrice = teacherRow.price;
+
+            // Phase 2B: Currency snapshot
+            const studentCurrency = body.currency || (student ? student.currency : null) || 'KWD';
+            const teacherCurrency = body.teacherCurrency || (teacherRow ? teacherRow.currency : null) || 'EGP';
+
+            let exchangeRateFrom = null;
+            let exchangeRateTo = null;
+            let exchangeRateValue = null;
+
+            if (studentCurrency !== teacherCurrency) {
+                const rate = await prisma.exchangeRate.findFirst({
+                    where: { fromCurrency: studentCurrency, toCurrency: teacherCurrency },
+                    orderBy: { effectiveDate: 'desc' }
+                });
+                if (rate) {
+                    exchangeRateFrom = studentCurrency;
+                    exchangeRateTo = teacherCurrency;
+                    exchangeRateValue = rate.buyRate;
+                }
+            }
 
             await tx.session.create({
                 data: {
@@ -155,6 +177,8 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
                     teacherId: finalTeacherId || '', teacherName: body.teacherName || '',
                     subject: body.subject || '', date: body.date, day: body.day || '',
                     time: body.time || '', price: studentPrice, teacherPrice,
+                    studentCurrency, teacherCurrency,
+                    exchangeRateFrom, exchangeRateTo, exchangeRateValue,
                     status: body.status || 'scheduled',
                     topics: body.topics || '', homework: body.homework || '',
                     needsCompensation: body.needsCompensation ? 1 : 0,
@@ -197,7 +221,7 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
     const { id } = req.params;
     const updates = req.body;
     const isTeacher = req.user.role === 'teacher';
-    const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject', 'topics', 'homework', 'needsCompensation'];
+    const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject', 'topics', 'homework', 'needsCompensation', 'studentCurrency', 'teacherCurrency', 'exchangeRateFrom', 'exchangeRateTo', 'exchangeRateValue'];
     const keys = Object.keys(updates).filter(k => allowedFields.includes(k));
     if (keys.length === 0) return res.status(400).json({ error: 'No valid fields to update' });
 

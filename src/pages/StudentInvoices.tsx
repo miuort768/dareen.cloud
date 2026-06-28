@@ -65,6 +65,7 @@ export const StudentInvoices = () => {
         status: 'pending' as 'paid' | 'pending' | 'overdue',
         paymentMethod: 'نقدي',
         notes: '',
+        currency: 'KWD',
         items: [] as { description: string; date?: string; amount: number }[]
     });
 
@@ -124,6 +125,7 @@ export const StudentInvoices = () => {
             status: invoice.status,
             paymentMethod: invoice.paymentMethod || '',
             notes: invoice.notes || '',
+            currency: (invoice as { currency?: string }).currency || 'KWD',
             items: invoice.items || []
         });
         setShowForm(true);
@@ -141,6 +143,7 @@ export const StudentInvoices = () => {
             status: 'pending',
             paymentMethod: 'نقدي',
             notes: '',
+            currency: 'KWD',
             items: []
         });
         setShowForm(false);
@@ -189,7 +192,7 @@ export const StudentInvoices = () => {
             return;
         }
 
-        const invoiceData = {
+        const         invoiceData = {
             studentId: student.id,
             studentName: student.name,
             amount: Number(formData.amount),
@@ -199,6 +202,7 @@ export const StudentInvoices = () => {
             status: formData.status,
             paymentMethod: formData.paymentMethod,
             notes: formData.notes,
+            currency: formData.currency,
             items: formData.items
         };
 

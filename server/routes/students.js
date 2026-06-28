@@ -93,7 +93,7 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // 2. Add student
 router.post('/', validate(createStudentSchema), async (req, res) => {
-    const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
+    const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password, currency } = req.body;
     const newId = id || `std_${require('crypto').randomBytes(4).toString('hex')}`;
     const bcrypt = require('bcrypt');
 
@@ -108,7 +108,8 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
             await tx.student.create({
                 data: {
                     id: newId, name, grade, parentPhone, studentPhone, curriculum, notes,
-                    sessionPrice: sessionPrice || 0, username: dbUsername, password: hashedPassword
+                    sessionPrice: sessionPrice || 0, currency: currency || 'KWD',
+                    username: dbUsername, password: hashedPassword
                 }
             });
 
@@ -149,7 +150,7 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 // 3. Update student
 router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     const { id } = req.params;
-    const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
+    const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password, currency } = req.body;
     const bcrypt = require('bcrypt');
 
     try {
@@ -168,7 +169,7 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
             });
 
             // 2. Update basic student info
-            const data = { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice: sessionPrice || 0, username: dbUsername };
+            const data = { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice: sessionPrice || 0, currency: currency || 'KWD', username: dbUsername };
             if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
                 data.password = await bcrypt.hash(password, 10);
             }

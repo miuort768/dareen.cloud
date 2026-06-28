@@ -96,6 +96,11 @@ export const useFinance = () => {
     };
 
     // Derived Data
+    const reportCurrency = useMemo(() => {
+        if (serverStats?.reportCurrency) return serverStats.reportCurrency as string;
+        return 'KWD';
+    }, [serverStats]);
+
     const stats = useMemo(() => {
         const now = new Date();
         const currentMonthStr = now.toISOString().slice(0, 7);
@@ -156,7 +161,8 @@ export const useFinance = () => {
             automatedLaborCost,
             netProfit,
             monthProfit,
-            profitMargin
+            profitMargin,
+            reportCurrency
         };
     }, [sessions, invoices, manualTransactions, fixedExpenses, serverStats, filterMonth]);
 

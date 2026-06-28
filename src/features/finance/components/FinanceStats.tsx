@@ -9,6 +9,7 @@ interface FinanceStatsProps {
     totalFixedExpenses: number;
     netProfit: number;
     monthProfit: number;
+    reportCurrency?: string;
 }
 
 interface StatCardProps {
@@ -31,7 +32,7 @@ const StatCard = ({ title, value, icon: Icon, color, sub, badge }: StatCardProps
                     )}
                 </div>
                 <p className="text-lg font-black font-mono leading-none mt-1 text-white">{value}</p>
-                <p className="text-[9px] font-bold text-white/60 mt-0.5">ج.م</p>
+                <p className="text-[9px] font-bold text-white/60 mt-0.5">{reportCurrency || 'KWD'}</p>
                 {sub && <p className="text-[8px] font-bold text-white/60 mt-0.5">{sub}</p>}
             </div>
         </div>
@@ -46,6 +47,7 @@ export const FinanceStats = ({
     totalFixedExpenses,
     netProfit,
     monthProfit,
+    reportCurrency = 'KWD',
 }: FinanceStatsProps) => {
     const isProfit = (netProfit || 0) >= 0;
 

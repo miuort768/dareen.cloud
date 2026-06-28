@@ -12,9 +12,10 @@ interface SubjectData {
 
 interface SubjectAnalysisProps {
     subjectAnalysis: SubjectData[];
+    reportCurrency?: string;
 }
 
-export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysis }) => {
+export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysis, reportCurrency = 'KWD' }) => {
     return (
         <div className="space-y-6">
             <SectionCard className="p-6">
@@ -45,7 +46,7 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                     <div className="space-y-2">
                         <div className="flex justify-between items-center text-[10px]">
                             <span className="text-[#64748B] font-bold">صافي الربح</span>
-                            <span className="font-black" style={{ color: '#6C4BFF' }}>{subj.profit.toLocaleString()} ج.م</span>
+                            <span className="font-black" style={{ color: '#6C4BFF' }}>{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
                             <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full">
                                 <div className="h-full rounded-full" style={{ backgroundColor: '#6C4BFF', width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />

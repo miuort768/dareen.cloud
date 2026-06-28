@@ -5,6 +5,7 @@ const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const cache = require('../utils/cache');
 const { prisma } = require('../utils/prisma');
+const currencyService = require('../services/currencyService');
 
 router.use(authMiddleware, checkRole(['admin']));
 
@@ -100,46 +101,70 @@ router.post('/fixed-expenses/reset', async (req, res) => {
     }
 });
 
+async function convertItems(items, amountField, currencyField, defaultCurrency, reportCurrency) {
+    let total = 0;
+    if (!items || items.length === 0) return total;
+    const conversions = items.map(async (item) => {
+        const amount = item[amountField] || 0;
+        const currency = item[currencyField] || defaultCurrency;
+        if (amount === 0) return 0;
+        const converted = await currencyService.convert(amount, currency, reportCurrency);
+        return converted;
+    });
+    const results = await Promise.all(conversions);
+    return results.reduce((sum, v) => sum + v, 0);
+}
+
 router.get('/stats', async (req, res) => {
     try {
         const cached = cache.get('finance:stats');
         if (cached) return res.json(cached);
 
+        const reportCurrency = await currencyService.getReportCurrency();
         const now = new Date();
         const currentMonth = now.toISOString().slice(0, 7);
 
         const [
-            sessionIncomeAgg,
-            manualIncomeAgg,
-            invoiceExpenseAgg,
-            manualExpenseAgg,
-            fixedExpenseAgg,
-            monthSessionAgg,
-            monthManualIncomeAgg,
-            monthInvoiceExpenseAgg,
-            monthManualExpenseAgg,
-            expenseByCat,
-            teacherPieAgg,
-            fixedPieAgg,
+            sessions,
+            manualIncomes,
+            teacherInvoices,
+            manualExpenses,
+            fixedExpenses,
         ] = await Promise.all([
-            prisma.session.aggregate({ where: { status: 'completed' }, _sum: { price: true } }),
-            prisma.manualTransaction.aggregate({ where: { type: 'income', status: 'completed' }, _sum: { amount: true } }),
-            prisma.teacherInvoice.aggregate({ where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } }, _sum: { amount: true } }),
-            prisma.manualTransaction.aggregate({ where: { type: 'expense', status: 'completed' }, _sum: { amount: true } }),
-            prisma.fixedExpense.aggregate({ where: { isActive: 1 }, _sum: { amount: true } }),
-            prisma.session.aggregate({ where: { status: 'completed', date: { startsWith: currentMonth } }, _sum: { price: true } }),
-            prisma.manualTransaction.aggregate({ where: { type: 'income', status: 'completed', date: { startsWith: currentMonth } }, _sum: { amount: true } }),
-            prisma.teacherInvoice.aggregate({ where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] }, date: { startsWith: currentMonth } }, _sum: { amount: true } }),
-            prisma.manualTransaction.aggregate({ where: { type: 'expense', status: 'completed', date: { startsWith: currentMonth } }, _sum: { amount: true } }),
-            prisma.manualTransaction.groupBy({ by: ['category'], where: { type: 'expense', status: 'completed' }, _sum: { amount: true } }),
-            prisma.teacherInvoice.aggregate({ where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } }, _sum: { amount: true } }),
-            prisma.fixedExpense.aggregate({ where: { isActive: 1 }, _sum: { amount: true } }),
+            prisma.session.findMany({ where: { status: 'completed' }, select: { price: true, studentCurrency: true, date: true } }),
+            prisma.manualTransaction.findMany({ where: { type: 'income', status: 'completed' }, select: { amount: true, currency: true, date: true } }),
+            prisma.teacherInvoice.findMany({ where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } }, select: { amount: true, currency: true, date: true } }),
+            prisma.manualTransaction.findMany({ where: { type: 'expense', status: 'completed' }, select: { amount: true, currency: true, date: true, category: true } }),
+            prisma.fixedExpense.findMany({ where: { isActive: 1 }, select: { amount: true, currency: true } }),
         ]);
 
-        const totalIncome = (sessionIncomeAgg._sum.price || 0) + (manualIncomeAgg._sum.amount || 0);
-        const monthIncome = (monthSessionAgg._sum.price || 0) + (monthManualIncomeAgg._sum.amount || 0);
-        const totalExpenses = (invoiceExpenseAgg._sum.amount || 0) + (manualExpenseAgg._sum.amount || 0) + (fixedExpenseAgg._sum.amount || 0);
-        const monthExpenses = (monthInvoiceExpenseAgg._sum.amount || 0) + (monthManualExpenseAgg._sum.amount || 0) + (fixedExpenseAgg._sum.amount || 0);
+        const monthSessions = sessions.filter(s => s.date && s.date.startsWith(currentMonth));
+        const monthManualIncomes = manualIncomes.filter(t => t.date && t.date.startsWith(currentMonth));
+        const monthTeacherInvoices = teacherInvoices.filter(i => i.date && i.date.startsWith(currentMonth));
+        const monthManualExpenses = manualExpenses.filter(t => t.date && t.date.startsWith(currentMonth));
+
+        const [sessionIncome, manualIncomeTotal] = await Promise.all([
+            convertItems(sessions, 'price', 'studentCurrency', 'KWD', reportCurrency),
+            convertItems(manualIncomes, 'amount', 'currency', 'KWD', reportCurrency),
+        ]);
+        const [mSessionIncome, mManualIncomeTotal] = await Promise.all([
+            convertItems(monthSessions, 'price', 'studentCurrency', 'KWD', reportCurrency),
+            convertItems(monthManualIncomes, 'amount', 'currency', 'KWD', reportCurrency),
+        ]);
+        const [invoiceExpense, manualExpenseTotal, fixedExpenseTotal] = await Promise.all([
+            convertItems(teacherInvoices, 'amount', 'currency', 'EGP', reportCurrency),
+            convertItems(manualExpenses, 'amount', 'currency', 'KWD', reportCurrency),
+            convertItems(fixedExpenses, 'amount', 'currency', 'KWD', reportCurrency),
+        ]);
+        const [mInvoiceExpense, mManualExpenseTotal] = await Promise.all([
+            convertItems(monthTeacherInvoices, 'amount', 'currency', 'EGP', reportCurrency),
+            convertItems(monthManualExpenses, 'amount', 'currency', 'KWD', reportCurrency),
+        ]);
+
+        const totalIncome = sessionIncome + manualIncomeTotal;
+        const monthIncome = mSessionIncome + mManualIncomeTotal;
+        const totalExpenses = invoiceExpense + manualExpenseTotal + fixedExpenseTotal;
+        const monthExpenses = mInvoiceExpense + mManualExpenseTotal + fixedExpenseTotal;
 
         const monthlyData = [];
         for (let i = 5; i >= 0; i--) {
@@ -147,34 +172,44 @@ router.get('/stats', async (req, res) => {
             const mStr = d.toISOString().slice(0, 7);
             const mLabel = d.toLocaleDateString('ar-EG', { month: 'short' });
 
-            const [mS, mI, mTi, mE] = await Promise.all([
-                prisma.session.aggregate({ where: { status: 'completed', date: { startsWith: mStr } }, _sum: { price: true } }),
-                prisma.manualTransaction.aggregate({ where: { type: 'income', status: 'completed', date: { startsWith: mStr } }, _sum: { amount: true } }),
-                prisma.teacherInvoice.aggregate({ where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] }, date: { startsWith: mStr } }, _sum: { amount: true } }),
-                prisma.manualTransaction.aggregate({ where: { type: 'expense', status: 'completed', date: { startsWith: mStr } }, _sum: { amount: true } }),
+            const mSessions = sessions.filter(s => s.date && s.date.startsWith(mStr));
+            const mIncomes = manualIncomes.filter(t => t.date && t.date.startsWith(mStr));
+            const mInvoices = teacherInvoices.filter(i => i.date && i.date.startsWith(mStr));
+            const mExpenses = manualExpenses.filter(t => t.date && t.date.startsWith(mStr));
+
+            const [mSessConv, mIncConv, mInvConv, mExpConv] = await Promise.all([
+                convertItems(mSessions, 'price', 'studentCurrency', 'KWD', reportCurrency),
+                convertItems(mIncomes, 'amount', 'currency', 'KWD', reportCurrency),
+                convertItems(mInvoices, 'amount', 'currency', 'EGP', reportCurrency),
+                convertItems(mExpenses, 'amount', 'currency', 'KWD', reportCurrency),
             ]);
 
-            monthlyData.push({
-                month: mLabel,
-                income: (mS._sum.price || 0) + (mI._sum.amount || 0),
-                expense: (mTi._sum.amount || 0) + (mE._sum.amount || 0),
-            });
+            monthlyData.push({ month: mLabel, income: mSessConv + mIncConv, expense: mInvConv + mExpConv });
         }
 
+        const catMap = {};
+        const catConversions = manualExpenses.map(async (e) => {
+            const cat = e.category || 'أخرى';
+            const converted = await currencyService.convert(e.amount || 0, e.currency || 'KWD', reportCurrency);
+            catMap[cat] = (catMap[cat] || 0) + converted;
+        });
+        await Promise.all(catConversions);
+
         const pieData = [
-            ...expenseByCat.map(e => ({ name: e.category, value: e._sum.amount || 0 })),
-            { name: 'رواتب معلمات', value: teacherPieAgg._sum.amount || 0 },
-            { name: 'مصاريف ثابتة', value: fixedPieAgg._sum.amount || 0 },
+            ...Object.entries(catMap).map(([name, value]) => ({ name, value })),
+            { name: 'رواتب معلمات', value: invoiceExpense },
+            { name: 'مصاريف ثابتة', value: fixedExpenseTotal },
         ].filter(d => d.value > 0);
 
         const result = {
-            totalIncome,
-            monthIncome,
-            totalExpenses,
-            monthExpenses,
-            netProfit: totalIncome - totalExpenses,
-            monthProfit: monthIncome - monthExpenses,
+            totalIncome: await currencyService.roundMoney(totalIncome),
+            monthIncome: await currencyService.roundMoney(monthIncome),
+            totalExpenses: await currencyService.roundMoney(totalExpenses),
+            monthExpenses: await currencyService.roundMoney(monthExpenses),
+            netProfit: await currencyService.roundMoney(totalIncome - totalExpenses),
+            monthProfit: await currencyService.roundMoney(monthIncome - monthExpenses),
             profitMargin: totalIncome > 0 ? (((totalIncome - totalExpenses) / totalIncome) * 100).toFixed(1) : '0',
+            reportCurrency,
             monthlyData,
             pieData,
         };

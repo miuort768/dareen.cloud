@@ -104,7 +104,7 @@ export const InvoiceForm = ({
           />
         </div>
         <div>
-          <FieldLabel>المبلغ (ج.م) *</FieldLabel>
+          <FieldLabel>المبلغ *</FieldLabel>
           <input
             type="number"
             required
@@ -113,6 +113,23 @@ export const InvoiceForm = ({
             placeholder="0"
             className={inputClasses}
           />
+        </div>
+        <div>
+          <FieldLabel>العملة</FieldLabel>
+          <select
+            value={formData.currency}
+            onChange={e => setFormData({ ...formData, currency: e.target.value })}
+            className={inputClasses}
+          >
+            <option value="KWD">د.ك (KWD)</option>
+            <option value="SAR">﷼ (SAR)</option>
+            <option value="AED">د.إ (AED)</option>
+            <option value="QAR">﷼ (QAR)</option>
+            <option value="OMR">﷼ (OMR)</option>
+            <option value="BHD">د.ب (BHD)</option>
+            <option value="EGP">ج.م (EGP)</option>
+            <option value="USD">$ (USD)</option>
+          </select>
         </div>
         <div>
           <FieldLabel>وسيلة الدفع</FieldLabel>

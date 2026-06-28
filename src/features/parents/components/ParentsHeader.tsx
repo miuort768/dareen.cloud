@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Download, X, Plus } from 'lucide-react';
+import { Users, X, Plus, FileSpreadsheet, FileText } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface ParentsHeaderProps {
@@ -8,7 +8,8 @@ interface ParentsHeaderProps {
     showAddForm: boolean;
     onToggleAddForm: () => void;
     onImport: () => void;
-    onExport: () => void;
+    onExportExcel: () => void;
+    onExportPDF: () => void;
 }
 
 export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
@@ -17,7 +18,8 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
     showAddForm,
     onToggleAddForm,
     onImport,
-    onExport
+    onExportExcel,
+    onExportPDF
 }) => {
     return (
         <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] shadow-lg px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print rounded-2xl mt-4">
@@ -38,7 +40,8 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                 <div className="hidden md:flex items-center gap-1 p-1 ml-2 bg-white/15 backdrop-blur-sm rounded-xl">
                     <button onClick={onImport} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg">استيراد</button>
                     <div className="w-[1px] h-4 bg-white/20 mx-1" />
-                    <button onClick={onExport} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg">تصدير</button>
+                    <button onClick={onExportExcel} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg"><FileSpreadsheet size={12} /> Excel</button>
+                    <button onClick={onExportPDF} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg"><FileText size={12} /> PDF</button>
                 </div>
 
                 <button

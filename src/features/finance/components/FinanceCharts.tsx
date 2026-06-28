@@ -16,6 +16,7 @@ interface FinanceChartsProps {
     monthlyData: MonthlyData[];
     pieData: PieData[];
     totalExpenses: number;
+    reportCurrency?: string;
 }
 
 const PIE_COLORS = [
@@ -27,7 +28,7 @@ const PIE_COLORS = [
 ];
 
 // Custom Tooltip for Area Chart
-const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: { name?: string; value: number; color?: string }[]; label?: string }) => {
+const AreaTooltip = ({ active, payload, label, reportCurrency = 'KWD' }: { active?: boolean; payload?: { name?: string; value: number; color?: string }[]; label?: string; reportCurrency?: string }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-sm border border-white/10 text-right min-w-[150px]" dir="rtl">
@@ -38,14 +39,14 @@ const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: {
                             <TrendingUp size={10} className="text-emerald-400" />
                             <span className="text-[10px] font-medium text-slate-400 uppercase">إيرادات</span>
                         </div>
-                        <span className="text-sm font-medium font-mono">+{payload[0].value.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center gap-4">
-                        <div className="flex items-center gap-1.5">
-                            <TrendingDown size={10} className="text-rose-400" />
-                            <span className="text-[10px] font-medium text-slate-400 uppercase">مصروفات</span>
+                            <span className="text-sm font-medium font-mono">+{payload[0].value.toLocaleString()} {reportCurrency}</span>
                         </div>
-                        <span className="text-sm font-medium font-mono">-{payload[1]?.value.toLocaleString() || 0}</span>
+                        <div className="flex justify-between items-center gap-4">
+                            <div className="flex items-center gap-1.5">
+                                <TrendingDown size={10} className="text-rose-400" />
+                                <span className="text-[10px] font-medium text-slate-400 uppercase">مصروفات</span>
+                            </div>
+                            <span className="text-sm font-medium font-mono">-{payload[1]?.value.toLocaleString() || 0} {reportCurrency}</span>
                     </div>
                 </div>
             </div>
@@ -54,7 +55,7 @@ const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: {
     return null;
 };
 
-export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceChartsProps) => {
+export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurrency = 'KWD' }: FinanceChartsProps) => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-0" dir="rtl">
             
@@ -99,7 +100,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                             <XAxis dataKey="month" tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 800 }} axisLine={false} tickLine={false} dy={10} />
                             <YAxis tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 800 }} axisLine={false} tickLine={false} tickFormatter={(v) => v >= 1000 ? `${v/1000}k` : v} />
-                            <Tooltip content={<AreaTooltip />} cursor={{ stroke: '#6366f1', strokeWidth: 1, strokeDasharray: '4 4' }} />
+                            <Tooltip content={<AreaTooltip reportCurrency={reportCurrency} />} cursor={{ stroke: '#6366f1', strokeWidth: 1, strokeDasharray: '4 4' }} />
                             <Area type="monotone" dataKey="income" name="إيرادات" stroke="#10B981" strokeWidth={2.5} fillOpacity={1} fill="url(#colorIncome)" activeDot={{ r: 5, strokeWidth: 2 }} />
                             <Area type="monotone" dataKey="expense" name="مصروفات" stroke="#EF4444" strokeWidth={2.5} fillOpacity={1} fill="url(#colorExpense)" activeDot={{ r: 5, strokeWidth: 2 }} />
                         </AreaChart>
@@ -136,7 +137,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                                                 return (
                                                     <div className="bg-slate-900 text-white px-3 py-2 rounded-xl border border-white/10 shadow-sm text-right" dir="rtl">
                                                         <p className="text-[9px] font-medium uppercase text-slate-400 mb-1">{data.name}</p>
-                                                        <p className="text-sm font-medium font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">ج.م</span></p>
+                                                        <p className="text-sm font-medium font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">{reportCurrency}</span></p>
                                                     </div>
                                                 );
                                             }
@@ -167,7 +168,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-medium text-slate-800 dark:text-white font-mono">{entry.value.toLocaleString()}</span>
-                                    <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-lg text-slate-500">
+                                    <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-lg text-slate-500">{reportCurrency} 
                                         {((entry.value / totalExpenses) * 100).toFixed(0)}%
                                     </span>
                                 </div>

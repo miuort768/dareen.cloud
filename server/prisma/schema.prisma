@@ -33,6 +33,7 @@ model Teacher {
   username    String?      @unique
   password    String?
   points      Int          @default(0)
+  currency    String       @default("EGP")
   deletedAt   DateTime?    @map("deleted_at")
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
@@ -60,6 +61,7 @@ model Student {
   curriculum   String?
   notes        String?
   sessionPrice Int          @default(0) @map("session_price")
+  currency     String       @default("KWD")
   parentId     String?
   parent       Parent?      @relation(fields: [parentId], references: [id], onDelete: SetNull)
   totalPoints  Int          @default(0) @map("total_points")
@@ -150,6 +152,11 @@ model Session {
   time             String?
   price            Int      @default(0)
   teacherPrice     Int?     @default(0) @map("teacherPrice")
+  studentCurrency  String?
+  teacherCurrency  String?
+  exchangeRateFrom String?
+  exchangeRateTo   String?
+  exchangeRateValue Decimal?
   status           String   @default("scheduled")
   topics           String?
   homework         String?
@@ -255,12 +262,45 @@ model TeacherAvailability {
 
 // ========== Phase 3: Finance Domain ==========
 
+model Currency {
+  code      String @id
+  name      String
+  symbol    String
+  isActive  Int    @default(1)
+  sortOrder Int    @default(0)
+
+  @@map("currencies")
+}
+
+model ExchangeRate {
+  id            Int      @id @default(autoincrement())
+  fromCurrency  String
+  toCurrency    String
+  buyRate       Decimal
+  sellRate      Decimal
+  effectiveDate DateTime
+  notes         String?
+  createdAt     DateTime @default(now())
+  createdBy     String?
+
+  @@unique([fromCurrency, toCurrency, effectiveDate])
+  @@map("exchange_rates")
+}
+
+model FinancialSetting {
+  key   String  @id
+  value String?
+
+  @@map("financial_settings")
+}
+
 model StudentInvoice {
   id            String   @id @default(cuid())
   studentId     String
   student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentName   String?
   amount        Int
+  currency      String?
   description   String?
   date          String
   dueDate       String?
@@ -283,6 +323,7 @@ model TeacherInvoice {
   teacherName      String?  @map("teacher")
   specialization   String?
   amount           Int
+  currency         String?
   paymentMethod    String?
   status           String   @default("unpaid")
   personalExpenses Int?     @default(0) @map("personalExpenses")
@@ -300,6 +341,7 @@ model ManualTransaction {
   type        String
   category    String?
   amount      Float?
+  currency    String?
   date        String
   description String?
   status      String   @default("completed")
@@ -314,6 +356,7 @@ model FixedExpense {
   id       Int     @id @default(autoincrement())
   name     String
   amount   Float?  @default(0)
+  currency String?
   isActive Int?    @default(1) @map("is_active")
 
   @@index([isActive])

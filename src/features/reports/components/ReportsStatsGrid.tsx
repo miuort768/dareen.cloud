@@ -10,6 +10,7 @@ interface ReportsStatsGridProps {
     cancelledSessions: number;
     totalRevenue: number;
     monthRevenue: number;
+    reportCurrency?: string;
 }
 
 const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; sub?: string; gradient?: string; accent?: string }) => (
@@ -43,7 +44,8 @@ export const ReportsStatsGrid = ({
     attendanceRate,
     cancelledSessions,
     totalRevenue,
-    monthRevenue
+    monthRevenue,
+    reportCurrency = 'KWD'
 }: ReportsStatsGridProps) => {
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -74,7 +76,7 @@ export const ReportsStatsGrid = ({
             <StatCard
                 label="الإيرادات الكلية"
                 value={totalRevenue.toLocaleString()}
-                sub={`${monthRevenue.toLocaleString()} ج.م/شهر`}
+                sub={`${monthRevenue.toLocaleString()} ${reportCurrency}/شهر`}
                 icon={DollarSign}
                 gradient="bg-gradient-to-br from-amber-500 to-orange-700"
                 accent="bg-amber-300"

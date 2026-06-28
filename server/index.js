@@ -48,6 +48,8 @@ const uploadRouter = require('./routes/upload');
 const liveRouter = require('./routes/live');
 const trialSessionsRouter = require('./routes/trial_sessions');
 const teacherAvailabilityRouter = require('./routes/teacher_availability');
+const { searchRouter } = require('./routes/search');
+const { exportRouter } = require('./routes/export');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -220,6 +222,8 @@ async function startServer() {
         apiRouter.use('/leads', leadsRouter);
         apiRouter.use('/trial-sessions', trialSessionsRouter);
         apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
+        apiRouter.use('/search', searchRouter);
+        apiRouter.use('/export', isAdmin, exportRouter);
 
         apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
             req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;

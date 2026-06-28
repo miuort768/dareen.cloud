@@ -1,6 +1,8 @@
 import { Search, AlertCircle, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { downloadExport } from '../lib/download';
+import { useShowNotification } from '../context/AppContext';
 
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
 import { ParentsTable } from '../features/parents/components/ParentsTable';
@@ -10,6 +12,7 @@ import { useParents } from '../features/parents/hooks/useParents';
 
 export const Parents = () => {
     const { state, actions } = useParents();
+    const showNotification = useShowNotification();
 
     if (state.loading) {
         return (
@@ -49,7 +52,8 @@ export const Parents = () => {
                         }
                     }}
                     onImport={actions.handleImportParents}
-                    onExport={actions.handleExportParents}
+                    onExportExcel={() => downloadExport('parents', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error'))}
+                    onExportPDF={() => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))}
                 />
 
                 <div className="py-6 space-y-6">

@@ -31,6 +31,7 @@ export interface TeacherInvoice {
     status: InvoiceStatus;
     date: string;
     personalExpenses?: number;
+    currency?: string;
 }
 
 export interface TeacherInvoiceFormData {
@@ -41,6 +42,7 @@ export interface TeacherInvoiceFormData {
     paymentMethod: string;
     status: InvoiceStatus;
     personalExpenses: string;
+    currency: string;
 }
 
 export interface InvoiceStats {

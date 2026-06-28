@@ -7,6 +7,7 @@ export interface Student {
     curriculum?: string;
     notes?: string;
     sessionPrice: number;
+    currency?: string;
     enrollments: Enrollment[];
     totalPoints?: number;
     badges?: string;

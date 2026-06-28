@@ -17,6 +17,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         phone2: '',
         subject: '',
         price: '',
+        currency: 'EGP',
         username: '',
         password: ''
     });
@@ -31,7 +32,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 subject: initialData.subject,
                 price: String(initialData.price),
                 username: initialData.username || '',
-                password: initialData.password || ''
+                password: initialData.password || '',
+        currency: initialData.currency || 'EGP'
             });
             setEnableLogin(!!initialData.username);
         }
@@ -42,6 +44,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         onSubmit({
             ...formData,
             price: Number(formData.price),
+            currency: formData.currency || 'EGP',
             username: enableLogin ? formData.username : '',
             password: enableLogin ? formData.password : ''
         });
@@ -109,6 +112,38 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                     placeholder="0.00"
                                 />
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-medium text-emerald-500 uppercase">ج.م</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Currency Section */}
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3 pb-2 border-b border-gray-100 dark:border-slate-800">
+                        <div className="w-6 h-6 flex items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/30">
+                            <DollarSign size={12} className="text-emerald-500" />
+                        </div>
+                        <h4 className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest">عملة السعر</h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                            <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-1">العملة</label>
+                            <div className="relative group">
+                                <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
+                                <select
+                                    value={formData.currency}
+                                    onChange={e => setFormData({ ...formData, currency: e.target.value })}
+                                    className="w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-800 rounded-xl focus:outline-none focus:border-[#6C4BFF] focus:ring-1 focus:ring-[#6C4BFF]/20 dark:text-white text-[11px] font-medium transition-all pr-10 appearance-none"
+                                >
+                                    <option value="KWD">د.ك (KWD)</option>
+                                    <option value="SAR">﷼ (SAR)</option>
+                                    <option value="AED">د.إ (AED)</option>
+                                    <option value="QAR">﷼ (QAR)</option>
+                                    <option value="OMR">﷼ (OMR)</option>
+                                    <option value="BHD">د.ب (BHD)</option>
+                                    <option value="EGP">ج.م (EGP)</option>
+                                    <option value="USD">$ (USD)</option>
+                                </select>
                             </div>
                         </div>
                     </div>

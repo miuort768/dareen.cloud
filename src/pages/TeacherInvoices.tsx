@@ -28,7 +28,8 @@ export const TeacherInvoices = () => {
         amount: '',
         paymentMethod: '',
         status: INVOICE_STATUS.PROCESSING,
-        personalExpenses: ''
+        personalExpenses: '',
+        currency: 'EGP'
     });
     const [teachers, setTeachers] = useState<Teacher[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -142,7 +143,8 @@ export const TeacherInvoices = () => {
             amount: invoice.amount.toString(),
             paymentMethod: invoice.paymentMethod,
             status: invoice.status,
-            personalExpenses: invoice.personalExpenses ? invoice.personalExpenses.toString() : ''
+            personalExpenses: invoice.personalExpenses ? invoice.personalExpenses.toString() : '',
+            currency: invoice.currency || 'EGP'
         });
         setShowForm(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -157,7 +159,8 @@ export const TeacherInvoices = () => {
             amount: '',
             paymentMethod: '',
             status: INVOICE_STATUS.PROCESSING,
-            personalExpenses: ''
+            personalExpenses: '',
+            currency: 'EGP'
         });
         setShowForm(false);
     }, []);
@@ -175,6 +178,7 @@ export const TeacherInvoices = () => {
             paymentMethod: formData.paymentMethod,
             status: formData.status,
             personalExpenses: personalExpValue,
+            currency: formData.currency || 'EGP',
             date: new Date().toISOString().split('T')[0]
         };
         try {
@@ -284,9 +288,10 @@ export const TeacherInvoices = () => {
                                 teacher: t.name,
                                 specialization: t.subject || '',
                                 amount: totalAmount,
-                                paymentMethod: '����',
+                                paymentMethod: 'نقدي',
                                 status: INVOICE_STATUS.PROCESSING,
                                 personalExpenses: 0,
+                                currency: 'EGP',
                                 date: new Date().toISOString().split('T')[0]
                             });
                         });

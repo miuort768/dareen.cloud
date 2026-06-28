@@ -18,6 +18,7 @@ import { SuccessModal } from '../../../shared/components/SuccessModal';
 
 // Feature Components
 import { Plus, X, Presentation } from 'lucide-react';
+import { downloadExport } from '../../../lib/download';
 import { TeacherStats } from '../components/TeacherStats';
 import { TeacherToolbar } from '../components/TeacherToolbar';
 import { TeacherForm } from '../components/TeacherForm';
@@ -196,24 +197,6 @@ export const Teachers = () => {
         }
     };
 
-    const handleExport = () => {
-        try {
-            const dataStr = JSON.stringify(teachers, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `teachers_export_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            showNotification('تم تصدير البيانات بنجاح', 'success');
-        } catch {
-            showNotification('حدث خطأ أثناء التصدير', 'error');
-        }
-    };
-
     const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -349,7 +332,8 @@ export const Teachers = () => {
                             if (showAddForm) setEditId(null);
                         }}
                         onImport={() => fileInputRef.current?.click()}
-                        onExport={handleExport}
+                        onExportExcel={() => downloadExport('teachers', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error'))}
+                        onExportPDF={() => downloadExport('teachers', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))}
                         onDeleteAll={handleDeleteAll}
                     />
 

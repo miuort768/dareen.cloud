@@ -6,9 +6,10 @@ interface FinancialReportProps {
     totalExpenses: number;
     monthExpenses: number;
     completedSessions: number;
+    reportCurrency?: string;
 }
 
-const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; subColor?: string }) => (
+const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor, currency }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; subColor?: string; currency?: string }) => (
     <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 p-4 rounded-2xl shadow-sm">
         <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: `${color}12` }}>
@@ -16,8 +17,8 @@ const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor }: 
             </div>
             <h3 className="text-[11px] font-bold text-slate-500 dark:text-slate-400">{title}</h3>
         </div>
-        <p className="text-lg font-black text-slate-800 dark:text-white tabular-nums">{value.toLocaleString()} ج.م</p>
-        <p className="text-[10px] font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} ج.م</p>
+        <p className="text-lg font-black text-slate-800 dark:text-white tabular-nums">{value.toLocaleString()} {currency}</p>
+        <p className="text-[10px] font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
     </div>
 );
 
@@ -26,7 +27,8 @@ export const FinancialReport = ({
     monthRevenue,
     totalExpenses,
     monthExpenses,
-    completedSessions
+    completedSessions,
+    reportCurrency = 'KWD'
 }: FinancialReportProps) => {
     const netProfit = totalRevenue - totalExpenses;
     const monthNetProfit = monthRevenue - monthExpenses;
@@ -41,6 +43,7 @@ export const FinancialReport = ({
                     icon={TrendingUp}
                     color="#10B981"
                     subColor="#059669"
+                    currency={reportCurrency}
                 />
                 <FinancialCard
                     title="إجمالي المصروفات"
@@ -49,6 +52,7 @@ export const FinancialReport = ({
                     icon={TrendingDown}
                     color="#F43F5E"
                     subColor="#E11D48"
+                    currency={reportCurrency}
                 />
                 <FinancialCard
                     title="صافي الربح"
@@ -57,6 +61,7 @@ export const FinancialReport = ({
                     icon={DollarSign}
                     color="#6C4BFF"
                     subColor="#6C4BFF"
+                    currency={reportCurrency}
                 />
             </div>
 
@@ -68,9 +73,9 @@ export const FinancialReport = ({
                     <div>
                         <h3 className="text-xs font-bold text-slate-800 dark:text-white mb-1">ملخص التقرير المالي</h3>
                         <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 leading-relaxed">
-                            تم تسجيل <span className="font-bold text-slate-700 dark:text-slate-200">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: '#059669' }}>{totalRevenue.toLocaleString()} ج.م</span>.
-                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: '#E11D48' }}>{totalExpenses.toLocaleString()} ج.م</span>،
-                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: '#6C4BFF' }}>{netProfit.toLocaleString()} ج.م</span>.
+                            تم تسجيل <span className="font-bold text-slate-700 dark:text-slate-200">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: '#059669' }}>{totalRevenue.toLocaleString()} {reportCurrency}</span>.
+                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: '#E11D48' }}>{totalExpenses.toLocaleString()} {reportCurrency}</span>،
+                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: '#6C4BFF' }}>{netProfit.toLocaleString()} {reportCurrency}</span>.
                         </p>
                     </div>
                 </div>

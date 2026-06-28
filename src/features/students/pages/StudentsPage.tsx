@@ -4,7 +4,7 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { Search, AlertCircle, Plus, TrendingUp, Download, Upload, Trash2, BookOpen, GraduationCap } from 'lucide-react';
+import { Search, AlertCircle, Plus, TrendingUp, Upload, Trash2, BookOpen, GraduationCap, FileSpreadsheet, FileText } from 'lucide-react';
 
 // Shared Components
 import { PageLoader } from '../../../components/ui/PageLoader';
@@ -18,6 +18,7 @@ import { ConfirmModal } from '../../../shared/components/ConfirmModal';
 
 // Utils
 import { generateSessionDates } from '../utils/sessionUtils';
+import { downloadExport } from '../../../lib/download';
 
 // Types
 import type { Student, Enrollment, ScheduleSlot } from '../types';
@@ -327,7 +328,8 @@ export const Students = () => {
                                 }}
                             />
                             <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2.5 py-1.5 border border-slate-100 dark:border-slate-700 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Upload size={12} /> استيراد</button>
-                            <button onClick={() => { const header = 'الاسم,رقم الهاتف,البريد الإلكتروني,الصف,عدد الحصص\n'; const rows = students.map(s => `${s.name},${s.studentPhone||''},${s.email||''},${s.grade},${s.enrollments?.length||0}`).join('\n'); const blob = new Blob(['\ufeff' + header + rows], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'students.csv'; link.click(); URL.revokeObjectURL(link.href); }} className="flex items-center gap-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2.5 py-1.5 border border-slate-100 dark:border-slate-700 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Download size={12} /> تصدير</button>
+                            <button onClick={() => downloadExport('students', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] font-bold px-2.5 py-1.5 border border-green-200 dark:border-green-800 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileSpreadsheet size={12} /> Excel</button>
+                            <button onClick={() => downloadExport('students', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold px-2.5 py-1.5 border border-red-200 dark:border-red-800 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileText size={12} /> PDF</button>
                             <button onClick={() => setIsDeletingAll(true)} className="flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:bg-rose-500 hover:border-rose-500 hover:text-white text-rose-500 text-[10px] font-bold px-2.5 py-1.5 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Trash2 size={12} /></button>
                         </div>
                     </div>

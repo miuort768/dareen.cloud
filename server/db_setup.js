@@ -192,6 +192,32 @@ async function setupDatabase() {
             is_active INTEGER DEFAULT 1
         );
 
+        CREATE TABLE IF NOT EXISTS currencies (
+            code TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            symbol TEXT NOT NULL,
+            isActive INTEGER DEFAULT 1,
+            sortOrder INTEGER DEFAULT 0
+        );
+
+        CREATE TABLE IF NOT EXISTS exchange_rates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fromCurrency TEXT NOT NULL,
+            toCurrency TEXT NOT NULL,
+            buyRate TEXT NOT NULL,
+            sellRate TEXT NOT NULL,
+            effectiveDate TEXT NOT NULL,
+            notes TEXT,
+            createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+            createdBy TEXT,
+            UNIQUE(fromCurrency, toCurrency, effectiveDate)
+        );
+
+        CREATE TABLE IF NOT EXISTS financial_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        );
+
         CREATE TABLE IF NOT EXISTS tasks (
             id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
@@ -505,6 +531,19 @@ async function setupDatabase() {
     await addColumnIfNotExists('student_invoices', 'is_archived', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('teacher_invoices', 'is_archived', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('manual_transactions', 'is_archived', 'INTEGER DEFAULT 0');
+
+    // Phase 2A: Multi-Currency columns
+    await addColumnIfNotExists('students', 'currency', 'TEXT DEFAULT \'KWD\'');
+    await addColumnIfNotExists('teachers', 'currency', 'TEXT DEFAULT \'EGP\'');
+    await addColumnIfNotExists('student_invoices', 'currency', 'TEXT');
+    await addColumnIfNotExists('teacher_invoices', 'currency', 'TEXT');
+    await addColumnIfNotExists('manual_transactions', 'currency', 'TEXT');
+    await addColumnIfNotExists('fixed_expenses', 'currency', 'TEXT');
+    await addColumnIfNotExists('sessions', 'studentCurrency', 'TEXT');
+    await addColumnIfNotExists('sessions', 'teacherCurrency', 'TEXT');
+    await addColumnIfNotExists('sessions', 'exchangeRateFrom', 'TEXT');
+    await addColumnIfNotExists('sessions', 'exchangeRateTo', 'TEXT');
+    await addColumnIfNotExists('sessions', 'exchangeRateValue', 'TEXT');
 
     // Create remaining indices
     const indices = [

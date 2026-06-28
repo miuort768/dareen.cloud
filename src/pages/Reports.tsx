@@ -212,6 +212,7 @@ export const Reports = () => {
                         totalExpenses={state.totalExpenses}
                         monthExpenses={state.monthExpenses}
                         completedSessions={state.completedSessions}
+                        reportCurrency="KWD"
                     />
                 )}
 

@@ -6,6 +6,7 @@ export interface Teacher {
     email?: string;
     subject: string;
     price: number;
+    currency?: string;
     username?: string;
     password?: string;
 }
