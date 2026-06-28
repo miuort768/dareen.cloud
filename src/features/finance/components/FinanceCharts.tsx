@@ -39,7 +39,7 @@ const AreaTooltip = ({ active, payload, label, reportCurrency = 'KWD' }: { activ
                             <TrendingUp size={10} className="text-emerald-400" />
                             <span className="text-[10px] font-medium text-slate-400 uppercase">إيرادات</span>
                         </div>
-                            <span className="text-sm font-medium font-mono">+{payload[0].value.toLocaleString()} {reportCurrency}</span>
+                            <span className="text-sm font-medium font-mono">+{(payload[0]?.value ?? 0).toLocaleString()} {reportCurrency}</span>
                         </div>
                         <div className="flex justify-between items-center gap-4">
                             <div className="flex items-center gap-1.5">
@@ -137,7 +137,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                                 return (
                                                     <div className="bg-slate-900 text-white px-3 py-2 rounded-xl border border-white/10 shadow-sm text-right" dir="rtl">
                                                         <p className="text-[9px] font-medium uppercase text-slate-400 mb-1">{data.name}</p>
-                                                        <p className="text-sm font-medium font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">{reportCurrency}</span></p>
+                                                        <p className="text-sm font-medium font-mono">{(data?.value ?? 0).toLocaleString()} <span className="text-[9px] text-slate-400">{reportCurrency}</span></p>
                                                     </div>
                                                 );
                                             }
@@ -147,7 +147,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                 </ResponsiveContainer>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                                     <p className="text-[9px] font-medium text-slate-400 uppercase tracking-tighter">الإجمالي</p>
-                                    <p className="text-lg font-medium text-slate-800 dark:text-white font-mono leading-none">{totalExpenses.toLocaleString()}</p>
+                                    <p className="text-lg font-medium text-slate-800 dark:text-white font-mono leading-none">{(totalExpenses ?? 0).toLocaleString()}</p>
                                 </div>
                             </>
                         ) : (
@@ -167,9 +167,9 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                     <span className="text-[10px] font-normal text-slate-600 dark:text-slate-400 truncate max-w-[100px]">{entry.name}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-medium text-slate-800 dark:text-white font-mono">{entry.value.toLocaleString()}</span>
+                                    <span className="text-[10px] font-medium text-slate-800 dark:text-white font-mono">{(entry?.value ?? 0).toLocaleString()}</span>
                                     <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-lg text-slate-500">{reportCurrency} 
-                                        {((entry.value / totalExpenses) * 100).toFixed(0)}%
+                                        {totalExpenses > 0 ? ((entry?.value ?? 0) / totalExpenses * 100).toFixed(0) : 0}%
                                     </span>
                                 </div>
                             </div>
