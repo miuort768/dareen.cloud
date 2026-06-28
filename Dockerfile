@@ -26,14 +26,13 @@ WORKDIR /app
 COPY server/package*.json ./server/
 RUN cd server && npm install
 
-# نسخ السكيما وتوليد Prisma Client (PostgreSQL) ثم إزالة devDeps
-COPY server/prisma ./server/prisma
-RUN cp ./server/prisma/schema.pg.prisma ./server/prisma/schema.prisma
-ENV DATABASE_URL=postgresql://darin:${DB_PASSWORD}@postgres:5432/darin
-RUN cd server && npx prisma generate && npm prune --production
-
-# نسخ بقية كود الخادم
+# نسخ بقية كود الخادم (بما في ذلك السكيما)
 COPY server/ ./server/
+
+# تبديل سكيما Prisma إلى PostgreSQL وتوليد العميل ثم إزالة devDeps
+RUN cp ./server/prisma/schema.pg.prisma ./server/prisma/schema.prisma
+ENV DATABASE_URL=postgresql://placeholder:placeholder@postgres:5432/placeholder
+RUN cd server && npx prisma generate && npm prune --production
 
 # نسخ الملفات المبنية من الواجهة الأمامية
 COPY --from=frontend-builder /app/dist ./dist
