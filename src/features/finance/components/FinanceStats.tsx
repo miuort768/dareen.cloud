@@ -13,10 +13,10 @@ interface FinanceStatsProps {
 }
 
 interface StatCardProps {
-    title: string; value: string; icon: React.ComponentType<{ size?: number }>; color: string; sub?: string; badge?: { label: string; color: string };
+    title: string; value: string; icon: React.ComponentType<{ size?: number }>; color: string; sub?: string; badge?: { label: string; color: string }; reportCurrency?: string;
 }
 
-const StatCard = ({ title, value, icon: Icon, color, sub, badge }: StatCardProps) => (
+const StatCard = ({ title, value, icon: Icon, color, sub, badge, reportCurrency }: StatCardProps) => (
     <div className="shadow-sm overflow-hidden rounded-2xl dark:brightness-[0.65]" style={{ backgroundColor: color }}>
         <div className="p-4 flex items-center gap-3">
             <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm rounded-xl" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
@@ -60,6 +60,7 @@ export const FinanceStats = ({
                 color="#10B981"
                 sub={`+${(monthIncome || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: 'وارد', color: 'bg-[#10B98112] text-[#10B981]' }}
+                reportCurrency={reportCurrency}
             />
             <StatCard
                 title="مستحقات المعلمات"
@@ -68,6 +69,7 @@ export const FinanceStats = ({
                 color="#F43F5E"
                 sub={`-${(monthExpenses || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: 'صادر', color: 'bg-[#F43F5E12] text-[#F43F5E]' }}
+                reportCurrency={reportCurrency}
             />
             <StatCard
                 title="المصروفات التشغيلية"
@@ -76,6 +78,7 @@ export const FinanceStats = ({
                 color="#8B5CF6"
                 sub="مصروفات ثابتة"
                 badge={{ label: 'ثابت', color: 'bg-[#8B5CF612] text-[#8B5CF6]' }}
+                reportCurrency={reportCurrency}
             />
             <StatCard
                 title="صافي الربح"
@@ -84,6 +87,7 @@ export const FinanceStats = ({
                 color={isProfit ? '#F59E0B' : '#64748B'}
                 sub={`${(monthProfit || 0) >= 0 ? '+' : ''}${(monthProfit || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: isProfit ? 'ربح' : 'خسارة', color: isProfit ? 'bg-[#F59E0B12] text-[#F59E0B]' : 'bg-[#64748B12] text-[#64748B]' }}
+                reportCurrency={reportCurrency}
             />
         </div>
     );
