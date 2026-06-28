@@ -109,7 +109,8 @@ async function convert(amount, fromCurrency, toCurrency, date) {
   if (fromCurrency === toCurrency) return amount;
   const rate = await getLatestRate(fromCurrency, toCurrency, date);
   if (rate === null) {
-    throw new Error(`No exchange rate found for ${fromCurrency} → ${toCurrency}`);
+    logger.warn(`No exchange rate found for ${fromCurrency} → ${toCurrency}, using 1:1`);
+    return roundMoney(amount);
   }
   const converted = amount * rate;
   return roundMoney(converted);
