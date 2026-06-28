@@ -34,6 +34,23 @@ const financialSettings = [
   { key: 'autoUpdateRates', value: 'false' },
 ];
 
+const defaultRates = [
+  { fromCurrency: 'KWD', toCurrency: 'EGP', buyRate: 49.50, sellRate: 50.00 },
+  { fromCurrency: 'KWD', toCurrency: 'SAR', buyRate: 12.40, sellRate: 12.50 },
+  { fromCurrency: 'KWD', toCurrency: 'AED', buyRate: 12.10, sellRate: 12.20 },
+  { fromCurrency: 'KWD', toCurrency: 'QAR', buyRate: 11.90, sellRate: 12.00 },
+  { fromCurrency: 'KWD', toCurrency: 'OMR', buyRate: 1.28, sellRate: 1.30 },
+  { fromCurrency: 'KWD', toCurrency: 'BHD', buyRate: 1.24, sellRate: 1.26 },
+  { fromCurrency: 'KWD', toCurrency: 'USD', buyRate: 3.30, sellRate: 3.32 },
+  { fromCurrency: 'EGP', toCurrency: 'KWD', buyRate: 0.020, sellRate: 0.021 },
+  { fromCurrency: 'SAR', toCurrency: 'KWD', buyRate: 0.080, sellRate: 0.081 },
+  { fromCurrency: 'AED', toCurrency: 'KWD', buyRate: 0.082, sellRate: 0.083 },
+  { fromCurrency: 'QAR', toCurrency: 'KWD', buyRate: 0.084, sellRate: 0.085 },
+  { fromCurrency: 'OMR', toCurrency: 'KWD', buyRate: 0.77, sellRate: 0.78 },
+  { fromCurrency: 'BHD', toCurrency: 'KWD', buyRate: 0.80, sellRate: 0.81 },
+  { fromCurrency: 'USD', toCurrency: 'KWD', buyRate: 0.30, sellRate: 0.31 },
+];
+
 async function main() {
   for (const c of currencies) {
     await prisma.currency.upsert({
@@ -51,7 +68,17 @@ async function main() {
     });
   }
 
-  console.log(`Seeded ${currencies.length} currencies and ${financialSettings.length} financial settings.`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  for (const r of defaultRates) {
+    await prisma.exchangeRate.upsert({
+      where: { fromCurrency_toCurrency_effectiveDate: { fromCurrency: r.fromCurrency, toCurrency: r.toCurrency, effectiveDate: today } },
+      update: { buyRate: r.buyRate, sellRate: r.sellRate },
+      create: { ...r, effectiveDate: today, notes: 'سعر افتراضي أولي' },
+    });
+  }
+
+  console.log(`Seeded ${currencies.length} currencies, ${defaultRates.length} exchange rates, and ${financialSettings.length} financial settings.`);
 }
 
 main()
