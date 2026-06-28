@@ -3,7 +3,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
 import { useCurrentUser, useIsAuthenticated } from '../context/AppContext';
 import { useChatStore } from '../store/chatStore';
-import type { LiveSession } from '../types';
 
 interface ChatMessage {
     id: string;
@@ -28,8 +27,7 @@ export const useChatSocketInit = () => {
     const currentUser = useCurrentUser();
     const queryClient = useQueryClient();
     const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
-    
-    const setLiveSession = useChatStore(s => s.setLiveSession);
+
     const setIsConnected = useChatStore(s => s.setIsConnected);
     const activeConversationId = useChatStore(s => s.activeConversationId);
     const activeConvRef = useRef(activeConversationId);
@@ -47,7 +45,6 @@ export const useChatSocketInit = () => {
 
         const typingTimeouts = typingTimeoutsRef.current;
 
-        // --- Notification Audio ---
         let audio: HTMLAudioElement | null = null;
         try {
             audio = new Audio('/notification.mp3');
@@ -77,7 +74,6 @@ export const useChatSocketInit = () => {
         };
 
         const handleTyping = (data: { conversationId: string; userId: string; userName: string; isTyping: boolean }) => {
-            // Only tracking typing for current conversation or general
             useChatStore.getState().setTypingUsers(
                 useChatStore.getState().typingUsers.filter(t => t.conversationId !== data.conversationId || t.userName !== data.userName)
             );
@@ -101,14 +97,12 @@ export const useChatSocketInit = () => {
         };
 
         const handleNewMessage = (message: ChatMessage) => {
-            // 1. Update messages cache
             queryClient.setQueryData(['messages', message.conversationId], (old: unknown) => {
                 const msgs = (Array.isArray(old) ? old : []) as ChatMessage[];
                 if (msgs.find((m: ChatMessage) => m.id === message.id)) return msgs;
                 return [...msgs, message];
             });
 
-            // 2. Update conversations cache
             queryClient.setQueryData(['conversations', currentUserId], (old: unknown) => {
                 const conversations = (Array.isArray(old) ? old : []) as ChatConversation[];
                 const updated = conversations.map((conv: ChatConversation) => {
@@ -134,7 +128,6 @@ export const useChatSocketInit = () => {
 
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
 
-            // 4. Notifications
             const isCurrentlyActive = activeConvRef.current === message.conversationId;
             const isFromOthers = String(message.senderId) !== currentUserId;
 
@@ -159,14 +152,6 @@ export const useChatSocketInit = () => {
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
-        const handleSessionInvite = (data: LiveSession) => {
-            setLiveSession(data);
-        };
-
-        const handleSessionEnded = () => {
-            setLiveSession(null);
-        };
-
         const handleConnect = () => setIsConnected(true);
         const handleDisconnect = () => setIsConnected(false);
 
@@ -176,8 +161,6 @@ export const useChatSocketInit = () => {
         socket.on('new_message', handleNewMessage);
         socket.on('typing', handleTyping);
         socket.on('new_conversation', handleNewConversation);
-        socket.on('session_invite', handleSessionInvite);
-        socket.on('session_ended', handleSessionEnded);
 
         return () => {
             socket.off('connect', handleConnect);
@@ -185,11 +168,8 @@ export const useChatSocketInit = () => {
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
             socket.off('new_conversation', handleNewConversation);
-            socket.off('session_invite', handleSessionInvite);
-            socket.off('session_ended', handleSessionEnded);
-            
+
             Object.values(typingTimeouts).forEach(timeout => clearTimeout(timeout));
         };
-    }, [isAuthenticated, currentUser, queryClient, setLiveSession, setIsConnected]);
-
+    }, [isAuthenticated, currentUser, queryClient, setIsConnected]);
 };

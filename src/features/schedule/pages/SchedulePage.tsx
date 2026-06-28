@@ -397,9 +397,11 @@ export const Schedule = () => {
                                         const res = await startLiveSession({
                                             title: `حصة مباشرة: ${selectedEvent.studentName}`,
                                             subject: selectedEvent.subject,
+                                            meetingProvider: 'google_meet',
+                                            meetingUrl: 'https://meet.google.com/new',
                                             targetStudentId: selectedEvent.studentId,
                                         });
-                                        if (res?.id) navigate(`/classroom/${res.id}`);
+                                        if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                     } catch { setShowDetails(false); }
                                 }}
                                 className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed]"

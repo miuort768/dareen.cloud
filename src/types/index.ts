@@ -131,12 +131,20 @@ export interface Evaluation {
 }
 
 export interface LiveSession {
+    id: string;
     teacherId: string;
     teacherName: string;
+    title?: string;
     subject?: string;
-    type?: string;
-    sessionId?: string;
-    timestamp?: string;
+    meetingProvider: string;
+    meetingUrl?: string;
+    meetingCode?: string;
+    isExternalMeeting: boolean;
+    status: string;
+    targetStudentId?: string;
+    startedAt: string;
+    endedAt?: string;
+    endedBy?: string;
 }
 
 export interface FixedExpense {

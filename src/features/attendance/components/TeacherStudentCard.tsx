@@ -143,9 +143,11 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             const result = await startLiveSession({
                 title: `حصة مباشرة: ${student.name}`,
                 subject: en.subject,
+                meetingProvider: 'google_meet',
+                meetingUrl: 'https://meet.google.com/new',
                 targetStudentId: student.id,
             });
-            navigate(`/classroom/${result.id}`);
+            if (result?.meetingUrl) window.open(result.meetingUrl, '_blank');
         } catch (err) {
             alert(`فشل بدء البث: ${err.message}`);
         }

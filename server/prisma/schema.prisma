@@ -164,15 +164,21 @@ model Session {
 }
 
 model LiveSession {
-  id              String   @id @default(cuid())
-  teacherId       String
-  teacher         Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
-  teacherName     String
-  title           String?
-  subject         String?
-  status          String   @default("active")
-  targetStudentId String?
-  startedAt       DateTime @default(now()) @map("started_at")
+  id                String    @id @default(cuid())
+  teacherId         String
+  teacher           Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherName       String
+  title             String?
+  subject           String?
+  meetingProvider   String    @default("google_meet")
+  meetingUrl        String?
+  meetingCode       String?
+  isExternalMeeting Boolean   @default(true)
+  status            String    @default("active")
+  targetStudentId   String?
+  startedAt         DateTime  @default(now()) @map("started_at")
+  endedAt           DateTime? @map("ended_at")
+  endedBy           String?
 
   @@index([teacherId, status])
   @@map("live_sessions")

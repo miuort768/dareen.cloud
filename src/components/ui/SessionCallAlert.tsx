@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Video, X, BellRing, ArrowRight } from 'lucide-react';
+import { ExternalLink, X, BellRing } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from '../../context/AppContext';
 import { socketService } from '../../lib/socket';
@@ -8,12 +7,18 @@ import { socketService } from '../../lib/socket';
 interface CallData {
     teacherName: string;
     subject: string;
-    sessionId: string;
+    meetingUrl: string;
+    meetingProvider: string;
 }
+
+const PROVIDER_NAMES: Record<string, string> = {
+    google_meet: 'Google Meet',
+    zoom: 'Zoom',
+    custom: 'رابط مخصص',
+};
 
 export const SessionCallAlert = () => {
     const currentUser = useCurrentUser();
-    const navigate = useNavigate();
     const [callData, setCallData] = useState<CallData | null>(null);
     const [show, setShow] = useState(false);
     const notificationAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -69,32 +74,30 @@ export const SessionCallAlert = () => {
                         </button>
                     </div>
                     
-                    <div className="p-5 flex gap-4">
-                        <div className="w-16 h-16 bg-gray-950 text-white flex items-center justify-center border-2 border-primary-400 shrink-0">
-                            <Video size={32} />
-                        </div>
-                        <div className="flex-1 text-right">
+                    <div className="p-5">
+                        <div className="text-right mb-4">
                             <h4 className="font-medium text-gray-950 text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
-                            <p className="text-[10px] text-gray-500 font-normal mb-4 uppercase tracking-tighter">الحصة: {callData.subject}</p>
-                            
-                            <div className="flex gap-2">
-                                <button 
-                                    onClick={() => {
-                                        if (callData?.sessionId) {
-                                            navigate(`/classroom/${callData.sessionId}`);
-                                        }
-                                    }}
-                                    className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-medium text-xs flex items-center justify-center gap-2"
-                                >
-                                    انضم الآن <ArrowRight size={14} />
-                                </button>
-                                <button 
-                                    onClick={() => setShow(false)}
-                                    className="px-4 py-2 border-2 border-gray-950 font-normal text-xs hover:bg-gray-50 transition-colors"
-                                >
-                                    لاحقاً
-                                </button>
-                            </div>
+                            <p className="text-[10px] text-gray-500 font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
+                            <p className="text-[10px] font-bold text-primary-600">
+                                عبر {PROVIDER_NAMES[callData.meetingProvider] || callData.meetingProvider}
+                            </p>
+                        </div>
+                        
+                        <div className="flex gap-2">
+                            <a
+                                href={callData.meetingUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-medium text-xs flex items-center justify-center gap-2"
+                            >
+                                انضم للحصة <ExternalLink size={14} />
+                            </a>
+                            <button 
+                                onClick={() => setShow(false)}
+                                className="px-4 py-2 border-2 border-gray-950 font-normal text-xs hover:bg-gray-50 transition-colors"
+                            >
+                                لاحقاً
+                            </button>
                         </div>
                     </div>
                     

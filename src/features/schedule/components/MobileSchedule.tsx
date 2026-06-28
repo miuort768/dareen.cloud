@@ -412,9 +412,11 @@ export const MobileSchedule = () => {
                                                 const res = await startLiveSession({
                                                     title: `حصة مباشرة: ${selectedEvent.studentName}`,
                                                     subject: selectedEvent.subject,
+                                                    meetingProvider: 'google_meet',
+                                                    meetingUrl: 'https://meet.google.com/new',
                                                     targetStudentId: selectedEvent.studentId,
                                                 });
-                                                if (res?.id) navigate(`/classroom/${res.id}`);
+                                                if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                             } catch { setShowDetails(false); }
                                         }}
                                         className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-purple-200/30"

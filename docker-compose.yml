@@ -4,7 +4,6 @@ services:
       context: .
       args:
         - VITE_API_URL=/api
-        - VITE_LIVEKIT_URL=${VITE_LIVEKIT_URL:-ws://localhost:7880}
     container_name: darin-app
     restart: always
     ports:
@@ -19,13 +18,9 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgresql://darin:${DB_PASSWORD}@postgres:5432/darin}
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - FRONTEND_URL=${FRONTEND_URL:-https://dareen.cloud}
-      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY:?LIVEKIT_API_KEY is required}
-      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET:?LIVEKIT_API_SECRET is required}
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_URL=${REDIS_URL:-redis://redis:6379}
     depends_on:
-      livekit:
-        condition: service_started
       postgres:
         condition: service_healthy
       redis:
@@ -35,19 +30,6 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-
-  livekit:
-    image: livekit/livekit-server:latest
-    container_name: livekit-server
-    restart: always
-    command: --dev --bind 0.0.0.0
-    ports:
-      - "7880:7880"
-      - "7881:7881"
-      - "7882:7882/udp"
-    environment:
-      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY:?LIVEKIT_API_KEY is required}
-      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET:?LIVEKIT_API_SECRET is required}
 
   postgres:
     image: postgres:16-alpine

@@ -40,7 +40,6 @@ export default defineConfig({
           date: ['date-fns'],
           query: ['@tanstack/react-query'],
           charts: ['recharts'],
-          classroom: ['@livekit/components-react', 'livekit-client'],
         }
       }
     }

@@ -94,8 +94,6 @@ export const Header = () => {
                 if (path.includes('/blog')) return { title: 'إدارة المدونة', subtitle: 'إدارة مقالات المدونة والكتب.' };
                 if (path.includes('/jobs')) return { title: 'طلبات التوظيف', subtitle: 'إدارة طلبات التوظيف المقدمة.' };
                 return { title: 'الإدارة', subtitle: 'لوحة تحكم الإدارة.' };
-            case '/classroom':
-                return { title: 'الفصل الدراسي', subtitle: 'منصة التعلم التفاعلي.' };
             case '/profile':
                 return { title: 'الملف الشخصي', subtitle: 'إدارة الحساب والإعدادات الشخصية.' };
             default:

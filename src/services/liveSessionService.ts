@@ -1,36 +1,25 @@
 import { api } from '../lib/api';
-import { socketService } from '../lib/socket';
 
 interface StartSessionResult {
-  id: string;          // sessionId
+  id: string;
   teacherName: string;
+  meetingUrl: string;
 }
 
-// الوظيفة الوحيدة لبدء البث — تستخدمها كل المكونات
 export async function startLiveSession(params: {
   title?: string;
   subject?: string;
-  targetStudentId?: string;     // اختياري — إذا موجود، يرسل إشعار للطالب
+  meetingProvider: 'google_meet' | 'zoom' | 'custom';
+  meetingUrl: string;
+  targetStudentId?: string;
 }): Promise<StartSessionResult> {
-  // 1. إنشاء الجلسة في قاعدة البيانات
   const res = await api.post<StartSessionResult>('/live/start', {
-    title: params.title || 'بث مباشر',
+    title: params.title || 'حصة مباشرة',
     subject: params.subject || '',
+    meetingProvider: params.meetingProvider,
+    meetingUrl: params.meetingUrl.trim(),
     targetStudentId: params.targetStudentId || null,
   });
-
-  // 2. إذا كان هناك طالب معين، أرسل له إشعار عبر Socket
-  if (params.targetStudentId && res.id) {
-    const socket = socketService.getSocket();
-    if (socket?.connected) {
-      socket.emit('call_student', {
-        studentId: params.targetStudentId,
-        subject: params.subject,
-        sessionId: res.id,
-        teacherName: res.teacherName,
-      });
-    }
-  }
 
   return res;
 }

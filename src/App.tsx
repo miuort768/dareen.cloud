@@ -52,7 +52,6 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidget';
-const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
@@ -266,8 +265,6 @@ function App() {
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />
           </Route>
-
-          <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
