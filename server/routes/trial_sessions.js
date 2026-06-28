@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createTrialSessionSchema, updateTrialSessionSchema } = require('../utils/validators');
+const { prisma } = require('../utils/prisma');
 
 router.use(authMiddleware);
 
@@ -14,7 +15,7 @@ const emitTrialUpdate = (req) => {
 
 router.get('/', async (req, res) => {
     try {
-        const trials = await req.db.all('SELECT * FROM trial_sessions ORDER BY created_at DESC');
+        const trials = await prisma.trialSession.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(trials);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -23,15 +24,13 @@ router.get('/', async (req, res) => {
 
 router.get('/stats', async (req, res) => {
     try {
-        const stats = await req.db.get(`
-            SELECT 
-                COUNT(*) as total,
-                SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed,
-                SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
-                SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled
-            FROM trial_sessions
-        `);
-        res.json(stats);
+        const [total, completed, pending, cancelled] = await Promise.all([
+            prisma.trialSession.count(),
+            prisma.trialSession.count({ where: { status: 'completed' } }),
+            prisma.trialSession.count({ where: { status: 'pending' } }),
+            prisma.trialSession.count({ where: { status: 'cancelled' } }),
+        ]);
+        res.json({ total, completed, pending, cancelled });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -41,12 +40,17 @@ router.post('/', validate(createTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, notes } = req.body;
         const id = uuidv4();
-        const createdAt = new Date().toISOString();
-        await req.db.run(
-            `INSERT INTO trial_sessions (id, studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)`,
-            [id, studentName, parentPhone, subject, teacherId || null, teacherName || null, date, time, notes || '', createdAt]
-        );
-        const trial = await req.db.get('SELECT * FROM trial_sessions WHERE id = ?', [id]);
+        await prisma.trialSession.create({
+            data: {
+                id, studentName, parentPhone,
+                subject: subject || '',
+                teacherId: teacherId || '',
+                teacherName: teacherName || '',
+                date, time: time || '',
+                notes: notes || '',
+            }
+        });
+        const trial = await prisma.trialSession.findUnique({ where: { id } });
         emitTrialUpdate(req);
         res.status(201).json(trial);
     } catch (err) {
@@ -57,11 +61,22 @@ router.post('/', validate(createTrialSessionSchema), async (req, res) => {
 router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes } = req.body;
-        await req.db.run(
-            `UPDATE trial_sessions SET studentName = COALESCE(?, studentName), parentPhone = COALESCE(?, parentPhone), subject = COALESCE(?, subject), teacherId = COALESCE(?, teacherId), teacherName = COALESCE(?, teacherName), date = COALESCE(?, date), time = COALESCE(?, time), status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?`,
-            [studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes, req.params.id]
-        );
-        const trial = await req.db.get('SELECT * FROM trial_sessions WHERE id = ?', [req.params.id]);
+        const data = {};
+        if (studentName !== undefined) data.studentName = studentName;
+        if (parentPhone !== undefined) data.parentPhone = parentPhone;
+        if (subject !== undefined) data.subject = subject;
+        if (teacherId !== undefined) data.teacherId = teacherId;
+        if (teacherName !== undefined) data.teacherName = teacherName;
+        if (date !== undefined) data.date = date;
+        if (time !== undefined) data.time = time;
+        if (status !== undefined) data.status = status;
+        if (notes !== undefined) data.notes = notes;
+
+        await prisma.trialSession.update({
+            where: { id: req.params.id },
+            data
+        });
+        const trial = await prisma.trialSession.findUnique({ where: { id: req.params.id } });
         emitTrialUpdate(req);
         res.json(trial);
     } catch (err) {
@@ -71,7 +86,7 @@ router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
 
 router.delete('/:id', checkRole(['admin']), async (req, res) => {
     try {
-        await req.db.run('DELETE FROM trial_sessions WHERE id = ?', [req.params.id]);
+        await prisma.trialSession.delete({ where: { id: req.params.id } });
         emitTrialUpdate(req);
         res.json({ success: true });
     } catch (err) {
@@ -81,26 +96,42 @@ router.delete('/:id', checkRole(['admin']), async (req, res) => {
 
 router.post('/:id/convert', checkRole(['admin']), async (req, res) => {
     try {
-        const trial = await req.db.get('SELECT * FROM trial_sessions WHERE id = ?', [req.params.id]);
+        const trial = await prisma.trialSession.findUnique({ where: { id: req.params.id } });
         if (!trial) return res.status(404).json({ error: 'Trial session not found' });
 
         const studentId = uuidv4();
-        const now = new Date().toISOString();
-        await req.db.run(
-            `INSERT INTO students (id, name, parentPhone, curriculum, notes, created_at) VALUES (?, ?, ?, ?, ?, ?)`,
-            [studentId, trial.studentName, trial.parentPhone, '', `منقول من جلسة مراجعة: ${trial.id}`, now]
-        );
+        await prisma.student.create({
+            data: {
+                id: studentId,
+                name: trial.studentName,
+                parentPhone: trial.parentPhone,
+                curriculum: '',
+                notes: `منقول من جلسة مراجعة: ${trial.id}`,
+            }
+        });
 
         if (trial.teacherId) {
-            await req.db.run(
-                `INSERT INTO enrollments (studentId, teacherId, teacher, subject, sessionsTotal, sessionsUsed) VALUES (?, ?, ?, ?, ?, ?)`,
-                [studentId, trial.teacherId, trial.teacherName, trial.subject || '', 1, 1]
-            );
+            await prisma.enrollment.create({
+                data: {
+                    studentId,
+                    teacherId: trial.teacherId,
+                    teacherFallback: trial.teacherName || '',
+                    subject: trial.subject || '',
+                    sessionsTotal: 1,
+                    sessionsUsed: 1,
+                }
+            });
         }
 
-        await req.db.run('UPDATE trial_sessions SET status = ? WHERE id = ?', ['converted', trial.id]);
+        await prisma.trialSession.update({
+            where: { id: trial.id },
+            data: { status: 'converted' }
+        });
 
-        const student = await req.db.get('SELECT id, name, parentPhone FROM students WHERE id = ?', [studentId]);
+        const student = await prisma.student.findUnique({
+            where: { id: studentId },
+            select: { id: true, name: true, parentPhone: true }
+        });
         res.status(201).json({ student, message: 'تم تحويل طالب المراجعة إلى طالب مقيد بنجاح' });
     } catch (err) {
         res.status(500).json({ error: err.message });

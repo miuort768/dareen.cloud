@@ -1,19 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
-// Using req.db from middleware
-
+const crypto = require('crypto');
 const { authMiddleware, checkRole } = require('../middleware/auth');
-
-router.use(authMiddleware);
-router.use(checkRole(['admin']));
-
 const logger = require('../utils/logger');
 const validate = require('../middleware/validation');
 const {
     createTeacherInvoiceSchema, updateTeacherInvoiceSchema,
     createStudentInvoiceSchema, updateStudentInvoiceSchema
 } = require('../utils/validators');
+const { prisma } = require('../utils/prisma');
+
+router.use(authMiddleware);
+router.use(checkRole(['admin']));
 
 // --- Teacher Invoices ---
 
@@ -22,33 +20,21 @@ router.get('/teacher', async (req, res) => {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
+        const where = {};
+
+        if (q) {
+            where.teacherName = { contains: q };
+        }
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
-            let sql = 'SELECT * FROM teacher_invoices';
-            let countSql = 'SELECT COUNT(*) as total FROM teacher_invoices';
-            let params = [];
-
-            if (q) {
-                const searchClause = ' WHERE lower(teacher) LIKE ?';
-                sql += searchClause;
-                countSql += searchClause;
-                params.push(`%${q}%`);
-            }
-
-            sql += ' ORDER BY date DESC, id DESC LIMIT ? OFFSET ?';
-            const invoices = await req.db.all(sql, [...params, limit, offset]);
-            const count = await req.db.get(countSql, params);
-
-            res.json({
-                data: invoices,
-                total: count.total,
-                page,
-                limit,
-                totalPages: Math.ceil(count.total / limit)
-            });
+            const [invoices, total] = await Promise.all([
+                prisma.teacherInvoice.findMany({ where, orderBy: [{ date: 'desc' }, { id: 'desc' }], skip: offset, take: limit }),
+                prisma.teacherInvoice.count({ where })
+            ]);
+            res.json({ data: invoices, total, page, limit, totalPages: Math.ceil(total / limit) });
         } else {
-            const invoices = await req.db.all('SELECT * FROM teacher_invoices ORDER BY date DESC, id DESC');
+            const invoices = await prisma.teacherInvoice.findMany({ where, orderBy: [{ date: 'desc' }, { id: 'desc' }] });
             res.json(invoices);
         }
     } catch (err) {
@@ -59,13 +45,22 @@ router.get('/teacher', async (req, res) => {
 
 router.post('/teacher', validate(createTeacherInvoiceSchema), async (req, res) => {
     const body = req.body;
-    const id = body.id || `inv_t_${require('crypto').randomBytes(4).toString('hex')}`;
+    const id = body.id || `inv_t_${crypto.randomBytes(4).toString('hex')}`;
     try {
-        await req.db.run(
-            `INSERT INTO teacher_invoices (id, teacherId, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, body.teacherId || null, body.teacher, body.specialization, body.amount, body.paymentMethod, body.status, body.personalExpenses, body.date]
-        );
-        const newItem = await req.db.get('SELECT * FROM teacher_invoices WHERE id = ?', [id]);
+        await prisma.teacherInvoice.create({
+            data: {
+                id,
+                teacherId: body.teacherId || '',
+                teacherName: body.teacher,
+                specialization: body.specialization || '',
+                amount: body.amount,
+                paymentMethod: body.paymentMethod || '',
+                status: body.status || 'unpaid',
+                personalExpenses: body.personalExpenses ?? 0,
+                date: body.date,
+            }
+        });
+        const newItem = await prisma.teacherInvoice.findUnique({ where: { id } });
         res.status(201).json(newItem);
     } catch (err) {
         logger.error('Error adding teacher invoice', err);
@@ -77,13 +72,22 @@ router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res
     const { id } = req.params;
     const { teacher, specialization, amount, paymentMethod, status, personalExpenses, date } = req.body;
     try {
-        const result = await req.db.run(
-            `UPDATE teacher_invoices SET teacher = ?, specialization = ?, amount = ?, paymentMethod = ?, status = ?, personalExpenses = ?, date = ? WHERE id = ?`,
-            [teacher, specialization, amount, paymentMethod, status, personalExpenses, date, id]
-        );
-        if (result.changes === 0) return res.status(404).json({ error: 'Invoice not found' });
+        const existing = await prisma.teacherInvoice.findUnique({ where: { id } });
+        if (!existing) return res.status(404).json({ error: 'Invoice not found' });
 
-        const updated = await req.db.get('SELECT * FROM teacher_invoices WHERE id = ?', [id]);
+        await prisma.teacherInvoice.update({
+            where: { id },
+            data: {
+                teacherName: teacher,
+                specialization: specialization || '',
+                amount,
+                paymentMethod: paymentMethod || '',
+                status: status || 'unpaid',
+                personalExpenses: personalExpenses ?? 0,
+                date,
+            }
+        });
+        const updated = await prisma.teacherInvoice.findUnique({ where: { id } });
         res.json(updated);
     } catch (err) {
         logger.error('Error updating teacher invoice', err, { id });
@@ -94,7 +98,7 @@ router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res
 router.delete('/teacher/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM teacher_invoices WHERE id = ?', [id]);
+        await prisma.teacherInvoice.delete({ where: { id } });
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting teacher invoice', err, { id });
@@ -109,41 +113,26 @@ router.get('/student', async (req, res) => {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
+        const where = {};
+
+        if (q) {
+            where.studentName = { contains: q };
+        }
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
-            let sql = 'SELECT * FROM student_invoices';
-            let countSql = 'SELECT COUNT(*) as total FROM student_invoices';
-            let params = [];
-
-            if (q) {
-                const searchClause = ' WHERE lower(studentName) LIKE ?';
-                sql += searchClause;
-                countSql += searchClause;
-                params.push(`%${q}%`);
-            }
-
-            sql += ' ORDER BY date DESC, dueDate ASC, id DESC LIMIT ? OFFSET ?';
-            const invoices = await req.db.all(sql, [...params, limit, offset]);
-            const count = await req.db.get(countSql, params);
-
+            const [invoices, total] = await Promise.all([
+                prisma.studentInvoice.findMany({ where, orderBy: [{ date: 'desc' }, { dueDate: 'asc' }, { id: 'desc' }], skip: offset, take: limit }),
+                prisma.studentInvoice.count({ where })
+            ]);
             const parsed = invoices.map(inv => ({
-                ...inv,
-                items: inv.items ? JSON.parse(inv.items) : []
+                ...inv, items: inv.items ? JSON.parse(inv.items) : []
             }));
-
-            res.json({
-                data: parsed,
-                total: count.total,
-                page,
-                limit,
-                totalPages: Math.ceil(count.total / limit)
-            });
+            res.json({ data: parsed, total, page, limit, totalPages: Math.ceil(total / limit) });
         } else {
-            const invoices = await req.db.all('SELECT * FROM student_invoices ORDER BY date DESC, dueDate ASC, id DESC');
+            const invoices = await prisma.studentInvoice.findMany({ where, orderBy: [{ date: 'desc' }, { dueDate: 'asc' }, { id: 'desc' }] });
             const parsed = invoices.map(inv => ({
-                ...inv,
-                items: inv.items ? JSON.parse(inv.items) : []
+                ...inv, items: inv.items ? JSON.parse(inv.items) : []
             }));
             res.json(parsed);
         }
@@ -158,16 +147,19 @@ router.post('/student', validate(createStudentInvoiceSchema), async (req, res) =
     if (!body.studentId) {
         return res.status(400).json({ error: 'Student ID is required' });
     }
-    const id = body.id || `inv_s_${require('crypto').randomBytes(4).toString('hex')}`;
+    const id = body.id || `inv_s_${crypto.randomBytes(4).toString('hex')}`;
     try {
-        const description = body.description || '';
         const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;
-
-        await req.db.run(
-            `INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes, items) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, body.studentId, body.studentName, body.amount, description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes, items]
-        );
-        const newItem = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
+        await prisma.studentInvoice.create({
+            data: {
+                id, studentId: body.studentId, studentName: body.studentName || '',
+                amount: body.amount, description: body.description || '',
+                date: body.date, dueDate: body.dueDate || '',
+                status: body.status || 'unpaid', paymentMethod: body.paymentMethod || '',
+                notes: body.notes || '', items,
+            }
+        });
+        const newItem = await prisma.studentInvoice.findUnique({ where: { id } });
         if (newItem && newItem.items) newItem.items = JSON.parse(newItem.items);
         res.status(201).json(newItem);
     } catch (err) {
@@ -180,14 +172,21 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
     const { id } = req.params;
     const body = req.body;
     try {
-        const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;
-        const result = await req.db.run(
-            `UPDATE student_invoices SET studentId = ?, studentName = ?, amount = ?, description = ?, date = ?, dueDate = ?, status = ?, paymentMethod = ?, notes = ?, items = ? WHERE id = ?`,
-            [body.studentId, body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes, items, id]
-        );
-        if (result.changes === 0) return res.status(404).json({ error: 'Invoice not found' });
+        const existing = await prisma.studentInvoice.findUnique({ where: { id } });
+        if (!existing) return res.status(404).json({ error: 'Invoice not found' });
 
-        const updated = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
+        const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;
+        await prisma.studentInvoice.update({
+            where: { id },
+            data: {
+                studentId: body.studentId, studentName: body.studentName || '',
+                amount: body.amount, description: body.description || '',
+                date: body.date, dueDate: body.dueDate || '',
+                status: body.status || 'unpaid', paymentMethod: body.paymentMethod || '',
+                notes: body.notes || '', items,
+            }
+        });
+        const updated = await prisma.studentInvoice.findUnique({ where: { id } });
         if (updated && updated.items) updated.items = JSON.parse(updated.items);
         res.json(updated);
     } catch (err) {
@@ -203,10 +202,11 @@ router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, r
         return res.status(400).json({ error: 'Status is required' });
     }
     try {
-        const result = await req.db.run(`UPDATE student_invoices SET status = ? WHERE id = ?`, [status, id]);
-        if (result.changes === 0) return res.status(404).json({ error: 'Invoice not found' });
+        const existing = await prisma.studentInvoice.findUnique({ where: { id } });
+        if (!existing) return res.status(404).json({ error: 'Invoice not found' });
 
-        const updated = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
+        await prisma.studentInvoice.update({ where: { id }, data: { status } });
+        const updated = await prisma.studentInvoice.findUnique({ where: { id } });
         res.json(updated);
     } catch (err) {
         logger.error('Error patching student invoice', err, { id });
@@ -217,7 +217,7 @@ router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, r
 router.delete('/student/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM student_invoices WHERE id = ?', [id]);
+        await prisma.studentInvoice.delete({ where: { id } });
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting student invoice', err, { id });
@@ -226,4 +226,3 @@ router.delete('/student/:id', async (req, res) => {
 });
 
 module.exports = { invoiceRouter: router };
-

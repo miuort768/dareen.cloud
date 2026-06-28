@@ -1,0 +1,595 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ========== Phase 1: Core Domain ==========
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  username     String   @unique
+  password     String
+  role         String   @default("admin")
+  permissions  String?  @db.Text
+  tokenVersion Int      @default(1) @map("token_version")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Teacher {
+  id          String       @id @default(cuid())
+  name        String
+  phone1      String?
+  phone2      String?
+  subject     String?
+  price       Int          @default(0)
+  email       String?
+  username    String?      @unique
+  password    String?
+  points      Int          @default(0)
+  deletedAt   DateTime?    @map("deleted_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  enrollments    Enrollment[]
+  sessions       Session[]
+  invoices       TeacherInvoice[]
+  evaluations    Evaluation[]
+  trialSessions  TrialSession[]
+  availability   TeacherAvailability[]
+  activeSessions ActiveSession[]
+  liveSessions   LiveSession[]
+
+  @@index([email])
+  @@index([phone1])
+  @@map("teachers")
+}
+
+model Student {
+  id           String       @id @default(cuid())
+  name         String
+  grade        String?
+  parentPhone  String?      @map("parent_phone")
+  studentPhone  String?     @map("student_phone")
+  curriculum   String?
+  notes        String?
+  sessionPrice Int          @default(0) @map("session_price")
+  parentId     String?
+  parent       Parent?      @relation(fields: [parentId], references: [id], onDelete: SetNull)
+  totalPoints  Int          @default(0) @map("total_points")
+  badges       String?      @db.Text
+  username     String?      @unique
+  password     String?
+  deletedAt    DateTime?    @map("deleted_at")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+
+  enrollments   Enrollment[]
+  pointsLogs    PointsLog[]
+  sessions      Session[]
+  invoices      StudentInvoice[]
+  evaluations   Evaluation[]
+  activeSessions ActiveSession[]
+
+  @@index([parentId])
+  @@index([studentPhone])
+  @@map("students")
+}
+
+model Parent {
+  id        String    @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  username  String?   @unique
+  password  String?
+  deletedAt DateTime? @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  students Student[]
+
+  @@index([phone])
+  @@map("parents")
+}
+
+model Enrollment {
+  id               Int      @id @default(autoincrement())
+  studentId        String
+  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId        String?
+  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherFallback  String?  @map("teacher")
+  subject          String?
+  curr             String?
+  sessionsTotal    Int      @default(0) @map("sessions_total")
+  sessionsUsed     Int      @default(0) @map("sessions_used")
+  schedule         String?  @db.Text
+  nextSessionNotes String?  @map("next_session_notes")
+  isFrozen         Int?     @default(0) @map("isFrozen")
+  frozenReason     String?  @map("frozenReason")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@map("enrollments")
+}
+
+model PointsLog {
+  id        String   @id @default(cuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  amount    Int
+  action    String
+  timestamp DateTime @default(now())
+
+  @@index([studentId])
+  @@map("points_log")
+}
+
+// ========== Phase 2: Education Domain ==========
+
+model Session {
+  id               String   @id @default(cuid())
+  studentId        String
+  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId        String?
+  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  studentName      String?
+  teacherName      String?
+  subject          String?
+  date             String   @map("date")
+  day              String?
+  time             String?
+  price            Int      @default(0)
+  teacherPrice     Int?     @default(0) @map("teacherPrice")
+  status           String   @default("scheduled")
+  topics           String?
+  homework         String?
+  needsCompensation Int?    @default(0) @map("needsCompensation")
+  isArchived       Int?     @default(0) @map("is_archived")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@index([date])
+  @@map("sessions")
+}
+
+model LiveSession {
+  id              String   @id @default(cuid())
+  teacherId       String
+  teacher         Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherName     String
+  title           String?
+  subject         String?
+  status          String   @default("active")
+  targetStudentId String?
+  startedAt       DateTime @default(now()) @map("started_at")
+
+  @@index([teacherId, status])
+  @@map("live_sessions")
+}
+
+model ActiveSession {
+  id           String   @id @default(cuid())
+  studentId    String
+  student      Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId    String
+  teacher      Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherName  String
+  subject      String
+  timerSeconds Int?     @default(0) @map("timerSeconds")
+  startedAt    DateTime @default(now()) @map("startedAt")
+
+  @@index([teacherId])
+  @@index([studentId])
+  @@map("active_sessions")
+}
+
+model Evaluation {
+  id         String   @id @default(cuid())
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId  String
+  teacher    Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherName String?
+  sessionId  String?  @map("sessionId")
+  date       String
+  rating     String
+  notes      String?
+  points     Int?     @default(0)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@map("evaluations")
+}
+
+model TrialSession {
+  id           String   @id @default(cuid())
+  studentName  String
+  parentPhone  String
+  subject      String?
+  teacherId    String?
+  teacher      Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherName  String?
+  date         String
+  time         String?
+  status       String   @default("pending")
+  notes        String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([teacherId])
+  @@index([status])
+  @@index([date])
+  @@map("trial_sessions")
+}
+
+model TeacherAvailability {
+  id          String   @id @default(cuid())
+  teacherId   String
+  teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherName String
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  isAvailable Int?     @default(1) @map("isAvailable")
+
+  @@index([teacherId])
+  @@map("teacher_availability")
+}
+
+// ========== Phase 3: Finance Domain ==========
+
+model StudentInvoice {
+  id            String   @id @default(cuid())
+  studentId     String
+  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentName   String?
+  amount        Int
+  description   String?
+  date          String
+  dueDate       String?
+  status        String   @default("unpaid")
+  paymentMethod String?
+  notes         String?
+  items         String?  @db.Text
+  isArchived    Int?     @default(0) @map("is_archived")
+
+  @@index([studentId])
+  @@index([status])
+  @@index([date])
+  @@map("student_invoices")
+}
+
+model TeacherInvoice {
+  id               String   @id @default(cuid())
+  teacherId        String?
+  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherName      String?  @map("teacher")
+  specialization   String?
+  amount           Int
+  paymentMethod    String?
+  status           String   @default("unpaid")
+  personalExpenses Int?     @default(0) @map("personalExpenses")
+  date             String
+  isArchived       Int?     @default(0) @map("is_archived")
+
+  @@index([teacherId])
+  @@index([status])
+  @@index([date])
+  @@map("teacher_invoices")
+}
+
+model ManualTransaction {
+  id          String   @id @default(cuid())
+  type        String
+  category    String?
+  amount      Float?
+  date        String
+  description String?
+  status      String   @default("completed")
+  isArchived  Int?     @default(0) @map("is_archived")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([type, status, date])
+  @@map("manual_transactions")
+}
+
+model FixedExpense {
+  id       Int     @id @default(autoincrement())
+  name     String
+  amount   Float?  @default(0)
+  isActive Int?    @default(1) @map("is_active")
+
+  @@index([isActive])
+  @@map("fixed_expenses")
+}
+
+// ========== Phase 4: Content & Communication ==========
+
+model BlogPost {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  title              String
+  excerpt            String?
+  content            String?
+  coverImage         String?
+  category           String?
+  keywords           String?
+  author             String?
+  date               String?
+  contentType        String?
+  curriculum         String?
+  level              String?
+  grade              String?
+  term               String?
+  subject            String?
+  downloadLink       String?
+  watchLink          String?
+  views              Int?     @default(0)
+  showButtons        Int?     @default(1) @map("show_buttons")
+  downloadButtonText String?  @map("download_button_text")
+  watchButtonText    String?  @map("watch_button_text")
+  source             String?
+  fileSize           String?  @map("file_size")
+  seoTitle           String?  @map("seo_title")
+  seoDescription     String?  @map("seo_description")
+  ogImage            String?  @map("og_image")
+  focusKeyword       String?  @map("focus_keyword")
+  readingTime        Int?     @default(0) @map("reading_time")
+  canonicalUrl       String?  @map("canonical_url")
+  robotsIndex        Int?     @default(1) @map("robots_index")
+  isFeatured         Int?     @default(0) @map("is_featured")
+  tags               String?
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  @@index([slug])
+  @@index([date])
+  @@index([category])
+  @@index([contentType])
+  @@index([curriculum])
+  @@index([subject])
+  @@index([isFeatured])
+  @@map("blog_posts")
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  studentName String
+  phone       String
+  subject     String?
+  curriculum  String?
+  status      String   @default("new")
+  priority    String   @default("medium")
+  notes       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("leads")
+}
+
+model JobApplication {
+  id              String   @id @default(cuid())
+  name            String
+  phone           String
+  whatsapp        String?
+  position        String
+  qualification   String
+  grade           String?
+  graduationYear  String?
+  onlineYears     String?
+  curriculums     String?
+  contacted       Int?     @default(0)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@index([position])
+  @@index([phone])
+  @@map("job_applications")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String?
+  phone     String
+  subject   String?
+  message   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([phone])
+  @@map("contact_messages")
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  name      String?
+  isGroup   Int?     @default(0) @map("isGroup")
+  createdBy String?
+  isLive    Int?     @default(0) @map("isLive")
+  meetingUrl String?  @map("meetingUrl")
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  members ConversationMember[]
+  messages Message[]
+
+  @@index([createdBy])
+  @@map("conversations")
+}
+
+model ConversationMember {
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+
+  @@id([conversationId, userId])
+  @@index([userId])
+  @@map("conversation_members")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  senderName     String
+  content        String
+  timestamp      DateTime     @default(now())
+
+  @@index([conversationId])
+  @@index([conversationId, timestamp])
+  @@map("messages")
+}
+
+model ChatProfile {
+  id        String   @id @default(cuid())
+  name      String
+  username  String   @unique
+  password  String
+  avatar    String?
+  status    String?  @default("offline")
+  lastSeen  DateTime?
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  @@map("chat_profiles")
+}
+
+model ForumPost {
+  id         String   @id @default(cuid())
+  authorId   String
+  authorName String
+  authorRole String
+  content    String
+  status     String   @default("pending")
+  upvotes    String?  @default("[]") @db.Text
+  downvotes  String?  @default("[]") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  comments ForumComment[]
+
+  @@index([authorId])
+  @@index([status])
+  @@map("forum_posts")
+}
+
+model ForumComment {
+  id         String    @id @default(cuid())
+  postId     String
+  post       ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId   String
+  authorName String
+  authorRole String
+  content    String
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  @@index([postId])
+  @@map("forum_comments")
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  type      String?  @default("general")
+  date      String
+  isActive  Int?     @default(1) @map("isActive")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([type])
+  @@index([date])
+  @@index([isActive])
+  @@map("announcements")
+}
+
+model Notification {
+  id             String   @id @default(cuid())
+  senderId       String?
+  receiverId     String?
+  senderName     String?
+  title          String
+  message        String?
+  type           String?  @default("info")
+  time           String
+  read           Int?     @default(0)
+  conversationId String?
+  link           String?
+  isDismissed    Int?     @default(0) @map("is_dismissed")
+
+  @@index([receiverId])
+  @@index([senderId])
+  @@map("notifications")
+}
+
+// ========== Phase 5: System Domain ==========
+
+model SystemSetting {
+  key   String @id
+  value String?
+
+  @@map("system_settings")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  status      String   @default("pending")
+  priority    String   @default("medium")
+  dueDate     String?
+  userId      String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([status])
+  @@map("tasks")
+}
+
+model CompletedSession {
+  id String @id
+
+  @@map("completed_sessions")
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    String?
+  username  String?
+  action    String
+  details   String?
+  timestamp DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([timestamp])
+  @@map("audit_logs")
+}
+
+model WhatsAppTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  content   String
+  isActive  Int?     @default(1) @map("isActive")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([name])
+  @@map("whatsapp_templates")
+}
+
+model PushSubscription {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  subscription String
+  deviceType   String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("push_subscriptions")
+}

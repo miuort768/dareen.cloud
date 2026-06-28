@@ -6,6 +6,7 @@ const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const { blogPostSchema, validate } = require('./blog.validation');
 const cache = require('../utils/cache');
+const { prisma } = require('../utils/prisma');
 
 const calculateReadingTime = (content) => {
     if (!content) return 0;
@@ -16,37 +17,15 @@ const calculateReadingTime = (content) => {
 
 const mapPost = (post) => post ? {
     ...post,
-    fileSize: post.file_size,
-    showButtons: post.show_buttons === 1 || post.show_buttons === true,
-    downloadButtonText: post.download_button_text,
-    watchButtonText: post.watch_button_text,
-    seoTitle: post.seo_title,
-    seoDescription: post.seo_description,
-    ogImage: post.og_image,
-    focusKeyword: post.focus_keyword,
-    readingTime: post.reading_time,
-    canonicalUrl: post.canonical_url,
-    robotsIndex: post.robots_index === 1 || post.robots_index === true,
-    isFeatured: post.is_featured === 1 || post.is_featured === true,
-    tags: post.tags,
-    file_size: undefined,
-    show_buttons: undefined,
-    download_button_text: undefined,
-    watch_button_text: undefined,
-    seo_title: undefined,
-    seo_description: undefined,
-    og_image: undefined,
-    focus_keyword: undefined,
-    reading_time: undefined,
-    canonical_url: undefined,
-    robots_index: undefined,
-    is_featured: undefined,
+    showButtons: post.showButtons === 1 || post.showButtons === true,
+    robotsIndex: post.robotsIndex === 1 || post.robotsIndex === true,
+    isFeatured: post.isFeatured === 1 || post.isFeatured === true,
 } : post;
 
 router.get('/', async (req, res) => {
     try {
         if (req.query.all === 'true') {
-            const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC');
+            const posts = await prisma.blogPost.findMany({ orderBy: { date: 'desc' } });
             return res.json(posts.map(mapPost));
         }
         const page = Math.max(1, parseInt(req.query.page) || 1);
@@ -55,9 +34,11 @@ router.get('/', async (req, res) => {
         const cached = cache.get(cacheKey);
         if (cached) return res.json(cached);
         const offset = (page - 1) * limit;
-        const total = await req.db.get('SELECT COUNT(*) as count FROM blog_posts');
-        const posts = await req.db.all('SELECT * FROM blog_posts ORDER BY date DESC LIMIT ? OFFSET ?', [limit, offset]);
-        const result = { posts: posts.map(mapPost), total: total.count, page, totalPages: Math.ceil(total.count / limit) };
+        const [posts, total] = await Promise.all([
+            prisma.blogPost.findMany({ orderBy: { date: 'desc' }, skip: offset, take: limit }),
+            prisma.blogPost.count()
+        ]);
+        const result = { posts: posts.map(mapPost), total, page, totalPages: Math.ceil(total / limit) };
         cache.set(cacheKey, result, 300000);
         res.json(result);
     } catch (err) {
@@ -75,9 +56,12 @@ router.get('/:slug', async (req, res) => {
             if (cached) return res.json(cached);
         }
         if (!isBot(req.headers['user-agent'])) {
-            await req.db.run('UPDATE blog_posts SET views = COALESCE(views, 0) + 1 WHERE slug = ?', [req.params.slug]);
+            await prisma.blogPost.update({
+                where: { slug: req.params.slug },
+                data: { views: { increment: 1 } }
+            });
         }
-        const post = await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]);
+        const post = await prisma.blogPost.findUnique({ where: { slug: req.params.slug } });
         if (!post) return res.status(404).json({ error: 'Post not found' });
         const result = mapPost(post);
         cache.set(cacheKey, result, 300000);
@@ -99,24 +83,45 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(blogPostSchema),
         const id = uuidv4();
         const readingTime = calculateReadingTime(content);
 
-        await req.db.run(
-            `INSERT INTO blog_posts (id, slug, title, excerpt, content, coverImage, category, keywords, author, date, contentType, curriculum, level, grade, term, subject, downloadLink, watchLink, show_buttons, download_button_text, watch_button_text, source, file_size, seo_title, seo_description, og_image, focus_keyword, reading_time, canonical_url, robots_index, is_featured, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, slug, title, excerpt, content, coverImage, category, keywords, author,
-             date || new Date().toISOString(),
-             contentType || null, curriculum || null, level || null,
-             grade || null, term || null, subject || null,
-             downloadLink || null, watchLink || null,
-             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null,
-             source || null, fileSize || null,
-             seoTitle || null, seoDescription || null, ogImage || null,
-             focusKeyword || null, readingTime, canonicalUrl || null,
-             robotsIndex === false ? 0 : 1, isFeatured === true ? 1 : 0, tags || null]
-        );
+        await prisma.blogPost.create({
+            data: {
+                id, slug, title,
+                excerpt: excerpt || '',
+                content: content || '',
+                coverImage: coverImage || '',
+                category: category || '',
+                keywords: keywords || '',
+                author: author || '',
+                date: date || new Date().toISOString(),
+                contentType: contentType || '',
+                curriculum: curriculum || '',
+                level: level || '',
+                grade: grade || '',
+                term: term || '',
+                subject: subject || '',
+                downloadLink: downloadLink || '',
+                watchLink: watchLink || '',
+                showButtons: showButtons === false ? 0 : 1,
+                downloadButtonText: downloadButtonText || '',
+                watchButtonText: watchButtonText || '',
+                source: source || '',
+                fileSize: fileSize || '',
+                seoTitle: seoTitle || '',
+                seoDescription: seoDescription || '',
+                ogImage: ogImage || '',
+                focusKeyword: focusKeyword || '',
+                readingTime,
+                canonicalUrl: canonicalUrl || '',
+                robotsIndex: robotsIndex === false ? 0 : 1,
+                isFeatured: isFeatured === true ? 1 : 0,
+                tags: tags || '',
+            }
+        });
 
         cache.delPattern('blog:list:');
         res.status(201).json({ id, title, slug });
     } catch (err) {
-        if (err.message.includes('UNIQUE constraint failed: blog_posts.slug')) {
+        if (err.code === 'P2002' && err.meta?.target?.includes('slug')) {
             return res.status(400).json({ error: 'الرابط المختصر (slug) موجود بالفعل، يرجى استخدام رابط مختلف.' });
         }
         ResponseHandler.serverError(res, err, 'Create blog post');
@@ -134,19 +139,28 @@ router.put('/:id', authMiddleware, checkRole(['admin']), validate(blogPostSchema
         } = req.validatedBody;
         const readingTime = calculateReadingTime(content);
 
-        await req.db.run(
-            `UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, coverImage = ?, category = ?, keywords = ?, author = ?, date = ?, contentType = ?, curriculum = ?, level = ?, grade = ?, term = ?, subject = ?, downloadLink = ?, watchLink = ?, show_buttons = ?, download_button_text = ?, watch_button_text = ?, source = ?, file_size = ?, seo_title = ?, seo_description = ?, og_image = ?, focus_keyword = ?, reading_time = ?, canonical_url = ?, robots_index = ?, is_featured = ?, tags = ? WHERE id = ?`,
-            [title, slug, excerpt, content, coverImage, category, keywords, author, date,
-             contentType || null, curriculum || null, level || null,
-             grade || null, term || null, subject || null,
-             downloadLink || null, watchLink || null,
-             showButtons === false ? 0 : 1, downloadButtonText || null, watchButtonText || null,
-             source || null, fileSize || null,
-             seoTitle || null, seoDescription || null, ogImage || null,
-             focusKeyword || null, readingTime, canonicalUrl || null,
-             robotsIndex === false ? 0 : 1, isFeatured === true ? 1 : 0, tags || null,
-             req.params.id]
-        );
+        await prisma.blogPost.update({
+            where: { id: req.params.id },
+            data: {
+                title, slug, excerpt: excerpt || '', content: content || '',
+                coverImage: coverImage || '', category: category || '',
+                keywords: keywords || '', author: author || '', date,
+                contentType: contentType || '', curriculum: curriculum || '',
+                level: level || '', grade: grade || '', term: term || '',
+                subject: subject || '', downloadLink: downloadLink || '',
+                watchLink: watchLink || '',
+                showButtons: showButtons === false ? 0 : 1,
+                downloadButtonText: downloadButtonText || '',
+                watchButtonText: watchButtonText || '',
+                source: source || '', fileSize: fileSize || '',
+                seoTitle: seoTitle || '', seoDescription: seoDescription || '',
+                ogImage: ogImage || '', focusKeyword: focusKeyword || '',
+                readingTime, canonicalUrl: canonicalUrl || '',
+                robotsIndex: robotsIndex === false ? 0 : 1,
+                isFeatured: isFeatured === true ? 1 : 0,
+                tags: tags || '',
+            }
+        });
 
         cache.delPattern('blog:');
         res.json({ success: true });
@@ -157,7 +171,7 @@ router.put('/:id', authMiddleware, checkRole(['admin']), validate(blogPostSchema
 
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
-        await req.db.run('DELETE FROM blog_posts WHERE id = ?', [req.params.id]);
+        await prisma.blogPost.delete({ where: { id: req.params.id } });
         cache.delPattern('blog:');
         res.json({ success: true });
     } catch (err) {
@@ -165,20 +179,28 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
     }
 });
 
-// Related posts
 router.get('/:slug/related', async (req, res) => {
     try {
-        const post = await req.db.get('SELECT id, category, subject FROM blog_posts WHERE slug = ?', [req.params.slug]);
+        const post = await prisma.blogPost.findUnique({
+            where: { slug: req.params.slug },
+            select: { id: true, category: true, subject: true }
+        });
         if (!post) return res.json([]);
         const cacheKey = `blog:related:${req.params.slug}`;
         const cached = cache.get(cacheKey);
         if (cached) return res.json(cached);
-        const related = await req.db.all(
-            `SELECT slug, title, excerpt, coverImage, date FROM blog_posts 
-             WHERE id != ? AND (category = ? OR subject = ?) 
-             ORDER BY date DESC LIMIT 3`,
-            [post.id, post.category, post.subject]
-        );
+        const related = await prisma.blogPost.findMany({
+            where: {
+                id: { not: post.id },
+                OR: [
+                    { category: post.category },
+                    { subject: post.subject }
+                ]
+            },
+            select: { slug: true, title: true, excerpt: true, coverImage: true, date: true },
+            orderBy: { date: 'desc' },
+            take: 3
+        });
         cache.set(cacheKey, related, 300000);
         res.json(related);
     } catch (err) {

@@ -1,58 +1,60 @@
 const express = require('express');
 const router = express.Router();
-const { getStudentEnrollments, withTransaction } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const cache = require('../utils/cache');
+const { prisma } = require('../utils/prisma');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
 
-
-// Using req.db from middleware
-
-
-// 1. Backup data
 router.get('/backup', async (req, res) => {
     try {
         const [
             students, teachers, parents, sessions, teacherInvoices,
             studentInvoices, manualTransactions, fixedExpenses,
-            tasks, completedSessions, dismissedNotifications, systemSettings, users,
+            tasks, completedSessions, systemSettings, users,
             announcements, conversations, messages, notifications, chatProfiles, conversationMembers,
             auditLogs, whatsappTemplates
         ] = await Promise.all([
-            req.db.all('SELECT * FROM students'),
-            req.db.all('SELECT * FROM teachers'),
-            req.db.all('SELECT * FROM parents'),
-            req.db.all('SELECT * FROM sessions'),
-            req.db.all('SELECT * FROM teacher_invoices'),
-            req.db.all('SELECT * FROM student_invoices'),
-            req.db.all('SELECT * FROM manual_transactions'),
-            req.db.all('SELECT * FROM fixed_expenses'),
-            req.db.all('SELECT * FROM tasks'),
-            req.db.all('SELECT * FROM completed_sessions'),
-            req.db.all('SELECT * FROM dismissed_notifications'),
-            req.db.all('SELECT * FROM system_settings'),
-            req.db.all('SELECT id, name, username, role, permissions FROM users'),
-            req.db.all('SELECT * FROM announcements'),
-            req.db.all('SELECT * FROM conversations'),
-            req.db.all('SELECT * FROM messages'),
-            req.db.all('SELECT * FROM notifications'),
-            req.db.all('SELECT * FROM chat_profiles'),
-            req.db.all('SELECT * FROM conversation_members'),
-            req.db.all('SELECT * FROM audit_logs'),
-            req.db.all('SELECT * FROM whatsapp_templates')
+            prisma.student.findMany({ include: { enrollments: true } }),
+            prisma.teacher.findMany(),
+            prisma.parent.findMany(),
+            prisma.session.findMany(),
+            prisma.teacherInvoice.findMany(),
+            prisma.studentInvoice.findMany(),
+            prisma.manualTransaction.findMany(),
+            prisma.fixedExpense.findMany(),
+            prisma.task.findMany(),
+            prisma.completedSession.findMany(),
+            prisma.systemSetting.findMany(),
+            prisma.user.findMany({ select: { id: true, name: true, username: true, role: true, permissions: true } }),
+            prisma.announcement.findMany(),
+            prisma.conversation.findMany(),
+            prisma.message.findMany(),
+            prisma.notification.findMany(),
+            prisma.chatProfile.findMany(),
+            prisma.conversationMember.findMany(),
+            prisma.auditLog.findMany(),
+            prisma.whatsAppTemplate.findMany(),
         ]);
 
-        const studentsWithEnrollments = await Promise.all(students.map(async (s) => {
-            const enrollments = await getStudentEnrollments(req.db, s.id);
-            return { ...s, enrollments };
+        let dismissedNotifications = [];
+        try {
+            dismissedNotifications = await prisma.$queryRawUnsafe('SELECT id FROM dismissed_notifications');
+        } catch (e) { }
+
+        const studentsWithEnrollments = students.map(s => ({
+            ...s,
+            enrollments: s.enrollments.map(e => ({
+                ...e,
+                schedule: typeof e.schedule === 'string' ? JSON.parse(e.schedule) : (e.schedule || [])
+            }))
         }));
 
         const backup = {
-            version: '1.2', // Incremented version
+            version: '1.2',
             timestamp: new Date().toISOString(),
             data: {
                 students: studentsWithEnrollments,
@@ -61,15 +63,13 @@ router.get('/backup', async (req, res) => {
                 sessions,
                 invoices: teacherInvoices,
                 studentInvoices: studentInvoices.map(inv => ({
-                    ...inv,
-                    items: inv.items ? JSON.parse(inv.items) : []
+                    ...inv, items: inv.items ? JSON.parse(inv.items) : []
                 })),
                 manualTransactions,
                 fixedExpenses,
                 tasks,
                 completedSessions,
                 dismissedNotifications,
-                // Include active notifications too to preserve user state
                 notifications,
                 systemSettings,
                 users,
@@ -89,206 +89,283 @@ router.get('/backup', async (req, res) => {
     }
 });
 
-// 2. Restore data
 router.post('/restore', async (req, res) => {
     const { data } = req.body;
     if (!data) return res.status(400).json({ error: 'No data provided' });
 
     try {
-        await withTransaction(req.db, async (tx) => {
-            // Delete existing data in reverse order of dependencies
-            await tx.run('DELETE FROM messages');
-            await tx.run('DELETE FROM conversation_members');
-            await tx.run('DELETE FROM conversations');
-            await tx.run('DELETE FROM chat_profiles');
-            await tx.run('DELETE FROM announcements');
-            await tx.run('DELETE FROM enrollments'); // Depends on students/teachers
-            await tx.run('DELETE FROM student_invoices');
-            await tx.run('DELETE FROM sessions');
-
-            await tx.run('DELETE FROM students');
-            await tx.run('DELETE FROM teachers');
-            await tx.run('DELETE FROM parents');
-
-            await tx.run('DELETE FROM teacher_invoices');
-            await tx.run('DELETE FROM notifications');
-            await tx.run('DELETE FROM tasks');
-            await tx.run('DELETE FROM manual_transactions');
-            await tx.run('DELETE FROM fixed_expenses');
-            await tx.run('DELETE FROM completed_sessions');
-            await tx.run('DELETE FROM dismissed_notifications');
-            await tx.run('DELETE FROM audit_logs');
-            await tx.run('DELETE FROM whatsapp_templates');
-            await tx.run('DELETE FROM system_settings');
-
-            // We keep the primary 'admin' to avoid locking out, but clear others
-            // Only if we are restoring users, otherwise keep existing
+        await prisma.$transaction(async (tx) => {
+            await tx.message.deleteMany();
+            await tx.conversationMember.deleteMany();
+            await tx.conversation.deleteMany();
+            await tx.chatProfile.deleteMany();
+            await tx.announcement.deleteMany();
+            await tx.enrollment.deleteMany();
+            await tx.studentInvoice.deleteMany();
+            await tx.session.deleteMany();
+            await tx.student.deleteMany();
+            await tx.teacher.deleteMany();
+            await tx.parent.deleteMany();
+            await tx.teacherInvoice.deleteMany();
+            await tx.notification.deleteMany();
+            await tx.task.deleteMany();
+            await tx.manualTransaction.deleteMany();
+            await tx.fixedExpense.deleteMany();
+            await tx.completedSession.deleteMany();
+            await tx.auditLog.deleteMany();
+            await tx.whatsAppTemplate.deleteMany();
+            await tx.systemSetting.deleteMany();
+            try { await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications'); } catch (e) { }
             if (data.users && data.users.length > 0) {
-                await tx.run("DELETE FROM users WHERE username != 'admin'");
+                await tx.user.deleteMany({ where: { NOT: { username: 'admin' } } });
             }
 
-            // --- RESTORE PROCESS ---
-
-            // 1. Users first (as other tables might refer to them)
             if (data.users) {
                 for (const u of data.users) {
                     if (u.username === 'admin') continue;
-                    await tx.run(`INSERT OR REPLACE INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions)]);
+                    await tx.user.create({
+                        data: {
+                            id: u.id, name: u.name, username: u.username,
+                            password: u.password, role: u.role,
+                            permissions: typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions || [])
+                        }
+                    });
                 }
             }
 
-            // 2. Teachers & Parents (independent entities)
             if (data.teachers) {
                 for (const t of data.teachers) {
-                    await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.name, t.phone1 || '', t.phone2 || '', t.subject || '', t.price || 0, t.email || '', t.username || null, t.password || null, t.created_at || new Date().toISOString()]);
+                    await tx.teacher.create({
+                        data: {
+                            id: t.id, name: t.name, phone1: t.phone1 || '', phone2: t.phone2 || '',
+                            subject: t.subject || '', price: t.price || 0, email: t.email || '',
+                            username: t.username || null, password: t.password || null,
+                            createdAt: t.created_at ? new Date(t.created_at) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.parents) {
                 for (const p of data.parents) {
-                    await tx.run(`INSERT INTO parents (id, name, phone, email) VALUES (?, ?, ?, ?)`,
-                        [p.id, p.name, p.phone || '', p.email || '']);
+                    await tx.parent.create({
+                        data: { id: p.id, name: p.name, phone: p.phone || '', email: p.email || '' }
+                    });
                 }
             }
 
-            // 3. Students & Enrollments
             if (data.students) {
                 for (const s of data.students) {
-                    await tx.run(`INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [s.id, s.name, s.grade || '', s.parentPhone || '', s.studentPhone || '', s.curriculum || '', s.notes || '', s.sessionPrice !== undefined ? s.sessionPrice : 0]);
-
+                    await tx.student.create({
+                        data: {
+                            id: s.id, name: s.name, grade: s.grade || '',
+                            parentPhone: s.parentPhone || '', studentPhone: s.studentPhone || '',
+                            curriculum: s.curriculum || '', notes: s.notes || '',
+                            sessionPrice: s.sessionPrice !== undefined ? s.sessionPrice : 0,
+                            badges: s.badges || '', totalPoints: s.totalPoints || 0,
+                            username: s.username || null, password: s.password || null,
+                        }
+                    });
                     if (s.enrollments) {
                         for (const e of s.enrollments) {
-                            await tx.run(`INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                                [s.id, e.teacher || '', e.teacherId || null, e.subject || '', e.curr || '', e.sessionsTotal || 0, e.sessionsUsed || 0, typeof e.schedule === 'string' ? e.schedule : JSON.stringify(e.schedule || [])]);
+                            await tx.enrollment.create({
+                                data: {
+                                    studentId: s.id, teacherFallback: e.teacher || '',
+                                    teacherId: e.teacherId || null, subject: e.subject || '',
+                                    curr: e.curr || '', sessionsTotal: e.sessionsTotal || 0,
+                                    sessionsUsed: e.sessionsUsed || 0,
+                                    schedule: typeof e.schedule === 'string' ? e.schedule : JSON.stringify(e.schedule || []),
+                                }
+                            });
                         }
                     }
                 }
             }
 
-            // 4. Sessions (Added all columns like teacherPrice)
             if (data.sessions) {
                 for (const s of data.sessions) {
-                    await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [s.id, s.studentId, s.studentName, s.teacherId || null, s.teacherName, s.subject, s.date, s.day || '', s.time, s.price || 0, s.teacherPrice || 0, s.status, s.created_at || new Date().toISOString()]);
+                    await tx.session.create({
+                        data: {
+                            id: s.id, studentId: s.studentId, studentName: s.studentName || '',
+                            teacherId: s.teacherId || '', teacherName: s.teacherName || '',
+                            subject: s.subject || '', date: s.date, day: s.day || '',
+                            time: s.time || '', price: s.price || 0, teacherPrice: s.teacherPrice || 0,
+                            status: s.status || 'scheduled',
+                            createdAt: s.created_at ? new Date(s.created_at) : undefined,
+                        }
+                    });
                 }
             }
 
-            // 5. Financials
             if (data.invoices) {
                 for (const i of data.invoices) {
-                    await tx.run(`INSERT INTO teacher_invoices (id, teacherId, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [i.id, i.teacherId || null, i.teacher, i.specialization || '', i.amount, i.paymentMethod, i.status, i.personalExpenses || 0, i.date]);
+                    await tx.teacherInvoice.create({
+                        data: {
+                            id: i.id, teacherId: i.teacherId || '', teacherName: i.teacher || '',
+                            specialization: i.specialization || '', amount: i.amount,
+                            paymentMethod: i.paymentMethod || '', status: i.status || 'unpaid',
+                            personalExpenses: i.personalExpenses || 0, date: i.date,
+                        }
+                    });
                 }
             }
 
             if (data.studentInvoices) {
                 for (const i of data.studentInvoices) {
                     const items = i.items ? (typeof i.items === 'string' ? i.items : JSON.stringify(i.items)) : null;
-                    await tx.run(`INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes, items) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [i.id, i.studentId, i.studentName, i.amount, i.description, i.date, i.dueDate, i.status, i.paymentMethod || '', i.notes || '', items]);
+                    await tx.studentInvoice.create({
+                        data: {
+                            id: i.id, studentId: i.studentId, studentName: i.studentName || '',
+                            amount: i.amount, description: i.description || '', date: i.date,
+                            dueDate: i.dueDate || '', status: i.status || 'unpaid',
+                            paymentMethod: i.paymentMethod || '', notes: i.notes || '', items,
+                        }
+                    });
                 }
             }
 
             if (data.manualTransactions) {
                 for (const t of data.manualTransactions) {
-                    await tx.run(`INSERT INTO manual_transactions (id, type, category, amount, date, description, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.type, t.category, t.amount, t.date, t.description, t.status, t.created_at || new Date().toISOString()]);
+                    await tx.manualTransaction.create({
+                        data: {
+                            id: t.id, type: t.type, category: t.category || '',
+                            amount: t.amount, date: t.date, description: t.description || '',
+                            status: t.status || 'completed',
+                            createdAt: t.created_at ? new Date(t.created_at) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.fixedExpenses) {
                 for (const e of data.fixedExpenses) {
-                    await tx.run(`INSERT INTO fixed_expenses (id, name, amount, is_active) VALUES (?, ?, ?, ?)`,
-                        [e.id, e.name, e.amount, e.is_active]);
+                    await tx.fixedExpense.create({
+                        data: { name: e.name, amount: e.amount || 0, isActive: e.is_active ?? 1 }
+                    });
                 }
             }
 
-            // 6. Tasks & Notifications & Settings
             if (data.tasks) {
                 for (const t of data.tasks) {
-                    await tx.run(`INSERT INTO tasks (id, title, description, status, priority, dueDate) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.title, t.description, t.status, t.priority, t.dueDate]);
+                    await tx.task.create({
+                        data: {
+                            id: t.id, title: t.title, description: t.description || '',
+                            status: t.status || 'pending', priority: t.priority || 'medium',
+                            dueDate: t.dueDate || '',
+                            createdAt: t.created_at ? new Date(t.created_at) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.completedSessions) {
                 for (const s of data.completedSessions) {
-                    await tx.run(`INSERT INTO completed_sessions (id) VALUES (?)`, [s.id]);
+                    await tx.completedSession.upsert({ where: { id: s.id }, update: {}, create: { id: s.id } });
                 }
             }
 
             if (data.dismissedNotifications) {
                 for (const n of data.dismissedNotifications) {
-                    await tx.run(`INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)`, [n.id]);
+                    try {
+                        await tx.$executeRawUnsafe('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', [n.id]);
+                    } catch (e) { }
                 }
             }
 
             if (data.notifications) {
                 for (const n of data.notifications) {
-                    await tx.run(`INSERT OR IGNORE INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [n.id, n.senderId || 'system', n.receiverId, n.senderName || 'System', n.title, n.message, n.type, n.time, n.read, n.conversationId || null]);
+                    await tx.notification.create({
+                        data: {
+                            id: n.id, senderId: n.senderId || 'system', receiverId: n.receiverId || '',
+                            senderName: n.senderName || 'System', title: n.title, message: n.message || '',
+                            type: n.type || 'info', time: n.time, read: n.read ?? 0,
+                            conversationId: n.conversationId || '',
+                        }
+                    });
                 }
             }
 
             if (data.chatProfiles) {
                 for (const cp of data.chatProfiles) {
-                    await tx.run(`INSERT INTO chat_profiles (id, name, username, password, avatar, status, lastSeen, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [cp.id, cp.name, cp.username, cp.password, cp.avatar || null, cp.status || 'offline', cp.lastSeen || null, cp.createdAt || new Date().toISOString()]);
+                    await tx.chatProfile.create({
+                        data: {
+                            id: cp.id, name: cp.name, username: cp.username, password: cp.password,
+                            avatar: cp.avatar || '', status: cp.status || 'offline',
+                            lastSeen: cp.lastSeen ? new Date(cp.lastSeen) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.systemSettings) {
                 for (const s of data.systemSettings) {
-                    await tx.run(`INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)`, [s.key, s.value]);
+                    await tx.systemSetting.upsert({ where: { key: s.key }, update: { value: s.value }, create: { key: s.key, value: s.value } });
                 }
             }
 
-            // 7. New Tables: Announcements & Chat
             if (data.announcements) {
                 for (const a of data.announcements) {
-                    // Check column naming carefully: isActive vs active, created_at vs date
-                    await tx.run(`INSERT INTO announcements (id, title, content, type, date, isActive, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                        [a.id, a.title, a.content, a.type || a.targetAudience || 'general', a.date, a.isActive !== undefined ? a.isActive : (a.active !== undefined ? a.active : 1), a.created_at || a.date || new Date().toISOString()]);
+                    await tx.announcement.create({
+                        data: {
+                            id: a.id, title: a.title, content: a.content || '',
+                            type: a.type || 'general', date: a.date,
+                            isActive: a.isActive ?? (a.active ?? 1),
+                            createdAt: a.created_at || a.date ? new Date(a.created_at || a.date) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.conversations) {
                 for (const c of data.conversations) {
-                    // Schema columns: id, name, isGroup, createdBy, createdAt
-                    await tx.run(`INSERT INTO conversations (id, name, isGroup, createdBy, createdAt) VALUES (?, ?, ?, ?, ?)`,
-                        [c.id, c.name || null, c.isGroup !== undefined ? c.isGroup : (c.type === 'group' ? 1 : 0), c.createdBy || 'system', c.createdAt || c.updatedAt || new Date().toISOString()]);
+                    await tx.conversation.create({
+                        data: {
+                            id: c.id, name: c.name || null, isGroup: c.isGroup ?? (c.type === 'group' ? 1 : 0),
+                            createdBy: c.createdBy || 'system',
+                        }
+                    });
                 }
             }
 
             if (data.conversationMembers) {
                 for (const cm of data.conversationMembers) {
-                    await tx.run(`INSERT INTO conversation_members (conversationId, userId) VALUES (?, ?)`,
-                        [cm.conversationId, cm.userId]);
+                    await tx.conversationMember.create({ data: { conversationId: cm.conversationId, userId: cm.userId } });
                 }
             }
 
             if (data.messages) {
                 for (const m of data.messages) {
-                    // Schema columns: id, conversationId, senderId, senderName, content, timestamp
-                    await tx.run(`INSERT INTO messages (id, conversationId, senderId, senderName, content, timestamp) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.timestamp]);
+                    await tx.message.create({
+                        data: {
+                            id: m.id, conversationId: m.conversationId, senderId: m.senderId,
+                            senderName: m.senderName, content: m.content,
+                            timestamp: m.timestamp ? new Date(m.timestamp) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.auditLogs) {
                 for (const al of data.auditLogs) {
-                    await tx.run(`INSERT INTO audit_logs (id, userId, username, action, details, timestamp) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [al.id, al.userId, al.username, al.action, al.details, al.timestamp]);
+                    await tx.auditLog.create({
+                        data: {
+                            userId: al.userId || '', username: al.username || '',
+                            action: al.action, details: al.details || '',
+                            timestamp: al.timestamp ? new Date(al.timestamp) : undefined,
+                        }
+                    });
                 }
             }
 
             if (data.whatsappTemplates) {
                 for (const wt of data.whatsappTemplates) {
-                    await tx.run(`INSERT INTO whatsapp_templates (id, name, content, isActive, created_at) VALUES (?, ?, ?, ?, ?)`,
-                        [wt.id, wt.name, wt.content, wt.isActive, wt.created_at]);
+                    await tx.whatsAppTemplate.create({
+                        data: {
+                            id: wt.id, name: wt.name, content: wt.content,
+                            isActive: wt.isActive ?? 1,
+                            createdAt: wt.created_at ? new Date(wt.created_at) : undefined,
+                        }
+                    });
                 }
             }
         });
@@ -300,36 +377,27 @@ router.post('/restore', async (req, res) => {
     }
 });
 
-
-// 3. System Reset
 router.post('/system-reset', async (req, res) => {
     try {
-        await withTransaction(req.db, async (tx) => {
-            // Delete all operational data
-            await tx.run('DELETE FROM enrollments');
-            await tx.run('DELETE FROM students');
-            await tx.run('DELETE FROM teachers');
-            await tx.run('DELETE FROM parents');
-            await tx.run('DELETE FROM sessions');
-            await tx.run('DELETE FROM teacher_invoices');
-            await tx.run('DELETE FROM student_invoices');
-            await tx.run('DELETE FROM notifications');
-            await tx.run('DELETE FROM tasks');
-            await tx.run('DELETE FROM manual_transactions');
-            await tx.run('DELETE FROM fixed_expenses');
-            await tx.run('DELETE FROM completed_sessions');
-            await tx.run('DELETE FROM dismissed_notifications');
-            await tx.run('DELETE FROM audit_logs');
-            await tx.run('DELETE FROM whatsapp_templates');
+        await prisma.$transaction(async (tx) => {
+            await tx.enrollment.deleteMany();
+            await tx.student.deleteMany();
+            await tx.teacher.deleteMany();
+            await tx.parent.deleteMany();
+            await tx.session.deleteMany();
+            await tx.teacherInvoice.deleteMany();
+            await tx.studentInvoice.deleteMany();
+            await tx.notification.deleteMany();
+            await tx.task.deleteMany();
+            await tx.manualTransaction.deleteMany();
+            await tx.fixedExpense.deleteMany();
+            await tx.completedSession.deleteMany();
+            await tx.auditLog.deleteMany();
+            await tx.whatsAppTemplate.deleteMany();
+            try { await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications'); } catch (e) { }
+            await tx.user.deleteMany({ where: { NOT: { role: { in: ['admin', 'supervisor'] } } } });
+            await tx.systemSetting.deleteMany();
 
-            // Delete non-admin users if any exist (safety measure)
-            // But per requirements, we keep "admins" and "supervisors"
-            await tx.run("DELETE FROM users WHERE role NOT IN ('admin', 'supervisor')");
-
-            // Reset system settings to defaults
-            await tx.run("DELETE FROM system_settings");
-
-            // Re-seed default settings
             const defaultSettings = [
                 { key: 'academy_name', value: 'دارين لتعليم و التدريب' },
                 { key: 'admin_phone', value: '201152001250' },
@@ -342,10 +410,9 @@ router.post('/system-reset', async (req, res) => {
                 { key: 'balance_warning_threshold', value: '2' }
             ];
             for (const s of defaultSettings) {
-                await tx.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);
+                await tx.systemSetting.create({ data: { key: s.key, value: s.value } });
             }
 
-            // Re-seed default fixed expenses
             const defaultExpenses = [
                 { name: 'إيجار المركز', amount: 0 },
                 { name: 'كهرباء وإنترنت', amount: 0 },
@@ -354,7 +421,7 @@ router.post('/system-reset', async (req, res) => {
                 { name: 'أخرى', amount: 0 }
             ];
             for (const exp of defaultExpenses) {
-                await tx.run('INSERT INTO fixed_expenses (name, amount) VALUES (?, ?)', [exp.name, exp.amount]);
+                await tx.fixedExpense.create({ data: { name: exp.name, amount: exp.amount } });
             }
         });
         res.json({ message: 'System reset successful' });
@@ -363,19 +430,14 @@ router.post('/system-reset', async (req, res) => {
     }
 });
 
-// 3.5 System Archive (Month Close-out)
 router.post('/archive-month', async (req, res) => {
     try {
-        await withTransaction(req.db, async (tx) => {
-            // Flag all current active financial records as "archived"
-            await tx.run('UPDATE sessions SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
-            await tx.run('UPDATE student_invoices SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
-            await tx.run('UPDATE teacher_invoices SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
-            await tx.run('UPDATE manual_transactions SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
-            
-            // Log the action
-            await tx.run("INSERT INTO audit_logs (userId, username, action, details) VALUES (?, ?, ?, ?)", 
-                         ['system', 'System', 'MONTH_ARCHIVE', 'تم إقفال الشهر المالي وأرشفة جميع السجلات.']);
+        await prisma.$transaction(async (tx) => {
+            await tx.session.updateMany({ where: { OR: [{ isArchived: 0 }, { isArchived: null }] }, data: { isArchived: 1 } });
+            await tx.studentInvoice.updateMany({ where: { OR: [{ isArchived: 0 }, { isArchived: null }] }, data: { isArchived: 1 } });
+            await tx.teacherInvoice.updateMany({ where: { OR: [{ isArchived: 0 }, { isArchived: null }] }, data: { isArchived: 1 } });
+            await tx.manualTransaction.updateMany({ where: { OR: [{ isArchived: 0 }, { isArchived: null }] }, data: { isArchived: 1 } });
+            await tx.auditLog.create({ data: { userId: 'system', username: 'System', action: 'MONTH_ARCHIVE', details: 'تم إقفال الشهر المالي وأرشفة جميع السجلات.' } });
         });
         res.json({ message: 'Month archived successfully' });
     } catch (err) {
@@ -383,13 +445,11 @@ router.post('/archive-month', async (req, res) => {
     }
 });
 
-
-// 4. Settings Routes
 router.get('/settings', async (req, res) => {
     try {
         const cached = cache.get('system:settings');
         if (cached) return res.json(cached);
-        const settings = await req.db.all('SELECT key, value FROM system_settings');
+        const settings = await prisma.systemSetting.findMany();
         const settingsMap = {};
         settings.forEach(s => { settingsMap[s.key] = s.value; });
         cache.set('system:settings', settingsMap, 60000);
@@ -402,7 +462,7 @@ router.get('/settings', async (req, res) => {
 router.post('/settings', async (req, res) => {
     const { key, value } = req.body;
     try {
-        await req.db.run('INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)', [key, String(value)]);
+        await prisma.systemSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
         cache.del('system:settings');
         res.json({ success: true });
     } catch (err) {
@@ -410,15 +470,13 @@ router.post('/settings', async (req, res) => {
     }
 });
 
-// 5. User Management Routes
 router.get('/users', async (req, res) => {
     try {
         const cached = cache.get('system:users');
         if (cached) return res.json(cached);
-        const users = await req.db.all('SELECT id, name, username, role, permissions FROM users');
+        const users = await prisma.user.findMany({ select: { id: true, name: true, username: true, role: true, permissions: true } });
         const parsedUsers = users.map(u => ({
-            ...u,
-            permissions: u.permissions ? JSON.parse(u.permissions) : []
+            ...u, permissions: u.permissions ? JSON.parse(u.permissions) : []
         }));
         cache.set('system:users', parsedUsers, 60000);
         res.json(parsedUsers);
@@ -432,10 +490,12 @@ router.post('/users', async (req, res) => {
     try {
         const bcrypt = require('bcrypt');
         const hashedPassword = await bcrypt.hash(password, 10);
-        await req.db.run(
-            'INSERT INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)',
-            [id || require('uuid').v4(), name, username, hashedPassword, role || 'admin', JSON.stringify(permissions || [])]
-        );
+        await prisma.user.create({
+            data: {
+                id: id || require('uuid').v4(), name, username, password: hashedPassword,
+                role: role || 'admin', permissions: JSON.stringify(permissions || [])
+            }
+        });
         cache.del('system:users');
         res.status(201).json({ success: true });
     } catch (err) {
@@ -447,19 +507,12 @@ router.put('/users/:id', async (req, res) => {
     const { id } = req.params;
     const { name, username, password, role, permissions } = req.body;
     try {
+        const bcrypt = require('bcrypt');
+        const data = { name, username, role: role || 'admin', permissions: JSON.stringify(permissions || []) };
         if (password && password.trim() !== '') {
-            const bcrypt = require('bcrypt');
-            const hashedPassword = await bcrypt.hash(password, 10);
-            await req.db.run(
-                'UPDATE users SET name = ?, username = ?, password = ?, role = ?, permissions = ? WHERE id = ?',
-                [name, username, hashedPassword, role, JSON.stringify(permissions), id]
-            );
-        } else {
-            await req.db.run(
-                'UPDATE users SET name = ?, username = ?, role = ?, permissions = ? WHERE id = ?',
-                [name, username, role, JSON.stringify(permissions), id]
-            );
+            data.password = await bcrypt.hash(password, 10);
         }
+        await prisma.user.update({ where: { id }, data });
         cache.del('system:users');
         res.json({ success: true });
     } catch (err) {
@@ -470,18 +523,17 @@ router.put('/users/:id', async (req, res) => {
 router.delete('/users/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM users WHERE id = ?', id);
+        await prisma.user.delete({ where: { id } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
-// 7. Dismissed Notifications Routes
 router.get('/dismissed-notifications', async (req, res) => {
     try {
-        const dismissed = await req.db.all('SELECT id FROM dismissed_notifications');
-        res.json(dismissed.map(d => d.id));
+        const dismissed = await prisma.$queryRawUnsafe('SELECT id FROM dismissed_notifications');
+        res.json((dismissed || []).map(d => d.id));
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
@@ -490,7 +542,7 @@ router.get('/dismissed-notifications', async (req, res) => {
 router.post('/dismissed-notifications', async (req, res) => {
     const { id } = req.body;
     try {
-        await req.db.run('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', id);
+        await prisma.$executeRawUnsafe('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', [id]);
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -499,17 +551,16 @@ router.post('/dismissed-notifications', async (req, res) => {
 
 router.delete('/dismissed-notifications/reset', async (req, res) => {
     try {
-        await req.db.run('DELETE FROM dismissed_notifications');
+        await prisma.$executeRawUnsafe('DELETE FROM dismissed_notifications');
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
-// 8. Audit Logs
 router.get('/audit-logs', async (req, res) => {
     try {
-        const logs = await req.db.all('SELECT * FROM audit_logs ORDER BY timestamp DESC LIMIT 500');
+        const logs = await prisma.auditLog.findMany({ orderBy: { timestamp: 'desc' }, take: 500 });
         res.json(logs);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -519,18 +570,16 @@ router.get('/audit-logs', async (req, res) => {
 router.post('/audit-logs', async (req, res) => {
     const { action, details, userId, username } = req.body;
     try {
-        await req.db.run('INSERT INTO audit_logs (userId, username, action, details) VALUES (?, ?, ?, ?)',
-            [userId || 'system', username || 'System', action, details]);
+        await prisma.auditLog.create({ data: { userId: userId || 'system', username: username || 'System', action, details: details || '' } });
         res.status(201).json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
-// 9. WhatsApp Templates
 router.get('/whatsapp-templates', async (req, res) => {
     try {
-        const templates = await req.db.all('SELECT * FROM whatsapp_templates');
+        const templates = await prisma.whatsAppTemplate.findMany();
         res.json(templates);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -540,8 +589,9 @@ router.get('/whatsapp-templates', async (req, res) => {
 router.post('/whatsapp-templates', async (req, res) => {
     const { id, name, content, isActive } = req.body;
     try {
-        await req.db.run('INSERT INTO whatsapp_templates (id, name, content, isActive) VALUES (?, ?, ?, ?)',
-            [id || require('uuid').v4(), name, content, isActive !== undefined ? isActive : 1]);
+        await prisma.whatsAppTemplate.create({
+            data: { id: id || require('uuid').v4(), name, content, isActive: isActive !== undefined ? isActive : 1 }
+        });
         res.status(201).json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -552,8 +602,7 @@ router.put('/whatsapp-templates/:id', async (req, res) => {
     const { id } = req.params;
     const { name, content, isActive } = req.body;
     try {
-        await req.db.run('UPDATE whatsapp_templates SET name = ?, content = ?, isActive = ? WHERE id = ?',
-            [name, content, isActive, id]);
+        await prisma.whatsAppTemplate.update({ where: { id }, data: { name, content, isActive } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -563,13 +612,11 @@ router.put('/whatsapp-templates/:id', async (req, res) => {
 router.delete('/whatsapp-templates/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM whatsapp_templates WHERE id = ?', id);
+        await prisma.whatsAppTemplate.delete({ where: { id } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
-
 module.exports = { systemRouter: router };
-

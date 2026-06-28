@@ -86,7 +86,19 @@ app.use((req, res, next) => {
 });
 
 app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+    let redisStatus = 'unavailable';
+    let cacheFallbacks = 0;
+    try {
+        const redis = require('./utils/redis');
+        redisStatus = redis.status();
+        cacheFallbacks = redis.getFallbackCount();
+    } catch { /* ignore */ }
+    res.status(200).json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        redis: redisStatus,
+        cacheFallbackCount: cacheFallbacks,
+    });
 });
 
 app.use(helmet({
@@ -116,30 +128,32 @@ async function startServer() {
         app.use(dbMiddleware);
         app.set('trust proxy', 1);
 
-        const rateLimit = require('express-rate-limit');
-        const limiter = rateLimit({
+        const { initQueueSystem } = require('./services');
+        initQueueSystem().catch((err) => {
+            console.error('Queue system init failed (non-fatal):', err.message);
+        });
+
+        const { createRateLimiter } = require('./middleware/rateLimiter');
+        const limiter = createRateLimiter({
             windowMs: 15 * 60 * 1000,
             max: process.env.NODE_ENV === 'development' ? 100000 : 3000,
-            message: { error: 'Too many requests, please try again later.' },
-            standardHeaders: true,
-            legacyHeaders: false,
-            skip: (req) => req.path === '/health'
+            message: 'Too many requests, please try again later.',
+            skipFailedRequests: false,
         });
-        app.use('/api/', limiter);
 
-        const strictLimiter = rateLimit({
+        const strictLimiter = createRateLimiter({
             windowMs: 15 * 60 * 1000,
             max: 20,
-            message: { error: 'محاولات كثيرة. حاول بعد 15 دقيقة.' },
-            standardHeaders: true,
-            legacyHeaders: false,
+            message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
         });
-        const moderateLimiter = rateLimit({
+        const moderateLimiter = createRateLimiter({
             windowMs: 15 * 60 * 1000,
             max: 100,
-            message: { error: 'محاولات كثيرة. حاول بعد 15 دقيقة.' },
-            standardHeaders: true,
-            legacyHeaders: false,
+            message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
+        });
+        app.use('/api/', (req, res, next) => {
+            if (req.path === '/health' || req.path === '/') return next();
+            limiter(req, res, next);
         });
         const apiRouter = express.Router();
         const { authMiddleware, checkRole } = require('./middleware/auth');
@@ -193,10 +207,7 @@ async function startServer() {
         apiRouter.use('/evaluations', evaluationsRouter);
         apiRouter.use('/student-portal', studentPortalRouter);
         apiRouter.use('/sessions', sessionRouter);
-        apiRouter.use('/notifications', (req, res, next) => {
-            req.sendPushToUser = sendPushToUser;
-            notificationRouter(req, res, next);
-        });
+        apiRouter.use('/notifications', notificationRouter);
         apiRouter.use('/system', isAdmin, systemRouter);
         apiRouter.use('/finance', isAdmin, financeRouter);
         apiRouter.use('/tasks', tasksRouter);
@@ -239,6 +250,15 @@ async function startServer() {
                     res.setHeader('Cache-Control', 'no-cache');
                 } else if (filePath.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
                     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+                }
+            }
+        }));
+
+        app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads'), {
+            maxAge: '7d',
+            setHeaders: (res, filePath) => {
+                if (filePath.match(/\.(png|jpg|jpeg|gif|webp|avif|svg)$/)) {
+                    res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
                 }
             }
         }));

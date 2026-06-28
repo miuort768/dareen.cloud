@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { authMiddleware, checkRole } = require('../middleware/auth');
+const { authMiddleware } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const { sanitizeInput } = require('../middleware/advanced');
+const { prisma } = require('../utils/prisma');
 
 router.use(sanitizeInput);
 
@@ -14,13 +15,15 @@ router.post('/', async (req, res) => {
         if (!phone) {
             return res.status(400).json({ error: 'رقم الهاتف مطلوب' });
         }
-
-        const id = uuidv4();
-        const createdAt = new Date().toISOString();
-        await req.db.run(
-            'INSERT INTO contact_messages (id, name, phone, subject, message, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-            [id, name || '', phone, subject || '', message || '', createdAt]
-        );
+        await prisma.contactMessage.create({
+            data: {
+                id: uuidv4(),
+                name: name || '',
+                phone,
+                subject: subject || '',
+                message: message || '',
+            }
+        });
         res.status(201).json({ message: 'تم إرسال الرسالة بنجاح' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Submit contact message');
@@ -29,7 +32,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', authMiddleware, async (req, res) => {
     try {
-        const messages = await req.db.all('SELECT * FROM contact_messages ORDER BY created_at DESC');
+        const messages = await prisma.contactMessage.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(messages);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch contact messages');
@@ -38,7 +41,7 @@ router.get('/', authMiddleware, async (req, res) => {
 
 router.delete('/:id', authMiddleware, async (req, res) => {
     try {
-        await req.db.run('DELETE FROM contact_messages WHERE id = ?', [req.params.id]);
+        await prisma.contactMessage.delete({ where: { id: req.params.id } });
         res.json({ message: 'تم الحذف' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete contact message');

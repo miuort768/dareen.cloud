@@ -6,6 +6,7 @@ const validate = require('../middleware/validation');
 const { createAvailabilitySchema } = require('../utils/validators');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const { prisma } = require('../utils/prisma');
 
 router.use(authMiddleware);
 
@@ -14,9 +15,14 @@ router.get('/', async (req, res) => {
         const teacherId = req.query.teacherId;
         let rows;
         if (teacherId) {
-            rows = await req.db.all('SELECT * FROM teacher_availability WHERE teacherId = ? ORDER BY dayOfWeek, startTime', [teacherId]);
+            rows = await prisma.teacherAvailability.findMany({
+                where: { teacherId },
+                orderBy: [{ dayOfWeek: 'asc' }, { startTime: 'asc' }]
+            });
         } else {
-            rows = await req.db.all('SELECT * FROM teacher_availability ORDER BY teacherName, dayOfWeek, startTime');
+            rows = await prisma.teacherAvailability.findMany({
+                orderBy: [{ teacherName: 'asc' }, { dayOfWeek: 'asc' }, { startTime: 'asc' }]
+            });
         }
         res.json(rows);
     } catch (err) {
@@ -30,19 +36,37 @@ router.get('/available-at', async (req, res) => {
         if (day === undefined || !time) {
             return res.status(400).json({ error: 'day and time query params required' });
         }
-        const rows = await req.db.all(
-            `SELECT ta.*, t.name as teacherName, t.subject FROM teacher_availability ta JOIN teachers t ON t.id = ta.teacherId WHERE ta.dayOfWeek = ? AND ta.isAvailable = 1 AND ta.startTime <= ? AND ta.endTime >= ?`,
-            [parseInt(day), time, time]
-        );
 
-        const busyTeacherIds = await req.db.all(
-            `SELECT DISTINCT teacherId FROM sessions WHERE date = ? AND time = ? AND status != 'cancelled'`,
-            [req.query.date || '', time]
-        );
-        const busyIds = new Set(busyTeacherIds.map(b => b.teacherId));
+        const rows = await prisma.teacherAvailability.findMany({
+            where: {
+                dayOfWeek: parseInt(day),
+                isAvailable: 1,
+                startTime: { lte: time },
+                endTime: { gte: time }
+            },
+            include: {
+                teacher: { select: { name: true, subject: true } }
+            }
+        });
+
+        const busySessions = await prisma.session.findMany({
+            where: {
+                date: req.query.date || '',
+                time,
+                status: { not: 'cancelled' }
+            },
+            select: { teacherId: true },
+            distinct: ['teacherId']
+        });
+        const busyIds = new Set(busySessions.map(b => b.teacherId));
         const available = rows.filter(r => !busyIds.has(r.teacherId));
 
-        res.json(available);
+        const mapped = available.map(r => ({
+            ...r,
+            teacherName: r.teacher?.name || r.teacherName,
+            subject: r.teacher?.subject || null
+        }));
+        res.json(mapped);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch available slots');
     }
@@ -55,17 +79,26 @@ router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
             return res.status(400).json({ error: 'teacherId and slots array required' });
         }
 
-        await req.db.run('DELETE FROM teacher_availability WHERE teacherId = ?', [teacherId]);
+        await prisma.teacherAvailability.deleteMany({ where: { teacherId } });
 
-        for (const slot of slots) {
-            const id = uuidv4();
-            await req.db.run(
-                `INSERT INTO teacher_availability (id, teacherId, teacherName, dayOfWeek, startTime, endTime, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                [id, teacherId, teacherName, slot.dayOfWeek, slot.startTime, slot.endTime, slot.isAvailable !== undefined ? slot.isAvailable : 1]
-            );
+        if (slots.length > 0) {
+            await prisma.teacherAvailability.createMany({
+                data: slots.map(slot => ({
+                    id: uuidv4(),
+                    teacherId,
+                    teacherName,
+                    dayOfWeek: slot.dayOfWeek,
+                    startTime: slot.startTime,
+                    endTime: slot.endTime,
+                    isAvailable: slot.isAvailable !== undefined ? slot.isAvailable : 1,
+                }))
+            });
         }
 
-        const saved = await req.db.all('SELECT * FROM teacher_availability WHERE teacherId = ? ORDER BY dayOfWeek, startTime', [teacherId]);
+        const saved = await prisma.teacherAvailability.findMany({
+            where: { teacherId },
+            orderBy: [{ dayOfWeek: 'asc' }, { startTime: 'asc' }]
+        });
         res.status(201).json(saved);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Bulk save availability');
@@ -75,11 +108,17 @@ router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { dayOfWeek, startTime, endTime, isAvailable } = req.body;
-        await req.db.run(
-            `UPDATE teacher_availability SET dayOfWeek = COALESCE(?, dayOfWeek), startTime = COALESCE(?, startTime), endTime = COALESCE(?, endTime), isAvailable = COALESCE(?, isAvailable) WHERE id = ?`,
-            [dayOfWeek, startTime, endTime, isAvailable, req.params.id]
-        );
-        const updated = await req.db.get('SELECT * FROM teacher_availability WHERE id = ?', [req.params.id]);
+        const data = {};
+        if (dayOfWeek !== undefined) data.dayOfWeek = dayOfWeek;
+        if (startTime !== undefined) data.startTime = startTime;
+        if (endTime !== undefined) data.endTime = endTime;
+        if (isAvailable !== undefined) data.isAvailable = isAvailable;
+
+        await prisma.teacherAvailability.update({
+            where: { id: req.params.id },
+            data
+        });
+        const updated = await prisma.teacherAvailability.findUnique({ where: { id: req.params.id } });
         res.json(updated);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Update availability slot');
@@ -88,7 +127,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        await req.db.run('DELETE FROM teacher_availability WHERE id = ?', [req.params.id]);
+        await prisma.teacherAvailability.delete({ where: { id: req.params.id } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete availability slot');

@@ -1,40 +1,47 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { getDb } = require('../utils/db');
-const rateLimit = require('express-rate-limit');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const { sanitizeInput } = require('../middleware/advanced');
+const { prisma } = require('../utils/prisma');
+const { createRateLimiter } = require('../middleware/rateLimiter');
 
 router.use(sanitizeInput);
 
-const publicChatLimiter = rateLimit({
+const publicChatLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 200,
-  message: { error: 'طلبات كثيرة جداً، حاول بعد 15 دقيقة' }
+  message: 'طلبات كثيرة جداً، حاول بعد 15 دقيقة'
 });
 
 router.post('/init', publicChatLimiter, async (req, res) => {
     try {
         const { name, phone } = req.body || {};
-        const db = await getDb();
         const guestId = `guest_${uuidv4().split('-')[0]}`;
         const guestName = name ? `${name} - ${phone || 'بدون رقم'}` : `زائر (${guestId})`;
 
-        const admin = await db.get("SELECT id FROM users WHERE role = 'admin' ORDER BY id ASC LIMIT 1");
+        const admin = await prisma.user.findFirst({
+            where: { role: 'admin' },
+            orderBy: { id: 'asc' },
+            select: { id: true }
+        });
         if (!admin) return res.status(404).json({ error: 'No admin found' });
 
         const conversationId = uuidv4();
-        await db.run(
-            "INSERT INTO conversations (id, isGroup, name) VALUES (?, 0, ?)",
-            [conversationId, guestName]
-        );
-
-        await db.run(
-            "INSERT INTO conversation_members (conversationId, userId) VALUES (?, ?), (?, ?)",
-            [conversationId, guestId, conversationId, admin.id]
-        );
+        await prisma.conversation.create({
+            data: {
+                id: conversationId,
+                isGroup: 0,
+                name: guestName,
+                members: {
+                    create: [
+                        { userId: guestId },
+                        { userId: admin.id }
+                    ]
+                }
+            }
+        });
 
         res.json({ guestId, conversationId, guestName });
     } catch (err) {
@@ -45,21 +52,26 @@ router.post('/init', publicChatLimiter, async (req, res) => {
 router.post('/message', publicChatLimiter, async (req, res) => {
     const { guestId, conversationId, text, guestName } = req.body;
     try {
-        const db = await getDb();
         const messageId = uuidv4();
         const timestamp = new Date().toISOString();
 
-        await db.run(
-            "INSERT INTO messages (id, conversationId, senderId, senderName, content, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-            [messageId, conversationId, guestId, guestName, text, timestamp]
-        );
+        await prisma.message.create({
+            data: {
+                id: messageId, conversationId, senderId: guestId,
+                senderName: guestName, content: text, timestamp: new Date(timestamp)
+            }
+        });
 
         const io = req.app.get('socketio');
         if (io) {
             const newMessage = { id: messageId, conversationId, senderId: guestId, senderName: guestName, content: text, timestamp };
             io.to(conversationId).emit('new_message', newMessage);
 
-            const admin = await db.get("SELECT id FROM users WHERE role = 'admin' ORDER BY id ASC LIMIT 1");
+            const admin = await prisma.user.findFirst({
+                where: { role: 'admin' },
+                orderBy: { id: 'asc' },
+                select: { id: true }
+            });
             if (admin) {
                 io.to(`user_${admin.id}`).emit('new_message', newMessage);
                 io.to(`user_${admin.id}`).emit('notification', {
@@ -78,11 +90,10 @@ router.post('/message', publicChatLimiter, async (req, res) => {
 router.get('/messages/:conversationId', async (req, res) => {
     const { conversationId } = req.params;
     try {
-        const db = await getDb();
-        const messages = await db.all(
-            'SELECT * FROM messages WHERE conversationId = ? ORDER BY timestamp ASC',
-            [conversationId]
-        );
+        const messages = await prisma.message.findMany({
+            where: { conversationId },
+            orderBy: { timestamp: 'asc' }
+        });
         res.json(messages);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch public chat messages');

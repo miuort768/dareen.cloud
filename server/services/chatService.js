@@ -1,88 +1,103 @@
 const { v4: uuidv4 } = require('uuid');
+const { prisma } = require('../utils/prisma');
 
-/**
- * Service to handle Chat-related database operations.
- */
 class ChatService {
-    constructor(db) {
-        this.db = db;
-    }
-
     async getProfiles() {
-        return await this.db.all('SELECT id, name, username, avatar, status, lastSeen FROM chat_profiles');
+        return await prisma.chatProfile.findMany({
+            select: { id: true, name: true, username: true, avatar: true, status: true, lastSeen: true }
+        });
     }
 
     async getAvailableUsers() {
-        const teachers = await this.db.all('SELECT id, name, username, "teacher" as type FROM teachers WHERE username IS NOT NULL');
-        const admins = await this.db.all('SELECT id, name, username, "admin" as type FROM users');
-        const parents = await this.db.all('SELECT id, name, username, "parent" as type FROM parents WHERE username IS NOT NULL');
-        const students = await this.db.all('SELECT id, name, username, "student" as type FROM students WHERE username IS NOT NULL');
-        const chatProfiles = await this.db.all('SELECT id, name, username, "chat_user" as type FROM chat_profiles');
-        return [...teachers, ...admins, ...parents, ...students, ...chatProfiles];
+        const [teachers, admins, parents, students, chatProfiles] = await Promise.all([
+            prisma.teacher.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
+            prisma.user.findMany({ select: { id: true, name: true, username: true } }),
+            prisma.parent.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
+            prisma.student.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
+            prisma.chatProfile.findMany({ select: { id: true, name: true, username: true } }),
+        ]);
+        return [
+            ...teachers.map(t => ({ ...t, type: 'teacher' })),
+            ...admins.map(a => ({ ...a, type: 'admin' })),
+            ...parents.map(p => ({ ...p, type: 'parent' })),
+            ...students.map(s => ({ ...s, type: 'student' })),
+            ...chatProfiles.map(c => ({ ...c, type: 'chat_user' })),
+        ];
     }
 
     async getConversations(userId) {
-        // Optimized single-query fetch for all conversations with display names
-        const convs = await this.db.all(`
-            SELECT 
-                c.*, 
-                CASE 
-                    WHEN c.isGroup = 1 THEN c.name 
-                    ELSE COALESCE(other_u.name, other_t.name, other_p.name, other_s.name, other_cp.name, c.name, 'Unknown User') 
-                END as displayName,
-                (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
-                (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
-                (SELECT COUNT(*) FROM notifications WHERE conversationId = c.id AND receiverId = ? AND read = 0) as unreadCount,
-                (SELECT GROUP_CONCAT(userId) FROM conversation_members WHERE conversationId = c.id) as memberIds
-            FROM conversations c
-            JOIN conversation_members cm_me ON c.id = cm_me.conversationId AND cm_me.userId = ?
-            -- For private chats, find the other member
-            LEFT JOIN conversation_members cm_other ON c.id = cm_other.conversationId AND c.isGroup = 0 AND cm_other.userId != ?
-            LEFT JOIN users other_u ON cm_other.userId = other_u.id
-            LEFT JOIN teachers other_t ON cm_other.userId = other_t.id
-            LEFT JOIN parents other_p ON cm_other.userId = other_p.id
-            LEFT JOIN students other_s ON cm_other.userId = other_s.id
-            LEFT JOIN chat_profiles other_cp ON cm_other.userId = other_cp.id
-            GROUP BY c.id
-            ORDER BY lastMessageTime DESC
-        `, [userId, userId, userId]);
+        const memberships = await prisma.conversationMember.findMany({
+            where: { userId },
+            select: { conversationId: true }
+        });
+        const convIds = memberships.map(m => m.conversationId);
+        if (convIds.length === 0) return [];
 
-        return convs.map(c => ({
-            ...c,
-            members: (c.memberIds || '').split(','),
-            isGroup: !!c.isGroup,
-            unreadCount: c.unreadCount || 0
-        }));
+        const conversations = await prisma.conversation.findMany({
+            where: { id: { in: convIds } },
+            include: { members: { select: { userId: true } } }
+        });
+
+        const lastMessages = await prisma.message.findMany({
+            where: { conversationId: { in: convIds } },
+            orderBy: { timestamp: 'desc' },
+            distinct: ['conversationId'],
+            take: convIds.length,
+            select: { conversationId: true, content: true, timestamp: true }
+        });
+        const lastMsgMap = {};
+        lastMessages.forEach(m => { lastMsgMap[m.conversationId] = m; });
+
+        const unreadCounts = {};
+        const notifs = await prisma.notification.findMany({
+            where: { conversationId: { in: convIds }, receiverId: userId, read: 0 },
+            select: { conversationId: true }
+        });
+        notifs.forEach(n => { unreadCounts[n.conversationId] = (unreadCounts[n.conversationId] || 0) + 1; });
+
+        return conversations.map(c => {
+            const otherMember = c.members.find(m => m.userId !== userId);
+            let displayName = c.name;
+            if (!c.isGroup && otherMember) {
+                displayName = otherMember.userId;
+            }
+            const lm = lastMsgMap[c.id];
+            return {
+                ...c,
+                isGroup: !!c.isGroup,
+                isLive: !!c.isLive,
+                members: c.members.map(m => m.userId),
+                displayName,
+                lastMessage: lm?.content || null,
+                lastMessageTime: lm?.timestamp || null,
+                unreadCount: unreadCounts[c.id] || 0,
+            };
+        });
     }
 
     async saveMessage(conversationId, { senderId, senderName, content }) {
         const id = uuidv4();
-        await this.db.run(
-            'INSERT INTO messages (id, conversationId, senderId, senderName, content) VALUES (?, ?, ?, ?, ?)',
-            [id, conversationId, senderId, senderName, content]
-        );
-        return await this.db.get('SELECT * FROM messages WHERE id = ?', id);
+        await prisma.message.create({
+            data: { id, conversationId, senderId, senderName, content }
+        });
+        return await prisma.message.findUnique({ where: { id } });
     }
 
     async updateProfile(id, { name, username, password, avatar }) {
+        const data = {};
+        if (name !== undefined) data.name = name;
+        if (username !== undefined) data.username = username;
+        if (avatar !== undefined) data.avatar = avatar;
         if (password) {
             const bcrypt = require('bcrypt');
-            const hashedPassword = await bcrypt.hash(password, 10);
-            await this.db.run(
-                'UPDATE chat_profiles SET name = ?, username = ?, password = ?, avatar = ? WHERE id = ?',
-                [name, username, hashedPassword, avatar, id]
-            );
-        } else {
-            await this.db.run(
-                'UPDATE chat_profiles SET name = ?, username = ?, avatar = ? WHERE id = ?',
-                [name, username, avatar, id]
-            );
+            data.password = await bcrypt.hash(password, 10);
         }
+        await prisma.chatProfile.update({ where: { id }, data });
         return { success: true };
     }
 
     async deleteProfile(id) {
-        await this.db.run('DELETE FROM chat_profiles WHERE id = ?', id);
+        await prisma.chatProfile.delete({ where: { id } });
         return { success: true };
     }
 
@@ -90,144 +105,123 @@ class ChatService {
         const id = uuidv4();
         const bcrypt = require('bcrypt');
         const hashedPassword = await bcrypt.hash(password || '123456', 10);
-        await this.db.run(
-            'INSERT INTO chat_profiles (id, name, username, password, avatar) VALUES (?, ?, ?, ?, ?)',
-            [id, name, username, hashedPassword, avatar || null]
-        );
-        return { id, name, username, avatar };
+        await prisma.chatProfile.create({
+            data: { id, name, username, password: hashedPassword, avatar: avatar || '' }
+        });
+        return { id, name, username, avatar: avatar || '' };
     }
 
     async checkPrivateRequest(members) {
-        if (members.length === 2) {
-            return await this.db.get(`
-                SELECT c.id FROM conversations c
-                JOIN conversation_members cm1 ON c.id = cm1.conversationId
-                JOIN conversation_members cm2 ON c.id = cm2.conversationId
-                WHERE c.isGroup = 0 
-                AND cm1.userId = ? 
-                AND cm2.userId = ?
-                LIMIT 1
-            `, [members[0], members[1]]);
-        }
-        return null;
+        if (members.length !== 2) return null;
+        const convs = await prisma.conversation.findMany({
+            where: { isGroup: 0 },
+            include: {
+                members: { where: { userId: { in: members } }, select: { userId: true } }
+            }
+        });
+        return convs.find(c => c.members.length === 2) || null;
     }
 
     async createConversation({ name, isGroup, members, createdBy }) {
-        // Check for existing private chat
         if (!isGroup) {
             const existing = await this.checkPrivateRequest(members);
-            if (existing) return existing;
+            if (existing) return { id: existing.id, name: existing.name, isGroup: false, members };
         }
 
         const id = uuidv4();
-        await this.db.run(
-            'INSERT INTO conversations (id, name, isGroup, createdBy) VALUES (?, ?, ?, ?)',
-            [id, name || null, isGroup ? 1 : 0, createdBy]
-        );
-
-        for (const userId of members) {
-            await this.db.run(
-                'INSERT INTO conversation_members (conversationId, userId) VALUES (?, ?)',
-                [id, userId]
-            );
-        }
+        await prisma.conversation.create({
+            data: {
+                id,
+                name: name || null,
+                isGroup: isGroup ? 1 : 0,
+                createdBy: createdBy || '',
+                members: {
+                    create: members.map(userId => ({ userId }))
+                }
+            }
+        });
         return { id, name, isGroup, members };
     }
 
     async updateConversation(id, { name, members }) {
         if (name !== undefined) {
-            await this.db.run('UPDATE conversations SET name = ? WHERE id = ?', [name, id]);
+            await prisma.conversation.update({ where: { id }, data: { name } });
         }
         if (members && Array.isArray(members)) {
-            await this.db.run('DELETE FROM conversation_members WHERE conversationId = ?', id);
-            for (const userId of members) {
-                await this.db.run(
-                    'INSERT INTO conversation_members (conversationId, userId) VALUES (?, ?)',
-                    [id, userId]
-                );
-            }
+            await prisma.conversationMember.deleteMany({ where: { conversationId: id } });
+            await prisma.conversationMember.createMany({
+                data: members.map(userId => ({ conversationId: id, userId }))
+            });
         }
         return { success: true };
     }
 
     async deleteConversation(id) {
-        await this.db.run('DELETE FROM conversations WHERE id = ?', id);
-        await this.db.run('DELETE FROM conversation_members WHERE conversationId = ?', id);
-        await this.db.run('DELETE FROM messages WHERE conversationId = ?', id);
+        await prisma.message.deleteMany({ where: { conversationId: id } });
+        await prisma.conversationMember.deleteMany({ where: { conversationId: id } });
+        await prisma.conversation.delete({ where: { id } });
         return { success: true };
     }
 
     async deleteAllConversations() {
-        await this.db.run('DELETE FROM conversations');
-        await this.db.run('DELETE FROM conversation_members');
-        await this.db.run('DELETE FROM messages');
-        // Optional: clear related notifications too? Maybe better to keep them or clear them.
-        // Let's clear notifications related to conversations.
-        await this.db.run('DELETE FROM notifications WHERE conversationId IS NOT NULL');
+        await prisma.message.deleteMany();
+        await prisma.conversationMember.deleteMany();
+        await prisma.conversation.deleteMany();
+        await prisma.notification.deleteMany({ where: { conversationId: { not: null } } });
         return { success: true };
     }
 
     async getMessages(conversationId) {
-        return await this.db.all(
-            'SELECT * FROM messages WHERE conversationId = ? ORDER BY timestamp ASC',
-            conversationId
-        );
+        return await prisma.message.findMany({
+            where: { conversationId },
+            orderBy: { timestamp: 'asc' }
+        });
     }
 
     async sendNotification({ conversationId, senderId, senderName, content }) {
-        const members = await this.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', conversationId);
-        const conv = await this.db.get('SELECT name, isGroup FROM conversations WHERE id = ?', conversationId);
+        const members = await prisma.conversationMember.findMany({
+            where: { conversationId },
+            select: { userId: true }
+        });
+        const conv = await prisma.conversation.findUnique({
+            where: { id: conversationId },
+            select: { name: true, isGroup: true }
+        });
+        if (!conv) return;
 
         for (const member of members) {
             if (member.userId !== senderId) {
-                // Check existing notification
-                const existingNotif = await this.db.get(
-                    'SELECT id, message FROM notifications WHERE receiverId = ? AND conversationId = ? AND read = 0',
-                    [member.userId, conversationId]
-                );
+                const existingNotif = await prisma.notification.findFirst({
+                    where: { receiverId: member.userId, conversationId, read: 0 }
+                });
 
                 if (existingNotif) {
-                    let newMsg = '';
-                    if (existingNotif.message.includes('رسائل جديدة')) {
-                        const match = existingNotif.message.match(/(\d+)/);
-                        const count = match ? parseInt(match[1]) + 1 : 2;
-                        newMsg = `لديك ${count} رسائل جديدة في هذه المحادثة`;
-                    } else {
-                        newMsg = `لديك 2 رسائل جديدة في هذه المحادثة`;
-                    }
-
-                    await this.db.run(
-                        'UPDATE notifications SET message = ?, time = ?, senderName = ? WHERE id = ?',
-                        [newMsg, new Date().toISOString(), senderName, existingNotif.id]
-                    );
+                    let match = existingNotif.message.match(/(\d+)/);
+                    let count = match ? parseInt(match[1]) + 1 : 2;
+                    let newMsg = `لديك ${count} رسائل جديدة في هذه المحادثة`;
+                    await prisma.notification.update({
+                        where: { id: existingNotif.id },
+                        data: { message: newMsg, time: new Date().toISOString(), senderName }
+                    });
                 } else {
-                    const notifId = uuidv4();
-                    await this.db.run(
-                        `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [
-                            notifId,
-                            senderId,
-                            member.userId,
-                            senderName,
-                            conv.isGroup ? `رسالة جديدة في ${conv.name}` : `رسالة جديدة من ${senderName}`,
-                            content.length > 50 ? content.substring(0, 50) + '...' : content,
-                            'info',
-                            new Date().toISOString(),
-                            0,
-                            conversationId
-                        ]
-                    );
+                    await prisma.notification.create({
+                        data: {
+                            id: uuidv4(), senderId, receiverId: member.userId, senderName,
+                            title: conv.isGroup ? `رسالة جديدة في ${conv.name}` : `رسالة جديدة من ${senderName}`,
+                            message: content.length > 50 ? content.substring(0, 50) + '...' : content,
+                            type: 'info', time: new Date().toISOString(), read: 0, conversationId
+                        }
+                    });
                 }
             }
         }
     }
 
     async markAsRead(conversationId, userId) {
-        await this.db.run(
-            'UPDATE notifications SET read = 1 WHERE conversationId = ? AND receiverId = ?',
-            [conversationId, userId]
-        );
+        await prisma.notification.updateMany({
+            where: { conversationId, receiverId: userId },
+            data: { read: 1 }
+        });
         return { success: true };
     }
 }

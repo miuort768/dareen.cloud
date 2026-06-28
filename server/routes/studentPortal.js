@@ -2,30 +2,31 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../utils/logger');
 const { authMiddleware } = require('../middleware/auth');
+const { prisma } = require('../utils/prisma');
 
-// 1. Student Portal: Get Profile & Enrollments
 router.get('/me', authMiddleware, async (req, res) => {
     try {
         const studentId = req.user.id;
-        
-        // Ensure student exists
-        const student = await req.db.get('SELECT id, name, grade, parentPhone, studentPhone, curriculum, notes, totalPoints, badges FROM students WHERE id = ?', [studentId]);
+
+        const student = await prisma.student.findUnique({
+            where: { id: studentId },
+            select: { id: true, name: true, grade: true, parentPhone: true, studentPhone: true, curriculum: true, notes: true, totalPoints: true, badges: true }
+        });
         if (!student) return res.status(404).json({ error: 'Student not found' });
 
-        // Deep fetch enrollments
-        const enrollments = await req.db.all('SELECT * FROM enrollments WHERE studentId = ?', [studentId]);
-        
-        // Parse schedule JSON if it exists
+        const enrollments = await prisma.enrollment.findMany({
+            where: { studentId }
+        });
+
         const enrollmentsWithParsedData = enrollments.map(en => ({
             ...en,
             schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
         }));
 
-        // Read from DB table so it works across different devices/users
-        const activeSession = await req.db.get(
-            'SELECT * FROM active_sessions WHERE studentId = ? ORDER BY startedAt DESC LIMIT 1',
-            [studentId]
-        );
+        const activeSession = await prisma.activeSession.findFirst({
+            where: { studentId },
+            orderBy: { startedAt: 'desc' }
+        });
 
         res.json({
             ...student,
@@ -33,21 +34,20 @@ router.get('/me', authMiddleware, async (req, res) => {
             isLive: !!activeSession,
             activeSession: activeSession || null
         });
-
     } catch (err) {
         logger.error('Error fetching student profile with data', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-// 2. Student Portal: Get Sessions (attendance history)
 router.get('/me/sessions', authMiddleware, async (req, res) => {
     try {
         const studentId = req.user.id;
-        const sessions = await req.db.all(
-            'SELECT * FROM sessions WHERE studentId = ? ORDER BY date DESC LIMIT 100',
-            [studentId]
-        );
+        const sessions = await prisma.session.findMany({
+            where: { studentId },
+            orderBy: { date: 'desc' },
+            take: 100
+        });
         res.json(sessions);
     } catch (err) {
         logger.error('Error fetching student sessions', err);
@@ -55,22 +55,26 @@ router.get('/me/sessions', authMiddleware, async (req, res) => {
     }
 });
 
-// 3. Student Portal: Get Points Log
 router.get('/me/points-log', authMiddleware, async (req, res) => {
     try {
         let studentId = req.user.id;
-        
-        // If parent is requesting, allow based on studentId query param
+
         if (req.user.role === 'parent' && req.query.studentId) {
-            const relation = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [req.query.studentId, req.user.phone]);
+            const relation = await prisma.student.findFirst({
+                where: { id: req.query.studentId, parentPhone: req.user.phone }
+            });
             if (relation) {
                 studentId = req.query.studentId;
             } else {
                 return res.status(403).json({ error: 'Access denied to this student data' });
             }
         }
-        
-        const logs = await req.db.all('SELECT * FROM points_log WHERE studentId = ? ORDER BY timestamp DESC LIMIT 50', [studentId]);
+
+        const logs = await prisma.pointsLog.findMany({
+            where: { studentId },
+            orderBy: { timestamp: 'desc' },
+            take: 50
+        });
         res.json(logs);
     } catch (err) {
         logger.error('Error fetching points log', err);
@@ -78,14 +82,14 @@ router.get('/me/points-log', authMiddleware, async (req, res) => {
     }
 });
 
-// 4. Student Portal: Get Announcements
 router.get('/me/announcements', authMiddleware, async (req, res) => {
     try {
-        const announcements = await req.db.all(
-            "SELECT * FROM system_settings WHERE key LIKE 'announcement_%' ORDER BY key DESC LIMIT 10"
-        );
-        // Parse stored announcements
-        const parsed = announcements.map(a => {
+        const settings = await prisma.systemSetting.findMany({
+            where: { key: { startsWith: 'announcement_' } },
+            orderBy: { key: 'desc' },
+            take: 10
+        });
+        const parsed = settings.map(a => {
             try { return JSON.parse(a.value); } catch(e) { return null; }
         }).filter(Boolean);
         res.json(parsed);

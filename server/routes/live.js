@@ -4,10 +4,10 @@ const crypto = require('crypto');
 const { authMiddleware } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
+const { prisma } = require('../utils/prisma');
 
 const genId = () => crypto.randomBytes(16).toString('hex');
 
-// TURN Credentials (lightweight, no DB needed)
 router.get('/turn-credentials', (req, res) => {
     const secret = process.env.TURN_SECRET;
     const turnUrl = process.env.TURN_SERVER_URL;
@@ -40,7 +40,6 @@ router.get('/turn-credentials', (req, res) => {
     });
 });
 
-// LiveKit Token Generation (requires auth)
 const { AccessToken } = require('livekit-server-sdk');
 
 router.get('/token', authMiddleware, (req, res) => {
@@ -79,25 +78,44 @@ router.get('/token', authMiddleware, (req, res) => {
 router.get('/active', authMiddleware, async (req, res) => {
     try {
         const { id, role, permissions } = req.user;
-        let query = '';
-        let params = [];
+        let where = { status: 'active' };
 
         if (permissions?.includes('*')) {
-            query = 'SELECT * FROM live_sessions WHERE status = "active" ORDER BY started_at DESC';
         } else if (role === 'teacher') {
-            query = 'SELECT * FROM live_sessions WHERE teacherId = ? AND status = "active"';
-            params = [id];
+            where.teacherId = id;
         } else if (role === 'student') {
-            query = `SELECT * FROM live_sessions WHERE status = "active" AND (targetStudentId = ? OR (targetStudentId IS NULL AND teacherId IN (SELECT teacherId FROM enrollments WHERE studentId = ?)))`;
-            params = [id, id];
+            const enrollments = await prisma.enrollment.findMany({
+                where: { studentId: id },
+                select: { teacherId: true }
+            });
+            const teacherIds = enrollments.map(e => e.teacherId).filter(Boolean);
+            where.OR = [
+                { targetStudentId: id },
+                { targetStudentId: null, teacherId: { in: teacherIds } }
+            ];
         } else if (role === 'parent') {
-            query = `SELECT * FROM live_sessions WHERE status = "active" AND (targetStudentId IN (SELECT id FROM students WHERE parentId = ?) OR (targetStudentId IS NULL AND teacherId IN (SELECT teacherId FROM enrollments WHERE studentId IN (SELECT id FROM students WHERE parentId = ?))))`;
-            params = [id, id];
+            const children = await prisma.student.findMany({
+                where: { parentId: id },
+                select: { id: true }
+            });
+            const childIds = children.map(c => c.id);
+            const enrollments = await prisma.enrollment.findMany({
+                where: { studentId: { in: childIds } },
+                select: { teacherId: true }
+            });
+            const teacherIds = enrollments.map(e => e.teacherId).filter(Boolean);
+            where.OR = [
+                { targetStudentId: { in: childIds } },
+                { targetStudentId: null, teacherId: { in: teacherIds } }
+            ];
         } else {
             return res.json([]);
         }
 
-        const sessions = await req.db.all(query, params);
+        const sessions = await prisma.liveSession.findMany({
+            where,
+            orderBy: { startedAt: 'desc' }
+        });
         res.json(sessions);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch active live sessions');
@@ -115,15 +133,19 @@ router.post('/start', authMiddleware, async (req, res) => {
         const teacherId = req.user.id;
         const teacherName = req.user.teacherName || req.user.name || req.user.username || 'معلمة';
 
-        await req.db.run(
-            'UPDATE live_sessions SET status = "ended" WHERE teacherId = ? AND status = "active"',
-            [teacherId]
-        );
+        await prisma.liveSession.updateMany({
+            where: { teacherId, status: 'active' },
+            data: { status: 'ended' }
+        });
 
-        await req.db.run(
-            `INSERT INTO live_sessions (id, teacherId, teacherName, title, subject, targetStudentId) VALUES (?, ?, ?, ?, ?, ?)`,
-            [id, teacherId, teacherName, title || 'بث مباشر', subject || '', targetStudentId || null]
-        );
+        await prisma.liveSession.create({
+            data: {
+                id, teacherId, teacherName,
+                title: title || 'بث مباشر',
+                subject: subject || '',
+                targetStudentId: targetStudentId || '',
+            }
+        });
 
         res.status(201).json({ id, teacherId, teacherName });
     } catch (err) {
@@ -134,14 +156,16 @@ router.post('/start', authMiddleware, async (req, res) => {
 router.post('/end/:id', authMiddleware, async (req, res) => {
     try {
         const isAdmin = req.user?.role === 'admin' || req.user?.permissions?.includes('*');
-        const result = await req.db.run(
-            isAdmin
-                ? 'UPDATE live_sessions SET status = "ended" WHERE id = ?'
-                : 'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
-            isAdmin ? [req.params.id] : [req.params.id, req.user.id]
-        );
+        const where = isAdmin
+            ? { id: req.params.id, status: 'active' }
+            : { id: req.params.id, teacherId: req.user.id, status: 'active' };
 
-        if (result.changes === 0) {
+        const result = await prisma.liveSession.updateMany({
+            where,
+            data: { status: 'ended' }
+        });
+
+        if (result.count === 0) {
             return res.status(404).json({ error: 'Session not found or already ended' });
         }
 

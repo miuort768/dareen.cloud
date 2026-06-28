@@ -4,6 +4,7 @@ const webpush = require('web-push');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const logger = require('../utils/logger');
 const ResponseHandler = require('../utils/responseHandler');
+const { prisma } = require('../utils/prisma');
 
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
@@ -23,16 +24,14 @@ router.post('/subscribe', authMiddleware, async (req, res) => {
         }
 
         const subJson = JSON.stringify(subscription);
-        const existing = await req.db.get(
-            'SELECT id FROM push_subscriptions WHERE userId = ? AND subscription = ?',
-            [userId, subJson]
-        );
+        const existing = await prisma.pushSubscription.findFirst({
+            where: { userId, subscription: subJson }
+        });
 
         if (!existing) {
-            await req.db.run(
-                'INSERT INTO push_subscriptions (userId, subscription, deviceType) VALUES (?, ?, ?)',
-                [userId, subJson, deviceType || 'unknown']
-            );
+            await prisma.pushSubscription.create({
+                data: { userId, subscription: subJson, deviceType: deviceType || 'unknown' }
+            });
         }
 
         res.status(201).json({ success: true });
@@ -43,10 +42,9 @@ router.post('/subscribe', authMiddleware, async (req, res) => {
 
 async function sendPushToUser(db, userId, title, message, url = '/') {
     try {
-        const subscriptions = await db.all(
-            'SELECT subscription FROM push_subscriptions WHERE userId = ?',
-            [userId]
-        );
+        const subscriptions = await prisma.pushSubscription.findMany({
+            where: { userId }
+        });
 
         const payload = JSON.stringify({ title, body: message, url });
 
@@ -55,7 +53,7 @@ async function sendPushToUser(db, userId, title, message, url = '/') {
             return webpush.sendNotification(pushConfig, payload).catch(err => {
                 logger.error(`Push error for ${err.endpoint}: ${err.message}`);
                 if (err.statusCode === 404 || err.statusCode === 410) {
-                    db.run('DELETE FROM push_subscriptions WHERE subscription = ?', [sub.subscription]);
+                    prisma.pushSubscription.deleteMany({ where: { subscription: sub.subscription } });
                 }
             });
         });
@@ -71,13 +69,13 @@ router.post('/notify-student-parent', authMiddleware, async (req, res) => {
         const { studentId, title, body } = req.body;
         if (!studentId) return res.status(400).json({ error: 'studentId required' });
 
-        const parents = await req.db.all('SELECT * FROM parents');
+        const parents = await prisma.parent.findMany();
         let notified = 0;
         for (const parent of parents) {
             let children = [];
             try { children = JSON.parse(parent.children || '[]'); } catch { children = []; }
             if (children.includes(studentId)) {
-                await sendPushToUser(req.db, parent.id, title || 'بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
+                await sendPushToUser(null, parent.id, title || 'بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
                 notified++;
             }
         }

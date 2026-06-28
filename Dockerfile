@@ -22,16 +22,14 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# تثبيت متطلبات sqlite3 للنسخ Alpine
-RUN apk add --no-cache python3 make g++
-
 # نسخ ملفات الحزم وتثبيت التبعيات
 COPY server/package*.json ./server/
 RUN cd server && npm install
 
-# نسخ السكيما وتوليد Prisma Client ثم إزالة devDeps
+# نسخ السكيما وتوليد Prisma Client (PostgreSQL) ثم إزالة devDeps
 COPY server/prisma ./server/prisma
-ENV DATABASE_URL=file:./prisma/dev.db
+RUN cp ./server/prisma/schema.pg.prisma ./server/prisma/schema.prisma
+ENV DATABASE_URL=postgresql://darin:${DB_PASSWORD}@postgres:5432/darin
 RUN cd server && npx prisma generate && npm prune --production
 
 # نسخ بقية كود الخادم

@@ -1,12 +1,60 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
-const { getStudentEnrollments, getStudentsWithEnrollments, withTransaction, updateEnrollmentSessions, awardPoints } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createSessionSchema, updateSessionSchema } = require('../utils/validators');
+const { prisma } = require('../utils/prisma');
 
-// 1. Get all sessions
+async function updateSessionCount(tx, { studentId, subject, teacherName, teacherId, delta }) {
+    const enrollments = await tx.enrollment.findMany({
+        where: { studentId, subject: subject || '' },
+        select: { id: true, teacherId: true, teacherFallback: true, sessionsUsed: true }
+    });
+    const match = enrollments.find(e =>
+        (teacherId && e.teacherId === teacherId) ||
+        (teacherName && e.teacherFallback && e.teacherFallback.trim().toLowerCase() === teacherName.trim().toLowerCase())
+    ) || enrollments[0];
+    if (!match) return 0;
+    const newVal = delta > 0 ? match.sessionsUsed + 1 : Math.max(0, match.sessionsUsed - 1);
+    await tx.enrollment.update({ where: { id: match.id }, data: { sessionsUsed: newVal } });
+    return 1;
+}
+
+async function awardPointsInline(tx, { studentId, amount, action }) {
+    if (!amount || amount === 0) return;
+    await tx.pointsLog.create({ data: { id: uuidv4(), studentId, amount, action } });
+    const student = await tx.student.findUnique({
+        where: { id: studentId },
+        select: { totalPoints: true, badges: true }
+    });
+    if (!student) return;
+    const newTotal = (student.totalPoints || 0) + amount;
+    await tx.student.update({ where: { id: studentId }, data: { totalPoints: newTotal } });
+    if (amount > 0) {
+        let badges = [];
+        try { badges = JSON.parse(student.badges || '[]'); } catch (e) { badges = []; }
+        const milestones = [
+            { threshold: 500, name: 'شاطر ومجتهد', color: 'emerald' },
+            { threshold: 1500, name: 'العبقري / العبقري', color: 'blue' },
+            { threshold: 2500, name: 'بطل المعهد', color: 'violet' },
+            { threshold: 3500, name: 'جوكر المعهد', color: 'amber' }
+        ];
+        let badgeAdded = false;
+        milestones.forEach(m => {
+            if (newTotal >= m.threshold && !badges.some(b => b.name === m.name)) {
+                badges.push({ name: m.name, color: m.color, date: new Date().toISOString() });
+                badgeAdded = true;
+            }
+        });
+        if (badgeAdded) {
+            await tx.student.update({ where: { id: studentId }, data: { badges: JSON.stringify(badges) } });
+        }
+    }
+}
+
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const page = parseInt(req.query.page);
@@ -14,23 +62,23 @@ router.get('/', authMiddleware, async (req, res) => {
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
         const studentId = req.query.studentId;
         const teacherId = req.query.teacherId;
-
-        let whereClauses = [];
-        let params = [];
+        const where = {};
 
         if (q) {
-            whereClauses.push('(lower(studentName) LIKE ? OR lower(teacherName) LIKE ? OR subject LIKE ?)');
-            params.push(`%${q}%`, `%${q}%`, `%${q}%`);
+            where.OR = [
+                { studentName: { contains: q } },
+                { teacherName: { contains: q } },
+                { subject: { contains: q } }
+            ];
         }
 
-        // Role-based Access Control checks (Prevention of Broken Object Level Authorization)
         if (req.user.role === 'student') {
-            // Students can only fetch their own sessions
-            whereClauses.push('studentId = ?');
-            params.push(req.user.id);
+            where.studentId = req.user.id;
         } else if (req.user.role === 'parent') {
-            // Parents can only fetch sessions for their children
-            const children = await req.db.all('SELECT id FROM students WHERE parentPhone = ? OR parentId = ?', [req.user.phone, req.user.id]);
+            const children = await prisma.student.findMany({
+                where: { OR: [{ parentPhone: req.user.phone }, { parentId: req.user.id }] },
+                select: { id: true }
+            });
             const childIds = children.map(c => c.id);
             if (childIds.length === 0) {
                 return res.json(!isNaN(page) && !isNaN(limit) ? { data: [], total: 0, page, limit, totalPages: 0 } : []);
@@ -39,30 +87,18 @@ router.get('/', authMiddleware, async (req, res) => {
                 if (!childIds.includes(studentId)) {
                     return res.status(403).json({ error: 'Access denied: student is not your child' });
                 }
-                whereClauses.push('studentId = ?');
-                params.push(studentId);
+                where.studentId = studentId;
             } else {
-                whereClauses.push(`studentId IN (${childIds.map(() => '?').join(',')})`);
-                params.push(...childIds);
+                where.studentId = { in: childIds };
             }
         } else if (req.user.role === 'teacher') {
-            // Teachers can only fetch sessions they teach
-            whereClauses.push('teacherId = ?');
-            params.push(req.user.id);
+            where.teacherId = req.user.id;
         } else {
-            // Admin/supervisor can request anything, apply filters if passed
-            if (studentId) {
-                whereClauses.push('studentId = ?');
-                params.push(studentId);
-            }
-            if (teacherId) {
-                whereClauses.push('teacherId = ?');
-                params.push(teacherId);
-            }
+            if (studentId) where.studentId = studentId;
+            if (teacherId) where.teacherId = teacherId;
         }
 
-        const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
-        const isTeacher = req.user && req.user.role === 'teacher';
+        const isTeacher = req.user.role === 'teacher';
 
         const mapSession = (s) => {
             if (isTeacher) {
@@ -74,22 +110,13 @@ router.get('/', authMiddleware, async (req, res) => {
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
-            let sql = `SELECT * FROM sessions${whereSql}`;
-            let countSql = `SELECT COUNT(*) as total FROM sessions${whereSql}`;
-
-            sql += ' ORDER BY date DESC, time DESC LIMIT ? OFFSET ?';
-            const sessions = await req.db.all(sql, [...params, limit, offset]);
-            const count = await req.db.get(countSql, params);
-
-            res.json({
-                data: sessions.map(mapSession),
-                total: count.total,
-                page,
-                limit,
-                totalPages: Math.ceil(count.total / limit)
-            });
+            const [sessions, total] = await Promise.all([
+                prisma.session.findMany({ where, orderBy: [{ date: 'desc' }, { time: 'desc' }], skip: offset, take: limit }),
+                prisma.session.count({ where })
+            ]);
+            res.json({ data: sessions.map(mapSession), total, page, limit, totalPages: Math.ceil(total / limit) });
         } else {
-            const sessions = await req.db.all(`SELECT * FROM sessions${whereSql} ORDER BY date DESC, time DESC`, params);
+            const sessions = await prisma.session.findMany({ where, orderBy: [{ date: 'desc' }, { time: 'desc' }] });
             res.json(sessions.map(mapSession));
         }
     } catch (err) {
@@ -98,65 +125,60 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-// 2. Add session
 router.post('/', authMiddleware, validate(createSessionSchema), async (req, res) => {
     const body = req.body;
-    const isTeacher = req.user && req.user.role === 'teacher';
+    const isTeacher = req.user.role === 'teacher';
 
     try {
-        const newItem = await withTransaction(req.db, async (tx) => {
-            const id = body.id || `sess_${require('crypto').randomBytes(4).toString('hex')}`;
+        const newItem = await prisma.$transaction(async (tx) => {
+            const id = body.id || `sess_${crypto.randomBytes(4).toString('hex')}`;
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
 
             if (!studentPrice && body.studentId) {
-                const student = await tx.get('SELECT sessionPrice FROM students WHERE id = ?', [body.studentId]);
+                const student = await tx.student.findUnique({ where: { id: body.studentId }, select: { sessionPrice: true } });
                 if (student) studentPrice = student.sessionPrice;
             }
 
-            const teacherRow = await tx.get(
-                'SELECT id, price FROM teachers WHERE id = ? OR LOWER(TRIM(name)) = LOWER(TRIM(?))',
-                [body.teacherId || null, body.teacherName]
-            );
+            const teacherRow = body.teacherId
+                ? await tx.teacher.findUnique({ where: { id: body.teacherId }, select: { id: true, price: true } })
+                : body.teacherName
+                    ? await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true } })
+                    : null;
 
             const finalTeacherId = body.teacherId || (teacherRow ? teacherRow.id : null);
-            if (teacherRow) {
-                teacherPrice = teacherRow.price;
-            }
+            if (teacherRow) teacherPrice = teacherRow.price;
 
-            await tx.run(
-                `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status, topics, homework, needsCompensation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id, body.studentId, body.studentName, finalTeacherId, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status, body.topics || null, body.homework || null, body.needsCompensation ? 1 : 0]
-            );
+            await tx.session.create({
+                data: {
+                    id, studentId: body.studentId, studentName: body.studentName || '',
+                    teacherId: finalTeacherId || '', teacherName: body.teacherName || '',
+                    subject: body.subject || '', date: body.date, day: body.day || '',
+                    time: body.time || '', price: studentPrice, teacherPrice,
+                    status: body.status || 'scheduled',
+                    topics: body.topics || '', homework: body.homework || '',
+                    needsCompensation: body.needsCompensation ? 1 : 0,
+                }
+            });
 
             if (body.status === 'completed') {
-                await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: finalTeacherId, delta: 1 });
-                await awardPoints(tx, { studentId: body.studentId, amount: 10, action: `حضور حصة: ${body.subject}` });
+                await updateSessionCount(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: finalTeacherId, delta: 1 });
+                await awardPointsInline(tx, { studentId: body.studentId, amount: 10, action: `حضور حصة: ${body.subject}` });
             }
 
-            // 🔔 Auto-notify parent on absence
             if (body.status === 'cancelled') {
-                const { v4: uuidv4 } = require('uuid');
-                const notifId = uuidv4();
-                const notifTime = new Date().toISOString();
-                await tx.run(
-                    `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)`,
-                    [
-                        notifId,
-                        req.user?.id || 'system',
-                        body.studentId,
-                        req.user?.teacherName || req.user?.name || 'النظام',
-                        `غياب: ${body.studentName}`,
-                        `تم تسجيل غياب الطالب "${body.studentName}" في مادة "${body.subject}" بتاريخ ${body.date}.`,
-                        'warning',
-                        notifTime
-                    ]
-                );
+                await tx.notification.create({
+                    data: {
+                        id: uuidv4(), senderId: req.user?.id || 'system', receiverId: body.studentId,
+                        senderName: req.user?.teacherName || req.user?.name || 'النظام',
+                        title: `غياب: ${body.studentName}`,
+                        message: `تم تسجيل غياب الطالب "${body.studentName}" في مادة "${body.subject}" بتاريخ ${body.date}.`,
+                        type: 'warning', time: new Date().toISOString(), read: 0,
+                    }
+                });
             }
 
-            const session = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
-
+            const session = await tx.session.findUnique({ where: { id } });
             if (isTeacher) {
                 const { price, ...rest } = session;
                 return { ...rest, price: session.teacherPrice };
@@ -171,61 +193,52 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
     }
 });
 
-
-// 3. Update session
 router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
-    const isTeacher = req.user && req.user.role === 'teacher';
+    const isTeacher = req.user.role === 'teacher';
     const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject', 'topics', 'homework', 'needsCompensation'];
     const keys = Object.keys(updates).filter(k => allowedFields.includes(k));
-
     if (keys.length === 0) return res.status(400).json({ error: 'No valid fields to update' });
 
-    const setClause = keys.map(k => `${k} = ?`).join(', ');
-    const values = keys.map(k => updates[k]);
+    const data = {};
+    keys.forEach(k => { data[k] = updates[k]; });
 
     try {
-        const updated = await withTransaction(req.db, async (tx) => {
-            const oldSession = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+        const updated = await prisma.$transaction(async (tx) => {
+            const oldSession = await tx.session.findUnique({ where: { id } });
             if (!oldSession) throw new Error('Session not found');
 
-            await tx.run(`UPDATE sessions SET ${setClause} WHERE id = ?`, [...values, id]);
-            const newSession = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+            await tx.session.update({ where: { id }, data });
+            const newSession = await tx.session.findUnique({ where: { id } });
 
             const wasCompleted = oldSession.status === 'completed';
             const isCompleted = newSession.status === 'completed';
-
-            // Check if identifying fields changed (affecting which enrollment it belongs to)
             const identityChanged =
                 oldSession.studentId !== newSession.studentId ||
                 oldSession.subject !== newSession.subject ||
                 oldSession.teacherId !== newSession.teacherId;
 
             if (wasCompleted && isCompleted && identityChanged) {
-                // Return to old enrollment
-                await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
-                await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل بيانات حصة مكتملة: ${oldSession.subject}` });
-
-                // Deduct from new enrollment
-                await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
-                await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة (انتقال): ${newSession.subject}` });
+                await updateSessionCount(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                await awardPointsInline(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل بيانات حصة مكتملة: ${oldSession.subject}` });
+                await updateSessionCount(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                await awardPointsInline(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة (انتقال): ${newSession.subject}` });
             } else if (!identityChanged) {
                 if (wasCompleted && !isCompleted) {
-                    await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
-                    await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل حالة حصة: ${oldSession.subject}` });
+                    await updateSessionCount(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                    await awardPointsInline(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل حالة حصة: ${oldSession.subject}` });
                 } else if (!wasCompleted && isCompleted) {
-                    await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
-                    await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة: ${newSession.subject}` });
+                    await updateSessionCount(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                    await awardPointsInline(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة: ${newSession.subject}` });
                 }
             } else {
-                // Identity changed AND status changed
                 if (wasCompleted && !isCompleted) {
-                    await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
-                    await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `إلغاء حصة مكتملة: ${oldSession.subject}` });
+                    await updateSessionCount(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                    await awardPointsInline(tx, { studentId: oldSession.studentId, amount: -10, action: `إلغاء حصة مكتملة: ${oldSession.subject}` });
                 } else if (!wasCompleted && isCompleted) {
-                    await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
-                    await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة جديدة: ${newSession.subject}` });
+                    await updateSessionCount(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                    await awardPointsInline(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة جديدة: ${newSession.subject}` });
                 }
             }
 
@@ -244,18 +257,17 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
     }
 });
 
-// 4. Delete session
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
-        await withTransaction(req.db, async (tx) => {
-            const session = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+        await prisma.$transaction(async (tx) => {
+            const session = await tx.session.findUnique({ where: { id } });
             if (session) {
                 if (session.status === 'completed') {
-                    await updateEnrollmentSessions(tx, { studentId: session.studentId, subject: session.subject, teacherName: session.teacherName, teacherId: session.teacherId, delta: -1 });
-                    await awardPoints(tx, { studentId: session.studentId, amount: -10, action: `حذف حصة مكتملة: ${session.subject}` });
+                    await updateSessionCount(tx, { studentId: session.studentId, subject: session.subject, teacherName: session.teacherName, teacherId: session.teacherId, delta: -1 });
+                    await awardPointsInline(tx, { studentId: session.studentId, amount: -10, action: `حذف حصة مكتملة: ${session.subject}` });
                 }
-                await tx.run('DELETE FROM sessions WHERE id = ?', [id]);
+                await tx.session.delete({ where: { id } });
             }
         });
         res.json({ message: 'Deleted' });

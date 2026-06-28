@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { getDb } = require('../utils/db');
+const { prisma } = require('../utils/prisma');
 
 module.exports = (app) => {
     app.get('/sitemap.xml', async (req, res) => {
@@ -31,8 +31,10 @@ module.exports = (app) => {
                 xml += '  </url>\n';
             });
             try {
-                const db = await getDb();
-                const posts = await db.all("SELECT slug, date FROM blog_posts");
+                const posts = await prisma.blogPost.findMany({
+                    select: { slug: true, date: true },
+                    orderBy: { date: 'desc' }
+                });
                 posts.forEach((post) => {
                     const postDate = post.date ? post.date.split('T')[0] : date;
                     xml += '  <url>\n';
@@ -73,7 +75,7 @@ Sitemap: https://dareen.cloud/sitemap.xml
 
     app.get('/books/:slug', async (req, res, next) => {
         try {
-            const post = req.db ? await req.db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug]) : null;
+            const post = await prisma.blogPost.findUnique({ where: { slug: req.params.slug } }).catch(() => null);
             if (post) {
                 const html = fs.readFileSync(path.join(__dirname, '../../dist/index.html'), 'utf-8');
                 const esc = require('escape-html');

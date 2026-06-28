@@ -5,6 +5,8 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const { validateImageUpload } = require('../middleware/upload');
+const { processImage } = require('../services/imageService');
+const logger = require('../utils/logger');
 
 const UPLOAD_DIR = path.join(__dirname, '../../public/uploads/blog');
 
@@ -33,20 +35,65 @@ const upload = multer({
     }
 });
 
-router.post('/blog-image', authMiddleware, checkRole(['admin']), upload.single('image'), validateImageUpload, (req, res) => {
+router.post('/blog-image', authMiddleware, checkRole(['admin']), upload.single('image'), validateImageUpload, async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'لم يتم رفع أي ملف' });
     }
-    const url = `/uploads/blog/${req.file.filename}`;
-    res.json({ url, filename: req.file.filename });
+
+    const { filename, originalname, mimetype, path: filePath } = req.file;
+    const url = `/uploads/blog/${filename}`;
+
+    processImage({
+        filePath,
+        filename,
+        originalName: originalname,
+        mimeType: mimetype,
+        uploadDir: UPLOAD_DIR,
+        options: {
+            sizes: ['thumbnail', 'medium', 'large'],
+            formats: ['webp'],
+            stripMetadata: true,
+        },
+    }).then((result) => {
+        if (result.queued) {
+            logger.info('Image queued for processing: ' + filename + ' (job ' + result.jobId + ')');
+        } else if (result.result) {
+            logger.info('Image processed synchronously: ' + filename + ' (' + result.result.compression + ' compression)');
+        }
+    }).catch((err) => {
+        logger.error('Image processing failed for ' + filename + ': ' + (err.message || err));
+    });
+
+    res.json({ url, filename });
 });
 
 router.delete('/blog-image/:filename', authMiddleware, checkRole(['admin']), (req, res) => {
     const fs = require('fs');
-    const filePath = path.join(UPLOAD_DIR, req.params.filename);
-    if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        res.json({ success: true });
+    const baseName = path.parse(req.params.filename).name;
+    const dir = UPLOAD_DIR;
+
+    const patterns = [
+        req.params.filename,
+        baseName + '_thumbnail.webp',
+        baseName + '_medium.webp',
+        baseName + '_large.webp',
+    ];
+
+    let deleted = 0;
+    for (const pattern of patterns) {
+        const filePath = path.join(dir, pattern);
+        if (fs.existsSync(filePath)) {
+            try {
+                fs.unlinkSync(filePath);
+                deleted++;
+            } catch (err) {
+                logger.warn('Failed to delete ' + pattern + ': ' + (err.message || err));
+            }
+        }
+    }
+
+    if (deleted > 0) {
+        res.json({ success: true, deleted });
     } else {
         res.status(404).json({ error: 'الملف غير موجود' });
     }
