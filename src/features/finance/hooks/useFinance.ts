@@ -217,8 +217,8 @@ export const useFinance = () => {
 
     const filteredTransactions = useMemo(() => {
         return allTransactions.filter(t => {
-            const matchesSearch = t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                t.category.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesSearch = (t.description || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (t.category || '').toLowerCase().includes(searchTerm.toLowerCase());
             const matchesType = filterType === 'all' || t.type === filterType;
 
             const isMatchingMonth = (dateStr: string) => {
@@ -267,8 +267,9 @@ export const useFinance = () => {
 
         const expenseByCategory = allTransactions
             .filter(t => t.type === 'expense' && t.status === 'completed')
-            .reduce((acc: Record<string, number>, t: { date: string; amount: number }) => {
-                acc[t.category] = (acc[t.category] || 0) + t.amount;
+            .reduce((acc: Record<string, number>, t: any) => {
+                const cat = t.category || 'أخرى';
+                acc[cat] = (acc[cat] || 0) + t.amount;
                 return acc;
             }, {} as Record<string, number>);
 
