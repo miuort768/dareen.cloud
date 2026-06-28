@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 
 let prisma;
 
-// Use dev.db (synced via prisma db push) which has both Prisma schema and actual data
+// Point to dev.db which has the Prisma schema synced via prisma db push
 const resolvedDbPath = 'file:' + path.resolve(__dirname, '..', 'dev.db').replace(/\\/g, '/');
 
 if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql')) {

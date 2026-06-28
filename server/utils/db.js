@@ -10,7 +10,7 @@ let dbInstance = null;
  */
 async function getDb() {
     if (!dbInstance) {
-        const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'database.sqlite');
+        const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'dev.db');
         dbInstance = await open({
             filename: dbPath,
             driver: sqlite3.Database
