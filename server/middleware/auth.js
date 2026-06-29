@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { prisma } = require('../utils/prisma');
+const { hasPermission } = require('../services/permissionService');
 
 const modelMap = {
     admin: 'user',
@@ -54,4 +55,26 @@ const checkRole = (roles) => {
     };
 };
 
-module.exports = { authMiddleware, checkRole };
+const requirePermission = (permissionKey) => {
+    return async (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        if (req.user.role === 'admin') {
+            return next();
+        }
+
+        try {
+            const has = await hasPermission(req.user.id, permissionKey, 'users');
+            if (!has) {
+                return res.status(403).json({ error: 'Forbidden: Insufficient permissions' });
+            }
+            next();
+        } catch (err) {
+            return res.status(500).json({ error: 'Permission check failed' });
+        }
+    };
+};
+
+module.exports = { authMiddleware, checkRole, requirePermission };

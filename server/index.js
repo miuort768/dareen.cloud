@@ -154,7 +154,7 @@ async function startServer() {
             limiter(req, res, next);
         });
         const apiRouter = express.Router();
-        const { authMiddleware, checkRole } = require('./middleware/auth');
+        const { authMiddleware, checkRole, requirePermission } = require('./middleware/auth');
         const { isAdmin } = require('./middleware/permissions');
 
         apiRouter.use('/auth/login', strictLimiter);
@@ -222,6 +222,7 @@ async function startServer() {
         apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
         apiRouter.use('/search', searchRouter);
         apiRouter.use('/export', isAdmin, exportRouter);
+        apiRouter.use('/roles', isAdmin, require('./routes/roles'));
 
         apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
             req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;

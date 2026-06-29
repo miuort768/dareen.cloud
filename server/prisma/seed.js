@@ -78,7 +78,69 @@ async function main() {
     });
   }
 
-  console.log(`Seeded ${currencies.length} currencies, ${defaultRates.length} exchange rates, and ${financialSettings.length} financial settings.`);
+  // RBAC seed
+  const permissionsData = [
+    { key: '*', label: 'الوصول الكامل', group: 'system' },
+    { key: 'dashboard.read', label: 'عرض لوحة التحكم', group: 'dashboard' },
+    { key: 'dashboard.revenue', label: 'عرض الإيرادات', group: 'dashboard' },
+    { key: 'dashboard.analytics', label: 'عرض التحليلات', group: 'dashboard' },
+    { key: 'students.read', label: 'عرض الطلاب', group: 'students' },
+    { key: 'students.create', label: 'إضافة طالب', group: 'students' },
+    { key: 'students.edit', label: 'تعديل طالب', group: 'students' },
+    { key: 'students.delete', label: 'حذف طالب', group: 'students' },
+    { key: 'teachers.read', label: 'عرض المعلمين', group: 'teachers' },
+    { key: 'teachers.create', label: 'إضافة معلم', group: 'teachers' },
+    { key: 'teachers.edit', label: 'تعديل معلم', group: 'teachers' },
+    { key: 'teachers.delete', label: 'حذف معلم', group: 'teachers' },
+    { key: 'finance.read', label: 'عرض المالية', group: 'finance' },
+    { key: 'finance.transactions.create', label: 'إضافة معاملة مالية', group: 'finance' },
+    { key: 'finance.transactions.delete', label: 'حذف معاملة مالية', group: 'finance' },
+    { key: 'finance.invoices.read', label: 'عرض الفواتير', group: 'finance' },
+    { key: 'finance.invoices.edit', label: 'تعديل الفواتير', group: 'finance' },
+    { key: 'finance.reports', label: 'التقارير المالية', group: 'finance' },
+    { key: 'sessions.read', label: 'عرض الجلسات', group: 'sessions' },
+    { key: 'sessions.create', label: 'إضافة جلسة', group: 'sessions' },
+    { key: 'sessions.edit', label: 'تعديل جلسة', group: 'sessions' },
+    { key: 'leads.read', label: 'عرض العملاء المحتملين', group: 'leads' },
+    { key: 'leads.create', label: 'إضافة عميل محتمل', group: 'leads' },
+    { key: 'leads.edit', label: 'تعديل عميل محتمل', group: 'leads' },
+    { key: 'system.settings', label: 'إعدادات النظام', group: 'system' },
+    { key: 'system.users', label: 'إدارة المستخدمين', group: 'system' },
+    { key: 'system.backup', label: 'النسخ الاحتياطي', group: 'system' },
+    { key: 'system.audit', label: 'سجل التدقيق', group: 'system' },
+  ];
+
+  const createdPermissions = [];
+  for (const p of permissionsData) {
+    const perm = await prisma.permission.upsert({
+      where: { key: p.key },
+      update: { label: p.label, group: p.group },
+      create: p,
+    });
+    createdPermissions.push(perm);
+  }
+
+  let adminRole = await prisma.role.findUnique({ where: { name: 'admin' } });
+  if (!adminRole) {
+    adminRole = await prisma.role.create({
+      data: {
+        name: 'admin',
+        label: 'مدير النظام',
+        description: 'صلاحيات كاملة للنظام',
+        isSystem: 1,
+      },
+    });
+  }
+
+  for (const perm of createdPermissions) {
+    await prisma.rolePermission.upsert({
+      where: { roleId_permissionId: { roleId: adminRole.id, permissionId: perm.id } },
+      update: { granted: 1 },
+      create: { roleId: adminRole.id, permissionId: perm.id, granted: 1 },
+    });
+  }
+
+  console.log(`Seeded ${currencies.length} currencies, ${defaultRates.length} exchange rates, ${financialSettings.length} financial settings, ${createdPermissions.length} permissions, and admin role.`);
 }
 
 main()
