@@ -177,7 +177,7 @@ export const Leads: React.FC = () => {
                                     <option value="all" className="text-slate-900">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
-                                <ChevronDown className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" size={12} />
+                                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" size={12} />
                             </div>
                         </div>
                     </div>
