@@ -1,5 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { safeTable } = require('../utils/asyncHandler');
+const { prisma } = require('../utils/prisma');
+
+const modelMap = {
+    admin: 'user',
+    teacher: 'teacher',
+    student: 'student',
+    parent: 'parent',
+};
 
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -13,11 +20,16 @@ const authMiddleware = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (decoded.token_version !== undefined && req.db) {
-            const table = safeTable(decoded.role);
-            const current = await req.db.get(`SELECT token_version FROM ${table} WHERE id = ?`, [decoded.id]);
-            if (current && current.token_version !== decoded.token_version) {
-                return res.status(401).json({ error: 'Session revoked. Please login again.' });
+        if (decoded.token_version !== undefined) {
+            const modelName = modelMap[decoded.role];
+            if (modelName) {
+                const current = await prisma[modelName].findUnique({
+                    where: { id: decoded.id },
+                    select: { tokenVersion: true }
+                });
+                if (current && current.tokenVersion !== decoded.token_version) {
+                    return res.status(401).json({ error: 'Session revoked. Please login again.' });
+                }
             }
         }
 
@@ -28,10 +40,6 @@ const authMiddleware = async (req, res, next) => {
     }
 };
 
-/**
- * Middleware to check if user has required role
- * @param {string[]} roles - Array of allowed roles
- */
 const checkRole = (roles) => {
     return (req, res, next) => {
         if (!req.user) {

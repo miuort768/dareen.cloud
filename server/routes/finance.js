@@ -4,15 +4,16 @@ const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const cache = require('../utils/cache');
-const { getDb } = require('../utils/db');
 const currencyService = require('../services/currencyService');
+const { prisma } = require('../utils/prisma');
 
 router.use(authMiddleware, checkRole(['admin']));
 
 router.get('/transactions', async (req, res) => {
     try {
-        const db = await getDb();
-        const transactions = await db.all('SELECT * FROM manual_transactions ORDER BY date DESC, created_at DESC');
+        const transactions = await prisma.manualTransaction.findMany({
+            orderBy: [{ date: 'desc' }, { createdAt: 'desc' }]
+        });
         res.json(transactions);
     } catch (err) {
         logger.error('Error fetching transactions', err);
@@ -27,13 +28,19 @@ router.post('/transactions', async (req, res) => {
     }
     const id = uuidv4();
     try {
-        const db = await getDb();
-        await db.run(
-            'INSERT INTO manual_transactions (id, type, category, amount, date, description, status, currency) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-            id, type, category || '', amount, date, description || '', 'completed', currency || null
-        );
+        const newTransaction = await prisma.manualTransaction.create({
+            data: {
+                id,
+                type,
+                category: category || '',
+                amount: parseFloat(amount),
+                date,
+                description: description || '',
+                status: 'completed',
+                currency: currency || null,
+            }
+        });
         cache.del('finance:stats');
-        const newTransaction = await db.get('SELECT * FROM manual_transactions WHERE id = ?', id);
         res.status(201).json(newTransaction);
     } catch (err) {
         logger.error('Error adding transaction', err);
@@ -44,8 +51,7 @@ router.post('/transactions', async (req, res) => {
 router.delete('/transactions/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const db = await getDb();
-        await db.run('DELETE FROM manual_transactions WHERE id = ?', id);
+        await prisma.manualTransaction.delete({ where: { id } });
         cache.del('finance:stats');
         res.json({ message: 'Transaction deleted successfully' });
     } catch (err) {
@@ -56,8 +62,7 @@ router.delete('/transactions/:id', async (req, res) => {
 
 router.delete('/transactions', async (req, res) => {
     try {
-        const db = await getDb();
-        await db.run('DELETE FROM manual_transactions');
+        await prisma.manualTransaction.deleteMany();
         cache.del('finance:stats');
         res.json({ message: 'All transactions deleted successfully' });
     } catch (err) {
@@ -68,8 +73,9 @@ router.delete('/transactions', async (req, res) => {
 
 router.get('/fixed-expenses', async (req, res) => {
     try {
-        const db = await getDb();
-        const expenses = await db.all('SELECT * FROM fixed_expenses WHERE is_active = 1');
+        const expenses = await prisma.fixedExpense.findMany({
+            where: { isActive: 1 }
+        });
         res.json(expenses);
     } catch (err) {
         logger.error('Error fetching fixed expenses', err);
@@ -84,10 +90,11 @@ router.put('/fixed-expenses/:id', async (req, res) => {
         return res.status(400).json({ error: 'Amount is required' });
     }
     try {
-        const db = await getDb();
-        await db.run('UPDATE fixed_expenses SET amount = ? WHERE id = ?', amount, parseInt(id));
+        const updated = await prisma.fixedExpense.update({
+            where: { id: parseInt(id) },
+            data: { amount: parseFloat(amount) }
+        });
         cache.del('finance:stats');
-        const updated = await db.get('SELECT * FROM fixed_expenses WHERE id = ?', parseInt(id));
         res.json(updated);
     } catch (err) {
         logger.error('Error updating fixed expense', err, { id });
@@ -97,10 +104,14 @@ router.put('/fixed-expenses/:id', async (req, res) => {
 
 router.post('/fixed-expenses/reset', async (req, res) => {
     try {
-        const db = await getDb();
-        await db.run('UPDATE fixed_expenses SET amount = 0');
+        await prisma.fixedExpense.updateMany({
+            where: { isActive: 1 },
+            data: { amount: 0 }
+        });
         cache.del('finance:stats');
-        const expenses = await db.all('SELECT * FROM fixed_expenses WHERE is_active = 1');
+        const expenses = await prisma.fixedExpense.findMany({
+            where: { isActive: 1 }
+        });
         res.json(expenses);
     } catch (err) {
         logger.error('Error resetting fixed expenses', err);
@@ -127,17 +138,31 @@ router.get('/stats', async (req, res) => {
         const cached = cache.get('finance:stats');
         if (cached) return res.json(cached);
 
-        const db = await getDb();
         const reportCurrency = await currencyService.getReportCurrency();
         const now = new Date();
         const currentMonth = now.toISOString().slice(0, 7);
 
         const [sessions, manualIncomes, teacherInvoices, manualExpenses, fixedExpenses] = await Promise.all([
-            db.all("SELECT price, student_currency AS studentCurrency, date FROM sessions WHERE status = 'completed'"),
-            db.all("SELECT amount, currency, date FROM manual_transactions WHERE type = 'income' AND status = 'completed'"),
-            db.all("SELECT amount, currency, date FROM teacher_invoices WHERE status IN ('paid', 'مدفوعة', 'تم الدفع')"),
-            db.all("SELECT amount, currency, date, category FROM manual_transactions WHERE type = 'expense' AND status = 'completed'"),
-            db.all("SELECT amount, currency FROM fixed_expenses WHERE is_active = 1"),
+            prisma.session.findMany({
+                where: { status: 'completed' },
+                select: { price: true, studentCurrency: true, date: true }
+            }),
+            prisma.manualTransaction.findMany({
+                where: { type: 'income', status: 'completed' },
+                select: { amount: true, currency: true, date: true }
+            }),
+            prisma.teacherInvoice.findMany({
+                where: { status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } },
+                select: { amount: true, currency: true, date: true }
+            }),
+            prisma.manualTransaction.findMany({
+                where: { type: 'expense', status: 'completed' },
+                select: { amount: true, currency: true, date: true, category: true }
+            }),
+            prisma.fixedExpense.findMany({
+                where: { isActive: 1 },
+                select: { amount: true, currency: true }
+            }),
         ]);
 
         const monthSessions = sessions.filter(s => s.date && s.date.startsWith(currentMonth));

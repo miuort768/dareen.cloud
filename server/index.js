@@ -15,12 +15,10 @@ const helmet = require('helmet');
 const { Server } = require('socket.io');
 const http = require('http');
 
-const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 const monitoringMiddleware = require('./middleware/monitoring');
 const correlationIdMiddleware = require('./middleware/correlationId');
-const { setupDatabase } = require('./db_setup');
-const { getDb } = require('./utils/db');
+const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
 
 const { authRouter } = require('./routes/auth');
@@ -123,11 +121,9 @@ require('./routes/seo')(app);
 
 async function startServer() {
     try {
-        await getDb();
-        console.log('Database initialized successfully');
-        await setupDatabase();
+        await prisma.$connect();
+        console.log('Database connected successfully via Prisma');
 
-        app.use(dbMiddleware);
         app.set('trust proxy', 1);
 
         const { initQueueSystem } = require('./services');
@@ -177,11 +173,13 @@ async function startServer() {
 
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {
-                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
-                     'notifications_enabled', 'auto_backup', 'chatbot_enabled',
-                     'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-                     'reminder_minutes_before', 'library_whatsapp', 'library_telegram']);
+                const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
+                    'notifications_enabled', 'auto_backup', 'chatbot_enabled',
+                    'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
+                    'reminder_minutes_before', 'library_whatsapp', 'library_telegram'];
+                const settings = await prisma.systemSetting.findMany({
+                    where: { key: { in: keys } }
+                });
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);
                 res.json(settingsMap);
@@ -294,49 +292,14 @@ async function startServer() {
         prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
         app.use(prerender);
 
-        // Sitemap
-        app.get('/sitemap.xml', async (req, res) => {
-            try {
-                const posts = await req.db.all('SELECT slug, date FROM blog_posts ORDER BY date DESC');
-                const urls = [
-                    { loc: '/', priority: '1.0', changefreq: 'weekly' },
-                    { loc: '/courses', priority: '0.9', changefreq: 'weekly' },
-                    { loc: '/books', priority: '0.9', changefreq: 'daily' },
-                    { loc: '/about', priority: '0.6', changefreq: 'monthly' },
-                    { loc: '/contact', priority: '0.5', changefreq: 'monthly' },
-                    { loc: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
-                    { loc: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
-                    { loc: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
-                    { loc: '/terms-of-work', priority: '0.3', changefreq: 'yearly' },
-                    { loc: '/jobs', priority: '0.5', changefreq: 'weekly' },
-                    ...posts.map(p => ({
-                        loc: `/books/${p.slug}`,
-                        priority: '0.8',
-                        changefreq: 'monthly',
-                        lastmod: p.date
-                    }))
-                ];
-                const xml = `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            ${urls.map(u => `
-            <url>
-                <loc>https://dareen.cloud${u.loc}</loc>
-                <priority>${u.priority}</priority>
-                <changefreq>${u.changefreq}</changefreq>
-                ${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}
-            </url>`).join('')}
-        </urlset>`;
-                res.header('Content-Type', 'application/xml');
-                res.send(xml);
-            } catch (err) {
-                res.status(500).send('Error generating sitemap');
-            }
-        });
-
-        // RSS Feed
+        // RSS Feed (sitemap handled in routes/seo.js)
         app.get('/rss.xml', async (req, res) => {
             try {
-                const posts = await req.db.all('SELECT slug, title, excerpt, coverImage, date, author, category, subject, curriculum FROM blog_posts ORDER BY date DESC LIMIT 50');
+                const posts = await prisma.blogPost.findMany({
+                    select: { slug: true, title: true, excerpt: true, coverImage: true, date: true, author: true, category: true, subject: true, curriculum: true },
+                    orderBy: { date: 'desc' },
+                    take: 50
+                });
                 const items = posts.map(p => `
                 <item>
                     <title><![CDATA[${p.title}]]></title>
@@ -399,8 +362,7 @@ async function startServer() {
             console.log(`${signal} received. Shutting down gracefully...`);
             serverInstance.close(async () => {
                 try {
-                    const db = await getDb();
-                    await db.close();
+                    await prisma.$disconnect();
                     process.exit(0);
                 } catch (err) {
                     console.error('Error during database closure:', err);
