@@ -39,5 +39,19 @@ export const settingsService = {
 
     async deleteWhatsappTemplate(id: number) {
         return api.delete<{ success: boolean }>(`/system/whatsapp-templates/${id}`);
-    }
+    },
+
+    // Monitoring
+    async getMonitoring() {
+        return api.get<{ uptime: number; memory: Record<string, number>; database: string; counts: Record<string, number>; timestamp: string; total: number; errors: number; slow: unknown[] }>('/system/monitoring');
+    },
+
+    // Backup
+    async createBackup() {
+        return api.post<{ id: number; type: string; status: string; size: number; createdAt: string }>('/system/backup');
+    },
+
+    async getBackupHistory(page = 1, limit = 20) {
+        return api.get<{ data: unknown[]; total: number; page: number; limit: number; totalPages: number }>(`/system/backup-history?page=${page}&limit=${limit}`);
+    },
 };

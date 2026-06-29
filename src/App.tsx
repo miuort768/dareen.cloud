@@ -49,6 +49,7 @@ const TermsOfService = lazy(() => import('./pages/public/TermsOfService').then(m
 const TermsOfWork = lazy(() => import('./pages/public/TermsOfWork').then(m => ({ default: m.TermsOfWork })));
 const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m.AdminBlog })));
 const RolesPage = lazy(() => import('./features/roles/pages/RolesPage').then(m => ({ default: m.RolesPage })));
+const MonitoringPage = lazy(() => import('./features/monitoring/pages/MonitoringPage').then(m => ({ default: m.MonitoringPage })));
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
@@ -263,6 +264,7 @@ function App() {
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
             <Route path="admin-jobs" element={<ProtectedRoute permission="admin"><AdminJobs /></ProtectedRoute>} />
             <Route path="roles" element={<ProtectedRoute permission="admin"><RolesPage /></ProtectedRoute>} />
+            <Route path="monitoring" element={<ProtectedRoute permission="admin"><MonitoringPage /></ProtectedRoute>} />
             
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />

@@ -6,6 +6,8 @@ const logger = require('../utils/logger');
 const cache = require('../utils/cache');
 const { prisma } = require('../utils/prisma');
 const { audit } = require('../services/auditService');
+const { createBackup, getBackupHistory } = require('../services/backupService');
+const { getMetrics } = require('../middleware/monitoring');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
@@ -630,6 +632,51 @@ router.delete('/whatsapp-templates/:id', async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
+    }
+});
+
+// Monitoring
+router.get('/monitoring', async (req, res) => {
+    try {
+        const metrics = getMetrics();
+        const dbHealth = await prisma.$queryRaw`SELECT 1 as ok`.catch(() => null);
+        const [userCount, sessionCount, backupCount] = await Promise.all([
+            prisma.user.count(),
+            prisma.session.count(),
+            prisma.backup.count(),
+        ]);
+        res.json({
+            ...metrics,
+            database: dbHealth ? 'connected' : 'disconnected',
+            counts: { users: userCount, sessions: sessionCount, backups: backupCount },
+            timestamp: new Date().toISOString(),
+            node: process.version,
+            platform: process.platform,
+        });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Monitoring error');
+    }
+});
+
+// Backup history
+router.get('/backup-history', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const result = await getBackupHistory(page, limit);
+        res.json(result);
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Backup history error');
+    }
+});
+
+// Create backup
+router.post('/backup', async (req, res) => {
+    try {
+        const { backup } = await createBackup(req.user.id, req.user.username, 'manual');
+        res.json(backup);
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Backup error');
     }
 });
 

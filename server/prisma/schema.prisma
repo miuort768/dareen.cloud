@@ -646,6 +646,21 @@ model PushSubscription {
   @@map("push_subscriptions")
 }
 
+model Backup {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  username  String?
+  type      String   @default("manual")
+  size      Int?
+  status    String   @default("completed")
+  filePath  String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("backups")
+}
+
 // ========== RBAC (Phase 6) ==========
 
 model Role {
