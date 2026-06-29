@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { updatePresence, removePresence } = require('../services/executive/presence');
 
 const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
     const counts = new Map();
@@ -46,7 +47,9 @@ module.exports = (io) => {
             if (user?.role === 'admin' || user?.permissions?.includes('*')) {
                 socket.join('admin_room');
             }
-            console.log(`   ✅ Joined Personal Room: ${userRoom}`);
+
+            updatePresence(userId, { name: user.name, role: user.role });
+            io.to('admin_room').emit('presence_update', { userId, name: user.name, role: user.role, status: 'online' });
         }
 
         socket.on('join_conversation', (conversationId) => {
@@ -77,8 +80,18 @@ module.exports = (io) => {
             socket.to(data.conversationId).emit('typing', data);
         });
 
+        socket.on('presence_ping', () => {
+            if (!userId) return;
+            updatePresence(userId, { name: user.name, role: user.role });
+            socket.to('admin_room').emit('presence_update', { userId, name: user.name, role: user.role, status: 'online' });
+        });
+
         socket.on('disconnect', () => {
             console.log(`🔌 Socket Disconnected: ${socket.id}`);
+            if (userId) {
+                removePresence(userId);
+                io.to('admin_room').emit('presence_update', { userId, name: user.name, role: user.role, status: 'offline' });
+            }
         });
     });
 };

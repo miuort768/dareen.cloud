@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { DashboardHeader } from '../components/DashboardHeader';
@@ -14,8 +15,10 @@ import { RecentActivityFeed } from '../components/RecentActivityFeed';
 import { PageLoader } from '../../../components/ui/PageLoader';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
+import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
 import { cn } from '../../../lib/utils';
 import { motion } from 'framer-motion';
+import { LayoutDashboard, TrendingUp } from 'lucide-react';
 
 const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <motion.section
@@ -44,6 +47,8 @@ export const Dashboard = () => {
         fetchDashboardData
     } = useDashboardData(currentUser);
 
+    const [view, setView] = useState<'standard' | 'executive'>('standard');
+
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
         return <div className="min-h-full bg-slate-50 dark:bg-slate-950" />;
     }
@@ -62,6 +67,39 @@ export const Dashboard = () => {
             <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
                 <Section><DashboardHeader isTeacher={false} currentUser={currentUser} /></Section>
 
+                {currentUser.permissions?.includes('*') && (
+                    <Section>
+                        <div className="flex justify-center">
+                            <div className="inline-flex bg-white rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-1 gap-1">
+                                <button
+                                    onClick={() => setView('standard')}
+                                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                                        view === 'standard'
+                                            ? 'bg-blue-500 text-white shadow-sm'
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    <LayoutDashboard size={18} /> لوحة الإدارة
+                                </button>
+                                <button
+                                    onClick={() => setView('executive')}
+                                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                                        view === 'executive'
+                                            ? 'bg-blue-500 text-white shadow-sm'
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    <TrendingUp size={18} /> لوحة القيادة التنفيذية
+                                </button>
+                            </div>
+                        </div>
+                    </Section>
+                )}
+
+                {view === 'executive' ? (
+                    <ExecutiveDashboard />
+                ) : (
+                    <>
                 <Section>
                     <QuickActionsHub />
                 </Section>
@@ -121,6 +159,8 @@ export const Dashboard = () => {
                         </Section>
                     </div>
                 </div>
+                    </>
+                )}
             </div>
 
             <div className="block md:hidden">

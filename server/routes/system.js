@@ -12,6 +12,63 @@ const { getMetrics } = require('../middleware/monitoring');
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
 
+// GET /api/system/settings-batch — returns all settings grouped
+router.get('/settings-batch', async (req, res) => {
+    try {
+        const settings = await prisma.systemSetting.findMany();
+        const map = {};
+        settings.forEach(s => { map[s.key] = s.value; });
+        const financialSettings = await prisma.financialSetting.findMany();
+        const finMap = {};
+        financialSettings.forEach(s => { finMap[s.key] = s.value; });
+        res.json({ system: map, financial: finMap });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'System route error');
+    }
+});
+
+// POST /api/system/settings-batch — save multiple settings at once
+router.post('/settings-batch', async (req, res) => {
+    const { settings } = req.body;
+    if (!settings || !Array.isArray(settings)) return res.status(400).json({ error: 'settings array required' });
+    try {
+        for (const { key, value } of settings) {
+            await prisma.systemSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
+        }
+        const cache = require('../utils/cache');
+        cache.del('system:settings');
+        await audit(req.user.id, req.user.username, 'SETTINGS_BATCH_UPDATE', { count: settings.length }, 'system', null);
+        res.json({ success: true });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'System route error');
+    }
+});
+
+// GET /api/system/financial-settings
+router.get('/financial-settings', async (req, res) => {
+    try {
+        const settings = await prisma.financialSetting.findMany();
+        const map = {};
+        settings.forEach(s => { map[s.key] = s.value; });
+        res.json(map);
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'System route error');
+    }
+});
+
+// POST /api/system/financial-settings
+router.post('/financial-settings', async (req, res) => {
+    const { key, value } = req.body;
+    try {
+        await prisma.financialSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
+        const cache = require('../utils/cache');
+        cache.delPattern('currency:');
+        res.json({ success: true });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'System route error');
+    }
+});
+
 router.get('/backup', async (req, res) => {
     try {
         const [

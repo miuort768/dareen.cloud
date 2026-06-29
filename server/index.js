@@ -210,6 +210,7 @@ async function startServer() {
         apiRouter.use('/notifications', notificationRouter);
         apiRouter.use('/system', isAdmin, systemRouter);
         apiRouter.use('/finance', isAdmin, financeRouter);
+        apiRouter.use('/currencies', isAdmin, require('./routes/currencies').currenciesRouter);
         apiRouter.use('/tasks', tasksRouter);
         apiRouter.use('/active-sessions', activeSessionsRouter);
         apiRouter.use('/chat', chatRouter);
@@ -223,6 +224,7 @@ async function startServer() {
         apiRouter.use('/search', searchRouter);
         apiRouter.use('/export', isAdmin, exportRouter);
         apiRouter.use('/roles', isAdmin, require('./routes/roles'));
+        apiRouter.use('/v1/executive', require('./routes/executive'));
 
         apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
             req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;

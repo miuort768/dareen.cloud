@@ -1,6 +1,76 @@
 import { api } from '../../../lib/api';
 
+export interface Currency {
+    code: string;
+    name: string;
+    symbol: string;
+    isActive: number;
+    sortOrder: number;
+}
+
+export interface ExchangeRate {
+    id: number;
+    fromCurrency: string;
+    toCurrency: string;
+    buyRate: number;
+    sellRate: number;
+    effectiveDate: string;
+    notes: string | null;
+    createdAt: string;
+    createdBy: string | null;
+}
+
+export interface SettingsBatch {
+    system: Record<string, string>;
+    financial: Record<string, string>;
+}
+
 export const settingsService = {
+    async getSettingsBatch() {
+        return api.get<SettingsBatch>('/system/settings-batch');
+    },
+
+    async saveSettingsBatch(settings: { key: string; value: string }[]) {
+        return api.post<{ success: boolean }>('/system/settings-batch', { settings });
+    },
+
+    async getFinancialSettings() {
+        return api.get<Record<string, string>>('/system/financial-settings');
+    },
+
+    async saveFinancialSetting(key: string, value: string) {
+        return api.post<{ success: boolean }>('/system/financial-settings', { key, value });
+    },
+
+    // Currencies
+    async getCurrencies() {
+        return api.get<Currency[]>('/currencies');
+    },
+
+    async createCurrency(data: { code: string; name: string; symbol: string; sortOrder?: number }) {
+        return api.post<Currency>('/currencies', data);
+    },
+
+    async updateCurrency(code: string, data: { name: string; symbol: string; isActive: number; sortOrder: number }) {
+        return api.put<Currency>(`/currencies/${code}`, data);
+    },
+
+    async deleteCurrency(code: string) {
+        return api.delete<{ success: boolean }>(`/currencies/${code}`);
+    },
+
+    // Exchange Rates
+    async getExchangeRates() {
+        return api.get<ExchangeRate[]>('/currencies/exchange-rates');
+    },
+
+    async createExchangeRate(data: { fromCurrency: string; toCurrency: string; buyRate: number; sellRate: number; effectiveDate?: string; notes?: string }) {
+        return api.post<ExchangeRate>('/currencies/exchange-rates', data);
+    },
+
+    async deleteExchangeRate(id: number) {
+        return api.delete<{ success: boolean }>(`/currencies/exchange-rates/${id}`);
+    },
     async getBackup() {
         return api.get<unknown>('/system/backup');
     },
