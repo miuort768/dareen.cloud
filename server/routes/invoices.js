@@ -9,6 +9,7 @@ const {
     createStudentInvoiceSchema, updateStudentInvoiceSchema
 } = require('../utils/validators');
 const { prisma } = require('../utils/prisma');
+const { audit } = require('../services/auditService');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
@@ -62,6 +63,7 @@ router.post('/teacher', validate(createTeacherInvoiceSchema), async (req, res) =
             }
         });
         const newItem = await prisma.teacherInvoice.findUnique({ where: { id } });
+        await audit(req.user.id, req.user.username, 'INVOICE_CREATE', { invoiceId: id, teacherName: body.teacher, amount: body.amount, currency: body.currency, type: 'teacher' }, 'teacher_invoice', id);
         res.status(201).json(newItem);
     } catch (err) {
         logger.error('Error adding teacher invoice', err);
@@ -90,6 +92,7 @@ router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res
             }
         });
         const updated = await prisma.teacherInvoice.findUnique({ where: { id } });
+        await audit(req.user.id, req.user.username, 'INVOICE_UPDATE', { invoiceId: id, before: existing, after: { teacher, specialization, amount, currency, status }, type: 'teacher' }, 'teacher_invoice', id);
         res.json(updated);
     } catch (err) {
         logger.error('Error updating teacher invoice', err, { id });
@@ -100,7 +103,9 @@ router.put('/teacher/:id', validate(updateTeacherInvoiceSchema), async (req, res
 router.delete('/teacher/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        const deleted = await prisma.teacherInvoice.findUnique({ where: { id } });
         await prisma.teacherInvoice.delete({ where: { id } });
+        await audit(req.user.id, req.user.username, 'INVOICE_DELETE', { invoiceId: id, deleted, type: 'teacher' }, 'teacher_invoice', id);
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting teacher invoice', err, { id });
@@ -164,6 +169,7 @@ router.post('/student', validate(createStudentInvoiceSchema), async (req, res) =
         });
         const newItem = await prisma.studentInvoice.findUnique({ where: { id } });
         if (newItem && newItem.items) newItem.items = JSON.parse(newItem.items);
+        await audit(req.user.id, req.user.username, 'INVOICE_CREATE', { invoiceId: id, studentName: body.studentName, amount: body.amount, currency: body.currency, type: 'student' }, 'student_invoice', id);
         res.status(201).json(newItem);
     } catch (err) {
         logger.error('Error adding student invoice', err);
@@ -192,6 +198,7 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
         });
         const updated = await prisma.studentInvoice.findUnique({ where: { id } });
         if (updated && updated.items) updated.items = JSON.parse(updated.items);
+        await audit(req.user.id, req.user.username, 'INVOICE_UPDATE', { invoiceId: id, before: existing, after: { ...body }, type: 'student' }, 'student_invoice', id);
         res.json(updated);
     } catch (err) {
         logger.error('Error updating student invoice', err, { id });
@@ -211,6 +218,7 @@ router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, r
 
         await prisma.studentInvoice.update({ where: { id }, data: { status } });
         const updated = await prisma.studentInvoice.findUnique({ where: { id } });
+        await audit(req.user.id, req.user.username, 'INVOICE_UPDATE', { invoiceId: id, before: { status: existing.status }, after: { status }, type: 'student' }, 'student_invoice', id);
         res.json(updated);
     } catch (err) {
         logger.error('Error patching student invoice', err, { id });
@@ -221,7 +229,9 @@ router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, r
 router.delete('/student/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        const deleted = await prisma.studentInvoice.findUnique({ where: { id } });
         await prisma.studentInvoice.delete({ where: { id } });
+        await audit(req.user.id, req.user.username, 'INVOICE_DELETE', { invoiceId: id, deleted, type: 'student' }, 'student_invoice', id);
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting student invoice', err, { id });

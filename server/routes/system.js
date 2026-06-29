@@ -5,6 +5,7 @@ const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const cache = require('../utils/cache');
 const { prisma } = require('../utils/prisma');
+const { audit } = require('../services/auditService');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
@@ -424,6 +425,7 @@ router.post('/system-reset', async (req, res) => {
                 await tx.fixedExpense.create({ data: { name: exp.name, amount: exp.amount } });
             }
         });
+        await audit(req.user.id, req.user.username, 'SYSTEM_RESET', null, 'system', null);
         res.json({ message: 'System reset successful' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -462,8 +464,10 @@ router.get('/settings', async (req, res) => {
 router.post('/settings', async (req, res) => {
     const { key, value } = req.body;
     try {
+        const before = await prisma.systemSetting.findUnique({ where: { key } });
         await prisma.systemSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
         cache.del('system:settings');
+        await audit(req.user.id, req.user.username, 'SETTING_UPDATE', { key, before: before?.value, after: value }, 'system_setting', key);
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -560,8 +564,18 @@ router.delete('/dismissed-notifications/reset', async (req, res) => {
 
 router.get('/audit-logs', async (req, res) => {
     try {
-        const logs = await prisma.auditLog.findMany({ orderBy: { timestamp: 'desc' }, take: 500 });
-        res.json(logs);
+        const page = parseInt(req.query.page) || 1;
+        const limit = Math.min(parseInt(req.query.limit) || 100, 500);
+        const action = req.query.action || '';
+        const username = req.query.username || '';
+        const where = {};
+        if (action) where.action = { contains: action };
+        if (username) where.username = { contains: username };
+        const [logs, total] = await Promise.all([
+            prisma.auditLog.findMany({ where, orderBy: { timestamp: 'desc' }, skip: (page - 1) * limit, take: limit }),
+            prisma.auditLog.count({ where })
+        ]);
+        res.json({ data: logs, total, page, limit, totalPages: Math.ceil(total / limit) });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }

@@ -6,6 +6,7 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 const cache = require('../utils/cache');
 const currencyService = require('../services/currencyService');
 const { prisma } = require('../utils/prisma');
+const { audit } = require('../services/auditService');
 
 router.use(authMiddleware, checkRole(['admin']));
 
@@ -41,6 +42,7 @@ router.post('/transactions', async (req, res) => {
             }
         });
         cache.del('finance:stats');
+        await audit(req.user.id, req.user.username, 'TRANSACTION_CREATE', { transactionId: id, type, amount, currency, date }, 'manual_transaction', id);
         res.status(201).json(newTransaction);
     } catch (err) {
         logger.error('Error adding transaction', err);
@@ -51,8 +53,10 @@ router.post('/transactions', async (req, res) => {
 router.delete('/transactions/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        const deleted = await prisma.manualTransaction.findUnique({ where: { id } });
         await prisma.manualTransaction.delete({ where: { id } });
         cache.del('finance:stats');
+        await audit(req.user.id, req.user.username, 'TRANSACTION_DELETE', { transactionId: id, deleted }, 'manual_transaction', id);
         res.json({ message: 'Transaction deleted successfully' });
     } catch (err) {
         logger.error('Error deleting transaction', err, { id });
@@ -62,8 +66,9 @@ router.delete('/transactions/:id', async (req, res) => {
 
 router.delete('/transactions', async (req, res) => {
     try {
-        await prisma.manualTransaction.deleteMany();
+        const { count } = await prisma.manualTransaction.deleteMany();
         cache.del('finance:stats');
+        await audit(req.user.id, req.user.username, 'TRANSACTION_DELETE_ALL', { count }, 'manual_transaction', null);
         res.json({ message: 'All transactions deleted successfully' });
     } catch (err) {
         logger.error('Error deleting all transactions', err);
@@ -90,11 +95,13 @@ router.put('/fixed-expenses/:id', async (req, res) => {
         return res.status(400).json({ error: 'Amount is required' });
     }
     try {
+        const before = await prisma.fixedExpense.findUnique({ where: { id: parseInt(id) } });
         const updated = await prisma.fixedExpense.update({
             where: { id: parseInt(id) },
             data: { amount: parseFloat(amount) }
         });
         cache.del('finance:stats');
+        await audit(req.user.id, req.user.username, 'EXPENSE_UPDATE', { expenseId: id, name: before?.name, before: before?.amount, after: amount }, 'fixed_expense', id);
         res.json(updated);
     } catch (err) {
         logger.error('Error updating fixed expense', err, { id });
@@ -109,6 +116,7 @@ router.post('/fixed-expenses/reset', async (req, res) => {
             data: { amount: 0 }
         });
         cache.del('finance:stats');
+        await audit(req.user.id, req.user.username, 'EXPENSE_RESET', null, 'fixed_expense', null);
         const expenses = await prisma.fixedExpense.findMany({
             where: { isActive: 1 }
         });
