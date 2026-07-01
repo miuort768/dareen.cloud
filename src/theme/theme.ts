@@ -71,15 +71,15 @@ export const light: ThemeColors = {
   'border-warning': amber[500],
 
   // Error
-  'bg-error': rose[500],
-  'bg-error-hover': rose[600],
-  'bg-error-active': rose[700],
+  'bg-error': rose[600],
+  'bg-error-hover': rose[700],
+  'bg-error-active': rose[800],
   'bg-error-soft': rose[50],
   'bg-error-light': rose[100],
-  'text-error': rose[500],
+  'text-error': rose[600],
   'text-error-dark': rose[700],
   'text-on-error': '#ffffff',
-  'border-error': rose[500],
+  'border-error': rose[600],
 
   // Info
   'bg-info': sky[500],

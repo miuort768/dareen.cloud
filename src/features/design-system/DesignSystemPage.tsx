@@ -56,7 +56,7 @@ export function DesignSystemPage() {
       </header>
 
       {/* Experimental Warning */}
-      <div className="bg-error-soft border-b border-error">
+      <div role="alert" className="bg-error-soft border-b border-error">
         <div className="max-w-7xl mx-auto px-4 py-2 text-xs text-error-dark text-center font-medium">
           ⚠ Internal Development Only — هذه الواجهة للمراجعة الداخلية وليست مرجعًا نهائيًا
         </div>

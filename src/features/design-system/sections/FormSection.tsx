@@ -8,31 +8,31 @@ export function FormSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className={LABEL_CLASS}>Input نص</label>
-            <input type="text" placeholder="اكتب هنا..." className={INPUT_CLASS} />
+            <label htmlFor="input-text" className={LABEL_CLASS}>Input نص</label>
+            <input id="input-text" type="text" placeholder="اكتب هنا..." className={INPUT_CLASS} />
           </div>
           <div>
-            <label className={LABEL_CLASS}>Input مع خطأ</label>
-            <input type="text" defaultValue="قيمة خاطئة" className={`${INPUT_CLASS} border-error focus:ring-error`} />
+            <label htmlFor="input-error" className={LABEL_CLASS}>Input مع خطأ</label>
+            <input id="input-error" type="text" defaultValue="قيمة خاطئة" className={`${INPUT_CLASS} border-error focus:ring-error`} />
             <p className="text-xs text-error mt-1">هذا الحقل مطلوب</p>
           </div>
           <div>
-            <label className={LABEL_CLASS}>Disabled</label>
-            <input type="text" disabled value="معطل" className={`${INPUT_CLASS} opacity-50 cursor-not-allowed`} />
+            <label htmlFor="input-disabled" className={LABEL_CLASS}>Disabled</label>
+            <input id="input-disabled" type="text" disabled value="معطل" className={`${INPUT_CLASS} opacity-50 cursor-not-allowed`} />
           </div>
         </div>
         <div className="space-y-4">
           <div>
-            <label className={LABEL_CLASS}>Select</label>
-            <select className={INPUT_CLASS}>
+            <label htmlFor="input-select" className={LABEL_CLASS}>Select</label>
+            <select id="input-select" className={INPUT_CLASS}>
               <option>اختر خياراً</option>
               <option>خيار 1</option>
               <option>خيار 2</option>
             </select>
           </div>
           <div>
-            <label className={LABEL_CLASS}>Textarea</label>
-            <textarea rows={3} placeholder="اكتب نصاً طويلاً..." className={INPUT_CLASS} />
+            <label htmlFor="input-textarea" className={LABEL_CLASS}>Textarea</label>
+            <textarea id="input-textarea" rows={3} placeholder="اكتب نصاً طويلاً..." className={INPUT_CLASS} />
           </div>
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2 text-sm text-main">

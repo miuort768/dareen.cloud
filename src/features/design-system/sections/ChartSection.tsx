@@ -5,7 +5,7 @@ export function ChartSection() {
   return (
     <section>
       <h2 className="text-lg font-bold mb-4">الرسوم البيانية — Charts</h2>
-      <div className="rounded-card border p-4">
+      <div className="rounded-card border p-4" role="img" aria-label="رسم بياني عمودي يوضح الإيرادات الشهرية">
         <h3 className="text-sm font-semibold text-muted mb-4">رسم بياني عمودي — الإيرادات الشهرية</h3>
         <div className="flex items-end gap-3 h-40">
           {mockChartData.map(d => (

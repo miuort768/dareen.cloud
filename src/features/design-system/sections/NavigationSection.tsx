@@ -8,7 +8,7 @@ export function NavigationSection() {
           <h3 className="text-sm font-semibold text-muted mb-3">Tabs</h3>
           <div className="flex gap-1 border-b">
             {['لوحة القيادة', 'الطلاب', 'المعلمين', 'الإعدادات'].map(tab => (
-              <button key={tab} className={`px-4 py-2 text-sm border-b-2 transition-colors ${
+              <button key={tab} className={`px-4 py-2 text-sm border-b-2 transition-colors focus:outline-none focus:ring-2 focus:ring-focus ${
                 tab === 'الطلاب'
                   ? 'border-primary text-primary font-semibold'
                   : 'border-transparent text-muted hover:text-main'

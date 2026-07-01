@@ -49,12 +49,12 @@ export const palette = {
   warningLight: amber[100],
   warningDark: amber[700],
 
-  error: rose[500],
+  error: rose[600],
   errorSoft: rose[50],
   errorLight: rose[100],
   errorDark: rose[700],
-  errorHover: rose[600],
-  errorActive: rose[700],
+  errorHover: rose[700],
+  errorActive: rose[800],
 
   info: sky[500],
   infoSoft: sky[50],

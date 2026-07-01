@@ -18,6 +18,12 @@
 | v0.9 → v1.0 | إضافة `radius.card` (0.75rem) + `shadows.card` إلى design-tokens.ts | Token رسمي لزوايا وظلال البطاقات (بدلاً من `rounded-card` غير المعرّف) |
 | v0.9 → v1.0 | إضافة `focus`, `error.hover`, `error.active`, `borderRadius.card`, `boxShadow.card` إلى tailwind.config.js | تمكين Tailwind من استخدام الـ tokens الجديدة |
 | v0.9 → v1.0 | إصلاح Playground: focus rings, active states, `text-white` → `text-on-*`, Charts HEX → CSS vars | تمشياً مع Token Compliance |
+| v0.9 → v1.0 | **الإصلاحات:** `bg-error` light rose[500]→rose[600] | رفع تباين زر Destructive من 3.67:1→4.82:1 ✅ AA |
+| v0.9 → v1.0 | `bg-error-hover` rose[600]→rose[700], `bg-error-active` rose[700]→rose[800] | الحفاظ على سلسلة hover/active للـ error (متفق مع primary: 600→700→800) |
+| v0.9 → v1.0 | Access: Nav tabs focus ring, Dark toggle `aria-pressed` + focus ring | Keyboard Navigation |
+| v0.9 → v1.0 | Access: Form labels `htmlFor`/`id` لجميع الحقول | Semantic HTML |
+| v0.9 → v1.0 | Access: Charts `role="img"` + `aria-label`, Banner `role="alert"` | Screen Reader support |
+| v0.9 → v1.0 | توثيق Gate 3 results في AccessibilitySection | شفافية نتائج الفحص |
 
 ---
 

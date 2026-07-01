@@ -24,7 +24,8 @@ export function DarkModeSection() {
         </p>
         <button
           onClick={toggle}
-          className="px-6 py-3 rounded-md bg-primary text-on-primary hover:bg-primary-hover transition-colors text-sm font-medium"
+          aria-pressed={isDark}
+          className="px-6 py-3 rounded-md bg-primary text-on-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-focus transition-colors text-sm font-medium"
         >
           {isDark ? 'التبديل إلى الوضع الفاتح' : 'التبديل إلى الوضع الغامق'}
         </button>

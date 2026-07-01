@@ -61,12 +61,12 @@
   --border-warning: #f59e0b;
 
   /* Error */
-  --bg-error: #f43f5e;
-  --bg-error-hover: #e11d48;
-  --bg-error-active: #be123c;
+  --bg-error: #e11d48;
+  --bg-error-hover: #be123c;
+  --bg-error-active: #9f1239;
   --bg-error-soft: #fff1f2;
   --bg-error-light: #ffe4e6;
-  --text-error: #f43f5e;
+  --text-error: #e11d48;
   --text-error-dark: #be123c;
   --text-on-error: #ffffff;
   --border-error: #f43f5e;
