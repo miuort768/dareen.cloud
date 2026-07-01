@@ -93,19 +93,17 @@ export const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', duration: 0.4 }}
             className={cn(
-              "relative w-full max-w-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-3xl p-6 shadow-2xl z-10 overflow-hidden",
+              'relative w-full max-w-lg bg-card backdrop-blur-xl border border-border rounded-3xl p-6 shadow-2xl z-10 overflow-hidden',
               className
             )}
           >
             <div className="flex items-center justify-between mb-5">
               {title && (
-                <h3 className="text-base font-black text-slate-900 dark:text-white">
-                  {title}
-                </h3>
+                <h3 className="text-base font-black text-main">{title}</h3>
               )}
               <button
                 onClick={handleClose}
-                className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 mr-auto"
+                className="text-muted hover:text-main transition-colors p-1.5 rounded-xl hover:bg-hover mr-auto focus:outline-none focus:ring-2 focus:ring-focus"
                 aria-label="إغلاق"
               >
                 <X size={18} />

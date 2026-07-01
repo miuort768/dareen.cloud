@@ -80,6 +80,17 @@ module.exports = {
           light: 'var(--bg-accent-light)',
         },
 
+        // Text on colored backgrounds — key name = what follows "text-"
+        'on-primary': 'var(--text-on-primary)',
+        'on-error': 'var(--text-on-error)',
+        'on-accent': 'var(--text-on-accent)',
+
+        // Primary extended
+        'primary-hover': 'var(--bg-primary-hover)',
+        'primary-active': 'var(--bg-primary-active)',
+        'primary-soft': 'var(--bg-primary-soft)',
+        'primary-light': 'var(--bg-primary-light)',
+
         // Focus (ring)
         focus: 'var(--ring-focus)',
 
