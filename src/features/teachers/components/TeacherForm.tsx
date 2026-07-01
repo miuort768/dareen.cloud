@@ -33,7 +33,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 price: String(initialData.price),
                 username: initialData.username || '',
                 password: initialData.password || '',
-        currency: initialData.currency || 'EGP'
+                currency: initialData.currency || 'EGP'
             });
             setEnableLogin(!!initialData.username);
         }
@@ -78,7 +78,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <p className="text-[8px] font-medium text-white/70 uppercase tracking-widest mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
                     </div>
                 </div>
-                <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all">
+                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all">
                     <X size={18} />
                 </button>
             </div>
@@ -98,22 +98,6 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <FormInput label="رقم الهاتف (2)" icon={Phone} type="tel" value={formData.phone2} onChange={(val: string) => setFormData({ ...formData, phone2: val })} placeholder="اختياري" dir="ltr" />
                         <FormInput label="التخصص" icon={Tag} value={formData.subject} onChange={(val: string) => setFormData({ ...formData, subject: val })} required placeholder="لغة عربية" />
                         <FormInput label="السعر الافتراضي للحصة" icon={DollarSign} type="number" value={formData.price} onChange={(val: string) => setFormData({ ...formData, price: val })} placeholder="0.00" />
-                        <FormInput label="الرقم القومي / الهوية" icon={Key} value={(formData as { nationalId?: string }).nationalId || ''} onChange={(val: string) => setFormData({ ...formData, nationalId: val })} placeholder="اختياري" dir="ltr" />
-                        <div className="space-y-1.5">
-                            <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-1">تعريفة الحصة</label>
-                            <div className="relative group">
-                                <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
-                                <input
-                                    required
-                                    type="number"
-                                    value={formData.price}
-                                    onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2.5 bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-800 rounded-xl focus:outline-none focus:border-[#6C4BFF] focus:ring-1 focus:ring-[#6C4BFF]/20 dark:text-white text-[11px] font-medium transition-all"
-                                    placeholder="0.00"
-                                />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-medium text-emerald-500 uppercase">ج.م</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
