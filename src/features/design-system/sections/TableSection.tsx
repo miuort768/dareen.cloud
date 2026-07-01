@@ -37,10 +37,10 @@ export function TableSection() {
       <div className="flex items-center justify-between mt-3 text-sm">
         <p className="text-muted">عرض 1-5 من 20</p>
         <div className="flex gap-2">
-          <button className="px-3 py-1 rounded border text-muted hover:bg-hover">السابق</button>
-          <button className="px-3 py-1 rounded bg-primary text-on-primary">1</button>
-          <button className="px-3 py-1 rounded border text-muted hover:bg-hover">2</button>
-          <button className="px-3 py-1 rounded border text-muted hover:bg-hover">التالي</button>
+          <button className="px-3 py-1 rounded border text-muted hover:bg-hover focus:outline-none focus:ring-2 focus:ring-focus">السابق</button>
+          <button className="px-3 py-1 rounded bg-primary text-on-primary focus:outline-none focus:ring-2 focus:ring-focus">1</button>
+          <button className="px-3 py-1 rounded border text-muted hover:bg-hover focus:outline-none focus:ring-2 focus:ring-focus">2</button>
+          <button className="px-3 py-1 rounded border text-muted hover:bg-hover focus:outline-none focus:ring-2 focus:ring-focus">التالي</button>
         </div>
       </div>
     </section>

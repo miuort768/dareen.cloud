@@ -28,13 +28,13 @@
 
 | المكون | التقييم (1–5) | ملاحظات |
 |---|---|---|
-| Buttons | ☐ | |
-| Forms (Inputs, Selects, Checkboxes) | ☐ | |
-| Cards | ☐ | |
-| Alerts | ☐ | |
-| Tables | ☐ | |
-| Charts | ☐ | |
-| Navigation | ☐ | |
+| Buttons | 4/5 | تمت إضافة focus rings + active states + إصلاح `bg-error-dark` الوهمي + إزالة `text-white`. ✅ جميع المتغيرات تستخدم Semantic Tokens الآن. |
+| Forms (Inputs, Selects, Checkboxes) | 3/5 | ✅ Labels/error states تستخدم Tokens بشكل صحيح. ❌ Checkbox/Radio أصلي (مؤجل لـ Sprint 3). ⚠ استخدام `rounded-md` مباشرة. |
+| Cards | 4/5 | ✅ `rounded-card` أصبح Token حقيقي (`--radius-card`). ✅ أضيف `shadow-card`. ✅ Premium يستخدم `text-on-accent` بدل `text-white`. |
+| Alerts | 4/5 | ✅ جميع حالات الـ 4 Status Colors. ✅ Semantic Tokens صحيحة. ⚠ لا يوجد زر إغلاق (مقبول لدليل مرجعي). |
+| Tables | 4/5 | ✅ Pagination تستخدم Semantic Tokens + Focus Rings الآن. ✅ Status Badges صحيحة. ✅ Row hover + Primary highlight. |
+| Charts | 3/5 | ✅ تم استبدال الـ HEX بـ CSS Variables. ❌ `rounded-t` ليس Token. ⚡ تعتمد على نجاح مراجعة المكونات الأساسية. |
+| Navigation | 4/5 | ✅ Tabs, Breadcrumb, Sidebar تستخدم Tokens. ⚠ `border-r-2` غير RTL-aware (مؤجل). |
 
 ---
 
@@ -113,10 +113,18 @@
 | Accent: إبقاء Gold 500 + إضافة textOnAccent | Gold decorative فقط — textOnAccent (slate[900]) للمستقبل | ✅ أضيف إلى palette/semantic |
 | Neutral: إبقاء Slate كامل | التباين ممتاز — text-dim مقصود كعنصر ثانوي | ✅ لا تعديل |
 | Status Colors: إبقاء الحالية | متمايزة وواضحة في كلا الوضعين | ✅ لا تعديل |
-| Shadows: إبقاء الحالية | 11 variation تغطي جميع الحالات | ✅ لا تعديل |
-| Radius: إبقاء الحالية | 9 steps كافية | ✅ لا تعديل |
+| Shadows: إبقاء الحالية + إضافة shadow-card | 12 variation الآن | ✅ أضيف إلى design-tokens |
+| Radius: إبقاء الحالية + إضافة radius-card | 10 steps الآن — token رسمي للبطاقات | ✅ أضيف إلى design-tokens |
 | Typography: إضافة fontWeights | لإكمال نظام Typography | ✅ أضيف إلى design-tokens.ts |
-| Dark Mode Primary Contrast | 4.47:1 — مؤجل لـ Sprint 3 (حل على مستوى Component) | ⏳ مؤجل |
+| Dark Mode Primary Contrast | 4.47:1 — Known Issue يُراجع في Sprint 3 | ⏳ Known Issue |
+| `rounded-card` غير معرّف | أضيف كـ Token رسمي (0.75rem) | ✅ تم |
+| `bg-error-dark` غير موجود | أضيف كـ `bg-error-hover` في palette/semantic/tailwind | ✅ تم |
+| Focus Ring مفقود | أضيف `ring-focus` Token + focus rings على كل الأزرار | ✅ تم |
+| Active states ناقصة | أضيفت لـ Secondary/Outline/Ghost/Destructive | ✅ تم |
+| `text-white` Hardcoded | استُبدل بـ `text-on-error`, `text-on-accent`, `text-on-primary` | ✅ تم |
+| Charts تستخدم HEX | استُبدلت بـ CSS Variables | ✅ تم |
+| Checkbox/Radio أصلي | مؤجل لـ Sprint 3 | ⏳ مؤجل |
+| `border-r-2` غير RTL-aware | مؤجل لـ Sprint 3 | ⏳ مؤجل |
 
 ---
 
@@ -135,7 +143,7 @@
 | النطاق | الحالة |
 |---|---|
 | Review A — Brand Foundation | ✅ **مكتمل** — 4/5 + ملاحظات مسجلة |
-| Review B — Components | ⬜ قيد الانتظار |
+| Review B — Components | ✅ **مكتمل** — Phase 1 (Buttons/Forms/Cards) + Phase 2 (Alerts/Tables) + Phase 3 (Nav/Charts) |
 | Review C — Screens | ⬜ قيد الانتظار |
 | Review D — Accessibility | ⬜ قيد الانتظار |
-| Brand Palette v1.0 معتمد | ⬜ غير معتمد (ينتظر Reviews B–D) |
+| Brand Palette v1.0 معتمد | ⬜ غير معتمد (ينتظر Reviews C–D) |

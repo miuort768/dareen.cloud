@@ -1,8 +1,11 @@
 const SHADOWS = [
   { label: 'sm', class: 'shadow-sm' },
+  { label: 'card', class: 'shadow-card' },
   { label: 'md', class: 'shadow-md' },
   { label: 'lg', class: 'shadow-lg' },
   { label: 'xl', class: 'shadow-xl' },
+  { label: 'gold', class: 'shadow-gold' },
+  { label: 'glass', class: 'shadow-glass' },
 ] as const;
 
 export function ShadowSection() {

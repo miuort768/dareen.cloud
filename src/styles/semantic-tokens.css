@@ -36,6 +36,9 @@
   --text-dim: #94a3b8;
   --text-inverse: #ffffff;
 
+  /* Focus */
+  --ring-focus: #4f46e5;
+
   /* Borders */
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
@@ -59,10 +62,13 @@
 
   /* Error */
   --bg-error: #f43f5e;
+  --bg-error-hover: #e11d48;
+  --bg-error-active: #be123c;
   --bg-error-soft: #fff1f2;
   --bg-error-light: #ffe4e6;
   --text-error: #f43f5e;
   --text-error-dark: #be123c;
+  --text-on-error: #ffffff;
   --border-error: #f43f5e;
 
   /* Info */
@@ -102,6 +108,8 @@
   --text-dim: #64748b;
   --text-inverse: #0f172a;
 
+  --ring-focus: #818cf8;
+
   --border: #334155;
   --border-strong: #475569;
   --divider: #334155;
@@ -121,10 +129,13 @@
   --border-warning: #d97706;
 
   --bg-error: #e11d48;
+  --bg-error-hover: #f43f5e;
+  --bg-error-active: #fb7185;
   --bg-error-soft: #881337;
   --bg-error-light: #9f1239;
   --text-error: #fb7185;
   --text-error-dark: #fda4af;
+  --text-on-error: #ffffff;
   --border-error: #e11d48;
 
   --bg-info: #0284c7;

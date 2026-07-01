@@ -13,6 +13,11 @@
 | v0.9 → v1.0 | إضافة `textOnAccent` (slate[900]) إلى palette.ts | توفير لون نص مناسب للعناصر ذات خلفية ذهبية |
 | v0.9 → v1.0 | إضافة `text-on-accent` إلى semantic.ts | ربط Semantic Token جديد لاستخدامات Premium/Badges |
 | v0.9 → v1.0 | إضافة `fontWeight` (normal/medium/semibold/bold) إلى design-tokens.ts | إكمال نظام Typography بأوزان الخط الأساسية |
+| v0.9 → v1.0 | إضافة `textOnError`, `focusRing`, `errorHover`, `errorActive` إلى palette.ts | إصلاح مشاكل الـ Destructive Button + Focus Ring |
+| v0.9 → v1.0 | إضافة `text-on-error`, `ring-focus`, `bg-error-hover`, `bg-error-active` إلى semantic.ts | ربط الـ Semantic Tokens الجديدة لاستخدامها في المكونات |
+| v0.9 → v1.0 | إضافة `radius.card` (0.75rem) + `shadows.card` إلى design-tokens.ts | Token رسمي لزوايا وظلال البطاقات (بدلاً من `rounded-card` غير المعرّف) |
+| v0.9 → v1.0 | إضافة `focus`, `error.hover`, `error.active`, `borderRadius.card`, `boxShadow.card` إلى tailwind.config.js | تمكين Tailwind من استخدام الـ tokens الجديدة |
+| v0.9 → v1.0 | إصلاح Playground: focus rings, active states, `text-white` → `text-on-*`, Charts HEX → CSS vars | تمشياً مع Token Compliance |
 
 ---
 

@@ -46,6 +46,9 @@ export const light: ThemeColors = {
   'text-dim': slate[400],
   'text-inverse': '#ffffff',
 
+  // Focus
+  'ring-focus': indigo[600],
+
   // Borders
   'border': slate[200],
   'border-strong': slate[300],
@@ -69,10 +72,13 @@ export const light: ThemeColors = {
 
   // Error
   'bg-error': rose[500],
+  'bg-error-hover': rose[600],
+  'bg-error-active': rose[700],
   'bg-error-soft': rose[50],
   'bg-error-light': rose[100],
   'text-error': rose[500],
   'text-error-dark': rose[700],
+  'text-on-error': '#ffffff',
   'border-error': rose[500],
 
   // Info
@@ -118,6 +124,9 @@ export const dark: ThemeColors = {
   'text-dim': slate[500],
   'text-inverse': slate[900],
 
+  // Focus
+  'ring-focus': indigo[400],
+
   // Borders
   'border': slate[700],
   'border-strong': slate[600],
@@ -139,10 +148,13 @@ export const dark: ThemeColors = {
   'border-warning': amber[600],
 
   'bg-error': rose[600],
+  'bg-error-hover': rose[500],
+  'bg-error-active': rose[400],
   'bg-error-soft': rose[900],
   'bg-error-light': rose[800],
   'text-error': rose[400],
   'text-error-dark': rose[300],
+  'text-on-error': '#ffffff',
   'border-error': rose[600],
 
   'bg-info': sky[600],

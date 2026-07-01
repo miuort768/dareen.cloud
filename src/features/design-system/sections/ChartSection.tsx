@@ -22,7 +22,7 @@ export function ChartSection() {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
         {mockChartData.map((d, i) => {
-          const colors = ['#4f46e5', '#10b981', '#f59e0b', '#f43f5e', '#0ea5e9', '#8b5cf6'];
+          const colors = ['var(--bg-primary)', 'var(--bg-success)', 'var(--bg-warning)', 'var(--bg-error)', 'var(--bg-info)', 'var(--text-accent)'];
           return (
             <div key={d.name} className="flex items-center gap-2 p-3 rounded-card border">
               <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: colors[i] }} />

@@ -43,6 +43,9 @@ export const semantic = {
   'text-dim': palette.textDim,
   'text-inverse': palette.textInverse,
 
+  // Focus
+  'ring-focus': palette.focusRing,
+
   // Borders
   'border': palette.border,
   'border-strong': palette.borderAccent,
@@ -66,10 +69,13 @@ export const semantic = {
 
   // Error
   'bg-error': palette.error,
+  'bg-error-hover': palette.errorHover,
+  'bg-error-active': palette.errorActive,
   'bg-error-soft': palette.errorSoft,
   'bg-error-light': palette.errorLight,
   'text-error': palette.error,
   'text-error-dark': palette.errorDark,
+  'text-on-error': palette.textOnError,
   'border-error': palette.error,
 
   // Info

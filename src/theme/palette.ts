@@ -53,14 +53,21 @@ export const palette = {
   errorSoft: rose[50],
   errorLight: rose[100],
   errorDark: rose[700],
+  errorHover: rose[600],
+  errorActive: rose[700],
 
   info: sky[500],
   infoSoft: sky[50],
   infoLight: sky[100],
   infoDark: sky[700],
 
-  // Text on Accent
+  // Text on colored backgrounds
   textOnAccent: slate[900],
+  textOnError: '#ffffff',
+  textOnSuccess: '#ffffff',
+
+  // Focus
+  focusRing: indigo[600],
 
   // Hover backgrounds
   hover: slate[100],

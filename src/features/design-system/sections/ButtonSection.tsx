@@ -1,9 +1,9 @@
 const VARIANTS = [
   { label: 'Primary', className: 'bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-active' },
-  { label: 'Secondary', className: 'bg-card text-main border hover:bg-hover' },
-  { label: 'Outline', className: 'border border-primary text-primary hover:bg-primary-soft' },
-  { label: 'Ghost', className: 'text-muted hover:bg-hover' },
-  { label: 'Destructive', className: 'bg-error text-white hover:bg-error-dark' },
+  { label: 'Secondary', className: 'bg-card text-main border hover:bg-hover active:bg-hover' },
+  { label: 'Outline', className: 'border border-primary text-primary hover:bg-primary-soft active:bg-primary active:text-on-primary' },
+  { label: 'Ghost', className: 'text-muted hover:bg-hover active:text-dim' },
+  { label: 'Destructive', className: 'bg-error text-on-error hover:bg-error-hover active:bg-error-active' },
 ] as const;
 
 const SIZES = [
@@ -22,11 +22,11 @@ export function ButtonSection() {
             <h3 className="text-sm font-semibold text-muted mb-3">{variant.label}</h3>
             <div className="flex flex-wrap gap-3 items-center">
               {SIZES.map(size => (
-                <button key={size.label} className={`rounded-md font-medium transition-colors ${size.className} ${variant.className}`}>
+                <button key={size.label} className={`rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-focus ${size.className} ${variant.className}`}>
                   {variant.label} {size.label}
                 </button>
               ))}
-              <button disabled className={`rounded-md font-medium transition-colors opacity-50 cursor-not-allowed ${SIZES[1].className} ${variant.className}`}>
+              <button disabled className={`rounded-md font-medium transition-colors opacity-50 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-focus ${SIZES[1].className} ${variant.className}`}>
                 Disabled
               </button>
             </div>

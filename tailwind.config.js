@@ -80,6 +80,9 @@ module.exports = {
           light: 'var(--bg-accent-light)',
         },
 
+        // Focus (ring)
+        focus: 'var(--ring-focus)',
+
         // Status colors
         success: {
           DEFAULT: 'var(--bg-success)',
@@ -93,6 +96,8 @@ module.exports = {
         },
         error: {
           DEFAULT: 'var(--bg-error)',
+          hover: 'var(--bg-error-hover)',
+          active: 'var(--bg-error-active)',
           soft: 'var(--bg-error-soft)',
           light: 'var(--bg-error-light)',
         },
@@ -101,6 +106,9 @@ module.exports = {
           soft: 'var(--bg-info-soft)',
           light: 'var(--bg-info-light)',
         },
+      },
+      borderRadius: {
+        card: 'var(--radius-card)',
       },
       boxShadow: {
         sm: 'var(--shadow-sm)',
@@ -111,6 +119,7 @@ module.exports = {
         '2xl': 'var(--shadow-2xl)',
         inner: 'var(--shadow-inner)',
         none: '0 0 #0000',
+        card: 'var(--shadow-card)',
         gold: 'var(--shadow-gold)',
         'gold-hover': 'var(--shadow-gold-hover)',
         glass: 'var(--shadow-glass)',
