@@ -17,4 +17,19 @@ export { StaggeredList, StaggeredGrid } from './StaggeredList';
 
 export { PageTransition }  from './PageTransition';
 
-export { Image }            from './Image';
+export { Image }           from './Image';
+
+export { Badge }           from './Badge';
+export type { BadgeProps } from './Badge';
+
+export { Alert }           from './Alert';
+export type { AlertProps } from './Alert';
+
+export { Select }          from './Select';
+export type { SelectProps } from './Select';
+
+export { Checkbox, Radio } from './Checkbox';
+export type { CheckboxProps, RadioProps } from './Checkbox';
+
+export { Switch }          from './Switch';
+export type { SwitchProps } from './Switch';
