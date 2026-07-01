@@ -8,24 +8,25 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Readex Pro', 'sans-serif'],
-        heading: ['El Messiri', 'sans-serif'],
-        dash: ['IBM Plex Sans Arabic', 'Readex Pro', 'sans-serif'],
+        sans: 'var(--font-family-sans)',
+        heading: 'var(--font-family-heading)',
+        dash: 'var(--font-family-dash)',
       },
       fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
-        sm: ['0.8125rem', { lineHeight: '1.25rem' }], // 13px
-        base: ['0.875rem', { lineHeight: '1.5rem' }], // 14px
-        lg: ['1rem', { lineHeight: '1.5rem' }], // 16px
-        xl: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
-        '2xl': ['1.25rem', { lineHeight: '1.75rem' }], // 20px
-        '3xl': ['1.5rem', { lineHeight: '2rem' }], // 24px
-        '4xl': ['1.875rem', { lineHeight: '2.25rem' }], // 30px
-        '5xl': ['2.25rem', { lineHeight: '2.5rem' }], // 36px
-        '6xl': ['3rem', { lineHeight: '1' }], // 48px
-        '7xl': ['3.75rem', { lineHeight: '1' }], // 60px
+        xs: ['var(--font-size-xs)', { lineHeight: 'var(--line-height-xs)' }],
+        sm: ['var(--font-size-sm)', { lineHeight: 'var(--line-height-sm)' }],
+        base: ['var(--font-size-base)', { lineHeight: 'var(--line-height-base)' }],
+        lg: ['var(--font-size-lg)', { lineHeight: 'var(--line-height-lg)' }],
+        xl: ['var(--font-size-xl)', { lineHeight: 'var(--line-height-xl)' }],
+        '2xl': ['var(--font-size-2xl)', { lineHeight: 'var(--line-height-2xl)' }],
+        '3xl': ['var(--font-size-3xl)', { lineHeight: 'var(--line-height-3xl)' }],
+        '4xl': ['var(--font-size-4xl)', { lineHeight: 'var(--line-height-4xl)' }],
+        '5xl': ['var(--font-size-5xl)', { lineHeight: 'var(--line-height-5xl)' }],
+        '6xl': ['var(--font-size-6xl)', { lineHeight: 'var(--line-height-6xl)' }],
+        '7xl': ['var(--font-size-7xl)', { lineHeight: 'var(--line-height-7xl)' }],
       },
       colors: {
+        /* ========== Legacy Colors (للمكونات الحالية — ستستبدل تدريجيًا) ========== */
         primary: {
           DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
           50: 'rgb(var(--color-primary) / 0.1)',
@@ -51,12 +52,68 @@ module.exports = {
           crimson: '#9f1239',
           emerald: '#10b981',
           slate: '#0F172A',
-        }
+        },
+
+        /* ========== Semantic Tokens (Design System v0.9) ========== */
+        // Background levels
+        surface: 'var(--bg-surface)',
+        background: 'var(--bg-background)',
+        card: 'var(--bg-card)',
+
+        // Text levels
+        muted: 'var(--text-muted)',
+        dim: 'var(--text-dim)',
+        inverse: 'var(--text-inverse)',
+
+        // Border
+        border: {
+          DEFAULT: 'var(--border)',
+          strong: 'var(--border-strong)',
+        },
+        divider: 'var(--divider)',
+
+        // Accent (Gold)
+        accent: {
+          DEFAULT: 'var(--bg-accent)',
+          hover: 'var(--bg-accent-hover)',
+          soft: 'var(--bg-accent-soft)',
+          light: 'var(--bg-accent-light)',
+        },
+
+        // Status colors
+        success: {
+          DEFAULT: 'var(--bg-success)',
+          soft: 'var(--bg-success-soft)',
+          light: 'var(--bg-success-light)',
+        },
+        warning: {
+          DEFAULT: 'var(--bg-warning)',
+          soft: 'var(--bg-warning-soft)',
+          light: 'var(--bg-warning-light)',
+        },
+        error: {
+          DEFAULT: 'var(--bg-error)',
+          soft: 'var(--bg-error-soft)',
+          light: 'var(--bg-error-light)',
+        },
+        info: {
+          DEFAULT: 'var(--bg-info)',
+          soft: 'var(--bg-info-soft)',
+          light: 'var(--bg-info-light)',
+        },
       },
       boxShadow: {
-        'gold': '0 10px 30px -10px rgba(212, 175, 55, 0.3)',
-        'gold-hover': '0 20px 40px -10px rgba(212, 175, 55, 0.4)',
-        'glass': '0 8px 32px 0 rgba(15, 23, 42, 0.05)',
+        sm: 'var(--shadow-sm)',
+        DEFAULT: 'var(--shadow)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
+        '2xl': 'var(--shadow-2xl)',
+        inner: 'var(--shadow-inner)',
+        none: '0 0 #0000',
+        gold: 'var(--shadow-gold)',
+        'gold-hover': 'var(--shadow-gold-hover)',
+        glass: 'var(--shadow-glass)',
       },
       keyframes: {
         shine: {

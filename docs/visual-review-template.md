@@ -1,0 +1,141 @@
+# مراجعة بصرية — Visual Review
+
+**المشروع:** منصة دارين التعليمية
+**النطاق:** Design System v0.9 → v1.0
+**تاريخ البدء:** 2026-07-01
+**الحالة:** ⬜ قيد المراجعة
+
+---
+
+## Review A — Brand Foundation
+
+**الهدف:** التأكد من أن الهوية تعمل بصريًا.
+
+| البند | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Primary مناسب للعلامة التجارية | 5/5 | Indigo 600 (#4f46e5) في الوضع الفاتح — احترافي، ثقة، إبداع. WCAG AA (6.3:1 مع الأبيض). |
+| Accent مميز وغير مبالغ فيه | 4/5 | Gold 500 (#D4AF37) مميز للاستخدامات المحدودة. ⚠ يجب حظره في نصوص الجسم (contrast 2.0:1). أُضيف `textOnAccent` (slate[900]) للمستقبل. |
+| Neutral مريح للخلفيات | 5/5 | Slate 50/100/200 للسطح/الخلفية/الحدود — هرمية بصرية ممتازة. text-muted (4.5:1) وtext-dim (2.5:1 مقبول للعناصر الثانوية). |
+| Status Colors واضحة ومتمايزة | 5/5 | 4 ألوان حالة (Emerald/Amber/Rose/Sky) متميزة عن Primary وعن بعضها. Dark Mode shift يحافظ على التباين. |
+| التباين العام مقبول | 4/5 | ⚠ Dark Mode Primary Button: أبيض على indigo[500] = 4.47:1 (يفشل AA للنصوص العادية، ينجح للكبيرة). مقبول مؤقتًا — يُحل في Sprint 3 مع حدود/ظلال للمكونات. |
+| الانطباع العام | 4/5 | هوية قوية ومتسقة. يحتاج المكونات لتعكس الجودة الحقيقية للنظام. |
+
+---
+
+## Review B — Components
+
+**الهدف:** مراجعة المكونات المشتركة في Playground.
+
+| المكون | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Buttons | ☐ | |
+| Forms (Inputs, Selects, Checkboxes) | ☐ | |
+| Cards | ☐ | |
+| Alerts | ☐ | |
+| Tables | ☐ | |
+| Charts | ☐ | |
+| Navigation | ☐ | |
+
+---
+
+## Review C — Screens
+
+**الهدف:** مراجعة تجربة المستخدم على الشاشات الرئيسية.
+
+### Landing
+
+| البند | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Visual Hierarchy | ☐ | |
+| Spacing | ☐ | |
+| Typography | ☐ | |
+| Colors | ☐ | |
+| Consistency | ☐ | |
+| Overall | ☐ | |
+
+### Dashboard
+
+| البند | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Visual Hierarchy | ☐ | |
+| Spacing | ☐ | |
+| Typography | ☐ | |
+| Colors | ☐ | |
+| Consistency | ☐ | |
+| Overall | ☐ | |
+
+### Login
+
+| البند | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Visual Hierarchy | ☐ | |
+| Spacing | ☐ | |
+| Typography | ☐ | |
+| Colors | ☐ | |
+| Consistency | ☐ | |
+| Overall | ☐ | |
+
+### Settings
+
+| البند | التقييم (1–5) | ملاحظات |
+|---|---|---|
+| Visual Hierarchy | ☐ | |
+| Spacing | ☐ | |
+| Typography | ☐ | |
+| Colors | ☐ | |
+| Consistency | ☐ | |
+| Overall | ☐ | |
+
+---
+
+## Review D — Accessibility
+
+**الهدف:** ضمان توافق الحد الأدنى للمعايير.
+
+| البند | Pass / Fail | ملاحظات |
+|---|---|---|
+| WCAG Contrast (AA) | ☐ | |
+| Focus Ring ظاهر | ☐ | |
+| Keyboard Navigation | ☐ | |
+| Dark Mode متناسق | ☐ | |
+| Charts متمايزة بالألوان | ☐ | |
+| Color Blind Friendly | ☐ | |
+
+---
+
+## Decision Log — Changes Before v1.0
+
+**الهدف:** توثيق كل تغيير مطلوب قبل اعتماد Brand Palette v1.0.
+
+| القرار | السبب | الحالة |
+|---|---|---|
+| Primary: إبقاء Indigo 600 (فاتح) / 500 (غامق) | مقبول — 6.3:1 (فاتح) و4.47:1 (غامق، AA Large ✓) | ✅ لا تعديل |
+| Accent: إبقاء Gold 500 + إضافة textOnAccent | Gold decorative فقط — textOnAccent (slate[900]) للمستقبل | ✅ أضيف إلى palette/semantic |
+| Neutral: إبقاء Slate كامل | التباين ممتاز — text-dim مقصود كعنصر ثانوي | ✅ لا تعديل |
+| Status Colors: إبقاء الحالية | متمايزة وواضحة في كلا الوضعين | ✅ لا تعديل |
+| Shadows: إبقاء الحالية | 11 variation تغطي جميع الحالات | ✅ لا تعديل |
+| Radius: إبقاء الحالية | 9 steps كافية | ✅ لا تعديل |
+| Typography: إضافة fontWeights | لإكمال نظام Typography | ✅ أضيف إلى design-tokens.ts |
+| Dark Mode Primary Contrast | 4.47:1 — مؤجل لـ Sprint 3 (حل على مستوى Component) | ⏳ مؤجل |
+
+---
+
+## معيار الاعتماد
+
+لا يُعتمد **Brand Palette v1.0** إلا إذا تحققت الشروط التالية:
+
+- [ ] لا يوجد أي عنصر حصل على تقييم **أقل من 4/5** دون خطة معالجة.
+- [ ] جميع عناصر **Accessibility** الأساسية ناجحة (Pass).
+- [ ] لا توجد ملاحظات حرجة (Critical) مفتوحة.
+
+---
+
+## الخلاصة
+
+| النطاق | الحالة |
+|---|---|
+| Review A — Brand Foundation | ✅ **مكتمل** — 4/5 + ملاحظات مسجلة |
+| Review B — Components | ⬜ قيد الانتظار |
+| Review C — Screens | ⬜ قيد الانتظار |
+| Review D — Accessibility | ⬜ قيد الانتظار |
+| Brand Palette v1.0 معتمد | ⬜ غير معتمد (ينتظر Reviews B–D) |

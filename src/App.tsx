@@ -57,6 +57,7 @@ import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidge
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
+const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
 
 
 
@@ -222,6 +223,11 @@ function App() {
           <Route path="/terms-of-work" element={<TermsOfWork />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/developer" element={<DeveloperProfile />} />
+
+          {/* Design System Playground — Dev Only */}
+          {import.meta.env.DEV && (
+            <Route path="/design-system" element={<DesignSystemPage />} />
+          )}
 
           {/* Protected App Routes */}
           {/* Protected App Routes */}

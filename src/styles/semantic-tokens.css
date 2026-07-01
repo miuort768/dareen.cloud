@@ -1,0 +1,136 @@
+/* ========================================
+   Semantic Tokens — Design System v0.9
+   المصدر الوحيد للحقيقة هو src/theme/*.ts
+   هذا الملف يُولَّد من semantic.ts — لا تعدله يدويًا
+   ======================================== */
+
+:root {
+  /* Backgrounds */
+  --bg-surface: #f8fafc;
+  --bg-background: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  /* Primary */
+  --bg-primary: #4f46e5;
+  --bg-primary-hover: #4338ca;
+  --bg-primary-active: #3730a3;
+  --bg-primary-soft: #eef2ff;
+  --bg-primary-light: #e0e7ff;
+  --text-primary: #4f46e5;
+  --text-on-primary: #ffffff;
+  --border-primary: #4f46e5;
+  --ring-primary: #4f46e5;
+
+  /* Accent (Gold) */
+  --text-accent: #D4AF37;
+  --bg-accent: #D4AF37;
+  --bg-accent-hover: #b8960e;
+  --bg-accent-soft: #fdf8e8;
+  --bg-accent-light: #faf1d1;
+  --border-accent: #D4AF37;
+
+  /* Text */
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --divider: #e2e8f0;
+
+  /* Success */
+  --bg-success: #10b981;
+  --bg-success-soft: #ecfdf5;
+  --bg-success-light: #d1fae5;
+  --text-success: #10b981;
+  --text-success-dark: #047857;
+  --border-success: #10b981;
+
+  /* Warning */
+  --bg-warning: #f59e0b;
+  --bg-warning-soft: #fffbeb;
+  --bg-warning-light: #fef3c7;
+  --text-warning: #f59e0b;
+  --text-warning-dark: #b45309;
+  --border-warning: #f59e0b;
+
+  /* Error */
+  --bg-error: #f43f5e;
+  --bg-error-soft: #fff1f2;
+  --bg-error-light: #ffe4e6;
+  --text-error: #f43f5e;
+  --text-error-dark: #be123c;
+  --border-error: #f43f5e;
+
+  /* Info */
+  --bg-info: #0ea5e9;
+  --bg-info-soft: #f0f9ff;
+  --bg-info-light: #e0f2fe;
+  --text-info: #0ea5e9;
+  --text-info-dark: #0369a1;
+  --border-info: #0ea5e9;
+}
+
+/* Dark Mode */
+.dark {
+  --bg-surface: #020617;
+  --bg-background: #0f172a;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+
+  --bg-primary: #6366f1;
+  --bg-primary-hover: #818cf8;
+  --bg-primary-active: #a5b4fc;
+  --bg-primary-soft: #312e81;
+  --bg-primary-light: #3730a3;
+  --text-primary: #818cf8;
+  --text-on-primary: #ffffff;
+  --border-primary: #6366f1;
+
+  --text-accent: #e8c447;
+  --bg-accent: #D4AF37;
+  --bg-accent-hover: #e8c447;
+  --bg-accent-soft: #342a04;
+  --bg-accent-light: #604e08;
+  --border-accent: #D4AF37;
+
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-inverse: #0f172a;
+
+  --border: #334155;
+  --border-strong: #475569;
+  --divider: #334155;
+
+  --bg-success: #059669;
+  --bg-success-soft: #064e3b;
+  --bg-success-light: #065f46;
+  --text-success: #34d399;
+  --text-success-dark: #6ee7b7;
+  --border-success: #059669;
+
+  --bg-warning: #d97706;
+  --bg-warning-soft: #78350f;
+  --bg-warning-light: #92400e;
+  --text-warning: #fbbf24;
+  --text-warning-dark: #fcd34d;
+  --border-warning: #d97706;
+
+  --bg-error: #e11d48;
+  --bg-error-soft: #881337;
+  --bg-error-light: #9f1239;
+  --text-error: #fb7185;
+  --text-error-dark: #fda4af;
+  --border-error: #e11d48;
+
+  --bg-info: #0284c7;
+  --bg-info-soft: #0c4a6e;
+  --bg-info-light: #075985;
+  --text-info: #38bdf8;
+  --text-info-dark: #7dd3fc;
+  --border-info: #0284c7;
+}
