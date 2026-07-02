@@ -28,7 +28,7 @@ export const PublicFooter = () => {
                                 دارين السابعة
                             </span>
                         </div>
-                        <p className="text-muted text-sm lg:text-xs leading-relaxed border-r-2 border-primary/30 pr-4">
+                        <p className="text-on-primary opacity-70 text-sm lg:text-xs leading-relaxed border-r-2 border-primary/30 pr-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.
                         </p>
                     </div>
@@ -47,7 +47,7 @@ export const PublicFooter = () => {
                                 <li key={idx}>
                                     <Link
                                         to={link.path}
-                                        className="text-muted hover:text-accent transition-colors flex items-center gap-2 text-sm"
+                                        className="text-on-primary opacity-70 hover:text-accent transition-colors flex items-center gap-2 text-sm"
                                     >
                                         <span className="text-accent">›</span> {link.name}
                                     </Link>
@@ -62,11 +62,11 @@ export const PublicFooter = () => {
                             تواصل معنا
                         </h3>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3 text-sm text-muted">
+                            <li className="flex items-start gap-3 text-sm text-on-primary opacity-70">
                                 <MapPin className="w-5 h-5 text-accent shrink-0" />
                                 <span>بني سويف - مصر</span>
                             </li>
-                            <li className="flex items-center gap-3 text-sm text-muted">
+                            <li className="flex items-center gap-3 text-sm text-on-primary opacity-70">
                                 <Phone className="w-5 h-5 text-accent shrink-0" />
                                 <a
                                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
@@ -78,7 +78,7 @@ export const PublicFooter = () => {
                                     +{adminPhone?.replace(/\D/g, '') || '965000000000'}
                                 </a>
                             </li>
-                            <li className="flex items-center gap-3 text-sm text-muted">
+                            <li className="flex items-center gap-3 text-sm text-on-primary opacity-70">
                                 <Instagram className="w-5 h-5 text-accent shrink-0" />
                                 <a
                                     href="https://www.instagram.com/daren_school/?hl=ar"
@@ -116,25 +116,25 @@ export const PublicFooter = () => {
 
                 <div className="border-t border-white/10 pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="text-center md:text-right">
-                        <p className="text-muted text-sm">
+                        <p className="text-on-primary opacity-70 text-sm">
                             &copy; {new Date().getFullYear()} <span className="text-on-primary font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
                         </p>
                     </div>
 
                     <div className="text-center">
-                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary-active)] border border-white/10 overflow-hidden group cursor-pointer">
+                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-active)] border border-white/10 overflow-hidden group cursor-pointer">
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                            <span className="relative z-10 text-[10px] font-bold text-muted tracking-wide font-heading">تصميم وتطوير</span>
-                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-accent group-hover:from--[var(--bg-primary)] group-hover:to-accent-hover transition-colors font-heading">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-[10px] font-bold text-on-primary opacity-70 tracking-wide font-heading">تصميم وتطوير</span>
+                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-accent group-hover:from-[var(--bg-primary)] group-hover:to-accent-hover transition-colors font-heading">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-6 justify-center md:justify-end">
-                        <Link to="/privacy-policy" className="text-muted hover:text-accent text-sm transition-colors">سياسة الخصوصية</Link>
-                        <Link to="/refund-policy" className="text-muted hover:text-accent text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
+                        <Link to="/privacy-policy" className="text-on-primary opacity-70 hover:text-accent text-sm transition-colors">سياسة الخصوصية</Link>
+                        <Link to="/refund-policy" className="text-on-primary opacity-70 hover:text-accent text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
                     </div>
                 </div>
             </div>

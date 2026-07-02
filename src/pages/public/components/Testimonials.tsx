@@ -34,7 +34,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="max-w-6xl mx-auto">
                     <div className="lg:hidden">
                         <div className="relative group">
-                            <div className="p-4 bg-card border border-border shadow-sm rounded-2xl relative overflow-hidden flex flex-col min-h-[140px]">
+                            <div className="p-4 bg-surface border border-border shadow-sm rounded-2xl relative overflow-hidden flex flex-col min-h-[140px]">
                                 <Quote size={30} className="text-primary opacity-10 absolute -top-1 -left-1" />
                                 
                                 <div className="relative z-10 flex flex-col h-full flex-grow">
@@ -70,7 +70,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                         'group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col rounded-2xl',
                                         isLarge 
                                             ? 'lg:col-span-2 bg-success-dark border-success-dark text-on-success p-6' 
-                                            : 'bg-card border-border text-muted p-5'
+                                            : 'bg-surface border-border text-muted p-5'
                                     )}
                                 >
                                     <Quote size={isLarge ? 60 : 30} className={cn(
