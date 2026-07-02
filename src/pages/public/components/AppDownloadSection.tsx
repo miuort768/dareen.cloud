@@ -29,7 +29,7 @@ export const AppDownloadSection = () => {
     return (
         <>
             {/* Desktop */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-main transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-white dark:bg-card transition-colors duration-500">
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <div className="max-w-6xl mx-auto bg-primary-soft dark:bg-card border border-primary/30 dark:border-primary/30 rounded-2xl shadow-sm overflow-hidden">
                         <div className="flex flex-col items-center justify-center p-6 md:p-10 text-center">
@@ -107,7 +107,7 @@ export const AppDownloadSection = () => {
             </section>
 
             {/* Mobile */}
-            <section className="block md:hidden relative overflow-hidden bg-main transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-white dark:bg-card transition-colors duration-500 pt-2 pb-4">
                 <div className="absolute top-40 -left-20 w-64 h-64 bg-primary opacity-10 rounded-full blur-[100px] pointer-events-none"></div>
                 <div className="absolute bottom-40 -right-20 w-80 h-80 bg-primary opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
                 <div className="relative z-10 px-5">
