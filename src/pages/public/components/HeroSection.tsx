@@ -9,7 +9,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: HeroSectionProps) => {
     return (
-        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-main">
+        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-white dark:bg-card">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary-soft via-primary-soft to-card dark:from-card dark:via-card dark:to-card rounded-2xl shadow-sm border border-primary/30 dark:border-border overflow-hidden">
                     <div className="flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6 p-6 md:p-10">
