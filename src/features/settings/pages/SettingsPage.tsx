@@ -381,7 +381,7 @@ export const Settings = () => {
     };
 
     return (
-        <div className="space-y-0 pb-24 min-h-full" dir="rtl">
+        <div className="space-y-0 pb-24 min-h-full max-w-full w-full overflow-x-hidden" dir="rtl">
             <div className="bg-gradient-to-l from-primary to-primary-hover px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
@@ -398,7 +398,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            <div className="bg-gradient-to-l from-primary to-primary-hover px-1 py-1">
+            <div className="bg-gradient-to-l from-primary to-primary-hover px-2 md:px-4 py-1">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button
@@ -418,7 +418,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-3 md:px-5 lg:px-8 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {renderTab()}
             </div>
 
