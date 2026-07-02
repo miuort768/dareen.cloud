@@ -93,7 +93,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     <div>
                                         <p className={cn(
                                             'leading-relaxed font-medium italic',
-                                            isLarge ? 'text-sm text-on-success opacity-90' : 'text-[11px] text-muted'
+                                            isLarge ? 'text-sm text-on-success' : 'text-[11px] text-muted'
                                         )}>
                                             "{review.content}"
                                         </p>

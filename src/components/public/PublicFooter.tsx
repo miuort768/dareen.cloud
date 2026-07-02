@@ -122,12 +122,12 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-active)] border border-white/10 overflow-hidden group cursor-pointer">
+                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] border border-white/10 overflow-hidden group cursor-pointer">
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
                             <span className="relative z-10 text-[10px] font-bold text-on-primary opacity-70 tracking-wide font-heading">تصميم وتطوير</span>
-                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-accent group-hover:from-[var(--bg-primary)] group-hover:to-accent-hover transition-colors font-heading">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-on-primary to-accent group-hover:from-on-primary group-hover:to-accent-hover transition-colors font-heading">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
                         </div>
                     </div>
