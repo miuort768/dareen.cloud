@@ -162,7 +162,7 @@ export const Home = () => {
                   <p className="text-[12px] font-bold text-primary mb-0.5">{slide.subtitle}</p>
                   <p className="text-[9px] text-muted leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
-                    <Link to="/courses" className="bg-card text-main text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-black/10 hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
+                    <Link to="/courses" className="bg-surface text-main text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-black/10 hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
                       <Play className="w-3 h-3 fill-main" />
                       تصفح الدورات
                     </Link>
@@ -249,7 +249,7 @@ export const Home = () => {
                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 ${
                   activeCategory === cat.value
                     ? 'bg-primary text-on-primary shadow-md shadow-black/20'
-                    : 'bg-card text-muted border border-border'
+                    : 'bg-surface text-muted border border-border'
                 }`}
               >
                 <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary' : 'text-muted'} />
@@ -269,9 +269,9 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                className="min-w-[180px] w-[180px] bg-card rounded-xl shadow-sm border border-border overflow-hidden shrink-0 block"
+                className="min-w-[180px] w-[180px] bg-surface rounded-xl shadow-sm border border-border overflow-hidden shrink-0 block"
               >
-                <div className="relative h-24 bg-card overflow-hidden">
+                <div className="relative h-24 bg-surface overflow-hidden">
                   <img
                     src={c.image}
                     alt={c.title}

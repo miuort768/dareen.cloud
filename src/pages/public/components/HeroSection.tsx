@@ -40,7 +40,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 </Link>
                                 <button
                                     onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-card text-main border border-border font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-surface text-main border border-border font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
                                     aria-label="شاهد دليل الاستخدام"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-primary-soft flex items-center justify-center group-hover:scale-110 transition">
@@ -104,7 +104,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
 
                 <div className="hidden md:grid grid-cols-4 gap-2 mt-3 max-w-6xl mx-auto">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="bg-card rounded-2xl p-2 shadow-sm border border-border flex items-center justify-between gap-1 group hover:shadow-md transition-all">
+                        <div key={idx} className="bg-surface rounded-2xl p-2 shadow-sm border border-border flex items-center justify-between gap-1 group hover:shadow-md transition-all">
                             <p className="text-[10px] lg:text-[11px] font-black text-main leading-tight flex-1">
                                 {text}
                             </p>
