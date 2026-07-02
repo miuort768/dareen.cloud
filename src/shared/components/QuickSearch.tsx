@@ -102,11 +102,11 @@ export const QuickSearch = () => {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-3 px-4 py-2 bg-gray-100 hover:bg-primary-50 dark:bg-gray-800 dark:hover:bg-primary-900/20 transition-all text-gray-500 hover:text-primary-600 border border-transparent hover:border-primary-200"
+                className="flex items-center gap-3 px-4 py-2 bg-surface hover:bg-primary-soft dark:bg-card dark:hover:bg-primary/20 transition-all text-muted hover:text-primary border border-transparent hover:border-primary"
             >
                 <Search size={16} />
                 <span className="text-sm font-bold">بحث سريع...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-gray-200 text-[10px] font-black rounded-none shadow-sm ml-4">Ctrl+K</kbd>
+                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-border text-[10px] font-black rounded-none shadow-sm ml-4">Ctrl+K</kbd>
             </button>
         );
     }
@@ -115,9 +115,9 @@ export const QuickSearch = () => {
         <>
             <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] animate-in fade-in duration-300" onClick={() => setIsOpen(false)} />
             <div className="fixed top-24 left-1/2 -translate-x-1/2 w-full max-w-2xl z-[70] px-4 animate-in zoom-in-95 duration-200">
-                <div className="bg-white dark:bg-gray-900 border-t-4 border-primary-600 shadow-2xl overflow-hidden rounded-none">
-                    <div className="flex items-center gap-4 p-5 bg-gray-50 dark:bg-gray-800/50">
-                        <Search className="text-primary-600" size={24} />
+                <div className="bg-white dark:bg-card border-t-4 border-primary shadow-2xl overflow-hidden rounded-none">
+                    <div className="flex items-center gap-4 p-5 bg-background dark:bg-card/50">
+                        <Search className="text-primary" size={24} />
                         <input
                             ref={inputRef}
                             type="text"
@@ -125,23 +125,23 @@ export const QuickSearch = () => {
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="ابحث عن طالب، معلمة، أو صفحة عبر النظام..."
-                            className="flex-1 bg-transparent outline-none text-lg font-bold text-gray-900 dark:text-white placeholder-gray-400 text-right"
+                            className="flex-1 bg-transparent outline-none text-lg font-bold text-main dark:text-on-primary placeholder-gray-400 text-right"
                             dir="rtl"
                         />
-                        <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-red-500"><X size={20} /></button>
+                        <button onClick={() => setIsOpen(false)} className="text-muted hover:text-error"><X size={20} /></button>
                     </div>
 
                     <div className="max-h-[400px] overflow-y-auto custom-scrollbar p-2">
                         {isTeacher ? (
                             <div className="p-16 text-center">
-                                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 rounded-full flex items-center justify-center">
-                                    <Lock size={48} className="text-amber-600 dark:text-amber-400" />
+                                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] dark:from--[var(--bg-warning)]/30 dark:to--[var(--bg-warning)]/30 rounded-full flex items-center justify-center">
+                                    <Lock size={48} className="text-warning dark:text-warning" />
                                 </div>
-                                <h3 className="font-black text-xl text-gray-700 dark:text-gray-200 mb-3">نعتذر بشدة</h3>
-                                <p className="text-gray-500 dark:text-gray-400 font-bold mb-2">
+                                <h3 className="font-black text-xl text-main dark:text-dim mb-3">نعتذر بشدة</h3>
+                                <p className="text-muted dark:text-muted font-bold mb-2">
                                     الصلاحية الكاملة لمستر أحمد فقط
                                 </p>
-                                <p className="text-primary-600 font-bold text-lg mt-4">نتمنى لك التوفيق 💪</p>
+                                <p className="text-primary font-bold text-lg mt-4">نتمنى لك التوفيق 💪</p>
                             </div>
                         ) : results.length > 0 ? (
                             results.map((result, index) => {
@@ -152,22 +152,22 @@ export const QuickSearch = () => {
                                         onClick={() => handleSelect(result)}
                                         className={cn(
                                             "w-full flex items-center gap-4 p-4 transition-all text-right group",
-                                            index === selectedIndex ? "bg-primary-600 text-white shadow-lg" : "hover:bg-primary-50 text-gray-700 dark:text-gray-300 dark:hover:bg-primary-900/10"
+                                            index === selectedIndex ? "bg-primary text-on-primary shadow-lg" : "hover:bg-primary-soft text-main dark:text-dim dark:hover:bg-primary/10"
                                         )}
                                     >
                                         <div className={cn(
                                             "w-12 h-12 flex items-center justify-center rounded-none shadow-sm",
-                                            index === selectedIndex ? "bg-white/20" : "bg-gray-100 dark:bg-gray-800"
+                                            index === selectedIndex ? "bg-white/20" : "bg-surface dark:bg-card"
                                         )}>
-                                            <Icon size={20} className={index === selectedIndex ? "text-white" : "text-primary-600"} />
+                                            <Icon size={20} className={index === selectedIndex ? "text-on-primary" : "text-primary"} />
                                         </div>
                                         <div className="flex-1">
                                             <h4 className="font-black text-sm uppercase tracking-tight">{result.title}</h4>
-                                            {result.subtitle && <p className={cn("text-[10px] font-bold mt-0.5", index === selectedIndex ? "text-primary-100" : "text-gray-400")}>{result.subtitle}</p>}
+                                            {result.subtitle && <p className={cn("text-[10px] font-bold mt-0.5", index === selectedIndex ? "text-primary" : "text-muted")}>{result.subtitle}</p>}
                                         </div>
                                         <span className={cn(
                                             "text-[9px] font-black px-2 py-1 uppercase tracking-widest",
-                                            index === selectedIndex ? "bg-white/10 text-white" : "bg-gray-200 dark:bg-gray-800 text-gray-500"
+                                            index === selectedIndex ? "bg-white/10 text-on-primary" : "bg-surface dark:bg-card text-muted"
                                         )}>
                                             {result.type === 'page' ? 'صفحة' : result.type === 'student' ? 'طالب' : result.type === 'teacher' ? 'معلمة' : 'ولي أمر'}
                                         </span>
@@ -175,7 +175,7 @@ export const QuickSearch = () => {
                                 );
                             })
                         ) : (
-                            <div className="p-16 text-center text-gray-300">
+                            <div className="p-16 text-center text-dim">
                                 <Search size={64} className="mx-auto mb-4 opacity-10" />
                                 <p className="font-black text-sm uppercase tracking-widest">لم يتم العثور على نتائج</p>
                             </div>

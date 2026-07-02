@@ -48,24 +48,24 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             <div className="mb-6">
                 <FieldLabel>حدود الشارات</FieldLabel>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-1">
-                    <div className="p-3 bg-amber-50 rounded-xl border border-amber-100">
+                    <div className="p-3 bg-warning-soft rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
-                            <Star size={14} className="text-amber-500" />
-                            <span className="text-[11px] font-bold text-amber-700">الشارة البرونزية</span>
+                            <Star size={14} className="text-warning" />
+                            <span className="text-[11px] font-bold text-warning-dark">الشارة البرونزية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold1} onChange={e => setBadgeThreshold1(e.target.value)} />
                     </div>
-                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="p-3 bg-surface rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
-                            <Trophy size={14} className="text-slate-500" />
-                            <span className="text-[11px] font-bold text-slate-700">الشارة الفضية</span>
+                            <Trophy size={14} className="text-muted" />
+                            <span className="text-[11px] font-bold text-main">الشارة الفضية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold2} onChange={e => setBadgeThreshold2(e.target.value)} />
                     </div>
-                    <div className="p-3 bg-yellow-50 rounded-xl border border-yellow-100">
+                    <div className="p-3 bg-warning-soft rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
-                            <Award size={14} className="text-yellow-600" />
-                            <span className="text-[11px] font-bold text-yellow-700">الشارة الذهبية</span>
+                            <Award size={14} className="text-warning-dark" />
+                            <span className="text-[11px] font-bold text-warning-dark">الشارة الذهبية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold3} onChange={e => setBadgeThreshold3(e.target.value)} />
                     </div>
@@ -77,7 +77,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 <ToggleRow icon={Trophy} label="تفعيل لوحة الشرف" sub="عرض قائمة الطلاب المتميزين" checked={leaderboardEnabled} onChange={() => setLeaderboardEnabled(!leaderboardEnabled)} />
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-6 pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات المكافآت</PrimaryBtn>
             </div>
         </SectionCard>

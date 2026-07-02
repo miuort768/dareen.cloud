@@ -22,15 +22,15 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
     onExportPDF
 }) => {
     return (
-        <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] shadow-lg px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print rounded-2xl mt-4">
+        <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] shadow-lg px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print rounded-2xl mt-4">
             <div className="flex items-center gap-3 md:gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
-                    <Users size={18} className="text-white" />
+                    <Users size={18} className="text-on-primary" />
                 </div>
                 <div>
-                    <h1 className="text-sm md:text-lg font-bold text-white leading-tight">سجل أولياء الأمور</h1>
+                    <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">سجل أولياء الأمور</h1>
                     <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 bg-white/15 backdrop-blur-sm text-white rounded-lg">{totalParents} ولي أمر</span>
+                        <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 bg-white/15 backdrop-blur-sm text-on-primary rounded-lg">{totalParents} ولي أمر</span>
                         <span className="text-[9px] md:text-[10px] font-bold text-white/60">{totalLinkedStudents} طالب مرتبط</span>
                     </div>
                 </div>
@@ -49,8 +49,8 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                     className={cn(
                         "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl",
                         showAddForm 
-                            ? "bg-rose-500 text-white hover:bg-rose-600" 
-                            : "bg-white/20 backdrop-blur-sm text-white hover:bg-white/30"
+                            ? "bg-error text-on-primary hover:bg-error" 
+                            : "bg-white/20 backdrop-blur-sm text-on-primary hover:bg-white/30"
                     )}
                 >
                     {showAddForm ? <X size={14} /> : <Plus size={14} />}

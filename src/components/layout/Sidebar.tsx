@@ -45,7 +45,6 @@ export const Sidebar = () => {
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
 
-    // Persist collapsed state
     useEffect(() => {
         localStorage.setItem('sidebar_collapsed', String(collapsed));
     }, [collapsed]);
@@ -92,57 +91,37 @@ export const Sidebar = () => {
         { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
     ];
 
-    // Filter navigation based on permissions
     const filteredNavigation = navigation.filter(item => {
-        // If no user, show nothing
         if (!currentUser) return false;
-
-        // Admin access ('*')
         if (currentUser.permissions?.includes('*')) {
-            // Admin sees EVERYTHING except portal specific pages and tasks
             if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard', 'tasks'].includes(item.id)) return false;
             return true;
         }
-
-        // Parent specific access
-        // Exclude general dashboard for parents as they have parent-dashboard
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
             if (['parent_dashboard', 'chat', 'parent_students', 'parent_announcements', 'forum'].includes(item.id)) return true;
         }
-
-        // Student specific access
         if (currentUser.role === 'student') {
             if (item.id === 'dashboard') return false;
             if (['student_dashboard', 'chat', 'forum', 'parent_announcements'].includes(item.id)) return true;
         }
-
-        // Explicitly allow Dashboard for Teachers
         if (item.id === 'dashboard' && currentUser.role === 'teacher') return true;
-
-        // Explicitly allow Forum for Teachers
         if (item.id === 'forum' && currentUser.role === 'teacher') return true;
-
-        // Hide evaluations from teachers
         if (item.id === 'evaluations' && currentUser.role === 'teacher') return false;
-
-        // Specific page access
         return currentUser.permissions?.includes(item.id);
     });
 
-    // Show loading state instead of hiding sidebar completely
     if (!currentUser) {
         return (
             <>
-                {/* Desktop Sidebar - Loading State */}
                 <div
                     className={cn(
-                        "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
+                        "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0",
                         collapsed ? "w-20" : "w-72"
                     )}
                 >
                     <div className={cn(
-                        "h-16 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-slate-900",
+                        "h-16 flex items-center border-b border-border transition-all duration-300",
                         collapsed ? "justify-center px-0" : "justify-between px-6"
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
@@ -150,7 +129,7 @@ export const Sidebar = () => {
                                 <img src="/dareen_logo_new.jpg" alt="الشعار" width={40} height={40} className="w-full h-full object-contain" />
                             </div>
                             <span className={cn(
-                                "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
+                                "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                             )}>
                                 دارين السابعة
@@ -158,7 +137,7 @@ export const Sidebar = () => {
                         </div>
                     </div>
                     <div className="flex-1 flex items-center justify-center">
-                        <div className="w-8 h-8 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
+                        <div className="w-8 h-8 border-4 border-primary-light border-t-primary rounded-full animate-spin"></div>
                     </div>
                 </div>
             </>
@@ -167,16 +146,14 @@ export const Sidebar = () => {
 
     return (
         <>
-            {/* Desktop Sidebar - Hidden on Mobile */}
             <div
                 className={cn(
-                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
+                    "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0",
                     collapsed ? "w-20" : "w-72"
                 )}
             >
-                {/* Search & Logo Area */}
                 <div className={cn(
-                    "h-14 items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
+                    "h-14 items-center border-b border-border transition-all duration-300",
                     collapsed ? "flex justify-center px-0" : "hidden xl:flex justify-between px-6"
                 )}>
                     <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
@@ -184,7 +161,7 @@ export const Sidebar = () => {
                             <img src="/dareen_logo_new.jpg" alt="الشعار" width={32} height={32} className="w-full h-full object-contain" />
                         </div>
                         <span className={cn(
-                            "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
+                            "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                         )}>
                             نظام دارين السابعة
@@ -192,7 +169,6 @@ export const Sidebar = () => {
                     </div>
                 </div>
 
-                {/* Navigation */}
                 <nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
                     {filteredNavigation.map((item) => (
                         <NavLink
@@ -201,8 +177,8 @@ export const Sidebar = () => {
                             className={({ isActive }) => cn(
                                 "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-[13px]",
                                 isActive
-                                    ? "bg-primary-50 text-primary-700 font-normal dark:bg-primary-900/50 dark:text-primary-400"
-                                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
+                                    ? "bg-primary-soft text-primary"
+                                    : "text-muted hover:bg-hover hover:text-main",
                                 collapsed && "justify-center py-1"
                             )}
                             title={collapsed ? item.name : ''}
@@ -214,19 +190,19 @@ export const Sidebar = () => {
                                     strokeWidth={collapsed ? 2.5 : 2}
                                 />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[9px] font-medium rounded-full animate-pulse shadow-sm border border-white dark:border-slate-950">
+                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-error text-on-error text-[9px] font-medium rounded-full animate-pulse shadow-sm border border-border">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </span>
                                 )}
                             </div>
                             <span className={cn(
-                                "whitespace-nowrap transition-all duration-300 font-normal",
+                                "whitespace-nowrap transition-all duration-300",
                                 collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                             )}>
                                 {item.name}
                             </span>
                             {collapsed && (
-                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-gray-900 text-white text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 dark:bg-gray-800 dark:text-gray-200">
+                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-surface text-main text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
                                     {item.name}
                                 </div>
                             )}
@@ -234,11 +210,10 @@ export const Sidebar = () => {
                     ))}
                 </nav>
 
-                {/* Collapse Toggle */}
-                <div className="px-4 pt-2 pb-0 border-t border-gray-100 dark:border-gray-800">
+                <div className="px-4 pt-2 pb-0 border-t border-border">
                     <button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
+                        className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-hover text-muted transition-colors"
                     >
                         {collapsed ? <ChevronRight size={18} className="mx-auto" /> : <ChevronLeft size={18} />}
                         <span className={cn(
@@ -250,12 +225,11 @@ export const Sidebar = () => {
                     </button>
                 </div>
 
-                {/* Logout */}
                 <div className="px-4 pb-4 pt-0">
                     <button
                         onClick={handleLogout}
                         className={cn(
-                            "w-full flex items-center gap-3 px-4 py-2 rounded-none text-red-500 hover:bg-red-50 transition-colors dark:hover:bg-red-900/20",
+                            "w-full flex items-center gap-3 px-4 py-2 rounded-none text-error hover:bg-error-soft transition-colors",
                             collapsed && "justify-center"
                         )}
                     >
@@ -270,9 +244,8 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            {/* Mobile Bottom Navigation - Redesigned to match image */}
             <div className={cn(
-                "lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)] overflow-hidden max-w-full transition-transform duration-300",
+                "lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-2 z-[100] overflow-hidden max-w-full transition-transform duration-300",
                 activeConversationId ? "translate-y-[100%]" : "translate-y-0"
             )}>
                 {[
@@ -284,8 +257,8 @@ export const Sidebar = () => {
                         className={({ isActive }) => cn(
                             "flex items-center justify-center transition-all duration-500 rounded-full",
                             isActive
-                                ? "bg-primary-50 dark:bg-primary-900/40 text-primary-600 dark:text-primary-300 px-4 py-2"
-                                : "text-gray-400 dark:text-gray-500 p-2"
+                                ? "bg-primary-soft text-primary px-4 py-2"
+                                : "text-muted p-2"
                         )}
                     >
                         {({ isActive }) => (
@@ -300,9 +273,8 @@ export const Sidebar = () => {
                                 <div className="relative">
                                     <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
 
-                                    {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-[10px] font-medium flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
+                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-error text-on-error text-[10px] font-medium flex items-center justify-center rounded-full ring-2 ring-border shadow-sm md:animate-pulse">
                                             {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                         </span>
                                     )}
@@ -315,15 +287,14 @@ export const Sidebar = () => {
 
                 <button
                     onClick={() => setMobileMenuOpen(true)}
-                    className="flex items-center justify-center p-2 text-gray-400 dark:text-gray-500 hover:text-primary-600 transition-colors"
+                    className="flex items-center justify-center p-2 text-muted hover:text-primary transition-colors"
                 >
                     <Menu size={22} strokeWidth={2} />
                 </button>
             </div>
 
-            {/* Mobile Full Menu Overlay - Modern Sheet Design */}
             <div className={cn(
-                "fixed inset-0 z-[110] bg-gray-950/40 backdrop-blur-md lg:hidden transition-all duration-500 overflow-hidden",
+                "fixed inset-0 z-[110] bg-background/40 backdrop-blur-md lg:hidden transition-all duration-500 overflow-hidden",
                 mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             )}>
                 <div
@@ -331,23 +302,22 @@ export const Sidebar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                 />
                 <div className={cn(
-                    "absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-950 rounded-none p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_-10px_25px_rgba(0,0,0,0.15)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10 w-full max-w-full",
+                    "absolute bottom-0 left-0 right-0 bg-card p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10 w-full max-w-full",
                     mobileMenuOpen ? "translate-y-0" : "translate-y-full"
                 )}>
-                    {/* Pull Bar */}
-                    <div className="w-12 h-1 bg-gray-200 dark:bg-gray-800 rounded-none mx-auto mb-4 shrink-0" />
+                    <div className="w-12 h-1 bg-surface mx-auto mb-4 shrink-0" />
 
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-border">
                         <div className="flex items-center gap-3">
                             <img src="/dareen_logo_new.jpg" alt="الشعار" width={32} height={32} className="w-8 h-8 object-contain" />
                             <div>
-                                <h2 className="text-base font-medium text-gray-900 dark:text-white leading-tight">{academyName}</h2>
-                                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-normal uppercase tracking-widest">قائمة الوصول السريع</p>
+                                <h2 className="text-base font-medium text-main leading-tight">{academyName}</h2>
+                                <p className="text-[10px] text-muted font-normal uppercase tracking-widest">قائمة الوصول السريع</p>
                             </div>
                         </div>
                         <button
                             onClick={() => setMobileMenuOpen(false)}
-                            className="p-3 bg-red-500 rounded-xl text-black hover:bg-red-600 transition-colors"
+                            className="p-3 bg-error text-on-error rounded-xl hover:bg-error-hover transition-colors"
                         >
                             <X size={22} />
                         </button>
@@ -363,19 +333,19 @@ export const Sidebar = () => {
                                     className={({ isActive }) => cn(
                                         "flex items-center gap-2 py-1.5 px-2.5 rounded-xl transition-all duration-200",
                                         isActive
-                                            ? "bg-primary-50 text-primary-700 font-normal dark:bg-primary-900/20 dark:text-primary-400 shadow-sm border border-primary-100 dark:border-primary-900/30"
-                                            : "bg-gray-50/50 text-gray-600 hover:bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
+                                            ? "bg-primary-soft text-primary shadow-sm border border-primary-soft"
+                                            : "bg-surface text-muted hover:bg-hover"
                                     )}
                                 >
                                     {({ isActive }) => (
                                         <>
                                             <div className={cn(
                                                 "w-7 h-7 rounded-lg flex items-center justify-center transition-all relative",
-                                                isActive ? "bg-white text-primary-600 shadow-sm dark:bg-gray-800" : "bg-white/50 text-gray-400 dark:bg-gray-800/50"
+                                                isActive ? "bg-card text-primary shadow-sm" : "bg-card/50 text-muted"
                                             )}>
                                                 <item.icon size={14} />
                                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-rose-500 text-white text-[8px] font-medium rounded-full shadow-sm border border-white dark:border-gray-950">
+                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-error text-on-error text-[8px] font-medium rounded-full shadow-sm border border-border">
                                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                                     </span>
                                                 )}
@@ -387,13 +357,13 @@ export const Sidebar = () => {
                             ))}
                         </div>
 
-                        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <div className="mt-4 pt-4 border-t border-border">
                             <button
                                 onClick={() => {
                                     handleLogout();
                                     setMobileMenuOpen(false);
                                 }}
-                                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-none bg-red-600 text-white font-normal hover:bg-red-700 transition-colors shadow-md"
+                                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-none bg-error text-on-error font-normal hover:bg-error-hover transition-colors shadow-md"
                             >
                                 <LogOut size={16} />
                                 <span className="uppercase tracking-widest text-[10px]">تسجيل الخروج</span>

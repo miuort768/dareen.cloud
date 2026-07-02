@@ -55,27 +55,27 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
     return (
         <div className={cn(
             "relative overflow-hidden rounded-2xl p-5 shadow-lg",
-            "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800",
-            "dark:from-indigo-800 dark:via-indigo-900 dark:to-purple-950"
+            "bg-gradient-to-br from-[var(--bg-primary)] via--[var(--bg-primary)] to-[var(--bg-primary-active)]",
+            "dark:from--[var(--bg-primary)] dark:via--[var(--bg-primary)] dark:to--[var(--bg-primary)]"
         )}>
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-400/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-1">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                    <span className="text-indigo-200 text-[10px] font-bold uppercase tracking-wider">الحصة القادمة</span>
+                    <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+                    <span className="text-primary text-[10px] font-bold uppercase tracking-wider">الحصة القادمة</span>
                 </div>
-                <h2 className="text-lg font-black text-white leading-tight mb-0.5">
+                <h2 className="text-lg font-black text-on-primary leading-tight mb-0.5">
                     {nextSession.subject}
                 </h2>
-                <p className="text-indigo-200 text-[11px] font-bold">
+                <p className="text-primary text-[11px] font-bold">
                     {nextSession.studentName}
                 </p>
                 <div className="mt-4 flex items-center gap-3">
-                    <Clock size={16} className="text-indigo-300" />
+                    <Clock size={16} className="text-primary" />
                     <span className={cn(
                         "text-3xl font-black tabular-nums tracking-wider",
-                        isNow ? "text-emerald-300" : "text-white"
+                        isNow ? "text-success" : "text-on-primary"
                     )}>
                         {isNow ? "الآن" : timeLeft}
                     </span>
@@ -84,7 +84,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     onClick={() => onStart(nextSession.id)}
                     className={cn(
                         "mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold transition-all",
-                        "bg-white/20 backdrop-blur-sm border border-white/30 text-white",
+                        "bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary",
                         "hover:bg-white/30 active:scale-[0.98]"
                     )}
                 >

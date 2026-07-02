@@ -229,7 +229,7 @@ export const MobileAppointments = () => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             dir="rtl"
-            className="min-h-full pb-4 overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950"
+            className="min-h-full pb-4 overflow-x-hidden relative bg-background dark:bg-background"
         >
             {/* Pull to Refresh */}
             <motion.div
@@ -238,13 +238,13 @@ export const MobileAppointments = () => {
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full"
             >
-                <div className="flex items-center gap-2.5 text-[#8B5CF6] font-medium text-xs">
+                <div className="flex items-center gap-2.5 text-primary font-medium text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
                     ) : pullDistance > 55 ? (
                         <><Sparkles size={16} className="animate-pulse" strokeWidth={1.5} /><span>أفلت للتحديث</span></>
                     ) : (
-                        <span className="text-[#94A3B8]">اسحب للتحديث</span>
+                        <span className="text-dim">اسحب للتحديث</span>
                     )}
                 </div>
             </motion.div>
@@ -252,24 +252,24 @@ export const MobileAppointments = () => {
             {/* Stats */}
             <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
                 <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 text-center shadow-sm border border-[#8B5CF6]/20">
-                        <p className="text-[18px] font-black text-[#8B5CF6] tabular-nums leading-none">{todayCount}</p>
-                        <p className="text-[8px] font-bold text-[#8B5CF6]/70 mt-1">اليوم</p>
+                    <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-primary/20">
+                        <p className="text-[18px] font-black text-primary tabular-nums leading-none">{todayCount}</p>
+                        <p className="text-[8px] font-bold text-primary/70 mt-1">اليوم</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 text-center shadow-sm border border-emerald-100/50 dark:border-emerald-900/30">
-                        <p className="text-[18px] font-black text-emerald-600 dark:text-emerald-400 tabular-nums leading-none">{totalCount - completedCount}</p>
-                        <p className="text-[8px] font-bold text-emerald-500/70 mt-1">المتبقي</p>
+                    <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-success/50 dark:border-success/30">
+                        <p className="text-[18px] font-black text-success dark:text-success tabular-nums leading-none">{totalCount - completedCount}</p>
+                        <p className="text-[8px] font-bold text-success/70 mt-1">المتبقي</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 text-center shadow-sm border border-blue-100/50 dark:border-blue-900/30">
-                        <p className="text-[18px] font-black text-[#2563EB] dark:text-blue-400 tabular-nums leading-none">{totalCount}</p>
-                        <p className="text-[8px] font-bold text-blue-500/70 mt-1">الإجمالي</p>
+                    <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-info/50 dark:border-info/30">
+                        <p className="text-[18px] font-black text-primary dark:text-info tabular-nums leading-none">{totalCount}</p>
+                        <p className="text-[8px] font-bold text-info/70 mt-1">الإجمالي</p>
                     </div>
                 </div>
             </motion.div>
 
             {/* Tabs */}
             <div className="px-4 pb-2">
-                <div className="flex bg-gradient-to-b from-[#F1F5F9] to-[#F1F5F9] dark:from-slate-800/60 dark:to-slate-800/60 rounded-2xl p-1 gap-1 shadow-sm">
+                <div className="flex bg-gradient-to-b from-surface to-surface dark:from-[var(--bg-primary-active)]/60 dark:to-[var(--bg-primary-active)]/60 rounded-2xl p-1 gap-1 shadow-sm">
                     {[
                         { id: 'upcoming' as const, label: 'المواعيد', badge: totalCount - completedCount },
                         { id: 'completed' as const, label: 'المكتملة', badge: completedCount },
@@ -280,9 +280,9 @@ export const MobileAppointments = () => {
                             whileTap={{ scale: 0.96 }}
                             className={cn(
                                 "flex-1 py-2 px-2 flex items-center justify-center gap-1.5 transition-all duration-300 relative rounded-xl",
-                                activeTab === tab.id
-                                    ? "bg-white dark:bg-slate-900 shadow-sm text-[#8B5CF6] dark:text-[#A78BFA] font-bold"
-                                    : "text-[#94A3B8] dark:text-slate-500 font-medium"
+                                    activeTab === tab.id
+                                        ? "bg-white dark:bg-primary-active shadow-sm text-primary font-bold"
+                                        : "text-dim dark:text-muted font-medium"
                             )}
                         >
                             {tab.id === 'upcoming' ? (
@@ -295,8 +295,8 @@ export const MobileAppointments = () => {
                                 <span className={cn(
                                     "text-[7px] font-bold px-1.5 py-0.5 rounded-full",
                                     activeTab === tab.id
-                                        ? "bg-[#8B5CF6] text-white"
-                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500"
+                                        ? "bg-primary text-on-primary"
+                                        : "bg-surface dark:bg-primary-active text-muted dark:text-muted"
                                 )}>{tab.badge}</span>
                             )}
                         </motion.button>
@@ -307,20 +307,20 @@ export const MobileAppointments = () => {
             {/* Filters */}
             <div className="px-4 pb-2 space-y-2">
                 <div className="relative">
-                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث باسم الطالب أو المادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#8B5CF6] rounded-2xl transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-white shadow-sm"
+                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                     />
                 </div>
                 <div className="flex gap-2">
                     <select
                         value={filterDay}
                         onChange={(e) => setFilterDay(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-2xl outline-none text-slate-600 dark:text-slate-300 shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-[9px] font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -328,7 +328,7 @@ export const MobileAppointments = () => {
                     <select
                         value={filterTeacher}
                         onChange={(e) => setFilterTeacher(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-2xl outline-none text-slate-600 dark:text-slate-300 shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-[9px] font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
                     >
                         <option value="all">كل المعلمات</option>
                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}
@@ -349,12 +349,12 @@ export const MobileAppointments = () => {
                     >
                         {appointmentsByDay.length > 0 ? (
                             appointmentsByDay.map(({ day, appointments }) => (
-                                <div key={day} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 overflow-hidden">
-                                    <div className="px-4 py-2.5 border-b border-slate-100/50 dark:border-slate-800/50 flex items-center justify-between">
-                                        <h3 className="font-bold text-xs text-slate-900 dark:text-white">{day}</h3>
+                                <div key={day} className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 overflow-hidden">
+                                    <div className="px-4 py-2.5 border-b border-border/50 dark:border-border/50 flex items-center justify-between">
+                                        <h3 className="font-bold text-xs text-main dark:text-on-primary">{day}</h3>
                                         <span className={cn(
                                             "text-[8px] font-bold px-2 py-0.5 rounded-lg",
-                                            appointments.length > 0 ? "bg-[#8B5CF6] text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                            appointments.length > 0 ? "bg-primary text-on-primary" : "bg-surface dark:bg-primary-active text-muted"
                                         )}>{appointments.length} موعد</span>
                                     </div>
                                     <div className="p-2 space-y-1.5">
@@ -363,38 +363,38 @@ export const MobileAppointments = () => {
                                                 key={app.id}
                                                 whileTap={{ scale: 0.97 }}
                                                 onClick={() => { triggerHaptic('light'); setSelectedAppointment(app); setShowDetails(true); }}
-                                                className="p-3 rounded-xl border border-slate-100 dark:border-slate-800 cursor-pointer active:scale-[0.97] transition-all"
+                                                className="p-3 rounded-xl border border-border dark:border-border cursor-pointer active:scale-[0.97] transition-all"
                                             >
                                                 <div className="flex items-center justify-between mb-2">
                                                     <div className="flex items-center gap-1.5">
-                                                        <Clock size={11} className="text-[#8B5CF6]" strokeWidth={1.5} />
-                                                        <span className="font-bold text-xs text-[#7C3AED] tabular-nums">{app.time}</span>
+                                                        <Clock size={11} className="text-primary" strokeWidth={1.5} />
+                                                        <span className="font-bold text-xs text-primary tabular-nums">{app.time}</span>
                                                     </div>
                                                     {activeTab === 'upcoming' && (
                                                         <motion.button
                                                             whileTap={{ scale: 0.93 }}
                                                             onClick={(e) => handleCompleteSession(app.id, e)}
-                                                            className="px-2.5 py-1 bg-emerald-500 text-white text-[8px] font-bold rounded-xl flex items-center gap-1 shadow-sm"
+                                                            className="px-2.5 py-1 bg-success text-on-primary text-[8px] font-bold rounded-xl flex items-center gap-1 shadow-sm"
                                                         >
                                                             <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
                                                         </motion.button>
                                                     )}
                                                     {activeTab === 'completed' && (
-                                                        <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+                                                        <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg bg-success-light dark:bg-success/30 text-success dark:text-success">
                                                             تم
                                                         </span>
                                                     )}
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black shrink-0" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>
+                                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black shrink-0 bg-primary/10 text-primary">
                                                         {app.studentName.charAt(0)}
                                                     </div>
                                                     <div className="min-w-0 flex-1">
-                                                        <p className="text-[11px] font-bold text-slate-800 dark:text-white leading-tight truncate">{app.studentName}</p>
+                                                        <p className="text-[11px] font-bold text-main dark:text-on-primary leading-tight truncate">{app.studentName}</p>
                                                         <div className="flex items-center gap-1.5">
-                                                            <span className="text-[7px] font-bold text-slate-400">{app.subject}</span>
-                                                            <span className="text-[7px] font-bold text-slate-300">·</span>
-                                                            <span className="text-[7px] font-bold text-slate-400 truncate">{app.teacherName}</span>
+                                                            <span className="text-[7px] font-bold text-muted">{app.subject}</span>
+                                                            <span className="text-[7px] font-bold text-dim">·</span>
+                                                            <span className="text-[7px] font-bold text-muted truncate">{app.teacherName}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -404,9 +404,9 @@ export const MobileAppointments = () => {
                                 </div>
                             ))
                         ) : (
-                            <div className="py-16 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-                                <Calendar size={28} className="mx-auto mb-2 text-slate-300 dark:text-slate-600" strokeWidth={1.5} />
-                                <p className="text-xs font-bold text-slate-400 dark:text-slate-500">
+                            <div className="py-16 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
+                                <Calendar size={28} className="mx-auto mb-2 text-dim dark:text-muted" strokeWidth={1.5} />
+                                <p className="text-xs font-bold text-muted dark:text-muted">
                                     {activeTab === 'upcoming' ? 'لا توجد مواعيد متبقية' : 'لا توجد مواعيد مكتملة'}
                                 </p>
                             </div>
@@ -431,48 +431,48 @@ export const MobileAppointments = () => {
                             exit={{ y: '100%' }}
                             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                             onClick={e => e.stopPropagation()}
-                            className="w-full bg-white dark:bg-slate-900 rounded-t-3xl shadow-2xl overflow-hidden max-h-[85vh]"
+                            className="w-full bg-white dark:bg-primary-active rounded-t-3xl shadow-2xl overflow-hidden max-h-[85vh]"
                         >
                             <div className="flex justify-center pt-3 pb-1">
-                                <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full" />
+                                <div className="w-10 h-1 bg-card dark:bg-primary-active rounded-full" />
                             </div>
 
                             <div className="px-5 pb-6 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-[9px] font-bold text-slate-400">تفاصيل الموعد</p>
-                                        <h3 className="text-sm font-black text-slate-900 dark:text-white">{selectedAppointment.day}</h3>
+                                        <p className="text-[9px] font-bold text-muted">تفاصيل الموعد</p>
+                                        <h3 className="text-sm font-black text-main dark:text-on-primary">{selectedAppointment.day}</h3>
                                     </div>
-                                    <div className="px-3 py-1.5 rounded-xl" style={{ backgroundColor: '#8B5CF612' }}>
-                                        <p className="font-black text-lg tabular-nums text-[#8B5CF6] leading-none">{selectedAppointment.time}</p>
+                                    <div className="px-3 py-1.5 rounded-xl bg-primary/10">
+                                        <p className="font-black text-lg tabular-nums text-primary leading-none">{selectedAppointment.time}</p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#8B5CF608', borderRight: '3px solid #8B5CF6' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary/[0.03] border-r-[3px] border-primary">
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">الطالب</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedAppointment.studentName}</p>
-                                            <span className="text-[9px] font-bold text-[#7C3AED]">{selectedAppointment.studentGrade}</span>
+                                            <span className="text-[8px] font-bold text-muted">الطالب</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.studentName}</p>
+                                            <span className="text-[9px] font-bold text-primary">{selectedAppointment.studentGrade}</span>
                                         </div>
-                                        <User size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#10B98108', borderRight: '3px solid #10B981' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success/[0.03] border-r-[3px] border-success">
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">المعلمة</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedAppointment.teacherName}</p>
+                                            <span className="text-[8px] font-bold text-muted">المعلمة</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.teacherName}</p>
                                         </div>
-                                        <ShieldCheck size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <ShieldCheck size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#F59E0B08', borderRight: '3px solid #F59E0B' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning/[0.03] border-r-[3px] border-warning">
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">المادة</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedAppointment.subject}</p>
-                                            <span className="text-[7px] font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>{selectedAppointment.curriculum}</span>
+                                            <span className="text-[8px] font-bold text-muted">المادة</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.subject}</p>
+                                            <span className="text-[7px] font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning/10 text-warning">{selectedAppointment.curriculum}</span>
                                         </div>
-                                        <BookOpen size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
                                 </div>
 
@@ -483,7 +483,7 @@ export const MobileAppointments = () => {
                                             handleCompleteSession(selectedAppointment.id, e);
                                             setShowDetails(false);
                                         }}
-                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from-emerald-600 to-emerald-500 text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-emerald-200/30"
+                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from--[var(--bg-success)] to--[var(--bg-success)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/30"
                                     >
                                         <CheckCircle2 size={14} strokeWidth={1.5} />
                                         إتمام الحصة

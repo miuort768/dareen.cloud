@@ -17,7 +17,7 @@ const variants = {
   outline: 'border border-primary text-primary hover:bg-primary-soft active:bg-primary active:text-on-primary',
   ghost: 'text-muted hover:bg-hover active:text-dim',
   destructive: 'bg-error text-on-error hover:bg-error-hover active:bg-error-active shadow-sm',
-  glass: 'bg-white/70 dark:bg-slate-900/60 backdrop-blur-md text-main border border-white/20 dark:border-white/10 shadow-sm',
+  glass: 'bg-white/70 dark:bg-primary-active/60 backdrop-blur-md text-main border border-white/20 dark:border-white/10 shadow-sm',
 };
 
 const sizes = {

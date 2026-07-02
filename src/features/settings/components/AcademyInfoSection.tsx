@@ -48,11 +48,11 @@ export const AcademyInfoSection = ({
                                 <img src={localAcademyLogo} alt="Logo" className="w-12 h-12 rounded-lg object-cover border" />
                             )}
                             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-all">
+                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-xs font-bold text-muted hover:bg-hover rounded-xl transition-all">
                                 <Image size={14} /> {localAcademyLogo ? 'تغيير' : 'رفع'}
                             </button>
                             {localAcademyLogo && (
-                                <button onClick={() => setLocalAcademyLogo('')} className="text-[10px] font-bold text-red-500 hover:text-red-700">إزالة</button>
+                                <button onClick={() => setLocalAcademyLogo('')} className="text-[10px] font-bold text-error hover:text-error-dark">إزالة</button>
                             )}
                         </div>
                     </div>
@@ -70,35 +70,35 @@ export const AcademyInfoSection = ({
                     <div>
                         <FieldLabel>رقم الهاتف</FieldLabel>
                         <div className="relative">
-                            <Phone size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <Phone size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
                             <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="pr-9" placeholder="مثال: 201015098836" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>البريد الإلكتروني</FieldLabel>
                         <div className="relative">
-                            <Send size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <Send size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
                             <InputField value={academyEmail} onChange={e => setAcademyEmail(e.target.value)} className="pr-9" placeholder="email@example.com" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>تيليجرام</FieldLabel>
                         <div className="relative">
-                            <Hash size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <Hash size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
                             <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} className="pr-9" placeholder="dareen_app" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>رابط واتساب</FieldLabel>
                         <div className="relative">
-                            <MapPin size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <MapPin size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
                             <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="pr-9" placeholder="رقم الواتساب" />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-6 pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving}>حفظ معلومات المعهد</PrimaryBtn>
             </div>
         </SectionCard>

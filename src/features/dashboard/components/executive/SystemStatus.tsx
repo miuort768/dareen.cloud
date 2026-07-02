@@ -44,17 +44,17 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const statusColor = (s: string) => s === 'healthy' ? '#22c55e' : s === 'warning' ? '#f59e0b' : '#ef4444';
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400">حالة النظام</h3>
-                <Server size={18} className="text-gray-500" />
+                <h3 className="text-sm font-semibold text-muted dark:text-muted">حالة النظام</h3>
+                <Server size={18} className="text-muted" />
             </div>
 
             <div className="space-y-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Database size={16} className="text-gray-500" />
-                        <span className="text-sm text-gray-600 dark:text-gray-300">قاعدة البيانات</span>
+                        <Database size={16} className="text-muted" />
+                        <span className="text-sm text-muted dark:text-dim">قاعدة البيانات</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <DbIcon size={16} style={{ color: statusColor(dbStatus) }} />
@@ -62,15 +62,15 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                             {health.database?.status === 'connected' ? 'متصل' : health.database?.status === 'error' ? 'خطأ' : 'غير معروف'}
                         </span>
                         {health.database?.latency > 0 && (
-                            <span className="text-[10px] text-gray-400">{health.database.latency}ms</span>
+                            <span className="text-[10px] text-muted">{health.database.latency}ms</span>
                         )}
                     </div>
                 </div>
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <HardDrive size={16} className="text-gray-500" />
-                        <span className="text-sm text-gray-600 dark:text-gray-300">Redis</span>
+                        <HardDrive size={16} className="text-muted" />
+                        <span className="text-sm text-muted dark:text-dim">Redis</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <RedisIcon size={16} style={{ color: statusColor(redisStatus) }} />
@@ -82,8 +82,8 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Server size={16} className="text-gray-500" />
-                        <span className="text-sm text-gray-600 dark:text-gray-300">الذاكرة</span>
+                        <Server size={16} className="text-muted" />
+                        <span className="text-sm text-muted dark:text-dim">الذاكرة</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <MemIcon size={16} style={{ color: statusColor(memStatus) }} />
@@ -95,8 +95,8 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Cpu size={16} className="text-gray-500" />
-                        <span className="text-sm text-gray-600 dark:text-gray-300">المعالج</span>
+                        <Cpu size={16} className="text-muted" />
+                        <span className="text-sm text-muted dark:text-dim">المعالج</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <span className="text-xs font-medium" style={{ color: statusColor(cpuStatus) }}>
@@ -105,8 +105,8 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                     </div>
                 </div>
 
-                <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
-                    <div className="flex items-center justify-between text-xs text-gray-400">
+                <div className="pt-2 border-t border-border dark:border-border">
+                    <div className="flex items-center justify-between text-xs text-muted">
                         <span>مدة التشغيل: {uptimeHours}h</span>
                         <span>Node: {health.node || 'N/A'}</span>
                     </div>

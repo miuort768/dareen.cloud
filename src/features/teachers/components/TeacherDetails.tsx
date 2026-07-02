@@ -65,58 +65,58 @@ export const TeacherDetails = ({
 
     return (
         <div className={cn(
-            "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl flex flex-col h-fit shadow-sm overflow-hidden",
+            "bg-card border border-border rounded-2xl flex flex-col h-fit shadow-sm overflow-hidden",
             "lg:static lg:sticky lg:top-4"
         )} dir="rtl">
             {/* Header Section */}
-            <div className="relative p-4 md:p-6 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6]">
+            <div className="relative p-4 md:p-6 bg-gradient-to-br from-primary to-primary-light">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center font-bold text-xl shadow-sm shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10 text-on-primary flex items-center justify-center font-bold text-xl shadow-sm shrink-0">
                             {teacher.name.charAt(0)}
                         </div>
                         <div className="min-w-0">
-                            <h3 className="font-bold text-base md:text-lg text-white truncate">{teacher.name}</h3>
-                            <span className="text-[9px] font-bold text-purple-200 bg-white/10 border border-white/10 px-2 py-0.5 uppercase tracking-widest rounded-xl">{teacher.subject}</span>
+                            <h3 className="font-bold text-base md:text-lg text-on-primary truncate">{teacher.name}</h3>
+                            <span className="text-[9px] font-bold text-on-primary opacity-60 bg-white/10 border border-white/10 px-2 py-0.5 uppercase tracking-widest rounded-xl">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2 md:gap-3">
                         {!isTeacherView && (
                             <>
-                                <button onClick={() => onSendNotification(teacher)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-amber-500 text-white rounded-xl transition-all" title="إرسال إشعار"><Bell size={16} strokeWidth={2.5} /></button>
-                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-emerald-500 text-white rounded-xl transition-all" title="مراسلة"><MessageCircle size={16} strokeWidth={2.5} /></button>
+                                <button onClick={() => onSendNotification(teacher)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-warning text-on-primary rounded-xl transition-all" title="إرسال إشعار"><Bell size={16} strokeWidth={2.5} /></button>
+                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-success text-on-primary rounded-xl transition-all" title="مراسلة"><MessageCircle size={16} strokeWidth={2.5} /></button>
                             </>
                         )}
-                        <button onClick={onClose} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-rose-500 text-white rounded-xl transition-all" title="إغلاق"><X size={16} /></button>
+                        <button onClick={onClose} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-error text-on-primary rounded-xl transition-all" title="إغلاق"><X size={16} /></button>
                     </div>
                 </div>
             </div>
 
             <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none">
                 {/* Performance Gauge */}
-                <div className="p-5 bg-gradient-to-br from-purple-50 to-slate-50 dark:from-purple-950/20 dark:to-slate-900/50 border border-purple-100 dark:border-purple-900/50 rounded-2xl shadow-sm relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="p-5 bg-gradient-to-br from-primary-soft to-surface dark:from-primary-soft dark:to-surface border border-border rounded-2xl shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-success/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
                     <div className="flex justify-between items-start mb-4">
                         <div>
-                            <p className="text-[8px] font-medium text-slate-400 uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
+                            <p className="text-[8px] font-medium text-muted uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-2xl font-medium text-slate-800 dark:text-white italic tracking-tighter">{monthlySessions}</span>
-                                <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">جلسة منجزة</span>
+                                <span className="text-2xl font-medium text-main italic tracking-tighter">{monthlySessions}</span>
+                                <span className="text-[9px] font-medium text-muted uppercase tracking-widest">جلسة منجزة</span>
                             </div>
                         </div>
                         <div className={cn(
                             "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium uppercase tracking-tighter rounded-xl",
-                            performanceChange >= 0 ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" : "bg-rose-500 text-white shadow-sm shadow-rose-500/20"
+                            performanceChange >= 0 ? "bg-success text-on-success shadow-sm" : "bg-error text-on-error shadow-sm"
                         )}>
                             <TrendingUp size={10} className={performanceChange < 0 ? "rotate-180" : ""} />
                             {performanceChange > 0 ? `+${performanceChange}%` : `${performanceChange}%`}
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-hover rounded-full overflow-hidden">
                         <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${Math.min(100, (monthlySessions / (prevMonthSessions || 1)) * 50)}%` }}
-                            className="h-full bg-emerald-500 rounded-full"
+                            className="h-full bg-success rounded-full"
                         />
                     </div>
                 </div>
@@ -124,11 +124,11 @@ export const TeacherDetails = ({
                 {/* Enrollment Section */}
                 <div className="space-y-4">
                     <div className="flex items-stretch h-9 w-fit group cursor-default">
-                        <div className="bg-white dark:bg-slate-800 px-4 flex items-center justify-center border-y border-r border-gray-200 dark:border-slate-700 min-w-[44px] rounded-r-xl transition-colors group-hover:border-gray-300 dark:group-hover:border-slate-600">
-                            <span className="text-xs font-medium text-[#6C4BFF]">{enrolledStudents.length}</span>
+                        <div className="bg-card px-4 flex items-center justify-center border-y border-r border-border min-w-[44px] rounded-r-xl transition-colors">
+                            <span className="text-xs font-medium text-primary">{enrolledStudents.length}</span>
                         </div>
-                        <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white px-4 flex items-center justify-center rounded-l-xl relative overflow-hidden transition-all">
-                            <h4 className="text-[10px] text-white font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
+                        <div className="bg-gradient-to-l from-primary to-primary-light text-on-primary px-4 flex items-center justify-center rounded-l-xl relative overflow-hidden transition-all">
+                            <h4 className="text-[10px] text-on-primary font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -141,25 +141,25 @@ export const TeacherDetails = ({
 
                             return (
                                 <div key={student.id} className={cn(
-                                    "p-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl shadow-sm relative transition-all group",
+                                    "p-3 bg-card border border-border rounded-xl shadow-sm relative transition-all group",
                                     (enrollment as { isFrozen?: boolean }).isFrozen && "opacity-50 grayscale",
-                                    isLow ? "border-rose-200 dark:border-rose-900/50" : "hover:border-[#6C4BFF]/30"
+                                    isLow ? "border-error" : "hover:border-primary/30"
                                 )}>
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-medium text-xs text-slate-800 dark:text-white uppercase">{student.name}</h5>
-                                                {isLow && <span className="text-[8px] font-medium text-rose-500 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 px-1.5 py-0.5 animate-pulse uppercase rounded-xl">رصيد منخفض</span>}
+                                                <h5 className="font-medium text-xs text-main uppercase">{student.name}</h5>
+                                                {isLow && <span className="text-[8px] font-medium text-error bg-error-soft border border-border px-1.5 py-0.5 animate-pulse uppercase rounded-xl">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[9px] font-medium text-slate-400 uppercase bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 border border-slate-100 dark:border-slate-700 rounded-xl">{student.grade}</span>
-                                                <span className="text-[9px] font-medium text-slate-500 uppercase">{enrollment.subject}</span>
+                                                <span className="text-[9px] font-medium text-muted uppercase bg-surface px-1.5 py-0.5 border border-border rounded-xl">{student.grade}</span>
+                                                <span className="text-[9px] font-medium text-muted uppercase">{enrollment.subject}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 onClick={() => onLogAttendance(student, enrollment)}
-                                                className="w-7 h-7 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-xl transition-all border border-transparent hover:border-emerald-600 shadow-sm"
+                                                className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-success rounded-xl transition-all border border-transparent hover:border-success shadow-sm"
                                                 title="تسجيل حضور"
                                             >
                                                 <CheckCircle2 size={14} strokeWidth={2.5} />
@@ -167,7 +167,7 @@ export const TeacherDetails = ({
                                             {!isTeacherView && (
                                                 <button
                                                     onClick={() => onUnenroll(student, teacher.name)}
-                                                    className="w-7 h-7 flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white rounded-xl transition-all border border-transparent hover:border-rose-600 shadow-sm"
+                                                    className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-error rounded-xl transition-all border border-transparent hover:border-error shadow-sm"
                                                     title="إلغاء التسجيل"
                                                 >
                                                     <Trash2 size={14} strokeWidth={2.5} />
@@ -184,10 +184,10 @@ export const TeacherDetails = ({
                                                     className={cn(
                                                         "w-4 h-4 border flex items-center justify-center text-[7px] font-medium font-mono rounded transition-all",
                                                         idx < actualUsed 
-                                                            ? "bg-emerald-500 border-emerald-600 text-white shadow-sm" 
+                                                            ? "bg-success border-success text-on-success shadow-sm" 
                                                             : idx === actualUsed 
-                                                                ? "bg-white dark:bg-slate-800 border-[#6C4BFF] text-[#6C4BFF] shadow-sm" 
-                                                                : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600"
+                                                                ? "bg-card border-primary text-primary shadow-sm" 
+                                                                : "bg-surface border-border text-dim"
                                                     )}
                                                 >
                                                     {idx < actualUsed ? <CheckCircle2 size={10} strokeWidth={3} /> : idx + 1}
@@ -195,19 +195,19 @@ export const TeacherDetails = ({
                                             ))}
                                         </div>
 
-                                        <div className="pt-3 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between">
+                                        <div className="pt-3 border-t border-border flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-medium text-slate-400 uppercase mb-1">
+                                                <div className="flex justify-between text-[8px] font-medium text-muted uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span className="tabular-nums">{progressPercent}%</span>
                                                 </div>
-                                                <div className="h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                                    <div className={cn("h-full rounded-full", isLow ? "bg-rose-500" : "bg-blue-500")} style={{ width: `${progressPercent}%` }} />
+                                                <div className="h-1 bg-hover rounded-full overflow-hidden">
+                                                    <div className={cn("h-full rounded-full", isLow ? "bg-error" : "bg-info")} style={{ width: `${progressPercent}%` }} />
                                                 </div>
                                             </div>
                                             <div className="text-center px-2">
-                                                <p className="text-[8px] font-medium text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
-                                                <p className={cn("text-xs font-medium font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
+                                                <p className="text-[8px] font-medium text-muted uppercase leading-none mb-0.5">الرصيد</p>
+                                                <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -221,18 +221,18 @@ export const TeacherDetails = ({
                 <div className="pt-4">
                     <button
                         onClick={() => setShowActivityModal(true)}
-                        className="w-full h-14 bg-[#6C4BFF]/5 dark:bg-purple-950/20 border-2 border-purple-200 dark:border-purple-800/50 rounded-2xl flex items-center justify-between px-6 hover:bg-[#6C4BFF]/10 hover:border-[#6C4BFF]/50 transition-all group"
+                        className="w-full h-14 bg-primary-soft border-2 border-primary rounded-2xl flex items-center justify-between px-6 hover:bg-primary-light hover:border-primary transition-all group"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] flex items-center justify-center text-white shadow-sm">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-l from-primary to-primary-light flex items-center justify-center text-on-primary shadow-sm">
                                 <Clock size={18} />
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] font-bold text-slate-800 dark:text-white uppercase tracking-widest">سجل النشاطات المفصل</p>
-                                <p className="text-[8px] font-medium text-purple-500 dark:text-purple-400 uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
+                                <p className="text-[10px] font-bold text-main uppercase tracking-widest">سجل النشاطات المفصل</p>
+                                <p className="text-[8px] font-medium text-primary uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
-                        <CheckCircle2 size={16} className="text-[#6C4BFF]" />
+                        <CheckCircle2 size={16} className="text-primary" />
                     </button>
                 </div>
             </div>
@@ -242,50 +242,50 @@ export const TeacherDetails = ({
             {/* Detailed Activity Modal */}
             {showActivityModal && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl">
-                    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowActivityModal(false)}></div>
-                    <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xl w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-2xl">
-                        <div className="p-4 bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] text-white flex items-center justify-between">
+                    <div className="fixed inset-0 bg-background/60 backdrop-blur-sm" onClick={() => setShowActivityModal(false)}></div>
+                    <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-card border border-border shadow-xl w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-2xl">
+                        <div className="p-4 bg-gradient-to-br from-primary to-primary-light text-on-primary flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10 flex items-center justify-center shadow-sm">
-                                    <Clock size={20} className="text-white" />
+                                    <Clock size={20} className="text-on-primary" />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-bold uppercase tracking-tighter text-white">سجل نشاطات المعلمة</h3>
-                                    <p className="text-[9px] text-purple-200 font-medium uppercase tracking-widest">{teacher.name}</p>
+                                    <h3 className="text-lg font-bold uppercase tracking-tighter text-on-primary">سجل نشاطات المعلمة</h3>
+                                    <p className="text-[9px] text-on-primary opacity-60 font-medium uppercase tracking-widest">{teacher.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-rose-500 rounded-xl transition-all">
-                                <X size={18} className="text-white" />
+                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-error rounded-xl transition-all">
+                                <X size={18} className="text-on-primary" />
                             </button>
                         </div>
                         
-                        <div className="flex-1 overflow-y-auto p-4 bg-slate-50 dark:bg-slate-950/50">
+                        <div className="flex-1 overflow-y-auto p-4 bg-surface">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                                 {teacherSessions.map(session => (
-                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                                    <div key={session.id} className="bg-card border border-border p-3 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                                         <div className={cn(
                                             "absolute top-0 right-0 w-1 h-full rounded-r-full",
-                                            session.status === 'completed' ? "bg-emerald-500" : "bg-rose-500"
+                                            session.status === 'completed' ? "bg-success" : "bg-error"
                                         )} />
                                         
                                         <div className="flex justify-between items-start mb-3">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 bg-slate-50 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-[#6C4BFF] group-hover:text-white transition-all">
+                                                <div className="w-7 h-7 bg-surface rounded-xl flex items-center justify-center text-dim group-hover:bg-primary group-hover:text-on-primary transition-all">
                                                     <Calendar size={12} />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-tight truncate">{session.studentName}</p>
-                                                    <p className="text-[7px] font-medium text-slate-400 uppercase tracking-widest">{session.date}</p>
+                                                    <p className="text-[10px] font-medium text-main uppercase tracking-tight truncate">{session.studentName}</p>
+                                                    <p className="text-[7px] font-medium text-muted uppercase tracking-widest">{session.date}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         
-                                        <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-slate-800">
-                                            <div className="flex items-center gap-1.5 text-[8px] font-medium text-slate-400 uppercase tracking-widest">
+                                        <div className="flex items-center justify-between pt-3 border-t border-border">
+                                            <div className="flex items-center gap-1.5 text-[8px] font-medium text-muted uppercase tracking-widest">
                                                 <Clock size={8} /> {session.time}
                                             </div>
                                             {!isTeacherView && (
-                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-slate-300 hover:text-rose-500 rounded-lg transition-colors">
+                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-dim hover:text-error rounded-lg transition-colors">
                                                     <Trash2 size={10} />
                                                 </button>
                                             )}

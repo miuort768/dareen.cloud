@@ -31,7 +31,7 @@ export const MouseGlow: React.FC = () => {
         <div className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block overflow-hidden">
             {/* 1. Large Soft Background Aura (The "Torch" effect) */}
             <motion.div
-                className="absolute w-[600px] h-[600px] rounded-full bg-indigo-500/5 dark:bg-indigo-500/10 blur-[120px]"
+                className="absolute w-[600px] h-[600px] rounded-full bg-primary/5 dark:bg-primary/10 blur-[120px]"
                 style={{
                     x: springX,
                     y: springY,
@@ -42,7 +42,7 @@ export const MouseGlow: React.FC = () => {
 
             {/* 2. Outer Interactive Ring */}
             <motion.div 
-                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-indigo-500/30 dark:border-indigo-400/40"
+                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-primary/30 dark:border-primary/40"
                 style={{
                     x: springX,
                     y: springY,
@@ -51,14 +51,14 @@ export const MouseGlow: React.FC = () => {
                 }}
                 animate={{
                     scale: isHovered ? 1.8 : 1,
-                    backgroundColor: isHovered ? 'rgba(79, 70, 229, 0.1)' : 'rgba(79, 70, 229, 0)',
+                    backgroundColor: isHovered ? '#4F46E61A' : '#4F46E600',
                     borderWidth: isHovered ? '2px' : '1px',
                 }}
             />
 
             {/* 3. Inner Crisp Dot */}
             <motion.div 
-                className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-indigo-600 dark:bg-indigo-400 shadow-[0_0_15px_rgba(79,70,229,0.8)]"
+                className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-primary dark:bg-primary shadow-[0_0_15px_#4F46E6CC]"
                 style={{
                     x: mouseX,
                     y: mouseY,

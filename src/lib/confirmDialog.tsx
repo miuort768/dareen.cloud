@@ -65,29 +65,29 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                 <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
-                        "relative bg-white dark:bg-slate-900 w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
+                        "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
                             <X size={15} />
                         </button>
 
                         <div className="p-6 pt-8 flex flex-col items-center text-center">
-                            <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-4">
+                            <div className="w-16 h-16 rounded-2xl bg-primary-soft dark:bg-primary/10 text-primary flex items-center justify-center mb-4">
                                 <Info size={28} />
                             </div>
 
-                            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">
+                            <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">
                                 {title}
                             </h3>
 
-                            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6 text-right max-w-[280px]">
+                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 text-right max-w-[280px]">
                                 {options.message}
                             </p>
 
                             <button
                                 onClick={handleClose}
-                                className="w-full h-12 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-sm transition-all active:scale-[0.98] shadow-lg shadow-indigo-500/20"
+                                className="w-full h-12 rounded-xl bg-primary hover:bg-primary text-on-primary font-bold text-sm transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
                             >
                                 {options.confirmText || 'حسناً'}
                             </button>
@@ -135,10 +135,10 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
-                        "relative bg-white dark:bg-slate-900 w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
+                        "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
                             <X size={15} />
                         </button>
 
@@ -146,17 +146,17 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                             <div className={cn(
                                 "w-16 h-16 rounded-2xl flex items-center justify-center mb-4",
                                 isDestructive
-                                    ? "bg-rose-50 dark:bg-rose-500/10 text-rose-500"
-                                    : "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-500"
+                                    ? "bg-error-light dark:bg-error/10 text-error"
+                                    : "bg-primary-soft dark:bg-primary/10 text-primary"
                             )}>
                                 {isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />}
                             </div>
 
-                            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">
+                            <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">
                                 {title}
                             </h3>
 
-                            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6 max-w-[260px]">
+                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 max-w-[260px]">
                                 {options.message}
                             </p>
 
@@ -164,17 +164,17 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 <button
                                     onClick={handleConfirm}
                                     className={cn(
-                                        "w-full h-12 rounded-xl text-white font-bold text-sm transition-all active:scale-[0.98]",
+                                        "w-full h-12 rounded-xl text-on-primary font-bold text-sm transition-all active:scale-[0.98]",
                                         isDestructive
-                                            ? "bg-rose-500 hover:bg-rose-600 shadow-lg shadow-rose-500/20"
-                                            : "bg-indigo-500 hover:bg-indigo-600 shadow-lg shadow-indigo-500/20"
+                                            ? "bg-error hover:bg-error shadow-lg shadow-error/20"
+                                            : "bg-primary hover:bg-primary shadow-lg shadow-primary/20"
                                     )}
                                 >
                                     {options.confirmText || 'تأكيد'}
                                 </button>
                                 <button
                                     onClick={handleClose}
-                                    className="w-full h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                                    className="w-full h-11 rounded-xl bg-surface dark:bg-primary-active text-muted dark:text-muted font-bold text-sm hover:bg-surface dark:hover:bg-primary-active transition-all"
                                 >
                                     {options.cancelText || 'إلغاء'}
                                 </button>

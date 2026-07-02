@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const TermsOfService = () => {
     const { adminPhone } = useSettingsStore();
     return (
-        <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
+        <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO
                 title="شروط الاستخدام والأحكام | دارين السابعة"
                 description="شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا."
@@ -27,21 +27,21 @@ export const TermsOfService = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8]">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-card">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-success/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-4">
-                        <Scale size={14} className="text-emerald-600" />
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-main border border-border rounded-none shadow-sm mb-4">
+                        <Scale size={14} className="text-success" />
                         <span className="text-xs font-black tracking-[0.2em] uppercase">الشروط والأحكام</span>
                     </div>
 
-                    <h1 className="text-xl md:text-5xl font-black text-gray-900 mb-3 leading-tight font-heading">
-                        شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-800 inline-block py-1">الاستخدام</span> والأحكام
+                    <h1 className="text-xl md:text-5xl font-black text-main mb-3 leading-tight font-heading">
+                        شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-success)] to--[var(--bg-success)] inline-block py-1">الاستخدام</span> والأحكام
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-sm md:text-lg text-muted max-w-2xl mx-auto leading-relaxed font-medium">
                         يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام خدماتنا
                     </p>
                 </div>
@@ -54,12 +54,12 @@ export const TermsOfService = () => {
                     {/* Acceptance */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-emerald-50 rounded-none flex items-center justify-center shrink-0">
-                                <FileCheck className="w-6 h-6 text-emerald-600" />
+                            <div className="w-12 h-12 bg-success-light rounded-none flex items-center justify-center shrink-0">
+                                <FileCheck className="w-6 h-6 text-success" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">قبول الشروط</h2>
-                                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">قبول الشروط</h2>
+                                <p className="text-sm md:text-base text-muted leading-relaxed">
                                     بالوصول إلى منصة دارين السابعة للتعليم والتدريب واستخدامها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا توافق على أي من هذه الشروط، يُمنع عليك استخدام هذه المنصة أو الوصول إليها.
                                 </p>
                             </div>
@@ -69,12 +69,12 @@ export const TermsOfService = () => {
                     {/* Services */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-blue-50 rounded-none flex items-center justify-center shrink-0">
-                                <BookOpen className="w-6 h-6 text-blue-600" />
+                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                                <BookOpen className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">الخدمات المقدمة</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-main mb-3">الخدمات المقدمة</h2>
+                                <div className="space-y-2 text-muted">
                                     <p>يوفر دارين السابعة خدمات تعليمية عبر الإنترنت تشمل:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>دروس خصوصية مباشرة عبر الإنترنت</li>
@@ -94,14 +94,14 @@ export const TermsOfService = () => {
                     {/* Registration */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-indigo-50 rounded-none flex items-center justify-center shrink-0">
-                                <UserX className="w-6 h-6 text-indigo-600" />
+                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                                <UserX className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">التسجيل والحساب</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-main mb-3">التسجيل والحساب</h2>
+                                <div className="space-y-2 text-muted">
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">1. إنشاء الحساب:</h3>
+                                        <h3 className="font-bold text-main mb-2">1. إنشاء الحساب:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>يجب تقديم معلومات دقيقة وكاملة عند التسجيل</li>
                                             <li>يجب أن يكون عمر المستخدم 13 عامًا على الأقل، أو بموافقة ولي الأمر</li>
@@ -110,7 +110,7 @@ export const TermsOfService = () => {
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">2. إنهاء الحساب:</h3>
+                                        <h3 className="font-bold text-main mb-2">2. إنهاء الحساب:</h3>
                                         <p>نحتفظ بالحق في تعليق أو إنهاء حسابك إذا:</p>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>انتهكت أي من هذه الشروط والأحكام</li>
@@ -127,14 +127,14 @@ export const TermsOfService = () => {
                     {/* Payment */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-amber-50 rounded-none flex items-center justify-center shrink-0">
-                                <CreditCard className="w-6 h-6 text-amber-600" />
+                            <div className="w-12 h-12 bg-warning-light rounded-none flex items-center justify-center shrink-0">
+                                <CreditCard className="w-6 h-6 text-warning" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">الرسوم والدفع</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-main mb-3">الرسوم والدفع</h2>
+                                <div className="space-y-2 text-muted">
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">1. الأسعار:</h3>
+                                        <h3 className="font-bold text-main mb-2">1. الأسعار:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>جميع الأسعار معروضة بالدينار الكويتي (KWD) ما لم يُذكر خلاف ذلك</li>
                                             <li>نحتفظ بالحق في تغيير الأسعار في أي وقت</li>
@@ -142,7 +142,7 @@ export const TermsOfService = () => {
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">2. طرق الدفع:</h3>
+                                        <h3 className="font-bold text-main mb-2">2. طرق الدفع:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>نقبل الدفع عبر البطاقات الائتمانية والتحويل البنكي</li>
                                             <li>يجب سداد الرسوم قبل بدء الدورة أو الحصة</li>
@@ -150,7 +150,7 @@ export const TermsOfService = () => {
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">3. سياسة الاسترداد:</h3>
+                                        <h3 className="font-bold text-main mb-2">3. سياسة الاسترداد:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>يمكن طلب استرداد كامل خلال 7 أيام من التسجيل إذا لم تبدأ الدورة</li>
                                             <li>بعد بدء الدورة، لا يمكن استرداد الرسوم إلا في حالات استثنائية</li>
@@ -166,12 +166,12 @@ export const TermsOfService = () => {
                     {/* User Conduct */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-red-50 rounded-none flex items-center justify-center shrink-0">
-                                <AlertCircle className="w-6 h-6 text-red-600" />
+                            <div className="w-12 h-12 bg-error-light rounded-none flex items-center justify-center shrink-0">
+                                <AlertCircle className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">قواعد السلوك</h2>
-                                <div className="space-y-2 text-gray-600">
+                                <h2 className="text-2xl font-black text-main mb-3">قواعد السلوك</h2>
+                                <div className="space-y-2 text-muted">
                                     <p>عند استخدام منصتنا، توافق على:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>احترام المعلمين والطلاب الآخرين</li>
@@ -190,9 +190,9 @@ export const TermsOfService = () => {
 
                     {/* Intellectual Property */}
                     <div className="mb-4">
-                        <div className="bg-gray-50 border border-gray-100 p-8 rounded-none">
-                            <h2 className="text-2xl font-black text-gray-900 mb-4">الملكية الفكرية</h2>
-                            <div className="space-y-2 text-gray-600">
+                        <div className="bg-background border border-border p-8 rounded-none">
+                            <h2 className="text-2xl font-black text-main mb-4">الملكية الفكرية</h2>
+                            <div className="space-y-2 text-muted">
                                 <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.</p>
                                 <p className="font-bold mt-4">يُحظر عليك:</p>
                                 <ul className="list-disc list-inside space-y-1 mr-4">
@@ -206,8 +206,8 @@ export const TermsOfService = () => {
 
                     {/* Liability */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-gray-900 mb-4">إخلاء المسؤولية</h2>
-                        <div className="space-y-2 text-gray-600">
+                        <h2 className="text-2xl font-black text-main mb-4">إخلاء المسؤولية</h2>
+                        <div className="space-y-2 text-muted">
                             <p>يتم توفير الخدمات "كما هي" دون أي ضمانات من أي نوع. نحن لا نضمن:</p>
                             <ul className="list-disc list-inside space-y-1 mr-4">
                                 <li>أن الخدمات ستكون متاحة دائمًا أو خالية من الأخطاء</li>
@@ -222,39 +222,39 @@ export const TermsOfService = () => {
 
                     {/* Changes */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-gray-900 mb-4">التعديلات على الشروط</h2>
-                        <p className="text-gray-600 leading-relaxed">
+                        <h2 className="text-2xl font-black text-main mb-4">التعديلات على الشروط</h2>
+                        <p className="text-muted leading-relaxed">
                             نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة مع تحديث تاريخ "آخر تحديث". استمرارك في استخدام المنصة بعد نشر التغييرات يعني قبولك لهذه التغييرات.
                         </p>
-                        <p className="text-sm text-gray-400 mt-4 font-bold">
+                        <p className="text-sm text-muted mt-4 font-bold">
                             آخر تحديث: 21 يناير 2026
                         </p>
                     </div>
 
                     {/* Governing Law */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-gray-900 mb-4">القانون الحاكم</h2>
-                        <p className="text-gray-600 leading-relaxed">
+                        <h2 className="text-2xl font-black text-main mb-4">القانون الحاكم</h2>
+                        <p className="text-muted leading-relaxed">
                             تخضع هذه الشروط والأحكام وتُفسر وفقًا لقوانين دولة الكويت. أي نزاعات تنشأ عن هذه الشروط ستخضع للاختصاص القضائي الحصري لمحاكم الكويت.
                         </p>
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-8 relative overflow-hidden group rounded-2xl">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-8 relative overflow-hidden group rounded-2xl">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-gray-500 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <h2 className="text-2xl font-black text-main mb-2">هل لديك استفسارات فنية؟</h2>
+                            <p className="text-muted mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-gray-900 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-emerald-600 transition-all group relative overflow-hidden"
+                                className="inline-flex items-center justify-center gap-4 bg-card text-on-primary px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-success transition-all group relative overflow-hidden"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from--[var(--bg-success)] to-[var(--bg-success)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
                             </a>

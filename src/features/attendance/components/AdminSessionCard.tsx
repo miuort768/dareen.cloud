@@ -19,10 +19,10 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     const progress = total > 0 ? (used / total) * 100 : 0;
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm h-full">
+        <div className="bg-white dark:bg-primary-active border border-border dark:border-border rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm h-full">
             <div className={cn(
                 "h-1.5 w-full transition-all",
-                session.status === 'completed' ? 'bg-emerald-500' : session.status === 'cancelled' ? 'bg-rose-500' : 'bg-slate-200 dark:bg-slate-700'
+                session.status === 'completed' ? 'bg-success' : session.status === 'cancelled' ? 'bg-error' : 'bg-surface dark:bg-primary-active'
             )}></div>
             
             <div className="p-5 flex-1 flex flex-col space-y-4">
@@ -32,13 +32,13 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                             {studentGrade?.charAt(0) || session.studentName.charAt(0)}
                         </div>
                         <div>
-                            <h4 className="font-normal text-slate-800 dark:text-white text-sm leading-tight">{session.studentName}</h4>
+                            <h4 className="font-normal text-main dark:text-on-primary text-sm leading-tight">{session.studentName}</h4>
                             <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-[9px] font-normal text-slate-400 uppercase">{studentGrade}</span>
-                                <span className="w-1 h-1 bg-slate-300 dark:bg-slate-600"></span>
+                                <span className="text-[9px] font-normal text-muted uppercase">{studentGrade}</span>
+                                <span className="w-1 h-1 bg-card dark:bg-card"></span>
                                 <div className="flex items-center gap-1">
                                     <BookOpen size={10} style={{ color: '#6C4BFF' }} />
-                                    <span className="text-[9px] font-normal text-slate-400">{session.subject}</span>
+                                    <span className="text-[9px] font-normal text-muted">{session.subject}</span>
                                 </div>
                             </div>
                         </div>
@@ -50,32 +50,32 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     )}
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div className="bg-white dark:bg-primary-active p-3 rounded-xl border border-border dark:border-border">
                     <div className="flex items-center gap-2 mb-1.5">
                         <Clock size={12} style={{ color: '#6C4BFF' }} />
-                        <span className="text-[9px] font-bold text-[#64748B] uppercase tracking-wide">موعد الحصة</span>
+                        <span className="text-[9px] font-bold text-muted uppercase tracking-wide">موعد الحصة</span>
                     </div>
-                    <div className="text-sm font-black font-mono text-slate-800 dark:text-white tabular-nums">
+                    <div className="text-sm font-black font-mono text-main dark:text-on-primary tabular-nums">
                         {session.time}
                     </div>
                 </div>
 
                 <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
+                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-muted">
                         <div className="flex items-center gap-1.5">
                             <Activity size={12} style={{ color: '#6C4BFF' }} />
                             <span>تغطية الرصيد</span>
                         </div>
-                            <div className="flex items-baseline gap-1 text-slate-800 dark:text-white">
-                            <span className="text-xs font-medium text-[#6C4BFF]">{used}</span>
+                            <div className="flex items-baseline gap-1 text-main dark:text-on-primary">
+                            <span className="text-xs font-medium text-primary">{used}</span>
                             <span className="opacity-50">/ {total}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out",
-                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-500' : 'bg-emerald-500'
+                                progress > 85 ? 'bg-error' : progress > 60 ? 'bg-warning' : 'bg-success'
                             )}
                             style={{ width: `${Math.min(100, progress)}%` }}
                         />
@@ -90,8 +90,8 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     className={cn(
                         "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'completed'
-                            ? 'bg-[#10B981] text-white'
-                            : 'bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white hover:from-[#5a3ee0] hover:to-[#7c3aed]'
+                            ? 'bg-success text-on-primary'
+                            : 'bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]'
                     )}
                 >
                     <CheckCircle2 size={14} /> إثبات
@@ -102,8 +102,8 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     className={cn(
                         "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'cancelled'
-                            ? 'bg-[#F43F5E] border-[#F43F5E] text-white'
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600'
+                            ? 'bg-error border-error text-on-primary'
+                            : 'bg-white dark:bg-primary-active border-border dark:border-border text-muted hover:text-error'
                     )}
                 >
                     <XCircle size={14} /> إلغاء
@@ -113,7 +113,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="px-5 pb-5 pt-0">
                     <button
                         onClick={() => onViewHistory(session.studentId, session.studentName, studentGrade, session.subject)}
-                        className="w-full py-2.5 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed] text-white font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                        className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
                     >
                         <History size={14} /> سجل الطالب
                     </button>

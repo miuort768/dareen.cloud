@@ -320,17 +320,17 @@ export const TeacherInvoices = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2 space-y-4">
 
-            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-primary rounded-2xl px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-                        <GraduationCap size={22} className="text-white" />
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
+                        <GraduationCap size={22} className="text-on-primary" />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-white leading-tight">فواتير المعلمات</h1>
-                        <p className="text-[11px] font-bold text-white/70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
+                        <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">فواتير المعلمات</h1>
+                        <p className="text-[11px] font-bold text-on-primary opacity-70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl" style={{ backgroundColor: '#10B981', color: 'white' }}>
+                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
                     <Sparkles size={13} />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي المستحقات
                 </div>
@@ -338,31 +338,31 @@ export const TeacherInvoices = () => {
 
             <InvoiceStats stats={stats} />
 
-            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-2xl p-3">
+            <div className="bg-gradient-to-l from-primary to-primary-light rounded-2xl p-3">
                 <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2" size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
+                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                                 <input
                                     placeholder="بحث باسم المعلمة..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full rounded-xl pr-9 py-2 text-xs font-bold outline-none text-white placeholder:text-white/50" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                                    className="w-full rounded-xl pr-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary bg-white/15"
                                 />
                             </div>
-                            <div className="flex items-center gap-2 rounded-xl px-3 py-2" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-                                <Calendar size={14} className="text-white/50" />
+                            <div className="flex items-center gap-2 rounded-xl px-3 py-2 bg-white/15">
+                                <Calendar size={14} className="text-on-primary opacity-50" />
                                 <div className="flex items-center gap-1">
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-white outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-on-primary outline-none cursor-pointer" 
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
-                                    <span className="text-[10px] font-bold text-white/50">إلى</span>
+                                    <span className="text-[10px] font-bold text-on-primary opacity-50">إلى</span>
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-white outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-on-primary outline-none cursor-pointer" 
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />
@@ -372,11 +372,11 @@ export const TeacherInvoices = () => {
                             <select
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value)}
-                                className="w-auto min-w-[140px] rounded-xl px-3 py-2 text-xs font-bold outline-none text-white" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                                className="w-auto min-w-[140px] rounded-xl px-3 py-2 text-xs font-bold outline-none text-on-primary bg-white/15"
                             >
-                                <option value="all" className="text-slate-900">جميع الحالات</option>
+                                <option value="all" className="text-main">جميع الحالات</option>
                                 {Object.values(INVOICE_STATUS).map(status => (
-                                    <option key={status} value={status} className="text-slate-900">{status}</option>
+                                    <option key={status} value={status} className="text-main">{status}</option>
                                 ))}
                             </select>
                         </div>

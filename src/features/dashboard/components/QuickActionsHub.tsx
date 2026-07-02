@@ -1,33 +1,39 @@
 import { UserPlus, FilePlus, Megaphone, Calendar, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { cn } from '../../../lib/utils';
+import { Card } from '../../../shared/components/ui';
 
 const actions = [
     { 
         title: 'إضافة طالب جديد', 
         icon: UserPlus, 
         href: '/students?action=new', 
-        color: '#2563EB',
+        iconColor: 'text-primary',
+        iconBg: 'bg-primary-soft',
         description: 'تسجيل طالب جديد في النظام'
     },
     { 
         title: 'إصدار فاتورة', 
         icon: FilePlus, 
         href: '/student-invoices?action=new', 
-        color: '#22C55E',
+        iconColor: 'text-success',
+        iconBg: 'bg-success-soft',
         description: 'إنشاء فاتورة مالية جديدة'
     },
     { 
         title: 'الجدول الاسبوعي', 
         icon: Calendar, 
         href: '/schedule', 
-        color: '#38BDF8',
+        iconColor: 'text-info',
+        iconBg: 'bg-info-soft',
         description: 'إدارة المواعيد والجدول'
     },
     { 
         title: 'إعلان عام', 
         icon: Megaphone, 
         href: '/announcements', 
-        color: '#F97316',
+        iconColor: 'text-warning-dark',
+        iconBg: 'bg-warning-soft',
         description: 'بث إعلان للمنصة بأكملها'
     }
 ];
@@ -39,32 +45,31 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="relative overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-300 active:scale-[0.98] hover:shadow-md group dark:brightness-[0.65]"
-                    style={{ backgroundColor: action.color }}
+                    className="group block"
                 >
-                    {/* Content */}
-                    <div className="relative z-10 flex flex-col gap-4">
-                        <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                            <action.icon size={20} strokeWidth={1.5} />
-                        </div>
+                    <Card variant="elevated" hoverLift className="!p-5 !border-border">
+                        <div className="flex flex-col gap-4">
+                            <div className={cn('w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm', action.iconBg, action.iconColor)}>
+                                <action.icon size={20} strokeWidth={1.5} />
+                            </div>
 
-                        <div>
-                            <h3 className="font-bold text-sm text-white leading-tight truncate">
-                                {action.title}
-                            </h3>
-                            <p className="text-[10px] font-medium mt-1 text-white/70">
-                                {action.description}
-                            </p>
-                        </div>
+                            <div>
+                                <h3 className="font-bold text-sm text-main leading-tight truncate">
+                                    {action.title}
+                                </h3>
+                                <p className="text-[10px] font-medium mt-1 text-muted">
+                                    {action.description}
+                                </p>
+                            </div>
 
-                        <div className="flex items-center gap-1 text-[9px] font-bold text-white">
-                            <span>انتقال</span>
-                            <ArrowLeft size={12} strokeWidth={1.5} />
+                            <div className="flex items-center gap-1 text-[9px] font-bold text-muted group-hover:text-primary transition-colors">
+                                <span>انتقال</span>
+                                <ArrowLeft size={12} strokeWidth={1.5} />
+                            </div>
                         </div>
-                    </div>
+                    </Card>
                 </Link>
             ))}
         </div>
     );
 };
-

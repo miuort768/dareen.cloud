@@ -13,7 +13,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
     const progress = Math.min((stats.completedSessions / stats.sessionsGoal) * 100, 100);
 
     return (
-        <div className="bg-emerald-600 border-4 border-gray-950 p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden group">
+        <div className="bg-success border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_#000] text-on-primary relative overflow-hidden group">
             
             {/* Background pattern */}
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all pointer-events-none"></div>
@@ -40,15 +40,15 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                             <span>هدف الحصص: {stats.completedSessions}/{stats.sessionsGoal}</span>
                             <span>{Math.round(progress)}%</span>
                         </div>
-                        <div className="h-4 bg-gray-950 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)]">
+                        <div className="h-4 bg-card border-2 border-border shadow-[2px_2px_0px_0px_#FFFFFF33]">
                             <div 
-                                className="h-full bg-yellow-400 transition-all duration-1000 ease-out" 
+                                className="h-full bg-warning transition-all duration-1000 ease-out" 
                                 style={{ width: `${progress}%` }}
                             ></div>
                         </div>
                     </div>
 
-                    <div className="flex items-start gap-2 p-3 bg-emerald-500/30 border-2 border-emerald-400/50 text-[9px] font-medium uppercase italic leading-relaxed">
+                    <div className="flex items-start gap-2 p-3 bg-success/30 border-2 border-success/50 text-[9px] font-medium uppercase italic leading-relaxed">
                         <Info size={14} className="flex-shrink-0" />
                         <p>بناءً على {stats.completedSessions} حصة منجزة بمعدل {stats.pricePerSession} ريال/للحصة. </p>
                     </div>

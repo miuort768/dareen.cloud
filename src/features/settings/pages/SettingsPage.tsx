@@ -382,23 +382,23 @@ export const Settings = () => {
 
     return (
         <div className="space-y-0 pb-24 min-h-full" dir="rtl">
-            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] px-4 md:px-6 py-5 flex items-center justify-between">
+            <div className="bg-gradient-to-l from-primary to-primary-hover px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-                        <SettingsIcon size={22} className="text-white" />
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
+                        <SettingsIcon size={22} className="text-on-primary" />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-white leading-tight">مركز الإعدادات</h1>
-                        <p className="text-[11px] font-bold text-white/70 mt-0.5">إدارة كافة إعدادات النظام من مكان واحد</p>
+                        <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">مركز الإعدادات</h1>
+                        <p className="text-[11px] font-bold text-on-primary opacity-70 mt-0.5">إدارة كافة إعدادات النظام من مكان واحد</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5 bg-white/15 text-on-primary">
                     <SettingsIcon size={12} />
                     {TABS.find(t => t.id === activeTab)?.label}
                 </div>
             </div>
 
-            <div className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] px-1 py-1">
+            <div className="bg-gradient-to-l from-primary to-primary-hover px-1 py-1">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button
@@ -407,8 +407,8 @@ export const Settings = () => {
                             className={cn(
                                 'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight',
                                 activeTab === tab.id
-                                    ? 'bg-white text-[#6C4BFF] shadow-sm'
-                                    : 'text-white/70 hover:text-white'
+                                    ? 'bg-card text-primary shadow-sm'
+                                    : 'text-on-primary opacity-70 hover:text-on-primary'
                             )}
                         >
                             <tab.icon size={15} />

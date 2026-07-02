@@ -146,7 +146,7 @@ export const Agenda = () => {
                             className={cn(
                                 "px-4 py-2 text-[10px] font-bold transition-all whitespace-nowrap rounded-none",
                                 activeDay === day
-                                    ? "bg-white text-amber-700"
+                                    ? "bg-white text-warning"
                                     : "bg-white/15 text-white/70 hover:bg-white/30"
                             )}
                         >
@@ -162,7 +162,7 @@ export const Agenda = () => {
                         placeholder="بحث عن طالب..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/15 border border-white/20 text-white placeholder:text-white/50 pr-10 py-2 text-[11px] font-bold outline-none rounded-none"
+                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 pr-10 py-2 text-[11px] font-bold outline-none rounded-none"
                     />
                 </div>
             </div>
@@ -172,13 +172,13 @@ export const Agenda = () => {
                 {scheduledAppointments.length > 0 ? (
                     scheduledAppointments.map((app) => (
                         <div key={app.id} className={cn(
-                            "relative group bg-white dark:bg-gray-900 border-2 transition-all overflow-hidden rounded-none shadow-sm hover:shadow-sm",
-                            app.isDone ? "border-emerald-100 dark:border-emerald-900/30" : "border-gray-100 dark:border-gray-800 hover:border-amber-500"
+                            "relative group bg-white dark:bg-card border-2 transition-all overflow-hidden rounded-none shadow-sm hover:shadow-sm",
+                            app.isDone ? "border-success dark:border-success/30" : "border-border dark:border-border hover:border-warning"
                         )}>
                             {/* Status Stripe */}
                             <div className={cn(
                                 "absolute top-0 right-0 w-1.5 h-full transition-all",
-                                app.isDone ? "bg-emerald-500" : "bg-amber-500 scale-y-50 group-hover:scale-y-100"
+                                app.isDone ? "bg-success" : "bg-warning scale-y-50 group-hover:scale-y-100"
                             )}></div>
 
                             <div className="p-5 space-y-4">
@@ -186,30 +186,30 @@ export const Agenda = () => {
                                     <div className="flex items-center gap-3">
                                         <div className={cn(
                                             "w-12 h-12 flex items-center justify-center font-medium text-lg rounded-none transition-colors",
-                                            app.isDone ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
+                                            app.isDone ? "bg-success-light text-success" : "bg-warning-light text-warning dark:bg-warning/20"
                                         )}>
                                             {app.studentName.charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-gray-900 dark:text-white text-base leading-tight">{app.studentName}</h4>
-                                            <p className="text-[10px] font-normal text-gray-400 flex items-center gap-1 uppercase">
+                                            <h4 className="font-medium text-main dark:text-on-primary text-base leading-tight">{app.studentName}</h4>
+                                            <p className="text-[10px] font-normal text-muted flex items-center gap-1 uppercase">
                                                 {app.studentGrade}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-medium text-gray-500 rounded-none font-mono">
+                                    <div className="px-2 py-1 bg-surface dark:bg-card text-[9px] font-medium text-muted rounded-none font-mono">
                                         {app.time}
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-xs font-normal text-gray-600 dark:text-gray-400">
-                                        <BookOpen size={14} className="text-amber-500" />
+                                    <div className="flex items-center gap-2 text-xs font-normal text-muted dark:text-muted">
+                                        <BookOpen size={14} className="text-warning" />
                                         <span>{app.subject}</span>
                                     </div>
                                     {!isTeacher && (
-                                        <div className="flex items-center gap-2 text-xs font-normal text-gray-500">
-                                            <User size={14} className="text-blue-500" />
+                                        <div className="flex items-center gap-2 text-xs font-normal text-muted">
+                                            <User size={14} className="text-info" />
                                             <span>�. {app.teacherName}</span>
                                         </div>
                                     )}
@@ -217,15 +217,15 @@ export const Agenda = () => {
 
                                 {/* Progress for that enrollment */}
                                 <div className="pt-2">
-                                    <div className="flex justify-between items-center mb-1 text-[9px] font-medium uppercase tracking-widest text-gray-400">
+                                    <div className="flex justify-between items-center mb-1 text-[9px] font-medium uppercase tracking-widest text-muted">
                                         <span>���� ������</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
-                                    <div className="h-1.5 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                                    <div className="h-1.5 bg-surface dark:bg-card overflow-hidden">
                                         <div
                                             className={cn(
                                                 "h-full transition-all duration-1000",
-                                                app.isDone ? "bg-emerald-500" : "bg-amber-500"
+                                                app.isDone ? "bg-success" : "bg-warning"
                                             )}
                                             style={{ width: `${(app.enrollment.sessionsUsed / app.enrollment.sessionsTotal) * 100}%` }}
                                         ></div>
@@ -234,7 +234,7 @@ export const Agenda = () => {
 
                                 <div className="pt-2">
                                     {app.isDone ? (
-                                        <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
+                                        <div className="w-full bg-success-light dark:bg-success/20 text-success py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
                                             <CheckCircle2 size={16} />
                                             �� �������
                                         </div>
@@ -242,7 +242,7 @@ export const Agenda = () => {
                                         <button
                                             onClick={() => handleMarkDone(app)}
                                             disabled={logAttendanceMutation.isPending}
-                                            className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-amber-500/10 active:scale-95 disabled:opacity-50"
+                                            className="w-full bg-warning hover:bg-warning text-on-primary py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-warning/10 active:scale-95 disabled:opacity-50"
                                         >
                                             {logAttendanceMutation.isPending ? '���� �������...' : (
                                                 <>
@@ -257,10 +257,10 @@ export const Agenda = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="col-span-full py-24 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 rounded-none">
-                        <Calendar size={48} className="mx-auto mb-4 text-gray-200" />
-                        <h3 className="text-lg font-medium text-gray-400">�� ���� ��� ������ ���� �����</h3>
-                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">���� ������ �� ������� ��������</p>
+                    <div className="col-span-full py-24 text-center border-2 border-dashed border-border dark:border-border bg-white/50 dark:bg-card/50 rounded-none">
+                        <Calendar size={48} className="mx-auto mb-4 text-dim" />
+                        <h3 className="text-lg font-medium text-muted">�� ���� ��� ������ ���� �����</h3>
+                        <p className="text-sm text-muted font-normal mt-1 uppercase tracking-widest">���� ������ �� ������� ��������</p>
                     </div>
                 )}
             </div>

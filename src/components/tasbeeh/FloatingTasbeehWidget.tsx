@@ -79,7 +79,7 @@ export const FloatingTasbeehWidget = () => {
         return (
             <button
                 onClick={toggle}
-                className="fixed z-[9999] flex items-center justify-center w-12 h-12 bg-[#1e3a5f] hover:bg-[#2563EB] text-white rounded-2xl shadow-xl border border-white/10 active:scale-95 transition-all"
+                className="fixed z-[9999] flex items-center justify-center w-12 h-12 bg-primary hover:bg-primary text-on-primary rounded-2xl shadow-xl border border-white/10 active:scale-95 transition-all"
                 style={{ left: position.x, top: position.y }}
                 title="المسبحة"
             >
@@ -91,7 +91,7 @@ export const FloatingTasbeehWidget = () => {
     return (
         <div
             ref={dragRef}
-            className="fixed z-[9999] bg-gradient-to-br from-[#1e3a5f] to-[#0d2137] border border-white/10 rounded-2xl shadow-2xl w-44 select-none"
+            className="fixed z-[9999] bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)] border border-white/10 rounded-2xl shadow-2xl w-44 select-none"
             style={{ left: position.x, top: position.y }}
             dir="rtl"
         >
@@ -103,15 +103,15 @@ export const FloatingTasbeehWidget = () => {
                 <span className="text-white/60 text-[9px] font-bold tracking-wider">المسبحة</span>
                 <button
                     onClick={close}
-                    className="w-5 h-5 flex items-center justify-center bg-red-500/60 hover:bg-red-500 text-white rounded-full"
+                    className="w-5 h-5 flex items-center justify-center bg-error/60 hover:bg-error text-on-primary rounded-full"
                 >
                     <X size={10} />
                 </button>
             </div>
 
             <div className="flex flex-col items-center gap-3 p-4">
-                <div className="w-20 h-20 flex items-center justify-center rounded-full border-[3px] border-[#2563EB]/40 bg-white/5">
-                    <span className="text-3xl font-black text-white tabular-nums">
+                <div className="w-20 h-20 flex items-center justify-center rounded-full border-[3px] border-primary/40 bg-white/5">
+                    <span className="text-3xl font-black text-on-primary tabular-nums">
                         {count}
                     </span>
                 </div>
@@ -119,7 +119,7 @@ export const FloatingTasbeehWidget = () => {
                 <div className="flex items-center gap-2 w-full">
                     <button
                         onClick={increment}
-                        className="flex-1 h-9 flex items-center justify-center gap-1 bg-[#2563EB] hover:bg-[#1d4ed8] active:scale-95 text-white rounded-xl text-xs font-bold transition-all"
+                        className="flex-1 h-9 flex items-center justify-center gap-1 bg-primary hover:bg-primary-hover active:scale-95 text-on-primary rounded-xl text-xs font-bold transition-all"
                     >
                         <Plus size={14} />
                         تعد

@@ -42,29 +42,29 @@ export const StudentDetails = ({
     const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
 
     return (
-        <div className="flex flex-col bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden mb-12">
+        <div className="flex flex-col bg-card border border-border shadow-sm overflow-hidden mb-12">
             {/* Header Section */}
-            <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800" dir="rtl">
+            <div className="relative p-6 bg-surface border-b border-border" dir="rtl">
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-slate-400 hover:text-rose-500 p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all"
+                    className="absolute left-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
                 >
                     <X size={18} />
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-bold text-xl shadow-sm shrink-0">
+                    <div className="w-12 h-12 bg-primary text-on-primary flex items-center justify-center font-bold text-xl shadow-sm shrink-0">
                         {student.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-normal text-base text-slate-800 dark:text-white truncate">{student.name}</h3>
+                            <h3 className="font-normal text-base text-main truncate">{student.name}</h3>
                             <RankBadge rank={rank} size="sm" />
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[10px] font-normal text-blue-500 bg-blue-50 dark:bg-blue-900/20 px-1.5 py-0.5 uppercase">{student.grade}</span>
-                            <span className="text-[10px] font-normal text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 px-1.5 py-0.5">{points} XP</span>
-                            <button onClick={() => setShowCard(true)} className="text-[10px] font-normal text-slate-400 hover:text-blue-500 flex items-center gap-1">
+                            <span className="text-[10px] font-normal text-info bg-info-soft px-1.5 py-0.5 uppercase">{student.grade}</span>
+                            <span className="text-[10px] font-normal text-success bg-success-soft px-1.5 py-0.5">{points} XP</span>
+                            <button onClick={() => setShowCard(true)} className="text-[10px] font-normal text-dim hover:text-info flex items-center gap-1">
                                 <UserCircle2 size={12} />
                                 بطاقة الطالب
                             </button>
@@ -75,35 +75,35 @@ export const StudentDetails = ({
 
             <div className="p-4 space-y-5 overflow-y-auto flex-1 custom-scrollbar" dir="rtl">
                 {/* Points & Rank Panel */}
-                <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div className="p-4 bg-card border border-border shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                            <div className="w-10 h-10 bg-info-soft text-info flex items-center justify-center">
                                 <Trophy size={18} />
                             </div>
                             <div>
-                                <p className="text-[9px] font-normal text-slate-400 uppercase">الرتبة الحالية</p>
-                                <p className="text-sm font-medium text-slate-800 dark:text-white">{rank.name}</p>
+                                <p className="text-[9px] font-normal text-dim uppercase">الرتبة الحالية</p>
+                                <p className="text-sm font-medium text-main">{rank.name}</p>
                             </div>
                         </div>
                         {next && (
                             <div className="text-left">
-                                <p className="text-[9px] font-normal text-slate-400 uppercase">التالي</p>
-                                <p className="text-[11px] font-normal text-blue-500">{next.name}</p>
+                                <p className="text-[9px] font-normal text-dim uppercase">التالي</p>
+                                <p className="text-[11px] font-normal text-info">{next.name}</p>
                             </div>
                         )}
                     </div>
 
                     {next && (
                         <div className="space-y-2">
-                            <div className="h-1.5 bg-slate-50 dark:bg-slate-800 overflow-hidden">
+                            <div className="h-1.5 bg-surface overflow-hidden">
                                 <motion.div 
                                     initial={{ width: 0 }}
                                     animate={{ width: `${Math.min((points / next.minPoints) * 100, 100)}%` }}
-                                    className="h-full bg-blue-500"
+                                    className="h-full bg-primary"
                                 />
                             </div>
-                            <div className="flex justify-between text-[9px] font-normal text-slate-400 uppercase">
+                            <div className="flex justify-between text-[9px] font-normal text-dim uppercase">
                                 <span>متبقي {pointsNeeded} XP</span>
                                 <span className="font-mono">{points} / {next.minPoints}</span>
                             </div>
@@ -113,24 +113,24 @@ export const StudentDetails = ({
 
                 {/* Account Details */}
                 <div className="grid grid-cols-2 gap-3">
-<div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-transparent">
-                        <p className="text-[9px] font-normal text-slate-400 uppercase mb-1">اسم المستخدم</p>
-                        <p className="text-xs font-normal text-blue-500 font-mono">@{student.username || '—'}</p>
+<div className="p-3 bg-surface border border-transparent">
+                        <p className="text-[9px] font-normal text-dim uppercase mb-1">اسم المستخدم</p>
+                        <p className="text-xs font-normal text-info font-mono">@{student.username || '—'}</p>
                     </div>
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-transparent">
-                        <p className="text-[9px] font-normal text-slate-400 uppercase mb-1">حالة المصادقة</p>
+                    <div className="p-3 bg-surface border border-transparent">
+                        <p className="text-[9px] font-normal text-dim uppercase mb-1">حالة المصادقة</p>
                         <div className="flex items-center gap-1.5">
-                            <div className={cn("w-1.5 h-1.5", student.username ? "bg-emerald-500" : "bg-rose-500")} />
-                            <p className="text-[10px] font-normal text-slate-600 dark:text-slate-300">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
+                            <div className={cn("w-1.5 h-1.5", student.username ? "bg-success" : "bg-error")} />
+                            <p className="text-[10px] font-normal text-muted">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Enrollments */}
                 <div className="space-y-6">
-                    <div className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
-                        <h4 className="text-[10px] font-normal text-slate-400 uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
-                        <span className="text-[9px] font-normal bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-300 px-2 py-0.5">{student.enrollments.length} برامج</span>
+                    <div className="flex items-center justify-between border-b border-border pb-2">
+                        <h4 className="text-[10px] font-normal text-dim uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
+                        <span className="text-[9px] font-normal bg-surface text-muted px-2 py-0.5">{student.enrollments.length} برامج</span>
                     </div>
 
                     <div className="space-y-4">
@@ -142,32 +142,32 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm relative",
+                                    "p-3 bg-card border border-border shadow-sm relative",
                                     en.isFrozen && "opacity-50 grayscale",
-                                    isLow ? "border-rose-100 dark:border-rose-800/30" : ""
+                                    isLow ? "border-error" : ""
                                 )}>
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-bold text-xs text-slate-800 dark:text-white">{en.subject}</h5>
-                                                {isLow && <span className="text-[8px] font-normal text-rose-500 bg-rose-50 dark:bg-rose-900/20 px-1 animate-pulse">رصيد منخفض</span>}
+                                                <h5 className="font-bold text-xs text-main">{en.subject}</h5>
+                                                {isLow && <span className="text-[8px] font-normal text-error bg-error-soft px-1 animate-pulse">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="w-4 h-4 bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
-                                                    <User size={8} className="text-slate-400" />
+                                                <div className="w-4 h-4 bg-hover flex items-center justify-center">
+                                                    <User size={8} className="text-dim" />
                                                 </div>
-                                                <span className="text-[9px] font-normal text-slate-500">{en.teacher}</span>
+                                                <span className="text-[9px] font-normal text-muted">{en.teacher}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             {onFreezeEnrollment && en.id && (
-                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"}>
+                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-info hover:bg-info-soft transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"}>
                                                     {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
                                                 </button>
                                             )}
-                                            <button onClick={() => onSendReminder?.(en)} className="w-6 h-6 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all" title="تذكير"><MessageCircle size={12} /></button>
-                                            <button onClick={() => onRenewEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all" title="تجديد"><RefreshCw size={12} /></button>
-                                            <button onClick={() => onDeleteEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all" title="حذف"><Trash size={12} /></button>
+                                            <button onClick={() => onSendReminder?.(en)} className="w-6 h-6 flex items-center justify-center text-success hover:bg-success-soft transition-all" title="تذكير"><MessageCircle size={12} /></button>
+                                            <button onClick={() => onRenewEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-info hover:bg-info-soft transition-all" title="تجديد"><RefreshCw size={12} /></button>
+                                            <button onClick={() => onDeleteEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-error hover:bg-error-soft transition-all" title="حذف"><Trash size={12} /></button>
                                         </div>
                                     </div>
 
@@ -179,10 +179,10 @@ export const StudentDetails = ({
                                                     className={cn(
                                                     "w-4 h-4 border flex items-center justify-center text-[7px] font-normal font-mono transition-all",
                                                     idx < actualUsed 
-                                                        ? "bg-emerald-500 border-emerald-500 text-white" 
+                                                        ? "bg-success border-success text-inverse" 
                                                         : idx === actualUsed 
-                                                            ? "bg-white dark:bg-slate-900 border-blue-500 text-blue-500 shadow-sm" 
-                                                            : "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-300 dark:text-slate-500"
+                                                            ? "bg-card border-info text-info shadow-sm" 
+                                                            : "bg-surface border-border text-dim"
                                                     )}
                                                 >
                                                     {idx < actualUsed ? <CheckCircle2 size={10} /> : idx + 1}
@@ -190,24 +190,24 @@ export const StudentDetails = ({
                                             ))}
                                         </div>
 
-                                        <div className="pt-3 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                                        <div className="pt-3 border-t border-border flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-normal text-slate-400 uppercase mb-1">
+                                                <div className="flex justify-between text-[8px] font-normal text-dim uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span>{progressPercent}%</span>
                                                 </div>
-                                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden">
-                                                    <div className={cn("h-full", isLow ? "bg-rose-500" : "bg-blue-500")} style={{ width: `${progressPercent}%` }} />
+                                                <div className="h-1 bg-surface overflow-hidden">
+                                                    <div className={cn("h-full", isLow ? "bg-error" : "bg-primary")} style={{ width: `${progressPercent}%` }} />
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="text-center px-2 border-r border-slate-100 dark:border-slate-800">
-                                                    <p className="text-[8px] font-normal text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
-                                                    <p className={cn("text-xs font-medium font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
+                                                <div className="text-center px-2 border-r border-border">
+                                                    <p className="text-[8px] font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
+                                                    <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                                 </div>
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                                    className="w-6 h-6 bg-slate-900 text-white text-[10px] font-medium flex items-center justify-center hover:bg-blue-600 active:scale-90 transition-all shadow-sm"
+                                                    className="w-6 h-6 bg-primary text-on-primary text-[10px] font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm"
                                                 >
                                                     <Plus size={12} strokeWidth={3} />
                                                 </button>
@@ -216,12 +216,12 @@ export const StudentDetails = ({
                                     </div>
 
                                     {addingSessionsIndex === i && (
-                                        <div className="flex gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
+                                        <div className="flex gap-2 mt-3 pt-3 border-t border-border animate-in slide-in-from-top-2 duration-200">
                                             {[1, 2, 4, 8].map(num => (
                                                 <button
                                                     key={num}
                                                     onClick={() => { onAddSessions?.(i, num); setAddingSessionsIndex(null); }}
-                                                    className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-blue-500 hover:text-white text-slate-600 dark:text-slate-300 font-normal text-[10px] font-mono transition-all"
+                                                    className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-[10px] font-mono transition-all"
                                                 >
                                                     +{num} حصة
                                                 </button>
@@ -234,7 +234,7 @@ export const StudentDetails = ({
                                                         setAddingSessionsIndex(null);
                                                     }
                                                 }}
-                                                className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-blue-500 hover:text-white text-slate-600 dark:text-slate-300 font-normal text-[10px] font-mono transition-all"
+                                                className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-[10px] font-mono transition-all"
                                             >
                                                 مخصص
                                             </button>
@@ -245,13 +245,13 @@ export const StudentDetails = ({
                         })}
 
                         {/* Add Enrollment */}
-                        <div className="bg-white dark:bg-slate-900 p-4 border-2 border-dashed border-blue-200 dark:border-blue-900/30 relative">
+                        <div className="bg-card p-4 border-2 border-dashed border-border relative">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-sm">
+                                <div className="w-8 h-8 bg-primary-soft text-primary flex items-center justify-center shadow-sm">
                                     <Plus size={14} strokeWidth={2.5} />
                                 </div>
                                 <div>
-                                    <h4 className="font-medium text-xs text-slate-800 dark:text-white uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
+                                    <h4 className="font-medium text-xs text-main uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
                                 </div>
                             </div>
                             <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />

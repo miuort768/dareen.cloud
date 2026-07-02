@@ -29,35 +29,35 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
     const config = {
         success: {
             icon: CheckCircle2,
-            gradient: 'from-emerald-500/20 to-emerald-600/5',
-            border: 'border-emerald-500/40',
-            iconBg: 'bg-emerald-500',
-            text: 'text-emerald-900 dark:text-emerald-100',
-            progressBar: 'bg-emerald-500'
+            gradient: 'from-[var(--bg-success)]/20 to-[var(--bg-success)]/5',
+            border: 'border-success/40',
+            iconBg: 'bg-success',
+            text: 'text-success dark:text-success',
+            progressBar: 'bg-success'
         },
         error: {
             icon: XCircle,
-            gradient: 'from-rose-500/20 to-rose-600/5',
-            border: 'border-rose-500/40',
-            iconBg: 'bg-rose-500',
-            text: 'text-rose-900 dark:text-rose-100',
-            progressBar: 'bg-rose-500'
+            gradient: 'from-[var(--bg-error)]/20 to-[var(--bg-error)]/5',
+            border: 'border-error/40',
+            iconBg: 'bg-error',
+            text: 'text-error dark:text-error',
+            progressBar: 'bg-error'
         },
         warning: {
             icon: AlertCircle,
-            gradient: 'from-amber-500/20 to-amber-600/5',
-            border: 'border-amber-500/40',
-            iconBg: 'bg-amber-500',
-            text: 'text-amber-900 dark:text-amber-100',
-            progressBar: 'bg-amber-500'
+            gradient: 'from--[var(--bg-warning)]/20 to--[var(--bg-warning)]/5',
+            border: 'border-warning/40',
+            iconBg: 'bg-warning',
+            text: 'text-warning dark:text-warning',
+            progressBar: 'bg-warning'
         },
         info: {
             icon: Info,
-            gradient: 'from-sky-500/20 to-sky-600/5',
-            border: 'border-sky-500/40',
-            iconBg: 'bg-sky-500',
-            text: 'text-sky-900 dark:text-sky-100',
-            progressBar: 'bg-sky-500'
+            gradient: 'from--[var(--bg-info)]/20 to--[var(--bg-info)]/5',
+            border: 'border-info/40',
+            iconBg: 'bg-info',
+            text: 'text-info dark:text-info',
+            progressBar: 'bg-info'
         }
     };
 
@@ -66,7 +66,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
     return (
         <div className={cn(
             "group relative flex items-center gap-4 p-4 min-w-[320px] max-w-[420px] rounded-none shadow-[4px_4px_0px_0px_black] border-2  transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-            "bg-white dark:bg-slate-900",
+            "bg-white dark:bg-primary-active",
             border,
             isExiting ? "opacity-0 scale-95 translate-x-10" : "animate-in slide-in-from-right-12 fade-in",
             "hover:shadow-[6px_6px_0px_0px_black] hover:-translate-y-0.5"
@@ -76,7 +76,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
 
             {/* Icon Section */}
             <div className={cn(
-                "relative z-10 p-2.5 rounded-none text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] flex-shrink-0 animate-bounce-slow",
+                "relative z-10 p-2.5 rounded-none text-on-primary border-2 border-border shadow-[2px_2px_0px_0px_black] flex-shrink-0 animate-bounce-slow",
                 iconBg
             )}>
                 <Icon size={20} className="drop-shadow-sm" />
@@ -92,7 +92,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
             {/* Close Button */}
             <button
                 onClick={handleClose}
-                className="relative z-10 p-1.5 rounded-none text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent hover:border-gray-950"
+                className="relative z-10 p-1.5 rounded-none text-muted hover:bg-black/5 dark:hover:bg-white/5 hover:text-main dark:hover:text-on-primary transition-all border border-transparent hover:border-border"
             >
                 <X size={16} />
             </button>

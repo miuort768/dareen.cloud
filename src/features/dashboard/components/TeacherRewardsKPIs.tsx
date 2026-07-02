@@ -21,10 +21,10 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
     ];
 
     return (
-        <div className="bg-white border-4 border-gray-950 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
+        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_#000] relative overflow-hidden group">
             
-            <div className="flex items-center gap-2 mb-6 text-gray-950 dark:text-white">
-                <Target size={20} className="text-primary-600" />
+            <div className="flex items-center gap-2 mb-6 text-main dark:text-on-primary">
+                <Target size={20} className="text-primary" />
                 <h3 className="font-medium text-xs uppercase tracking-tighter">أهداف المكافآت المهنية (KPIs)</h3>
             </div>
 
@@ -37,24 +37,24 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                         <div key={idx} className="space-y-2">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className={cn("p-1.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]", 
-                                        isAchieved ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-400"
+                                    <div className={cn("p-1.5 border-2 border-border shadow-[2px_2px_0px_0px_#000]", 
+                                        isAchieved ? "bg-success text-on-primary" : "bg-surface text-muted"
                                     )}>
                                         {goal.icon}
                                     </div>
-                                    <span className="text-[10px] font-medium text-gray-900 dark:text-white uppercase">{goal.name}</span>
+                                    <span className="text-[10px] font-medium text-main dark:text-on-primary uppercase">{goal.name}</span>
                                 </div>
                                 <div className="text-[10px] font-medium">
-                                    <span className={cn(isAchieved ? "text-emerald-600" : "text-primary-600")}>{goal.value}{goal.unit}</span>
-                                    <span className="text-gray-300 mx-1">/</span>
-                                    <span className="text-gray-400">{goal.goal}{goal.unit}</span>
+                                    <span className={cn(isAchieved ? "text-success" : "text-primary")}>{goal.value}{goal.unit}</span>
+                                    <span className="text-dim mx-1">/</span>
+                                    <span className="text-muted">{goal.goal}{goal.unit}</span>
                                 </div>
                             </div>
                             
-                            <div className="h-3 bg-gray-100 dark:bg-gray-800 border-2 border-gray-950 overflow-hidden">
+                            <div className="h-3 bg-surface dark:bg-card border-2 border-border overflow-hidden">
                                 <div 
                                     className={cn("h-full transition-all duration-1000", 
-                                        isAchieved ? "bg-emerald-500" : "bg-primary-500"
+                                        isAchieved ? "bg-success" : "bg-primary"
                                     )}
                                     style={{ width: `${progress}%` }}
                                 ></div>
@@ -64,9 +64,9 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                 })}
             </div>
 
-            <div className="mt-8 p-4 bg-gray-950 text-white border-2 border-gray-950 flex items-center justify-between group-hover:bg-primary-600 transition-colors">
+            <div className="mt-8 p-4 bg-card text-on-primary border-2 border-border flex items-center justify-between group-hover:bg-primary transition-colors">
                 <div className="flex items-center gap-3">
-                    <Award size={20} className="text-yellow-400 animate-bounce" />
+                    <Award size={20} className="text-warning animate-bounce" />
                     <div>
                         <p className="text-[9px] font-medium text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
                         <h4 className="text-xs font-medium uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>

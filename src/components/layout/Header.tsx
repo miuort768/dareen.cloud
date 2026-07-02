@@ -15,7 +15,6 @@ export const Header = () => {
     const lastScrollY = useRef(0);
 
     useEffect(() => {
-        // Hide header on scroll down (mobile only), show on scroll up
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             if (currentScrollY > 60) {
@@ -125,10 +124,10 @@ export const Header = () => {
                 <div className="w-px h-8 bg-white/20 shrink-0 hidden md:block" />
                 {title && (
                     <div className="min-w-0 flex-1">
-                        <h1 className="text-sm md:text-lg font-bold text-white truncate tracking-tight leading-none">
+                        <h1 className="text-sm md:text-lg font-bold text-on-primary truncate tracking-tight leading-none">
                             {title}
                         </h1>
-                        <p className="hidden md:block text-[10px] font-normal text-white/70 uppercase tracking-widest leading-none mt-0.5">
+                        <p className="hidden md:block text-[10px] font-normal text-on-primary opacity-70 uppercase tracking-widest leading-none mt-0.5">
                             {subtitle || 'دارين للتعليم والتدريب'}
                         </p>
                     </div>
@@ -138,7 +137,7 @@ export const Header = () => {
             <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-9 h-9 flex items-center justify-center text-blue-200 hover:bg-white/10 transition-colors shrink-0"
+                    className="w-9 h-9 flex items-center justify-center text-on-primary hover:bg-white/10 transition-colors shrink-0"
                 >
                     <Sun size={18} />
                 </button>
@@ -153,11 +152,11 @@ export const Header = () => {
                     to={currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-dashboard' : currentUser?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard'}
                     className="flex items-center pr-2 border-r border-white/20 shrink-0 group transition-all"
                 >
-                    <div className="w-9 h-9 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
+                    <div className="w-9 h-9 bg-gradient-to-br from-primary-light to-primary-soft flex items-center justify-center text-muted rounded-full shrink-0 border-2 border-success/30 dark:border-success/40 shadow-[0_0_12px_#34D39933] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
                             <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
                         ) : (
-                            <User size={18} className="text-slate-500 dark:text-emerald-400" />
+                            <User size={18} className="text-muted dark:text-success" />
                         )}
                     </div>
                 </Link>

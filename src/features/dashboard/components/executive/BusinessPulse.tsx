@@ -35,8 +35,8 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
     const offset = circumference - (pulse.score / 100) * circumference;
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">مؤشر الأداء العام</h3>
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border flex flex-col items-center">
+            <h3 className="text-sm font-semibold text-muted dark:text-muted mb-1">مؤشر الأداء العام</h3>
             <div className="relative w-36 h-32">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 140 130">
                     <path
@@ -68,7 +68,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
                 <LabelIcon size={12} />
                 {PULSE_LABELS[pulse.status] || 'غير متاح'}
             </span>
-            <p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-2 leading-relaxed">{pulse.message}</p>
+            <p className="text-xs text-muted dark:text-muted text-center mt-2 leading-relaxed">{pulse.message}</p>
         </div>
     );
 });

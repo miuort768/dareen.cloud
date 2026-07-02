@@ -182,19 +182,19 @@ export const AdminBlog = () => {
         <>
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-[1600px] mx-auto px-2 space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-card rounded-2xl shadow-sm border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#E11D4812' }}>
-                        <BookOpen size={22} style={{ color: '#E11D48' }} />
+                    <div className="w-11 h-11 rounded-xl bg-error-soft text-error flex items-center justify-center shrink-0">
+                        <BookOpen size={22} />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">المقالات التعليمية</h1>
-                        <p className="text-[11px] font-bold text-slate-400 mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
+                        <h1 className="text-lg md:text-xl font-black text-main leading-tight">المقالات التعليمية</h1>
+                        <p className="text-[11px] font-bold text-muted mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
                     </div>
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#E11D48] text-white font-bold rounded-xl hover:bg-[#BE123C] transition-all shadow-sm active:scale-95"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-error text-on-error font-bold rounded-xl hover:bg-error-hover transition-all shadow-sm active:scale-95"
                 >
                     <Plus size={18} />
                     <span className="text-xs">إضافة مقال</span>
@@ -202,30 +202,30 @@ export const AdminBlog = () => {
             </div>
 
             <button onClick={() => setShowSettings(s => !s)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs"
+                className="flex items-center gap-2 px-4 py-2.5 bg-surface dark:bg-card text-muted font-bold rounded-xl hover:bg-hover transition-all text-xs"
             >
                 <Settings size={14} />
                 <span>إعدادات المكتبة</span>
             </button>
 
             {showSettings && (
-                <div className="bg-white dark:bg-slate-900 p-5 border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl space-y-4">
-                    <h3 className="font-black text-sm text-slate-900 dark:text-white">إعدادات صفحة المكتبة</h3>
+                <div className="bg-card p-5 border border-border shadow-sm rounded-2xl space-y-4">
+                    <h3 className="font-black text-sm text-main">إعدادات صفحة المكتبة</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رقم واتساب المكتبة</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">رقم واتساب المكتبة</label>
                             <input type="text" value={libraryWhatsapp}
                                 onChange={(e) => setLibraryWhatsapp(e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 placeholder="مثال: 201234567890"
                                 dir="ltr"
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">معرف تليجرام المكتبة</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">معرف تليجرام المكتبة</label>
                             <input type="text" value={libraryTelegram}
                                 onChange={(e) => setLibraryTelegram(e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 placeholder="مثال: dareen_app"
                                 dir="ltr"
                             />
@@ -233,7 +233,7 @@ export const AdminBlog = () => {
                     </div>
                     <div className="flex justify-end gap-3">
                         <button onClick={() => { setShowSettings(false); setLibraryWhatsapp(savedWhatsapp); setLibraryTelegram(savedTelegram); }}
-                            className="px-4 py-2 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl text-xs"
+                            className="px-4 py-2 font-bold text-muted hover:text-main transition-all rounded-xl text-xs"
                         >إلغاء</button>
                         <button onClick={async () => {
                             setSavingSettings(true);
@@ -246,7 +246,7 @@ export const AdminBlog = () => {
                             finally { setSavingSettings(false); }
                         }}
                             disabled={savingSettings}
-                            className="px-5 py-2 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 rounded-xl text-xs"
+                            className="px-5 py-2 bg-error text-on-error font-bold hover:bg-error-hover transition-all disabled:opacity-50 rounded-xl text-xs"
                         >
                             {savingSettings ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
                         </button>
@@ -254,28 +254,32 @@ export const AdminBlog = () => {
                 </div>
             )}
 
-            <div className="bg-white dark:bg-slate-900 p-4 border border-slate-100/50 dark:border-slate-800/50 shadow-sm space-y-4 rounded-2xl">
+            <div className="bg-card p-4 border border-border shadow-sm space-y-4 rounded-2xl">
                 <div className="relative flex-grow">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2" size={20} style={{ color: '#94A3B8' }} />
+                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={20} />
                     <input
                         type="text"
                         placeholder="بحث عن مقالات أو تصنيفات..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-12 py-3 focus:border-[#E11D48] transition-all font-bold text-sm rounded-xl outline-none"
+                        className="w-full bg-surface dark:bg-card border border-border pr-12 py-3 focus:outline-none focus:ring-2 focus:ring-focus transition-all font-bold text-sm rounded-xl outline-none"
                     />
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                     {[
-                        { key: '', label: 'الكل', color: '#64748B' },
-                        { key: 'foundation', label: 'التأسيس', color: '#7C3AED' },
-                        { key: 'solutions', label: 'حل الكتب', color: '#2563EB' },
-                        { key: 'notes', label: 'المذكرات', color: '#059669' },
-                        { key: 'more', label: 'المزيد', color: '#D97706' },
+                        { key: '', label: 'الكل' },
+                        { key: 'foundation', label: 'التأسيس' },
+                        { key: 'solutions', label: 'حل الكتب' },
+                        { key: 'notes', label: 'المذكرات' },
+                        { key: 'more', label: 'المزيد' },
                     ].map(btn => (
                         <button key={btn.key} onClick={() => setFilterType(btn.key)}
-                            className={`px-4 py-2 text-xs font-bold rounded-xl transition-all active:scale-95 ${filterType === btn.key ? 'text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
-                            style={filterType === btn.key ? { backgroundColor: btn.color } : undefined}>
+                            className={cn(
+                                "px-4 py-2 text-xs font-bold rounded-xl transition-all active:scale-95",
+                                filterType === btn.key
+                                    ? "bg-error text-on-error shadow-sm"
+                                    : "text-muted bg-surface dark:bg-card hover:bg-hover"
+                            )}>
                             {btn.label}
                         </button>
                     ))}
@@ -284,35 +288,35 @@ export const AdminBlog = () => {
 
             {/* Inline Form */}
             {isModalOpen && currentPost && (
-                <div className="bg-white dark:bg-slate-900 w-full overflow-hidden border border-slate-100/50 dark:border-slate-800/50 shadow-sm rounded-2xl">
-                    <div className="p-4 bg-[#172554] text-white flex items-center justify-between rounded-t-2xl">
+                <div className="bg-card w-full overflow-hidden border border-border shadow-sm rounded-2xl">
+                    <div className="p-4 bg-primary text-on-primary flex items-center justify-between rounded-t-2xl">
                         <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
-                        <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-rose-500 transition-all" aria-label="إغلاق"><X size={18} /></button>
+                        <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-error transition-all" aria-label="إغلاق"><X size={18} /></button>
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">عنوان المقال</label>
+                                <label className="block text-[10px] font-bold text-muted mb-1.5">عنوان المقال</label>
                                 <input
                                     required
                                     type="text"
                                     value={currentPost.title}
                                     onChange={(e) => setCurrentPost({ ...currentPost, title: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                     placeholder="مثال: أفضل نصائح الدراسة..."
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الرابط المختصر (Slug)</label>
+                                <label className="block text-[10px] font-bold text-muted mb-1.5">الرابط المختصر (Slug)</label>
                                 <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
                                         required
                                         type="text"
                                         value={currentPost.slug}
                                         onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
                                         dir="ltr"
                                         placeholder="أفضل-نصائح-الدراسة"
                                     />
@@ -322,44 +326,44 @@ export const AdminBlog = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التصنيف</label>
+                                <label className="block text-[10px] font-bold text-muted mb-1.5">التصنيف</label>
                                 <div className="relative">
-                                    <Tag className="absolute right-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
                                         type="text"
                                         value={currentPost.category}
                                         onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pr-10 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                         placeholder="مثل: نصائح دراسية"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكاتب</label>
+                                <label className="block text-[10px] font-bold text-muted mb-1.5">الكاتب</label>
                                 <input
                                     type="text"
                                     value={currentPost.author}
                                     onChange={(e) => setCurrentPost({ ...currentPost, author: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">التاريخ</label>
+                                <label className="block text-[10px] font-bold text-muted mb-1.5">التاريخ</label>
                                 <input
                                     type="date"
                                     value={currentPost.date?.split('T')[0]}
                                     onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 />
                             </div>
                         </div>
 
-                        <div className="p-4 rounded-2xl" style={{ backgroundColor: '#E11D4808', border: '1px solid #E11D4815' }}>
-                            <p className="text-[10px] font-bold mb-4" style={{ color: '#E11D48' }}>تصنيف تعليمي — سيظهر في صفحة المواد</p>
+                        <div className="p-4 rounded-2xl bg-error-soft/50 border border-error/10">
+                            <p className="text-[10px] font-bold mb-4 text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">نوع المحتوى</label>
-                                    <select value={currentPost.contentType} onChange={e => { const v = e.target.value; setCurrentPost(prev => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">نوع المحتوى</label>
+                                    <select value={currentPost.contentType} onChange={e => { const v = e.target.value; setCurrentPost(prev => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none">
                                         <option value="notes">مذكرات</option>
                                         <option value="solutions">حل كتب</option>
                                         <option value="more">المزيد</option>
@@ -367,8 +371,8 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المنهج</label>
-                                    <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">المنهج</label>
+                                    <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="kuwait">الكويت</option>
                                         <option value="qatar">قطر</option>
@@ -377,8 +381,8 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المرحلة</label>
-                                    <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">المرحلة</label>
+                                    <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="primary">ابتدائي</option>
                                         <option value="middle">متوسط</option>
@@ -388,23 +392,23 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الصف</label>
-                                    <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">الصف</label>
+                                    <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الفصل</label>
-                                    <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">الفصل</label>
+                                    <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون</option>
                                         <option value="1">الفصل الأول</option>
                                         <option value="2">الفصل الثاني</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">المادة</label>
-                                    <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-sm font-bold focus:border-[#E11D48] rounded-xl outline-none disabled:opacity-50">
+                                    <label className="text-[10px] font-bold text-dim block mb-1">المادة</label>
+                                    <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="arabic">عربي</option>
                                         <option value="math">رياضيات</option>
@@ -427,38 +431,38 @@ export const AdminBlog = () => {
                         {(currentPost.contentType === 'foundation' || currentPost.contentType === 'notes') && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="text-[10px] font-bold text-slate-400 block mb-1">رابط المصدر</label>
+                                <label className="text-[10px] font-bold text-dim block mb-1">رابط المصدر</label>
                                 <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input type="url" value={currentPost.source || ''} onChange={e => setCurrentPost({ ...currentPost, source: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
                                         dir="ltr" placeholder="https://..." />
                                 </div>
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-slate-400 block mb-1">حجم الملف</label>
+                                <label className="text-[10px] font-bold text-dim block mb-1">حجم الملف</label>
                                 <input type="text" value={currentPost.fileSize || ''} onChange={e => setCurrentPost({ ...currentPost, fileSize: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                     placeholder="2.5 MB" />
                             </div>
                         </div>
                         )}
 
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">رابط الصورة الرئيسية</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">رابط الصورة الرئيسية</label>
                             <div className="relative">
-                                <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                 <input
                                     type="url"
                                     value={currentPost.coverImage}
                                     onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
-                                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
                                     dir="ltr"
                                     placeholder="https://..."
                                 />
                             </div>
                             {currentPost.coverImage && (
-                                <div className="mt-2 h-32 w-full border border-slate-100/50 dark:border-slate-800/50 overflow-hidden rounded-xl">
+                                <div className="mt-2 h-32 w-full border border-border overflow-hidden rounded-xl">
                                     <img
                                         src={currentPost.coverImage}
                                         alt="معاينة"
@@ -477,101 +481,101 @@ export const AdminBlog = () => {
                                     type="checkbox"
                                     checked={currentPost.isNew || false}
                                     onChange={(e) => setCurrentPost({ ...currentPost, isNew: e.target.checked })}
-                                    className="w-4 h-4 rounded border-slate-300 text-[#E11D48] focus:ring-[#E11D48]"
+                                    className="w-4 h-4 rounded border-border text-error focus:ring-focus"
                                 />
-                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                                    <Star size={12} className="text-amber-500" /> جديد
+                                <span className="text-[10px] font-bold text-muted flex items-center gap-1">
+                                    <Star size={12} className="text-warning" /> جديد
                                 </span>
                             </label>
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
                             <input
                                 type="text"
                                 value={currentPost.keywords}
                                 onChange={(e) => setCurrentPost({ ...currentPost, keywords: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm rounded-xl outline-none"
+                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 placeholder="دراسة, نصائح, تفوق"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
                             <textarea
                                 rows={2}
                                 value={currentPost.excerpt}
                                 onChange={(e) => setCurrentPost({ ...currentPost, excerpt: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none rounded-xl outline-none"
+                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm resize-none rounded-xl outline-none"
                                 placeholder="وصف قصير يظهر في نتائج البحث..."
                             />
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">محتوى المقال (كود HTML)</label>
+                            <label className="block text-[10px] font-bold text-muted mb-1.5">محتوى المقال (كود HTML)</label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الأول</span>
+                                    <span className="text-[10px] font-bold text-dim block mb-1.5">الجزء الأول</span>
                                     <textarea
                                         rows={10}
                                         required
                                         value={contentPart1}
                                         onChange={(e) => setContentPart1(e.target.value)}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm resize-none font-mono rounded-xl outline-none"
                                         placeholder="الجزء الأول من المحتوى..."
                                     />
                                 </div>
                                 <div className="flex flex-col gap-4">
-                                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
-                                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">إظهار أزرار التحميل والمشاهدة</span>
+                                    <div className="flex items-center justify-between p-3 bg-surface dark:bg-card/50 rounded-xl border border-border">
+                                        <span className="text-[10px] font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
                                         <button type="button" onClick={() => setCurrentPost({ ...currentPost, showButtons: !currentPost.showButtons })}
-                                            className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+                                            className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim dark:bg-hover'}`}>
                                             <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'left-0.5 translate-x-6' : 'left-0.5'}`} />
                                         </button>
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
+                                        <label className="block text-[10px] font-bold text-dim mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
                                         <div className="relative">
-                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
                                                 type="url"
                                                 value={currentPost.downloadLink || ''}
                                                 onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
-                                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
                                                 dir="ltr"
                                                 placeholder="https://..."
                                             />
                                         </div>
-                                        <label className="block text-[10px] font-bold text-slate-400 mt-2 mb-1.5">نص زر التحميل</label>
+                                        <label className="block text-[10px] font-bold text-dim mt-2 mb-1.5">نص زر التحميل</label>
                                         <input type="text" value={currentPost.downloadButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, downloadButtonText: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm text-right rounded-xl outline-none"
+                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
                                             placeholder="تحميل الملف" />
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-slate-400 mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
+                                        <label className="block text-[10px] font-bold text-dim mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
                                         <div className="relative">
-                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#94A3B8' }} />
+                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
                                                 type="url"
                                                 value={currentPost.watchLink || ''}
                                                 onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
-                                                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 pl-10 focus:border-[#E11D48] font-bold text-sm text-left rounded-xl outline-none"
+                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
                                                 dir="ltr"
                                                 placeholder="https://..."
                                             />
                                         </div>
-                                        <label className="block text-[10px] font-bold text-slate-400 mt-2 mb-1.5">نص زر المشاهدة</label>
+                                        <label className="block text-[10px] font-bold text-dim mt-2 mb-1.5">نص زر المشاهدة</label>
                                         <input type="text" value={currentPost.watchButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, watchButtonText: e.target.value })}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm text-right rounded-xl outline-none"
+                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
                                             placeholder="مشاهدة الملف" />
                                     </div>
                                     <div className="flex-1">
-                                        <span className="text-[10px] font-bold text-slate-400 block mb-1.5">الجزء الثاني</span>
+                                        <span className="text-[10px] font-bold text-dim block mb-1.5">الجزء الثاني</span>
                                         <textarea
                                             rows={6}
                                             value={contentPart2}
                                             onChange={(e) => setContentPart2(e.target.value)}
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 focus:border-[#E11D48] font-bold text-sm resize-none font-mono rounded-xl outline-none"
+                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm resize-none font-mono rounded-xl outline-none"
                                             placeholder="الجزء الثاني من المحتوى..."
                                         />
                                     </div>
@@ -580,66 +584,66 @@ export const AdminBlog = () => {
                         </div>
 
                         {/* SEO Settings */}
-                        <div className="p-4 rounded-2xl" style={{ backgroundColor: '#7C3AED08', border: '1px solid #7C3AED15' }}>
-                            <p className="text-[10px] font-bold mb-4" style={{ color: '#7C3AED' }}>⚙️ إعدادات SEO — ظهور المقال في محركات البحث</p>
+                        <div className="p-4 rounded-2xl bg-primary-soft/50 border border-primary/10">
+                            <p className="text-[10px] font-bold mb-4 text-primary">⚙️ إعدادات SEO — ظهور المقال في محركات البحث</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">عنوان SEO (إذا اختلف عن عنوان المقال)</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">عنوان SEO (إذا اختلف عن عنوان المقال)</label>
                                     <input type="text" value={currentPost.seoTitle || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoTitle: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الوصف في SEO</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">الوصف في SEO</label>
                                     <input type="text" value={currentPost.seoDescription || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoDescription: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">صورة OG (لمشاركة فيسبوك/واتساب)</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">صورة OG (لمشاركة فيسبوك/واتساب)</label>
                                     <input type="url" value={currentPost.ogImage || ''} onChange={(e) => setCurrentPost({ ...currentPost, ogImage: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الكلمة المفتاحية الأساسية (Focus Keyword)</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">الكلمة المفتاحية الأساسية (Focus Keyword)</label>
                                     <input type="text" value={currentPost.focusKeyword || ''} onChange={(e) => setCurrentPost({ ...currentPost, focusKeyword: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">الوسوم (Tags) — مفصولة بفواصل</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">الوسوم (Tags) — مفصولة بفواصل</label>
                                     <input type="text" value={currentPost.tags || ''} onChange={(e) => setCurrentPost({ ...currentPost, tags: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-slate-400 block mb-1">Canonical URL (إذا اختلف)</label>
+                                    <label className="text-[10px] font-bold text-dim block mb-1">Canonical URL (إذا اختلف)</label>
                                     <input type="url" value={currentPost.canonicalUrl || ''} onChange={(e) => setCurrentPost({ ...currentPost, canonicalUrl: e.target.value })}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 focus:border-[#7C3AED] font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
                                 </div>
                             </div>
                             <div className="flex items-center gap-6 mt-4">
                                 <label className="flex items-center gap-2 cursor-pointer">
                                     <input type="checkbox" checked={currentPost.robotsIndex !== false} onChange={(e) => setCurrentPost({ ...currentPost, robotsIndex: e.target.checked })}
-                                        className="w-4 h-4 rounded border-slate-300 text-[#7C3AED] focus:ring-[#7C3AED]" />
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">السماح بفهرسة المقال (Index)</span>
+                                        className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
+                                    <span className="text-[10px] font-bold text-muted">السماح بفهرسة المقال (Index)</span>
                                 </label>
                                 <label className="flex items-center gap-2 cursor-pointer">
                                     <input type="checkbox" checked={currentPost.isFeatured || false} onChange={(e) => setCurrentPost({ ...currentPost, isFeatured: e.target.checked })}
-                                        className="w-4 h-4 rounded border-slate-300 text-[#7C3AED] focus:ring-[#7C3AED]" />
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1"><Star size={12} className="text-amber-500" /> مقال مميز</span>
+                                        className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
+                                    <span className="text-[10px] font-bold text-muted flex items-center gap-1"><Star size={12} className="text-warning" /> مقال مميز</span>
                                 </label>
                             </div>
                         </div>
 
-                        <div className="p-5 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 flex justify-end gap-3 rounded-xl">
+                        <div className="p-5 border-t border-border bg-surface dark:bg-card/50 flex justify-end gap-3 rounded-xl">
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="px-5 py-2.5 font-bold text-slate-500 hover:text-slate-800 transition-all rounded-xl"
+                                className="px-5 py-2.5 font-bold text-muted hover:text-main transition-all rounded-xl"
                             >
                                 إلغاء
                             </button>
                             <button
                                 type="submit"
                                 disabled={submitting}
-                                className="flex items-center gap-2 px-6 py-2.5 bg-[#E11D48] text-white font-bold hover:bg-[#BE123C] transition-all disabled:bg-slate-400 shadow-sm active:scale-95 rounded-xl"
+                                className="flex items-center gap-2 px-6 py-2.5 bg-error text-on-error font-bold hover:bg-error-hover transition-all disabled:opacity-50 shadow-sm active:scale-95 rounded-xl"
                             >
                                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
                                 <span className="text-xs">نشر المقال</span>
@@ -652,37 +656,37 @@ export const AdminBlog = () => {
             {/* Posts Grid */}
             {isModalOpen ? null : loading ? (
                 <div className="flex items-center justify-center py-20">
-                    <div className="w-10 h-10 rounded-full border-2 border-slate-200 border-t-[#E11D48] animate-spin" />
+                    <div className="w-10 h-10 rounded-full border-2 border-border border-t-error animate-spin" />
                 </div>
             ) : filteredPosts.length === 0 ? (
-                <div className="text-center py-20 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: '#E11D4812' }}>
-                        <BookOpen size={22} style={{ color: '#E11D48' }} />
+                <div className="text-center py-20 bg-card border border-dashed border-border rounded-2xl">
+                    <div className="w-12 h-12 rounded-xl bg-error-soft text-error flex items-center justify-center mx-auto mb-3">
+                        <BookOpen size={22} />
                     </div>
-                    <p className="text-sm font-bold text-slate-400">لا توجد مقالات بعد! أضف أول مقال الآن</p>
+                    <p className="text-sm font-bold text-muted">لا توجد مقالات بعد! أضف أول مقال الآن</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredPosts.map(post => (
-                        <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl">
+                        <div key={post.id} className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
                             <div className="relative h-36 overflow-hidden">
                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                 <div className="absolute top-2 right-2">
-                                    <span className="text-[10px] font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: '#E11D48', color: '#FFFFFF' }}>{post.category}</span>
+                                    <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-error text-on-error">{post.category}</span>
                                 </div>
                             </div>
                             <div className="p-3">
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-1 line-clamp-2 text-sm">{post.title}</h3>
-                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 mb-2">
+                                <h3 className="font-bold text-main mb-1 line-clamp-2 text-sm">{post.title}</h3>
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-muted mb-2">
                                     <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
                                     <div className="flex items-center gap-1"><User size={12} /> {post.author}</div>
                                 </div>
-                                <div className="flex items-center justify-between pt-2 border-t border-slate-100/50 dark:border-slate-800/50">
+                                <div className="flex items-center justify-between pt-2 border-t border-border">
                                     <div className="flex gap-2">
-                                        <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl" style={{ color: '#2563EB' }} aria-label="تعديل"><Edit2 size={14} /></button>
-                                        <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl" style={{ color: '#E11D48' }} aria-label="حذف"><Trash2 size={14} /></button>
+                                        <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl text-info" aria-label="تعديل"><Edit2 size={14} /></button>
+                                        <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl text-error" aria-label="حذف"><Trash2 size={14} /></button>
                                     </div>
-                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-1.5" style={{ color: '#94A3B8' }}><ExternalLink size={14} /></a>
+                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-1.5 text-dim"><ExternalLink size={14} /></a>
                                 </div>
                             </div>
                         </div>

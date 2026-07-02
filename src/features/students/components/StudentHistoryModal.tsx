@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Calendar } from 'lucide-react';
+import { X, Calendar, Clock } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
 import { Skeleton } from '../../../components/ui/Skeleton';
@@ -50,33 +50,33 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 ">
-            <div className="bg-white dark:bg-gray-900 w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm animate-in fade-in zoom-in duration-300">
+            <div className="bg-card w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm animate-in fade-in zoom-in duration-300">
                 {/* Header */}
-                <div className="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between" dir="rtl">
+                <div className="p-4 border-b border-border flex items-center justify-between" dir="rtl">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-sm">
+                        <div className="w-10 h-10 bg-info-soft text-info flex items-center justify-center shadow-sm">
                             <Clock size={18} />
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <X size={24} className="text-gray-400" />
+                    <button onClick={onClose} className="p-2 hover:bg-surface dark:hover:bg-hover transition-colors">
+                        <X size={24} className="text-dim" />
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-gray-900/50 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto p-6 bg-surface custom-scrollbar">
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 w-full" />)}
                         </div>
                     ) : sessions.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+                        <div className="flex flex-col items-center justify-center h-64 text-dim">
                             <Calendar size={48} className="mb-4 opacity-50" />
                             <p className="font-normal">لا يوجد سجل حصص لهذا الطالب</p>
                         </div>
                     ) : (
-                        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden">
+                        <div className="bg-card border border-border overflow-hidden">
                             <table className="w-full text-sm text-right">
-                                <thead className="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-normal">
+                                <thead className="bg-surface dark:bg-hover text-dim font-normal">
                                     <tr>
                                         <th className="p-4">التاريخ</th>
                                         <th className="p-4">اليوم</th>
@@ -86,19 +86,19 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                                         <th className="p-4">الحالة</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                                <tbody className="divide-y divide-border">
                                     {sessions.map(session => (
-                                        <tr key={session.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                        <tr key={session.id} className="hover:bg-surface dark:hover:bg-hover transition-colors">
                                             <td className="p-4 font-mono font-normal">{new Date(session.date).toLocaleDateString('ar-EG')}</td>
                                             <td className="p-4 font-normal">{session.day}</td>
-                                            <td className="p-4 font-normal text-gray-900 dark:text-white">{session.subject}</td>
-                                            <td className="p-4 text-gray-600 dark:text-gray-400">{session.teacherName}</td>
+                                            <td className="p-4 font-normal text-main">{session.subject}</td>
+                                            <td className="p-4 text-muted">{session.teacherName}</td>
                                             <td className="p-4 font-mono">{session.time}</td>
                                             <td className="p-4">
                                                 <span className={cn(
                                                     "px-2 py-1 text-[10px] font-medium uppercase tracking-widest",
-                                                    session.status === 'completed' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800" :
-                                                        "bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-800"
+                                                    session.status === 'completed' ? "bg-success-soft text-success border border-success-soft" :
+                                                        "bg-error-soft text-error border border-error-soft"
                                                 )}>
                                                     {session.status === 'completed' ? 'حضور' : 'غياب'}
                                                 </span>

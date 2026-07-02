@@ -24,13 +24,13 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="ضمانات النظام" />
             <div className="space-y-3">
-                <div className="p-4 bg-white dark:bg-slate-900 border border-rose-100/50 dark:border-rose-900/50">
+                <div className="p-4 bg-card border border-border">
                     <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
-                            <p className="text-xs font-bold text-rose-800 dark:text-rose-200 flex items-center gap-1.5">
+                            <p className="text-xs font-bold text-error flex items-center gap-1.5">
                                 <AlertCircle size={13} /> قفل التعديل بأثر رجعي
                             </p>
-                            <p className="text-[10px] text-rose-500 mt-1.5 leading-relaxed">
+                            <p className="text-[10px] text-error mt-1.5 leading-relaxed">
                                 يمنع الموظفين من إضافة أو تعديل حصص في تواريخ قديمة لضمان دقة السجلات المالية.
                             </p>
                         </div>
@@ -41,8 +41,8 @@ export const PoliciesSettings = ({
                     </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100/50 dark:border-slate-800/50">
-                    <p className="text-[11px] font-bold text-[#2563EB] flex items-center gap-1.5 mb-3">
+                <div className="pt-2 border-t border-border">
+                    <p className="text-[11px] font-bold text-primary flex items-center gap-1.5 mb-3">
                         <Wallet size={13} /> سياسة حساب العمولات
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -56,13 +56,13 @@ export const PoliciesSettings = ({
                                 className={cn(
                                     'p-3 border text-right transition-all',
                                     teacherCommissionType === opt.id
-                                        ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-sm'
-                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-100/50 dark:border-slate-800/50 hover:border-[#2563EB]/30'
+                                        ? 'bg-primary text-on-primary border-primary shadow-sm'
+                                        : 'bg-card text-muted border-border hover:border-primary'
                                 )}
                             >
                                 <p className="text-xs font-bold">{opt.label}</p>
-                                <p className={cn('text-[9px] mt-0.5', teacherCommissionType === opt.id ? 'text-white/60' : 'text-slate-400')}>{opt.sub}</p>
-                                {teacherCommissionType === opt.id && <CheckCircle2 size={12} className="mt-1 text-white/80" />}
+                                <p className={cn('text-[9px] mt-0.5', teacherCommissionType === opt.id ? 'text-on-primary opacity-60' : 'text-muted')}>{opt.sub}</p>
+                                {teacherCommissionType === opt.id && <CheckCircle2 size={12} className="mt-1 text-on-primary opacity-80" />}
                             </button>
                         ))}
                     </div>
@@ -73,9 +73,9 @@ export const PoliciesSettings = ({
         <SectionCard>
             <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="آلية التجميد التلقائي" />
             <div className="space-y-3">
-                <div className="p-4 bg-white dark:bg-slate-900 border border-sky-100/50 dark:border-sky-900/50">
-                    <p className="text-xs font-bold text-sky-800 dark:text-sky-200 mb-1">حد الغياب المسموح</p>
-                    <p className="text-[10px] text-sky-500 leading-relaxed mb-3">
+                <div className="p-4 bg-card border border-border">
+                    <p className="text-xs font-bold text-info mb-1">حد الغياب المسموح</p>
+                    <p className="text-[10px] text-info leading-relaxed mb-3">
                         إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
                     </p>
                     <div className="flex items-center gap-3">
@@ -95,17 +95,17 @@ export const PoliciesSettings = ({
                     </div>
                 </div>
 
-                <div className="p-4 bg-white dark:bg-slate-900 border border-rose-200/50 dark:border-rose-800/50">
+                <div className="p-4 bg-card border border-border">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#F43F5E12' }}>
-                            <Archive size={14} style={{ color: '#F43F5E' }} />
+                        <div className="w-8 h-8 flex items-center justify-center bg-error-soft">
+                            <Archive size={14} className="text-error" />
                         </div>
                         <div>
-                            <p className="text-xs font-bold text-rose-700 dark:text-rose-300">إقفال الشهر المالي</p>
-                            <p className="text-[9px] text-rose-400">منطقة الخطر</p>
+                            <p className="text-xs font-bold text-error">إقفال الشهر المالي</p>
+                            <p className="text-[9px] text-error">منطقة الخطر</p>
                         </div>
                     </div>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                    <p className="text-[10px] text-muted leading-relaxed mb-3">
                         أرشفة كافة الحصص الحالية وتصفير الإحصائيات الشهرية. لا تستخدم هذا إلا بنهاية الشهر الفعلي.
                     </p>
                     <DangerBtn

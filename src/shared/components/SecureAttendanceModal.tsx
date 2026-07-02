@@ -50,26 +50,26 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
             <div
-                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm"
+                className="fixed inset-0 bg-background/60 backdrop-blur-sm"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md overflow-hidden rounded-none">
-                <div className="bg-primary-600 p-4 text-white flex justify-between items-center">
+            <div className="relative bg-white dark:bg-card border border-border dark:border-border shadow-2xl w-full max-w-md overflow-hidden rounded-none">
+                <div className="bg-primary p-4 text-on-primary flex justify-between items-center">
                     <div className="flex items-center gap-2 font-bold">
                         <ShieldCheck size={20} />
                         <span>تسجيل حضور مؤكد</span>
                     </div>
-                    <button onClick={onClose} className="text-white/80 hover:text-white">
+                    <button onClick={onClose} className="text-on-primary/80 hover:text-on-primary">
                         <X size={20} />
                     </button>
                 </div>
 
                 <div className="p-6 space-y-6">
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-black text-gray-900 dark:text-white">{studentName}</h3>
-                        <p className="text-xs text-primary-600 font-bold mt-1 bg-primary-50 inline-block px-2 py-1 rounded-none dark:bg-primary-900/20 dark:text-primary-400">
+                        <p className="text-sm text-muted dark:text-muted font-bold mb-1">تسجيل للطالب</p>
+                        <h3 className="text-lg font-black text-main dark:text-on-primary">{studentName}</h3>
+                        <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20 dark:text-primary">
                             بتاريخ: {date}
                         </p>
                     </div>
@@ -80,11 +80,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             className={cn(
                                 "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'completed'
-                                    ? "border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
-                                    : "border-gray-100 bg-white text-gray-400 hover:border-emerald-200 dark:bg-gray-800 dark:border-gray-700"
+                                    ? "border-success bg-success-light text-success dark:bg-success/20 dark:text-success"
+                                    : "border-border bg-white text-muted hover:border-success dark:bg-card dark:border-border"
                             )}
                         >
-                            <CheckCircle2 size={24} className={status === 'completed' ? "text-emerald-500" : "text-gray-300"} />
+                            <CheckCircle2 size={24} className={status === 'completed' ? "text-success" : "text-dim"} />
                             <span className="font-bold text-sm">حضور</span>
                         </button>
                         <button
@@ -92,11 +92,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             className={cn(
                                 "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'cancelled'
-                                    ? "border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400"
-                                    : "border-gray-100 bg-white text-gray-400 hover:border-rose-200 dark:bg-gray-800 dark:border-gray-700"
+                                    ? "border-error bg-error-light text-error dark:bg-error/20 dark:text-error"
+                                    : "border-border bg-white text-muted hover:border-error dark:bg-card dark:border-border"
                             )}
                         >
-                            <XCircle size={24} className={status === 'cancelled' ? "text-rose-500" : "text-gray-300"} />
+                            <XCircle size={24} className={status === 'cancelled' ? "text-error" : "text-dim"} />
                             <span className="font-bold text-sm">غياب</span>
                         </button>
                     </div>
@@ -104,25 +104,25 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     {status === 'completed' && (
                         <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                                    <BookOpen size={12} className="text-emerald-500" /> ما تم إنجازه في الحصة
+                                <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                    <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                                 </label>
                                 <textarea 
                                     placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                                    className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-none focus:border-emerald-500 focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-on-primary dark:border-border"
                                     rows={2}
                                     value={topics}
                                     onChange={(e) => setTopics(e.target.value)}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                                    <Star size={12} className="text-amber-500" /> الواجب المطلوب
+                                <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                    <Star size={12} className="text-warning" /> الواجب المطلوب
                                 </label>
                                 <input 
                                     type="text"
                                     placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                                    className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-none focus:border-amber-500 focus:bg-white transition-all text-xs font-bold dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-on-primary dark:border-border"
                                     value={homework}
                                     onChange={(e) => setHomework(e.target.value)}
                                 />
@@ -132,7 +132,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
                     {status === 'cancelled' && (
                         <div className="animate-in fade-in slide-in-from-top-4 duration-300">
-                            <label className="flex items-center gap-3 p-4 bg-rose-50 border-2 border-rose-100 cursor-pointer hover:bg-rose-100/50 transition-colors">
+                            <label className="flex items-center gap-3 p-4 bg-error-light border-2 border-error cursor-pointer hover:bg-error-light/50 transition-colors">
                                 <input 
                                     type="checkbox"
                                     checked={needsCompensation}
@@ -140,15 +140,15 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     className="w-5 h-5 rounded-none accent-rose-600 cursor-pointer"
                                 />
                                 <div>
-                                    <p className="text-sm font-black text-rose-700 uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
-                                    <p className="text-[10px] font-bold text-rose-500">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
+                                    <p className="text-sm font-black text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
+                                    <p className="text-[10px] font-bold text-error">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
                                 </div>
                             </label>
                         </div>
                     )}
 
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-gray-600 dark:text-gray-300 flex items-center gap-1">
+                        <label className="text-xs font-bold text-muted dark:text-dim flex items-center gap-1">
                             <Lock size={12} /> كلمة المرور للتأكيد
                         </label>
                         <input
@@ -160,17 +160,17 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             }}
                             placeholder="أدخل كلمة المرور..."
                             className={cn(
-                                "w-full p-3 bg-gray-50 border rounded-none outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:text-white text-center font-mono tracking-widest",
-                                error ? "border-red-500" : "border-gray-200 dark:border-gray-700"
+                                "w-full p-3 bg-background border rounded-none outline-none focus:ring-0 focus:border-primary dark:bg-card dark:text-on-primary text-center font-mono tracking-widest",
+                                error ? "border-error" : "border-border dark:border-border"
                             )}
                             autoFocus
                         />
-                        {error && <p className="text-xs text-red-500 font-bold text-center">{error}</p>}
+                        {error && <p className="text-xs text-error font-bold text-center">{error}</p>}
                     </div>
 
                     <button
                         onClick={handleConfirm}
-                        className="w-full bg-primary-600 text-white py-3 rounded-none font-black shadow-lg shadow-primary-600/20 hover:bg-primary-700 flex items-center justify-center gap-2"
+                        className="w-full bg-primary text-on-primary py-3 rounded-none font-black shadow-lg shadow-primary/20 hover:bg-primary-hover flex items-center justify-center gap-2"
                     >
                         تأكيد التسجيل
                     </button>

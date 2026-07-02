@@ -64,7 +64,7 @@ export const AttendanceSettingsSection = ({
                 <ToggleRow icon={Snowflake} label="قفل إدخال الحضور السابق" sub="منع تعديل الحضور لأيام سابقة" checked={localBackdateLock} onChange={() => setLocalBackdateLock(!localBackdateLock)} />
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-6 pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات الحضور</PrimaryBtn>
             </div>
         </SectionCard>

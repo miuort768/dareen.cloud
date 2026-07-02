@@ -63,22 +63,22 @@ export const SessionCallAlert = () => {
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
                 className="fixed bottom-16 left-4 right-4 md:left-auto md:right-8 md:bottom-8 z-[1000] md:w-[400px]"
             >
-                <div className="bg-white border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] p-1 overflow-hidden">
-                    <div className="bg-primary-600 p-3 flex justify-between items-center border-b-2 border-gray-950">
-                        <div className="flex items-center gap-2 text-white">
+                <div className="bg-white border-4 border-border shadow-[10px_10px_0px_0px_black] p-1 overflow-hidden">
+                    <div className="bg-primary p-3 flex justify-between items-center border-b-2 border-border">
+                        <div className="flex items-center gap-2 text-on-primary">
                             <BellRing size={20} className="animate-bounce" />
                             <span className="font-medium italic text-sm">تنبيه حصة مباشرة!</span>
                         </div>
-                        <button onClick={() => setShow(false)} className="text-white hover:rotate-90 transition-transform">
+                        <button onClick={() => setShow(false)} className="text-on-primary hover:rotate-90 transition-transform">
                             <X size={20} />
                         </button>
                     </div>
                     
                     <div className="p-5">
                         <div className="text-right mb-4">
-                            <h4 className="font-medium text-gray-950 text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
-                            <p className="text-[10px] text-gray-500 font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
-                            <p className="text-[10px] font-bold text-primary-600">
+                            <h4 className="font-medium text-main text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
+                            <p className="text-[10px] text-muted font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
+                            <p className="text-[10px] font-bold text-primary">
                                 عبر {PROVIDER_NAMES[callData.meetingProvider] || callData.meetingProvider}
                             </p>
                         </div>
@@ -88,25 +88,25 @@ export const SessionCallAlert = () => {
                                 href={callData.meetingUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-medium text-xs flex items-center justify-center gap-2"
+                                className="flex-1 bg-primary text-on-primary py-2 px-4 border-2 border-border shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-medium text-xs flex items-center justify-center gap-2"
                             >
                                 انضم للحصة <ExternalLink size={14} />
                             </a>
                             <button 
                                 onClick={() => setShow(false)}
-                                className="px-4 py-2 border-2 border-gray-950 font-normal text-xs hover:bg-gray-50 transition-colors"
+                                className="px-4 py-2 border-2 border-border font-normal text-xs hover:bg-surface transition-colors"
                             >
                                 لاحقاً
                             </button>
                         </div>
                     </div>
                     
-                    <div className="bg-gray-50 h-1 w-full overflow-hidden">
+                    <div className="bg-background h-1 w-full overflow-hidden">
                         <motion.div 
                             initial={{ width: "100%" }}
                             animate={{ width: "0%" }}
                             transition={{ duration: 60, ease: "linear" }}
-                            className="h-full bg-primary-600"
+                            className="h-full bg-primary"
                         />
                     </div>
                 </div>

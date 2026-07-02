@@ -1,15 +1,7 @@
-import { ListTodo, History, Clock, Calendar, Activity as ActivityIcon } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { ListTodo, Calendar, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-interface Activity {
-    id: string;
-    type: 'session' | 'task';
-    title: string;
-    time: string;
-    status: string;
-    color: string;
-}
+import { ActivityFeed } from '../../../shared/components/ui';
+import type { ActivityItem } from '../../../shared/components/ui';
 
 interface RecentActivityFeedProps {
     sessions: { id: string; studentName: string; date?: string; status?: string }[];
@@ -18,97 +10,37 @@ interface RecentActivityFeedProps {
 
 export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps) => {
     const navigate = useNavigate();
-    const activities: Activity[] = [
-        ...sessions.slice(0, 5).map(s => ({
-            id: `s-${s.id}`,
-            type: 'session' as const,
-            title: `${s.studentName}`,
-            time: s.date || '',
-            status: s.status === 'completed' ? 'تمت الجلسة' : s.status === 'cancelled' ? 'ملغاة' : 'نشطة الآن',
-            color: s.status === 'completed' ? 'emerald' : s.status === 'cancelled' ? 'rose' : 'blue'
-        })),
-        ...tasks.slice(0, 5).map(t => ({
-            id: `t-${t.id}`,
-            type: 'task' as const,
-            title: `${t.title}`,
-            time: t.dueDate || '',
-            status: t.status === 'completed' ? 'مهمة منجزة' : 'قيد التنفيذ',
-            color: t.status === 'completed' ? 'emerald' : 'amber'
-        }))
-    ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
 
-    const color = '#2563EB';
+    const sessionItems: ActivityItem[] = sessions.slice(0, 5).map(s => ({
+        id: `s-${s.id}`,
+        title: `جلسة: ${s.studentName}`,
+        time: s.date || '',
+        icon: Calendar,
+        variant: s.status === 'completed' ? 'success' : s.status === 'cancelled' ? 'error' : 'info',
+        badge: s.status === 'completed' ? 'تمت الجلسة' : s.status === 'cancelled' ? 'ملغاة' : 'نشطة الآن',
+        badgeVariant: s.status === 'completed' ? 'success' : s.status === 'cancelled' ? 'error' : 'info',
+    }));
+
+    const taskItems: ActivityItem[] = tasks.slice(0, 5).map(t => ({
+        id: `t-${t.id}`,
+        title: t.title,
+        time: t.dueDate || '',
+        icon: ListTodo,
+        variant: t.status === 'completed' ? 'success' : 'warning',
+        badge: t.status === 'completed' ? 'مهمة منجزة' : 'قيد التنفيذ',
+        badgeVariant: t.status === 'completed' ? 'success' : 'warning',
+    }));
+
+    const allItems = [...sessionItems, ...taskItems]
+        .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+        .slice(0, 8);
 
     return (
-        <div className="p-6 md:p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 flex flex-col h-full relative overflow-hidden transition-all duration-300 hover:shadow-md" dir="rtl">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}12`, color }}>
-                        <History size={20} strokeWidth={1.5} />
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">سجل النشاطات</h3>
-                        <p className="text-[9px] font-medium text-[#64748B] mt-0.5">سجل المراقبة الفورية</p>
-                    </div>
-                </div>
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${color}15`, color }}>
-                    <ActivityIcon size={14} strokeWidth={1.5} className="animate-pulse" />
-                </div>
-            </div>
-
-            <div className="space-y-6 flex-1 overflow-y-auto pr-1 -mr-1 custom-scrollbar">
-                {activities.length > 0 ? (
-                    activities.map((act, i) => (
-                        <div key={act.id} className="relative flex gap-5 items-start group">
-                            {i !== activities.length - 1 && (
-                                <div className="absolute top-10 right-[19px] w-[2px] h-10" style={{ backgroundColor: `${color}20` }} />
-                            )}
-
-                            <div className={cn(
-                                "z-10 w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all shadow-sm",
-                                act.color === 'emerald' && 'text-[#22C55E]',
-                                act.color === 'rose' && 'text-rose-500',
-                                act.color === 'blue' && 'text-[#2563EB]',
-                                act.color === 'amber' && 'text-amber-500'
-                            )} style={{ backgroundColor: `${act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B'}12` }}>
-                                {act.type === 'session' ? <Calendar size={18} strokeWidth={1.5} /> : <ListTodo size={18} strokeWidth={1.5} />}
-                            </div>
-                            
-                            <div className="flex-1 min-w-0 pt-1">
-                                <div className="flex flex-col">
-                                    <h4 className="font-bold text-xs text-[#0F172A] dark:text-white truncate" style={{ color: `${color}` }}>{act.title}</h4>
-                                    <div className="flex items-center gap-3 mt-2">
-                                        <span className={cn(
-                                            "text-[9px] font-bold px-2 py-0.5 rounded-xl border",
-                                            act.color === 'emerald' ? 'text-[#22C55E] border-emerald-100 dark:border-emerald-500/20' :
-                                            act.color === 'rose' ? 'text-rose-500 border-rose-100 dark:border-rose-500/20' :
-                                            act.color === 'blue' ? 'text-[#2563EB] border-blue-100 dark:border-blue-500/20' :
-                                            'text-amber-500 border-amber-100 dark:border-amber-500/20'
-                                        )} style={{ backgroundColor: `${act.color === 'blue' ? color : act.color === 'emerald' ? '#22C55E' : act.color === 'rose' ? '#F43F5E' : '#F59E0B'}15` }}>
-                                            {act.status}
-                                        </span>
-                                        <span className="text-[9px] font-medium text-[#64748B] flex items-center gap-1">
-                                            <Clock size={10} strokeWidth={1.5} style={{ color: `${color}60` }} />
-                                            {act.time}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl" style={{ border: `2px dashed ${color}30` }}>
-                        <History size={24} strokeWidth={1.5} style={{ color: `${color}50` }} />
-                        <p className="text-[10px] font-medium text-[#64748B] mt-2">لا توجد نشاطات مؤخراً</p>
-                    </div>
-                )}
-            </div>
-
-            <div className="mt-8 pt-6" style={{ borderTop: `1px solid ${color}20` }}>
-                <button onClick={() => navigate('/settings')} className="w-full h-11 rounded-2xl text-white text-[10px] font-bold transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: color }}>
-                    عرض سجل النظام الكامل
-                </button>
-            </div>
-        </div>
+        <ActivityFeed
+            items={allItems}
+            title="سجل النشاطات"
+            subtitle="سجل المراقبة الفورية"
+            emptyMessage="لا توجد نشاطات مؤخراً"
+        />
     );
 };

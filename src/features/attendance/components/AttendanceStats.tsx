@@ -13,14 +13,14 @@ interface AttendanceStatsProps {
 const StatItem = ({ title, value, icon: Icon, subLabel, color = '#6C4BFF' }: { title: string, value: number, icon: LucideIcon, subLabel?: string, color?: string }) => (
     <div className="rounded-2xl p-4 dark:brightness-[0.65]" style={{ backgroundColor: color }}>
         <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-                <Icon size={20} className="text-white" />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
+                <Icon size={20} className="text-on-primary" />
             </div>
             <div className="min-w-0">
-                <p className="text-[10px] font-bold text-white/70">{title}</p>
-                <p className="text-lg font-black leading-none mt-0.5 text-white">
+                <p className="text-[10px] font-bold text-on-primary/70">{title}</p>
+                <p className="text-lg font-black leading-none mt-0.5 text-on-primary">
                     {value}
-                    {subLabel && <span className="text-[10px] font-bold text-white/60 mr-1">{subLabel}</span>}
+                    {subLabel && <span className="text-[10px] font-bold text-on-primary/60 mr-1">{subLabel}</span>}
                 </p>
             </div>
         </div>

@@ -28,10 +28,10 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     if (expired.length > 0) {
         alerts.push({
             icon: AlertCircle,
-            border: 'border-rose-100 dark:border-rose-500/20',
-            bg: 'bg-rose-50 dark:bg-rose-500/10',
-            text: 'text-rose-700 dark:text-rose-300',
-            iconColor: 'text-rose-500',
+            border: 'border-error dark:border-error/20',
+            bg: 'bg-error-light dark:bg-error/10',
+            text: 'text-error dark:text-error',
+            iconColor: 'text-error',
             title: `${expired.length} طالب منتهي اشتراكهم`,
             desc: expired.slice(0, 3).map(s => s.studentName).join('، ') + (expired.length > 3 ? ` و${expired.length - 3} آخرين` : '')
         });
@@ -40,10 +40,10 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     if (low.length > 0) {
         alerts.push({
             icon: Clock,
-            border: 'border-amber-100 dark:border-amber-500/20',
-            bg: 'bg-amber-50 dark:bg-amber-500/10',
-            text: 'text-amber-700 dark:text-amber-300',
-            iconColor: 'text-amber-500',
+            border: 'border-warning dark:border-warning/20',
+            bg: 'bg-warning-light dark:bg-warning/10',
+            text: 'text-warning dark:text-warning',
+            iconColor: 'text-warning',
             title: `${low.length} طالب رصيدهم على وشك النفاد`,
             desc: low.slice(0, 3).map(s => `${s.studentName} (${s.remainingSessions} حصص)`).join('، ') + (low.length > 3 ? ` و${low.length - 3} آخرين` : '')
         });
@@ -52,10 +52,10 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     focusStudents.slice(0, 3).forEach(f => {
         alerts.push({
             icon: AlertTriangle,
-            border: 'border-amber-100 dark:border-amber-500/20',
-            bg: 'bg-amber-50 dark:bg-amber-500/10',
-            text: 'text-amber-700 dark:text-amber-300',
-            iconColor: 'text-amber-500',
+            border: 'border-warning dark:border-warning/20',
+            bg: 'bg-warning-light dark:bg-warning/10',
+            text: 'text-warning dark:text-warning',
+            iconColor: 'text-warning',
             title: f.name,
             desc: f.reason
         });
@@ -64,19 +64,19 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     if (alerts.length === 0) {
         alerts.push({
             icon: Info,
-            border: 'border-emerald-100 dark:border-emerald-500/20',
-            bg: 'bg-emerald-50 dark:bg-emerald-500/10',
-            text: 'text-emerald-700 dark:text-emerald-300',
-            iconColor: 'text-emerald-500',
+            border: 'border-success dark:border-success/20',
+            bg: 'bg-success-light dark:bg-success/10',
+            text: 'text-success dark:text-success',
+            iconColor: 'text-success',
             title: 'كل شيء على ما يرام',
             desc: 'لا توجد تنبيهات حالياً'
         });
     }
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-700">
-            <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
+        <div className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border">
+            <h3 className="text-xs font-bold text-muted dark:text-muted mb-3 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-error animate-pulse" />
                 مركز التنبيهات
             </h3>
             <div className="space-y-2">
@@ -85,7 +85,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                         <alert.icon size={15} className={cn("shrink-0 mt-0.5", alert.iconColor)} />
                         <div className="min-w-0">
                             <p className={cn("text-[10px] font-bold", alert.text)}>{alert.title}</p>
-                            <p className="text-[8px] font-medium text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">{alert.desc}</p>
+                            <p className="text-[8px] font-medium text-muted dark:text-muted mt-0.5 line-clamp-2">{alert.desc}</p>
                         </div>
                     </div>
                 ))}

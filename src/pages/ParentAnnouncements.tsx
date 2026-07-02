@@ -1,4 +1,4 @@
-ï»¿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Bell,
@@ -18,6 +18,13 @@ import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
+
+const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; label: string; color: string; bg: string; border: string }> = {
+    urgent: { icon: AlertTriangle, label: 'ÚÇÌá', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
+    holiday: { icon: Umbrella, label: 'ÅÌÇÒÉ', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
+    event: { icon: Grid, label: 'İÚÇáíÉ', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
+    general: { icon: Bell, label: 'äÔÑÉ', color: 'var(--text-dim)', bg: 'var(--bg-card)', border: 'var(--border)' },
+};
 
 interface Announcement {
     id: string;
@@ -59,30 +66,7 @@ export const ParentAnnouncements = () => {
         )
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    const getTypeConfig = (type: string) => {
-        switch (type) {
-            case 'urgent': return { 
-                icon: AlertTriangle, 
-                color: '#F43F5E', 
-                label: 'Ø¹Ø§Ø¬Ù„'
-            };
-            case 'holiday': return { 
-                icon: Umbrella, 
-                color: '#F59E0B', 
-                label: 'Ø¥Ø¬Ø§Ø²Ø©'
-            };
-            case 'event': return { 
-                icon: Grid, 
-                color: '#8B5CF6', 
-                label: 'ÙØ¹Ø§Ù„ÙŠØ©'
-            };
-            default: return { 
-                icon: Bell, 
-                color: '#64748B', 
-                label: 'Ù†Ø´Ø±Ø©'
-            };
-        }
-    };
+    const getTypeConfig = (type: string) => TYPE_CONFIG[type] || TYPE_CONFIG.general;
 
     if (isLoading) {
         return <PageLoader />;
@@ -91,66 +75,66 @@ export const ParentAnnouncements = () => {
     return (
         <div className="min-h-full pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 px-4 md:px-6 py-6 md:py-8">
+            <div className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 px-4 md:px-6 py-6 md:py-8">
                 <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#8B5CF612' }}>
-                        <Bell size={20} style={{ color: '#8B5CF6' }} />
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary-soft">
+                        <Bell size={20} className="text-primary" />
                     </div>
                     <div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: '#8B5CF612', color: '#8B5CF6' }}>Ù‚Ù†Ø§Ø© Ø§Ù„Ø¥Ø¹Ù„Ø§Ù… Ø§Ù„Ù…Ø±ÙƒØ²ÙŠ</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">ŞäÇÉ ÇáÅÚáÇã ÇáãÑßÒí</span>
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white leading-tight">Ù†Ø´Ø±Ø© Ø¥Ø¹Ù„Ø§Ù†Ø§Øª Ø§Ù„Ù…Ù†ØµØ©</h1>
-                    <p className="text-[11px] font-bold text-slate-400">Ø§Ø¨Ù‚ Ø¹Ù„Ù‰ Ø§Ø·Ù„Ø§Ø¹ Ø¨Ø£Ø­Ø¯Ø« Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§Øª ÙˆØ§Ù„ÙØ¹Ø§Ù„ÙŠØ§Øª Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø¤Ø³Ø³Ø©</p>
+                    <h1 className="text-xl md:text-2xl font-black text-main dark:text-inverse leading-tight">äÔÑÉ ÅÚáÇäÇÊ ÇáãäÕÉ</h1>
+                    <p className="text-[11px] font-bold text-muted">ÇÈŞ Úáì ÇØáÇÚ ÈÃÍÏË ÇáÊäÈíåÇÊ æÇáİÚÇáíÇÊ ÏÇÎá ÇáãÄÓÓÉ</p>
                 </div>
             </div>
 
             <div className="space-y-3">
                 <div className="relative">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2" size={18} style={{ color: '#94A3B8' }} />
+                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
                     <input
                         type="text"
-                        placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø£Ø±Ø´ÙŠÙ..."
+                        placeholder="ÇÈÍË İí ÇáÃÑÔíİ..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-xl shadow-sm text-[13px] font-bold focus:outline-none focus:border-[#8B5CF6] transition-all placeholder:text-slate-400 dark:text-white"
+                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-[13px] font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
                     />
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                     <FilterButton
-                        label="Ø¹Ø±Ø¶ Ø§Ù„ÙƒÙ„"
+                        label="ÚÑÖ Çáßá"
                         active={filterType === 'all'}
                         onClick={() => setFilterType('all')}
                         icon={Grid}
-                        activeColor="#8B5CF6"
+                        activeColor="var(--bg-primary)"
                     />
                     <FilterButton
-                        label="Ø¹Ø§Ø¬Ù„"
+                        label="ÚÇÌá"
                         active={filterType === 'urgent'}
                         onClick={() => setFilterType('urgent')}
                         icon={Zap}
-                        activeColor="#F43F5E"
+                        activeColor="var(--bg-error)"
                     />
                     <FilterButton
-                        label="Ø¥Ø¬Ø§Ø²Ø©"
+                        label="ÅÌÇÒÉ"
                         active={filterType === 'holiday'}
                         onClick={() => setFilterType('holiday')}
                         icon={Umbrella}
-                        activeColor="#F59E0B"
+                        activeColor="var(--bg-warning)"
                     />
                     <FilterButton
-                        label="Ù†Ø´Ø±Ø©"
+                        label="äÔÑÉ"
                         active={filterType === 'general'}
                         onClick={() => setFilterType('general')}
                         icon={Calendar}
-                        activeColor="#8B5CF6"
+                        activeColor="var(--bg-primary)"
                     />
                 </div>
             </div>
 
-            {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ANNOUNCEMENTS LIST â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+            {/* ??????????????? ANNOUNCEMENTS LIST ??????????????? */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <AnimatePresence mode="popLayout">
                     {filteredAnnouncements.map((ann, idx) => {
@@ -163,44 +147,43 @@ export const ParentAnnouncements = () => {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                                 key={ann.id}
-                                className="bg-white dark:bg-slate-900 rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100/50 dark:border-slate-800/50 relative overflow-hidden flex flex-col"
+                                className="bg-white dark:bg-primary-active rounded-2xl p-5 md:p-6 shadow-sm border border-border/50 dark:border-border/50 relative overflow-hidden flex flex-col"
                             >
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold">
+                                    <div className="flex items-center gap-2 text-muted text-[10px] font-bold">
                                         <Clock size={12} />
                                         {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                                     </div>
-                                    <span className="px-3 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm" style={{ backgroundColor: `${config.color}12`, color: config.color, border: `1px solid ${config.color}20` }}>
-                                        {ann.type === 'urgent' && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#FFFFFF' }} />}
+                                    <span className="px-3 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
+                                        {ann.type === 'urgent' && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
                                         {config.label}
                                     </span>
                                 </div>
 
                                 <div className="space-y-2.5 mb-5 flex-1">
-                                    <h3 className="text-sm md:text-lg font-bold text-slate-900 dark:text-white leading-tight">
+                                    <h3 className="text-sm md:text-lg font-bold text-main dark:text-inverse leading-tight">
                                         {ann.title}
                                     </h3>
-                                    <p className="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed line-clamp-4">
+                                    <p className="text-[11px] md:text-xs text-dim dark:text-muted font-bold leading-relaxed line-clamp-4">
                                         {ann.content}
                                     </p>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-100/50 dark:border-slate-800/50">
+                                <div className="flex items-center justify-between pt-4 border-t border-divider">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
-                                            <ShieldCheck size={14} style={{ color: '#8B5CF6' }} />
+                                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
+                                            <ShieldCheck size={14} className="text-primary" />
                                         </div>
-                                        <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ©</span>
+                                        <span className="text-[9px] font-bold text-dim dark:text-muted">ÅÏÇÑÉ ÇáÃßÇÏíãíÉ</span>
                                     </div>
                                     
                                     <a 
-                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`Ø§Ø³ØªÙØ³Ø§Ø± Ø¨Ø®ØµÙˆØµ Ø¥Ø¹Ù„Ø§Ù†: ${ann.title}`)}`}
+                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`ÇÓÊİÓÇÑ ÈÎÕæÕ ÅÚáÇä: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
-                                        className="text-[#8B5CF6] border border-[#8B5CF620] px-4 py-1.5 rounded-xl text-[10px] font-bold flex items-center gap-2 transition-all hover:bg-[#8B5CF6] hover:text-white active:scale-95"
-                                        style={{ backgroundColor: '#8B5CF608' }}
+                                        className="text-primary border border-primary px-4 py-1.5 rounded-xl text-[10px] font-bold flex items-center gap-2 transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
                                     >
                                         <MessageCircle size={14} />
-                                        Ø§Ø³ØªÙØ³Ø§Ø±
+                                        ÇÓÊİÓÇÑ
                                     </a>
                                 </div>
                             </motion.div>
@@ -209,12 +192,12 @@ export const ParentAnnouncements = () => {
                 </AnimatePresence>
 
                 {filteredAnnouncements.length === 0 && (
-                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 p-8">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: '#8B5CF612' }}>
-                            <Bell size={22} style={{ color: '#8B5CF6' }} />
+                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border p-8">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 bg-primary-soft">
+                            <Bell size={22} className="text-primary" />
                         </div>
-                        <h3 className="text-sm font-bold text-slate-400">Ù„Ø§ ØªÙˆØ¬Ø¯ ØªØ­Ø¯ÙŠØ«Ø§Øª Ø¬Ø¯ÙŠØ¯Ø©</h3>
-                        <p className="text-[10px] font-bold text-slate-400 mt-1">Ø³ÙˆÙ ØªØ¸Ù‡Ø± Ø§Ù„Ø¥Ø¹Ù„Ø§Ù†Ø§Øª Ø§Ù„Ù‡Ø§Ù…Ø© Ù‡Ù†Ø§</p>
+                        <h3 className="text-sm font-bold text-muted">áÇ ÊæÌÏ ÊÍÏíËÇÊ ÌÏíÏÉ</h3>
+                        <p className="text-[10px] font-bold text-muted mt-1">Óæİ ÊÙåÑ ÇáÅÚáÇäÇÊ ÇáåÇãÉ åäÇ</p>
                     </div>
                 )}
             </div>
@@ -229,8 +212,8 @@ const FilterButton = ({ label, active, onClick, icon: Icon, activeColor }: { lab
         className={cn(
             "flex items-center justify-between px-4 py-3.5 rounded-xl text-[10px] md:text-xs font-bold transition-all border shadow-sm active:scale-95",
             active 
-                ? "text-white border-transparent" 
-                : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-100/50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800"
+                ? "text-on-primary border-transparent" 
+                : "bg-white dark:bg-primary-active text-muted dark:text-muted border-border/50 dark:border-border/50 hover:bg-surface dark:hover:bg-primary-active"
         )}
         style={active ? { backgroundColor: activeColor, borderColor: activeColor } : {}}
     >

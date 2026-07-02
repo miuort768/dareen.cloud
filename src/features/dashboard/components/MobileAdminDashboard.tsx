@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
+import { StatCard } from '../../../shared/components/ui/StatCard';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -113,7 +114,7 @@ export const MobileAdminDashboard = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="pb-4 text-right overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950"
+            className="pb-4 text-right overflow-x-hidden relative bg-background dark:bg-background"
             dir="rtl"
         >
 
@@ -124,13 +125,13 @@ export const MobileAdminDashboard = ({
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full"
             >
-                <div className="flex items-center gap-2.5 text-[#2563EB] font-medium text-xs">
+                <div className="flex items-center gap-2.5 text-primary font-medium text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
                     ) : pullDistance > 55 ? (
                         <><Sparkles size={16} className="animate-pulse" strokeWidth={1.5} /><span>أفلت للتحديث</span></>
                     ) : (
-                        <span className="text-[#94A3B8]">اسحب للتحديث</span>
+                        <span className="text-dim">اسحب للتحديث</span>
                     )}
                 </div>
             </motion.div>
@@ -139,24 +140,24 @@ export const MobileAdminDashboard = ({
             <div className={cn(
                 "sticky top-0 z-[100] transition-all duration-500",
                 headerScrolled
-                    ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm border-b border-slate-100/50 dark:border-slate-800/50"
-                    : "bg-white dark:bg-slate-950 border-b border-transparent"
+                    ? "bg-white/80 dark:bg-background/80 backdrop-blur-xl shadow-sm border-b border-border/50 dark:border-border/50"
+                    : "bg-white dark:bg-background border-b border-transparent"
             )}>
                 <div className="px-4 pt-3 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] flex items-center justify-center text-white shadow-sm shadow-blue-200/40">
+                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] flex items-center justify-center text-on-primary shadow-sm shadow-info/40">
                                 <ShieldCheck {...iconProps} />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">مركز القيادة</h1>
-                                <p className="text-[9px] font-medium text-[#64748B] dark:text-slate-500">
+                                <h1 className="text-sm font-bold text-main dark:text-on-primary leading-tight">مركز القيادة</h1>
+                                <p className="text-[9px] font-medium text-muted dark:text-muted">
                                     {format(new Date(), 'eeee, d MMMM', { locale: ar })}
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="px-2.5 py-1.5 rounded-xl bg-[#F1F5F9]/70 dark:bg-slate-800/70 backdrop-blur-sm text-[#2563EB] dark:text-[#38BDF8] font-medium text-[9px] tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-xl bg-surface/70 dark:bg-primary-active/70 backdrop-blur-sm text-primary dark:text-info font-medium text-[9px] tabular-nums">
                                 <Clock {...miniIconProps} className="inline ml-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -166,7 +167,7 @@ export const MobileAdminDashboard = ({
 
                 {/* Tabs */}
                 <div className="px-4 pb-3">
-                    <div className="flex bg-gradient-to-b from-[#F1F5F9] to-[#F1F5F9] dark:from-slate-800/60 dark:to-slate-800/60 rounded-2xl p-1 gap-1 shadow-sm">
+                    <div className="flex bg-gradient-to-b from-surface to-surface dark:from-[var(--bg-primary-active)]/60 dark:to-[var(--bg-primary-active)]/60 rounded-2xl p-1 gap-1 shadow-sm">
                         {[
                             { id: 'home' as const, label: 'الرئيسية', icon: Home },
                             { id: 'quick' as const, label: 'إجراءات', icon: FilePlus },
@@ -180,14 +181,14 @@ export const MobileAdminDashboard = ({
                                 className={cn(
                                     "flex-1 py-2 px-2 flex items-center justify-center gap-1.5 transition-all duration-300 relative rounded-xl",
                                     activeTab === tab.id
-                                        ? "bg-white dark:bg-slate-900 shadow-sm text-[#2563EB] dark:text-[#38BDF8] font-bold"
-                                        : "text-[#94A3B8] dark:text-slate-500 font-medium hover:text-[#0F172A] dark:hover:text-slate-300"
+                                        ? "bg-white dark:bg-primary-active shadow-sm text-primary dark:text-info font-bold"
+                                        : "text-dim dark:text-muted font-medium hover:text-main dark:hover:text-dim"
                                 )}
                             >
                                 <tab.icon {...smallIconProps} />
                                 <span className="text-[9px]">{tab.label}</span>
                                 {tab.badge !== undefined && tab.badge > 0 && (
-                                    <span className="absolute -top-1 -left-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[#22C55E] to-[#16A34A] text-white font-bold text-[7px] flex items-center justify-center px-1 border-2 border-white dark:border-slate-900 rounded-full shadow-sm">
+                                    <span className="absolute -top-1 -left-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary font-bold text-[7px] flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
                                         {tab.badge}
                                     </span>
                                 )}
@@ -211,52 +212,40 @@ export const MobileAdminDashboard = ({
                         >
                             {/* Quick Stats */}
                             <motion.div className="grid grid-cols-3 gap-3" variants={stagger} initial="initial" animate="animate">
-                                <QuickStatCard
-                                    icon={Users}
-                                    label="الطلاب"
-                                    value={stats.studentsCount}
-                                    color="#2563EB"
-                                    onClick={() => { triggerHaptic('light'); navigate('/students'); }}
-                                />
-                                <QuickStatCard
-                                    icon={BookOpen}
-                                    label="الاشتراكات"
-                                    value={stats.totalEnrollments}
-                                    color="#22C55E"
-                                    onClick={() => { triggerHaptic('light'); navigate('/schedule'); }}
-                                />
-                                <QuickStatCard
-                                    icon={TrendingUp}
-                                    label="صافي الربح"
-                                    value={`${(stats.totalNetProfit || 0).toLocaleString()}`}
-                                    color="#8B5CF6"
-                                    onClick={() => { triggerHaptic('light'); handleTabChange('finance'); }}
-                                />
+                                <motion.div variants={fadeUpItem} onClick={() => { triggerHaptic('light'); navigate('/students'); }} className="cursor-pointer">
+                                    <StatCard title="الطلاب" value={stats.studentsCount} icon={Users} variant="info" />
+                                </motion.div>
+                                <motion.div variants={fadeUpItem} onClick={() => { triggerHaptic('light'); navigate('/schedule'); }} className="cursor-pointer">
+                                    <StatCard title="الاشتراكات" value={stats.totalEnrollments} icon={BookOpen} variant="success" />
+                                </motion.div>
+                                <motion.div variants={fadeUpItem} onClick={() => { triggerHaptic('light'); handleTabChange('finance'); }} className="cursor-pointer">
+                                    <StatCard title="صافي الربح" value={`${(stats.totalNetProfit || 0).toLocaleString()}`} icon={TrendingUp} variant="primary" />
+                                </motion.div>
                             </motion.div>
 
                             {/* Today's Progress */}
-                            <motion.div {...fadeUp} className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-800">
+                            <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] dark:from-emerald-900/30 dark:to-emerald-800/20 flex items-center justify-center">
-                                            <Award {...smallIconProps} className="text-[#22C55E]" />
+                                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/30 dark:to--[var(--bg-success)]/20 flex items-center justify-center">
+                                            <Award {...smallIconProps} className="text-success" />
                                         </div>
                                         <div>
-                                            <span className="text-[9px] font-bold text-[#22C55E] dark:text-emerald-400">اليوم</span>
-                                            <h3 className="text-xs font-bold text-[#0F172A] dark:text-white">معدل تنفيذ الحصص</h3>
+                                            <span className="text-[9px] font-bold text-success dark:text-success">اليوم</span>
+                                            <h3 className="text-xs font-bold text-main dark:text-on-primary">معدل تنفيذ الحصص</h3>
                                         </div>
                                     </div>
-                                    <span className="text-lg font-bold text-[#22C55E] tabular-nums">{completionRate}%</span>
+                                    <span className="text-lg font-bold text-success tabular-nums">{completionRate}%</span>
                                 </div>
-                                <div className="w-full h-2.5 bg-[#F1F5F9] dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div className="w-full h-2.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${Math.min(completionRate, 100)}%` }}
                                         transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
-                                        className="h-full rounded-full bg-gradient-to-r from-[#2563EB] to-[#38BDF8]"
+                                        className="h-full rounded-full bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-info)]"
                                     />
                                 </div>
-                                <p className="text-[9px] font-medium text-[#64748B] mt-2">تم تنفيذ {completedSessions} من {todaySessions} حصة</p>
+                                <p className="text-[9px] font-medium text-muted mt-2">تم تنفيذ {completedSessions} من {todaySessions} حصة</p>
                             </motion.div>
 
                             {/* Quick Links */}
@@ -278,7 +267,7 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-3"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-[#64748B] px-1">الإجراءات السريعة</motion.p>
+                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">الإجراءات السريعة</motion.p>
                             <motion.div className="grid grid-cols-2 gap-3" variants={stagger} initial="initial" animate="animate">
                                 <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="#2563EB" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
                                 <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="#22C55E" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
@@ -299,25 +288,25 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-4"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-[#64748B] px-1">المؤشرات المالية</motion.p>
+                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">المؤشرات المالية</motion.p>
 
-                            <motion.div {...fadeUp} className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 space-y-4">
-                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[#F0FDF4] to-[#DCFCE7] dark:from-emerald-950/20 dark:to-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30">
+                            <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border space-y-4">
+                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/20 dark:to--[var(--bg-success)]/20 border border-success dark:border-success/30">
                                     <div>
-                                        <span className="text-[9px] font-bold text-[#22C55E] dark:text-emerald-400">الإيرادات</span>
-                                        <p className="text-lg font-bold text-[#0F172A] dark:text-white mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
+                                        <span className="text-[9px] font-bold text-success dark:text-success">الإيرادات</span>
+                                        <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
                                     </div>
-                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#22C55E] to-[#16A34A] flex items-center justify-center text-white shadow-sm shadow-green-200/40">
+                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] flex items-center justify-center text-on-primary shadow-sm shadow-success/40">
                                         <TrendingUp size={20} strokeWidth={1.5} />
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[#FFF1F2] to-[#FFE4E6] dark:from-rose-950/20 dark:to-rose-900/20 border border-rose-100 dark:border-rose-900/30">
+                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-error-soft)] to-[var(--bg-error-light)] dark:from--[var(--bg-error)]/20 dark:to--[var(--bg-error)]/20 border border-error dark:border-error/30">
                                     <div>
-                                        <span className="text-[9px] font-bold text-rose-500 dark:text-rose-400">المصروفات</span>
-                                        <p className="text-lg font-bold text-[#0F172A] dark:text-white mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
+                                        <span className="text-[9px] font-bold text-error dark:text-error">المصروفات</span>
+                                        <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
                                     </div>
-                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white shadow-sm shadow-rose-200/40">
+                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] flex items-center justify-center text-on-primary shadow-sm shadow-error/40">
                                         <TrendingDown size={20} strokeWidth={1.5} />
                                     </div>
                                 </div>
@@ -325,7 +314,7 @@ export const MobileAdminDashboard = ({
                                 <motion.button
                                     onClick={() => { triggerHaptic('light'); navigate('/finance'); }}
                                     whileTap={{ scale: 0.97 }}
-                                    className="w-full h-11 rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-blue-200/40 hover:shadow-md hover:shadow-blue-200/60 transition-shadow active:scale-[0.98]"
+                                    className="w-full h-11 rounded-2xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-shadow active:scale-[0.98]"
                                 >
                                     <Wallet {...smallIconProps} />
                                     لوحة المالية كاملة
@@ -344,23 +333,23 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-4"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-[#64748B] px-1">التنبيهات</motion.p>
+                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">التنبيهات</motion.p>
 
                             {lowBalanceCount > 0 ? (
-                                <motion.div {...fadeUp} className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-rose-100 dark:border-rose-900/30">
+                                <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-error dark:border-error/30">
                                     <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white shadow-sm shadow-rose-200/40 shrink-0">
+                                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] flex items-center justify-center text-on-primary shadow-sm shadow-error/40 shrink-0">
                                             <Bell size={18} strokeWidth={1.5} />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="font-bold text-xs text-[#0F172A] dark:text-white">إشعار مالي</h3>
-                                            <p className="text-[10px] font-medium text-[#64748B] dark:text-slate-400 mt-1">
+                                            <h3 className="font-bold text-xs text-main dark:text-on-primary">إشعار مالي</h3>
+                                            <p className="text-[10px] font-medium text-muted dark:text-muted mt-1">
                                                 يوجد {lowBalanceCount} طلاب بحاجة إلى تجديد الاشتراك
                                             </p>
                                             <motion.button
                                                 onClick={() => { triggerHaptic('medium'); navigate('/students'); }}
                                                 whileTap={{ scale: 0.95 }}
-                                                className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white text-[9px] font-bold transition-all inline-flex items-center gap-1.5 shadow-sm shadow-blue-200/30"
+                                                className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[9px] font-bold transition-all inline-flex items-center gap-1.5 shadow-sm shadow-info/30"
                                             >
                                                 <UserPlus {...miniIconProps} />
                                                 عرض الطلاب
@@ -369,34 +358,34 @@ export const MobileAdminDashboard = ({
                                     </div>
                                 </motion.div>
                             ) : (
-                                <motion.div {...fadeUp} className="bg-white dark:bg-slate-900 rounded-2xl p-8 text-center shadow-sm border border-slate-100 dark:border-slate-800">
-                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] dark:from-emerald-900/30 dark:to-emerald-800/20 flex items-center justify-center mx-auto mb-3">
-                                        <Bell size={24} strokeWidth={1.5} className="text-[#22C55E]" />
+                                <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-8 text-center shadow-sm border border-border dark:border-border">
+                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/30 dark:to--[var(--bg-success)]/20 flex items-center justify-center mx-auto mb-3">
+                                        <Bell size={24} strokeWidth={1.5} className="text-success" />
                                     </div>
-                                    <p className="text-xs font-bold text-[#0F172A] dark:text-white">لا توجد تنبيهات</p>
-                                    <p className="text-[9px] font-medium text-[#64748B] mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
+                                    <p className="text-xs font-bold text-main dark:text-on-primary">لا توجد تنبيهات</p>
+                                    <p className="text-[9px] font-medium text-muted mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
                                 </motion.div>
                             )}
 
                             {/* Support Card — glassmorphism style */}
-                            <motion.div {...fadeUp} className="relative rounded-2xl p-5 shadow-sm overflow-hidden bg-gradient-to-br from-[#2563EB] to-[#1D4ED8]">
+                            <motion.div {...fadeUp} className="relative rounded-2xl p-5 shadow-sm overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
                                 <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-                                <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-blue-300/10 rounded-full blur-xl" />
+                                <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-info-light/10 rounded-full blur-xl" />
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/10">
-                                            <Headphones size={18} strokeWidth={1.5} className="text-white" />
+                                            <Headphones size={18} strokeWidth={1.5} className="text-on-primary" />
                                         </div>
                                         <div>
-                                            <h4 className="text-xs font-bold text-white">الدعم الفني</h4>
+                                            <h4 className="text-xs font-bold text-on-primary">الدعم الفني</h4>
                                             <p className="text-[9px] font-medium text-white/60">متاح 24/7</p>
                                         </div>
                                     </div>
                                     <motion.button
                                         onClick={() => { triggerHaptic('heavy'); window.open('https://wa.me/message/DAREEN', '_blank'); }}
                                         whileTap={{ scale: 0.97 }}
-                                        className="w-full h-11 rounded-2xl bg-white/15 backdrop-blur-md text-white text-[10px] font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm border border-white/10 hover:bg-white/25"
+                                        className="w-full h-11 rounded-2xl bg-white/15 backdrop-blur-md text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm border border-white/10 hover:bg-white/25"
                                     >
                                         <Headphones {...smallIconProps} />
                                         تواصل مع الدعم الفني
@@ -413,20 +402,16 @@ export const MobileAdminDashboard = ({
 };
 
 
-const QuickStatCard = ({ icon: Icon, label, value, color, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; value: string | number; color: string; onClick?: () => void }) => (
-    <motion.div
-        variants={fadeUpItem}
-        whileTap={{ scale: 0.95 }}
-        onClick={onClick}
-        className="bg-white dark:bg-slate-900 rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-sm border border-slate-100 dark:border-slate-800 cursor-pointer active:scale-95 transition-all hover:shadow-md hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50"
-    >
-        <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-2" style={{ backgroundColor: `${color}12`, color }}>
-            <Icon {...iconProps} />
-        </div>
-        <span className="text-lg font-bold text-[#0F172A] dark:text-white leading-none tabular-nums">{value ?? 0}</span>
-        <span className="text-[9px] font-medium text-[#64748B] dark:text-slate-500 mt-1">{label}</span>
-    </motion.div>
-);
+
+
+const colorVarMap: Record<string, string> = {
+    '#2563EB': 'var(--bg-primary)',
+    '#22C55E': 'var(--bg-success)',
+    '#8B5CF6': 'var(--chart-4)',
+    '#F97316': 'var(--bg-warning)',
+    '#38BDF8': 'var(--bg-info)',
+    '#F59E0B': 'var(--bg-warning)',
+};
 
 const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; color: string; onClick?: () => void }) => (
     <motion.button
@@ -434,26 +419,29 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
         className="rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all w-full dark:brightness-[0.65]"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: colorVarMap[color] || color }}
     >
-        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+        <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-sm text-on-primary">
             <Icon {...iconProps} />
         </div>
-        <span className="text-[10px] font-bold text-white leading-none mt-1">{label}</span>
-        <span className="text-[8px] font-medium text-white/70">{subtext}</span>
+        <span className="text-[10px] font-bold text-on-primary leading-none mt-1">{label}</span>
+        <span className="text-[8px] font-medium text-on-primary/70">{subtext}</span>
     </motion.button>
 );
 
-const QuickLink = ({ icon: Icon, label, color, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; color: string; onClick?: () => void }) => (
+const QuickLink = ({ icon: Icon, label, color, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; color: string; onClick?: () => void }) => {
+    const cssVar = colorVarMap[color] || color;
+    return (
     <motion.button
         variants={fadeUpItem}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className="bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-slate-100 dark:border-slate-800 active:scale-95 transition-all hover:shadow-md hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50"
+        className="bg-white dark:bg-primary-active rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-border dark:border-border active:scale-95 transition-all hover:shadow-md hover:shadow-sm/50 dark:hover:shadow-card/50"
     >
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}12`, color }}>
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${cssVar} 7%, transparent)`, color: cssVar }}>
             <Icon size={16} strokeWidth={1.5} />
         </div>
-        <span className="text-[11px] font-bold text-[#0F172A] dark:text-white">{label}</span>
+        <span className="text-[11px] font-bold text-main dark:text-on-primary">{label}</span>
     </motion.button>
-);
+    );
+};

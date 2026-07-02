@@ -88,21 +88,21 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
     const colorMap: Record<string, string> = {
-        rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-none', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
-        amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-none', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
-        indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-none', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },
-        emerald: { bg: 'bg-emerald-500/5', border: 'border-emerald-500/10', icon: 'bg-emerald-500 text-white shadow-none', text: 'text-emerald-600', sub: 'text-emerald-500/70', btn: '' },
+        rose: { bg: 'bg-error/5', border: 'border-error/10', icon: 'bg-error text-on-primary shadow-none', text: 'text-error', sub: 'text-error/70', btn: 'bg-error text-on-primary' },
+        amber: { bg: 'bg-warning/5', border: 'border-warning/10', icon: 'bg-warning text-on-primary shadow-none', text: 'text-warning', sub: 'text-warning/70', btn: 'bg-warning text-on-primary' },
+        indigo: { bg: 'bg-primary/5', border: 'border-primary/10', icon: 'bg-primary text-on-primary shadow-none', text: 'text-primary', sub: 'text-primary/70', btn: 'bg-primary text-on-primary' },
+        emerald: { bg: 'bg-success/5', border: 'border-success/10', icon: 'bg-success text-on-primary shadow-none', text: 'text-success', sub: 'text-success/70', btn: '' },
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-none flex flex-col" dir="rtl">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-primary-active/50 border border-border dark:border-border p-5 shadow-sm rounded-none flex flex-col" dir="rtl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 rounded-none flex items-center justify-center border border-slate-200">
+                    <div className="w-8 h-8 bg-surface dark:bg-primary-active text-muted rounded-none flex items-center justify-center border border-border">
                         <Zap size={16} />
                     </div>
                     <div>
-                        <h4 className="text-sm font-normal text-slate-900 dark:text-white uppercase tracking-tight">إخطارات ذكية</h4>
+                        <h4 className="text-sm font-normal text-main dark:text-on-primary uppercase tracking-tight">إخطارات ذكية</h4>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                     const c = colorMap[alert.color] || colorMap.indigo;
                     const Icon = alert.icon;
                     return (
-                        <div key={alert.id} className={cn("p-3 border border-slate-100 flex items-center gap-3 rounded-none transition-all hover:bg-white dark:hover:bg-slate-800", c.bg)}>
+                        <div key={alert.id} className={cn("p-3 border border-border flex items-center gap-3 rounded-none transition-all hover:bg-white dark:hover:bg-primary-active", c.bg)}>
                             <div className={cn("w-8 h-8 shrink-0 flex items-center justify-center rounded-none", c.icon)}>
                                 <Icon size={14} />
                             </div>

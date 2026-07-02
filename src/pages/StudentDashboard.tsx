@@ -41,13 +41,26 @@ interface PointLog {
 
 // ─── Quick Access Data ────────────────────────────────────
 const quickAccessItems = [
-    { id: 'courses', label: 'دوراتي', icon: BookOpen, color: '#22C55E', bg: '#F0FDF4' },
-    { id: 'certificates', label: 'الشهادات', icon: GraduationCap, color: '#3B82F6', bg: '#EFF6FF' },
-    { id: 'challenges', label: 'التحديات', icon: Trophy, color: '#A855F7', bg: '#FAF5FF' },
-    { id: 'live', label: 'بث مباشر', icon: Video, color: '#F97316', bg: '#FFF7ED' },
-    { id: 'consult', label: 'الاستشارات', icon: Headphones, color: '#10B981', bg: '#ECFDF5' },
-    { id: 'announcements', label: 'الإعلانات', icon: Megaphone, color: '#F97316', bg: '#FFF7ED' },
+    { id: 'courses', label: 'دوراتي', icon: BookOpen, variant: 'success' },
+    { id: 'certificates', label: 'الشهادات', icon: GraduationCap, variant: 'info' },
+    { id: 'challenges', label: 'التحديات', icon: Trophy, variant: 'primary' },
+    { id: 'live', label: 'بث مباشر', icon: Video, variant: 'warning' },
+    { id: 'consult', label: 'الاستشارات', icon: Headphones, variant: 'success' },
+    { id: 'announcements', label: 'الإعلانات', icon: Megaphone, variant: 'warning' },
 ];
+
+const variantBg: Record<string, string> = {
+    success: 'bg-success-soft',
+    info: 'bg-info-soft',
+    primary: 'bg-primary-soft',
+    warning: 'bg-warning-soft',
+};
+const variantText: Record<string, string> = {
+    success: 'text-success',
+    info: 'text-info',
+    primary: 'text-primary',
+    warning: 'text-warning',
+};
 
 // ─── Hero Slides ──────────────────────────────────────────
 const heroSlides = [
@@ -57,8 +70,8 @@ const heroSlides = [
         subtitle: 'للتعليم والتدريب عن بعد',
         desc: 'منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.',
         emoji: '🎓',
-        gradient: 'from-[#EEE9FF] via-[#E8E0FF] to-[#DDD5FF]',
-        textColor: 'text-[#3D1F8F]',
+        gradient: 'from-primary-light via-primary-soft to-primary-light',
+        textColor: 'text-primary',
     },
     {
         id: 1,
@@ -66,8 +79,8 @@ const heroSlides = [
         subtitle: 'من أي مكان في العالم',
         desc: 'حصص تفاعلية مباشرة مع أفضل المعلمين، متابعة دورية، وتقارير مفصلة لأولياء الأمور.',
         emoji: '🌍',
-        gradient: 'from-[#E0F2FE] via-[#BAE6FD] to-[#7DD3FC]',
-        textColor: 'text-[#0C4A6E]',
+        gradient: 'from-info-light via-info-soft to-info-light',
+        textColor: 'text-info-dark',
     },
     {
         id: 2,
@@ -75,8 +88,8 @@ const heroSlides = [
         subtitle: 'واكسب النقاط والشارات',
         desc: 'نظام مكافآت متميز يشجع الطلاب على التفوق والمثابرة مع شارات وألقاب حصرية.',
         emoji: '🏆',
-        gradient: 'from-[#FEF3C7] via-[#FDE68A] to-[#FCD34D]',
-        textColor: 'text-[#78350F]',
+        gradient: 'from-warning-light via-warning-soft to-warning-light',
+        textColor: 'text-warning-dark',
     },
 ];
 
@@ -167,44 +180,44 @@ export const StudentDashboard = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-screen bg-[#F8F7FF] dark:bg-slate-950 font-sans overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-surface font-sans overflow-x-hidden" dir="rtl">
 
             {/* ══════════════════ HEADER (glassmorphism, matches Admin Dashboard style) ══════════════════ */}
             <div className={cn(
                 "sticky top-0 z-[100] transition-all duration-500",
                 headerScrolled
-                    ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm border-b border-slate-100/50 dark:border-slate-800/50"
-                    : "bg-white dark:bg-slate-950 border-b border-transparent"
+                    ? "bg-white/80 dark:bg-background/80 backdrop-blur-xl shadow-sm border-b border-border"
+                    : "bg-card border-b border-transparent"
             )}>
                 <div className="px-4 pt-3 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] flex items-center justify-center text-white shadow-sm shadow-blue-200/40">
+                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-on-primary shadow-sm shadow-black/10">
                                 <GraduationCap size={18} strokeWidth={1.5} />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">الرئيسية</h1>
-                                <p className="text-[9px] font-medium text-[#64748B] dark:text-slate-500">طالب</p>
+                                <h1 className="text-sm font-bold text-main leading-tight">الرئيسية</h1>
+                                <p className="text-[9px] font-medium text-muted">طالب</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
                             {/* Dark mode toggle */}
                             <button
                                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="w-8 h-8 flex items-center justify-center text-[#64748B] dark:text-slate-400 hover:bg-[#F1F5F9] dark:hover:bg-slate-800 rounded-xl transition-colors"
+                                className="w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-xl transition-colors"
                             >
                                 {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
                             </button>
                             {/* Bell */}
                             <button
                                 onClick={() => navigate('/parent-announcements')}
-                                className="relative w-8 h-8 flex items-center justify-center text-[#64748B] dark:text-slate-400 hover:bg-[#F1F5F9] dark:hover:bg-slate-800 rounded-xl transition-colors"
+                                className="relative w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-xl transition-colors"
                             >
                                 <Bell size={16} strokeWidth={1.5} />
-                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900" />
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-card" />
                             </button>
                             {/* Live clock */}
-                            <div className="px-2.5 py-1.5 rounded-xl bg-[#F1F5F9]/70 dark:bg-slate-800/70 backdrop-blur-sm text-[#2563EB] dark:text-[#38BDF8] font-medium text-[9px] tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-xl bg-hover backdrop-blur-sm text-primary font-medium text-[9px] tabular-nums">
                                 <Clock size={12} strokeWidth={1.5} className="inline ml-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -244,14 +257,14 @@ export const StudentDashboard = () => {
                                 <div className="flex gap-2 pt-2 flex-wrap">
                                     <button
                                         onClick={() => navigate('/chat')}
-                                        className="flex items-center gap-1.5 bg-[#3D1F8F] text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
+                                        className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
                                     >
-                                        <Play size={12} fill="white" />
+                                        <Play size={12} fill="currentColor" />
                                         ابدأ الآن
                                     </button>
                                     <button
                                         onClick={() => navigate('/schedule')}
-                                        className="flex items-center gap-1.5 bg-white/80 dark:bg-white/10 text-[#3D1F8F] dark:text-white text-xs font-bold px-4 py-2 rounded-full border border-[#3D1F8F]/20 dark:border-white/20 active:scale-95 transition-transform"
+                                        className="flex items-center gap-1.5 bg-white/80 dark:bg-white/10 text-primary dark:text-inverse text-xs font-bold px-4 py-2 rounded-full border border-border active:scale-95 transition-transform"
                                     >
                                         استكشف الدورات
                                         <ChevronLeft size={12} />
@@ -266,8 +279,8 @@ export const StudentDashboard = () => {
                                         {heroSlides[heroIndex].emoji}
                                     </div>
                                     {/* Floating badge */}
-                                    <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-900 rounded-full px-2 py-1 shadow-lg dark:shadow-slate-900/50 flex items-center gap-1">
-                                        <span className="text-[9px] font-bold text-gray-700 dark:text-slate-300">🇰🇼</span>
+                                    <div className="absolute -bottom-2 -right-2 bg-card rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
+                                        <span className="text-[9px] font-bold text-main">🇰🇼</span>
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +293,7 @@ export const StudentDashboard = () => {
                             <button
                                 key={i}
                                 onClick={() => setHeroIndex(i)}
-                                                className={`rounded-full transition-all duration-300 ${i === heroIndex ? 'w-5 h-2 bg-[#7C3AED]' : 'w-2 h-2 bg-gray-300 dark:bg-slate-600'}`}
+                                                className={`rounded-full transition-all duration-300 ${i === heroIndex ? 'w-5 h-2 bg-primary' : 'w-2 h-2 bg-border'}`}
                             />
                         ))}
                     </div>
@@ -308,12 +321,11 @@ export const StudentDashboard = () => {
                                 className="flex flex-col items-center gap-1.5"
                             >
                                 <div
-                                    className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
-                                    style={{ backgroundColor: item.bg }}
+                                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${variantBg[item.variant]}`}
                                 >
-                                    <Icon size={22} style={{ color: item.color }} />
+                                    <Icon size={22} className={variantText[item.variant]} />
                                 </div>
-                                <span className="text-[10px] font-semibold text-gray-600 dark:text-slate-400 text-center leading-tight">
+                                <span className="text-[10px] font-semibold text-muted text-center leading-tight">
                                     {item.label}
                                 </span>
                             </motion.button>
@@ -327,8 +339,8 @@ export const StudentDashboard = () => {
             {/* ══════════════════ CONTINUE LEARNING ══════════════════ */}
             <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-3">
-                    <button onClick={() => navigate('/schedule')} className="text-[#7C3AED] dark:text-purple-400 text-sm font-bold">عرض الكل</button>
-                    <h2 className="text-lg font-black text-gray-800 dark:text-white">تابع تعلمك</h2>
+                    <button onClick={() => navigate('/schedule')} className="text-primary text-sm font-bold">عرض الكل</button>
+                    <h2 className="text-lg font-black text-main">تابع تعلمك</h2>
                 </div>
 
                 {enrollments.length > 0 ? (
@@ -343,37 +355,37 @@ export const StudentDashboard = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center gap-3"
+                                    className="bg-card rounded-2xl p-4 shadow-sm border border-border flex items-center gap-3"
                                 >
                                     {/* Course Icon */}
-                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center shrink-0 shadow-md">
-                                        <BookOpen size={22} className="text-white" />
+                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
+                                        <BookOpen size={22} className="text-on-primary" />
                                     </div>
                                     {/* Info */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">
+                                            <span className="text-[10px] font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
                                                 متابعة
                                             </span>
-                                            <h3 className="text-sm font-black text-gray-800 dark:text-white truncate max-w-[140px]">
+                                            <h3 className="text-sm font-black text-main truncate max-w-[140px]">
                                                 {en.subject || 'دورة تعليمية'}
                                             </h3>
                                         </div>
-                                        <p className="text-[10px] text-gray-400 dark:text-slate-500 text-right mb-2">
+                                        <p className="text-[10px] text-dim text-right mb-2">
                                             {en.level || `${used} من ${total} حصة`}
                                         </p>
                                         {/* Progress Bar */}
                                         <div className="relative">
-                                            <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                            <div className="h-2 bg-hover rounded-full overflow-hidden">
                                                 <motion.div
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${progress}%` }}
                                                     transition={{ duration: 0.8, delay: 0.3 + idx * 0.1 }}
-                                                    className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A78BFA] rounded-full"
+                                                    className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
                                                 />
                                             </div>
                                             <div className="flex justify-between mt-1">
-                                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-400">{progress}%</span>
+                                                <span className="text-[10px] font-bold text-primary">{progress}%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -383,28 +395,28 @@ export const StudentDashboard = () => {
                     </div>
                 ) : (
                     /* Demo Card */
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center gap-3">
-                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-400 to-blue-600 flex items-center justify-center shrink-0 shadow-md">
+                    <div className="bg-card rounded-2xl p-4 shadow-sm border border-border flex items-center gap-3">
+                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
                             <span className="text-2xl">💻</span>
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded-full">
+                                <span className="text-[10px] font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
                                     متابعة
                                 </span>
-                                <h3 className="text-sm font-black text-gray-800 dark:text-white">أساسيات البرمجة</h3>
+                                <h3 className="text-sm font-black text-main">أساسيات البرمجة</h3>
                             </div>
-                            <p className="text-[10px] text-gray-400 dark:text-slate-500 text-right mb-2">المستوى المبتدئ</p>
+                            <p className="text-[10px] text-dim text-right mb-2">المستوى المبتدئ</p>
                             <div className="relative">
-                                <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div className="h-2 bg-hover rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: '60%' }}
                                         transition={{ duration: 0.8, delay: 0.3 }}
-                                        className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A78BFA] rounded-full"
+                                        className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
                                     />
                                 </div>
-                                <span className="text-[10px] font-bold text-[#7C3AED] dark:text-purple-400 mt-1 block text-left">60%</span>
+                                <span className="text-[10px] font-bold text-primary mt-1 block text-left">60%</span>
                             </div>
                         </div>
                     </div>
@@ -415,24 +427,25 @@ export const StudentDashboard = () => {
             <div className="px-4 py-3">
                 <div className="grid grid-cols-3 gap-3">
                     {[
-                        { icon: Star, label: 'النقاط', value: points, color: '#F59E0B', bg: '#FFFBEB' },
-                        { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, color: '#10B981', bg: '#ECFDF5' },
-                        { icon: TrendingUp, label: 'اللقب', value: rank.name, color: '#7C3AED', bg: '#FAF5FF' },
+                        { icon: Star, label: 'النقاط', value: points, variant: 'warning' },
+                        { icon: CheckCircle, label: 'الحضور', value: `${stats.attendanceRate}%`, variant: 'success' },
+                        { icon: TrendingUp, label: 'اللقب', value: rank.name, variant: 'primary' },
                     ].map((item, idx) => {
                         const Icon = item.icon;
+                        const bgClass = variantBg[item.variant];
+                        const textClass = variantText[item.variant];
                         return (
                             <div
                                 key={idx}
-                                className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-slate-800 flex flex-col items-center text-center gap-1"
+                                className="bg-card rounded-2xl p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
                             >
                                 <div
-                                    className="w-9 h-9 rounded-xl flex items-center justify-center"
-                                    style={{ backgroundColor: item.bg }}
+                                    className={`w-9 h-9 rounded-xl flex items-center justify-center ${bgClass}`}
                                 >
-                                    <Icon size={18} style={{ color: item.color }} />
+                                    <Icon size={18} className={textClass} />
                                 </div>
-                                <span className="text-sm font-black text-gray-800 dark:text-white">{item.value}</span>
-                                <span className="text-[10px] text-gray-400 dark:text-slate-500 font-medium">{item.label}</span>
+                                <span className="text-sm font-black text-main">{item.value}</span>
+                                <span className="text-[10px] text-dim font-medium">{item.label}</span>
                             </div>
                         );
                     })}
@@ -442,17 +455,17 @@ export const StudentDashboard = () => {
             {/* ══════════════════ ACTIVITY & POINTS ══════════════════ */}
             {pointLogs.length > 0 && (
                 <div className="px-4 py-3">
-                    <h2 className="text-lg font-black text-gray-800 dark:text-white mb-3 text-right">آخر النشاطات</h2>
+                    <h2 className="text-lg font-black text-main mb-3 text-right">آخر النشاطات</h2>
                     <div className="space-y-2">
                         {pointLogs.slice(0, 3).map((log, i) => (
                             <div
                                 key={i}
-                                className="bg-white dark:bg-slate-900 rounded-2xl px-4 py-3 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center justify-between"
+                                className="bg-card rounded-2xl px-4 py-3 shadow-sm border border-border flex items-center justify-between"
                             >
-                                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full">
+                                <span className="text-xs font-bold text-success bg-success-soft px-2 py-1 rounded-full">
                                     +{log.amount} نقطة
                                 </span>
-                                <span className="text-xs text-gray-600 dark:text-slate-400 font-medium">{log.action}</span>
+                                <span className="text-xs text-muted font-medium">{log.action}</span>
                             </div>
                         ))}
                     </div>
@@ -461,17 +474,17 @@ export const StudentDashboard = () => {
 
             {/* ══════════════════ SUPPORT BANNER ══════════════════ */}
             <div className="px-4 py-3 pb-6">
-                <div className="bg-gradient-to-br from-[#5B21B6] to-[#7C3AED] rounded-3xl p-5 relative overflow-hidden shadow-xl shadow-purple-200">
+                <div className="bg-gradient-to-br from-primary to-primary-hover rounded-3xl p-5 relative overflow-hidden shadow-xl shadow-black/10">
                     <div className="absolute top-[-20px] left-[-20px] w-28 h-28 bg-white/10 rounded-full blur-2xl" />
                     <div className="absolute bottom-[-15px] right-[20%] w-20 h-20 bg-white/10 rounded-full blur-xl" />
                     <div className="relative z-10">
-                        <h3 className="text-white font-black text-lg mb-1 text-right">تحتاج مساعدة؟</h3>
-                        <p className="text-purple-200 text-xs mb-4 text-right">فريقنا جاهز لمساعدتك في أي وقت</p>
+                        <h3 className="text-on-primary font-black text-lg mb-1 text-right">تحتاج مساعدة؟</h3>
+                        <p className="text-on-primary opacity-80 text-xs mb-4 text-right">فريقنا جاهز لمساعدتك في أي وقت</p>
                         <a
                             href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-[#5B21B6] dark:text-purple-300 py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"
+                            className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"
                         >
                             <MessageSquare size={16} />
                             تواصل الآن
@@ -511,7 +524,7 @@ const MobileBottomNav = ({
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-gray-300/40 dark:shadow-black/20">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-black/10">
             <div className="flex items-center justify-around h-[68px] px-2">
                 {navItems.map((item) => {
                     const Icon = item.icon;
@@ -528,26 +541,26 @@ const MobileBottomNav = ({
                             className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
                         >
                             {isCenter ? (
-                                <div className="w-14 h-14 bg-gradient-to-br from-[#5B21B6] to-[#7C3AED] rounded-full flex items-center justify-center shadow-xl shadow-purple-300/50">
-                                    <Icon size={26} className="text-white" />
+                                <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary-hover rounded-full flex items-center justify-center shadow-xl shadow-black/10">
+                                    <Icon size={26} className="text-on-primary" />
                                 </div>
                             ) : (
                                 <>
                                     <Icon
                                         size={22}
                                         className={`transition-all duration-200 ${isActive
-                                            ? 'text-[#7C3AED]'
-                                            : 'text-gray-400 dark:text-slate-500'
+                                            ? 'text-primary'
+                                            : 'text-dim'
                                             }`}
                                         strokeWidth={isActive ? 2.5 : 1.5}
                                     />
                                     <span
-                                        className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-[#7C3AED]' : 'text-gray-400 dark:text-slate-500'}`}
+                                        className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-dim'}`}
                                     >
                                         {item.label}
                                     </span>
                                     {isActive && (
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#7C3AED] rounded-full" />
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-full" />
                                     )}
                                 </>
                             )}

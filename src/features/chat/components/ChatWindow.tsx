@@ -98,7 +98,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
     return (
-        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
+        <div className="flex-1 flex flex-col bg-background dark:bg-card overflow-hidden relative h-full">
             {/* WhatsApp Doodle Background Pattern */}
             <div 
                 className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
@@ -110,11 +110,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             />
 
             {/* Header - WhatsApp Style */}
-            <header className="sticky top-0 h-[60px] shrink-0 bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-[50] shadow-sm">
+            <header className="sticky top-0 h-[60px] shrink-0 bg-surface dark:bg-card flex items-center justify-between px-4 z-[50] shadow-sm">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
-                        className="lg:hidden p-1 text-[#54656f] dark:text-[#aebac1]"
+                        className="lg:hidden p-1 text-muted"
                     >
                         <ChevronRight size={24} />
                     </button>
@@ -132,15 +132,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                     <div className="flex flex-col text-right">
                         <h2 className={cn(
-                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate max-w-[150px] md:max-w-[300px]",
+                            "font-medium text-main leading-tight truncate max-w-[150px] md:max-w-[300px]",
                             selectedConv.isGroup ? "text-sm" : "text-base"
                         )}>
                             {selectedConv.displayName}
                         </h2>
                         {typingInThisConv.length > 0 ? (
-                            <span className="text-[12px] text-[#00a884] font-normal animate-pulse">جاري الكتابة...</span>
+                            <span className="text-[12px] text-success font-normal animate-pulse">جاري الكتابة...</span>
                         ) : (
-                            <span className="text-[12px] text-slate-400 dark:text-slate-500 font-normal">
+                            <span className="text-[12px] text-muted dark:text-muted font-normal">
                                 {selectedConv.isGroup ? "مجموعة" : "محادثة مباشرة"}
                             </span>
                         )}
@@ -148,7 +148,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 {currentUser?.role === 'admin' && (
-                    <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
+                    <div className="flex items-center gap-5 text-muted">
                         <div className={cn(
                             "flex items-center bg-white/10 dark:bg-black/20 rounded-full px-3 py-1 transition-all",
                             showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0"
@@ -159,7 +159,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     placeholder="بحث..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-slate-400"
+                                    className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-muted"
                                     autoFocus
                                 />
                             )}
@@ -171,7 +171,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             }}
                             className={cn(
                                 "p-2 rounded-full transition-colors",
-                                showSearchBar ? "bg-indigo-600 text-white" : "hover:bg-black/5 dark:hover:bg-white/5"
+                                showSearchBar ? "bg-primary text-on-primary" : "hover:bg-black/5 dark:hover:bg-white/5"
                             )}
                         >
                             <Search size={20} />
@@ -188,25 +188,25 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     <motion.div 
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#233138] shadow-sm z-[100] py-2 rounded-md"
+                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-card shadow-sm z-[100] py-2 rounded-md"
                                     >
                                         <button
                                             onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
+                                            className="w-full text-right px-4 py-3 text-sm text-muted hover:bg-hover dark:hover:bg-hover transition-colors"
                                         >
                                             معلومات المحادثة
                                         </button>
                                         {selectedConv.isGroup && (
                                             <button
                                                 onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                                className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors font-normal"
+                                                className="w-full text-right px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover dark:hover:bg-hover transition-colors font-normal"
                                             >
                                                 تعديل المجموعة
                                             </button>
                                         )}
                                         <button
                                             onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-3 text-sm text-rose-500 hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
+                                            className="w-full text-right px-4 py-3 text-sm text-error hover:bg-hover dark:hover:bg-hover transition-colors"
                                         >
                                             حذف الدردشة
                                         </button>
@@ -221,15 +221,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             {/* Messages - Virtualized Scroll for Performance */}
             <div className="flex-1 relative z-10">
                 {isMessagesError ? (
-                    <div className="flex items-center justify-center h-full text-slate-400 dark:text-slate-500 text-sm px-4">
+                    <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
                         تعذر تحميل الرسائل. حاول مرة أخرى.
                     </div>
                 ) : isLoadingMessages ? (
                     <div className="flex items-center justify-center h-full">
-                        <div className="w-8 h-8 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-2 border-success/30 border-t-emerald-500 rounded-full animate-spin" />
                     </div>
                 ) : filteredMessages.length === 0 ? (
-                    <div className="flex items-center justify-center h-full text-slate-400 dark:text-slate-500 text-sm px-4">
+                    <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
                         لا توجد رسائل بعد. ابدأ المحادثة الآن.
                     </div>
                 ) : (
@@ -259,23 +259,23 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     )}
                                 >
                                     <div className={cn(
-                                        "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
+                                        "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-sm relative",
                                         isMe 
-                                            ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tr-none mr-2" 
-                                            : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tl-none ml-2"
+                                            ? "bg-success-light dark:bg-success rounded-[7.5px] rounded-tr-none mr-2" 
+                                            : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none ml-2"
                                     )}>
                                         {isGroup && !isMe && (
-                                            <span className="block text-[12.5px] font-normal text-[#e542a3] mb-0.5 text-right">
+                                            <span className="block text-[12.5px] font-normal text-primary mb-0.5 text-right">
                                                 {msg.senderName}
                                             </span>
                                         )}
 
-                                        <div className="text-[14.2px] text-[#111b21] dark:text-[#e9edef] leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
+                                        <div className="text-[14.2px] text-main leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
                                             {msg.content}
                                         </div>
                                         
                                         <div className="flex items-center justify-end gap-1 mt-1">
-                                            <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
+                                            <span className="text-[10px] text-muted">
                                                 {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
                                                     ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
                                                     : '--:--'}
@@ -283,9 +283,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                             {isMe && (
                                                 <div className="flex">
                                                     {msg.readAt ? (
-                                                        <CheckCheck size={14} className="text-[#53bdeb]" />
+                                                        <CheckCheck size={14} className="text-info" />
                                                     ) : (
-                                                        <CheckCheck size={14} className="text-[#8696a0]" />
+                                                        <CheckCheck size={14} className="text-muted" />
                                                     )}
                                                 </div>
                                             )}
@@ -306,7 +306,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-20 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
+                        className="absolute bottom-20 left-6 w-10 h-10 bg-white dark:bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
@@ -314,7 +314,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </AnimatePresence>
 
             {/* Input Bar - Standardized Style */}
-            <footer className="bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-10 flex items-center gap-3">
+            <footer className="bg-surface dark:bg-card px-3 py-3 z-10 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
@@ -351,14 +351,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             }
                         }}
                         placeholder="اكتب رسالة"
-                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
+                        className="w-full bg-white dark:bg-card text-main text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-success shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
                     />
                 </div>
 
                 <div className="flex items-center justify-center shrink-0">
                     <button
                         onClick={handleSendMessage}
-                        className="bg-[#00a884] text-white p-3.5 rounded-none hover:bg-[#008f6f] transition-all shadow-[0_2px_4px_rgba(0,0,0,0.1)] active:scale-95 flex items-center justify-center h-[48px] w-[48px]"
+                        className="bg-success text-on-primary p-3.5 rounded-none hover:brightness-90 transition-all shadow-sm active:scale-95 flex items-center justify-center h-[48px] w-[48px]"
                         title="إرسال"
                     >
                         <Send size={20} className={cn("transition-transform", isSending && "animate-pulse")} />

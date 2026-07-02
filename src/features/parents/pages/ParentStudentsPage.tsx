@@ -66,7 +66,7 @@ export const ParentStudents = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-[#F8F7FF] dark:bg-slate-950 min-h-screen pb-24"
+            className="bg-primary-light dark:bg-background min-h-screen pb-24"
             dir="rtl"
         >
             <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
@@ -85,10 +85,10 @@ export const ParentStudents = () => {
                         />
                     ))}
                     {filteredStudents.length === 0 && (
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-white dark:bg-slate-900/50 text-center border border-dashed border-gray-200 dark:border-slate-800 rounded-2xl">
-                            <Users size={48} className="mx-auto text-gray-300 dark:text-slate-700 mb-4" />
-                            <h3 className="text-lg font-medium text-gray-400 dark:text-slate-500 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
-                            <p className="text-xs text-gray-500 dark:text-slate-400 font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-white dark:bg-primary-active/50 text-center border border-dashed border-border dark:border-border rounded-2xl">
+                            <Users size={48} className="mx-auto text-dim dark:text-main mb-4" />
+                            <h3 className="text-lg font-medium text-muted dark:text-muted uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
+                            <p className="text-xs text-muted dark:text-muted font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
                         </motion.div>
                     )}
                 </div>

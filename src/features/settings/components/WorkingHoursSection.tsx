@@ -56,25 +56,25 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
 
             <div className="space-y-2">
                 {schedule.map(d => (
-                    <div key={d.day} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-                        <button onClick={() => toggleDay(d.day)} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${d.enabled ? 'bg-purple-100 text-purple-600' : 'bg-slate-200 text-slate-400'}`}>
+                    <div key={d.day} className="flex items-center gap-3 p-3 bg-surface rounded-xl">
+                        <button onClick={() => toggleDay(d.day)} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${d.enabled ? 'bg-primary-soft text-primary' : 'bg-hover text-dim'}`}>
                             {d.day < 5 ? <Sun size={16} /> : <Moon size={16} />}
                         </button>
-                        <span className={`text-sm font-bold w-20 ${d.enabled ? 'text-slate-800' : 'text-slate-400'}`}>{DAYS[d.day]}</span>
+                        <span className={`text-sm font-bold w-20 ${d.enabled ? 'text-main' : 'text-dim'}`}>{DAYS[d.day]}</span>
                         {d.enabled ? (
                             <>
                                 <InputField type="time" value={d.start} onChange={e => updateTime(d.day, 'start', e.target.value)} className="w-28" />
-                                <span className="text-slate-400">—</span>
+                                <span className="text-dim">—</span>
                                 <InputField type="time" value={d.end} onChange={e => updateTime(d.day, 'end', e.target.value)} className="w-28" />
                             </>
                         ) : (
-                            <span className="text-xs text-slate-400 mr-4">إجازة</span>
+                            <span className="text-xs text-dim mr-4">إجازة</span>
                         )}
                     </div>
                 ))}
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-6 pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ أوقات العمل</PrimaryBtn>
             </div>
         </SectionCard>

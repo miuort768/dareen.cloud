@@ -31,15 +31,15 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
     const sorted = [...sessions].sort((a, b) => a.minutesUntil - b.minutesUntil);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400">الجلسات القادمة</h3>
-                <Clock size={18} className="text-gray-500" />
+                <h3 className="text-sm font-semibold text-muted dark:text-muted">الجلسات القادمة</h3>
+                <Clock size={18} className="text-muted" />
             </div>
 
             <div className="space-y-2">
                 {sorted.length === 0 && (
-                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center py-4">لا توجد جلسات قادمة</p>
+                    <p className="text-xs text-muted dark:text-muted text-center py-4">لا توجد جلسات قادمة</p>
                 )}
                 {sorted.map((session) => {
                     const urgencyColor = URGENCY_COLORS[session.urgency] || '#6b7280';
@@ -57,16 +57,16 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                                 <span className="text-lg font-bold" style={{ color: urgencyColor }}>
                                     {session.minutesUntil < 60 ? `${session.minutesUntil}د` : `${Math.round(session.minutesUntil / 60)}س`}
                                 </span>
-                                <span className="text-[10px] text-gray-400">{URGENCY_LABELS[session.urgency]}</span>
+                                <span className="text-[10px] text-muted">{URGENCY_LABELS[session.urgency]}</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">{session.subject}</p>
-                                <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                                <p className="text-sm font-semibold text-main dark:text-on-primary truncate">{session.subject}</p>
+                                <div className="flex items-center gap-3 mt-1 text-xs text-muted">
                                     <span className="flex items-center gap-1"><User size={13} />{session.studentName}</span>
                                     <span className="flex items-center gap-1"><GraduationCap size={13} />{session.teacherName}</span>
                                 </div>
                             </div>
-                            <span className="text-[11px] text-gray-400 whitespace-nowrap">{session.time}</span>
+                            <span className="text-[11px] text-muted whitespace-nowrap">{session.time}</span>
                         </div>
                     );
                 })}

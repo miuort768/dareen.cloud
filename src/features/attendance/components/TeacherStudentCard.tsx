@@ -154,11 +154,11 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm">
+        <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm">
             {/* Header Accent */}
             <div className={cn(
-                "h-1.5 w-full bg-slate-100 dark:bg-slate-800 transition-all",
-                timerRunning && "bg-rose-500 animate-pulse"
+                "h-1.5 w-full bg-surface dark:bg-primary-active transition-all",
+                timerRunning && "bg-error animate-pulse"
             )}></div>
 
             <div className="p-5 flex-1 flex flex-col space-y-4">
@@ -168,22 +168,22 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
-                            <h4 className="font-normal text-slate-800 dark:text-white text-sm leading-tight">{student.name}</h4>
+                            <h4 className="font-normal text-main dark:text-on-primary text-sm leading-tight">{student.name}</h4>
                             <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-[9px] font-normal text-slate-400 uppercase">{student.grade}</span>
-                                <span className="w-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></span>
+                                <span className="text-[9px] font-normal text-muted uppercase">{student.grade}</span>
+                                <span className="w-1 h-1 bg-surface dark:bg-primary-active rounded-full"></span>
                                 <div className="flex items-center gap-1">
-                                    <BookOpen size={10} className="text-[#6C4BFF]" />
-                                    <span className="text-[9px] font-normal text-slate-400">{en.subject}</span>
+                                    <BookOpen size={10} className="text-primary" />
+                                    <span className="text-[9px] font-normal text-muted">{en.subject}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="text-[10px] font-normal text-slate-400 block mb-0.5">التقدم</span>
+                        <span className="text-[10px] font-normal text-muted block mb-0.5">التقدم</span>
                         <div className="flex items-center justify-end gap-1">
-                             <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-rose-500" : "text-[#6C4BFF]")} />
-                             <span className="text-sm font-medium text-slate-800 dark:text-white leading-none">{Math.round(attendancePercent)}%</span>
+                             <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-error" : "text-primary")} />
+                             <span className="text-sm font-medium text-main dark:text-on-primary leading-none">{Math.round(attendancePercent)}%</span>
                         </div>
                     </div>
                 </div>
@@ -195,8 +195,8 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         className={cn(
                             "flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all shadow-sm active:scale-95",
                             timerRunning 
-                                ? "bg-rose-600 border-rose-500 text-white" 
-                                : "bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] border-[#6C4BFF] text-white hover:from-[#5a3ee0] hover:to-[#7c3aed]"
+                                ? "bg-error border-error text-on-primary" 
+                                : "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] border-primary text-on-primary hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
                         )}
                     >
                         <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded-xl font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-dim hover:bg-surface rounded-xl font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95"
                     >
                         <Calendar size={14} /> إعادة جدولة
                     </button>
@@ -216,21 +216,21 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                 {/* Progress Bar */}
                 <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
+                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-muted">
                         <div className="flex items-center gap-1.5">
-                            <Activity size={12} className="text-[#6C4BFF]" />
+                            <Activity size={12} className="text-primary" />
                             <span>تغطية الحصص</span>
                         </div>
                         <div className="flex items-baseline gap-1">
-                            <span className="text-xs text-[#6C4BFF] font-medium">{actualSessionsUsed}</span>
+                            <span className="text-xs text-primary font-medium">{actualSessionsUsed}</span>
                             <span className="opacity-50">/ {en.sessionsTotal}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out",
-                                attendancePercent > 85 ? "bg-rose-500" : attendancePercent > 60 ? "bg-amber-500" : "bg-emerald-500"
+                                attendancePercent > 85 ? "bg-error" : attendancePercent > 60 ? "bg-warning" : "bg-success"
                             )}
                             style={{ width: `${Math.min(100, attendancePercent)}%` }}
                         />
@@ -238,10 +238,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Schedule */}
-                <div className="space-y-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                <div className="space-y-2 pt-2 border-t border-border dark:border-border">
                     <div className="flex items-center justify-between">
-                        <h5 className="text-[9px] font-normal text-slate-400 uppercase flex items-center gap-1.5">
-                            <Clock size={10} className="text-[#6C4BFF]" /> الجدول الإسبوعي
+                        <h5 className="text-[9px] font-normal text-muted uppercase flex items-center gap-1.5">
+                            <Clock size={10} className="text-primary" /> الجدول الإسبوعي
                         </h5>
                         <button
                             onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
@@ -253,35 +253,35 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                     <div className="flex flex-wrap gap-1.5">
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 text-[9px] font-bold text-slate-600 dark:text-slate-400 rounded-xl">
+                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 text-[9px] font-bold text-muted dark:text-muted rounded-xl">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
-                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-slate-200 dark:border-slate-700">
-                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-[#6C4BFF]"><Edit size={10} /></button>
-                                        <button onClick={() => onDeleteSlot(student, en, i)} aria-label="حذف الموعد" className="text-rose-600"><Trash2 size={10} /></button>
+                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-border dark:border-border">
+                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-primary"><Edit size={10} /></button>
+                                        <button onClick={() => onDeleteSlot(student, en, i)} aria-label="حذف الموعد" className="text-error"><Trash2 size={10} /></button>
                                     </div>
                                 )}
                             </div>
                         )) : (
-                            <p className="text-[9px] text-slate-400 italic">لا يوجد جدول محدد</p>
+                            <p className="text-[9px] text-muted italic">لا يوجد جدول محدد</p>
                         )}
                     </div>
 
                     {isEditing && (
-                        <div className="p-3 bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] rounded-xl text-white space-y-3 mt-2">
+                        <div className="p-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl text-on-primary space-y-3 mt-2">
                             <div className="grid grid-cols-2 gap-2">
                                 <div>
-                                    <p className="text-[8px] font-bold text-white/60 mb-1 uppercase">اليوم</p>
+                                    <p className="text-[8px] font-bold text-on-primary/60 mb-1 uppercase">اليوم</p>
                                     <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-[10px] font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none">
                                         {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <p className="text-[8px] font-bold text-white/60 mb-1 uppercase">الساعة</p>
+                                    <p className="text-[8px] font-bold text-on-primary/60 mb-1 uppercase">الساعة</p>
                                     <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value.replace(/^0+/, '') })} placeholder="مثال: 4" className="w-full text-[10px] font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none" />
                                 </div>
                             </div>
-                            <button onClick={handleSaveSlot} className="w-full bg-white text-[#6C4BFF] font-bold text-[10px] py-2 rounded-xl hover:bg-white/90 transition-colors shadow-sm active:scale-95">
+                            <button onClick={handleSaveSlot} className="w-full bg-white text-primary font-bold text-[10px] py-2 rounded-xl hover:bg-white/90 transition-colors shadow-sm active:scale-95">
                                 {editSlotIndex !== null ? 'تحديث' : 'إضافة'}
                             </button>
                         </div>
@@ -300,14 +300,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         value={notes}
                         onChange={(e) => { setNotes(e.target.value); triggerSave(e.target.value); }}
                         placeholder="وثقي ملاحظات الحصة القادمة..."
-                        className="w-full bg-transparent border-none focus:ring-0 text-[10px] font-bold text-slate-700 dark:text-slate-300 placeholder:text-amber-300 resize-none min-h-[60px] p-0"
+                        className="w-full bg-transparent border-none focus:ring-0 text-[10px] font-bold text-main dark:text-dim placeholder:text-warning resize-none min-h-[60px] p-0"
                     />
                 </div>
 
                 {/* Live Stream Quick Start */}
                 <button 
                     onClick={startLiveStream}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-sm active:scale-95 group transition-all"
+                    className="w-full bg-error hover:bg-error text-on-primary py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-sm active:scale-95 group transition-all"
                 >
                     <Radio size={14} className="animate-pulse" />
                     <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
@@ -315,10 +315,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </button>
 
                 {/* Attendance Footer */}
-                <div className="pt-4 border-t border-slate-50 dark:border-slate-800 space-y-3 mt-auto">
+                <div className="pt-4 border-t border-border dark:border-border space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
-                        <h5 className="text-[9px] font-normal text-slate-400 uppercase flex items-center gap-1.5">
-                            <Activity size={12} className="text-emerald-500" /> التحضير والمتابعة
+                        <h5 className="text-[9px] font-normal text-muted uppercase flex items-center gap-1.5">
+                            <Activity size={12} className="text-success" /> التحضير والمتابعة
                         </h5>
                     </div>
 
@@ -327,17 +327,17 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             type="date" 
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="w-full px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-xl outline-none focus:border-[#6C4BFF] transition-all" 
+                            className="w-full px-2 py-2 bg-background dark:bg-primary-active border border-border dark:border-border text-[9px] font-bold rounded-xl outline-none focus:border-primary transition-all" 
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="w-full bg-[#F43F5E] text-white px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-rose-700 transition-all shadow-sm active:scale-95"
+                            className="w-full bg-error text-on-primary px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-error transition-all shadow-sm active:scale-95"
                         >
                             السجل
                         </button>
                         <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="w-full bg-[#10B981] text-white px-2 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all shadow-sm active:scale-95"
+                            className="w-full bg-success text-on-primary px-2 py-2 font-bold text-[10px] rounded-xl hover:bg-success transition-all shadow-sm active:scale-95"
                         >
                             تسجيل
                         </button>

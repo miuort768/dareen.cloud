@@ -15,17 +15,17 @@ interface PageHeaderProps {
 }
 
 const colorMap = {
-    primary: 'bg-primary-600',
-    indigo: 'bg-indigo-600',
-    emerald: 'bg-emerald-600',
-    amber: 'bg-amber-600',
+    primary: 'bg-primary',
+    indigo: 'bg-primary',
+    emerald: 'bg-success',
+    amber: 'bg-warning',
 };
 
 const lightColorMap = {
-    primary: 'bg-primary-50 text-primary-700 border-primary-600',
-    indigo: 'bg-indigo-50 text-indigo-700 border-indigo-600',
-    emerald: 'bg-emerald-50 text-emerald-700 border-emerald-600',
-    amber: 'bg-amber-50 text-amber-900 border-amber-600',
+    primary: 'bg-primary-soft text-primary border-primary',
+    indigo: 'bg-primary-soft text-primary border-primary',
+    emerald: 'bg-success-light text-success border-success',
+    amber: 'bg-warning-light text-warning border-warning',
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -37,14 +37,14 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     color = 'primary'
 }) => {
     return (
-        <div className="relative bg-white border-2 border-gray-950 p-4 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-8 rounded-none">
+        <div className="relative bg-white border-2 border-border p-4 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-8 rounded-none">
             {/* Pattern Background */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
             
             <div className="relative flex items-center justify-between flex-wrap gap-8">
                 <div className="flex items-center gap-6">
                     <div className={cn(
-                        "w-12 h-12 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] transform -rotate-2",
+                        "w-12 h-12 text-on-primary flex items-center justify-center border-2 border-border shadow-[2px_2px_0px_0px_black] transform -rotate-2",
                         colorMap[color]
                     )}>
                         <Icon size={24} />
@@ -52,17 +52,17 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                     <div>
                         <div className="flex items-center gap-2 mb-1">
                             <div className={cn("w-2 h-2", colorMap[color])}></div>
-                            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">بوابة الأكاديمية الإلكترونية</span>
+                            <span className="text-[10px] font-medium text-muted uppercase tracking-widest">بوابة الأكاديمية الإلكترونية</span>
                         </div>
-                        <h1 className="text-xl md:text-2xl font-medium text-gray-950 mb-1 tracking-tighter uppercase leading-none">{title}</h1>
-                        {subtitle && <p className="text-[9px] font-medium text-gray-400 uppercase tracking-widest italic">{subtitle}</p>}
+                        <h1 className="text-xl md:text-2xl font-medium text-main mb-1 tracking-tighter uppercase leading-none">{title}</h1>
+                        {subtitle && <p className="text-[9px] font-medium text-muted uppercase tracking-widest italic">{subtitle}</p>}
                     </div>
                 </div>
 
                 <div className="flex items-center gap-6 flex-wrap no-print">
                     {stats && stats.map((stat, i) => (
                         <div key={i} className={cn(
-                            "px-4 py-2 border-2 border-gray-950 flex flex-col items-center min-w-[100px] shadow-[2px_2px_0px_0px_black]",
+                            "px-4 py-2 border-2 border-border flex flex-col items-center min-w-[100px] shadow-[2px_2px_0px_0px_black]",
                             lightColorMap[color]
                         )}>
                             <p className="text-[9px] font-medium uppercase tracking-widest leading-none mb-1 opacity-60">{stat.label}</p>

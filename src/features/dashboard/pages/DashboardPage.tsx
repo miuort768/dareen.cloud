@@ -50,7 +50,7 @@ export const Dashboard = () => {
     const [view, setView] = useState<'standard' | 'executive'>('standard');
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
-        return <div className="min-h-full bg-slate-50 dark:bg-slate-950" />;
+        return <div className="min-h-full bg-background dark:bg-background" />;
     }
 
     if (loading) {
@@ -60,8 +60,8 @@ export const Dashboard = () => {
     return (
         <div className={cn(
             "min-h-full pb-24 overflow-x-hidden relative",
-            "bg-[#F8F8FC]",
-            "dark:bg-slate-950"
+            "bg-background",
+            "dark:bg-background"
         )} dir="rtl">
 
             <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
@@ -70,13 +70,13 @@ export const Dashboard = () => {
                 {currentUser.permissions?.includes('*') && (
                     <Section>
                         <div className="flex justify-center">
-                            <div className="inline-flex bg-white rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-1 gap-1">
+                            <div className="inline-flex bg-white rounded-full shadow-[0_2px_12px_#0000000F] p-1 gap-1">
                                 <button
                                     onClick={() => setView('standard')}
                                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                                         view === 'standard'
-                                            ? 'bg-blue-500 text-white shadow-sm'
-                                            : 'text-gray-500 hover:text-gray-700'
+                                            ? 'bg-info text-on-primary shadow-sm'
+                                            : 'text-muted hover:text-main'
                                     }`}
                                 >
                                     <LayoutDashboard size={18} /> لوحة الإدارة
@@ -85,8 +85,8 @@ export const Dashboard = () => {
                                     onClick={() => setView('executive')}
                                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                                         view === 'executive'
-                                            ? 'bg-blue-500 text-white shadow-sm'
-                                            : 'text-gray-500 hover:text-gray-700'
+                                            ? 'bg-info text-on-primary shadow-sm'
+                                            : 'text-muted hover:text-main'
                                     }`}
                                 >
                                     <TrendingUp size={18} /> لوحة القيادة التنفيذية

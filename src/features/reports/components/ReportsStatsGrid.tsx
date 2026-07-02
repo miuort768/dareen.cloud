@@ -1,5 +1,5 @@
 import { Calendar, TrendingUp, DollarSign, Users } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { StatCard } from '../../../shared/components/ui/StatCard';
 
 interface ReportsStatsGridProps {
     totalStudents: number;
@@ -12,29 +12,6 @@ interface ReportsStatsGridProps {
     monthRevenue: number;
     reportCurrency?: string;
 }
-
-const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; sub?: string; gradient?: string; accent?: string }) => (
-    <div className={cn("relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between shadow-sm", gradient)}>
-        {/* Background icon */}
-        <div className="absolute -left-3 -bottom-3 opacity-10">
-            <Icon size={70} />
-        </div>
-        {/* Top row */}
-        <div className="flex items-start justify-between mb-3">
-            <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center bg-white/20 ")}>
-                <Icon size={18} className="text-white" />
-            </div>
-            <span className="text-[9px] font-medium text-white/60 uppercase tracking-widest text-left">{sub}</span>
-        </div>
-        {/* Value */}
-        <div>
-            <p className="text-2xl font-medium text-white font-mono leading-none">{value}</p>
-            <p className="text-[10px] font-normal text-white/70 uppercase tracking-widest mt-1.5">{label}</p>
-        </div>
-        {/* Bottom accent bar */}
-        <div className={cn("absolute bottom-0 left-0 right-0 h-0.5 opacity-40", accent)} />
-    </div>
-);
 
 export const ReportsStatsGrid = ({
     totalStudents,
@@ -50,38 +27,34 @@ export const ReportsStatsGrid = ({
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <StatCard
-                label="إجمالي الطلاب"
+                title="إجمالي الطلاب"
                 value={totalStudents}
-                sub={`${totalEnrollments} اشتراك`}
                 icon={Users}
-                gradient="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6]"
-                accent="bg-blue-300"
+                variant="info"
+                subtitle={`${totalEnrollments} اشتراك`}
             />
             <StatCard
-                label="الحصص المتوقعة"
+                title="الحصص المتوقعة"
                 value={totalSessions}
-                sub={`${completedSessions} مكتملة`}
                 icon={Calendar}
-                gradient="bg-gradient-to-br from-emerald-600 to-emerald-800"
-                accent="bg-emerald-300"
+                variant="primary"
+                subtitle={`${completedSessions} مكتملة`}
             />
             <StatCard
-                label="نسبة الحضور"
+                title="نسبة الحضور"
                 value={attendanceRate + '%'}
-                sub={`${cancelledSessions} غياب`}
                 icon={TrendingUp}
-                gradient="bg-gradient-to-br from-indigo-600 to-violet-800"
-                accent="bg-indigo-300"
+                variant="success"
+                subtitle={`${cancelledSessions} غياب`}
             />
             <StatCard
-                label="الإيرادات الكلية"
+                title="الإيرادات الكلية"
                 value={totalRevenue.toLocaleString()}
-                sub={`${monthRevenue.toLocaleString()} ${reportCurrency}/شهر`}
                 icon={DollarSign}
-                gradient="bg-gradient-to-br from-amber-500 to-orange-700"
-                accent="bg-amber-300"
+                variant="warning"
+                unit={reportCurrency}
+                subtitle={`${monthRevenue.toLocaleString()} ${reportCurrency}/شهر`}
             />
         </div>
     );
 };
-

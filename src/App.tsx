@@ -140,18 +140,18 @@ function App() {
   if (isLoading || isSettingsLoading) {
     if (loadTimeout) {
       return (
-        <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-slate-950 dark:to-indigo-950 flex items-center justify-center p-6" dir="rtl">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 max-w-md w-full text-center space-y-4">
-            <div className="w-16 h-16 mx-auto bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center">
+        <div className="fixed inset-0 bg-gradient-to-br from-[var(--bg-background)] to--[var(--bg-primary)] dark:from-[var(--bg-background)] dark:to-[var(--bg-primary)] flex items-center justify-center p-6" dir="rtl">
+          <div className="bg-white dark:bg-primary-active rounded-2xl shadow-2xl border border-border dark:border-border p-8 max-w-md w-full text-center space-y-4">
+            <div className="w-16 h-16 mx-auto bg-warning-light dark:bg-warning/30 rounded-2xl flex items-center justify-center">
               <span className="text-3xl">⏳</span>
             </div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">يستغرق التحميل وقتاً أطول من المعتاد</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
+            <h2 className="text-xl font-black text-main dark:text-on-primary">يستغرق التحميل وقتاً أطول من المعتاد</h2>
+            <p className="text-sm text-muted dark:text-muted">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
             <div className="flex gap-3 justify-center pt-2">
-              <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-colors shadow-lg shadow-indigo-600/20">
+              <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
                 إعادة التحميل
               </button>
-              <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-colors shadow-lg shadow-red-600/20">
+              <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-6 py-2.5 bg-error hover:bg-error text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
                 مسح التخزين وإعادة التحميل
               </button>
             </div>
@@ -175,14 +175,14 @@ function App() {
       {/* Skip to main content for keyboard users */}
       <a
         href="#main-content"
-        className="fixed top-2 right-2 z-[99999] -translate-y-20 focus:translate-y-0 bg-indigo-600 text-white px-4 py-2 text-sm font-bold shadow-lg transition-transform duration-200 outline-none"
+        className="fixed top-2 right-2 z-[99999] -translate-y-20 focus:translate-y-0 bg-primary text-on-primary px-4 py-2 text-sm font-bold shadow-lg transition-transform duration-200 outline-none"
       >
         تخطي إلى المحتوى الرئيسي
       </a>
 
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
-        <div className="fixed top-0 inset-x-0 z-[9999] bg-amber-600 text-white text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
+        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-primary text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
           <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
             onClick={() => navigate('/settings')}

@@ -1,4 +1,4 @@
-๏ปฟimport React, { useState } from 'react';
+import React, { useState } from 'react';
 import {
     Calendar, RefreshCw, Printer,
     ArrowDownRight,
@@ -131,7 +131,7 @@ export const MonthlyClosing: React.FC = () => {
             const isLow = remaining <= 2;
             let waLink = '';
             if (student.parentPhone) {
-                const msg = `ุชุฐููุฑ ู…ู ุฏุงุฑูู ุงูุณุงุจุนุฉ: ุงูู…ุชุจูู ูู ุฑุตูุฏ ุงูุทุงูุจ ${student.name} ูู ู…ุงุฏุฉ ${enroll.subject} ูู ${remaining} ุญุตุต ููุท. ูุฑุฌู ุงูุชุฌุฏูุฏ ูุถู…ุงู ุงุณุชู…ุฑุงุฑ ุงูู…ูุงุนูุฏ.`;
+                const msg = `สะ฿ํั ใไ ฯวัํไ วแำวศฺษ: วแใสศÞํ Ýํ ัีํฯ วแุวแศ ${student.name} Ýํ ใวฯษ ${enroll.subject} ๅๆ ${remaining} อีี ÝÞุ. ํัฬ์ วแสฬฯํฯ แึใวไ วำสใัวั วแใๆวฺํฯ.`;
                 waLink = `https://wa.me/${student.parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
             }
             return { studentName: student.name, phone: student.parentPhone || '', subject: enroll.subject, remaining, total: enroll.sessionsTotal, isLow, waLink };
@@ -149,16 +149,16 @@ export const MonthlyClosing: React.FC = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-[#F8F7FF] dark:bg-slate-950" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-primary-light dark:bg-background" dir="rtl">
             <div className="mx-auto px-2 space-y-4">
-                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
+                <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
-                            <ActivityIcon size={22} className="text-white" />
+                            <ActivityIcon size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">ุชูููู ุงูุญุณุงุจุงุช ูุงูุฃูุดุทุฉ ุงูู…ุงููุฉ</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">ุงูุชุญููู ุงูู…ุงูู ูุงูุฎุชุงู…ู ูููุชุฑุฉ ุงูุญุงููุฉ</p>
+                            <h1 className="text-lg font-bold text-on-primary leading-tight">สÞÝํแ วแอำวศวส ๆวแรไิุษ วแใวแํษ</h1>
+                            <p className="text-[10px] font-bold text-white/70 mt-0.5">วแสอแํแ วแใวแํ ๆวแฮสวใํ แแÝสัษ วแอวแํษ</p>
                         </div>
                     </div>
 
@@ -168,7 +168,7 @@ export const MonthlyClosing: React.FC = () => {
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none focus:ring-0 cursor-pointer"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
                             >
                                 {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
@@ -177,71 +177,71 @@ export const MonthlyClosing: React.FC = () => {
                         <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15 backdrop-blur-sm">
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none cursor-pointer w-24"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
-                            <span className="text-[9px] text-white/50">โ’</span>
+                            <span className="text-[9px] text-white/50">?</span>
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none cursor-pointer w-24"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
 
-                        <button onClick={handleRefresh} className="p-1.5 rounded-xl bg-white/15 backdrop-blur-sm hover:bg-white/30 transition-colors" aria-label="ุชุญุฏูุซ">
-                            <RefreshCw size={14} className="text-white" />
+                        <button onClick={handleRefresh} className="p-1.5 rounded-xl bg-white/15 backdrop-blur-sm hover:bg-white/30 transition-colors" aria-label="สอฯํห">
+                            <RefreshCw size={14} className="text-on-primary" />
                         </button>
 
                         <PrimaryBtn onClick={() => window.print()}>
                             <Printer size={14} />
-                            ุทุจุงุนุฉ
+                            ุศวฺษ
                         </PrimaryBtn>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <StatItem
-                        title="ุตุงูู ุงูุฑุจุญ ุงูู…ุชููุน"
+                        title="ีวÝํ วแัศอ วแใสๆÞฺ"
                         value={netProjectedProfit.toLocaleString()}
                         icon={TrendingUp}
                         color="#6C4BFF"
-                        subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% ูุงู…ุด ุฑุจุญ`}
+                        subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% ๅวใิ ัศอ`}
                     />
                     <StatItem
-                        title="ุงูุชุญุตููุงุช ุงูููุฏูุฉ"
+                        title="วแสอีํแวส วแไÞฯํษ"
                         value={totalActualCollections.toLocaleString()}
                         icon={Wallet}
                         color="#10B981"
-                        subValue={`ุตุงูู ุงูุณูููุฉ: ${netActualCashFlow.toLocaleString()}`}
+                        subValue={`ีวÝํ วแำํๆแษ: ${netActualCashFlow.toLocaleString()}`}
                     />
                     <StatItem
-                        title="ุฑูุงุชุจ ุงูู…ุนูู…ุงุช"
+                        title="ัๆวสศ วแใฺแใวส"
                         value={totalTeacherPayout.toLocaleString()}
                         icon={ArrowDownRight}
                         color="#F43F5E"
-                        subValue={`${payrollData.length} ู…ุนูู…ุฉ ูุดุทุฉ`}
+                        subValue={`${payrollData.length} ใฺแใษ ไิุษ`}
                     />
                     <StatItem
-                        title="ุฅุฌู…ุงูู ุงููุดุงุท"
+                        title="ลฬใวแํ วแไิวุ"
                         value={filteredSessions.length}
                         icon={ActivityIcon}
                         color="#F59E0B"
-                        subValue="ุญุตุฉ ุชุนููู…ูุฉ ู…ููุฐุฉ"
+                        subValue="อีษ สฺแํใํษ ใไÝะษ"
                     />
                 </div>
 
                 <div className="px-0 mb-4">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100/50 dark:border-slate-800/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm">
+                    <div className="bg-white dark:bg-primary-active rounded-2xl border border-border/50 dark:border-border/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm">
                         {[
-                            { id: 'payroll', label: 'ุงูุฑูุงุชุจ', icon: Receipt },
-                            { id: 'collections', label: 'ุงูุชุญุตููุงุช', icon: Wallet },
-                            { id: 'renewals', label: 'ุงูุชุฌุฏูุฏุงุช', icon: AlertCircle },
-                            { id: 'analysis', label: 'ุชุญููู ุงูู…ูุงุฏ', icon: BarChart3 },
-                            { id: 'teachers', label: 'ุฃุฏุงุก ุงูููุฆุฉ', icon: Users },
-                            { id: 'compensation', label: 'ุงูุชุนููุถุงุช', icon: RefreshCw },
-                            { id: 'summary', label: 'ุงูู…ูุฎุต', icon: TrendingUp }
+                            { id: 'payroll', label: 'วแัๆวสศ', icon: Receipt },
+                            { id: 'collections', label: 'วแสอีํแวส', icon: Wallet },
+                            { id: 'renewals', label: 'วแสฬฯํฯวส', icon: AlertCircle },
+                            { id: 'analysis', label: 'สอแํแ วแใๆวฯ', icon: BarChart3 },
+                            { id: 'teachers', label: 'รฯวม วแๅํฦษ', icon: Users },
+                            { id: 'compensation', label: 'วแสฺๆํึวส', icon: RefreshCw },
+                            { id: 'summary', label: 'วแใแฮี', icon: TrendingUp }
                         ].map(tab => (
                             <button
                                 key={tab.id}
@@ -249,8 +249,8 @@ export const MonthlyClosing: React.FC = () => {
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-normal transition-all whitespace-nowrap",
                                     activeTab === tab.id
-                                        ? "bg-[#6C4BFF12] text-[#6C4BFF] shadow-sm"
-                                        : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                                        ? "bg-primary-soft text-primary shadow-sm"
+                                        : "text-muted hover:text-muted dark:hover:text-dim"
                                 )}
                             >
                                 <tab.icon size={14} />

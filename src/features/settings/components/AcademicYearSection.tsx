@@ -100,7 +100,7 @@ export const AcademicYearSection = ({
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-6 pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ السنة الدراسية</PrimaryBtn>
             </div>
         </SectionCard>

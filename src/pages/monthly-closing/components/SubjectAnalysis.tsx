@@ -23,12 +23,12 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                 <div className="h-[300px] w-full mt-6">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={subjectAnalysis}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                            <XAxis dataKey="name" fontSize={9} fontStyle="italic" />
-                            <YAxis fontSize={9} fontStyle="italic" />
-                            <Tooltip contentStyle={{ backgroundColor: '#0f172a', color: '#fff', borderRadius: '12px', border: 'none', fontSize: '10px' }} />
-                            <Bar dataKey="income" name="الإيرادات" fill="#6C4BFF" radius={[4, 4, 0, 0]} />
-                            <Bar dataKey="payout" name="التكاليف" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+                            <XAxis dataKey="name" fontSize={9} fontStyle="italic" tick={{ fill: 'var(--text-dim)' }} />
+                            <YAxis fontSize={9} fontStyle="italic" tick={{ fill: 'var(--text-dim)' }} />
+                            <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-main)', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '10px' }} />
+                            <Bar dataKey="income" name="الإيرادات" fill="var(--chart-1)" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="payout" name="التكاليف" fill="var(--chart-3)" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
@@ -38,20 +38,20 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                 {subjectAnalysis.map((subj, idx) => (
                     <SectionCard key={idx} className="p-5">
                         <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
-                            <span className="text-xs font-black">{String(subj.name).charAt(0)}</span>
+                            <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
+                                <span className="text-xs font-black">{String(subj.name).charAt(0)}</span>
+                            </div>
+                            <h3 className="text-xs font-bold text-main">{subj.name}</h3>
                         </div>
-                        <h3 className="text-xs font-bold text-slate-800 dark:text-white">{subj.name}</h3>
-                    </div>
-                    <div className="space-y-2">
-                        <div className="flex justify-between items-center text-[10px]">
-                            <span className="text-[#64748B] font-bold">صافي الربح</span>
-                            <span className="font-black" style={{ color: '#6C4BFF' }}>{subj.profit.toLocaleString()} {reportCurrency}</span>
+                        <div className="space-y-2">
+                            <div className="flex justify-between items-center text-[10px]">
+                                <span className="text-muted font-bold">صافي الربح</span>
+                                <span className="font-black text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
-                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full">
-                                <div className="h-full rounded-full" style={{ backgroundColor: '#6C4BFF', width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
+                            <div className="h-1 bg-surface overflow-hidden rounded-full">
+                                <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, (subj.profit / subj.income) * 100)}%` }} />
                             </div>
-                            <div className="flex justify-between items-center text-[9px] text-[#64748B] mt-1">
+                            <div className="flex justify-between items-center text-[9px] text-muted mt-1">
                                 <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
                             </div>
                         </div>

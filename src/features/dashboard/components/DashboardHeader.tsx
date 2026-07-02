@@ -30,22 +30,22 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
             {/* Identity & Welcome */}
             <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
-                <div className="w-14 h-14 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg shadow-blue-200/20 border border-white/10 shrink-0">
-                    <span className="text-xl font-black text-white">د</span>
+                <div className="w-14 h-14 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg shadow-info/20 border border-white/10 shrink-0">
+                    <span className="text-xl font-black text-on-primary">د</span>
                 </div>
 
                 <div className="text-right">
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-white text-[9px] font-bold px-2.5 py-1 rounded-xl border border-white/10">
+                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-on-primary text-[9px] font-bold px-2.5 py-1 rounded-xl border border-white/10">
                             <ShieldCheck size={10} strokeWidth={1.5} />
                             {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
                         </span>
-                        <span className="inline-flex items-center gap-1 bg-emerald-500/20 backdrop-blur-sm text-emerald-300 text-[8px] font-bold px-2 py-0.5 rounded-xl">
-                            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                        <span className="inline-flex items-center gap-1 bg-success/20 backdrop-blur-sm text-success text-[8px] font-bold px-2 py-0.5 rounded-xl">
+                            <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
                             نشط
                         </span>
                     </div>
-                    <h1 className="text-2xl font-black text-white leading-tight drop-shadow-sm">
+                    <h1 className="text-2xl font-black text-on-primary leading-tight drop-shadow-sm">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
                     </h1>
                     <div className="flex items-center gap-3 mt-2">
@@ -66,7 +66,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
                 <div className="flex items-center gap-2 px-4 h-10 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl shadow-sm">
                     <Clock size={14} strokeWidth={1.5} className="text-white/60" />
-                    <span className="text-xs font-medium text-white tabular-nums">
+                    <span className="text-xs font-medium text-on-primary tabular-nums">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
@@ -74,11 +74,11 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 {currentUser?.role === 'admin' && (
                     <button
                         onClick={toggleTasbeeh}
-                        className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold bg-white/15 backdrop-blur-sm text-white rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
+                        className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold bg-white/15 backdrop-blur-sm text-on-primary rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
                     >
                         <Sparkles size={14} strokeWidth={1.5} />
                         المسبحة
-                        <Sparkles size={10} strokeWidth={1.5} className="text-blue-200" />
+                        <Sparkles size={10} strokeWidth={1.5} className="text-info" />
                     </button>
                 )}
             </div>

@@ -65,6 +65,8 @@ export const palette = {
   textOnAccent: slate[900],
   textOnError: '#ffffff',
   textOnSuccess: '#ffffff',
+  textOnWarning: '#ffffff',
+  textOnInfo: '#ffffff',
 
   // Focus
   focusRing: indigo[600],

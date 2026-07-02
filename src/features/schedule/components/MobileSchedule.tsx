@@ -194,7 +194,7 @@ export const MobileSchedule = () => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             dir="rtl"
-            className="min-h-full pb-4 overflow-x-hidden relative bg-[#F8F8FC] dark:bg-slate-950"
+            className="min-h-full pb-4 overflow-x-hidden relative bg-background dark:bg-background"
         >
             {/* Pull to Refresh */}
             <motion.div
@@ -203,13 +203,13 @@ export const MobileSchedule = () => {
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full"
             >
-                <div className="flex items-center gap-2.5 text-[#6C4BFF] font-medium text-xs">
+                <div className="flex items-center gap-2.5 text-primary font-medium text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
                     ) : pullDistance > 55 ? (
                         <><Sparkles size={16} className="animate-pulse" strokeWidth={1.5} /><span>أفلت للتحديث</span></>
                     ) : (
-                        <span className="text-[#94A3B8]">اسحب للتحديث</span>
+                        <span className="text-dim">اسحب للتحديث</span>
                     )}
                 </div>
             </motion.div>
@@ -217,13 +217,13 @@ export const MobileSchedule = () => {
             {/* Search */}
             <div className="px-4 pt-3 pb-1">
                 <div className="relative">
-                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold outline-none focus:border-[#6C4BFF] rounded-2xl transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-700 dark:text-white shadow-sm"
+                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                     />
                 </div>
             </div>
@@ -242,15 +242,15 @@ export const MobileSchedule = () => {
                                 className={cn(
                                     "px-3.5 py-2 rounded-2xl text-[10px] font-bold whitespace-nowrap transition-all border",
                                     isActive
-                                        ? "bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white border-[#6C4BFF] shadow-sm shadow-purple-200/40"
-                                        : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700"
+                                        ? "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary border-primary shadow-sm shadow-primary/40"
+                                        : "bg-white dark:bg-primary-active text-muted dark:text-muted border-border dark:border-border"
                                 )}
                             >
                                 {day}
                                 {isToday && (
                                     <span className={cn(
                                         "mr-1.5 inline-block w-1.5 h-1.5 rounded-full",
-                                        isActive ? "bg-white" : "bg-[#6C4BFF]"
+                                        isActive ? "bg-white" : "bg-primary"
                                     )} />
                                 )}
                             </motion.button>
@@ -261,14 +261,14 @@ export const MobileSchedule = () => {
 
             {/* Stats row */}
             <motion.div {...fadeUp} className="px-4 pb-2">
-                <div className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-slate-100/50 dark:border-slate-800/50 flex items-center justify-between">
+                <div className="bg-white dark:bg-primary-active rounded-2xl p-3 shadow-sm border border-border/50 dark:border-border/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <CalendarDays size={14} className="text-[#6C4BFF]" strokeWidth={1.5} />
-                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{selectedDay}</span>
+                        <CalendarDays size={14} className="text-primary" strokeWidth={1.5} />
+                        <span className="text-[10px] font-bold text-muted dark:text-muted">{selectedDay}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <span className="text-lg font-black text-[#6C4BFF] tabular-nums">{totalToday}</span>
-                        <span className="text-[8px] font-bold text-slate-400">حصة</span>
+                        <span className="text-lg font-black text-primary tabular-nums">{totalToday}</span>
+                        <span className="text-[8px] font-bold text-muted">حصة</span>
                     </div>
                 </div>
             </motion.div>
@@ -276,7 +276,7 @@ export const MobileSchedule = () => {
             {/* Live Classes (admin only) */}
             {currentUser?.role === 'admin' && (
                 <div className="px-4 pb-2">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 overflow-hidden">
+                    <div className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 overflow-hidden">
                         <div className="p-3"><LiveClasses /></div>
                     </div>
                 </div>
@@ -286,7 +286,7 @@ export const MobileSchedule = () => {
             <div className="px-4 space-y-1">
                 {loading ? (
                     <div className="py-16 text-center">
-                        <Loader2 size={24} className="animate-spin text-[#6C4BFF] mx-auto" strokeWidth={1.5} />
+                        <Loader2 size={24} className="animate-spin text-primary mx-auto" strokeWidth={1.5} />
                     </div>
                 ) : filteredEvents.length > 0 ? (
                     TIME_SLOTS.map((slot, slotIdx) => {
@@ -302,7 +302,7 @@ export const MobileSchedule = () => {
                             >
                                 {/* Time column */}
                                 <div className="w-14 shrink-0 pt-1.5 text-center">
-                                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 tabular-nums">{slot.label}</span>
+                                    <span className="text-[9px] font-bold text-muted dark:text-muted tabular-nums">{slot.label}</span>
                                 </div>
                                 {/* Events */}
                                 <div className="flex-1 space-y-1.5 pb-2">
@@ -313,18 +313,18 @@ export const MobileSchedule = () => {
                                                 key={event.id}
                                                 whileTap={{ scale: 0.97 }}
                                                 onClick={() => { triggerHaptic('light'); setSelectedEvent(event); setShowDetails(true); }}
-                                                className="bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border-r-[3px] cursor-pointer active:scale-[0.97] transition-all"
+                                                className="bg-white dark:bg-primary-active rounded-2xl p-3 shadow-sm border-r-[3px] cursor-pointer active:scale-[0.97] transition-all"
                                                 style={{ borderRightColor: color }}
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black text-white"
+                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black text-on-primary"
                                                             style={{ backgroundColor: color }}>
                                                             {event.studentName.charAt(0)}
                                                         </div>
                                                         <div>
-                                                            <p className="text-[11px] font-bold text-slate-800 dark:text-white leading-tight">{event.studentName}</p>
-                                                            <p className="text-[8px] font-bold text-slate-400">{event.subject}</p>
+                                                            <p className="text-[11px] font-bold text-main dark:text-on-primary leading-tight">{event.studentName}</p>
+                                                            <p className="text-[8px] font-bold text-muted">{event.subject}</p>
                                                         </div>
                                                     </div>
                                                     <span className="text-[7px] font-bold px-1.5 py-0.5 rounded-lg" style={{ backgroundColor: `${color}15`, color }}>
@@ -339,10 +339,10 @@ export const MobileSchedule = () => {
                         );
                     })
                 ) : (
-                    <div className="py-16 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-                        <CalendarDays size={28} className="mx-auto mb-2 text-slate-300 dark:text-slate-600" strokeWidth={1.5} />
-                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500">لا توجد حصص في هذا اليوم</p>
-                        <p className="text-[9px] font-medium text-slate-300 dark:text-slate-600 mt-1">اختر يوماً آخر من الأيام أعلاه</p>
+                    <div className="py-16 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
+                        <CalendarDays size={28} className="mx-auto mb-2 text-dim dark:text-muted" strokeWidth={1.5} />
+                        <p className="text-xs font-bold text-muted dark:text-muted">لا توجد حصص في هذا اليوم</p>
+                        <p className="text-[9px] font-medium text-dim dark:text-muted mt-1">اختر يوماً آخر من الأيام أعلاه</p>
                     </div>
                 )}
             </div>
@@ -363,43 +363,43 @@ export const MobileSchedule = () => {
                             exit={{ y: '100%' }}
                             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                             onClick={e => e.stopPropagation()}
-                            className="w-full bg-white dark:bg-slate-900 rounded-t-3xl shadow-2xl overflow-hidden max-h-[85vh]"
+                            className="w-full bg-white dark:bg-primary-active rounded-t-3xl shadow-2xl overflow-hidden max-h-[85vh]"
                         >
                             {/* Handle */}
                             <div className="flex justify-center pt-3 pb-1">
-                                <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full" />
+                                <div className="w-10 h-1 bg-card dark:bg-primary-active rounded-full" />
                             </div>
 
                             <div className="px-5 pb-6 space-y-4">
                                 <div className="text-center">
-                                    <p className="text-[9px] font-bold text-slate-400">تفاصيل الحصة</p>
-                                    <h3 className="text-sm font-black text-slate-900 dark:text-white mt-0.5">{selectedEvent.day}</h3>
+                                    <p className="text-[9px] font-bold text-muted">تفاصيل الحصة</p>
+                                    <h3 className="text-sm font-black text-main dark:text-on-primary mt-0.5">{selectedEvent.day}</h3>
                                 </div>
 
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#6C4BFF08', borderRight: '3px solid #6C4BFF' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">الطالب</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
-                                            <span className="text-[9px] font-bold text-[#6C4BFF]">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
+                                            <span className="text-[8px] font-bold text-muted">الطالب</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.studentName}</p>
+                                            <span className="text-[9px] font-bold text-primary">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
                                         </div>
-                                        <User size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#10B98108', borderRight: '3px solid #10B981' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">المعلمة</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedEvent.teacherName}</p>
+                                            <span className="text-[8px] font-bold text-muted">المعلمة</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
                                         </div>
-                                        <BookOpen size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#F59E0B08', borderRight: '3px solid #F59E0B' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-slate-400">الوقت</span>
-                                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{selectedEvent.time}</p>
+                                            <span className="text-[8px] font-bold text-muted">الوقت</span>
+                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.time}</p>
                                         </div>
-                                        <Clock size={18} className="text-slate-300" strokeWidth={1.5} />
+                                        <Clock size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
                                 </div>
 
@@ -419,7 +419,7 @@ export const MobileSchedule = () => {
                                                 if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                             } catch { setShowDetails(false); }
                                         }}
-                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-purple-200/30"
+                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-primary/30"
                                     >
                                         <Video size={14} strokeWidth={1.5} />
                                         بدء بث مباشر
@@ -427,7 +427,7 @@ export const MobileSchedule = () => {
                                     <motion.button
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => { triggerHaptic('light'); navigate(`/students`); setShowDetails(false); }}
-                                        className="flex-1 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold border border-slate-200 dark:border-slate-700"
+                                        className="flex-1 py-3 rounded-2xl bg-surface dark:bg-primary-active text-muted dark:text-dim text-[10px] font-bold border border-border dark:border-border"
                                     >
                                         عرض الطالب
                                     </motion.button>

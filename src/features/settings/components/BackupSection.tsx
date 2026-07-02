@@ -50,41 +50,41 @@ export const BackupSection = ({
                 </SecondaryBtn>
                 <input id="import-backup-input" type="file" accept=".json" onChange={handleImportBackup} className="hidden" />
 
-                <PrimaryBtn onClick={createBackup} loading={isSaving} className="w-full justify-center" style={{ background: 'linear-gradient(to left, #059669, #10b981)' }}>
+                <PrimaryBtn onClick={createBackup} loading={isSaving} className="w-full justify-center">
                     <RotateCcw size={16} /> إنشاء نسخة الآن
                 </PrimaryBtn>
             </div>
 
             <div className="mb-6">
-                <h4 className="text-xs font-bold text-slate-500 mb-3 flex items-center gap-2">
+                <h4 className="text-xs font-bold text-muted mb-3 flex items-center gap-2">
                     <History size={14} /> سجل النسخ الاحتياطي
                 </h4>
                 {loading ? (
-                    <p className="text-xs text-slate-400">جاري التحميل...</p>
+                    <p className="text-xs text-dim">جاري التحميل...</p>
                 ) : backupHistory.length === 0 ? (
-                    <p className="text-xs text-slate-400">لا توجد نسخ احتياطية سابقة</p>
+                    <p className="text-xs text-dim">لا توجد نسخ احتياطية سابقة</p>
                 ) : (
                     <div className="space-y-1 max-h-48 overflow-y-auto">
                         {backupHistory.map(b => (
-                            <div key={b.id} className="flex items-center justify-between py-2 px-3 bg-slate-50 rounded-lg">
+                            <div key={b.id} className="flex items-center justify-between py-2 px-3 bg-surface rounded-lg">
                                 <div className="flex items-center gap-2">
-                                    <Clock size={12} className="text-slate-400" />
-                                    <span className="text-xs text-slate-600">{new Date(b.createdAt).toLocaleString('ar')}</span>
-                                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${b.status === 'completed' ? 'bg-green-50 text-green-600' : 'bg-yellow-50 text-yellow-600'}`}>
+                                    <Clock size={12} className="text-dim" />
+                                    <span className="text-xs text-muted">{new Date(b.createdAt).toLocaleString('ar')}</span>
+                                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${b.status === 'completed' ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning-dark'}`}>
                                         {b.status}
                                     </span>
                                 </div>
-                                <span className="text-[10px] text-slate-400">{formatSize(b.size)}</span>
+                                <span className="text-[10px] text-dim">{formatSize(b.size)}</span>
                             </div>
                         ))}
                     </div>
                 )}
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div className="pt-4 border-t border-border flex items-center justify-between">
                 <div>
-                    <p className="text-xs font-bold text-rose-600">منطقة خطرة</p>
-                    <p className="text-[10px] text-slate-400">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
+                    <p className="text-xs font-bold text-error">منطقة خطرة</p>
+                    <p className="text-[10px] text-dim">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
                 </div>
                 <div className="flex gap-2">
                     <SecondaryBtn onClick={triggerArchive}>أرشفة الموسم</SecondaryBtn>

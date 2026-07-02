@@ -14,19 +14,19 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
     const adminPhone = useAdminPhone();
     const navigate = useNavigate();
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full" dir="rtl">
+        <div className="bg-white dark:bg-primary-active border-2 border-border dark:border-border p-6 rounded-none shadow-sm flex flex-col h-full" dir="rtl">
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-slate-950 text-white rounded-none flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 bg-background text-on-primary rounded-none flex items-center justify-center shadow-lg">
                         <UserX size={20} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-medium text-slate-950 dark:text-white uppercase tracking-tighter">تجديد الاشتراكات</h3>
-                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest mt-1">المراقبة المالية</p>
+                        <h3 className="text-sm font-medium text-main dark:text-on-primary uppercase tracking-tighter">تجديد الاشتراكات</h3>
+                        <p className="text-[10px] font-medium text-muted uppercase tracking-widest mt-1">المراقبة المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 border border-rose-100 dark:border-rose-900/20 px-3 py-1.5 rounded-none text-[10px] font-medium uppercase tracking-widest">
+                <div className="flex items-center gap-2 bg-error-light dark:bg-error/20 text-error border border-error dark:border-error/20 px-3 py-1.5 rounded-none text-[10px] font-medium uppercase tracking-widest">
                     <AlertCircle size={12} />
                     {stats.lowBalanceCount} طلاب استحقاق
                 </div>
@@ -36,34 +36,34 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
             <div className="space-y-3 overflow-y-auto max-h-[400px] pr-2 -mr-2 custom-scrollbar">
                 {lowBalanceStudents.length > 0 ? (
                     lowBalanceStudents.map((item, idx) => (
-                        <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-none border-b border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-between group">
+                        <div key={idx} className="p-4 bg-background dark:bg-primary-active/30 rounded-none border-b border-border dark:border-border hover:bg-surface dark:hover:bg-primary-active transition-all flex items-center justify-between group">
                             <div className="flex items-center gap-4 min-w-0">
                                 <div className="relative">
-                                    <div className="w-10 h-10 rounded-none bg-white dark:bg-slate-800 flex items-center justify-center font-medium text-xs text-indigo-600 border-2 border-slate-950">
+                                    <div className="w-10 h-10 rounded-none bg-white dark:bg-primary-active flex items-center justify-center font-medium text-xs text-primary border-2 border-border">
                                         {item.studentName.charAt(0)}
                                     </div>
                                     <div className={cn(
-                                        "absolute -bottom-1 -right-1 w-4 h-4 rounded-none border-2 border-slate-950",
-                                        item.remainingSessions === 0 ? "bg-rose-500" : "bg-amber-500"
+                                        "absolute -bottom-1 -right-1 w-4 h-4 rounded-none border-2 border-border",
+                                        item.remainingSessions === 0 ? "bg-error" : "bg-warning"
                                     )} />
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className="font-medium text-xs text-slate-950 dark:text-white truncate group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{item.studentName}</h4>
-                                    <p className="text-[10px] font-medium text-slate-400 truncate mt-1 uppercase tracking-widest">{item.subject}</p>
+                                    <h4 className="font-medium text-xs text-main dark:text-on-primary truncate group-hover:text-primary transition-colors uppercase tracking-tight">{item.studentName}</h4>
+                                    <p className="text-[10px] font-medium text-muted truncate mt-1 uppercase tracking-widest">{item.subject}</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-4 shrink-0">
                                 <span className={cn(
                                     "text-[9px] font-medium px-2 py-0.5 rounded-none uppercase tracking-widest",
-                                    item.remainingSessions === 0 ? "bg-rose-100 text-rose-600" : "bg-amber-100 text-amber-600"
+                                    item.remainingSessions === 0 ? "bg-error-light text-error" : "bg-warning-light text-warning"
                                 )}>
                                     {item.remainingSessions === 0 ? 'انتهاء' : `${item.remainingSessions} م` }
                                 </span>
                                 
                                 <button
                                     onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                    className="w-10 h-10 bg-slate-950 text-white hover:bg-emerald-600 rounded-none flex items-center justify-center transition-all shadow-md active:scale-95"
+                                    className="w-10 h-10 bg-background text-on-primary hover:bg-success rounded-none flex items-center justify-center transition-all shadow-md active:scale-95"
                                 >
                                     <Phone size={14} />
                                 </button>
@@ -72,14 +72,14 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-24 opacity-20 flex flex-col items-center">
-                         <UserX size={48} className="text-slate-300 mb-4" />
+                         <UserX size={48} className="text-dim mb-4" />
                          <p className="text-[10px] font-medium uppercase tracking-[0.2em]">لا توجد أرصدة منخفضة</p>
                     </div>
                 )}
             </div>
 
             <div className="mt-auto pt-6">
-                <button onClick={() => navigate('/attendance')} className="w-full h-11 flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white rounded-none transition-all active:scale-95 border border-slate-200 dark:border-slate-700">
+                <button onClick={() => navigate('/attendance')} className="w-full h-11 flex items-center justify-center gap-2 bg-surface dark:bg-primary-active text-muted dark:text-muted font-medium text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary rounded-none transition-all active:scale-95 border border-border dark:border-border">
                     عرض كافة السجلات
                     <ChevronLeft size={16} />
                 </button>

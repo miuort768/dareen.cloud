@@ -33,3 +33,18 @@ export type { CheckboxProps, RadioProps } from './Checkbox';
 
 export { Switch }          from './Switch';
 export type { SwitchProps } from './Switch';
+
+export { Tabs }            from './Tabs';
+export type { TabsProps, Tab } from './Tabs';
+
+export { Breadcrumb }      from './Breadcrumb';
+export type { BreadcrumbItem, BreadcrumbProps } from './Breadcrumb';
+
+export { StatCard }         from './StatCard';
+export type { StatCardProps } from './StatCard';
+
+export { ChartContainer }    from './ChartContainer';
+export { ChartTooltip }      from './ChartTooltip';
+
+export { ActivityFeed }      from './ActivityFeed';
+export type { ActivityItem, ActivityFeedProps } from './ActivityFeed';

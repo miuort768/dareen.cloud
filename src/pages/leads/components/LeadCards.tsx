@@ -14,24 +14,24 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
         <div className="lg:hidden space-y-3">
             {filteredLeads.length === 0 ? (
                 <div className="py-16 text-center">
-                    <Users size={40} className="mx-auto mb-3 text-slate-200 dark:text-slate-800" />
-                    <p className="text-xs font-bold text-slate-400">لا توجد نتائج بحث</p>
+                    <Users size={40} className="mx-auto mb-3 text-dim dark:text-main" />
+                    <p className="text-xs font-bold text-muted">لا توجد نتائج بحث</p>
                 </div>
             ) : filteredLeads.map((lead) => (
                 <div
                     key={lead.id}
                     onDoubleClick={() => handleMarkLost(lead.id)}
-                    className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm rounded-2xl active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
+                    className="bg-white dark:bg-primary-active border border-border dark:border-border shadow-sm rounded-2xl active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
                     title="اضغط مرتين للإخفاء"
                 >
                     {/* Card header */}
                     <div className="flex items-center justify-between px-4 pt-4 pb-2">
                         <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 bg-[#6C4BFF]/10 text-[#6C4BFF]">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 bg-primary/10 text-primary">
                                 {lead.studentName?.charAt(0) || 'ع'}
                             </div>
-                            <div className="bg-gradient-to-l from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 px-3 py-1 rounded-xl">
-                                <h4 className="font-bold text-sm text-emerald-700 dark:text-emerald-300 leading-tight truncate">
+                            <div className="bg-gradient-to-l from--[var(--bg-success)] to--[var(--bg-success)] dark:from--[var(--bg-success)]/20 dark:to--[var(--bg-success)]/20 px-3 py-1 rounded-xl">
+                                <h4 className="font-bold text-sm text-success dark:text-success leading-tight truncate">
                                     {lead.studentName || 'عميل بدون اسم'}
                                 </h4>
                             </div>
@@ -40,8 +40,8 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                             {[...Array(3)].map((_, i) => (
                                 <Star key={i} size={11} className={cn(
                                     (lead.priority === 'high' || (lead.priority === 'medium' && i < 2) || (lead.priority === 'low' && i < 1))
-                                        ? "text-amber-400 fill-amber-400"
-                                        : "text-slate-200 dark:text-slate-700"
+                                        ? "text-warning fill-warning"
+                                        : "text-dim dark:text-main"
                                 )} />
                             ))}
                         </div>
@@ -50,27 +50,27 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                     {/* Card body */}
                     <div className="px-4 pb-3 space-y-2">
                         <div className="flex items-center gap-2">
-                            <Phone size={11} className="text-emerald-500 shrink-0" />
-                            <span className="text-xs font-bold text-slate-600 dark:text-slate-300 font-mono">{lead.phone}</span>
+                            <Phone size={11} className="text-success shrink-0" />
+                            <span className="text-xs font-bold text-muted dark:text-dim font-mono">{lead.phone}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Tag size={11} className="text-blue-400 shrink-0" />
-                            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{lead.subject}</span>
+                            <Tag size={11} className="text-info shrink-0" />
+                            <span className="text-xs font-bold text-muted dark:text-dim">{lead.subject}</span>
                             {lead.curriculum && (
-                                <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500">· {lead.curriculum}</span>
+                                <span className="text-[9px] font-bold text-muted dark:text-muted">· {lead.curriculum}</span>
                             )}
                         </div>
                     </div>
 
                     {lead.notes && (
-                        <div className="mx-4 mb-3 bg-amber-50 dark:bg-amber-950/10 border border-amber-100 dark:border-amber-900/20 px-3 py-2 rounded-xl">
-                            <span className="text-[8px] font-bold text-amber-600 dark:text-amber-400 tracking-widest ml-2">ملاحظات</span>
-                            <span className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{lead.notes}</span>
+                        <div className="mx-4 mb-3 bg-warning-light dark:bg-warning/10 border border-warning dark:border-warning/20 px-3 py-2 rounded-xl">
+                            <span className="text-[8px] font-bold text-warning dark:text-warning tracking-widest ml-2">ملاحظات</span>
+                            <span className="text-[11px] text-muted dark:text-muted font-medium leading-relaxed">{lead.notes}</span>
                         </div>
                     )}
 
                     {/* Card footer */}
-                    <div className="border-t border-gray-100 dark:border-slate-800 px-4 py-3">
+                    <div className="border-t border-border dark:border-border px-4 py-3">
                         <div className="flex items-center justify-between gap-2">
                             <select
                                 className={cn(
@@ -91,17 +91,17 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                     className={cn(
                                         "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                         lead.status === 'converted'
-                                            ? "bg-emerald-500 text-white"
-                                            : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+                                            ? "bg-success text-on-primary"
+                                            : "bg-success-light text-success hover:bg-success hover:text-on-primary"
                                     )}
                                     title="تم التحويل"
                                 >
                                     <CheckCircle2 size={12} />
                                 </button>
-                                <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all rounded-xl">
+                                <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="w-7 h-7 bg-success-light text-success flex items-center justify-center hover:bg-success hover:text-on-primary transition-all rounded-xl">
                                     <PhoneCall size={12} />
                                 </button>
-                                <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="w-7 h-7 bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-all rounded-xl">
+                                <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="w-7 h-7 bg-success-light text-success flex items-center justify-center hover:bg-success hover:text-on-primary transition-all rounded-xl">
                                     <MessageSquare size={12} />
                                 </button>
                                 <button 
@@ -109,8 +109,8 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                     className={cn(
                                         "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                         lead.status === 'lost'
-                                            ? "bg-rose-500 text-white"
-                                            : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"
+                                            ? "bg-error text-on-primary"
+                                            : "bg-error-light text-error hover:bg-error hover:text-on-primary"
                                     )}
                                 >
                                     <Trash size={12} />

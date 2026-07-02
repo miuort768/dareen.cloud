@@ -25,30 +25,30 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
 
     return (
         <SectionCard>
-            <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50">
+            <div className="p-4 border-b border-border/50 dark:border-border/50">
                 <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="#10B981" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">
-                    <thead className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
+                    <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 uppercase tracking-wider">الطالب</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">المبلغ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">التاريخ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-white/70 text-center">الحالة</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary uppercase tracking-wider">الطالب</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">المبلغ</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">التاريخ</th>
+                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">الحالة</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                    <tbody className="divide-y divide-border dark:divide-border">
                         {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
-                            <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                            <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
                                 <td className="px-4 py-4">
-                                    <span className="block font-bold text-xs text-slate-800 dark:text-white mb-0.5">{item.studentName}</span>
-                                    <span className="text-[9px] text-slate-400 font-medium line-clamp-1">{item.description}</span>
+                                    <span className="block font-bold text-xs text-main dark:text-on-primary mb-0.5">{item.studentName}</span>
+                                    <span className="text-[9px] text-muted font-medium line-clamp-1">{item.description}</span>
                                 </td>
-                                <td className="px-4 py-4 text-center font-bold text-xs text-emerald-600">
+                                <td className="px-4 py-4 text-center font-bold text-xs text-success">
                                     {item.amount.toLocaleString()} ج.م
                                 </td>
-                                <td className="px-4 py-4 text-center text-[10px] text-slate-400 font-mono">{item.date}</td>
+                                <td className="px-4 py-4 text-center text-[10px] text-muted font-mono">{item.date}</td>
                                 <td className="px-4 py-4 text-center">
                                     <button
                                         onClick={async () => {
@@ -58,7 +58,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                         }}
                                         className={cn(
                                             "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-xl",
-                                            item.status === 'paid' ? "bg-emerald-600 text-white" : "text-rose-600 border border-rose-200 bg-rose-50"
+                                            item.status === 'paid' ? "bg-success text-on-primary" : "text-error border border-error bg-error-light"
                                         )}
                                     >
                                         {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}

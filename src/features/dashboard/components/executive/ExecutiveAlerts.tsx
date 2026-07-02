@@ -33,11 +33,11 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
     const filtered = filter === 'all' ? allAlerts : allAlerts.filter(a => a.severity === filter);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400">التنبيهات</h3>
+                <h3 className="text-sm font-semibold text-muted dark:text-muted">التنبيهات</h3>
                 {counts.critical > 0 && (
-                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold">
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-error text-on-primary text-[10px] font-bold">
                         {counts.critical}
                     </span>
                 )}
@@ -53,7 +53,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                             onClick={() => setFilter(key)}
                             className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                                 isActive
-                                    ? 'text-white'
+                                    ? 'text-on-primary'
                                     : 'bg-transparent border'
                             }`}
                             style={{
@@ -70,7 +70,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
 
             <div className="space-y-2 max-h-64 overflow-y-auto">
                 {filtered.length === 0 && (
-                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center py-4">لا توجد تنبيهات</p>
+                    <p className="text-xs text-muted dark:text-muted text-center py-4">لا توجد تنبيهات</p>
                 )}
                 {filtered.map((alert, i) => {
                     const cfg = SEVERITY_CONFIG[alert.severity] || SEVERITY_CONFIG.info;
@@ -78,16 +78,16 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                     return (
                         <div
                             key={i}
-                            className="flex items-start gap-3 p-2.5 rounded-xl transition-all hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                            className="flex items-start gap-3 p-2.5 rounded-xl transition-all hover:bg-surface dark:hover:bg-card/50"
                             style={{ backgroundColor: cfg.bg + '66' }}
                         >
                             <Icon size={20} style={{ color: cfg.color }} className="mt-0.5 flex-shrink-0" />
                             <div className="min-w-0 flex-1">
-                                <p className="text-sm font-medium text-gray-800 dark:text-white">{alert.message}</p>
-                                {alert.time && <p className="text-xs text-gray-400 mt-0.5">{alert.time}</p>}
+                                <p className="text-sm font-medium text-main dark:text-on-primary">{alert.message}</p>
+                                {alert.time && <p className="text-xs text-muted mt-0.5">{alert.time}</p>}
                             </div>
                             {alert.count && (
-                                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 flex-shrink-0">+{alert.count}</span>
+                                <span className="text-xs font-bold text-muted dark:text-muted flex-shrink-0">+{alert.count}</span>
                             )}
                         </div>
                     );

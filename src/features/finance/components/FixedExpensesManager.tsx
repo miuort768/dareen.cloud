@@ -29,7 +29,7 @@ const ExpenseInput = ({
         <input
             type="number"
             step="any"
-            className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 px-2 py-1 text-xs font-normal focus:border-[#6C4BFF] focus:ring-0 outline-none transition-all rounded-xl"
+            className="w-full bg-card border-border px-2 py-1 text-xs font-normal focus:border-primary focus:ring-2 focus:ring-focus outline-none transition-all rounded-xl"
             placeholder="0"
             value={val}
             onChange={(e) => setVal(e.target.value)}
@@ -46,24 +46,24 @@ export const FixedExpensesManager = ({
 }: FixedExpensesManagerProps) => {
     return (
         <div className="px-0 mb-8" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl">
-                <div className="p-4 border-b border-slate-100/50 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-card border-border shadow-sm overflow-hidden rounded-2xl">
+                <div className="p-4 border-b border-border flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 flex items-center justify-center rounded-xl" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                        <div className="w-9 h-9 flex items-center justify-center bg-primary-soft text-primary rounded-xl">
                             <Wallet size={18} />
                         </div>
                         <div>
-                            <h2 className="text-sm font-normal text-slate-800 dark:text-white uppercase tracking-tight">المصروفات التشغيلية الثابتة</h2>
-                            <p className="text-[10px] text-slate-400 font-normal uppercase tracking-wider">تحديث شهري تلقائي</p>
+                            <h2 className="text-sm font-normal text-main uppercase tracking-tight">المصروفات التشغيلية الثابتة</h2>
+                            <p className="text-[10px] text-dim font-normal uppercase tracking-wider">تحديث شهري تلقائي</p>
                         </div>
                     </div>
 
                     <div className="flex gap-2 w-full md:w-auto">
-                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5A3FE0] hover:to-[#7C4DE6] text-white px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 shadow-sm transition-all uppercase rounded-xl">
+                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-primary hover:bg-primary-hover text-on-primary px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 shadow-sm transition-all uppercase rounded-xl">
                             <RefreshCcw size={14} />
                             ترحيل الكل
                         </button>
-                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-rose-500 px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 transition-all uppercase shadow-sm rounded-xl" style={{ backgroundColor: '#F43F5E12', border: '1px solid #F43F5E30' }}>
+                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-error px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 transition-all uppercase shadow-sm rounded-xl bg-error-soft border border-error">
                             <Trash2 size={14} />
                             تصفير
                         </button>
@@ -72,8 +72,8 @@ export const FixedExpensesManager = ({
 
                 <div className="p-4 grid grid-cols-2 md:grid-cols-5 gap-3">
                     {expenses.map(item => (
-                        <div key={item.id} className="p-3 bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 hover:border-[#6C4BFF]/30 transition-all group rounded-2xl">
-                            <label className="text-[9px] font-normal text-slate-400 uppercase mb-2 block truncate">
+                        <div key={item.id} className="p-3 bg-card border-border hover:border-primary transition-all group rounded-2xl">
+                            <label className="text-[9px] font-normal text-dim uppercase mb-2 block truncate">
                                 {item.name}
                             </label>
                             <div className="flex items-center gap-1.5">
@@ -82,7 +82,7 @@ export const FixedExpensesManager = ({
                                     amount={item.amount}
                                     onUpdate={onUpdateExpense}
                                 />
-                                <span className="text-[9px] font-normal text-slate-400 uppercase">{CURRENCY_SYMBOL}</span>
+                                <span className="text-[9px] font-normal text-dim uppercase">{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                     ))}

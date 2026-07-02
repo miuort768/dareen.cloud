@@ -59,14 +59,14 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 <FieldLabel>الصيغة الافتراضية للتصدير</FieldLabel>
                 <div className="flex gap-2 mt-1">
                     {(['pdf', 'excel'] as const).map(f => (
-                        <button key={f} onClick={() => setDefaultFormat(f)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${defaultFormat === f ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100'}`}>
+                        <button key={f} onClick={() => setDefaultFormat(f)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${defaultFormat === f ? 'bg-primary-soft text-primary border border-primary' : 'bg-surface text-muted border border-border hover:bg-hover'}`}>
                             <Download size={14} /> {f === 'pdf' ? 'PDF' : 'Excel'}
                         </button>
                     ))}
                 </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex justify-end">
+            <div className="pt-4 border-t border-border flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات التقارير</PrimaryBtn>
             </div>
         </SectionCard>

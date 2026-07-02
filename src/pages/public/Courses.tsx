@@ -49,10 +49,10 @@ const StarRating = ({ rating }: { rating: number }) => (
       <Star
         key={star}
         size={10}
-        className={star <= Math.floor(rating) ? 'text-amber-400 fill-amber-400' : 'text-amber-200 fill-amber-100'}
+        className={star <= Math.floor(rating) ? 'text-warning fill-warning' : 'text-warning fill-warning'}
       />
     ))}
-    <span className="text-[10px] font-black text-gray-600 mr-1">{rating}</span>
+    <span className="text-[10px] font-black text-muted mr-1">{rating}</span>
   </div>
 );
 
@@ -75,34 +75,34 @@ export const Courses = () => {
   );
 
   return (
-    <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
+    <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
       <SEO title="الدورات التعليمية أونلاين | دارين السابعة" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 
       <main className="flex-grow md:pt-32 pb-4 md:pb-6 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-indigo-200/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from--[var(--bg-info)]/5 to--[var(--bg-primary)]/5 rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via--[var(--bg-primary)]/20 to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
                         <AnimateOnScroll animation="fadeUp">
                         <div className="text-center mb-6 md:mb-8">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-2 md:mb-6">
-                                <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
-                                <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">استكشف مسيرتك التعليمية</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-2 md:mb-6">
+                                <Sparkles size={13} className="text-primary dark:text-primary" />
+                                <span className="text-[10px] font-black text-primary dark:text-primary">استكشف مسيرتك التعليمية</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-2 md:mb-4 leading-[1.15] tracking-tight">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-[1.15] tracking-tight">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)] dark:from--[var(--bg-primary)] dark:to-[var(--bg-primary)]">
                                     دورات
                                 </span>{' '}
                                 دارين السابعة
                             </h1>
 
-                            <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed font-medium">
+                            <p className="text-sm sm:text-base text-muted dark:text-muted max-w-md mx-auto leading-relaxed font-medium">
                                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
                             </p>
                         </div>
@@ -117,9 +117,9 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 pr-12 py-4 rounded-2xl bg-white dark:bg-slate-900/80 dark:backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 shadow-lg shadow-slate-200/50 dark:shadow-black/20 focus:border-indigo-400/50 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-base placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold"
+                className="w-full px-5 pr-12 py-4 rounded-2xl bg-white dark:bg-primary-active/80 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold"
               />
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 w-5 h-5 group-focus-within:text-indigo-500 transition-colors" />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim dark:text-muted w-5 h-5 group-focus-within:text-primary transition-colors" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -129,11 +129,11 @@ export const Courses = () => {
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 shadow-lg shadow-slate-900/20'
-                      : 'bg-white dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/50 hover:border-slate-900/20 dark:hover:border-slate-100/20 hover:text-slate-900 dark:hover:text-slate-100'
+                      ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-lg shadow-card/20'
+                      : 'bg-white dark:bg-primary-active/50 text-muted dark:text-muted border border-border dark:border-border/50 hover:border-border/20 dark:hover:border-border/20 hover:text-main dark:hover:text-dim'
                   }`}
                 >
-                  <cat.icon size={14} className={activeCategory === cat.value ? 'text-white dark:text-slate-950' : cat.color} />
+                  <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-main' : cat.color} />
                   <span>{cat.label}</span>
                 </button>
               ))}
@@ -154,9 +154,9 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                  className="group relative bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/5 transition-all duration-500"
+                  className="group relative bg-white dark:bg-primary-active/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500"
                 >
-                  <div className="relative h-44 overflow-hidden bg-slate-50 dark:bg-slate-800/30">
+                  <div className="relative h-44 overflow-hidden bg-background dark:bg-primary-active/30">
                     <img
                       src={course.image}
                       alt={course.title}
@@ -167,42 +167,42 @@ export const Courses = () => {
                       className="w-full h-full object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-[var(--bg-primary-active)] to-transparent" />
 
                     <div className="absolute top-3 right-3 z-10">
-                      <div className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg bg-gradient-to-br ${course.color}`}>
+                      <div className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
                         {CATEGORIES.find(c => c.value === course.category)?.label || course.category}
                       </div>
                     </div>
 
                     <div className="absolute bottom-3 left-3 z-10">
-                      <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                      <div className="bg-white/90 dark:bg-primary-active/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>
                   </div>
 
                   <div className="p-4 pb-0 flex flex-col flex-1">
-                    <h2 className="text-lg md:text-xl font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
                       {course.title}
                     </h2>
 
-                    <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mt-2 mb-4">
+                    <p className="text-[12px] text-muted dark:text-muted leading-relaxed line-clamp-2 mt-2 mb-4">
                       {course.desc}
                     </p>
 
-                    <div className="mt-auto flex items-center justify-between py-3 border-t border-slate-100 dark:border-slate-800/50">
+                    <div className="mt-auto flex items-center justify-between py-3 border-t border-border dark:border-border/50">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
-                          <Users size={12} className="text-indigo-500" />
+                        <div className="w-7 h-7 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">
+                          <Users size={12} className="text-primary" />
                         </div>
                         <div>
-                          <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 leading-none block">{course.students}</span>
-                          <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500">طالب</span>
+                          <span className="text-[11px] font-black text-main dark:text-dim leading-none block">{course.students}</span>
+                          <span className="text-[8px] font-bold text-muted dark:text-muted">طالب</span>
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-lg">
+                      <span className="flex items-center gap-1.5 text-[11px] font-black text-success dark:text-success bg-success-light dark:bg-success/10 px-3 py-1.5 rounded-lg">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>
@@ -213,7 +213,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]"
+                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from--[var(--bg-success)] to-[var(--bg-success)] hover:from--[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 active:scale-[0.98]"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
@@ -238,11 +238,11 @@ export const Courses = () => {
               viewport={{ once: true }}
               className="text-center py-20"
             >
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
-                <Search size={28} className="text-slate-300 dark:text-slate-600" />
+              <div className="w-16 h-16 rounded-2xl bg-background dark:bg-primary-active/50 flex items-center justify-center mx-auto mb-4 border border-border dark:border-border/50">
+                <Search size={28} className="text-dim dark:text-muted" />
               </div>
-              <h2 className="text-xl font-black text-slate-900 dark:text-slate-100 mb-1">لا توجد نتائج</h2>
-              <p className="text-sm text-slate-400 dark:text-slate-500 font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
+              <h2 className="text-xl font-black text-main dark:text-dim mb-1">لا توجد نتائج</h2>
+              <p className="text-sm text-muted dark:text-muted font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
             </motion.div>
           )}
         </div>

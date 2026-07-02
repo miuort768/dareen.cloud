@@ -23,8 +23,8 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     transition={{ duration: 0.4, ease: 'easeOut' }}
     className={cn(
       'flex flex-col items-center justify-center text-center py-16 px-6 rounded-2xl',
-      'bg-white/60 dark:bg-slate-900/50 backdrop-blur-md',
-      'border border-dashed border-slate-200 dark:border-slate-800',
+      'bg-white/60 dark:bg-primary-active/50 backdrop-blur-md',
+      'border border-dashed border-border dark:border-border',
       className
     )}
     dir="rtl"
@@ -34,17 +34,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-red-50 to-rose-100 dark:from-slate-800 dark:to-slate-900 text-red-500 dark:text-teal-400 shadow-[0_8px_30px_rgba(239,68,68,0.1)] dark:shadow-[0_8px_30px_rgba(20,184,166,0.1)]"
+        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from--[var(--bg-error)] to--[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_#EF44441A] dark:shadow-[0_8px_30px_#14B8A61A]"
       >
         {icon}
       </motion.div>
     )}
 
-    <h3 className="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">
+    <h3 className="text-base font-bold text-main dark:text-dim mb-2">
       {title}
     </h3>
     {description && (
-      <p className="text-sm text-slate-400 dark:text-slate-500 max-w-xs leading-relaxed font-medium mb-6">
+      <p className="text-sm text-muted dark:text-muted max-w-xs leading-relaxed font-medium mb-6">
         {description}
       </p>
     )}

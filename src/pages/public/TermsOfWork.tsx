@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const TermsOfWork = () => {
     const { adminPhone } = useSettingsStore();
     return (
-        <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
+        <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO
                 title="قوانين العمل | دارين السابعة"
                 description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
@@ -26,21 +26,21 @@ export const TermsOfWork = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-violet-950 dark:via-violet-900/30 dark:to-slate-900 md:bg-[#FDFCF8] dark:md:bg-slate-900 rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-violet-100/50 dark:border-violet-900/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-10 overflow-hidden bg-gradient-to-br from--[var(--bg-primary)] via--[var(--bg-primary)] to-white dark:from--[var(--bg-primary)] dark:via--[var(--bg-primary)]/30 dark:to-[var(--bg-primary-active)] md:bg-card dark:md:bg-primary-active rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-slate-800/80 dark:md:bg-slate-800 text-indigo-600 md:text-gray-900 dark:md:text-slate-200 border border-violet-200/50 dark:border-violet-800/50 md:border-gray-100 dark:md:border-slate-700 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
-                        <Briefcase size={12} className="text-indigo-600" />
+                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-primary-active/80 dark:md:bg-primary-active text-primary md:text-main dark:md:text-dim border border-primary/50 dark:border-primary/50 md:border-border dark:md:border-border rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
+                        <Briefcase size={12} className="text-primary" />
                         <span className="text-[9px] md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
                     </div>
 
-                    <h1 className="text-[18px] md:text-5xl font-black text-indigo-950 md:text-gray-900 dark:text-white mb-1 md:mb-3 leading-tight font-heading">
-                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 inline-block py-1">العمل</span> في دارين السابعة
+                    <h1 className="text-[18px] md:text-5xl font-black text-primary md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
+                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-primary)] inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
-                    <p className="text-[9px] md:text-lg text-slate-500 md:text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[9px] md:text-lg text-muted md:text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
                         لائحة العمل | السياسات والإجراءات المنظمة لعمل الكادر التعليمي .
                     </p>
                 </div>
@@ -53,12 +53,12 @@ export const TermsOfWork = () => {
                     {/* Introduction */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-indigo-50 rounded-none flex items-center justify-center shrink-0">
-                                <FileCheck className="w-6 h-6 text-indigo-600" />
+                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                                <FileCheck className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">مقدمة</h2>
-                                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">مقدمة</h2>
+                                <p className="text-sm md:text-base text-muted leading-relaxed">
                                     تهدف هذه القوانين إلى تنظيم علاقة العمل بين دارين السابعة وجميع المعلمين والموظفين العاملين في المنصة. الالتزام بهذه القوانين يضمن بيئة عمل مهنية ومنتظمة تحقق أهدافنا التعليمية المشتركة.
                                 </p>
                             </div>
@@ -68,12 +68,12 @@ export const TermsOfWork = () => {
                     {/* Teacher Qualifications */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-emerald-50 rounded-none flex items-center justify-center shrink-0">
-                                <Award className="w-6 h-6 text-emerald-600" />
+                            <div className="w-12 h-12 bg-success-light rounded-none flex items-center justify-center shrink-0">
+                                <Award className="w-6 h-6 text-success" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">مؤهلات المعلمين</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">مؤهلات المعلمين</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
                                         <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو حضوري</li>
@@ -89,12 +89,12 @@ export const TermsOfWork = () => {
                     {/* Code of Conduct */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-violet-50 rounded-none flex items-center justify-center shrink-0">
-                                <Shield className="w-6 h-6 text-violet-600" />
+                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                                <Shield className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">قواعد السلوك المهني</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">قواعد السلوك المهني</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <p>يلتزم جميع المعلمين والموظفين بـ:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>الالتزام بمواعيد الحصص وعدم التأخير أكثر من 5 دقائق</li>
@@ -113,12 +113,12 @@ export const TermsOfWork = () => {
                     {/* Attendance & Punctuality */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-amber-50 rounded-none flex items-center justify-center shrink-0">
-                                <Clock className="w-6 h-6 text-amber-600" />
+                            <div className="w-12 h-12 bg-warning-light rounded-none flex items-center justify-center shrink-0">
+                                <Clock className="w-6 h-6 text-warning" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">الحضور والمواعيد</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">الحضور والمواعيد</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>الدخول قبل موعد الحصة بـ 5 دقائق لضمان جاهزية التقنية</li>
                                         <li>خصم 25% عند التأخير لأكثر من 10 دقائق دون عذر.</li>
@@ -135,14 +135,14 @@ export const TermsOfWork = () => {
                     {/* Payment Terms */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-blue-50 rounded-none flex items-center justify-center shrink-0">
-                                <Award className="w-6 h-6 text-blue-600" />
+                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                                <Award className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">نظام المكافآت والخصومات</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">نظام المكافآت والخصومات</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <div>
-                                        <h3 className="font-bold text-gray-900 mb-2">المكافآت:</h3>
+                                        <h3 className="font-bold text-main mb-2">المكافآت:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>مكافأة التميز تُمنح بنهاية كل فصل دراسي.</li>
                                             <li>مكافأة الالتزام للمعلمين دون أي غياب شهريًا.</li>
@@ -150,7 +150,7 @@ export const TermsOfWork = () => {
                                         </ul>
                                     </div>
                                     <div className="mt-4">
-                                        <h3 className="font-bold text-gray-900 mb-2">الخصومات:</h3>
+                                        <h3 className="font-bold text-main mb-2">الخصومات:</h3>
                                         <ul className="list-disc list-inside space-y-1 mr-4">
                                             <li>التأخير بدون عذر: خصم 25% من قيمة الحصة</li>
                                             <li>الغياب بدون إشعار: خصم قيمة الحصة كاملة</li>
@@ -166,12 +166,12 @@ export const TermsOfWork = () => {
                     {/* Termination */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-red-50 rounded-none flex items-center justify-center shrink-0">
-                                <AlertCircle className="w-6 h-6 text-red-600" />
+                            <div className="w-12 h-12 bg-error-light rounded-none flex items-center justify-center shrink-0">
+                                <AlertCircle className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">إنهاء التعاقد</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">إنهاء التعاقد</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <p>يحق لدارين السابعة إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>الإخلال الجسيم بقواعد السلوك المهني</li>
@@ -189,12 +189,12 @@ export const TermsOfWork = () => {
                     {/* Professional Development */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-cyan-50 rounded-none flex items-center justify-center shrink-0">
-                                <UserCheck className="w-6 h-6 text-cyan-600" />
+                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                                <UserCheck className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-3">التطوير المهني</h2>
-                                <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">التطوير المهني</h2>
+                                <div className="space-y-1 text-muted text-[9px] md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>حضور ورش التطوير المهني إلزامي.</li>
                                         <li>تقييم أداء المعلم شهرياً من قبل المشرف الأكاديمي</li>
@@ -208,9 +208,9 @@ export const TermsOfWork = () => {
                     </div>
 
                     {/* Commitment */}
-                    <div className="bg-gray-50 border border-gray-100 p-8 rounded-none mb-4">
-                        <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-4">التعهد والالتزام</h2>
-                        <div className="space-y-1 text-gray-600 text-[9px] md:text-sm">
+                    <div className="bg-background border border-border p-8 rounded-none mb-4">
+                        <h2 className="text-xl md:text-2xl font-black text-main mb-4">التعهد والالتزام</h2>
+                        <div className="space-y-1 text-muted text-[9px] md:text-sm">
                             <p>بتوقيعك على هذه القوانين، فإنك تتعهد بـ:</p>
                             <ul className="list-disc list-inside space-y-1 mr-4">
                                 <li>الالتزام بجميع القوانين والسياسات المذكورة أعلاه</li>
@@ -224,24 +224,24 @@ export const TermsOfWork = () => {
                         </div>
                     </div>
 
-                    <p className="text-sm text-gray-400 mt-4 font-bold">
+                    <p className="text-sm text-muted mt-4 font-bold">
                         آخر تحديث: 26 مايو 2026
                     </p>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-3 relative overflow-hidden group rounded-2xl mt-8">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-600/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-3 relative overflow-hidden group rounded-2xl mt-8">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات؟</h2>
-                            <p className="text-gray-500 mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
+                            <h2 className="text-xl md:text-2xl font-black text-main mb-2">هل لديك استفسارات؟</h2>
+                            <p className="text-muted mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-indigo-600 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all"
+                                className="inline-flex items-center justify-center gap-4 bg-primary text-on-primary px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all"
                             >
                                 <Headphones className="w-5 h-5" />
                                 <span className="text-base md:text-lg">تواصل مع إدارة المعهد</span>

@@ -17,7 +17,6 @@ export const BottomNav = () => {
   const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
   const isSchedule = location.pathname.includes('/schedule');
   const isTasks = location.pathname.includes('/tasks');
-  // student-dashboard has its own embedded mobile nav
   const isStudentDash = location.pathname.includes('/student-dashboard');
 
   if (isChatPage || isDashboard || isSchedule || isTasks || isStudentDash) return null;
@@ -41,7 +40,7 @@ export const BottomNav = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl border-t border-slate-200/50 dark:border-slate-800/50 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-slate-900/10">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-card/90 backdrop-blur-2xl border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
       <div className="flex justify-around items-center h-[72px] px-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -57,26 +56,26 @@ export const BottomNav = () => {
             >
               <div className={cn(
                 "p-1.5 rounded-2xl transition-all duration-200",
-                isActive && "bg-primary-50 dark:bg-primary-950/40"
+                isActive && "bg-primary-soft"
               )}>
                 <Icon 
                   size={24} 
                   className={cn(
                     "transition-all duration-200",
                     isActive 
-                      ? "text-primary-600 dark:text-primary-400 stroke-[2.5]" 
-                      : "text-slate-400 dark:text-slate-500 stroke-[1.5]"
+                      ? "text-primary stroke-[2.5]" 
+                      : "text-muted stroke-[1.5]"
                   )} 
                 />
               </div>
               <span className={cn(
                 "text-[10px] font-medium tracking-tight transition-all duration-200",
-                isActive ? "text-primary-600 dark:text-primary-400" : "text-slate-400 dark:text-slate-500"
+                isActive ? "text-primary" : "text-muted"
               )}>
                 {item.label}
               </span>
               {isActive && (
-                <div className="absolute -top-0.5 w-6 h-1 bg-primary-500 dark:bg-primary-400 rounded-full" />
+                <div className="absolute -top-0.5 w-6 h-1 bg-primary rounded-full" />
               )}
             </button>
           );

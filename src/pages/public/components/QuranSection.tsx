@@ -8,19 +8,19 @@ interface QuranSectionProps {
 
 const LeafDecoration = () => (
     <div className="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none overflow-hidden opacity-60">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-emerald-400/30">
+        <svg viewBox="0 0 200 200" className="w-full h-full">
             <defs>
                 <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#08B26A" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#6C4BFF" stopOpacity="0.15" />
+                    <stop offset="0%" stopColor="var(--color-success)" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.15" />
                 </linearGradient>
             </defs>
             <path d="M180 20 Q140 40 120 80 Q100 120 130 150 Q160 130 170 90 Q180 50 180 20Z" fill="url(#leafGrad)" transform="rotate(15, 100, 100)" />
             <path d="M160 60 Q120 70 100 100 Q80 130 110 155 Q140 140 150 110 Q160 80 160 60Z" fill="url(#leafGrad)" transform="rotate(30, 100, 100)" />
             <path d="M200 40 Q170 50 150 80 Q130 110 150 135 Q170 120 180 90 Q190 60 200 40Z" fill="url(#leafGrad)" transform="rotate(-10, 100, 100)" />
-            <circle cx="170" cy="30" r="8" fill="#08B26A" opacity="0.15" />
-            <circle cx="150" cy="70" r="5" fill="#6C4BFF" opacity="0.1" />
-            <circle cx="190" cy="60" r="6" fill="#08B26A" opacity="0.12" />
+            <circle cx="170" cy="30" r="8" fill="var(--color-success)" opacity="0.15" />
+            <circle cx="150" cy="70" r="5" fill="var(--color-primary)" opacity="0.1" />
+            <circle cx="190" cy="60" r="6" fill="var(--color-success)" opacity="0.12" />
         </svg>
     </div>
 );
@@ -29,24 +29,24 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     return (
         <>
             {/* Desktop version */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-[#F8F8FC] dark:bg-slate-950 transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-main transition-colors duration-500">
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-emerald-100 via-emerald-50 to-white dark:from-slate-800 dark:via-slate-800 dark:to-slate-900 rounded-2xl shadow-sm border border-emerald-100/80 dark:border-emerald-900/30 overflow-hidden">
+                    <div className="max-w-6xl mx-auto bg-success-soft dark:bg-card border border-success dark:border-success rounded-2xl shadow-sm overflow-hidden">
                         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center p-6 md:p-10">
                             <div className="w-full lg:w-1/2 text-center">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-emerald-900/30 border border-emerald-200/50 dark:border-emerald-800 rounded-full mb-4 mx-auto">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <span className="text-emerald-900 dark:text-emerald-300 font-bold text-xs">برامج تحفيظ متميزة</span>
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-success-soft border border-success/50 dark:border-success rounded-full mb-4 mx-auto">
+                                    <span className="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+                                    <span className="text-success-dark dark:text-success font-bold text-xs">برامج تحفيظ متميزة</span>
                                 </div>
-                                <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-black dark:text-white leading-tight font-heading">
-                                    رحلتك مع <span className="text-emerald-600 relative inline-block">
+                                <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-main leading-tight font-heading">
+                                    رحلتك مع <span className="text-success relative inline-block">
                                         كتاب الله
-                                        <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" className="text-success opacity-30" />
                                         </svg>
                                     </span> تبدأ بخطوة
                                 </h2>
-                                <p className="text-gray-500 dark:text-slate-400 text-xs lg:text-sm leading-relaxed mb-6 max-w-xl mx-auto font-medium">
+                                <p className="text-muted text-xs lg:text-sm leading-relaxed mb-6 max-w-xl mx-auto font-medium">
                                     منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
@@ -54,7 +54,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="px-8 py-3.5 bg-emerald-600 text-white font-bold text-sm shadow-lg hover:bg-emerald-700 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                        className="px-8 py-3.5 bg-success text-on-success font-bold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     >
                                         <span>ابدأ الحفظ الآن</span>
                                         <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
@@ -62,7 +62,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <Link
                                         to="/courses"
                                         onClick={() => window.scrollTo(0, 0)}
-                                        className="px-8 py-3.5 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 font-bold text-sm hover:border-emerald-200 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center rounded-xl"
+                                        className="px-8 py-3.5 bg-card text-muted border border-border font-bold text-sm hover:border-success hover:text-success hover:bg-success-soft transition-all flex items-center justify-center rounded-xl"
                                     >
                                         <Sparkles size={16} className="ml-2" />
                                         تصفح المزيد
@@ -71,52 +71,52 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <div className="items-center justify-center gap-4 inline-flex">
                                     <div className="flex -space-x-3 space-x-reverse">
                                         {[1, 2, 3].map(i => (
-                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden shadow-sm">
+                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-card bg-success-soft overflow-hidden shadow-sm">
                                                 <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="40" height="40" />
                                             </div>
                                         ))}
-                                        <div className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-slate-300 shadow-sm">+5k</div>
+                                        <div className="w-10 h-10 rounded-full border-2 border-card bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted shadow-sm">+5k</div>
                                     </div>
-                                    <div className="h-8 w-px bg-emerald-200/50 dark:bg-emerald-800/50"></div>
+                                    <div className="h-8 w-px bg-success opacity-40 dark:opacity-40"></div>
                                     <div className="text-right">
-                                        <div className="text-sm font-bold text-black dark:text-white flex items-center gap-1">
+                                        <div className="text-sm font-bold text-main flex items-center gap-1">
                                             4.9/5
-                                            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                                            <Star className="w-4 h-4 text-warning fill-warning" />
                                         </div>
-                                        <div className="text-xs text-gray-500 dark:text-slate-400 font-medium">من قبل آلاف الطلاب</div>
+                                        <div className="text-xs text-muted font-medium">من قبل آلاف الطلاب</div>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full lg:w-1/2 flex justify-center py-4 lg:py-0">
                                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
-                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3 rounded-xl">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card border border-border rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-surface dark:bg-card text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <Clock className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">أوقات مرنة</h3>
-                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">اختر مواعيدك المفضلة</p>
+                                        <h3 className="font-black text-main text-xs mb-1">أوقات مرنة</h3>
+                                        <p className="text-[10px] text-muted leading-tight font-medium">اختر مواعيدك المفضلة</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
-                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3 rounded-xl">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card border border-border rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-warning-soft text-warning flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">متابعة دقيقة</h3>
-                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">تقارير إنجاز أسبوعية</p>
+                                        <h3 className="font-black text-main text-xs mb-1">متابعة دقيقة</h3>
+                                        <p className="text-[10px] text-muted leading-tight font-medium">تقارير إنجاز أسبوعية</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl shadow-sm flex flex-col items-center text-center">
-                                        <div className="w-11 h-11 bg-gray-50 dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3 rounded-xl">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card border border-border rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                        <div className="w-11 h-11 bg-success-soft text-success flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-black dark:text-white text-xs mb-1">معلمون مجازون</h3>
-                                        <p className="text-[10px] text-gray-500 dark:text-slate-400 leading-tight font-medium">نخبة الحفاظ المبدعون</p>
+                                        <h3 className="font-black text-main text-xs mb-1">معلمون مجازون</h3>
+                                        <p className="text-[10px] text-muted leading-tight font-medium">نخبة الحفاظ المبدعون</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
-                                        <Link to="/contact" className="p-4 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-lg text-white flex flex-col items-center text-center transition-all hover:scale-105 cursor-pointer">
-                                            <div className="w-11 h-11 bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
+                                        <Link to="/contact" className="p-4 bg-primary rounded-2xl shadow-lg text-on-primary flex flex-col items-center text-center transition-all hover:brightness-90 cursor-pointer">
+                                            <div className="w-11 h-11 bg-white/20 text-on-primary flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
                                                 <Sparkles className="w-5 h-5" />
                                             </div>
-                                            <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
-                                            <p className="text-white/80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
+                                            <h3 className="font-black text-on-primary text-xs mb-1">جرب مجاناً</h3>
+                                            <p className="text-on-primary opacity-80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
                                         </Link>
                                     </motion.div>
                                 </motion.div>
@@ -127,30 +127,30 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-[#F8F9FB] dark:bg-slate-950 transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-main transition-colors duration-500 pt-2 pb-4">
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
-                <div className="absolute top-40 -left-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-purple-400/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-40 -left-20 w-64 h-64 bg-success opacity-10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-primary opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-5">
                     {/* Badge */}
                     <div className="flex items-center justify-center mb-5 mt-2">
-                        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 border border-emerald-100/80 dark:border-emerald-800/60 rounded-full shadow-sm">
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span className="text-emerald-700 dark:text-emerald-300 font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
+                        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 dark:bg-success-soft border border-success rounded-full shadow-sm">
+                            <span className="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+                            <span className="text-success-dark dark:text-success font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
                         </div>
                     </div>
 
                     {/* Hero Title */}
                     <div className="text-center mb-5">
-                        <h2 className="text-[26px] leading-[1.2] font-black text-[#1B1B1F] dark:text-white font-heading">
+                        <h2 className="text-[26px] leading-[1.2] font-black text-main font-heading">
                             رحلتك مع{" "}
-                            <span className="text-[#08B26A] dark:text-emerald-400 relative inline-block">
+                            <span className="text-success relative inline-block">
                                 كتاب الله
-                                <svg className="absolute -bottom-1.5 left-0 w-full h-3 text-emerald-300" viewBox="0 0 120 12" preserveAspectRatio="none">
-                                    <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+                                <svg className="absolute -bottom-1.5 left-0 w-full h-3" viewBox="0 0 120 12" preserveAspectRatio="none">
+                                    <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" className="text-success opacity-40" />
                                 </svg>
                             </span>
                             <br />
@@ -159,7 +159,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
+                    <p className="text-muted text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
                         منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                     </p>
 
@@ -169,7 +169,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] py-4 bg-gradient-to-r from-[#08B26A] to-[#00A86B] text-white font-black text-base shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
+                            className="w-full max-w-[320px] py-4 bg-success text-on-success font-black text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
                         >
                             <span>ابدأ الحفظ الآن</span>
                             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
@@ -177,7 +177,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <Link
                             to="/courses"
                             onClick={() => window.scrollTo(0, 0)}
-                            className="w-full max-w-[320px] py-3.5 bg-white dark:bg-slate-900 text-[#08B26A] dark:text-emerald-400 border border-gray-100 dark:border-slate-700 font-bold text-sm hover:border-emerald-200 dark:hover:border-emerald-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
+                            className="w-full max-w-[320px] py-3.5 bg-card text-success border border-border font-bold text-sm hover:border-success hover:bg-success-soft transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
                         >
                             <Sparkles size={16} />
                             تصفح المزيد
@@ -188,52 +188,52 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="flex items-center justify-center gap-4 mb-8">
                         <div className="text-left">
                             <div className="flex items-center gap-1.5">
-                                <span className="text-lg font-black text-[#1B1B1F] dark:text-white">4.9</span>
-                                <span className="text-sm font-bold text-slate-500 dark:text-slate-400">/5</span>
-                                <Star size={14} className="text-amber-400 fill-amber-400" />
+                                <span className="text-lg font-black text-main">4.9</span>
+                                <span className="text-sm font-bold text-muted">/5</span>
+                                <Star size={14} className="text-warning fill-warning" />
                             </div>
-                            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">من قبل آلاف الطلاب</div>
+                            <div className="text-[11px] text-muted font-medium mt-0.5">من قبل آلاف الطلاب</div>
                         </div>
-                        <div className="h-10 w-px bg-emerald-200/60 dark:bg-emerald-800/60"></div>
+                        <div className="h-10 w-px bg-success opacity-40 dark:opacity-40"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="w-9 h-9 rounded-full border-2 border-white dark:border-slate-800 bg-gray-100 dark:bg-slate-800 overflow-hidden shadow-sm">
+                                <div key={i} className="w-9 h-9 rounded-full border-2 border-card bg-surface dark:bg-card overflow-hidden shadow-sm">
                                     <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="36" height="36" className="w-full h-full object-cover" />
                                 </div>
                             ))}
-                            <div className="w-9 h-9 rounded-full border-2 border-white dark:border-slate-800 bg-gradient-to-br from-[#08B26A] to-[#00A86B] flex items-center justify-center text-[10px] font-black text-white shadow-sm">5K+</div>
+                            <div className="w-9 h-9 rounded-full border-2 border-card bg-success flex items-center justify-center text-[10px] font-black text-on-success shadow-sm">5K+</div>
                         </div>
                     </div>
 
                     {/* Feature Cards 2x2 */}
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }} className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-amber-50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-3">
-                                <ClipboardCheck size={22} className="text-[#F5A623] dark:text-amber-400" />
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-warning-soft rounded-2xl flex items-center justify-center mb-3">
+                                <ClipboardCheck size={22} className="text-warning" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">متابعة دقيقة</h3>
-                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
+                            <h3 className="font-black text-main text-[13px] mb-1">متابعة دقيقة</h3>
+                            <p className="text-muted text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-3">
-                                <Clock size={22} className="text-[#6C4BFF] dark:text-purple-400" />
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-primary-soft rounded-2xl flex items-center justify-center mb-3">
+                                <Clock size={22} className="text-primary" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">أوقات مرنة</h3>
-                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
+                            <h3 className="font-black text-main text-[13px] mb-1">أوقات مرنة</h3>
+                            <p className="text-muted text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-[#6C4BFF] to-[#1B1464] border-0 rounded-2xl p-4 shadow-lg shadow-purple-500/20 flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-primary border-0 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
-                                <Sparkles size={22} className="text-white" />
+                                <Sparkles size={22} className="text-on-primary" />
                             </div>
-                            <h3 className="font-black text-white text-[13px] mb-1">جرب مجانًا</h3>
-                            <p className="text-white/80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
+                            <h3 className="font-black text-on-primary text-[13px] mb-1">جرب مجانًا</h3>
+                            <p className="text-on-primary opacity-80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-white dark:bg-slate-900 border border-gray-100/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mb-3">
-                                <Mic size={22} className="text-[#08B26A] dark:text-emerald-400" />
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                            <div className="w-11 h-11 bg-success-soft rounded-2xl flex items-center justify-center mb-3">
+                                <Mic size={22} className="text-success" />
                             </div>
-                            <h3 className="font-black text-[#1B1B1F] dark:text-white text-[13px] mb-1">معلمون مجازون</h3>
-                            <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
+                            <h3 className="font-black text-main text-[13px] mb-1">معلمون مجازون</h3>
+                            <p className="text-muted text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
                         </motion.div>
                     </motion.div>
 

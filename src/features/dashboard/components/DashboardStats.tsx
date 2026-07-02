@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign, ArrowUp, ArrowDown } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { StatCard } from '../../../shared/components/ui/StatCard';
 import type { DashboardStats as Stats } from '../types';
 
 interface DashboardStatsProps {
@@ -9,22 +9,7 @@ interface DashboardStatsProps {
     isTeacher: boolean;
 }
 
-const cardColors: Record<string, string> = {
-  'إجمالي الطلاب': '#2563EB',
-  'الاشتراكات النشطة': '#22C55E',
-  'حصص اليوم': '#38BDF8',
-  'الحصص المنفذة': '#8B5CF6',
-  'إجمالي المعلمين': '#F97316',
-  'إجمالي الإيرادات': '#22C55E',
-  'إجمالي المصروفات': '#F43F5E',
-  'صافي الربح': '#2563EB',
-};
-
-const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
-  title: string; value: string | number; icon: LucideIcon; unit?: string;
-  trendData?: { percentage: number; isPositive: boolean; label: string };
-  index: number;
-}) => {
+export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,88 +24,39 @@ const StatCard = ({ title, value, icon: Icon, unit, trendData, index }: {
     return () => observer.disconnect();
   }, []);
 
-  const barWidth = trendData ? Math.min(Math.abs(trendData.percentage), 100) : 0;
+  const cards = [
+    { title: 'إجمالي الطلاب', value: stats.studentsCount, icon: Users, variant: 'info' as const, trend: { value: 12, isUp: true, label: 'نمو الشهر' } },
+    { title: 'الاشتراكات النشطة', value: stats.totalEnrollments, icon: BookOpen, variant: 'success' as const, trend: { value: 7, isUp: true, label: 'نشطة' } },
+    { title: 'حصص اليوم', value: stats.todaySessions, icon: CalendarCheck, variant: 'primary' as const, trend: { value: 22, isUp: true, label: 'مجدولة' } },
+    { title: 'الحصص المنفذة', value: stats.completedSessions, icon: CheckCircle2, variant: 'info' as const, trend: { value: 18, isUp: true, label: 'مكتملة' } },
+  ];
 
-  const color = cardColors[title] || '#2563EB';
+  const adminCards = [
+    { title: 'إجمالي المعلمين', value: stats.teachersCount, icon: GraduationCap, variant: 'warning' as const, trend: { value: 3, isUp: true, label: 'جدد' } },
+    { title: 'إجمالي الإيرادات', value: (stats.totalRevenue || 0).toLocaleString(), icon: TrendingUp, unit: 'ج.م', variant: 'success' as const, trend: { value: 8, isUp: true, label: 'زيادة الإيرادات' } },
+    { title: 'إجمالي المصروفات', value: (stats.totalExpenses || 0).toLocaleString(), icon: TrendingDown, unit: 'ج.م', variant: 'error' as const, trend: { value: 5, isUp: false, label: 'تقليل التكاليف' } },
+    { title: 'صافي الربح', value: (stats.totalNetProfit || 0).toLocaleString(), icon: DollarSign, unit: 'ج.م', variant: 'warning' as const, trend: { value: 15, isUp: true, label: 'نمو الأرباح' } },
+  ];
 
   return (
     <div
       ref={ref}
       className={cn(
-        "relative p-4 rounded-2xl",
-        "shadow-sm",
-        "transition-all duration-300 hover:shadow-md hover:-translate-y-0.5",
-        "flex items-center gap-3 dark:brightness-[0.65]",
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full transition-all duration-700",
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}
-      style={{
-        backgroundColor: color,
-        transitionDelay: `${index * 80}ms`,
-      }}
     >
-      <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm shrink-0" style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-        <Icon size={18} strokeWidth={1.5} />
-      </div>
-
-      <div className="flex-1 min-w-0">
-        <h4 className="text-[10px] font-bold text-white/70 leading-none mb-0.5 truncate">
-          {title}
-        </h4>
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-xl font-black text-white tabular-nums tracking-tighter leading-none">
-            {value ?? 0}
-          </span>
-          {unit && (
-            <span className="text-[8px] font-bold text-white/60">
-              {unit}
-            </span>
-          )}
+      {cards.map((card, i) => (
+        <div key={i} style={{ transitionDelay: `${i * 80}ms` }} className="transition-all duration-500">
+          <StatCard {...card} />
         </div>
+      ))}
 
-        {trendData && (
-          <div className="flex items-center gap-2 mt-1.5">
-            <div className="flex-1 h-1 bg-white/20 overflow-hidden">
-              <div
-                className="h-full transition-all duration-700 bg-white/60"
-                style={{ width: visible ? `${barWidth}%` : '0%' }}
-              />
-            </div>
-            <div className="flex items-center gap-0.5 text-[8px] font-bold shrink-0 text-white/80">
-              {trendData.isPositive ? <ArrowUp size={8} /> : <ArrowDown size={8} />}
-              <span>{trendData.percentage}%</span>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
-  let idx = 0;
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full">
-      <StatCard title="إجمالي الطلاب" value={stats.studentsCount} icon={Users} index={idx++}
-        trendData={{ percentage: 12, isPositive: true, label: 'نمو الشهر' }} />
-      <StatCard title="الاشتراكات النشطة" value={stats.totalEnrollments} icon={BookOpen} index={idx++}
-        trendData={{ percentage: 7, isPositive: true, label: 'نشطة' }} />
-      <StatCard title="حصص اليوم" value={stats.todaySessions} icon={CalendarCheck} index={idx++}
-        trendData={{ percentage: 22, isPositive: true, label: 'مجدولة' }} />
-      <StatCard title="الحصص المنفذة" value={stats.completedSessions} icon={CheckCircle2} index={idx++}
-        trendData={{ percentage: 18, isPositive: true, label: 'مكتملة' }} />
-
-      {!isTeacher && (
-        <>
-          <StatCard title="إجمالي المعلمين" value={stats.teachersCount} icon={GraduationCap} index={idx++}
-            trendData={{ percentage: 3, isPositive: true, label: 'جدد' }} />
-          <StatCard title="إجمالي الإيرادات" value={(stats.totalRevenue || 0).toLocaleString()} icon={TrendingUp} unit="ج.م" index={idx++}
-            trendData={{ percentage: 8, isPositive: true, label: 'زيادة الإيرادات' }} />
-          <StatCard title="إجمالي المصروفات" value={(stats.totalExpenses || 0).toLocaleString()} icon={TrendingDown} unit="ج.م" index={idx++}
-            trendData={{ percentage: 5, isPositive: false, label: 'تقليل التكاليف' }} />
-          <StatCard title="صافي الربح" value={(stats.totalNetProfit || 0).toLocaleString()} icon={DollarSign} unit="ج.م" index={idx++}
-            trendData={{ percentage: 15, isPositive: true, label: 'نمو الأرباح' }} />
-        </>
-      )}
+      {!isTeacher && adminCards.map((card, i) => (
+        <div key={i + 4} style={{ transitionDelay: `${(i + 4) * 80}ms` }} className="transition-all duration-500">
+          <StatCard {...card} />
+        </div>
+      ))}
     </div>
   );
 };

@@ -98,17 +98,17 @@ export const ImportantNotifications = ({
         : [];
 
     return (
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-none flex flex-col h-full">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-primary-active/50 border border-border dark:border-border p-5 shadow-sm rounded-none flex flex-col h-full">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-indigo-600 text-white rounded-none flex items-center justify-center border border-slate-900 shadow-none">
+                    <div className="w-8 h-8 bg-primary text-on-primary rounded-none flex items-center justify-center border border-border shadow-none">
                         <Bell size={16} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-normal text-slate-900 dark:text-white uppercase tracking-tight">غرفة التنبيهات</h3>
+                        <h3 className="text-sm font-normal text-main dark:text-on-primary uppercase tracking-tight">غرفة التنبيهات</h3>
                     </div>
                 </div>
-                <div className="text-[10px] font-medium text-slate-400 border border-slate-100 dark:border-slate-800 px-2 py-0.5">
+                <div className="text-[10px] font-medium text-muted border border-border dark:border-border px-2 py-0.5">
                     {visibleNotifications.length} حرجة
                 </div>
             </div>
@@ -116,38 +116,38 @@ export const ImportantNotifications = ({
             <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
                 {visibleNotifications.length > 0 ? (
                     visibleNotifications.map((note) => (
-                        <div key={note.id} className="p-3 bg-slate-50/50 dark:bg-slate-800/30 rounded-none border border-slate-100 dark:border-slate-800 transition-all hover:bg-white flex items-center gap-3 group relative">
+                        <div key={note.id} className="p-3 bg-background/50 dark:bg-primary-active/30 rounded-none border border-border dark:border-border transition-all hover:bg-white flex items-center gap-3 group relative">
                             <div className={cn(
                                 "w-8 h-8 shrink-0 flex items-center justify-center rounded-none border",
-                                note.color === 'rose' ? "bg-rose-50 text-rose-500 border-rose-100" : "bg-amber-50 text-amber-500 border-amber-100"
+                                note.color === 'rose' ? "bg-error-light text-error border-error" : "bg-warning-light text-warning border-warning"
                             )}>
                                 <note.icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-normal text-slate-800 dark:text-white text-[11px] mb-1 truncate pr-4">
+                                <h4 className="font-normal text-main dark:text-on-primary text-[11px] mb-1 truncate pr-4">
                                     {note.title}
                                 </h4>
-                                <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-none">{note.description}</p>
+                                <p className="text-[9px] text-muted dark:text-muted leading-none">{note.description}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 {'action' in note && note.action ? (
-                                    <button onClick={note.action} className="text-[9px] font-normal text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
+                                    <button onClick={note.action} className="text-[9px] font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
                                         {note.actionLabel}
                                     </button>
                                 ) : 'link' in note && note.link ? (
-                                    <Link to={note.link} className="text-[9px] font-normal text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
+                                    <Link to={note.link} className="text-[9px] font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
                                         {note.actionLabel}
                                     </Link>
                                 ) : null}
-                                <button onClick={() => handleDismiss(note.id)} className="text-slate-300 hover:text-rose-500 p-1">
+                                <button onClick={() => handleDismiss(note.id)} className="text-dim hover:text-error p-1">
                                     <X size={12} />
                                 </button>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="py-10 text-center border border-dashed border-slate-200">
-                        <p className="text-[10px] font-normal text-slate-400">لا توجد تنبيهات نشطة</p>
+                    <div className="py-10 text-center border border-dashed border-border">
+                        <p className="text-[10px] font-normal text-muted">لا توجد تنبيهات نشطة</p>
                     </div>
                 )}
             </div>

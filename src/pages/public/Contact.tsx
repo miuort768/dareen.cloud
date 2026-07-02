@@ -36,35 +36,35 @@ export const Contact = () => {
             title: 'واتساب / هاتف',
             value: adminPhone,
             href: `https://wa.me/${whatsappNumber}`,
-            gradient: 'from-emerald-500 to-teal-600',
-            bg: 'bg-emerald-50 dark:bg-emerald-500/10',
-            border: 'border-emerald-100 dark:border-emerald-500/20',
-            iconColor: 'text-emerald-600',
+            gradient: 'from-[var(--bg-success)] to--[var(--bg-info)]',
+            bg: 'bg-success-light dark:bg-success/10',
+            border: 'border-success dark:border-success/20',
+            iconColor: 'text-success',
         },
         {
             icon: Mail,
             title: 'البريد الإلكتروني',
             value: 'miuort768@gmail.com',
             href: 'mailto:miuort768@gmail.com',
-            gradient: 'from-indigo-500 to-purple-600',
-            bg: 'bg-indigo-50 dark:bg-indigo-500/10',
-            border: 'border-indigo-100 dark:border-indigo-500/20',
-            iconColor: 'text-indigo-600',
+            gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]',
+            bg: 'bg-primary-soft dark:bg-primary/10',
+            border: 'border-primary dark:border-primary/20',
+            iconColor: 'text-primary',
         },
         {
             icon: MapPin,
             title: 'المقر الرئيسي',
             value: 'بني سويف — مصر',
             href: '#',
-            gradient: 'from-amber-500 to-orange-600',
-            bg: 'bg-amber-50 dark:bg-amber-500/10',
-            border: 'border-amber-100 dark:border-amber-500/20',
-            iconColor: 'text-amber-600',
+            gradient: 'from--[var(--bg-warning)] to--[var(--bg-warning)]',
+            bg: 'bg-warning-light dark:bg-warning/10',
+            border: 'border-warning dark:border-warning/20',
+            iconColor: 'text-warning',
         },
     ];
 
     return (
-        <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
+        <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-dim flex flex-col">
             <SEO title="اتصل بنا | دارين السابعة - دروس خصوصية أونلاين في السعودية والكويت والخليج" description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في السعودية والكويت والإمارات وقطر وعمان والبحرين. احجز حصة تجريبية مجانية عبر واتساب." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({
@@ -79,25 +79,25 @@ export const Contact = () => {
 
             <main className="flex-grow md:pt-28 pb-2 relative overflow-hidden">
                 {/* Subtle background glows */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-success/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
                 <div className="container mx-auto px-4 relative z-10 max-w-5xl">
 
                     {/* ── Hero Header ── */}
                     <AnimateOnScroll animation="fadeUp">
                     <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-1 md:mb-5">
-                            <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
-                            <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">نحن في خدمتك</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-1 md:mb-5">
+                            <Sparkles size={13} className="text-primary dark:text-primary" />
+                            <span className="text-[10px] font-black text-primary dark:text-primary">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-1 md:mb-3">
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-on-primary mb-1 md:mb-3">
                             تواصل مع{' '}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">
                                 دارين السابعة
                             </span>
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                        <p className="text-muted dark:text-muted text-sm md:text-base max-w-xl mx-auto leading-relaxed">
                             فريقنا جاهز للرد على جميع استفساراتك<br className="md:hidden" /> ومساعدتك في الانضمام إلى عالم دارين التعليمي.
                         </p>
                     </div>
@@ -111,15 +111,15 @@ export const Contact = () => {
                                     href={card.href}
                                     target={card.href !== '#' ? '_blank' : undefined}
                                     rel="noopener noreferrer"
-                                    className="group bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm block"
+                                    className="group bg-white dark:bg-primary-active/60 dark:backdrop-blur-xl p-5 rounded-2xl border border-border dark:border-border shadow-sm block"
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-white flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
+                                        <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br text-on-primary flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
                                             <card.icon size={20} />
                                         </div>
                                         <div className="flex-grow min-w-0">
-                                            <p className="text-[9px] font-black text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
-                                            <p className="text-sm font-bold text-gray-800 dark:text-white truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                            <p className="text-[9px] font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -129,20 +129,20 @@ export const Contact = () => {
 
                     {/* ── Contact Form Card ── */}
                     <AnimateOnScroll animation="fadeUp">
-                    <div className="bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800 rounded-none overflow-hidden shadow-xl shadow-gray-200/40 dark:shadow-black/40">
+                    <div className="bg-white dark:bg-primary-active/60 dark:backdrop-blur-xl border border-border dark:border-border rounded-none overflow-hidden shadow-xl shadow-sm/40 dark:shadow-black/40">
                         {/* Top accent bar */}
-                        <div className="h-1.5 bg-gradient-to-r from-indigo-600 via-purple-500 to-amber-500" />
+                        <div className="h-1.5 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)] to--[var(--bg-warning)]" />
 
                         {formState === 'success' ? (
                             <div className="py-20 text-center px-6">
-                                <div className="w-20 h-20 bg-emerald-50 rounded-none flex items-center justify-center mx-auto mb-5 text-emerald-500">
+                                <div className="w-20 h-20 bg-success-light rounded-none flex items-center justify-center mx-auto mb-5 text-success">
                                     <CheckCircle2 size={44} />
                                 </div>
-                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">تم الإرسال بنجاح!</h2>
-                                <p className="text-gray-500 dark:text-slate-400 mb-8 text-sm">سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
+                                <h2 className="text-2xl font-black text-main dark:text-on-primary mb-2">تم الإرسال بنجاح!</h2>
+                                <p className="text-muted dark:text-muted mb-8 text-sm">سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
                                 <button
                                     onClick={() => setFormState('idle')}
-                                    className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-none hover:bg-indigo-700 transition-all text-sm"
+                                    className="px-8 py-3 bg-primary text-on-primary font-bold rounded-none hover:bg-primary-hover transition-all text-sm"
                                 >
                                     إرسال رسالة أخرى
                                 </button>
@@ -150,25 +150,25 @@ export const Contact = () => {
                         ) : (
                             <div className="p-6 md:p-8">
                                 <div className="mb-4">
-                                    <h2 className="text-xl font-black text-gray-900 dark:text-white mb-1">أرسل لنا رسالة</h2>
-                                    <p className="text-gray-400 text-sm">سنتواصل معك خلال 24 ساعة.</p>
+                                    <h2 className="text-xl font-black text-main dark:text-on-primary mb-1">أرسل لنا رسالة</h2>
+                                    <p className="text-muted text-sm">سنتواصل معك خلال 24 ساعة.</p>
                                 </div>
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Row: Name + Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-gray-400  block">الاسم الكامل</label>
+                                            <label className="text-[10px] font-black text-muted  block">الاسم الكامل</label>
                                             <input
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                                                className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-none px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all placeholder:text-gray-300"
+                                                className="w-full bg-background dark:bg-primary-active/60 border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim"
                                                 placeholder="أدخل اسمك الكريم..."
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-gray-400  block">رقم الهاتف</label>
+                                            <label className="text-[10px] font-black text-muted  block">رقم الهاتف</label>
                                             <input
                                                 required
                                                 type="tel"
@@ -176,7 +176,7 @@ export const Contact = () => {
                                                 pattern="[0-9+\s]*"
                                                 value={formData.phone}
                                                 onChange={e => setFormData(p => ({ ...p, phone: e.target.value.replace(/[^0-9+\s]/g, '') }))}
-                                                className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-none px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all text-left placeholder:text-gray-300"
+                                                className="w-full bg-background dark:bg-primary-active/60 border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-left placeholder:text-dim"
                                                 placeholder="+965 XXXX XXXX"
                                                 dir="ltr"
                                             />
@@ -185,11 +185,11 @@ export const Contact = () => {
 
                                     {/* Subject */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-gray-400  block">الموضوع</label>
+                                        <label className="text-[10px] font-black text-muted  block">الموضوع</label>
                                         <select
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
-                                            className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-none px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all appearance-none bg-[length:14px] bg-no-repeat pr-10"
+                                            className="w-full bg-background dark:bg-primary-active/60 border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat pr-10"
                                             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundPosition: 'right 14px center' }}
                                         >
                                             <option>استفسار عن دورة تعليمية</option>
@@ -202,12 +202,12 @@ export const Contact = () => {
 
                                     {/* Message */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-gray-400  block">رسالتك</label>
+                                        <label className="text-[10px] font-black text-muted  block">رسالتك</label>
                                         <textarea
                                             rows={4}
                                             value={formData.message}
                                             onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                                            className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-none px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-gray-300"
+                                            className="w-full bg-background dark:bg-primary-active/60 border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all resize-none placeholder:text-dim"
                                             placeholder="اكتب استفسارك بالتفصيل هنا..."
                                         />
                                     </div>
@@ -221,8 +221,8 @@ export const Contact = () => {
                                             className={cn(
                                                 "flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  transition-all",
                                                 formState === 'submitting'
-                                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                                    : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20'
+                                                    ? 'bg-card text-muted cursor-not-allowed'
+                                                    : 'bg-primary hover:bg-primary-hover text-on-primary shadow-lg shadow-primary/20'
                                             )}
                                         >
                                             <span className={cn(formState === 'submitting' && 'animate-pulse')}>
@@ -236,7 +236,7 @@ export const Contact = () => {
                                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transition-all"
+                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  bg-success hover:bg-success text-on-primary shadow-lg shadow-success/20 transition-all"
                                         >
                                             <MessageCircle size={16} />
                                             <span>تواصل واتساب</span>

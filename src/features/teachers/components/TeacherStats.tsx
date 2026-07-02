@@ -9,10 +9,10 @@ interface TeacherStatsProps {
 }
 
 const statCards = [
-    { label: 'إجمالي المعلمات', icon: Users, gradient: 'from-[#6C4BFF] to-[#8B5CF6]' },
-    { label: 'عدد الطلاب', icon: UserPlus, gradient: 'from-emerald-500 to-teal-600' },
-    { label: 'التخصصات', icon: BookOpen, gradient: 'from-blue-500 to-blue-600' },
-    { label: 'متوسط السعر', icon: DollarSign, gradient: 'from-amber-500 to-orange-600' },
+    { label: 'إجمالي المعلمات', icon: Users, gradient: 'bg-primary' },
+    { label: 'عدد الطلاب', icon: UserPlus, gradient: 'bg-success' },
+    { label: 'التخصصات', icon: BookOpen, gradient: 'bg-info' },
+    { label: 'متوسط السعر', icon: DollarSign, gradient: 'bg-warning' },
 ];
 
 export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, averagePrice }: TeacherStatsProps) => {
@@ -20,13 +20,13 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 mb-8" dir="rtl">
             {statCards.map((s, i) => (
-                <div key={s.label} className={cn('flex items-center gap-3 p-4 rounded-2xl shadow-sm bg-gradient-to-br', s.gradient)}>
+                <div key={s.label} className={cn('flex items-center gap-3 p-4 rounded-2xl shadow-sm', s.gradient)}>
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-                        <s.icon size={20} className="text-white" />
+                        <s.icon size={20} className="text-on-primary" />
                     </div>
                     <div className="min-w-0">
-                        <p className="text-[10px] font-bold text-white/70 leading-none">{s.label}</p>
-                        <p className="text-2xl font-black text-white tabular-nums mt-1">{values[i]}</p>
+                        <p className="text-[10px] font-bold text-on-primary opacity-70 leading-none">{s.label}</p>
+                        <p className="text-2xl font-black text-on-primary tabular-nums mt-1">{values[i]}</p>
                     </div>
                 </div>
             ))}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageCircle, Phone, CheckCircle2 } from 'lucide-react';
 import { SectionCard } from './ClosingUI';
+import { Badge } from '../../../shared/components/ui';
 
 interface RenewalItem {
     studentName: string;
@@ -22,26 +23,26 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                     <div>
                         <div className="flex justify-between items-start mb-3">
                             <div>
-                                <h3 className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{item.studentName}</h3>
-                                <p className="text-[10px] font-bold text-[#6C4BFF] mt-0.5">{item.subject}</p>
+                                <h3 className="text-sm font-bold text-main leading-tight">{item.studentName}</h3>
+                                <p className="text-[10px] font-bold text-primary mt-0.5">{item.subject}</p>
                             </div>
-                            <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: '#F59E0B12', color: '#D97706' }}>رصيد منخفض</div>
+                            <Badge variant="warning" size="sm">رصيد منخفض</Badge>
                         </div>
-                        <div className="bg-white dark:bg-slate-900 p-3 flex items-center justify-between mb-4 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
-                            <span className="text-[10px] font-bold text-[#64748B]">الحصص المتبقية</span>
-                            <span className="text-lg font-black text-[#0F172A] dark:text-white font-mono">{item.remaining}</span>
+                        <div className="bg-surface dark:bg-card p-3 flex items-center justify-between mb-4 border border-border rounded-xl">
+                            <span className="text-[10px] font-bold text-muted">الحصص المتبقية</span>
+                            <span className="text-lg font-black text-main font-mono">{item.remaining}</span>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-[#10B981] hover:bg-emerald-700 text-white text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
-                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-[#0F172A] hover:bg-slate-800 text-white text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
+                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-success hover:brightness-90 text-on-success text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
+                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-primary hover:brightness-90 text-on-primary text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
                     </div>
                 </SectionCard>
             ))}
             {renewalsData.length === 0 && (
-                <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 rounded-xl shadow-sm">
-                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: '#6C4BFF20' }} />
-                    <p className="text-xs font-bold text-[#64748B]">لا توجد تجديدات مطلوبة</p>
+                <div className="col-span-full py-20 text-center bg-card border border-border rounded-xl shadow-sm">
+                    <CheckCircle2 className="mx-auto mb-3 text-primary opacity-20" size={48} />
+                    <p className="text-xs font-bold text-muted">لا توجد تجديدات مطلوبة</p>
                 </div>
             )}
         </div>

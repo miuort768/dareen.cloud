@@ -170,8 +170,8 @@ export const Blog = () => {
     const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
     const isCoursesStyle = selectedType === 'more';
     const cardStyle = selectedType === 'foundation'
-      ? { gradient: 'from-amber-500 to-orange-600', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300', fileSizeBadge: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-500/20' }
-      : { gradient: 'from-violet-500 to-purple-600', badge: 'مذكرة', icon: FileText, sourceText: 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300', fileSizeBadge: 'bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-200/50 dark:border-violet-500/20' };
+      ? { gradient: 'from--[var(--bg-warning)] to--[var(--bg-warning)]', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning dark:text-warning hover:text-warning dark:hover:text-warning', fileSizeBadge: 'bg-warning-light dark:bg-warning/10 text-warning dark:text-warning border-warning/50 dark:border-warning/20' }
+      : { gradient: 'from--[var(--bg-primary)] to-[var(--bg-primary)]', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary dark:text-primary hover:text-primary dark:hover:text-primary', fileSizeBadge: 'bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary border-primary/50 dark:border-primary/20' };
     if (isFoundationStyle) return <FoundationCard key={post.id} post={post} cardStyle={cardStyle} foundationBtnState={foundationBtnState} handleButtonClick={handleFoundationButtonClick} i={i} />;
     return <RegularCard key={post.id} post={post} isCoursesStyle={isCoursesStyle} i={i} />;
   };
@@ -179,7 +179,7 @@ export const Blog = () => {
   return (
     <>
       {showSplash && createPortal(<PageLoader />, document.body)}
-      <div className="min-h-screen bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
+      <div className="min-h-screen bg-background dark:bg-background font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
@@ -198,54 +198,54 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <main className="md:hidden pb-0 px-3 relative flex-1 bg-[#F8F8FC] dark:bg-slate-950">
+      <main className="md:hidden pb-0 px-3 relative flex-1 bg-surface dark:bg-background">
         {isHeroView ? (
           <div className="pb-6">
             <div className="flex items-center justify-between mb-5 mt-2">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center">
-                      <BookOpen size={10} className="text-white" />
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border dark:border-border">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[var(--bg-primary)] to--[var(--bg-primary)] flex items-center justify-center">
+                      <BookOpen size={10} className="text-on-primary" />
                     </div>
-                    <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">dareen7.com/books</span>
+                    <span className="text-[11px] font-bold text-main dark:text-dim">dareen7.com/books</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                   target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-green-50 dark:hover:bg-green-900/30 transition-all">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4"><rect width="24" height="24" rx="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-primary-active shadow-sm flex items-center justify-center hover:bg-success-light dark:hover:bg-success/30 transition-all">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-success"><rect width="24" height="24" rx="12" fill="currentColor"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-sky-50 dark:hover:bg-sky-900/30 transition-all">
-                  <Send size={16} className="text-sky-600 dark:text-sky-400" />
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-primary-active shadow-sm flex items-center justify-center hover:bg-info dark:hover:bg-info/30 transition-all">
+                  <Send size={16} className="text-info dark:text-info" />
                 </a>
                 <button onClick={() => setLibraryTheme(t => t === 'dark' ? 'light' : 'dark')}
-                  className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-                  {libraryTheme === 'dark' ? <Sun size={16} className="text-amber-500" /> : <Moon size={16} className="text-slate-600 dark:text-slate-400" />}
+                  className="w-10 h-10 rounded-2xl bg-white dark:bg-primary-active shadow-sm flex items-center justify-center hover:bg-surface dark:hover:bg-primary-active transition-all">
+                  {libraryTheme === 'dark' ? <Sun size={16} className="text-warning" /> : <Moon size={16} className="text-muted dark:text-muted" />}
                 </button>
               </div>
             </div>
 
-            <div className="relative bg-gradient-to-br from-violet-100 via-violet-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 rounded-2xl overflow-hidden mb-6 shadow-sm border border-violet-100/50 dark:border-slate-800">
+            <div className="relative bg-gradient-to-br from--[var(--bg-primary)] via--[var(--bg-primary)] to-white dark:from-[var(--bg-primary-active)] dark:via-[var(--bg-primary-active)] dark:to-[var(--bg-background)] rounded-2xl overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <p className="text-[18px] font-black text-indigo-950 dark:text-indigo-100 leading-tight mb-1">برعادية دارين<span className="text-blue-600 dark:text-blue-400"> السابعة</span></p>
-                  <p className="text-[12px] font-bold text-violet-600 dark:text-violet-400 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <p className="text-[18px] font-black text-primary dark:text-primary leading-tight mb-1">برعادية دارين<span className="text-info dark:text-info"> السابعة</span></p>
+                  <p className="text-[12px] font-bold text-primary dark:text-primary mb-2">أفضل الكتب والملخصات</p>
+                  <p className="text-[9px] text-muted dark:text-muted leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                      className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-[10px] font-bold px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all w-full text-center block">
+                      className="bg-white dark:bg-primary-active text-main dark:text-dim text-[10px] font-bold px-4 py-2 rounded-full border border-border dark:border-border hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all w-full text-center block">
                       طلب حصة مجانية
                     </a>
                   </div>
                 </div>
                 <div className="relative shrink-0">
-                  <div className="absolute inset-0 bg-violet-200/50 dark:bg-violet-800/30 rounded-full blur-xl" />
+                  <div className="absolute inset-0 bg-primary-light/50 dark:bg-primary/30 rounded-full blur-xl" />
                   <div className="relative w-[90px]">
                     <img src="/hero-child.png" alt="طفل يدرس على منصة دارين" width="90" height="90" loading="lazy" className="w-full h-auto object-contain drop-shadow-lg" />
                   </div>
@@ -275,9 +275,9 @@ export const Blog = () => {
       {/* Desktop */}
       <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-indigo-200/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from--[var(--bg-info)]/5 to--[var(--bg-primary)]/5 rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via--[var(--bg-primary)]/20 to-transparent" />
         </div>
         <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
           {isHeroView ? (

@@ -22,33 +22,33 @@ export const StudentToolbar = ({
 }: StudentToolbarProps) => {
     return (
         <div className="px-0 mb-6">
-            <div className="p-3 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 rounded-none" style={{ backgroundColor: '#2563EB' }} dir="rtl">
+            <div className="bg-primary p-3 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 rounded-none" dir="rtl">
                 {/* Search Input */}
                 <div className="relative flex-1 w-full">
-                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                     <input
                         type="text"
                         placeholder="البحث في قاعدة بيانات الطلاب..."
                         value={searchTerm}
                         onChange={(e) => onSearchChange(e.target.value)}
-                        className="w-full pl-6 pr-9 py-2 text-xs font-bold text-white placeholder:text-white/50 outline-none transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}
+                        className="w-full pl-6 pr-9 py-2 text-xs font-bold text-on-primary placeholder:text-on-primary placeholder:opacity-50 outline-none transition-all rounded-none bg-white/15 border border-white/20"
                     />
                 </div>
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-white/70">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-on-primary opacity-70">
                         {filteredCount} / {totalCount} طالب
                     </div>
                     
                     <div className="flex items-center gap-1.5 border-r border-white/20 pr-2 mr-1">
-                        <button onClick={onImport} className="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} title="استيراد">
+                        <button onClick={onImport} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-70 hover:opacity-100 transition-all rounded-none bg-white/10" title="استيراد">
                             <Upload size={14} />
                         </button>
-                        <button onClick={onExport} className="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} title="تصدير">
+                        <button onClick={onExport} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-70 hover:opacity-100 transition-all rounded-none bg-white/10" title="تصدير">
                             <Download size={14} />
                         </button>
-                        <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white transition-all rounded-none" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} title="تصفير">
+                        <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-70 hover:opacity-100 transition-all rounded-none bg-white/10" title="تصفير">
                             <Trash2 size={14} />
                         </button>
                     </div>

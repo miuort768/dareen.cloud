@@ -169,8 +169,8 @@ export const Schedule = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
-            <div className="w-8 h-8 border-2 border-slate-200 border-t-[#6C4BFF] rounded-full animate-spin" />
-            <p className="text-[11px] font-bold text-slate-400">جاري تحميل الجدول...</p>
+            <div className="w-8 h-8 border-2 border-border border-t-[#6C4BFF] rounded-full animate-spin" />
+            <p className="text-[11px] font-bold text-muted">جاري تحميل الجدول...</p>
         </div>
     );
 
@@ -179,13 +179,13 @@ export const Schedule = () => {
             <div className="hidden md:block max-w-[1600px] mx-auto px-2">
 
                 {/* Header */}
-                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-2xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
+                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-2xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                     <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
-                            <CalendarDays size={22} className="text-white" />
+                            <CalendarDays size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg md:text-xl font-bold text-white leading-tight">الجداول الدراسية</h1>
+                            <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">الجداول الدراسية</h1>
                             <p className="text-[11px] font-bold text-white/70 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
                     </div>
@@ -199,7 +199,7 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-white placeholder:text-white/50 text-[10px] font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
+                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 text-[10px] font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
 
@@ -209,8 +209,8 @@ export const Schedule = () => {
                             className={cn(
                                 "h-9 px-2.5 text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5 border",
                                 filterDay === todayDayName
-                                    ? "bg-white/25 border-white/30 text-white"
-                                    : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-white"
+                                    ? "bg-white/25 border-white/30 text-on-primary"
+                                    : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-on-primary"
                             )}
                         >
                             <Clock size={12} />
@@ -221,18 +221,18 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-xl outline-none focus:border-white/50 transition-all"
+                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl outline-none focus:border-white/50 transition-all"
                         >
-                            <option value="all" className="text-slate-900">كل الأيام</option>
+                            <option value="all" className="text-main">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
-                                <option key={day} value={day} className="text-slate-900">{day}</option>
+                                <option key={day} value={day} className="text-main">{day}</option>
                             ))}
                         </select>
 
                         {/* Print Button */}
                         <button
                             onClick={handlePrint}
-                            className="h-9 px-4 bg-white/15 border border-white/20 text-white text-[10px] font-bold rounded-xl shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
+                            className="h-9 px-4 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
                         >
                             <Printer size={13} />
                             طباعة
@@ -244,22 +244,22 @@ export const Schedule = () => {
                 {currentUser?.role === 'admin' && <LiveClasses />}
 
                 {/* Schedule Grid */}
-                <div ref={printRef} id="printable-schedule" className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl mt-4">
+                <div ref={printRef} id="printable-schedule" className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 shadow-sm overflow-hidden rounded-2xl mt-4">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
-                            <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-700">
-                                <div className="sticky right-0 z-10 p-3 text-[9px] font-bold text-white/70 border-l border-slate-700 bg-slate-800 dark:bg-slate-950">
+                            <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
+                                <div className="sticky right-0 z-10 p-3 text-[9px] font-bold text-inverse border-l border-border bg-primary-active dark:bg-background">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-[10px] font-bold text-center border-l border-slate-700 last:border-l-0 bg-slate-800 dark:bg-slate-950",
-                                        isToday(day) ? "text-white" : "text-white/70"
+                                        "p-3 text-[10px] font-bold text-center border-l border-border last:border-l-0 bg-primary-active dark:bg-background",
+                                        isToday(day) ? "text-on-primary" : "text-inverse"
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-[#6C4BFF]" />
+                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />
                                         )}
                                     </div>
                                 ))}
@@ -273,9 +273,9 @@ export const Schedule = () => {
                                 return (
                                     <div key={`${slot.hour}-${slot.period}`} className={cn(
                                         "grid grid-cols-[80px_repeat(7,1fr)]",
-                                        slotIdx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50/30 dark:bg-slate-950/20"
+                                        slotIdx % 2 === 0 ? "bg-white dark:bg-primary-active" : "bg-background/30 dark:bg-background/20"
                                     )}>
-                                        <div className="sticky right-0 z-10 p-2 text-[9px] font-bold text-slate-400 border-l border-b border-slate-100/50 dark:border-slate-800/50 flex items-center justify-center h-full bg-inherit">
+                                        <div className="sticky right-0 z-10 p-2 text-[9px] font-bold text-muted border-l border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
                                             <Clock size={10} className="ml-1 inline" />
                                             {slot.label}
                                         </div>
@@ -293,7 +293,7 @@ export const Schedule = () => {
                                                     <div
                                                         key={`${day}-${slot.hour}`}
                                                         onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
-                                                        className="p-1.5 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
+                                                        className="p-1.5 border-l last:border-l-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
                                                         style={{ backgroundColor: `${color}08` }}
                                                     >
                                                         <div className="absolute top-0 right-0 w-full h-0.5" style={{ backgroundColor: color }} />
@@ -304,8 +304,8 @@ export const Schedule = () => {
                                                                 <p className="text-[9px] font-bold leading-tight mb-0.5 truncate" style={{ color }}>
                                                                     {event.studentName}
                                                                 </p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.subject}</p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.teacherName}</p>
+                                                                <p className="text-[7px] font-bold text-muted truncate">{event.subject}</p>
+                                                                <p className="text-[7px] font-bold text-muted truncate">{event.teacherName}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -315,10 +315,10 @@ export const Schedule = () => {
                                             return (
                                                 <div
                                                     key={`${day}-${slot.hour}`}
-                                                    className="p-2 border-l last:border-l-0 border-b border-slate-100/50 dark:border-slate-800/50 min-h-[72px]"
+                                                    className="p-2 border-l last:border-l-0 border-b border-border/50 dark:border-border/50 min-h-[72px]"
                                                 >
                                                     {!isEmpty && (
-                                                        <div className="text-[7px] font-bold text-slate-300 text-center">—</div>
+                                                        <div className="text-[7px] font-bold text-dim text-center">—</div>
                                                     )}
                                                 </div>
                                             );
@@ -330,18 +330,18 @@ export const Schedule = () => {
                     </div>
 
                     {/* Legend */}
-                    <div className="border-t border-slate-100/50 dark:border-slate-800/50 p-4 flex flex-wrap items-center gap-4 bg-slate-50/50 dark:bg-slate-950/20 no-print">
-                        <span className="text-[9px] font-bold text-slate-400">دليل الألوان:</span>
+                    <div className="border-t border-border/50 dark:border-border/50 p-4 flex flex-wrap items-center gap-4 bg-background/50 dark:bg-background/20 no-print">
+                        <span className="text-[9px] font-bold text-muted">دليل الألوان:</span>
                         {uniqueTeachers.map((teacher, idx) => {
                             const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
                             return (
                                 <div key={idx} className="flex items-center gap-1.5">
                                     <div className="w-2 h-2" style={{ backgroundColor: accent.color }} />
-                                    <span className="text-[8px] font-bold text-slate-400">{teacher}</span>
+                                    <span className="text-[8px] font-bold text-muted">{teacher}</span>
                                 </div>
                             );
                         })}
-                        <span className="text-[9px] font-bold text-slate-400 mr-auto">
+                        <span className="text-[9px] font-bold text-muted mr-auto">
                             {filteredEvents.length} حصة
                         </span>
                     </div>
@@ -350,7 +350,7 @@ export const Schedule = () => {
                 {/* Loading or Empty State */}
                 {loading && (
                     <div className="flex justify-center py-12">
-                        <Loader2 className="animate-spin text-blue-600" size={24} />
+                        <Loader2 className="animate-spin text-info" size={24} />
                     </div>
                 )}
             </div>
@@ -362,32 +362,32 @@ export const Schedule = () => {
             {/* Event Details Modal */}
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden rounded-2xl" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 text-white flex items-center justify-between bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
+                    <div className="bg-white dark:bg-primary-active w-full max-w-sm shadow-sm border border-border dark:border-border overflow-hidden rounded-2xl" onClick={e => e.stopPropagation()}>
+                        <div className="p-4 text-on-primary flex items-center justify-between bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
                             </h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors rounded-xl">
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
                                 <X size={16} />
                             </button>
                         </div>
                         <div className="p-5 space-y-4">
                             <div>
-                                <span className="text-[9px] font-bold text-slate-400 block mb-1">الطالب</span>
-                                <p className="font-bold text-sm text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
+                                <span className="text-[9px] font-bold text-muted block mb-1">الطالب</span>
+                                <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.studentName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-slate-400 block mb-1">المعلمة</span>
-                                <p className="font-bold text-sm text-slate-900 dark:text-white">{selectedEvent.teacherName}</p>
+                                <span className="text-[9px] font-bold text-muted block mb-1">المعلمة</span>
+                                <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-slate-400 block mb-1">المادة</span>
-                                <p className="font-bold text-sm text-slate-900 dark:text-white">{selectedEvent.subject}</p>
+                                <span className="text-[9px] font-bold text-muted block mb-1">المادة</span>
+                                <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.subject}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-slate-400 block mb-1">الموعد</span>
-                                <p className="font-bold text-sm text-slate-900 dark:text-white">{selectedEvent.day} - {selectedEvent.time}</p>
+                                <span className="text-[9px] font-bold text-muted block mb-1">الموعد</span>
+                                <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.day} - {selectedEvent.time}</p>
                             </div>
                         </div>
                         <div className="flex gap-2 p-5 pt-0">
@@ -404,14 +404,14 @@ export const Schedule = () => {
                                         if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 text-white text-[10px] font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] hover:from-[#5a3ee0] hover:to-[#7c3aed]"
+                                className="flex-1 h-10 text-on-primary text-[10px] font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-white dark:bg-slate-900 text-slate-700 dark:text-white text-[10px] font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 rounded-xl"
+                                className="flex-1 h-10 bg-white dark:bg-primary-active text-main dark:text-on-primary text-[10px] font-bold border border-border dark:border-border shadow-sm hover:bg-surface transition-all active:scale-95 rounded-xl"
                             >
                                 عرض الطالب
                             </button>

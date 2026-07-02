@@ -278,23 +278,23 @@ export const Teachers = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-[#F8F7FF] dark:bg-slate-950 min-h-screen pb-24"
+            className="bg-surface min-h-screen pb-24"
             dir="rtl"
         >
             <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-6 md:pt-10">
                 {/* Header Section */}
-                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl px-5 md:px-8 py-4 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-purple-500/20">
+                <div className="bg-primary rounded-2xl px-5 md:px-8 py-4 md:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-primary/20">
                     <div className="flex items-center gap-3 md:gap-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-                            <Presentation size={20} className="text-white" />
+                            <Presentation size={20} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight">إدارة المعلمات</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">إدارة المعلمات</h1>
+                            <p className="text-[10px] font-bold text-on-primary opacity-70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
-                                <span className="text-[9px] font-bold text-white/60">{teachers.length} معلمة</span>
-                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                                <span className="text-[8px] font-bold px-2 py-0.5 rounded-xl bg-white/15 backdrop-blur-sm text-white border border-white/10">نشطة</span>
+                                <span className="text-[9px] font-bold text-on-primary opacity-60">{teachers.length} معلمة</span>
+                                <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
+                                <span className="text-[8px] font-bold px-2 py-0.5 rounded-xl bg-white/15 backdrop-blur-sm text-on-primary border border-white/10">نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -305,8 +305,8 @@ export const Teachers = () => {
                             className={cn(
                                 "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-[10px] md:text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
                                 showAddForm
-                                ? "bg-rose-500 text-white hover:bg-rose-600"
-                                : "bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25"
+                                ? "bg-error text-on-error hover:bg-error-hover"
+                                : "bg-white/15 backdrop-blur-sm text-on-primary border border-white/20 hover:bg-white/25"
                             )}
                         >
                             {showAddForm ? <X size={16} /> : <Plus size={16} />}

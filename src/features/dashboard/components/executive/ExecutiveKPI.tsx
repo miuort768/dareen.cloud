@@ -22,21 +22,21 @@ export const ExecutiveKPI = memo(function ExecutiveKPI({ stats }: { stats: Execu
     const metrics = METRICS(stats);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4">المؤشرات الرئيسية</h3>
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
+            <h3 className="text-sm font-semibold text-muted dark:text-muted mb-4">المؤشرات الرئيسية</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {metrics.map((m) => (
-                    <div key={m.label} className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-3 transition-all hover:shadow-sm">
+                    <div key={m.label} className="bg-background dark:bg-card/50 rounded-2xl p-3 transition-all hover:shadow-sm">
                         <div className="flex items-center justify-between mb-1">
                             <span className="text-lg">{m.icon}</span>
                             {m.trend === 'up' ? (
-                                <TrendingUp size={16} className="text-green-500" />
+                                <TrendingUp size={16} className="text-success" />
                             ) : (
-                                <TrendingDown size={16} className="text-red-500" />
+                                <TrendingDown size={16} className="text-error" />
                             )}
                         </div>
-                        <p className="text-lg font-bold text-gray-800 dark:text-white">{m.value}</p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500">{m.label}</p>
+                        <p className="text-lg font-bold text-main dark:text-on-primary">{m.value}</p>
+                        <p className="text-xs text-muted dark:text-muted">{m.label}</p>
                     </div>
                 ))}
             </div>

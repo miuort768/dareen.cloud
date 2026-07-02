@@ -51,15 +51,15 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
             <SectionCard>
                 <SectionTitle icon={Shield} label="الصلاحيات والأدوار" sub="إدارة صلاحيات المستخدمين" />
 
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-xl mb-5">
+                <div className="flex items-center justify-between p-4 bg-primary-soft rounded-xl mb-5">
                     <div className="flex items-center gap-3">
-                        <ExternalLink size={16} className="text-purple-600" />
+                        <ExternalLink size={16} className="text-primary" />
                         <div>
-                            <p className="text-sm font-bold text-purple-800">إدارة الأدوار المتقدمة</p>
-                            <p className="text-[10px] text-purple-600">صفحة منفصلة لإدارة الأدوار والصلاحيات بشكل متكامل</p>
+                            <p className="text-sm font-bold text-primary">إدارة الأدوار المتقدمة</p>
+                            <p className="text-[10px] text-primary">صفحة منفصلة لإدارة الأدوار والصلاحيات بشكل متكامل</p>
                         </div>
                     </div>
-                    <button onClick={() => navigate('/roles')} className="flex items-center gap-1.5 px-3 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700 transition-all">
+                    <button onClick={() => navigate('/roles')} className="flex items-center gap-1.5 px-3 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover transition-all">
                         <Users size={14} /> فتح
                     </button>
                 </div>
@@ -71,7 +71,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                 <div className="mb-4">
                     <FieldLabel>اسم الدور</FieldLabel>
                     <div className="flex gap-2">
-                        <input value={roleName} onChange={e => setRoleName(e.target.value)} placeholder="مثال: مشرف مالي" className="flex-1 bg-slate-50 border border-slate-200 px-3 py-2.5 text-sm font-bold rounded-xl focus:outline-none focus:border-purple-500" />
+                        <input value={roleName} onChange={e => setRoleName(e.target.value)} placeholder="مثال: مشرف مالي" className="flex-1 bg-surface border border-border px-3 py-2.5 text-sm font-bold rounded-xl focus:outline-none focus:border-primary" />
                         <PrimaryBtn onClick={handleCreateRole}>إنشاء الدور</PrimaryBtn>
                     </div>
                 </div>
@@ -86,8 +86,8 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                                 onClick={() => togglePerm(p.id)}
                                 className={`text-xs font-bold px-3 py-2 rounded-xl border transition-all text-right ${
                                     isSelected
-                                        ? 'bg-purple-100 border-purple-300 text-purple-700'
-                                        : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                                        ? 'bg-primary-soft border-primary text-primary'
+                                        : 'bg-surface border-border text-muted hover:bg-hover'
                                 }`}
                             >
                                 {p.label}

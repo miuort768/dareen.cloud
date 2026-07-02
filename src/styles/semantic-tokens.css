@@ -36,6 +36,20 @@
   --text-dim: #94a3b8;
   --text-inverse: #ffffff;
 
+  /* Chart colors */
+  --chart-1: #2563eb;
+  --chart-2: #059669;
+  --chart-3: #e11d48;
+  --chart-4: #8b5cf6;
+  --chart-5: #f59e0b;
+  --chart-6: #06b6d4;
+
+  /* Text on colored backgrounds */
+  --text-on-success: #ffffff;
+  --text-on-warning: #ffffff;
+  --text-on-info: #ffffff;
+  --text-on-accent: #0f172a;
+
   /* Focus */
   --ring-focus: #4f46e5;
 
@@ -136,8 +150,18 @@
   --text-error: #fb7185;
   --text-error-dark: #fda4af;
   --text-on-error: #ffffff;
+  --text-on-accent: #0f172a;
   --border-error: #e11d48;
 
+  --text-on-success: #ffffff;
+  --text-on-warning: #ffffff;
+  --text-on-info: #ffffff;
+  --chart-1: #60a5fa;
+  --chart-2: #34d399;
+  --chart-3: #fb7185;
+  --chart-4: #a78bfa;
+  --chart-5: #fbbf24;
+  --chart-6: #22d3ee;
   --bg-info: #0284c7;
   --bg-info-soft: #0c4a6e;
   --bg-info-light: #075985;

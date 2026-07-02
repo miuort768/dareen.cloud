@@ -54,7 +54,7 @@ export const AdvancedSettings = ({
                         <button
                             key={tag}
                             onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
-                            className="px-2.5 py-1 bg-white dark:bg-slate-900 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 hover:text-[#2563EB] text-slate-500 text-[10px] font-bold border border-slate-100/50 dark:border-slate-800/50 transition-all font-mono"
+                            className="px-2.5 py-1 bg-card hover:bg-info-soft hover:text-info text-muted text-[10px] font-bold border border-border transition-all font-mono"
                         >
                             {tag}
                         </button>
@@ -80,7 +80,7 @@ export const AdvancedSettings = ({
                         onChange={e => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))}
                         placeholder="30"
                     />
-                    <p className="text-[10px] text-slate-400 mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
+                    <p className="text-[10px] text-dim mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
                 </div>
             </div>
         </SectionCard>
@@ -109,7 +109,7 @@ export const AdvancedSettings = ({
                 </PrimaryBtn>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-slate-100/50 dark:border-slate-800/50">
+            <div className="mt-4 pt-4 border-t border-border">
                 <DangerBtn
                     className="w-full"
                     onClick={() => setSecureAction({

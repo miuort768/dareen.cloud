@@ -8,14 +8,14 @@ interface AuditLogSectionProps {
 
 export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) => (
     <SectionCard>
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100/50 dark:border-slate-800/50">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
             <div className="flex items-center gap-3">
-                <div className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#2563EB12' }}>
-                    <Activity size={16} style={{ color: '#2563EB' }} />
+                <div className="w-8 h-8 flex items-center justify-center bg-primary-soft">
+                    <Activity size={16} className="text-primary" />
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">سجل الرقابة</p>
-                    <p className="text-[10px] font-bold text-slate-400">سجل تدقيق النشاط العام</p>
+                    <p className="text-sm font-bold text-main">سجل الرقابة</p>
+                    <p className="text-[10px] font-bold text-muted">سجل تدقيق النشاط العام</p>
                 </div>
             </div>
             <SecondaryBtn onClick={fetchLogs}>
@@ -23,42 +23,42 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
             </SecondaryBtn>
         </div>
 
-        <div className="overflow-x-auto border border-slate-100/50 dark:border-slate-800/50">
+        <div className="overflow-x-auto border border-border">
             <table className="w-full text-right text-sm">
                 <thead>
-                    <tr className="bg-[#0F172A]">
-                        <th className="px-4 py-3 text-[10px] font-bold text-white/70 tracking-wide">التوقيت</th>
-                        <th className="px-4 py-3 text-[10px] font-bold text-white/70 tracking-wide">المسؤول</th>
-                        <th className="px-4 py-3 text-[10px] font-bold text-white/70 tracking-wide">الإجراء</th>
+                    <tr className="bg-hover">
+                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">التوقيت</th>
+                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">المسؤول</th>
+                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">الإجراء</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                <tbody className="divide-y divide-border">
                     {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
-                            <td className="px-4 py-3 font-mono text-[10px] text-slate-400" dir="ltr">
+                        <tr key={idx} className="hover:bg-hover transition-colors group">
+                            <td className="px-4 py-3 font-mono text-[10px] text-muted" dir="ltr">
                                 {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: '#2563EB12', color: '#2563EB' }}>
+                                    <div className="w-6 h-6 flex items-center justify-center text-[10px] font-bold bg-primary-soft text-primary">
                                         {log.username?.[0]?.toUpperCase() || 'A'}
                                     </div>
-                                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{log.username}</span>
+                                    <span className="text-xs font-medium text-main">{log.username}</span>
                                 </div>
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full" />
-                                    <span className="text-xs text-slate-600 dark:text-slate-300">{log.action}</span>
+                                    <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                                    <span className="text-xs text-main">{log.action}</span>
                                 </div>
                             </td>
                         </tr>
                     )) : (
                         <tr>
                             <td colSpan={3} className="py-16 text-center">
-                                <CheckCircle2 className="mx-auto mb-2 text-emerald-400" size={24} />
-                                <p className="text-sm font-normal text-slate-400">لا توجد سجلات</p>
-                                <p className="text-[10px] text-slate-300 mt-1">لا يوجد نشاط مسجل</p>
+                                <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
+                                <p className="text-sm font-normal text-muted">لا توجد سجلات</p>
+                                <p className="text-[10px] text-dim mt-1">لا يوجد نشاط مسجل</p>
                             </td>
                         </tr>
                     )}
@@ -67,11 +67,11 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
         </div>
 
         <div className="flex items-center justify-between mt-3 px-1">
-            <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
-                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
+            <div className="flex items-center gap-1.5 text-[10px] text-muted">
+                <div className="w-1.5 h-1.5 bg-success rounded-full animate-ping" />
                 المراقبة نشطة
             </div>
-            <span className="text-[10px] text-slate-300">{auditLogs.length} سجل</span>
+            <span className="text-[10px] text-dim">{auditLogs.length} سجل</span>
         </div>
     </SectionCard>
 );

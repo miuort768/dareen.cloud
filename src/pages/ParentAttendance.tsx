@@ -1,4 +1,4 @@
-Ôªøimport { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
     Calendar,
     Filter,
@@ -55,18 +55,18 @@ export const ParentAttendance = () => {
         <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-medium text-gray-900 dark:text-white tracking-tight">ÿ≥ÿ¨ŸÑ ÿßŸÑÿ≠ÿ∂Ÿàÿ± ŸàÿßŸÑÿ∫Ÿäÿßÿ®</h1>
-                    <p className="text-sm text-gray-500 font-normal dark:text-gray-400">ŸÖÿ™ÿßÿ®ÿπÿ© ÿØŸÇŸäŸÇÿ© ŸÑÿ≠ÿ∂Ÿàÿ± ŸàÿßŸÜÿµÿ±ÿßŸÅ ÿßŸÑÿ£ÿ®ŸÜÿßÿ° ŸÅŸä ÿßŸÑÿ≠ÿµÿµ</p>
+                    <h1 className="text-2xl font-medium text-main dark:text-on-primary tracking-tight">”Ã· «·Õ÷Ê— Ê«·€Ì«»</h1>
+                    <p className="text-sm text-muted font-normal dark:text-muted">„ «»⁄… œﬁÌﬁ… ·Õ÷Ê— Ê«‰’—«› «·√»‰«¡ ›Ì «·Õ’’</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Filter size={16} className="text-gray-400" />
+                    <Filter size={16} className="text-muted" />
                     <select
                         value={selectedChildId}
                         onChange={(e) => setSelectedChildId(e.target.value)}
-                        className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 px-4 py-2 font-normal text-xs focus:outline-none focus:border-primary-500 transition-all"
+                        className="bg-white dark:bg-card border border-border dark:border-border px-4 py-2 font-normal text-xs focus:outline-none focus:border-primary transition-all"
                     >
-                        <option value="all">ŸÉŸÑ ÿßŸÑÿ£ÿ®ŸÜÿßÿ°</option>
+                        <option value="all">ﬂ· «·√»‰«¡</option>
                         {children.map(c => (
                             <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
@@ -77,16 +77,16 @@ export const ParentAttendance = () => {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {/* Stats Sidebar */}
                 <div className="lg:col-span-1 space-y-4">
-                    <div className="bg-gray-900 p-6 text-white border-r-4 border-r-emerald-500">
-                        <Activity className="text-emerald-500 mb-2" size={24} />
-                        <h4 className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">ÿ•ÿ¨ŸÖÿßŸÑŸä ÿßŸÑÿ≠ÿ∂Ÿàÿ±</h4>
+                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-emerald-500">
+                        <Activity className="text-success mb-2" size={24} />
+                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">≈Ã„«·Ì «·Õ÷Ê—</h4>
                         <div className="text-3xl font-medium mt-1">
                             {filteredSessions.filter(s => s.status === 'completed').length}
                         </div>
                     </div>
-                    <div className="bg-gray-900 p-6 text-white border-r-4 border-r-rose-500">
-                        <AlertCircle className="text-rose-500 mb-2" size={24} />
-                        <h4 className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">ÿ•ÿ¨ŸÖÿßŸÑŸä ÿßŸÑÿ∫Ÿäÿßÿ®</h4>
+                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-rose-500">
+                        <AlertCircle className="text-error mb-2" size={24} />
+                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">≈Ã„«·Ì «·€Ì«»</h4>
                         <div className="text-3xl font-medium mt-1">
                             {filteredSessions.filter(s => s.status === 'cancelled').length}
                         </div>
@@ -95,49 +95,49 @@ export const ParentAttendance = () => {
 
                 {/* Attendance Table */}
                 <div className="lg:col-span-3">
-                    <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-                        <div className="p-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                            <h4 className="font-medium text-[10px] text-gray-400 uppercase tracking-widest">ÿßŸÑÿ™ÿßÿ±ŸäÿÆ ŸàÿßŸÑÿ≥ÿ¨ŸÑ ÿßŸÑÿ≤ŸÖŸÜŸä</h4>
-                            <Calendar size={16} className="text-gray-300" />
+                    <div className="bg-white dark:bg-card border border-border dark:border-border shadow-sm overflow-hidden">
+                        <div className="p-4 bg-background dark:bg-card/50 border-b border-border dark:border-border flex items-center justify-between">
+                            <h4 className="font-medium text-[10px] text-muted uppercase tracking-widest">«· «—ÌŒ Ê«·”Ã· «·“„‰Ì</h4>
+                            <Calendar size={16} className="text-dim" />
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-right">
                                 <thead>
-                                    <tr className="bg-gray-50 dark:bg-gray-800/50 text-[10px] font-medium text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700">
-                                        <th className="px-6 py-4">ÿßŸÑÿßÿ®ŸÜ / ÿßŸÑŸÖÿßÿØÿ©</th>
-                                        <th className="px-6 py-4 text-center">ÿßŸÑÿ™ŸàŸÇŸäÿ™</th>
-                                        <th className="px-6 py-4 text-center">ÿßŸÑÿ≠ÿßŸÑÿ©</th>
+                                    <tr className="bg-background dark:bg-card/50 text-[10px] font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border">
+                                        <th className="px-6 py-4">«·«»‰ / «·„«œ…</th>
+                                        <th className="px-6 py-4 text-center">«· ÊﬁÌ </th>
+                                        <th className="px-6 py-4 text-center">«·Õ«·…</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                                <tbody className="divide-y divide-border dark:divide-border">
                                     {filteredSessions.map((session) => (
-                                        <tr key={session.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                                        <tr key={session.id} className="hover:bg-surface dark:hover:bg-card/50 transition-colors group">
                                             <td className="px-6 py-4">
-                                                <div className="font-normal text-gray-900 dark:text-white text-sm">{session.studentName}</div>
-                                                <div className="text-[10px] text-gray-400 font-medium uppercase tracking-tighter">{session.subject}</div>
+                                                <div className="font-normal text-main dark:text-on-primary text-sm">{session.studentName}</div>
+                                                <div className="text-[10px] text-muted font-medium uppercase tracking-tighter">{session.subject}</div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col items-center">
-                                                    <div className="text-xs font-normal text-gray-700 dark:text-gray-300">
+                                                    <div className="text-xs font-normal text-main dark:text-dim">
                                                         {format(new Date(session.date), 'eeee, d MMMM yyyy', { locale: ar })}
                                                     </div>
                                                     <div className="flex items-center gap-1 mt-1">
-                                                        <Clock size={10} className="text-gray-400" />
-                                                        <span className="text-[10px] text-gray-400 font-normal">{session.time}</span>
+                                                        <Clock size={10} className="text-muted" />
+                                                        <span className="text-[10px] text-muted font-normal">{session.time}</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex justify-center">
                                                     {session.status === 'completed' ? (
-                                                        <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800">
+                                                        <div className="flex items-center gap-2 px-3 py-1 bg-success-light text-success border border-success dark:bg-success/20 dark:text-success dark:border-success">
                                                             <CheckCircle2 size={12} />
-                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ÿ≠ÿ∂ÿ±</span>
+                                                            <span className="text-[10px] font-medium uppercase tracking-widest">Õ÷—</span>
                                                         </div>
                                                     ) : (
-                                                        <div className="flex items-center gap-2 px-3 py-1 bg-rose-50 text-rose-700 border border-rose-100 dark:bg-rose-900/20 dark:text-rose-400 dark:border-rose-800">
+                                                        <div className="flex items-center gap-2 px-3 py-1 bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error">
                                                             <XCircle size={12} />
-                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ÿ∫ÿßÿ¶ÿ® / ŸÖŸèŸÑÿ∫Ÿâ</span>
+                                                            <span className="text-[10px] font-medium uppercase tracking-widest">€«∆» / „ı·€Ï</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -146,7 +146,7 @@ export const ParentAttendance = () => {
                                     ))}
                                     {filteredSessions.length === 0 && (
                                         <tr>
-                                            <td colSpan={3} className="px-6 py-12 text-center text-gray-400 font-normal uppercase text-[10px] tracking-widest italic">ŸÑÿß ÿ™Ÿàÿ¨ÿØ ÿ≥ÿ¨ŸÑÿßÿ™ ÿ≠ÿ∂Ÿàÿ± ŸÖÿ™ÿßÿ≠ÿ© ÿ≠ÿßŸÑŸäÿßŸã</td>
+                                            <td colSpan={3} className="px-6 py-12 text-center text-muted font-normal uppercase text-[10px] tracking-widest italic">·«  ÊÃœ ”Ã·«  Õ÷Ê— „ «Õ… Õ«·Ì«</td>
                                         </tr>
                                     )}
                                 </tbody>

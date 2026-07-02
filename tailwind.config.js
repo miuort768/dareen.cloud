@@ -61,9 +61,13 @@ module.exports = {
         card: 'var(--bg-card)',
 
         // Text levels
+        main: 'var(--text-main)',
         muted: 'var(--text-muted)',
         dim: 'var(--text-dim)',
         inverse: 'var(--text-inverse)',
+
+        // Background levels
+        hover: 'var(--bg-hover)',
 
         // Border
         border: {
@@ -82,7 +86,10 @@ module.exports = {
 
         // Text on colored backgrounds — key name = what follows "text-"
         'on-primary': 'var(--text-on-primary)',
+        'on-success': 'var(--text-on-success)',
+        'on-warning': 'var(--text-on-warning)',
         'on-error': 'var(--text-on-error)',
+        'on-info': 'var(--text-on-info)',
         'on-accent': 'var(--text-on-accent)',
 
         // Primary extended
@@ -93,6 +100,16 @@ module.exports = {
 
         // Focus (ring)
         focus: 'var(--ring-focus)',
+
+        // Chart colors
+        chart: {
+          1: 'var(--chart-1)',
+          2: 'var(--chart-2)',
+          3: 'var(--chart-3)',
+          4: 'var(--chart-4)',
+          5: 'var(--chart-5)',
+          6: 'var(--chart-6)',
+        },
 
         // Status colors
         success: {

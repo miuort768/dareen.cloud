@@ -13,9 +13,9 @@ interface TransactionsLogProps {
 const PAGE_SIZE = 15;
 
 const StatusBadge = ({ status }: { status: string }) => {
-    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 uppercase tracking-wide rounded-lg"><CheckCircle2 size={9} /> معتمدة</span>;
-    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 uppercase tracking-wide rounded-lg"><Clock size={9} /> مراجعة</span>;
-    return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 uppercase tracking-wide rounded-lg"><X size={9} /> ملغاة</span>;
+    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-success bg-success-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><CheckCircle2 size={9} /> معتمدة</span>;
+    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-warning bg-warning-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><Clock size={9} /> مراجعة</span>;
+    return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-dim bg-surface px-2 py-0.5 uppercase tracking-wide rounded-lg"><X size={9} /> ملغاة</span>;
 };
 
 export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: TransactionsLogProps) => {
@@ -28,26 +28,24 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
     if (page > totalPages && page !== 1) setPage(1);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/50 shadow-sm overflow-hidden rounded-2xl" dir="rtl">
+        <div className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl" dir="rtl">
 
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-border bg-surface">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center rounded-xl" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                    <div className="w-8 h-8 flex items-center justify-center bg-primary-soft text-primary rounded-xl">
                         <History size={15} />
                     </div>
                     <div>
-                        <h2 className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">سجل العمليات المالية</h2>
-                        <p className="text-[9px] text-slate-400 font-normal mt-0.5 uppercase tracking-wide">
+                        <h2 className="text-xs font-medium text-main uppercase tracking-widest">سجل العمليات المالية</h2>
+                        <p className="text-[9px] text-dim font-normal mt-0.5 uppercase tracking-wide">
                             {totalCount} معاملة • صفحة {page} من {totalPages}
                         </p>
                     </div>
                 </div>
                 <button
                     onClick={onDeleteAll}
-                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold transition-all uppercase tracking-widest shadow-sm rounded-xl" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E', border: '1px solid #F43F5E30' }} 
-                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#F43F5E'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#F43F5E'; }}
-                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#F43F5E12'; e.currentTarget.style.color = '#F43F5E'; e.currentTarget.style.borderColor = '#F43F5E30'; }}
+                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold transition-all uppercase tracking-widest shadow-sm rounded-xl bg-error-soft text-error border border-error hover:bg-error hover:text-on-error hover:border-error"
                 >
                     <Trash2 size={12} />
                     تصفير الأرشيف
@@ -58,47 +56,47 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
             <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-right">
                     <thead>
-                        <tr className="bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6]">
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">#</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">النوع</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70">البيان</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">التصنيف</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">التاريخ</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">القيمة</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-white/70 text-center">الحالة</th>
+                        <tr className="bg-primary">
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">#</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">النوع</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70">البيان</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التصنيف</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التاريخ</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">القيمة</th>
+                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">الحالة</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                    <tbody className="divide-y divide-border">
                         {pageTx.length > 0 ? pageTx.map((tx, idx) => {
                             const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
                             return (
-                                <tr key={tx.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                <tr key={tx.id} className="hover:bg-hover transition-colors">
                                     <td className="px-5 py-3 text-center">
-                                        <span className="text-[10px] font-medium text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
+                                        <span className="text-[10px] font-medium text-dim font-mono">{String(globalIdx).padStart(2, '0')}</span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <div className="w-8 h-8 flex items-center justify-center mx-auto rounded-xl" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
+                                        <div className={cn("w-8 h-8 flex items-center justify-center mx-auto rounded-xl", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-error-soft text-error')}>
                                             {tx.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                                         </div>
                                     </td>
                                     <td className="px-5 py-3">
-                                        <p className="text-xs font-normal text-slate-800 dark:text-white">{tx.description || 'بدون وصف'}</p>
-                                        <p className="text-[9px] text-slate-400 font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
+                                        <p className="text-xs font-normal text-main">{tx.description || 'بدون وصف'}</p>
+                                        <p className="text-[9px] text-dim font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className="inline-block px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide rounded-lg" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#6C4BFF12', color: tx.type === 'income' ? '#059669' : '#6C4BFF' }}>
+                                        <span className={cn("inline-block px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide rounded-lg", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-primary-soft text-primary')}>
                                             {tx.category}
                                         </span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className="text-[10px] font-normal text-slate-500 font-mono">
+                                        <span className="text-[10px] font-normal text-muted font-mono">
                                             {new Date(tx.date).toLocaleDateString('ar-EG')}
                                         </span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
                                         <span className={cn(
                                             "text-sm font-medium font-mono",
-                                            tx.type === 'income' ? 'text-emerald-500' : 'text-rose-500'
+                                            tx.type === 'income' ? 'text-success' : 'text-error'
                                         )}>
                                             {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
                                             <span className="text-[9px] font-normal mr-0.5">{CURRENCY_SYMBOL}</span>
@@ -112,8 +110,8 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         }) : (
                             <tr>
                                 <td colSpan={7} className="px-6 py-16 text-center">
-                                    <DollarSign size={32} className="mx-auto text-slate-200 dark:text-slate-700 mb-2" />
-                                    <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">لا توجد عمليات مسجلة</p>
+                                    <DollarSign size={32} className="mx-auto text-dim mb-2" />
+                                    <p className="text-[10px] font-medium text-dim uppercase tracking-widest">لا توجد عمليات مسجلة</p>
                                 </td>
                             </tr>
                         )}
@@ -122,27 +120,27 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
             </div>
 
             {/* Mobile Cards */}
-            <div className="md:hidden divide-y divide-slate-50 dark:divide-slate-800">
+            <div className="md:hidden divide-y divide-border">
                 {pageTx.length > 0 ? pageTx.map((tx, idx) => {
                     const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
                     return (
                         <div key={tx.id} className="p-4 flex items-center gap-3">
-                            <div className="w-10 h-10 flex items-center justify-center shrink-0 relative rounded-xl" style={{ backgroundColor: tx.type === 'income' ? '#10B98112' : '#F43F5E12', color: tx.type === 'income' ? '#10B981' : '#F43F5E' }}>
+                            <div className={cn("w-10 h-10 flex items-center justify-center shrink-0 relative rounded-xl", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-error-soft text-error')}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-md" style={{ backgroundColor: '#6C4BFF', color: 'white' }}>{globalIdx}</span>
+                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center bg-primary text-on-primary rounded-md">{globalIdx}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">
-                                    <h3 className="font-normal text-xs text-slate-800 dark:text-white truncate">{tx.description || 'معاملة'}</h3>
-                                    <span className={cn("text-sm font-medium font-mono mr-2 shrink-0", tx.type === 'income' ? 'text-emerald-500' : 'text-rose-500')}>
+                                    <h3 className="font-normal text-xs text-main truncate">{tx.description || 'معاملة'}</h3>
+                                    <span className={cn("text-sm font-medium font-mono mr-2 shrink-0", tx.type === 'income' ? 'text-success' : 'text-error')}>
                                         {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[9px] font-normal text-slate-400">{tx.category}</span>
-                                    <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                                    <span className="text-[9px] text-slate-400 font-mono">{new Date(tx.date).toLocaleDateString('ar-EG')}</span>
-                                    <span className="w-1 h-1 bg-slate-200 rounded-full" />
+                                    <span className="text-[9px] font-normal text-dim">{tx.category}</span>
+                                    <span className="w-1 h-1 bg-border rounded-full" />
+                                    <span className="text-[9px] text-dim font-mono">{new Date(tx.date).toLocaleDateString('ar-EG')}</span>
+                                    <span className="w-1 h-1 bg-border rounded-full" />
                                     <StatusBadge status={tx.status} />
                                 </div>
                             </div>
@@ -150,23 +148,23 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                     );
                 }) : (
                     <div className="py-16 text-center">
-                        <DollarSign size={32} className="mx-auto text-slate-200 mb-2" />
-                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">خالٍ من البيانات</p>
+                        <DollarSign size={32} className="mx-auto text-dim mb-2" />
+                        <p className="text-[10px] font-medium text-dim uppercase tracking-widest">خالٍ من البيانات</p>
                     </div>
                 )}
             </div>
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-800/40">
-                    <p className="text-[10px] font-bold text-slate-400">
+                <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface">
+                    <p className="text-[10px] font-bold text-dim">
                         {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, transactions.length)} من {transactions.length}
                     </p>
                     <div className="flex items-center gap-1">
                         <button
                             onClick={() => setPage(p => Math.max(1, p - 1))}
                             disabled={page === 1}
-                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
+                            className="w-8 h-8 flex items-center justify-center bg-card border border-border text-muted hover:bg-primary hover:text-on-primary hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
                         >
                             <ChevronRight size={14} />
                         </button>
@@ -177,18 +175,18 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                 className={cn(
                                     "w-8 h-8 text-[11px] font-medium border transition-all rounded-xl",
                                     page === i + 1
-                                        ? "bg-gradient-to-l from-[#6C4BFF] to-[#8B5CF6] text-white border-[#6C4BFF]"
-                                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-[#6C4BFF]"
+                                        ? "bg-primary text-on-primary border-primary"
+                                        : "bg-card border-border text-muted hover:border-primary"
                                 )}
                             >
                                 {i + 1}
                             </button>
                         ))}
-                        {totalPages > 7 && <span className="text-slate-400 text-xs font-normal px-1">...</span>}
+                        {totalPages > 7 && <span className="text-dim text-xs font-normal px-1">...</span>}
                         <button
                             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                             disabled={page === totalPages}
-                            className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-[#6C4BFF] hover:text-white hover:border-[#6C4BFF] disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
+                            className="w-8 h-8 flex items-center justify-center bg-card border border-border text-muted hover:bg-primary hover:text-on-primary hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded-xl"
                         >
                             <ChevronLeft size={14} />
                         </button>

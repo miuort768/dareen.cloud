@@ -28,7 +28,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
-                <div className="animate-spin rounded-full h-10 w-10 border-2 border-blue-500 border-t-transparent" />
+                <div className="animate-spin rounded-full h-10 w-10 border-2 border-info border-t-transparent" />
             </div>
         );
     }
@@ -36,7 +36,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
     if (error || !data) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
-                <p className="text-gray-400">تعذر تحميل بيانات لوحة القيادة</p>
+                <p className="text-muted">تعذر تحميل بيانات لوحة القيادة</p>
             </div>
         );
     }

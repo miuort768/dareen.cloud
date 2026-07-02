@@ -22,17 +22,17 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                     </div>
                     <div className="flex-1">
                         <div className="flex justify-between items-start mb-2">
-                            <h3 className="text-sm font-bold text-slate-800 dark:text-white">{perf.name}</h3>
-                            <span className="text-[9px] font-bold text-slate-400 uppercase">{perf.total} حصة</span>
+                            <h3 className="text-sm font-bold text-main dark:text-on-primary">{perf.name}</h3>
+                            <span className="text-[9px] font-bold text-muted uppercase">{perf.total} حصة</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
-                                <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full"><div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} /></div>
+                                <div className="flex justify-between text-[8px] font-bold text-muted uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
+                                <div className="h-1 bg-background dark:bg-primary-active overflow-hidden rounded-full"><div className="h-full bg-success" style={{ width: `${perf.attendanceRate}%` }} /></div>
                             </div>
                             <div className="space-y-1">
-                                <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden rounded-full"><div className="h-full bg-[#6C4BFF]" style={{ width: `${perf.documentationRate}%` }} /></div>
+                                <div className="flex justify-between text-[8px] font-bold text-muted uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
+                                <div className="h-1 bg-background dark:bg-primary-active overflow-hidden rounded-full"><div className="h-full bg-primary" style={{ width: `${perf.documentationRate}%` }} /></div>
                             </div>
                         </div>
                     </div>

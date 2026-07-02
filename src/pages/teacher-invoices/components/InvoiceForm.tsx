@@ -30,9 +30,9 @@ interface InvoiceFormProps {
 }
 
 const inputClasses = [
-  'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-  'px-3 py-2 text-xs font-bold text-slate-800 dark:text-white',
-  'focus:outline-none focus:border-[#6C4BFF] focus:ring-2 focus:ring-purple-200/50 dark:focus:ring-purple-700/50',
+  'w-full bg-background dark:bg-primary-active border border-border dark:border-border',
+  'px-3 py-2 text-xs font-bold text-main dark:text-on-primary',
+  'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary/50',
   'transition-all duration-200 rounded-xl',
 ].join(' ');
 
@@ -53,7 +53,7 @@ export const InvoiceForm = ({
         <button
           type="button"
           onClick={handleCancel}
-          className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all rounded-xl"
+          className="p-1.5 text-muted hover:text-muted hover:bg-surface dark:hover:bg-primary-active transition-all rounded-xl"
         >
           <X size={16} />
         </button>

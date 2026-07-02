@@ -19,17 +19,17 @@ export const SecureActionModal = ({ secureAction, secureInput, setSecureInput, s
 
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-black/50 animate-in fade-in">
-            <div className="bg-white dark:bg-slate-900 p-6 max-w-md w-full shadow-sm border border-rose-100 dark:border-rose-900">
+            <div className="bg-card p-6 max-w-md w-full shadow-sm border border-error">
                 <div className="flex flex-col items-center text-center space-y-3">
-                    <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center text-rose-500 mb-1">
+                    <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error mb-1">
                         <AlertCircle size={24} />
                     </div>
-                    <h3 className="text-base font-normal text-slate-800 dark:text-white">{secureAction.title}</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{secureAction.description}</p>
+                    <h3 className="text-base font-normal text-main">{secureAction.title}</h3>
+                    <p className="text-xs text-muted leading-relaxed">{secureAction.description}</p>
 
-                    <div className="w-full bg-slate-50 dark:bg-slate-800 p-4 border border-slate-100 dark:border-slate-700 space-y-3 text-right mt-2">
-                        <p className="text-[11px] font-normal text-slate-600 dark:text-slate-300">اكتب للتأكيد:</p>
-                        <div className="text-center font-normal text-rose-500 bg-rose-50 dark:bg-rose-900/20 py-1.5 text-xs select-all border border-rose-100 dark:border-rose-800">
+                    <div className="w-full bg-surface p-4 border border-border space-y-3 text-right mt-2">
+                        <p className="text-[11px] font-normal text-muted">اكتب للتأكيد:</p>
+                        <div className="text-center font-normal text-error bg-error-soft py-1.5 text-xs select-all border border-error">
                             {secureAction.confirmWord}
                         </div>
                         <InputField
@@ -47,7 +47,7 @@ export const SecureActionModal = ({ secureAction, secureInput, setSecureInput, s
                         <button
                             disabled={secureInput !== secureAction.confirmWord}
                             onClick={() => { secureAction.actionFn(); setSecureAction(null); setSecureInput(''); }}
-                            className="flex-1 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-normal disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                            className="flex-1 py-2 bg-error hover:bg-error-hover text-on-error text-xs font-normal disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                         >
                             تنفيذ نهائي
                         </button>

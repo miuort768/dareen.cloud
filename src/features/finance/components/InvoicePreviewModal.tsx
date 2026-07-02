@@ -32,19 +32,19 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60  transition-all duration-300">
             {/* Reduced max-width to max-w-lg (roughly 25% smaller than 2xl/xl) */}
-            <div className="bg-white dark:bg-gray-900 w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
+            <div className="bg-card w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
                 {/* Decoration */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary opacity-10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
 
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800 no-print">
+                <div className="flex items-center justify-between p-6 border-b border-border no-print">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
-                            <Printer size={24} className="text-primary-600" />
+                        <div className="p-2 bg-primary-soft rounded-xl">
+                            <Printer size={24} className="text-primary" />
                         </div>
                         <div>
-                            <h3 className="font-medium text-xl text-gray-900 dark:text-white">معاينة الفاتورة</h3>
-                            <p className="text-xs text-gray-400 font-normal uppercase tracking-widest leading-none mt-1">معاينة الفاتورة</p>
+                            <h3 className="font-medium text-xl text-main">معاينة الفاتورة</h3>
+                            <p className="text-xs text-dim font-normal uppercase tracking-widest leading-none mt-1">معاينة الفاتورة</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -53,41 +53,41 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                 type="checkbox"
                                 checked={hidePricing}
                                 onChange={(e) => setHidePricing(e.target.checked)}
-                                className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+                                className="w-4 h-4 text-primary rounded border-border focus:ring-focus"
                             />
-                            <span className="text-xs font-normal text-gray-600 dark:text-gray-400">إخفاء المبالغ</span>
+                            <span className="text-xs font-normal text-muted">إخفاء المبالغ</span>
                         </label>
-                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors rounded-xl">
-                            <X size={24} className="text-gray-400" />
+                        <button onClick={onClose} className="p-2 hover:bg-hover transition-colors rounded-xl">
+                            <X size={24} className="text-dim" />
                         </button>
                     </div>
                 </div>
 
                 {/* Invoice Content */}
-                <div id="printable-invoice" className="p-8 bg-white dark:bg-gray-900 min-h-[500px]">
+                <div id="printable-invoice" className="p-8 bg-card min-h-[500px]">
                     <div className="flex justify-between items-start mb-8">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-primary-600 text-white flex items-center justify-center text-xl font-medium">
+                                <div className="w-10 h-10 bg-primary text-on-primary flex items-center justify-center text-xl font-medium">
                                     {(academyName || 'A').charAt(0)}
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-medium text-gray-900 dark:text-white tracking-tighter">{academyName || 'أكاديمية الشيخ خوارزمي'}</h2>
-                                    <p className="text-[10px] text-gray-400 font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
+                                    <h2 className="text-xl font-medium text-main tracking-tighter">{academyName || 'أكاديمية الشيخ خوارزمي'}</h2>
+                                    <p className="text-[10px] text-dim font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
                                 </div>
                             </div>
-                            <div className="text-xs font-normal text-gray-500 space-y-1">
+                            <div className="text-xs font-normal text-muted space-y-1">
                                 <p>هاتف: {adminPhone || '0123456789'}</p>
                             </div>
                         </div>
                         <div className="text-left">
-                            <h1 className="text-3xl font-medium text-gray-900 dark:text-white uppercase mb-2">فاتورة</h1>
-                            <p className="text-xs font-medium text-primary-600 font-mono">#{invoice.id.slice(0, 8).toUpperCase()}</p>
+                            <h1 className="text-3xl font-medium text-main uppercase mb-2">فاتورة</h1>
+                            <p className="text-xs font-medium text-primary font-mono">#{invoice.id.slice(0, 8).toUpperCase()}</p>
                             <div className={cn(
                                 "mt-2 inline-flex items-center gap-2 px-3 py-1 text-[10px] font-medium uppercase tracking-widest rounded-lg",
-                                invoice.status === 'paid' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
-                                    invoice.status === 'pending' ? "bg-amber-50 text-amber-600 border border-amber-100" :
-                                        "bg-rose-50 text-rose-600 border border-rose-100"
+                                invoice.status === 'paid' ? "bg-success-soft text-success border border-success" :
+                                    invoice.status === 'pending' ? "bg-warning-soft text-warning border border-warning" :
+                                        "bg-error-soft text-error border border-error"
                             )}>
                                 {invoice.status === 'paid' ? <CheckCircle2 size={12} /> : invoice.status === 'pending' ? <Clock size={12} /> : <AlertCircle size={12} />}
                                 {invoice.status === 'paid' ? 'مدفوعة' : invoice.status === 'pending' ? 'معلقة' : 'متأخرة'}
@@ -95,21 +95,21 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-8 border-y border-gray-100 dark:border-gray-800 py-6">
+                    <div className="grid grid-cols-2 gap-4 mb-8 border-y border-border py-6">
                         <div>
-                            <p className="text-[10px] text-gray-400 font-medium uppercase mb-2 tracking-widest">إلى الطالب:</p>
-                            <p className="text-base font-medium text-gray-900 dark:text-white mb-1">{invoice.studentName}</p>
-                            <p className="text-xs text-gray-500 font-normal italic">{invoice.description}</p>
+                            <p className="text-[10px] text-dim font-medium uppercase mb-2 tracking-widest">إلى الطالب:</p>
+                            <p className="text-base font-medium text-main mb-1">{invoice.studentName}</p>
+                            <p className="text-xs text-muted font-normal italic">{invoice.description}</p>
                         </div>
                         <div className="text-left">
                             <div className="space-y-2">
                                 <div>
-                                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-widest">تاريخ الإصدار</p>
-                                    <p className="text-xs font-normal text-gray-900 dark:text-white font-mono">{new Date(invoice.date).toLocaleDateString('ar-EG')}</p>
+                                    <p className="text-[10px] text-dim font-medium uppercase tracking-widest">تاريخ الإصدار</p>
+                                    <p className="text-xs font-normal text-main font-mono">{new Date(invoice.date).toLocaleDateString('ar-EG')}</p>
                                 </div>
                                 <div>
-                                    <p className="text-[10px] text-gray-400 font-medium uppercase tracking-widest">تاريخ الاستحقاق</p>
-                                    <p className="text-xs font-normal text-gray-900 dark:text-white font-mono">{new Date(invoice.dueDate).toLocaleDateString('ar-EG')}</p>
+                                    <p className="text-[10px] text-dim font-medium uppercase tracking-widest">تاريخ الاستحقاق</p>
+                                    <p className="text-xs font-normal text-main font-mono">{new Date(invoice.dueDate).toLocaleDateString('ar-EG')}</p>
                                 </div>
                             </div>
                         </div>
@@ -118,14 +118,14 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                     <div className="mb-8">
                         <table className="w-full table-fixed border-collapse">
                             <thead>
-                                <tr className="border-b-2 border-gray-900 dark:border-white">
+                                <tr className="border-b-2 border-border">
                                     <th className="py-2 text-right text-[10px] font-medium uppercase w-1/4">التاريخ</th>
                                     <th className="py-2 text-right text-[10px] font-medium uppercase w-1/4">المعلمة</th>
                                     <th className="py-2 text-right text-[10px] font-medium uppercase w-1/4">المادة</th>
                                     {!hidePricing && <th className="py-2 text-left text-[10px] font-medium uppercase w-1/4">الحساب</th>}
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                            <tbody className="divide-y divide-border">
                                 {invoice.items && invoice.items.length > 0 ? (
                                     invoice.items.map((item, idx) => {
                                         // item.description format: "Math - TeacherName (Status)"
@@ -137,25 +137,25 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
 
                                         return (
                                             <tr key={idx}>
-                                                <td className="py-3 text-xs font-mono font-normal text-gray-700 dark:text-gray-300" dir="ltr">
+                                                <td className="py-3 text-xs font-mono font-normal text-muted" dir="ltr">
                                                     {item.date ? new Date(item.date).toLocaleDateString('ar-EG') : '-'}
                                                 </td>
-                                                <td className="py-3 text-xs font-normal text-gray-700 dark:text-gray-300">
+                                                <td className="py-3 text-xs font-normal text-muted">
                                                     {teacherName}
                                                 </td>
-                                                <td className="py-3 text-xs font-normal text-gray-700 dark:text-gray-300">
+                                                <td className="py-3 text-xs font-normal text-muted">
                                                     {subject}
                                                     {status !== '-' && (
                                                         <span className={cn(
                                                             "mr-2 px-1.5 py-0.5 text-[9px] rounded-sm",
-                                                            status === 'حضور' ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+                                                            status === 'حضور' ? "bg-success-soft text-success" : "bg-error-soft text-error"
                                                         )}>
                                                             {status}
                                                         </span>
                                                     )}
                                                 </td>
                                                 {!hidePricing && (
-                                                    <td className="py-3 text-left text-xs font-medium font-mono text-gray-900 dark:text-white">
+                                                    <td className="py-3 text-left text-xs font-medium font-mono text-main">
                                                         {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
                                                     </td>
                                                 )}
@@ -164,49 +164,49 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                     })
                                 ) : (
                                     <tr>
-                                        <td colSpan={4} className="py-4 text-center text-sm font-normal text-gray-500">لا توجد تفاصيل للحصص</td>
+                                        <td colSpan={4} className="py-4 text-center text-sm font-normal text-muted">لا توجد تفاصيل للحصص</td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
 
-                    <div className="flex justify-between items-center pt-4 border-t-2 border-gray-900 dark:border-white">
-                        <div className="text-xs font-normal text-gray-500">
+                    <div className="flex justify-between items-center pt-4 border-t-2 border-border">
+                        <div className="text-xs font-normal text-muted">
                             إجمالي الحصص: {invoice.items?.length || 0}
                         </div>
                         {!hidePricing && (
-                            <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-gray-50 dark:bg-gray-800/50">
+                            <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-surface">
                                 <span className="text-xs font-medium uppercase tracking-widest">الإجمالي</span>
-                                <span className="text-lg font-medium font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</span>
+                                <span className="text-lg font-medium font-mono text-main">{invoice.amount.toLocaleString()} ج.م</span>
                             </div>
                         )}
                     </div>
 
                     {invoice.notes && (
                         <div className="mt-8">
-                            <p className="text-[10px] text-gray-400 font-medium uppercase mb-2 tracking-widest">ملاحظات:</p>
-                            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-normal italic">{invoice.notes}</p>
+                            <p className="text-[10px] text-dim font-medium uppercase mb-2 tracking-widest">ملاحظات:</p>
+                            <p className="text-xs text-muted leading-relaxed font-normal italic">{invoice.notes}</p>
                         </div>
                     )}
 
                     <div className="mt-12 text-center no-print">
-                        <p className="text-[10px] text-gray-400 font-medium uppercase tracking-[0.2em] mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
-                        <div className="w-24 h-1 bg-primary-600 mx-auto opacity-20"></div>
+                        <p className="text-[10px] text-dim font-medium uppercase tracking-[0.2em] mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
+                        <div className="w-24 h-1 bg-primary mx-auto opacity-20"></div>
                     </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 flex justify-end gap-3 no-print">
+                <div className="p-6 border-t border-border bg-surface flex justify-end gap-3 no-print">
                     <button
                         onClick={onClose}
-                        className="px-6 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors rounded-xl"
+                        className="px-6 py-2 text-sm font-medium text-muted hover:text-main transition-colors rounded-xl"
                     >
                         إغلاق
                     </button>
                     <button
                         onClick={handlePrint}
-                        className="px-6 py-2.5 bg-primary-600 text-white font-medium text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm shadow-primary-600/20 flex items-center gap-2 rounded-xl"
+                        className="px-6 py-2.5 bg-primary text-on-primary font-medium text-xs uppercase tracking-widest hover:bg-primary-hover transition-all shadow-sm flex items-center gap-2 rounded-xl"
                     >
                         <Printer size={16} />
                         طباعة

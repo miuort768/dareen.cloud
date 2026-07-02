@@ -28,18 +28,18 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4" dir="rtl">
             {/* 1. Subscriptions & Renewals */}
-            <div className="p-5 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md">
+            <div className="p-5 flex flex-col bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all duration-300 hover:shadow-md">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
                             <CreditCard size={20} />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">تجديد الاشتراكات</h3>
-                            <p className="text-[9px] font-medium text-[#64748B]">إدارة التحصيل المالي</p>
+                            <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">تجديد الاشتراكات</h3>
+                            <p className="text-[9px] font-medium text-muted">إدارة التحصيل المالي</p>
                         </div>
                     </div>
-                    <div className="px-3 py-1 text-[9px] font-bold rounded-xl text-white shadow-sm" style={{ backgroundColor: subColor }}>
+                    <div className="px-3 py-1 text-[9px] font-bold rounded-xl text-on-primary shadow-sm" style={{ backgroundColor: subColor }}>
                         {stats.lowBalanceCount} تنبيهات
                     </div>
                 </div>
@@ -47,14 +47,14 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
                     {lowBalanceStudents.length > 0 ? (
                         lowBalanceStudents.map((item, idx) => (
-                            <div key={idx} className="p-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all flex items-center justify-between group/item">
+                            <div key={idx} className="p-3 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all flex items-center justify-between group/item">
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[11px] transition-colors" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
                                         {item.studentName.charAt(0)}
                                     </div>
                                     <div className="min-w-0">
-                                        <h4 className="font-bold text-xs text-[#0F172A] dark:text-white truncate">{item.studentName}</h4>
-                                        <p className="text-[9px] font-medium text-[#64748B] mt-0.5 flex items-center gap-1">
+                                        <h4 className="font-bold text-xs text-main dark:text-on-primary truncate">{item.studentName}</h4>
+                                        <p className="text-[9px] font-medium text-muted mt-0.5 flex items-center gap-1">
                                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: subColor }} />
                                             {item.subject}
                                         </p>
@@ -65,14 +65,14 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                     <span className={cn(
                                         "text-[8px] font-bold px-2 py-1 border rounded-xl shadow-sm",
                                         item.remainingSessions === 0 
-                                            ? "text-rose-600 border-rose-200 bg-rose-50 dark:bg-rose-950/20" 
-                                            : "text-amber-600 border-amber-200 bg-amber-50 dark:bg-amber-950/20"
+                                            ? "text-error border-error bg-error-light dark:bg-error/20" 
+                                            : "text-warning border-warning bg-warning-light dark:bg-warning/20"
                                     )}>
                                         {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} جلسة`}
                                     </span>
                                     <button 
                                         onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                        className="w-8 h-8 rounded-xl text-white transition-colors shadow-sm flex items-center justify-center" style={{ backgroundColor: subColor }}
+                                        className="w-8 h-8 rounded-xl text-on-primary transition-colors shadow-sm flex items-center justify-center" style={{ backgroundColor: subColor }}
                                         title="إرسال تذكير واتساب"
                                     >
                                         <Phone size={14} />
@@ -81,15 +81,15 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             </div>
                         ))
                     ) : (
-                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                        <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                             <UserX size={24} className="mx-auto mb-2" style={{ color: `${subColor}40` }} />
-                            <p className="text-[9px] font-medium text-[#64748B]">لا توجد تجديدات معلقة</p>
+                            <p className="text-[9px] font-medium text-muted">لا توجد تجديدات معلقة</p>
                         </div>
                     )}
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/students" className="w-full h-11 rounded-2xl text-white text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: '#0F172A' }}>
+                    <Link to="/students" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: '#0F172A' }}>
                         إدارة كافة الطلاب
                         <ChevronLeft size={14} />
                     </Link>
@@ -97,15 +97,15 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
             </div>
 
             {/* 2. Tasks & Requests */}
-            <div className="p-5 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all duration-300 hover:shadow-md">
+            <div className="p-5 flex flex-col bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all duration-300 hover:shadow-md">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-sm" style={{ backgroundColor: `${taskColor}12`, color: taskColor }}>
                             <Briefcase size={20} />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">المهام والطلبات</h3>
-                            <p className="text-[9px] font-medium text-[#64748B]">سير العمليات التشغيلية</p>
+                            <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">المهام والطلبات</h3>
+                            <p className="text-[9px] font-medium text-muted">سير العمليات التشغيلية</p>
                         </div>
                     </div>
                     <div className="px-3 py-1 text-[9px] font-bold rounded-xl shadow-sm" style={{ backgroundColor: `${taskColor}20`, color: taskColor }}>
@@ -116,17 +116,17 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
                     {tasks.length > 0 ? (
                         tasks.slice(0, 10).map((task) => (
-                            <div key={task.id} className="p-3 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 transition-all flex items-center justify-between">
+                            <div key={task.id} className="p-3 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all flex items-center justify-between">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className={cn("w-1.5 h-8 rounded-full", task.priority === 'high' ? "bg-rose-500" : task.priority === 'medium' ? "bg-[#38BDF8]" : "bg-[#2563EB]")} />
+                                    <div className={cn("w-1.5 h-8 rounded-full", task.priority === 'high' ? "bg-error" : task.priority === 'medium' ? "bg-info" : "bg-primary")} />
                                     <div className="min-w-0">
-                                        <h4 className="font-bold text-xs text-[#0F172A] dark:text-white truncate">{task.title}</h4>
+                                        <h4 className="font-bold text-xs text-main dark:text-on-primary truncate">{task.title}</h4>
                                         <div className="flex items-center gap-2 mt-1">
                                             <div className="flex items-center gap-1">
-                                                <Clock size={10} className="text-[#64748B]" />
-                                                <span className="text-[8px] font-medium text-[#64748B]">{task.dueDate}</span>
+                                                <Clock size={10} className="text-muted" />
+                                                <span className="text-[8px] font-medium text-muted">{task.dueDate}</span>
                                             </div>
-                                            <span className="text-[8px] font-medium text-[#94A3B8]">[{task.priority}]</span>
+                                            <span className="text-[8px] font-medium text-dim">[{task.priority}]</span>
                                         </div>
                                     </div>
                                 </div>
@@ -137,15 +137,15 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             </div>
                         ))
                     ) : (
-                        <div className="py-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                        <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                             <ListTodo size={24} className="mx-auto mb-2" style={{ color: `${taskColor}40` }} />
-                            <p className="text-[9px] font-medium text-[#64748B]">تم إنجاز كافة المهام</p>
+                            <p className="text-[9px] font-medium text-muted">تم إنجاز كافة المهام</p>
                         </div>
                     )}
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/tasks" className="w-full h-11 rounded-2xl text-white text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: taskColor }}>
+                    <Link to="/tasks" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: taskColor }}>
                         مركز المهام المتكامل
                         <ChevronLeft size={14} />
                     </Link>

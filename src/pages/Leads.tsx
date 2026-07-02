@@ -1,4 +1,4 @@
-ï»¿import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -19,25 +19,25 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
         className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
         dir="rtl"
     >
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-slate-900 w-full max-w-sm shadow-xl rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-800">
-            <div className="bg-gradient-to-br from-rose-500 to-rose-600 px-5 py-4 flex items-center justify-between">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-primary-active w-full max-w-sm shadow-xl rounded-2xl overflow-hidden border border-border dark:border-border">
+            <div className="bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
-                        <AlertTriangle size={18} className="text-white" />
+                        <AlertTriangle size={18} className="text-on-primary" />
                     </div>
-                    <h3 className="text-sm font-bold text-white">Ø­Ø°Ù Ø§Ù„Ø¹Ù…ÙŠÙ„</h3>
+                    <h3 className="text-sm font-bold text-on-primary">ÍĞİ ÇáÚãíá</h3>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-white/70 rounded-xl transition-all" aria-label="Ø¥Ù„ØºØ§Ø¡"><X size={16} /></button>
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-primary/70 rounded-xl transition-all" aria-label="ÅáÛÇÁ"><X size={16} /></button>
             </div>
             <div className="p-5">
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„Ø¹Ù…ÙŠÙ„ØŸ</p>
-                <p className="text-xs font-bold text-slate-400 leading-relaxed">
-                    Ø³ÙŠØªÙ… Ø­Ø°Ù Ø§Ù„Ø¹Ù…ÙŠÙ„ <span className="text-rose-500 font-bold">Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹</span> Ù…Ù† Ù‚Ø§Ø¹Ø¯Ø© Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª ÙˆÙ„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹.
+                <p className="text-sm font-bold text-main dark:text-dim mb-1">åá ÃäÊ ãÊÃßÏ ãä ÍĞİ åĞÇ ÇáÚãíá¿</p>
+                <p className="text-xs font-bold text-muted leading-relaxed">
+                    ÓíÊã ÍĞİ ÇáÚãíá <span className="text-error font-bold">äåÇÆíÇğ</span> ãä ŞÇÚÏÉ ÇáÈíÇäÇÊ æáÇ íãßä ÇáÊÑÇÌÚ.
                 </p>
             </div>
             <div className="flex gap-2 p-5 pt-0">
-                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all active:scale-[0.98]">Ø¥Ù„ØºØ§Ø¡</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-white bg-gradient-to-l from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 rounded-xl transition-all active:scale-[0.98] shadow-sm shadow-rose-500/20">ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù</button>
+                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface dark:bg-primary-active hover:bg-surface dark:hover:bg-primary-active rounded-xl transition-all active:scale-[0.98]">ÅáÛÇÁ</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-primary bg-gradient-to-l from-[var(--bg-error)] to-[var(--bg-error)] hover:from--[var(--bg-error)] hover:to--[var(--bg-error)] rounded-xl transition-all active:scale-[0.98] shadow-sm shadow-error/20">ÊÃßíÏ ÇáÍĞİ</button>
             </div>
         </motion.div>
     </motion.div>
@@ -73,7 +73,7 @@ export const Leads: React.FC = () => {
             setIsAddModalOpen(false);
             formRef.current?.reset();
         },
-        onError: (err: Error & { response?: { data?: { error?: string } } }) => { alert('Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„Ø¥Ø¶Ø§ÙØ©: ' + (err?.response?.data?.error || err.message)); }
+        onError: (err: Error & { response?: { data?: { error?: string } } }) => { alert('ÍÏË ÎØÃ ÃËäÇÁ ÇáÅÖÇİÉ: ' + (err?.response?.data?.error || err.message)); }
     });
 
     const updateMutation = useMutation({
@@ -108,12 +108,12 @@ export const Leads: React.FC = () => {
     };
 
     const statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }> = {
-        new: { label: 'Ø¬Ø¯ÙŠØ¯', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-        contacted: { label: 'ØªÙ… Ø§Ù„ØªÙˆØ§ØµÙ„', color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-        interested: { label: 'Ù…Ù‡ØªÙ…', color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-        trial: { label: 'Ø­ØµØ© ØªØ¬Ø±ÙŠØ¨ÙŠØ©', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-        converted: { label: 'Ù…Ø´ØªØ±Ùƒ', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-        lost: { label: 'Ù…Ù„ØºÙŠ', color: 'text-rose-600', bg: 'bg-rose-50 dark:bg-rose-900/20' }
+        new: { label: 'ÌÏíÏ', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
+        contacted: { label: 'Êã ÇáÊæÇÕá', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
+        interested: { label: 'ãåÊã', color: 'text-success', bg: 'bg-success-light dark:bg-success/20' },
+        trial: { label: 'ÍÕÉ ÊÌÑíÈíÉ', color: 'text-primary', bg: 'bg-primary-soft dark:bg-primary-active/20' },
+        converted: { label: 'ãÔÊÑß', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
+        lost: { label: 'ãáÛí', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' }
     };
 
     if (isLoading) return <PageLoader />;
@@ -123,61 +123,61 @@ export const Leads: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-[#F8F7FF] dark:bg-slate-950 min-h-screen pb-24"
+            className="bg-primary-light dark:bg-background min-h-screen pb-24"
             dir="rtl"
         >
             <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-[#6C4BFF] to-[#8B5CF6] rounded-2xl px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-purple-500/20 mt-6 md:mt-10">
+                <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-2xl px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-primary/20 mt-6 md:mt-10">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-                            <Users size={22} className="text-white" />
+                            <Users size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white leading-tight">Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ù…Ø­ØªÙ…Ù„ÙŠÙ†</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">Ø¥Ø¯Ø§Ø±Ø© Ø·Ù„Ø¨Ø§Øª Ø§Ù„ØªØ³Ø¬ÙŠÙ„ ÙˆØ§Ù„Ù…Ù‡ØªÙ…ÙŠÙ†</p>
+                            <h1 className="text-lg font-bold text-on-primary leading-tight">ÇáÚãáÇÁ ÇáãÍÊãáíä</h1>
+                            <p className="text-[10px] font-bold text-on-primary/70 mt-0.5">ÅÏÇÑÉ ØáÈÇÊ ÇáÊÓÌíá æÇáãåÊãíä</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
                             "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-xl",
                             showLost
-                                ? "bg-white text-rose-600 border-slate-200 dark:bg-slate-800 dark:text-white dark:border-slate-700"
-                                : "bg-white/15 backdrop-blur-sm text-white border-white/20 hover:bg-white/25"
+                                ? "bg-white text-error border-border dark:bg-primary-active dark:text-on-primary dark:border-border"
+                                : "bg-white/15 backdrop-blur-sm text-on-primary border-white/20 hover:bg-white/25"
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                            <span>{showLost ? 'Ø§Ù„ÙƒÙ„' : 'Ø§Ù„Ù…Ø±ÙÙˆØ¶ÙˆÙ†'}</span>
-                            {!showLost && <span className="bg-rose-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
+                            <span>{showLost ? 'Çáßá' : 'ÇáãÑİæÖæä'}</span>
+                            {!showLost && <span className="bg-error text-on-primary text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
                         </button>
                         <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 border-0">
-                            <Plus size={14} /> Ø¥Ø¶Ø§ÙØ© Ø¹Ù…ÙŠÙ„
+                            <Plus size={14} /> ÅÖÇİÉ Úãíá
                         </PrimaryBtn>
                     </div>
                 </div>
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-                    <StatItem title="Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ù…Ù‡ØªÙ…ÙŠÙ†" value={stats?.total || 0} icon={Users} />
-                    <StatItem title="Ø¹Ù…Ù„Ø§Ø¡ Ø¬Ø¯Ø¯" value={stats?.new || 0} icon={Clock} />
-                    <StatItem title="ØªÙ… Ø§Ù„ØªØ­ÙˆÙŠÙ„" value={stats?.converted || 0} icon={CheckCircle2} />
-                    <StatItem title="Ù…Ø¹Ø¯Ù„ Ø§Ù„ØªØ­ÙˆÙŠÙ„" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} />
+                    <StatItem title="ÅÌãÇáí ÇáãåÊãíä" value={stats?.total || 0} icon={Users} />
+                    <StatItem title="ÚãáÇÁ ÌÏÏ" value={stats?.new || 0} icon={Clock} />
+                    <StatItem title="Êã ÇáÊÍæíá" value={stats?.converted || 0} icon={CheckCircle2} />
+                    <StatItem title="ãÚÏá ÇáÊÍæíá" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} icon={TrendingUp} />
                 </div>
 
                 {/* Search & Filter */}
-                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 mb-6 p-4">
+                <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl rounded-2xl shadow-sm border border-border dark:border-border mb-6 p-4">
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="relative flex-1">
-                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-                            <input type="text" placeholder="Ø§Ø¨Ø­Ø« Ø¨Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ..." className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-9 py-2 outline-none text-xs font-bold text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-[#6C4BFF] focus:ring-1 focus:ring-[#6C4BFF]/20 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                            <input type="text" placeholder="ÇÈÍË ÈÇáÇÓã Ãæ ÑŞã ÇáåÇÊİ..." className="w-full bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-9 py-2 outline-none text-xs font-bold text-main dark:text-on-primary placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="flex items-center gap-2 w-full md:w-auto">
-                            <Filter size={14} className="text-gray-400 hidden md:block shrink-0" />
+                            <Filter size={14} className="text-muted hidden md:block shrink-0" />
                             <div className="relative w-full md:w-auto">
-                                <select className="w-full md:w-auto appearance-none bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2 text-[11px] font-bold outline-none cursor-pointer focus:border-[#6C4BFF] focus:ring-1 focus:ring-[#6C4BFF]/20 transition-all text-gray-900 dark:text-white" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
-                                    <option value="all" className="text-slate-900">ÙƒÙ„ Ø§Ù„Ø­Ø§Ù„Ø§Øª</option>
+                                <select className="w-full md:w-auto appearance-none bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-3 py-2 text-[11px] font-bold outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all text-main dark:text-on-primary" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                    <option value="all" className="text-main">ßá ÇáÍÇáÇÊ</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
-                                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" size={12} />
+                                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-muted" size={12} />
                             </div>
                         </div>
                     </div>

@@ -52,6 +52,7 @@ export const semantic = {
   'divider': palette.divider,
 
   // Success
+  'text-on-success': palette.textOnSuccess,
   'bg-success': palette.success,
   'bg-success-soft': palette.successSoft,
   'bg-success-light': palette.successLight,
@@ -60,6 +61,7 @@ export const semantic = {
   'border-success': palette.success,
 
   // Warning
+  'text-on-warning': palette.textOnWarning,
   'bg-warning': palette.warning,
   'bg-warning-soft': palette.warningSoft,
   'bg-warning-light': palette.warningLight,
@@ -79,6 +81,7 @@ export const semantic = {
   'border-error': palette.error,
 
   // Info
+  'text-on-info': palette.textOnInfo,
   'bg-info': palette.info,
   'bg-info-soft': palette.infoSoft,
   'bg-info-light': palette.infoLight,

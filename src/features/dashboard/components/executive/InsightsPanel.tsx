@@ -54,10 +54,10 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
     };
 
     return (
-        <div className="rounded-3xl p-5 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-800 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 dark:border-gray-700">
+        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to--[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-[0_8px_30px_#0000000F] border border-border dark:border-border">
             <div className="flex items-center gap-2 mb-4">
-                <TrendingUp size={18} className="text-purple-500" />
-                <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400">تحليلات ذكية</h3>
+                <TrendingUp size={18} className="text-primary" />
+                <h3 className="text-sm font-semibold text-muted dark:text-muted">تحليلات ذكية</h3>
             </div>
 
             <div className="space-y-2">
@@ -70,7 +70,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                             style={{ backgroundColor: style.bg }}
                         >
                             <Lightbulb size={16} style={{ color: style.color }} className="mt-0.5 flex-shrink-0" />
-                            <p className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed">{insight.text}</p>
+                            <p className="text-sm text-main dark:text-dim leading-relaxed">{insight.text}</p>
                         </div>
                     );
                 })}

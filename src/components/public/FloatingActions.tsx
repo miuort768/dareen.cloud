@@ -18,7 +18,7 @@ export const FloatingActions = () => {
             id: 'whatsapp',
             icon: <MessageCircle className="w-5 h-5" />,
             label: 'استفسار واتساب',
-            color: 'bg-[#25D366]',
+            color: 'bg-success',
             href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`,
             isExternal: true
         },
@@ -26,7 +26,7 @@ export const FloatingActions = () => {
             id: 'telegram',
             icon: <Send className="w-5 h-5" />,
             label: 'تليجرام',
-            color: 'bg-[#229ED9]',
+            color: 'bg-info',
             href: tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`,
             isExternal: true
         },
@@ -34,7 +34,7 @@ export const FloatingActions = () => {
             id: 'theme',
             icon: theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />,
             label: theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي',
-            color: 'bg-indigo-600',
+            color: 'bg-primary',
             onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
             hideMobile: true
         }
@@ -60,9 +60,9 @@ export const FloatingActions = () => {
                             {/* Hover Label */}
                             <div className="absolute left-full ml-4 md:right-full md:mr-4 top-1/2 -translate-y-1/2 overflow-hidden pointer-events-none">
                                 <motion.div 
-                                    className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-slate-800/50 shadow-xl opacity-0 group-hover:opacity-100 -translate-x-4 md:translate-x-4 group-hover:translate-x-0 transition-all duration-300"
+                                    className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-border/50 shadow-xl opacity-0 group-hover:opacity-100 -translate-x-4 md:translate-x-4 group-hover:translate-x-0 transition-all duration-300"
                                 >
-                                    <span className="text-[10px] font-black text-slate-800 dark:text-white whitespace-nowrap uppercase tracking-wider">
+                                    <span className="text-[10px] font-black text-main dark:text-on-primary whitespace-nowrap uppercase tracking-wider">
                                         {action.label}
                                     </span>
                                 </motion.div>
@@ -75,12 +75,11 @@ export const FloatingActions = () => {
                                     rel={action.isExternal ? "noopener noreferrer" : ""}
                                     aria-label={action.label}
                                     className={cn(
-                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '0.9rem',
-                                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
+                                        borderRadius: '0.9rem'
                                     }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
@@ -91,12 +90,11 @@ export const FloatingActions = () => {
                                     onClick={action.onClick}
                                     aria-label={action.label}
                                     className={cn(
-                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '0.9rem',
-                                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
+                                        borderRadius: '0.9rem'
                                     }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>

@@ -88,7 +88,7 @@ export const RolesPage = () => {
             {editingRole && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'rgba(0,0,0,0.5)', display: 'flex',
+                    background: '#00000080', display: 'flex',
                     justifyContent: 'center', alignItems: 'center', zIndex: 1000
                 }}>
                     <div style={{ background: '#fff', padding: 24, borderRadius: 8, maxHeight: '80vh', overflow: 'auto', width: 600 }}>
