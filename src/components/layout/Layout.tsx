@@ -38,7 +38,7 @@ export const Layout = () => {
         <div
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="min-h-screen flex font-sans text-main transition-colors duration-300 relative bg-gradient-to-br from-surface via-card to-primary-soft"
+            className="min-h-screen flex font-sans text-main transition-colors duration-300 relative bg-white dark:bg-card"
         dir="rtl"
         >
             <Helmet>
