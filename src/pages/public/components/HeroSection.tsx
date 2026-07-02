@@ -59,10 +59,10 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                             height="40"
                                             alt=""
                                             loading="lazy"
-                                            className="w-10 h-10 rounded-full border-2 border-card shadow-sm"
+                                            className="w-10 h-10 rounded-full border-2 border-border shadow-sm"
                                         />
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-card bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted">
+                                    <div className="w-10 h-10 rounded-full border-2 border-border bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted">
                                         +2k
                                     </div>
                                 </div>

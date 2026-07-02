@@ -7,7 +7,7 @@ export const PublicFooter = () => {
     const { adminPhone } = useSettingsStore();
 
     return (
-        <footer className="relative bg-primary-active text-on-primary overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500 min-h-[300px]">
+        <footer className="relative bg-primary text-on-primary overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500 min-h-[300px]">
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-primary rounded-full blur-[120px]"></div>
                 <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-primary rounded-full blur-[120px]"></div>

@@ -105,7 +105,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative px-8 py-3.5 bg-primary-active dark:bg-primary-active text-on-primary font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
+                            className="group relative px-8 py-3.5 bg-primary dark:bg-primary text-on-primary font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
