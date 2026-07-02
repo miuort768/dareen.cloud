@@ -41,7 +41,7 @@ export const HowToSubscribe = () => {
     ];
 
     return (
-        <section className="relative overflow-hidden bg-main dark:bg-card rounded-3xl shadow-inner">
+        <section className="relative overflow-hidden bg-white dark:bg-card rounded-3xl shadow-inner">
             {/* Soft glow background */}
             <div className="absolute top-20 -right-20 w-60 h-60 bg-primary opacity-10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary opacity-10 rounded-full blur-[120px] pointer-events-none" />
