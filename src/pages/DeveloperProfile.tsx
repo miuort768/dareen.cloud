@@ -40,12 +40,12 @@ export const DeveloperProfile = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-4"
+                    className="flex flex-col md:flex-row items-center md:items-start gap-4"
                 >
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center shadow-xl shadow-primary dark:shadow-primary">
                         <Code size={28} className="text-on-primary" />
                     </div>
-                    <div>
+                    <div className="text-center md:text-right">
                         <h1 className="text-2xl md:text-3xl font-black text-main dark:text-on-primary">
                             مستر احمد عبدالله
                         </h1>
@@ -53,7 +53,7 @@ export const DeveloperProfile = () => {
                             مؤسس منصة دارين السابعة
                         </p>
                     </div>
-                    <div className="flex gap-3 mr-auto">
+                    <div className="flex gap-3 w-full md:w-auto md:mr-auto justify-center md:justify-end">
                         <a
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
