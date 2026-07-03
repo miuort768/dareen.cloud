@@ -12,7 +12,7 @@ export const MasarSection = () => {
                 <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary)] shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute right-0 top-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute left-0 bottom-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
@@ -94,7 +94,7 @@ export const MasarSection = () => {
                     </div>
 
                     {/* Purple Gradient Section */}
-                    <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] rounded-3xl p-6 shadow-lg shadow-primary/20 mb-5">
+                    <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary)] rounded-3xl p-6 shadow-lg shadow-primary/20 mb-5">
                         {/* Tabs */}
                         <div className="flex items-center gap-4 mb-4">
                             <div className="relative">

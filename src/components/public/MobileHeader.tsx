@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, LogIn, Sun, Monitor, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
+import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 
@@ -37,7 +37,7 @@ export const MobileHeader = () => {
         </div>
         <div className="flex items-center gap-1">
           <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0">
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Monitor className="w-4 h-4 text-primary" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Bed className="w-4 h-4 text-primary" />}
           </button>
           <div className="relative">
           <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center">

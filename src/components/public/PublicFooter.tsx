@@ -100,7 +100,7 @@ export const PublicFooter = () => {
                         <div className="space-y-3">
                             <Link
                                 to="/jobs"
-                                className="block w-full text-center bg-primary-soft dark:bg-primary-active/30 border border-border px-4 py-3 text-sm text-primary hover:bg-primary-light dark:hover:bg-primary-active/50 hover:border-accent transition-all"
+                                className="block w-full text-center bg-primary-soft dark:bg-primary/30 border border-border px-4 py-3 text-sm text-primary hover:bg-primary-light dark:hover:bg-primary/50 hover:border-accent transition-all"
                             >
                                 التقديم للوظائف
                             </Link>

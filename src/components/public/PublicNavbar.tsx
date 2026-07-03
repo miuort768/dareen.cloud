@@ -51,7 +51,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 left-0 right-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 dark:bg-primary-active/90 backdrop-blur-2xl shadow-[0_8px_32px_#0000001F] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
+            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_#0000001F] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 pr-2 group">
@@ -67,7 +67,7 @@ export const PublicNavbar = () => {
                             "flex-col items-center pt-0.5 text-center",
                             isAuthenticated ? "hidden md:flex" : "flex"
                         )}>
-                            <p className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from--[var(--bg-primary)] via--[var(--bg-primary)] to-[var(--bg-primary)]">
+                            <p className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary)]">
                                 دارين السابعة
                             </p>
                             <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-primary dark:text-primary font-bold mt-0.5 italic">
@@ -81,14 +81,14 @@ export const PublicNavbar = () => {
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
                                 </svg>
                             </span>
-                            <span className="md:hidden text-[9px] text-primary dark:text-primary font-bold mt-0.5 bg-primary-soft/80 dark:bg-primary-active/40 px-2 py-0.5 rounded-md italic">
+                            <span className="md:hidden text-[9px] text-primary dark:text-primary font-bold mt-0.5 bg-primary-soft/80 dark:bg-primary/40 px-2 py-0.5 rounded-md italic">
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-primary-soft/50 dark:bg-primary-active/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-primary dark:border-border shadow-sm">
+                    <div className="hidden md:flex items-center gap-2 bg-primary-soft/50 dark:bg-primary/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-primary dark:border-border shadow-sm">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
@@ -125,7 +125,7 @@ export const PublicNavbar = () => {
                                         {currentUser?.avatar ? (
                                             <img src={currentUser.avatar} alt={currentUser.name} width="32" height="32" className="w-full h-full object-cover" />
                                         ) : (
-                                            <div className="w-full h-full bg-primary-soft dark:bg-primary-active flex items-center justify-center">
+                                            <div className="w-full h-full bg-primary-soft dark:bg-primary flex items-center justify-center">
                                                 <User className="w-4 h-4 text-primary dark:text-primary" />
                                             </div>
                                         )}
@@ -133,15 +133,15 @@ export const PublicNavbar = () => {
                                     <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div className={`absolute left-0 mt-4 w-56 bg-white dark:bg-primary-active rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                <div className={`absolute left-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
-                                        <p className="text-sm font-bold text-main dark:text-dim">{currentUser?.name}</p>
+                                        <p className="text-sm font-bold text-main dark:text-on-primary">{currentUser?.name}</p>
                                         <p className="text-xs text-muted dark:text-muted">{currentUser?.username}</p>
                                     </div>
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center gap-2 px-4 py-3 text-sm text-main dark:text-dim hover:bg-primary-soft dark:hover:bg-primary-active hover:text-primary transition-colors"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary hover:text-primary transition-colors"
                                     >
                                         <Sparkles className="w-5 h-5 text-primary" />
                                         لوحة التحكم
@@ -157,10 +157,10 @@ export const PublicNavbar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link
-                                to="/login"
-                                className="hidden md:flex bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-primary)] text-on-primary px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
-                            >
+                                <Link
+                                    to="/login"
+                                    className="hidden md:flex bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                >
                                 تسجيل الدخول
                             </Link>
                         )}
@@ -177,8 +177,8 @@ export const PublicNavbar = () => {
                 </div>
 
                 {/* Mobile Menu - Floating Card Style */}
-                <div className={`
-                    absolute top-full left-0 right-0 mt-3 p-4 bg-white/95 dark:bg-primary-active/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border/60 shadow-2xl
+                    <div className={`
+                    absolute top-full left-0 right-0 mt-3 p-4 bg-white/95 dark:bg-card/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border/60 shadow-2xl
                     transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
                 `}>
@@ -221,7 +221,7 @@ export const PublicNavbar = () => {
                                 <Link
                                     to="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center justify-center bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-primary)] text-on-primary py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
+                                    className="flex items-center justify-center bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
                                 >
                                     تسجيل الدخول
                                 </Link>
