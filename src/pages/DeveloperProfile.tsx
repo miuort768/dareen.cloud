@@ -80,13 +80,13 @@ export const DeveloperProfile = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-white dark:bg-primary-active rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4"
+                    className="bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center">
                             <GraduationCap size={20} className="text-on-primary" />
                         </div>
-                        <h2 className="text-lg font-black text-main dark:text-on-primary">النشأة</h2>
+                        <h2 className="text-lg font-black text-main dark:text-main">النشأة</h2>
                     </div>
                     <p className="text-sm text-muted dark:text-muted leading-relaxed">
                         خريج كلية التربية — جامعة الأزهر. مدرس شغوف بالبرمجة،
@@ -126,19 +126,26 @@ export const DeveloperProfile = () => {
                     transition={{ delay: 0.3 }}
                     className="space-y-4"
                 >
-                    <h2 className="text-lg font-black text-main dark:text-on-primary">القيم</h2>
+                    <h2 className="text-lg font-black text-main dark:text-main">القيم</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {values.map((v, i) => {
                             const Icon = v.icon;
+                            const iconColors = [
+                                'bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)]',
+                                'bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)]',
+                                'bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)]',
+                                'bg-gradient-to-br from-[var(--bg-info)] to-[var(--bg-info)]',
+                                'bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)]',
+                            ];
                             return (
                                 <div
                                     key={i}
-                                    className="bg-white dark:bg-primary-active rounded-2xl p-4 shadow-sm border border-border dark:border-border text-center space-y-2"
+                                    className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm border border-border dark:border-border text-center space-y-2"
                                 >
-                                    <div className="w-10 h-10 mx-auto rounded-xl bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] flex items-center justify-center">
+                                    <div className={`w-10 h-10 mx-auto rounded-xl ${iconColors[i]} flex items-center justify-center`}>
                                         <Icon size={18} className="text-on-primary" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-main dark:text-on-primary">{v.title}</h3>
+                                    <h3 className="text-sm font-bold text-main dark:text-main">{v.title}</h3>
                                     <p className="text-[10px] text-muted dark:text-muted">{v.desc}</p>
                                 </div>
                             );
@@ -151,13 +158,13 @@ export const DeveloperProfile = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="bg-white dark:bg-primary-active rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4"
+                    className="bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-error)] to--[var(--bg-primary)] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-primary)] flex items-center justify-center">
                             <Heart size={20} className="text-on-primary" />
                         </div>
-                        <h2 className="text-lg font-black text-main dark:text-on-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
+                        <h2 className="text-lg font-black text-main dark:text-main">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
                     <div className="border-r-4 border-error pr-4 space-y-3">
                         <p className="text-sm text-muted dark:text-muted leading-relaxed">
@@ -180,7 +187,7 @@ export const DeveloperProfile = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] rounded-3xl p-6 md:p-8 shadow-xl shadow-warning dark:shadow-warning text-on-primary relative overflow-hidden"
+                    className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-3xl p-6 md:p-8 shadow-xl shadow-primary dark:shadow-primary text-on-primary relative overflow-hidden"
                 >
                     <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
                     <div className="relative z-10 text-center space-y-4">
@@ -191,7 +198,7 @@ export const DeveloperProfile = () => {
                                 href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 bg-white text-warning px-5 py-3 rounded-full text-sm font-bold shadow-lg hover:bg-warning-light active:scale-95 transition-all"
+                                className="flex items-center gap-2 bg-white text-primary px-5 py-3 rounded-full text-sm font-bold shadow-lg hover:bg-primary-light active:scale-95 transition-all"
                             >
                                 <MessageSquare size={16} />
                                 واتساب
