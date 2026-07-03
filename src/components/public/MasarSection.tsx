@@ -98,7 +98,7 @@ export const MasarSection = () => {
                         {/* Tabs */}
                         <div className="flex items-center gap-4 mb-4">
                             <div className="relative">
-                                <span className="text-on-primary font-black text-sm">مركز دارين</span>
+                                <span className="text-on-primary font-black text-sm">مركز دارين السابعة</span>
                                 <div className="absolute -bottom-1 right-0 w-full h-0.5 bg-white/80 rounded-full shadow-sm"></div>
                             </div>
                             <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary text-[10px] font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
