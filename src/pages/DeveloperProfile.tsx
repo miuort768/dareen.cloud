@@ -21,12 +21,12 @@ export const DeveloperProfile = () => {
     const tgHandle = typeof telegramHandle === 'string' ? telegramHandle : '';
 
     const values = [
-        { icon: Award, title: 'الجودة', desc: 'نقدم الأفضل دائماً' },
-        { icon: Sparkles, title: 'المتعة', desc: 'التعليم مش ممل' },
-        { icon: Star, title: 'الفائدة', desc: 'كل دقيقة بتفرق' },
-        { icon: Code, title: 'الابتكار', desc: 'نفكر خارج الصندوق' },
-        { icon: Heart, title: 'خدمة الطالب وولي الأمر', desc: 'هم الأساس' },
-        { icon: Target, title: 'التميز', desc: 'نسعى للأفضل دائماً' },
+        { icon: Award, title: 'الجودة', desc: 'نقدم الأفضل دايماً' },
+        { icon: Sparkles, title: 'المتعة', desc: 'التعليم مو ممل' },
+        { icon: Star, title: 'الفائدة', desc: 'كل دقيقة تفرق' },
+        { icon: Code, title: 'الابتكار', desc: 'إبداعنا ما له حدود' },
+        { icon: Heart, title: 'خدمة الطالب وولي الأمر', desc: 'هم أساس كل شي' },
+        { icon: Target, title: 'التميز', desc: 'نسعى للأفضل دايماً' },
     ];
 
     return (
@@ -90,9 +90,9 @@ export const DeveloperProfile = () => {
                         <h2 className="text-lg font-black text-main dark:text-main">النشأة</h2>
                     </div>
                     <p className="text-sm text-muted dark:text-muted leading-relaxed">
-                        خريج كلية التربية — جامعة الأزهر. مدرس شغوف بالبرمجة،
-                        آمن بأن التكنولوجيا هي المفتاح لتطوير التعليم العربي
-                        وجعله أكثر متعة وفائدة.
+                        خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
+                        ومؤمن إن التكنولوجيا هي المفتاح لتطوير التعليم العربي
+                        وتخليه أكثر متعة وفايدة.
                     </p>
                 </motion.div>
 
@@ -113,9 +113,9 @@ export const DeveloperProfile = () => {
                             <h2 className="text-lg font-black">الرؤية</h2>
                         </div>
                         <p className="text-sm leading-relaxed text-on-primary/90">
-                            "دارين السابعة ليست مجرد منصة، إنها أداة لمساعدة الطلاب وأولياء الأمور.
-                            {' '}هدفنا أن نكون أكبر منصة تعليمية عربية تقدم محتوى مفيد وممتع،
-                            {' '}وتساهم في بناء جيل واعٍ ومتعلم."
+                            "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
+                            {' '}هدفنا إنا نصير أكبر منصة تعليمية عربية نقدم محتوى مفيد وممتع،
+                            {' '}وتساعد في بناء جيل واعي ومتعلم."
                         </p>
                     </div>
                 </motion.div>
@@ -173,13 +173,13 @@ export const DeveloperProfile = () => {
                             "الإتقان أساس النجاح والتطوير.
                         </p>
                         <p className="text-sm text-muted dark:text-muted leading-relaxed">
-                            يجب على الإنسان أن يبدأ بتقديم أفضل ما لديه،
-                            {' '}مع الثقة بالله أولاً وأخيراً،
-                            {' '}وأن يتحلى بالأخلاق في كل خطوة.
+                            الإنسان لازم يبدي بأفضل ما عنده،
+                            {' '}مع التوكل على الله أول وأخير،
+                            {' '}ويلتزم بالأخلاق في كل خطوة.
                         </p>
                         <p className="text-sm text-muted dark:text-muted leading-relaxed">
-                            لأن النجاح الحقيقي مش بس في النتيجة،
-                            {' '}لكن في الطريق والأخلاق اللي تمشينا فيها."
+                            لأن النجاح الحقيقي مو بس في النتيجة،
+                            {' '}لكن في الطريق والأخلاق اللي نمشي فيها."
                         </p>
                     </div>
                 </motion.div>
@@ -194,7 +194,7 @@ export const DeveloperProfile = () => {
                     <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
                     <div className="relative z-10 text-center space-y-4">
                         <h3 className="text-xl font-black">تواصل معي</h3>
-                        <p className="text-sm text-on-primary/80">سأكون سعيداً بالتواصل معك</p>
+                        <p className="text-sm text-on-primary/80">يسعدني التواصل معاك</p>
                         <div className="flex justify-center gap-3 pt-2">
                             <a
                                 href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
