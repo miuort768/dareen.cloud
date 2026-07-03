@@ -8,7 +8,7 @@ import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const About = () => {
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-dim relative overflow-x-hidden">
+        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main relative overflow-x-hidden">
             <SEO title="من نحن | دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج" description="منصة دارين السابعة للتعليم عن بعد في الكويت، السعودية، قطر، الإمارات وعمان والبحرين. نوفر دروس خصوصية أونلاين في الدوحة والريان ومسقط وصلالة والمنامة والمحرق، تحفيظ قرآن، تأسيس أطفال، ومراجعات للمناهج الخليجية والبحرينية مع أفضل المعلمين المعتمدين. احجز حصة تجريبية مجانية." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'من نحن', item: '/about' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({
@@ -38,7 +38,7 @@ export const About = () => {
                     <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-main dark:text-on-primary mb-4 font-heading leading-[1.1] md:leading-tight relative">
                         <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                         <span aria-hidden="true">نحن لا نُدرّس فقط،<br className="md:hidden" /><span className="hidden md:inline"> </span></span>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] via--[var(--bg-primary)] to-[var(--bg-primary)] py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
+                        <span className="text-primary py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
                     </h1>
 
                     <p className="text-xs md:text-base text-muted dark:text-muted max-w-3xl mx-auto leading-relaxed md:leading-relaxed mb-8 px-4 font-medium">
@@ -83,7 +83,7 @@ export const About = () => {
                         {/* Interactive Visual Side */}
                         <div className="w-full lg:w-1/2 order-2 lg:order-1">
                             <div className="relative">
-                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[var(--bg-primary)]/10 to--[var(--bg-warning)]/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
+                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[var(--bg-primary)]/10 to-[var(--bg-warning)]/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
                                 <div className="relative grid grid-cols-2 gap-4">
                                     <div className="pt-8 space-y-4">
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
@@ -121,8 +121,8 @@ export const About = () => {
                             </p>
 
                             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="space-y-4">
-                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-primary-active/50 rounded-none hover:bg-surface dark:hover:bg-primary-active transition-colors border border-border dark:border-border">
-                                    <div className="w-12 h-12 bg-white dark:bg-primary-active rounded-none shadow-sm flex items-center justify-center text-primary shrink-0">
+                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-none hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                                    <div className="w-12 h-12 bg-white dark:bg-card rounded-none shadow-sm flex items-center justify-center text-primary shrink-0">
                                         <Zap size={24} />
                                     </div>
                                     <div>
@@ -130,8 +130,8 @@ export const About = () => {
                                         <p className="text-sm text-muted dark:text-muted font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                                     </div>
                                 </motion.div>
-                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-primary-active/50 rounded-none hover:bg-surface dark:hover:bg-primary-active transition-colors border border-border dark:border-border">
-                                    <div className="w-12 h-12 bg-white dark:bg-primary-active rounded-none shadow-sm flex items-center justify-center text-warning shrink-0">
+                                <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-none hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                                    <div className="w-12 h-12 bg-white dark:bg-card rounded-none shadow-sm flex items-center justify-center text-warning shrink-0">
                                         <BookOpen size={24} />
                                     </div>
                                     <div>
@@ -147,7 +147,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-4 md:py-6 bg-background dark:bg-primary-active/50 relative overflow-hidden">
+            <section className="py-4 md:py-6 bg-background dark:bg-card/50 relative overflow-hidden">
                 {/* Visual Separator */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--bg-surface)] to-transparent"></div>
 
@@ -168,8 +168,8 @@ export const About = () => {
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
                         {/* Value 1 - Honesty */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to--[var(--bg-primary)]/50 dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary)]/20 p-6 md:p-8 rounded-2xl border border-primary/50 dark:border-primary/30 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-primary/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)]/0 via--[var(--bg-primary)]/0 to-[var(--bg-primary)]/5 dark:to-[var(--bg-primary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-primary)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-primary)]/20 p-6 md:p-8 rounded-2xl border border-primary/50 dark:border-primary/30 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-primary/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)]/0 via-[var(--bg-primary)]/0 to-[var(--bg-primary)]/5 dark:to-[var(--bg-primary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/30 group-hover:scale-110 transition-all duration-500 shrink-0">
                                     <Shield className="w-6 h-6" />
@@ -182,10 +182,10 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 2 - Innovation */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to--[var(--bg-warning)]/50 dark:from-[var(--bg-primary-active)] dark:to--[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 hover:border-warning/50 dark:hover:border-warning/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-warning/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from--[var(--bg-warning)]/0 via--[var(--bg-warning)]/0 to--[var(--bg-warning)]/5 dark:to--[var(--bg-warning)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-warning)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 hover:border-warning/50 dark:hover:border-warning/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-warning/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-warning)]/0 via-[var(--bg-warning)]/0 to-[var(--bg-warning)]/5 dark:to-[var(--bg-warning)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 group-hover:shadow-warning/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 group-hover:shadow-warning/30 group-hover:scale-110 transition-all duration-500 shrink-0">
                                     <Lightbulb className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">الابتكار</h3>
@@ -196,8 +196,8 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 3 - Excellence */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to--[var(--bg-success)]/50 dark:from-[var(--bg-primary-active)] dark:to--[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 hover:border-success/50 dark:hover:border-success/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-success/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from--[var(--bg-success)]/0 via--[var(--bg-success)]/0 to-[var(--bg-success)]/5 dark:to-[var(--bg-success)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-success)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 hover:border-success/50 dark:hover:border-success/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-success/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-success)]/0 via-[var(--bg-success)]/0 to-[var(--bg-success)]/5 dark:to-[var(--bg-success)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary flex items-center justify-center shadow-lg shadow-success/20 group-hover:shadow-success/30 group-hover:scale-110 transition-all duration-500 shrink-0">
                                     <Award className="w-6 h-6" />
@@ -210,10 +210,10 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 4 - Building Generations */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to--[var(--bg-error)]/50 dark:from-[var(--bg-primary-active)] dark:to--[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 hover:border-error/50 dark:hover:border-error/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-error/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from--[var(--bg-error)]/0 via--[var(--bg-error)]/0 to-[var(--bg-error)]/5 dark:to-[var(--bg-error)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-error)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 hover:border-error/50 dark:hover:border-error/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-error/10">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-error)]/0 via-[var(--bg-error)]/0 to-[var(--bg-error)]/5 dark:to-[var(--bg-error)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to--[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 group-hover:shadow-error/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 group-hover:shadow-error/30 group-hover:scale-110 transition-all duration-500 shrink-0">
                                     <Compass className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">بناء الجيل</h3>
@@ -241,7 +241,7 @@ export const About = () => {
                         {/* The Professional Container */}
                         <div className="relative group overflow-hidden">
                             {/* Animated Border/Glow effect */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-[var(--bg-primary)] via--[var(--bg-warning)] to-[var(--bg-primary)] opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-sm"></div>
+                            <div className="absolute -inset-1 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-warning)] to-[var(--bg-primary)] opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-sm"></div>
                             
                             <div className="relative bg-primary p-8 md:p-12 shadow-[0_40px_100px_-15px_#00000099] border border-white/5">
                                 {/* Intricate Background Patterns */}
@@ -261,10 +261,10 @@ export const About = () => {
 
                                         <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-4 font-heading text-on-primary leading-tight md:leading-tight">
                                             هل أنت مستعد لتكون <br />
-                                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-warning)]">جزءاً من حكايتنا؟</span>
+                                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-warning)]">جزءاً من حكايتنا؟</span>
                                         </h2>
 
-                                        <p className="text-muted text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 font-medium leading-relaxed opacity-80">
+                                        <p className="text-on-primary/80 text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 font-medium leading-relaxed">
                                             انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                         </p>
 
@@ -272,7 +272,7 @@ export const About = () => {
                                             <Link
                                                 to="/courses"
                                                 onClick={() => window.scrollTo(0, 0)}
-                                                className="px-10 py-4 bg-primary hover:bg-primary-hover text-on-primary font-black text-lg shadow-[0_20px_40px_#4F46E94D] transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-4 group"
+                                                className="px-10 py-4 bg-white hover:bg-white/90 text-primary font-black text-lg shadow-[0_20px_40px_#00000033] transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-4 group"
                                             >
                                                 <span>ابدأ رحلتك الآن</span>
                                                 <ArrowLeft size={20} className="group-hover:-translate-x-2 transition-transform" />
@@ -281,7 +281,7 @@ export const About = () => {
                                             <Link
                                                 to="/login"
                                                 onClick={() => window.scrollTo(0, 0)}
-                                                className="px-10 py-4 bg-white/5 hover:bg-white/10 text-on-primary font-black text-lg border border-white/10 hover:border-white/30 transition-all duration-500 flex items-center justify-center group"
+                                                className="px-10 py-4 bg-white/15 hover:bg-white/25 text-on-primary font-black text-lg border border-white/20 hover:border-white/40 transition-all duration-500 flex items-center justify-center group"
                                             >
                                                 <span>تسجيل الدخول</span>
                                             </Link>
@@ -313,7 +313,7 @@ export const About = () => {
                                                         <Target size={24} />
                                                     </div>
                                                     <span className="text-3xl md:text-4xl font-black text-on-primary mb-1 block tracking-tight">100%</span>
-                                                    <span className="text-[10px] md:text-[11px] text-warning/80 font-black">نسبة نجاح</span>
+                                                    <span className="text-[10px] md:text-[11px] text-on-primary/80 font-black">نسبة نجاح</span>
                                                 </div>
 
                                                 <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-warning/10 rounded-full blur-2xl group-hover/card:bg-warning/20 transition-all"></div>
