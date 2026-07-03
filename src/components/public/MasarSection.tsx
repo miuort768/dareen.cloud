@@ -9,6 +9,8 @@ export const MasarSection = () => {
         <>
             {/* ─── Desktop version ─── */}
             <section className="hidden md:block py-4 bg-white dark:bg-background relative overflow-hidden transition-colors duration-500">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -66,8 +68,8 @@ export const MasarSection = () => {
             {/* ─── Mobile version ─── */}
             <section className="block md:hidden relative overflow-hidden bg-background dark:bg-background pt-3 pb-4">
                 {/* Decorative blobs */}
-                <div className="absolute top-20 -right-20 w-60 h-60 bg-primary/15 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -left-20 w-72 h-72 bg-info/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-20 -right-20 w-60 h-60 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-4">
                     {/* Hero Banner Image */}
@@ -86,7 +88,7 @@ export const MasarSection = () => {
                             <h2 className="text-main dark:text-on-primary text-lg font-black">بوابة الكتب والملخصات</h2>
                             <p className="text-muted dark:text-on-primary/70 text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
-                        <div className="w-10 h-10 rounded-2xl bg-primary-soft dark:bg-primary-active/30 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
                             <Download size={20} className="text-primary dark:text-primary" />
                         </div>
                     </div>
@@ -99,11 +101,11 @@ export const MasarSection = () => {
                                 <span className="text-on-primary font-black text-sm">مركز دارين</span>
                                 <div className="absolute -bottom-1 right-0 w-full h-0.5 bg-white/80 rounded-full shadow-sm"></div>
                             </div>
-                            <span className="text-on-primary/50 font-medium text-sm">للمذكرات التعليمية</span>
+                            <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary text-[10px] font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
                         </div>
 
                         {/* Description */}
-                        <p className="text-on-primary/80 text-[13px] leading-relaxed mb-6 font-medium">
+                        <p className="text-on-primary text-[12px] leading-relaxed mb-6 font-medium">
                             حصريًا في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                         </p>
 

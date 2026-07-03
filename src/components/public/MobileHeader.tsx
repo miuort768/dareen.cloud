@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, LogIn, Sun, Moon, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
+import { Menu, X, GraduationCap, LogIn, Sun, Monitor, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 
@@ -29,7 +29,7 @@ export const MobileHeader = () => {
             <GraduationCap className="w-6 h-6 text-on-primary relative z-10" />
           </div>
           <div>
-            <p className="text-[15px] font-black text-primary dark:text-primary leading-tight">دارين السابعة</p>
+            <p className="text-[17px] font-black text-main dark:text-on-primary leading-tight">دارين السابعة</p>
             <p className="text-[9px] font-bold leading-tight text-primary dark:text-primary">أفضل مدرسة افتراضية</p>
             <p className="text-[7px] text-primary dark:text-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
@@ -37,7 +37,7 @@ export const MobileHeader = () => {
         </div>
         <div className="flex items-center gap-1">
           <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0">
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Moon className="w-4 h-4 text-primary" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Monitor className="w-4 h-4 text-primary" />}
           </button>
           <div className="relative">
           <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center">

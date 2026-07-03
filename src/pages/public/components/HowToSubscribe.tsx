@@ -43,8 +43,8 @@ export const HowToSubscribe = () => {
     return (
         <section className="relative overflow-hidden bg-white dark:bg-card rounded-3xl shadow-inner">
             {/* Soft glow background */}
-            <div className="absolute top-20 -right-20 w-60 h-60 bg-primary opacity-10 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary opacity-10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-20 -right-20 w-60 h-60 bg-accent/10 dark:bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
@@ -98,7 +98,7 @@ export const HowToSubscribe = () => {
                 {/* Mobile perks list under cards */}
                 <div className="md:hidden space-y-3 mb-6 px-1">
                     {[
-                        { icon: 'CreditCard', title: 'الدفع', desc: 'بوسائل دفع محلية مناسبة' },
+                        { icon: 'CreditCard', title: 'الدفع وتحصيل الاشتراك', desc: 'بوسائل دفع محلية مناسبة' },
                         { icon: 'Clock', title: 'مواعيد مرنة', desc: 'في الوقت المناسب لك' },
                         { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
                     ].map((item, i) => (
@@ -121,7 +121,7 @@ export const HowToSubscribe = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl shadow-lg hover:brightness-110 hover:-translate-y-0.5 transition-all group"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
                 >
                     <Gift size={16} className="text-on-primary opacity-90" />
                     <span className="text-on-primary text-[13px] font-black">احجز حصتك المجانية الآن</span>

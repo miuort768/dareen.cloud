@@ -4,6 +4,8 @@ import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 export const FAQSection = () => {
     return (
         <section className="py-4 md:py-6 bg-surface dark:bg-background relative overflow-hidden transition-colors duration-500" id="faq">
+            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] dark:opacity-[0.02]">
                 <svg className="w-full h-full" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -32,11 +34,11 @@ export const FAQSection = () => {
             </div>
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-8">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary-active/50 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary" />
-                        <span className="text-[9px] font-black  text-muted dark:text-dim">لديك استفسار؟</span>
+                        <span className="text-[9px] font-black text-muted dark:text-on-primary/70">لديك استفسار؟</span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-main dark:text-on-primary mb-3 font-heading">
+                    <h2 className="text-2xl md:text-3xl font-black text-main mb-3 font-heading">
                         الأسئلة <span className="text-primary">الشائعة</span>
                     </h2>
                     <div className="h-1 w-16 bg-warning mx-auto rounded-full"></div>
@@ -84,12 +86,12 @@ export const FAQSection = () => {
                                         <h3 className="text-xs md:text-sm font-black text-main dark:text-on-primary group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                             {item.q}
                                         </h3>
-                                        <span className="w-6 h-6 rounded-full bg-surface flex items-center justify-center transform group-open:rotate-180 transition-all duration-300">
-                                            <ChevronDown size={14} className="text-muted" />
+                                        <span className="w-6 h-6 rounded-full bg-primary-soft dark:bg-primary/30 border border-border flex items-center justify-center transform group-open:rotate-180 transition-all duration-300">
+                                            <ChevronDown size={14} className="text-primary dark:text-on-primary" />
                                         </span>
                                     </summary>
                                     <div className="px-4 pb-4 pt-0">
-                                        <div className="h-px w-full bg-gradient-to-r from-[var(--bg-primary)]/10 via-[var(--bg-surface)] dark:via-[var(--bg-primary-active)] to-transparent mb-3"></div>
+                                        <div className="h-px w-full bg-gradient-to-r from-[var(--bg-primary)]/10 via-[var(--bg-surface)] dark:via-[var(--bg-primary)] to-transparent mb-3"></div>
                                         <p className="text-[10px] md:text-xs text-main dark:text-on-primary leading-relaxed font-medium">
                                             {item.a}
                                         </p>

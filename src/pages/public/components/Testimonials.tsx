@@ -17,8 +17,8 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
     return (
         <section className="py-4 md:py-6 bg-white dark:bg-card relative overflow-hidden transition-colors duration-500">
 
-            <div className="absolute top-0 left-0 w-48 h-48 bg-primary opacity-5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary opacity-5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-6">

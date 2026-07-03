@@ -122,12 +122,12 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-soft to-primary-light dark:from-primary-active/30 dark:to-primary-active/50 border border-border overflow-hidden group cursor-pointer">
-                            <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-shine-slow z-0"></div>
+                        <div onClick={() => navigate('/developer')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-hover dark:from-primary dark:to-primary-hover border border-primary-active overflow-hidden group cursor-pointer">
+                            <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-on-primary/10 to-transparent animate-shine-slow z-0"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                            <span className="relative z-10 text-[10px] font-bold text-muted tracking-wide font-heading">تصميم وتطوير</span>
-                            <span className="relative z-10 text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent group-hover:from-primary group-hover:to-accent-hover transition-colors font-heading">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-[10px] font-bold text-on-primary/80 tracking-wide font-heading">تصميم وتطوير</span>
+                            <span className="relative z-10 text-[10px] font-black text-on-primary font-heading">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
                         </div>
                     </div>

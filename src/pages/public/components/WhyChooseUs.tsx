@@ -31,10 +31,10 @@ const featureIcons = [ShieldCheck, Lightbulb, Heart];
 export const WhyChooseUs = () => {
   return (
     <section className="relative overflow-hidden bg-white dark:bg-card pt-4 md:pt-10 pb-0">
-      {/* Background decorative blobs */}
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary opacity-10 dark:opacity-5 rounded-full blur-[100px]" />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary opacity-10 dark:opacity-5 rounded-full blur-[100px]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary opacity-5 dark:opacity-5 rounded-full blur-[120px]" />
+      {/* Neon glow decorations */}
+      <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/3 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
@@ -57,7 +57,7 @@ export const WhyChooseUs = () => {
             const Icon = featureIcons[i];
             const vc = variantClasses[f.variant];
             return (
-              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative flex items-center gap-4 p-4 bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm rounded-2xl border border-border shadow-sm">
+              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative flex items-center gap-4 p-4 bg-white/80 dark:bg-primary/80 backdrop-blur-sm rounded-2xl border border-border shadow-sm">
                 {f.ribbon && (
                   <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
@@ -91,7 +91,7 @@ export const WhyChooseUs = () => {
                 href="https://wa.me/96500000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-[11px] font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
+                className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-[11px] font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
               >
                 ابدأ رحلة التميز الآن
                 <ArrowLeft size={14} />

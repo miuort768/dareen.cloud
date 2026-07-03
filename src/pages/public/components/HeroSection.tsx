@@ -10,6 +10,8 @@ interface HeroSectionProps {
 export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: HeroSectionProps) => {
     return (
         <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-white dark:bg-card">
+            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary-soft via-primary-soft to-card dark:from-card dark:via-card dark:to-card rounded-2xl shadow-sm border border-primary/30 dark:border-border overflow-hidden">
                     <div className="flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6 p-6 md:p-10">
@@ -32,14 +34,24 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary font-bold text-base sm:text-lg shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary font-bold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     aria-label="تصفح الدورات التعليمية"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <button
-                                    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                                    onClick={() => {
+                                        const el = document.getElementById('how-it-works');
+                                        if (el) {
+                                            el.scrollIntoView({ behavior: 'smooth' });
+                                        } else {
+                                            // Fallback if element not yet in DOM
+                                            setTimeout(() => {
+                                                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                                            }, 300);
+                                        }
+                                    }}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-surface text-main border border-border font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
                                     aria-label="شاهد دليل الاستخدام"
                                 >

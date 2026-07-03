@@ -153,7 +153,7 @@ export const Home = () => {
         </div>
 
         {/* Hero Carousel */}
-        <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[var(--bg-primary-active)] dark:via-[var(--bg-primary-active)] dark:to-[var(--bg-background)] rounded-2xl overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
+        <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-2xl overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
           {heroSlides.map((slide, i) => (
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">

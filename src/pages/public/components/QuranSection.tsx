@@ -30,6 +30,8 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
         <>
             {/* Desktop version */}
             <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-white dark:bg-card transition-colors duration-500">
+                <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <div className="max-w-6xl mx-auto bg-success-soft dark:bg-card border border-success dark:border-success rounded-2xl shadow-sm overflow-hidden">
                         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center p-6 md:p-10">
@@ -131,8 +133,8 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
-                <div className="absolute top-40 -left-20 w-64 h-64 bg-success opacity-10 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-primary opacity-10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-40 -left-20 w-64 h-64 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-5">
                     {/* Badge */}
@@ -159,7 +161,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-muted text-sm leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
+                    <p className="text-muted text-xs leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
                         منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                     </p>
 

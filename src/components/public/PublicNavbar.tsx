@@ -94,8 +94,8 @@ export const PublicNavbar = () => {
                                 key={item.path}
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-primary)] text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
-                                    : 'text-muted dark:text-dim hover:bg-white dark:hover:bg-primary-active hover:text-primary'
+                                    ? 'bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
+                                    : 'text-muted dark:text-on-primary/70 hover:bg-primary-soft dark:hover:bg-primary hover:text-primary'
                                     }`}
                             >
                                 {item.name}
