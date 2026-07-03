@@ -28,21 +28,21 @@ export const PrivacyPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)]/30 dark:to-[var(--bg-card)] md:bg-white dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-primary md:bg-white dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-info/5 dark:bg-info/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-gold/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 md:bg-primary-soft/60 dark:md:bg-primary/10 backdrop-blur-sm border border-primary/50 md:border-primary dark:md:border-primary/20 rounded-full mb-3">
-                        <Sparkles size={12} className="text-primary dark:text-primary" />
-                        <span className="text-[9px] md:text-[10px] font-black text-primary dark:text-primary">سياسة الخصوصية</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 md:bg-primary-soft/60 backdrop-blur-sm border border-white/20 md:border-primary rounded-full mb-3">
+                        <Sparkles size={12} className="text-on-primary md:text-primary" />
+                        <span className="text-[9px] md:text-[10px] font-black text-on-primary md:text-primary">سياسة الخصوصية</span>
                     </div>
 
-                    <h1 className="text-[18px] md:text-5xl font-black text-main md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
-                        حماية <span className="text-info inline-block py-1">بياناتك</span> أولويتنا
+                    <h1 className="text-[18px] md:text-5xl font-black text-on-primary md:text-main mb-1 md:mb-3 leading-tight font-heading">
+                        حماية <span className="text-warning inline-block py-1">بياناتك</span> أولويتنا
                     </h1>
 
-                    <p className="text-[9px] md:text-lg text-muted md:text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[9px] md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
                         نلتزم في دارين السابعة بحماية خصوصيتك وأمان معلوماتك الشخصية
                     </p>
                 </div>
