@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const PrivacyPolicy = () => {
     const { adminPhone } = useSettingsStore();
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-dim">
+        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main">
             <SEO
                 title="سياسة الخصوصية والأمان | دارين السابعة"
                 description="سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد. نضمن حماية بيانات الطلاب وأولياء الأمور والمعلمين وفق أعلى معايير الأمان والخصوصية."
@@ -28,7 +28,7 @@ export const PrivacyPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from--[var(--bg-primary)] via--[var(--bg-primary)] to-white dark:from--[var(--bg-primary)] dark:via--[var(--bg-primary)]/30 dark:to-[var(--bg-primary-active)] md:bg-white dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)]/30 dark:to-[var(--bg-card)] md:bg-white dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-info/5 dark:bg-info/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-gold/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
@@ -38,8 +38,8 @@ export const PrivacyPolicy = () => {
                         <span className="text-[9px] md:text-[10px] font-black text-primary dark:text-primary">سياسة الخصوصية</span>
                     </div>
 
-                    <h1 className="text-[18px] md:text-5xl font-black text-primary md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
-                        حماية <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-info)] to--[var(--bg-info)] inline-block py-1">بياناتك</span> أولويتنا
+                    <h1 className="text-[18px] md:text-5xl font-black text-main md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
+                        حماية <span className="text-info inline-block py-1">بياناتك</span> أولويتنا
                     </h1>
 
                     <p className="text-[9px] md:text-lg text-muted md:text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
@@ -70,7 +70,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Collection */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-success-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-none flex items-center justify-center shrink-0">
                                 <Database className="w-6 h-6 text-success" />
                             </div>
                             <div>
@@ -111,7 +111,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Usage */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary/10 rounded-none flex items-center justify-center shrink-0">
                                 <Eye className="w-6 h-6 text-primary" />
                             </div>
                             <div>
@@ -135,7 +135,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Protection */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-error-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-none flex items-center justify-center shrink-0">
                                 <Lock className="w-6 h-6 text-error" />
                             </div>
                             <div>
@@ -157,7 +157,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Sharing */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-warning-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-warning-light dark:bg-warning/30 rounded-none flex items-center justify-center shrink-0">
                                 <UserCheck className="w-6 h-6 text-warning" />
                             </div>
                             <div>
@@ -177,7 +177,7 @@ export const PrivacyPolicy = () => {
 
                     {/* User Rights */}
                     <div className="mb-4">
-                        <div className="bg-background dark:bg-primary-active/50 border border-border dark:border-border p-8 rounded-none">
+                        <div className="bg-background dark:bg-card/50 border border-border dark:border-border p-8 rounded-none">
                             <h2 className="text-2xl font-black text-main dark:text-on-primary mb-4">حقوقك</h2>
                             <div className="space-y-2 text-muted dark:text-muted text-[9px] md:text-sm">
                                 <p>لديك الحق في:</p>
@@ -205,19 +205,19 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-primary)] to--[var(--bg-primary)] border border-primary mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-primary/20">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-primary border border-primary/20 mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-primary/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-primary mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <p className="text-on-primary/80 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-primary text-on-primary px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-primary-hover transition-all group relative overflow-hidden shadow-lg border border-white/20"
+                                className="inline-flex items-center justify-center gap-4 bg-white text-primary hover:bg-white/90 px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
