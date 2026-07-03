@@ -127,7 +127,7 @@ export const DeveloperProfile = () => {
                     transition={{ delay: 0.3 }}
                     className="space-y-4"
                 >
-                    <h2 className="text-lg font-black text-main dark:text-main">القيم</h2>
+                    <h2 className="text-xl font-black text-main dark:text-main">القيم</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {values.map((v, i) => {
                             const Icon = v.icon;
