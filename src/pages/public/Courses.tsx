@@ -108,9 +108,7 @@ export const Courses = () => {
                         </div>
                         </AnimateOnScroll>
 
-                        <AnimateOnScroll animation="fadeUp">
-                        <div className="max-w-4xl mx-auto mb-10"
-                        >
+                        <div className="max-w-4xl mx-auto mb-10">
             <div className="relative group">
               <input
                 type="text"
@@ -127,19 +125,20 @@ export const Courses = () => {
                 <button
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-black text-xs transition-all duration-300 ${
+                  className={`cursor-pointer flex items-center gap-2 px-4 py-2.5 rounded-xl font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
                       ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-lg shadow-card/20 dark:shadow-[0_0_14px_rgba(99,102,241,0.2)]'
                       : 'bg-white dark:bg-card/50 text-muted dark:text-muted border border-border dark:border-border/50 hover:border-border/20 dark:hover:border-border/20 hover:text-main dark:hover:text-dim'
                   }`}
                 >
-                  <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-main' : cat.color} />
-                  <span>{cat.label}</span>
+                  <span className="pointer-events-none flex items-center gap-2">
+                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-main' : cat.color} />
+                    <span>{cat.label}</span>
+                  </span>
                 </button>
               ))}
                         </div>
                             </div>
-                    </AnimateOnScroll>
 
           {filteredCourses.length > 0 ? (
             <motion.div
