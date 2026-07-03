@@ -26,6 +26,7 @@ export const DeveloperProfile = () => {
         { icon: Star, title: 'الفائدة', desc: 'كل دقيقة بتفرق' },
         { icon: Code, title: 'الابتكار', desc: 'نفكر خارج الصندوق' },
         { icon: Heart, title: 'خدمة الطالب وولي الأمر', desc: 'هم الأساس' },
+        { icon: Target, title: 'التميز', desc: 'نسعى للأفضل دائماً' },
     ];
 
     return (
@@ -34,7 +35,7 @@ export const DeveloperProfile = () => {
             {/* Mobile Header (same as Home) */}
             <MobileHeader />
 
-            <div className="max-w-4xl mx-auto px-4 pt-28 md:pt-36 pb-4 space-y-6">
+            <div className="max-w-4xl mx-auto px-4 pt-4 md:pt-36 pb-4 space-y-6">
 
                 {/* ═══════════════ HERO ═══════════════ */}
                 <motion.div
@@ -136,6 +137,7 @@ export const DeveloperProfile = () => {
                                 'bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)]',
                                 'bg-gradient-to-br from-[var(--bg-info)] to-[var(--bg-info)]',
                                 'bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)]',
+                                'bg-gradient-to-br from-[var(--bg-accent)] to-[var(--bg-accent)]',
                             ];
                             return (
                                 <div
