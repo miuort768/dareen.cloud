@@ -131,7 +131,7 @@ export const MonthlyClosing: React.FC = () => {
             const isLow = remaining <= 2;
             let waLink = '';
             if (student.parentPhone) {
-                const msg = `ÊÐßíÑ ãä ÏÇÑíä ÇáÓÇÈÚÉ: ÇáãÊÈÞí Ýí ÑÕíÏ ÇáØÇáÈ ${student.name} Ýí ãÇÏÉ ${enroll.subject} åæ ${remaining} ÍÕÕ ÝÞØ. íÑÌì ÇáÊÌÏíÏ áÖãÇä ÇÓÊãÑÇÑ ÇáãæÇÚíÏ.`;
+                const msg = `ØªÙ†Ø¨ÙŠÙ‡ ØªØ¬Ø¯ÙŠØ¯ Ø§Ù„Ø¨Ø§Ù‚Ø©: ÙŠØªØ¨Ù‚Ù‰ Ù„Ù„Ø·Ø§Ù„Ø¨ ${student.name} ÙÙŠ Ù…Ø§Ø¯Ø© ${enroll.subject} ${remaining} Ø¬Ù„Ø³Ø§Øª ÙÙ‚Ø·. ÙŠØ±Ø¬Ù‰ Ø§Ù„ØªÙˆØ§ØµÙ„ Ù„Ù„ØªØ¬Ø¯ÙŠØ¯.`;
                 waLink = `https://wa.me/${student.parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
             }
             return { studentName: student.name, phone: student.parentPhone || '', subject: enroll.subject, remaining, total: enroll.sessionsTotal, isLow, waLink };
@@ -157,8 +157,8 @@ export const MonthlyClosing: React.FC = () => {
                             <ActivityIcon size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-on-primary leading-tight">ÊÞÝíá ÇáÍÓÇÈÇÊ æÇáÃäÔØÉ ÇáãÇáíÉ</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">ÇáÊÍáíá ÇáãÇáí æÇáÎÊÇãí ááÝÊÑÉ ÇáÍÇáíÉ</p>
+                            <h1 className="text-lg font-bold text-on-primary leading-tight">Ø§Ù„ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø´Ù‡Ø±ÙŠ ÙˆØ§Ù„Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ù…Ø§Ù„ÙŠ</h1>
+                            <p className="text-[10px] font-bold text-white/70 mt-0.5">ØªØ­Ù„ÙŠÙ„ Ø§Ù„Ø£Ø¯Ø§Ø¡ Ø§Ù„Ù…Ø§Ù„ÙŠ ÙˆØ§Ù„Ø¥Ø¯Ø§Ø±ÙŠ Ù„Ù„Ø´Ù‡Ø± Ø§Ù„Ø­Ø§Ù„ÙŠ</p>
                         </div>
                     </div>
 
@@ -181,7 +181,7 @@ export const MonthlyClosing: React.FC = () => {
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
-                            <span className="text-[9px] text-white/50">?</span>
+                            <span className="text-[9px] text-white/50">Ø¥Ù„Ù‰</span>
                             <input
                                 type="date"
                                 className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none cursor-pointer w-24"
@@ -190,58 +190,57 @@ export const MonthlyClosing: React.FC = () => {
                             />
                         </div>
 
-                        <button onClick={handleRefresh} className="p-1.5 rounded-xl bg-white/15 backdrop-blur-sm hover:bg-white/30 transition-colors" aria-label="ÊÍÏíË">
+                        <button onClick={handleRefresh} className="p-1.5 rounded-xl bg-white/15 backdrop-blur-sm hover:bg-white/30 transition-colors" aria-label="ØªØ­Ø¯ÙŠØ«">
                             <RefreshCw size={14} className="text-on-primary" />
                         </button>
 
                         <PrimaryBtn onClick={() => window.print()}>
                             <Printer size={14} />
-                            ØÈÇÚÉ
-                        </PrimaryBtn>
+                            Ø·Ø¨Ø§Ø¹Ø©                        </PrimaryBtn>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <StatItem
-                        title="ÕÇÝí ÇáÑÈÍ ÇáãÊæÞÚ"
+                        title="ØµØ§ÙÙŠ Ø§Ù„Ø±Ø¨Ø­ Ø§Ù„Ù…ØªÙˆÙ‚Ø¹"
                         value={netProjectedProfit.toLocaleString()}
                         icon={TrendingUp}
                         color="#6C4BFF"
-                        subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% åÇãÔ ÑÈÍ`}
+                        subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% Ù‡Ø§Ù…Ø´ Ø±Ø¨Ø­`}
                     />
                     <StatItem
-                        title="ÇáÊÍÕíáÇÊ ÇáäÞÏíÉ"
+                        title="Ø§Ù„ØªØ­ØµÙŠÙ„Ø§Øª Ø§Ù„ÙØ¹Ù„ÙŠØ©"
                         value={totalActualCollections.toLocaleString()}
                         icon={Wallet}
                         color="#10B981"
-                        subValue={`ÕÇÝí ÇáÓíæáÉ: ${netActualCashFlow.toLocaleString()}`}
+                        subValue={`ØµØ§ÙÙŠ Ø§Ù„ØªØ¯ÙÙ‚: ${netActualCashFlow.toLocaleString()}`}
                     />
                     <StatItem
-                        title="ÑæÇÊÈ ÇáãÚáãÇÊ"
+                        title="Ø±ÙˆØ§ØªØ¨ Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª"
                         value={totalTeacherPayout.toLocaleString()}
                         icon={ArrowDownRight}
                         color="#F43F5E"
-                        subValue={`${payrollData.length} ãÚáãÉ äÔØÉ`}
+                        subValue={`${payrollData.length} Ù…Ø¹Ù„Ù…Ø© Ù…Ø³Ø¬Ù„Ø©`}
                     />
                     <StatItem
-                        title="ÅÌãÇáí ÇáäÔÇØ"
+                        title="Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø¬Ù„Ø³Ø§Øª"
                         value={filteredSessions.length}
                         icon={ActivityIcon}
                         color="#F59E0B"
-                        subValue="ÍÕÉ ÊÚáíãíÉ ãäÝÐÉ"
+                        subValue="ÙƒÙ„ Ø§Ù„Ø¬Ù„Ø³Ø§Øª Ø§Ù„Ù…ÙƒØªÙ…Ù„Ø©"
                     />
                 </div>
 
                 <div className="px-0 mb-4">
                     <div className="bg-white dark:bg-primary-active rounded-2xl border border-border/50 dark:border-border/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm">
                         {[
-                            { id: 'payroll', label: 'ÇáÑæÇÊÈ', icon: Receipt },
-                            { id: 'collections', label: 'ÇáÊÍÕíáÇÊ', icon: Wallet },
-                            { id: 'renewals', label: 'ÇáÊÌÏíÏÇÊ', icon: AlertCircle },
-                            { id: 'analysis', label: 'ÊÍáíá ÇáãæÇÏ', icon: BarChart3 },
-                            { id: 'teachers', label: 'ÃÏÇÁ ÇáåíÆÉ', icon: Users },
-                            { id: 'compensation', label: 'ÇáÊÚæíÖÇÊ', icon: RefreshCw },
-                            { id: 'summary', label: 'ÇáãáÎÕ', icon: TrendingUp }
+                            { id: 'payroll', label: 'Ø§Ù„Ø±ÙˆØ§ØªØ¨', icon: Receipt },
+                            { id: 'collections', label: 'Ø§Ù„ØªØ­ØµÙŠÙ„Ø§Øª', icon: Wallet },
+                            { id: 'renewals', label: 'Ø§Ù„ØªØ¬Ø¯ÙŠØ¯Ø§Øª', icon: AlertCircle },
+                            { id: 'analysis', label: 'ØªØ­Ù„ÙŠÙ„ Ø§Ù„Ù…ÙˆØ§Ø¯', icon: BarChart3 },
+                            { id: 'teachers', label: 'Ø£Ø¯Ø§Ø¡ Ø§Ù„Ù…Ø¹Ù„Ù…Ø§Øª', icon: Users },
+                            { id: 'compensation', label: 'Ø§Ù„ØªØ¹ÙˆÙŠØ¶Ø§Øª', icon: RefreshCw },
+                            { id: 'summary', label: 'Ø§Ù„Ù…Ù„Ø®Øµ', icon: TrendingUp }
                         ].map(tab => (
                             <button
                                 key={tab.id}

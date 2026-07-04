@@ -31,10 +31,10 @@ const statusTextColor: Record<string, string> = {
 };
 
 const statusLabels: Record<string, string> = {
-  pending: 'Þํฯ วแวไสูวั',
-  completed: 'สใส',
-  cancelled: 'ใแÛํษ',
-  converted: 'สใ วแสำฬํแ'
+  pending: 'ููุฏ ุงูุงูุชุธุงุฑ',
+  completed: 'ุชู…',
+  cancelled: 'ู…ูุบู',
+  converted: 'ุชู… ุงูุชุญููู'
 };
 
 export const TrialSessions = () => {
@@ -64,19 +64,19 @@ export const TrialSessions = () => {
   const addMutation = useMutation({
     mutationFn: (data: Record<string, unknown>) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); },
-    onError: (err: Error) => alert('อฯห ฮุร รหไวม อÝู วแฬแำษ: ' + err.message)
+    onError: (err: Error) => alert('ุญุฏุซ ุฎุทุฃ ูู ุฅุถุงูุฉ ุงูุญุตุฉ: ' + err.message)
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/trial-sessions/${id}`),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); },
-    onError: (err: Error) => alert('อฯห ฮุร รหไวม วแอะÝ: ' + err.message)
+    onError: (err: Error) => alert('ุญุฏุซ ุฎุทุฃ ูู ุงูุญุฐู: ' + err.message)
   });
 
   const convertMutation = useMutation({
     mutationFn: (id: string) => api.post(`/trial-sessions/${id}/convert`),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); },
-    onError: (err: Error) => alert('อฯห ฮุร รหไวม สอๆํแ วแฬแำษ: ' + err.message)
+    onError: (err: Error) => alert('ุญุฏุซ ุฎุทุฃ ูู ุชุญููู ุงูุนู…ูู: ' + err.message)
   });
 
   useEffect(() => {
@@ -120,22 +120,22 @@ export const TrialSessions = () => {
               <BookOpen size={22} className="text-on-primary" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-on-primary leading-tight">ฬแำวส วแใัวฬฺษ</h1>
-              <p className="text-[10px] font-bold text-on-primary opacity-70 mt-0.5">สำฬํแ ๆใสวศฺษ ฬแำวส วแุแวศ Ûํั วแใÞํฯํไ</p>
+              <h1 className="text-lg font-bold text-on-primary leading-tight">ุงูุญุตุต ุงูุชุฌุฑูุจูุฉ</h1>
+              <p className="text-[10px] font-bold text-on-primary opacity-70 mt-0.5">ุฅุฏุงุฑุฉ ุงูุญุตุต ุงูุชุฌุฑูุจูุฉ ููุทูุงุจ ุงูุฌุฏุฏ</p>
             </div>
           </div>
           <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm border border-white/20 text-on-primary text-[11px] font-bold rounded-xl hover:bg-white/25 transition-all shadow-sm active:scale-95">
-            <Plus size={14} /> ฬแำษ ใัวฬฺษ
+            <Plus size={14} /> ุฅุถุงูุฉ ุญุตุฉ
           </button>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { title: 'วแลฬใวแํ', value: stats?.total || 0, icon: BookOpen, bg: 'bg-primary' },
-            { title: 'สใส', value: stats?.completed || 0, icon: CheckCircle2, bg: 'bg-success' },
-            { title: 'Þํฯ วแวไสูวั', value: stats?.pending || 0, icon: Clock, bg: 'bg-warning' },
-            { title: 'ใแÛํษ', value: stats?.cancelled || 0, icon: X, bg: 'bg-error' },
+            { title: 'ุงูุฅุฌู…ุงูู', value: stats?.total || 0, icon: BookOpen, bg: 'bg-primary' },
+            { title: 'ุชู…', value: stats?.completed || 0, icon: CheckCircle2, bg: 'bg-success' },
+            { title: 'ููุฏ ุงูุงูุชุธุงุฑ', value: stats?.pending || 0, icon: Clock, bg: 'bg-warning' },
+            { title: 'ู…ูุบู', value: stats?.cancelled || 0, icon: X, bg: 'bg-error' },
           ].map(s => (
             <div key={s.title} className={cn('flex items-center gap-3 p-4 rounded-2xl shadow-sm', s.bg)}>
               <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
@@ -154,14 +154,14 @@ export const TrialSessions = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="วศอห ศวำใ วแุวแศ รๆ ัÞใ ๆแํ วแรใั..." className="w-full pr-9 pl-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ุงุจุญุซ ุจุงุณู… ุงูุทุงูุจ ุฃู ุฑูู… ุงููุงุชู..." className="w-full pr-9 pl-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
             </div>
             <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-[11px] font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all">
-              <option value="">ฬใํฺ วแอวแวส</option>
-              <option value="pending">Þํฯ วแวไสูวั</option>
-              <option value="completed">สใส</option>
-              <option value="cancelled">ใแÛํษ</option>
-              <option value="converted">สใ วแสำฬํแ</option>
+              <option value="">ูู ุงูุญุงูุงุช</option>
+              <option value="pending">ููุฏ ุงูุงูุชุธุงุฑ</option>
+              <option value="completed">ุชู…</option>
+              <option value="cancelled">ู…ูุบู</option>
+              <option value="converted">ุชู… ุงูุชุญููู</option>
             </select>
           </div>
         </div>
@@ -170,7 +170,7 @@ export const TrialSessions = () => {
         {filtered.length === 0 ? (
           <div className="text-center py-16 bg-card border border-dashed border-border rounded-2xl">
             <BookOpen size={32} className="mx-auto mb-3 text-dim" />
-            <p className="text-xs font-bold text-dim">แว สๆฬฯ ฬแำวส ใัวฬฺษ</p>
+            <p className="text-xs font-bold text-dim">ูุง ุชูุฌุฏ ุญุตุต ุชุฌุฑูุจูุฉ</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -184,7 +184,7 @@ export const TrialSessions = () => {
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary">
-                      {t.studentName?.charAt(0) || 'ุ'}
+                      {t.studentName?.charAt(0) || 'ุท'}
                     </div>
                     <div>
                       <h3 className="text-xs font-bold text-main leading-tight">{t.studentName}</h3>
@@ -193,10 +193,10 @@ export const TrialSessions = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     {t.status === 'pending' && (
-                      <button onClick={() => convertMutation.mutate(t.id)} disabled={convertMutation.isPending} className="w-7 h-7 flex items-center justify-center bg-info-soft text-info hover:brightness-90 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="สอๆํแ แุวแศ ใÞํฯ"><ArrowLeftRight size={13} /></button>
+                      <button onClick={() => convertMutation.mutate(t.id)} disabled={convertMutation.isPending} className="w-7 h-7 flex items-center justify-center bg-info-soft text-info hover:brightness-90 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="ุชุญููู ุฅูู ุทุงูุจ"><ArrowLeftRight size={13} /></button>
                     )}
-                    <button onClick={() => openEdit(t)} className="w-7 h-7 flex items-center justify-center bg-hover text-dim hover:brightness-90 transition-all rounded-xl" aria-label="สฺฯํแ"><X size={13} className="rotate-45" /></button>
-                    <button onClick={() => setConfirmId(t.id)} className="w-7 h-7 flex items-center justify-center bg-error-soft text-error hover:brightness-90 transition-all rounded-xl" aria-label="อะÝ"><Trash size={13} /></button>
+                    <button onClick={() => openEdit(t)} className="w-7 h-7 flex items-center justify-center bg-hover text-dim hover:brightness-90 transition-all rounded-xl" aria-label="ุชุนุฏูู"><X size={13} className="rotate-45" /></button>
+                    <button onClick={() => setConfirmId(t.id)} className="w-7 h-7 flex items-center justify-center bg-error-soft text-error hover:brightness-90 transition-all rounded-xl" aria-label="ุญุฐู"><Trash size={13} /></button>
                   </div>
                 </div>
                 <div className="px-4 py-3">
@@ -230,7 +230,7 @@ export const TrialSessions = () => {
                   </div>
                   {t.notes && (
                     <div className="mt-3 bg-warning-soft border border-warning px-3 py-1.5 rounded-xl">
-                      <span className="text-[8px] font-bold text-warning-dark tracking-widest ml-1.5">ใแวอูวส</span>
+                      <span className="text-[8px] font-bold text-warning-dark tracking-widest ml-1.5">ู…ูุงุญุธุงุช</span>
                       <span className="text-[11px] font-medium text-main">{t.notes}</span>
                     </div>
                   )}
@@ -245,30 +245,30 @@ export const TrialSessions = () => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-xl w-full max-w-lg border border-border rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
               <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] px-5 py-4 flex items-center justify-between">
-                <h3 className="text-sm font-bold text-on-primary">{editingId ? 'สฺฯํแ ฬแำษ ใัวฬฺษ' : 'ลึวÝษ ฬแำษ ใัวฬฺษ'}</h3>
-                <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="w-7 h-7 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-xl transition-all" aria-label="ลÛแวÞ"><X size={16} /></button>
+                <h3 className="text-sm font-bold text-on-primary">{editingId ? 'ุชุนุฏูู ุงูุญุตุฉ' : 'ุฅุถุงูุฉ ุญุตุฉ ุฌุฏูุฏุฉ'}</h3>
+                <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="w-7 h-7 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-xl transition-all" aria-label="ุฅุบูุงู"><X size={16} /></button>
               </div>
               <form onSubmit={e => { e.preventDefault(); addMutation.mutate(form); }} className="p-5 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">วำใ วแุวแศ</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ัÞใ ๆแํ วแรใั</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">วแใวฯษ</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">วแใฺแใษ</label>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุงุณู… ุงูุทุงูุจ</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุฑูู… ููู ุงูุฃู…ุฑ</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุงูู…ุงุฏุฉ</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุงูู…ุนูู…ุฉ</label>
                     <select value={form.teacherName} onChange={e => {
                       const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
                       setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
                     }} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all appearance-none">
-                      <option value="">วฮสั ใฺแใษ</option>
+                      <option value="">ุงุฎุชุฑ ู…ุนูู…ุฉ</option>
                       {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
                         <option key={t.id} value={t.name}>{t.name}</option>
                       ))}
                     </select>
                   </div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">วแสวัํฮ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">วแๆÞส</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุงูุชุงุฑูุฎ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ุงูููุช</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
                 </div>
-                <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ใแวอูวส</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xs font-bold rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'ฬวัํ วแอÝู...' : editingId ? 'สอฯํห' : 'ลึวÝษ ฬแำษ ใัวฬฺษ'}</button>
+                <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ู…ูุงุญุธุงุช</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xs font-bold rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'ุฌุงุฑู ุงูุญูุธ...' : editingId ? 'ุชุญุฏูุซ' : 'ุฅุชู…ุงู… ุงูุฅุถุงูุฉ'}</button>
               </form>
             </motion.div>
           </motion.div>
@@ -282,14 +282,14 @@ export const TrialSessions = () => {
                 <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
                   <AlertTriangle size={20} className="text-on-error" />
                 </div>
-                <h3 className="text-sm font-bold text-on-error">อะÝ ฬแำษ วแใัวฬฺษ</h3>
+                <h3 className="text-sm font-bold text-on-error">ุชุฃููุฏ ุงูุญุฐู</h3>
               </div>
               <div className="p-5">
-                <p className="text-sm font-bold text-main">ๅแ รไส ใสร฿ฯ ใไ วแอะÝฟ</p>
+                <p className="text-sm font-bold text-main">ูู ุฃูุช ู…ุชุฃูุฏ ู…ู ุงูุญุฐูุ</p>
               </div>
               <div className="flex gap-2 px-5 pb-5">
-                <button onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-hover hover:brightness-90 rounded-xl transition-all active:scale-[0.98]">ลแÛวม</button>
-                <button onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'ฬวัํ วแอะÝ...' : 'อะÝ'}</button>
+                <button onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-hover hover:brightness-90 rounded-xl transition-all active:scale-[0.98]">ุฅูุบุงุก</button>
+                <button onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'ุฌุงุฑู ุงูุญุฐู...' : 'ุญุฐู'}</button>
               </div>
             </motion.div>
           </motion.div>

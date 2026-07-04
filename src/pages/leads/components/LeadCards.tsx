@@ -30,7 +30,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 bg-primary/10 text-primary">
                                 {lead.studentName?.charAt(0) || 'ع'}
                             </div>
-                            <div className="bg-gradient-to-l from--[var(--bg-success)] to--[var(--bg-success)] dark:from--[var(--bg-success)]/20 dark:to--[var(--bg-success)]/20 px-3 py-1 rounded-xl">
+                            <div className="bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] dark:from-[var(--bg-success)]/20 dark:to-[var(--bg-success)]/20 px-3 py-1 rounded-xl">
                                 <h4 className="font-bold text-sm text-success dark:text-success leading-tight truncate">
                                     {lead.studentName || 'عميل بدون اسم'}
                                 </h4>

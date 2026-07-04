@@ -19,7 +19,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to--[var(--bg-success)]',
+            'flex items-center justify-center gap-2 bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)]',
             'text-on-primary text-[11px] font-bold px-4 py-2.5 rounded-xl transition-all active:scale-95 shadow-sm shadow-success/20',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
@@ -31,9 +31,9 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
 
 const statConfig: { title: string; icon: React.ComponentType<{ size?: number }>; gradient: string }[] = [
     { title: 'إجمالي المهتمين', icon: Users, gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { title: 'عملاء جدد', icon: Clock, gradient: 'from--[var(--bg-info)] to--[var(--bg-info)]' },
-    { title: 'تم التحويل', icon: CheckCircle2, gradient: 'from-[var(--bg-success)] to--[var(--bg-info)]' },
-    { title: 'معدل التحويل', icon: TrendingUp, gradient: 'from--[var(--bg-warning)] to--[var(--bg-warning)]' },
+    { title: 'عملاء جدد', icon: Clock, gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
+    { title: 'تم التحويل', icon: CheckCircle2, gradient: 'from-[var(--bg-success)] to-[var(--bg-info)]' },
+    { title: 'معدل التحويل', icon: TrendingUp, gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
 ];
 
 export const StatItem = ({ title, value, icon: Icon }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
