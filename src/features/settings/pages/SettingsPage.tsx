@@ -418,7 +418,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            <div className="px-3 md:px-5 lg:px-8 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-3 md:px-5 lg:px-8 pt-4 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {renderTab()}
             </div>
 
