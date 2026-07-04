@@ -188,7 +188,7 @@ export const PrivacyPolicy = () => {
                                     <li>الاعتراض على معالجة بياناتك في ظروف معينة</li>
                                     <li>سحب موافقتك في أي وقت</li>
                                 </ul>
-                                <p className="mt-4 font-bold text-[10px] md:text-base dark:text-dim">للاستفسارات أو طلبات الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف.</p>
+                                <p className="mt-4 font-bold text-[10px] md:text-base dark:text-main">للاستفسارات أو طلبات الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف.</p>
                             </div>
                         </div>
                     </div>
