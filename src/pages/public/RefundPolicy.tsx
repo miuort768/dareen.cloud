@@ -28,21 +28,21 @@ export const RefundPolicy = () => {
             <MobileHeader />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-br from--[var(--bg-primary)] via--[var(--bg-primary)] to-white dark:from--[var(--bg-primary)] dark:via--[var(--bg-primary)]/30 dark:to-[var(--bg-primary-active)] md:bg-card dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
+            <section className="relative pt-4 pb-4 md:pt-36 md:pb-24 overflow-hidden bg-primary md:bg-card dark:md:bg-background rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-primary/50 dark:border-primary/50 md:border-0 mb-4 md:mb-0 mx-4 md:mx-0">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-info/5 dark:bg-info/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 dark:bg-gold/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 md:bg-primary-soft/60 dark:md:bg-primary/10 backdrop-blur-sm border border-primary/50 md:border-primary dark:md:border-primary/20 rounded-full mb-3">
-                        <Sparkles size={12} className="text-primary dark:text-primary" />
-                        <span className="text-[9px] md:text-[10px] font-black text-primary dark:text-primary">السياسات المالية</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 md:bg-primary-soft/60 backdrop-blur-sm border border-white/20 md:border-primary rounded-full mb-3">
+                        <Sparkles size={12} className="text-on-primary md:text-primary" />
+                        <span className="text-[9px] md:text-[10px] font-black text-on-primary md:text-primary">السياسات المالية</span>
                     </div>
 
-                    <h1 className="text-[18px] md:text-5xl font-black text-primary md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
-                        سياسة <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-info)] to-[var(--bg-primary)] dark:from--[var(--bg-info)] dark:to--[var(--bg-primary)] inline-block py-1">الاسترجاع</span> والإلغاء
+                    <h1 className="text-[18px] md:text-5xl font-black text-on-primary md:text-main mb-1 md:mb-3 leading-tight font-heading">
+                        سياسة <span className="md:text-transparent md:bg-clip-text md:bg-gradient-to-r md:from-[var(--bg-info)] md:to-[var(--bg-primary)] dark:md:from-[var(--bg-info)] dark:md:to-[var(--bg-primary)] text-warning inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-[8px] md:text-lg text-muted md:text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[8px] md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
@@ -77,15 +77,15 @@ export const RefundPolicy = () => {
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">حالات طلب الاسترداد</h2>
                                 <div className="space-y-4 text-muted dark:text-muted">
                                     <div className="p-4 bg-success-light/50 dark:bg-success/20 border-r-4 border-success">
-                                        <h3 className="font-bold text-main dark:text-dim mb-1">قبل بدء الدورة:</h3>
+                                        <h3 className="font-bold text-main dark:text-main mb-1">قبل بدء الدورة:</h3>
                                         <p>يمكن استرداد كامل المبلغ المدفوع (بعد خصم رسوم التحويل البنكي إن وجدت) إذا تم تقديم طلب الاسترداد قبل 48 ساعة على الأقل من موعد أول حصة.</p>
                                     </div>
                                     <div className="p-4 bg-warning-light/50 dark:bg-warning/20 border-r-4 border-warning">
-                                        <h3 className="font-bold text-main dark:text-dim mb-1">بعد الحصة الأولى (التجريبية):</h3>
+                                        <h3 className="font-bold text-main dark:text-main mb-1">بعد الحصة الأولى (التجريبية):</h3>
                                         <p>إذا كانت الدورة تتيح حصة تجريبية ولم يرغب الطالب في الاستمرار، يمكنه طلب استرداد باقي المبلغ المدفوع في غضون 24 ساعة من انتهاء الحصة الأولى.</p>
                                     </div>
-                                    <div className="p-4 bg-background dark:bg-primary-active/50 border-r-4 border-border">
-                                        <h3 className="font-bold text-main dark:text-dim mb-1">خلال الدورة:</h3>
+                                    <div className="p-4 bg-background dark:bg-card/50 border-r-4 border-border">
+                                        <h3 className="font-bold text-main dark:text-main mb-1">خلال الدورة:</h3>
                                         <p>لا يتم استرداد الرسوم بمجرد تجاوز الحصة الثانية إلا في حالات الظروف القهرية التي يقدرها المعهد، مع خصم قيمة الحصص التي تم تقديمها بالفعل.</p>
                                     </div>
                                 </div>
@@ -151,19 +151,19 @@ export const RefundPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-primary)] to--[var(--bg-primary)] border border-primary mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-primary/20">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-primary border border-primary mb-4 relative overflow-hidden group rounded-2xl shadow-xl shadow-primary/20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>
-                            <p className="text-primary mb-8 max-w-md mx-auto">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
+                            <p className="text-on-primary/80 mb-8 max-w-md mx-auto">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
 
                             <a
                                 href={`https://wa.me/${whatsappNumber}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-info text-on-primary px-10 py-4 w-full sm:w-auto rounded-xl font-bold hover:bg-primary-hover transition-all group relative overflow-hidden shadow-lg border border-white/20"
+                                className="inline-flex items-center justify-center gap-4 bg-info text-on-primary px-10 py-4 w-full sm:w-auto rounded-xl font-bold hover:bg-white/15 transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع قسم الحسابات</span>
