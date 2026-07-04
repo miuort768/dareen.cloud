@@ -32,8 +32,7 @@ const createTeacherSchema = z.object({
     phone2: z.string().optional().or(z.literal('')),
     subject: z.string().optional().or(z.literal('')),
     price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
-    percentage: z.number().or(z.string().transform(val => Number(val))).optional(),
-    color: z.string().optional(),
+    email: z.string().optional().or(z.literal('')),
     currency: z.string().optional(),
     username: z.string().optional().or(z.literal('')),
     password: z.string().optional().or(z.literal(''))

@@ -1,11 +1,6 @@
-const path = require('path');
-const fs = require('fs');
 const { PrismaClient } = require('@prisma/client');
 
 let prisma;
-
-// Point to dev.db which has the Prisma schema synced via prisma db push
-const resolvedDbPath = 'file:' + path.resolve(__dirname, '..', 'dev.db').replace(/\\/g, '/');
 
 if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql')) {
   const { Pool } = require('pg');
@@ -15,7 +10,7 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql'
   prisma = new PrismaClient({ adapter });
 } else {
   const { PrismaLibSql } = require('@prisma/adapter-libsql');
-  const adapter = new PrismaLibSql({ url: resolvedDbPath });
+  const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || 'file:./dev.db' });
   prisma = new PrismaClient({ adapter });
 }
 
