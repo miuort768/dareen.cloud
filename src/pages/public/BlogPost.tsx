@@ -128,7 +128,7 @@ export const BlogPost = () => {
 
 
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-dim relative flex flex-col">
+        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
             <SEO
                 title={post.seoTitle || post.title}
                 description={post.seoDescription || post.excerpt}
@@ -186,7 +186,7 @@ export const BlogPost = () => {
                                 </div>
                             </div>
                         </div>
-                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 bg-card dark:bg-white text-on-primary dark:text-main hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all font-bold text-sm rounded-xl">
+                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 bg-card dark:bg-white text-main dark:text-main hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all font-bold text-sm rounded-xl">
                             <ArrowRight size={16} />
                             <span>العودة لجميع المقالات</span>
                         </Link>
@@ -207,7 +207,7 @@ export const BlogPost = () => {
                     {post.tags && (
                     <div className="flex flex-wrap gap-2 mb-4">
                         {post.tags.split(',').map((tag: string, i: number) => (
-                            <span key={i} className="text-[10px] font-bold text-muted dark:text-muted bg-surface dark:bg-primary-active px-2 py-1 rounded-lg">#{tag.trim()}</span>
+                            <span key={i} className="text-[10px] font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>
                         ))}
                     </div>
                     )}
@@ -216,10 +216,10 @@ export const BlogPost = () => {
                 {/* Image + First Content Side by Side */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-                        <div className="w-full bg-surface dark:bg-primary-active overflow-hidden shadow-xl rounded-2xl">
+                        <div className="w-full bg-surface dark:bg-card overflow-hidden shadow-xl rounded-2xl">
                             <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
                         </div>
-                        <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main dark:text-dim"
+                        <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main dark:text-main"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first, post.title)) }}
                         />
                     </div>
@@ -251,7 +251,7 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-main dark:text-dim"
+                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-main dark:text-main"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest, post.title)) }}
                         />
                     )}
@@ -272,7 +272,7 @@ export const BlogPost = () => {
                             <a href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-info flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="تيليجرام">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.2 4.2L2.8 12.9c-.8.3-.7 1.5.1 1.7l5.1 1.4 2 6.3c.3.9 1.4.9 1.7 0L21.2 4.2z"/><path d="M11.9 15.7l6.5-6.5"/><path d="M9 21l3.4-5.8"/></svg>
                             </a>
-                            <button onClick={() => { navigator.clipboard.writeText(window.location.href).then(() => { const btn = document.activeElement as HTMLElement; const orig = btn?.innerHTML; if (btn) { btn.innerHTML = 'تم'; setTimeout(() => { if (btn) btn.innerHTML = orig || ''; }, 1500); } }); }} className="w-9 h-9 rounded-full bg-gradient-to-br from--[var(--bg-primary)] via-[var(--bg-primary)] to--[var(--bg-warning)] flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="انستغرام">
+                            <button onClick={() => { navigator.clipboard.writeText(window.location.href).then(() => { const btn = document.activeElement as HTMLElement; const orig = btn?.innerHTML; if (btn) { btn.innerHTML = 'تم'; setTimeout(() => { if (btn) btn.innerHTML = orig || ''; }, 1500); } }); }} className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-warning)] flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="انستغرام">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                             </button>
                             <button onClick={() => { navigator.clipboard.writeText(window.location.href).then(() => { const btn = document.activeElement as HTMLElement; const orig = btn?.innerHTML; if (btn) { btn.innerHTML = 'تم'; setTimeout(() => { if (btn) btn.innerHTML = orig || ''; }, 1500); } }).catch(() => { if (navigator.share) { navigator.share({ title: post.title, url: window.location.href }); } }); }} className="w-9 h-9 rounded-full bg-background0 flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="نسخ الرابط">
@@ -285,7 +285,7 @@ export const BlogPost = () => {
                                 <MessageCircle size={18} />
                                 <span>لدي سؤال؟</span>
                             </a>
-                            <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-4 bg-card dark:bg-white text-on-primary dark:text-main font-black text-sm rounded-xl shadow-lg hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all">
+                            <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-4 bg-card dark:bg-white text-main dark:text-main font-black text-sm rounded-xl shadow-lg hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all">
                                 <Play size={18} />
                                 ابدأ التعلم الآن
                             </Link>
@@ -299,8 +299,8 @@ export const BlogPost = () => {
                     <h2 className="text-2xl font-black text-main dark:text-on-primary mb-6">مقالات ذات صلة</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {relatedPosts.map((rp) => (
-                            <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-primary-active rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-border dark:border-border">
-                                <div className="aspect-[16/9] bg-surface dark:bg-primary-active overflow-hidden">
+                            <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-border dark:border-border">
+                                <div className="aspect-[16/9] bg-surface dark:bg-card overflow-hidden">
                                     <img src={rp.coverImage || ''} alt={rp.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                                 </div>
                                 <div className="p-4">

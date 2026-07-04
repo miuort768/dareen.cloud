@@ -49,7 +49,7 @@ interface FoundationCardProps {
 export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButtonClick, i }: FoundationCardProps) => {
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="group bg-white dark:bg-primary-active/50 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-sm transition-all duration-500 h-full flex flex-col relative">
+            <div className="group bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-sm transition-all duration-500 h-full flex flex-col relative">
                 <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
                 <div className="p-4 sm:p-5 flex flex-col flex-1">
                     <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
@@ -80,7 +80,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink, post.id, e)}
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
-                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from--[var(--bg-warning)] to--[var(--bg-warning)] hover:from--[var(--bg-warning)] hover:to--[var(--bg-warning)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-warning/20 hover:shadow-warning/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--bg-warning)] to-[var(--bg-warning)] hover:from-[var(--bg-warning)] hover:to-[var(--bg-warning)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-warning/20 hover:shadow-warning/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Download size={14} />
                                     <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
                                 </button>
@@ -88,14 +88,14 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                             {post.watchLink && (
                                 <button onClick={(e) => handleButtonClick('watch', post.watchLink, post.id, e)}
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
-                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary)] hover:to--[var(--bg-primary)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
+                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary)] hover:to-[var(--bg-primary)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Eye size={14} />
                                     <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
                                 </button>
                             )}
                         </div>
                         <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from--[var(--bg-success)] to-[var(--bg-success)] hover:from--[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
+                            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary text-[12px] font-black py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
                             <span>اقرأ المقال</span>
                         </Link>
                     </div>
@@ -112,17 +112,17 @@ interface RegularCardProps {
 }
 
 export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
-    const badgeGradient = 'from-[var(--bg-error)] to--[var(--bg-primary)]';
+    const badgeGradient = 'from-[var(--bg-error)] to-[var(--bg-primary)]';
 
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
             <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                className="group block bg-white dark:bg-primary-active/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500 h-full flex flex-col">
-                <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-background dark:bg-primary-active/30`}>
+                className="group block bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500 h-full flex flex-col">
+                <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-background dark:bg-card/30`}>
                     <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'object-cover group-hover:scale-105'}`} />
-                    <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-[var(--bg-primary-active)]' : 'from-black/40'} to-transparent`} />
+                    <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-[var(--bg-card)]' : 'from-black/40'} to-transparent`} />
                     <div className="absolute top-3 right-3 z-10">
-                        <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-on-primary shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-primary-active/90 backdrop-blur-sm text-primary dark:text-primary'}`}>{subjectNameMap[post.subject] || post.category}</span>
+                        <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-on-primary shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-card/90 backdrop-blur-sm text-primary dark:text-primary'}`}>{subjectNameMap[post.subject] || post.category}</span>
                     </div>
                 </div>
                 <div className="p-4 flex flex-col flex-1">
@@ -135,7 +135,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
                     <h2 className="text-sm sm:text-base font-heading font-black leading-snug mb-2 text-main dark:text-main group-hover:text-primary dark:group-hover:text-primary transition-colors">{post.title}</h2>
                     <p className="text-xs text-muted dark:text-muted leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
                     {isCoursesStyle ? (
-                        <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from--[var(--bg-success)] to-[var(--bg-success)] hover:from--[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 active:scale-[0.98]">
+                        <div className="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 active:scale-[0.98]">
                             <ArrowLeft size={14} />
                             <span>اقرأ المقال</span>
                         </div>
