@@ -123,8 +123,8 @@ export const Teachers = () => {
             }
             setShowAddForm(false);
             setEditId(null);
-        } catch {
-            // error is handled by the mutation hook via Toast
+        } catch (err) {
+            console.error('Error adding teacher:', err);
         }
     };
 

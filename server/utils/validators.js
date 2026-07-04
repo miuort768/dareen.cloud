@@ -28,7 +28,8 @@ const updateStudentSchema = createStudentSchema.partial();
 const createTeacherSchema = z.object({
     id: z.string().optional(),
     name: z.string().min(2, "Name is required").trim(),
-    phone: z.string().optional().or(z.literal('')),
+    phone1: z.string().optional().or(z.literal('')),
+    phone2: z.string().optional().or(z.literal('')),
     subject: z.string().optional().or(z.literal('')),
     price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
     percentage: z.number().or(z.string().transform(val => Number(val))).optional(),
