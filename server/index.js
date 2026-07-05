@@ -50,6 +50,7 @@ const teacherAvailabilityRouter = require('./routes/teacher_availability');
 const { searchRouter } = require('./routes/search');
 const { exportRouter } = require('./routes/export');
 const auditRouter = require('./routes/audit');
+const { healthRouter } = require('./routes/health');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -274,6 +275,9 @@ async function startServer() {
         apiRouter.use((req, res) => {
             res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
         });
+
+        // Health & flags — no auth (liveness/readiness)
+        app.use('/health', healthRouter);
 
         // ✅ API router MUST come before static files and prerender
         app.use('/api', apiRouter);

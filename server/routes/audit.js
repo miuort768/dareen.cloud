@@ -9,13 +9,11 @@ const DEFAULT_LIMIT = 50;
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
-        const page = Math.max(1, parseInt(req.query.page) || 1);
         const limit = Math.min(parseInt(req.query.limit) || DEFAULT_LIMIT, MAX_LIMIT);
-        const skip = (page - 1) * limit;
 
         const where = {};
 
-        const { accountId, action, entityType, status, requestId, from, to } = req.query;
+        const { accountId, action, entityType, status, requestId, from, to, cursor } = req.query;
 
         if (accountId) where.accountId = accountId;
         if (action) where.action = action;
@@ -29,26 +27,50 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
             if (to) where.timestamp.lte = new Date(to);
         }
 
-        const [logs, total] = await Promise.all([
-            prisma.auditLog.findMany({
-                where,
-                orderBy: { timestamp: 'desc' },
-                skip,
-                take: limit,
-            }),
-            prisma.auditLog.count({ where }),
-        ]);
+        const orderBy = [{ timestamp: 'desc' }, { id: 'desc' }];
 
-        res.json({
-            data: logs,
-            pagination: {
-                page,
-                limit,
-                total,
-                totalPages: Math.ceil(total / limit),
-                hasMore: page * limit < total,
-            },
-        });
+        if (cursor) {
+            const logs = await prisma.auditLog.findMany({
+                where,
+                orderBy,
+                cursor: { id: cursor },
+                skip: 1,
+                take: limit,
+            });
+
+            res.json({
+                data: logs,
+                pagination: {
+                    limit,
+                    cursor: logs.length === limit ? logs[logs.length - 1].id : null,
+                    hasMore: logs.length === limit,
+                },
+            });
+        } else {
+            const page = Math.max(1, parseInt(req.query.page) || 1);
+            const skip = (page - 1) * limit;
+
+            const [logs, total] = await Promise.all([
+                prisma.auditLog.findMany({
+                    where,
+                    orderBy,
+                    skip,
+                    take: limit,
+                }),
+                prisma.auditLog.count({ where }),
+            ]);
+
+            res.json({
+                data: logs,
+                pagination: {
+                    page,
+                    limit,
+                    total,
+                    totalPages: Math.ceil(total / limit),
+                    hasMore: page * limit < total,
+                },
+            });
+        }
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Audit log fetch error');
     }

@@ -16,25 +16,25 @@ check('Admin count', async () => {
 });
 
 check('Teacher count', async () => {
-  const legacy = await prisma.teacher.count({ where: { deletedAt: null, username: { not: null }, password: { not: null } } });
+  const legacy = await prisma.teacher.count({ where: { deletedAt: null, NOT: [{ username: null }, { password: null }] } });
   const accounts = await prisma.account.count({ where: { accountType: 'TEACHER' } });
   return { legacy, accounts, match: legacy === accounts };
 });
 
 check('Parent count', async () => {
-  const legacy = await prisma.parent.count({ where: { deletedAt: null, username: { not: null }, password: { not: null } } });
+  const legacy = await prisma.parent.count({ where: { deletedAt: null, NOT: [{ username: null }, { password: null }] } });
   const accounts = await prisma.account.count({ where: { accountType: 'PARENT' } });
   return { legacy, accounts, match: legacy === accounts };
 });
 
 check('Student count', async () => {
-  const legacy = await prisma.student.count({ where: { deletedAt: null, username: { not: null }, password: { not: null } } });
+  const legacy = await prisma.student.count({ where: { deletedAt: null, NOT: [{ username: null }, { password: null }] } });
   const accounts = await prisma.account.count({ where: { accountType: 'STUDENT' } });
   return { legacy, accounts, match: legacy === accounts };
 });
 
 check('Chat profile count', async () => {
-  const legacy = await prisma.chatProfile.count({ where: { password: { not: null } } });
+  const legacy = await prisma.chatProfile.count();
   const accounts = await prisma.account.count({ where: { accountType: 'CHAT_USER' } });
   return { legacy, accounts, match: legacy === accounts };
 });

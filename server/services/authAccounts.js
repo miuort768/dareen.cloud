@@ -4,14 +4,16 @@ const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { AUDIT_STATUS } = require('../constants/auditStatus');
 const logger = require('../utils/logger');
 
-const AUTH_MODE = (process.env.AUTH_MODE || 'legacy').toLowerCase();
+function getAuthMode() {
+  return (process.env.AUTH_MODE || 'legacy').toLowerCase();
+}
 
 function isAccountsMode() {
-  return AUTH_MODE === 'accounts';
+  return getAuthMode() === 'accounts';
 }
 
 function isDualMode() {
-  return AUTH_MODE === 'dual';
+  return getAuthMode() === 'dual';
 }
 
 function isAccountsOrDual() {
@@ -162,17 +164,11 @@ async function incrementTokenVersion(userId, userType) {
     }
   }
 
-  if (!isAccountsMode()) {
-    const modelName = LEGACY_MODEL_MAP[upperType];
-    if (modelName) {
-      try {
-        if (modelName === 'chatProfile') {
-          // chatProfile has no tokenVersion
-        } else {
-          await prisma[modelName].update({ where: { id: userId }, data: { tokenVersion: { increment: 1 } } });
-        }
-      } catch { /* tokenVersion may not exist */ }
-    }
+  // Only the User (admin) model has tokenVersion in legacy tables
+  if (!isAccountsMode() && userType === 'admin') {
+    try {
+      await prisma.user.update({ where: { id: userId }, data: { tokenVersion: { increment: 1 } } });
+    } catch { /* legacy sync best-effort */ }
   }
 }
 
@@ -186,10 +182,9 @@ async function checkTokenVersion(userId, role, decodedVersion) {
 
   if (isAccountsMode()) return true;
 
-  const modelMap = { admin: 'user', teacher: 'teacher', parent: 'parent', student: 'student' };
-  const modelName = modelMap[role];
-  if (modelName) {
-    const current = await prisma[modelName].findUnique({ where: { id: userId }, select: { tokenVersion: true } });
+  // Only the User (admin) model has tokenVersion in legacy tables
+  if (role === 'admin') {
+    const current = await prisma.user.findUnique({ where: { id: userId }, select: { tokenVersion: true } });
     if (current) return current.tokenVersion === decodedVersion;
   }
 
@@ -208,7 +203,7 @@ module.exports = {
   incrementTokenVersion,
   checkTokenVersion,
   getAccountByEntity,
-  AUTH_MODE,
+  getAuthMode,
   isAccountsMode,
   isDualMode,
   isAccountsOrDual,
