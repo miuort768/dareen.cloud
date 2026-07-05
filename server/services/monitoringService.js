@@ -1,7 +1,7 @@
 const os = require('os');
 const { prisma } = require('../utils/prisma');
 const { getAuthMode } = require('./authAccounts');
-const { getAuditMode } = require('./auditService');
+const { getAuditMode, getFallbackWrites } = require('./auditService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const logger = require('../utils/logger');
 
@@ -153,9 +153,28 @@ async function getAuditQueueStatus() {
     if (redis.status() !== 'connected') {
       return { mode: 'queue', available: false, reason: 'Redis not connected' };
     }
-    const { getStatus } = require('../queue/auditQueue');
-    const counts = await getStatus();
-    return { mode: 'queue', available: true, ...counts };
+    const [counts, batchMetrics] = await Promise.all([
+      require('../queue/auditQueue').getStatus(),
+      require('../queue/auditWorker').getMetrics().catch(() => ({})),
+    ]);
+    const deadLetters = counts.failed || 0;
+    let health;
+    if (deadLetters === 0) health = 'healthy';
+    else if (deadLetters < 10) health = 'degraded';
+    else health = 'critical';
+    return {
+      mode: 'queue',
+      available: true,
+      health,
+      ...counts,
+      batch: {
+        flushes: batchMetrics.flushes || 0,
+        entries: batchMetrics.entries || 0,
+        averageBatchSize: batchMetrics.averageBatchSize || 0,
+        errors: batchMetrics.errors || 0,
+      },
+      fallbackWrites: getFallbackWrites(),
+    };
   } catch (err) {
     return { mode: 'queue', available: false, reason: err.message };
   }

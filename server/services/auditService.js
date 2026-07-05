@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const logger = require('../utils/logger');
 const { AUDIT_ACTIONS, isValidAction } = require('../constants/auditActions');
@@ -9,6 +10,16 @@ function getAuditMode() {
 
 function isQueueMode() {
   return getAuditMode() === 'queue';
+}
+
+let fallbackWrites = 0;
+
+function getFallbackWrites() {
+  return fallbackWrites;
+}
+
+function generateEventId() {
+  return crypto.randomUUID();
 }
 
 async function writeToQueue(entry) {
@@ -89,6 +100,7 @@ async function createAuditEntry({
   const finalStatus = isValidStatus(status) ? status : AUDIT_STATUS.SUCCESS;
 
   const entry = {
+    eventId: generateEventId(),
     action,
     status: finalStatus,
     accountId,
@@ -108,6 +120,7 @@ async function createAuditEntry({
       await writeToQueue(entry);
       return;
     } catch (queueErr) {
+      fallbackWrites++;
       logger.warn('Audit queue fallback to direct write', { action, error: queueErr.message });
     }
   }
@@ -185,6 +198,7 @@ module.exports = {
   isCriticalAction,
   getAuditMode,
   isQueueMode,
+  getFallbackWrites,
   ACTION_TYPES: AUDIT_ACTIONS,
   AUDIT_ACTIONS,
   AUDIT_STATUS,

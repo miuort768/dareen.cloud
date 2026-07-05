@@ -12,6 +12,8 @@ let pending = [];
 let timer = null;
 let worker = null;
 
+const metrics = { flushes: 0, entries: 0, errors: 0 };
+
 function getConnection() {
   let conn = { host: 'localhost', port: 6379 };
   try {
@@ -30,9 +32,12 @@ async function flush() {
   const batch = buffer.splice(0);
   const resolvers = pending.splice(0);
   try {
-    await prisma.auditLog.createMany({ data: batch });
+    await prisma.auditLog.createMany({ data: batch, skipDuplicates: true });
+    metrics.flushes++;
+    metrics.entries += batch.length;
     resolvers.forEach(r => r.resolve());
   } catch (err) {
+    metrics.errors++;
     logger.error('Audit batch write failed (' + batch.length + ' entries): ' + (err?.message || err));
     resolvers.forEach(r => r.reject(err));
   }
@@ -82,6 +87,13 @@ async function handleFailed(job, err) {
   }
 }
 
+function getMetrics() {
+  return {
+    ...metrics,
+    averageBatchSize: metrics.flushes > 0 ? (metrics.entries / metrics.flushes).toFixed(1) : 0,
+  };
+}
+
 function start() {
   if (worker) return worker;
   worker = new Worker(QUEUE_NAME, processor, {
@@ -101,6 +113,7 @@ function start() {
 }
 
 async function stop() {
+  worker?.pause();
   stopFlushTimer();
   await flush();
   if (worker) {
@@ -109,4 +122,4 @@ async function stop() {
   }
 }
 
-module.exports = { start, stop, flush };
+module.exports = { start, stop, flush, getMetrics };
