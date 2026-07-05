@@ -51,6 +51,7 @@ const { searchRouter } = require('./routes/search');
 const { exportRouter } = require('./routes/export');
 const auditRouter = require('./routes/audit');
 const { healthRouter } = require('./routes/health');
+const { monitoringRouter } = require('./routes/monitoring');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -254,6 +255,7 @@ async function startServer() {
         apiRouter.use('/export', isAdmin, exportRouter);
         apiRouter.use('/roles', isAdmin, require('./routes/roles'));
         apiRouter.use('/audit', isAdmin, auditRouter);
+        apiRouter.use('/monitoring', isAdmin, monitoringRouter);
         apiRouter.use('/v1/executive', require('./routes/executive'));
 
         apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
