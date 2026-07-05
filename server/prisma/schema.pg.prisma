@@ -308,7 +308,8 @@ model StudentInvoice {
   paymentMethod String?
   notes         String?
   items         String?  @db.Text
-  isArchived    Int?     @default(0) @map("is_archived")
+  paidAt        String?
+  deletedAt     DateTime?
 
   @@index([studentId])
   @@index([status])
@@ -329,6 +330,8 @@ model TeacherInvoice {
   personalExpenses Int?     @default(0) @map("personalExpenses")
   date             String
   isArchived       Int?     @default(0) @map("is_archived")
+  paidAt           String?
+  deletedAt        DateTime?
 
   @@index([teacherId])
   @@index([status])
