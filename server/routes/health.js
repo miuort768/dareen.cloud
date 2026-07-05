@@ -3,14 +3,16 @@ const router = express.Router();
 const { prisma } = require('../utils/prisma');
 const { getAuthMode } = require('../services/authAccounts');
 const { getAuditMode } = require('../services/auditService');
+const { getMode: getCacheMode } = require('../services/cacheService');
 const ResponseHandler = require('../utils/responseHandler');
 
 function getFeatureFlags() {
   return {
     authMode: getAuthMode(),
     auditMode: getAuditMode(),
+    cacheMode: getCacheMode(),
     passwordResetEnabled: true,
-    version: '3.2',
+    version: '3.3',
   };
 }
 

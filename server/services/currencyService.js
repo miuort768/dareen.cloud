@@ -1,35 +1,30 @@
 const { prisma } = require('../utils/prisma');
-const cache = require('../utils/cache');
+const cache = require('./cacheService');
+const { CACHE_KEYS } = require('../cache/cacheKeys');
 const logger = require('../utils/logger');
 
-const RATE_CACHE_TTL = 300000;
-const SETTINGS_CACHE_TTL = 600000;
+const RATE_CACHE_TTL = 300;
+const SETTINGS_CACHE_TTL = 600;
 
 async function getReportCurrency() {
-  const cached = await cache.get('currency:reportCurrency');
-  if (cached) return cached;
-  const setting = await prisma.financialSetting.findUnique({ where: { key: 'reportCurrency' } });
-  const value = setting?.value || 'KWD';
-  await cache.set('currency:reportCurrency', value, SETTINGS_CACHE_TTL);
-  return value;
+  return cache.remember(CACHE_KEYS.EXCHANGE_RATES + ':reportCurrency', SETTINGS_CACHE_TTL, async () => {
+    const setting = await prisma.financialSetting.findUnique({ where: { key: 'reportCurrency' } });
+    return setting?.value || 'KWD';
+  });
 }
 
 async function getDecimalPlaces() {
-  const cached = await cache.get('currency:decimalPlaces');
-  if (cached) return parseInt(cached, 10);
-  const setting = await prisma.financialSetting.findUnique({ where: { key: 'decimalPlaces' } });
-  const value = setting?.value ? parseInt(setting.value, 10) : 3;
-  await cache.set('currency:decimalPlaces', String(value), SETTINGS_CACHE_TTL);
-  return value;
+  return cache.remember(CACHE_KEYS.EXCHANGE_RATES + ':decimalPlaces', SETTINGS_CACHE_TTL, async () => {
+    const setting = await prisma.financialSetting.findUnique({ where: { key: 'decimalPlaces' } });
+    return setting?.value ? parseInt(setting.value, 10) : 3;
+  });
 }
 
 async function getRoundingMode() {
-  const cached = await cache.get('currency:roundingMode');
-  if (cached) return cached;
-  const setting = await prisma.financialSetting.findUnique({ where: { key: 'roundingMode' } });
-  const value = setting?.value || 'HALF_UP';
-  await cache.set('currency:roundingMode', value, SETTINGS_CACHE_TTL);
-  return value;
+  return cache.remember(CACHE_KEYS.EXCHANGE_RATES + ':roundingMode', SETTINGS_CACHE_TTL, async () => {
+    const setting = await prisma.financialSetting.findUnique({ where: { key: 'roundingMode' } });
+    return setting?.value || 'HALF_UP';
+  });
 }
 
 function roundMoneyAmount(amount, decimals, mode) {
@@ -66,43 +61,37 @@ function parsePrismaDecimal(val) {
 async function getLatestRate(fromCurrency, toCurrency, date) {
   if (fromCurrency === toCurrency) return 1;
 
-  const cacheKey = `currency:rate:${fromCurrency}:${toCurrency}:${date || 'latest'}`;
-  const cached = await cache.get(cacheKey);
-  if (cached !== null) return cached;
-
+  const cacheKey = `${CACHE_KEYS.EXCHANGE_RATES}:rate:${fromCurrency}:${toCurrency}:${date || 'latest'}`;
   const targetDate = date || new Date().toISOString().slice(0, 10);
 
-  let rate = await prisma.exchangeRate.findFirst({
-    where: {
-      fromCurrency,
-      toCurrency,
-      effectiveDate: { lte: new Date(targetDate) },
-    },
-    orderBy: { effectiveDate: 'desc' },
-  });
-
-  if (!rate) {
-    rate = await prisma.exchangeRate.findFirst({
+  return cache.remember(cacheKey, RATE_CACHE_TTL, async () => {
+    let rate = await prisma.exchangeRate.findFirst({
       where: {
-        fromCurrency: toCurrency,
-        toCurrency: fromCurrency,
+        fromCurrency,
+        toCurrency,
         effectiveDate: { lte: new Date(targetDate) },
       },
       orderBy: { effectiveDate: 'desc' },
     });
-    if (rate) {
-      const buyRate = parsePrismaDecimal(rate.buyRate);
-      const result = buyRate ? 1 / buyRate : null;
-      await cache.set(cacheKey, result, RATE_CACHE_TTL);
-      return result;
-    }
-    await cache.set(cacheKey, null, RATE_CACHE_TTL);
-    return null;
-  }
 
-  const result = parsePrismaDecimal(rate.buyRate);
-  await cache.set(cacheKey, result, RATE_CACHE_TTL);
-  return result;
+    if (!rate) {
+      rate = await prisma.exchangeRate.findFirst({
+        where: {
+          fromCurrency: toCurrency,
+          toCurrency: fromCurrency,
+          effectiveDate: { lte: new Date(targetDate) },
+        },
+        orderBy: { effectiveDate: 'desc' },
+      });
+      if (rate) {
+        const buyRate = parsePrismaDecimal(rate.buyRate);
+        return buyRate ? 1 / buyRate : null;
+      }
+      return null;
+    }
+
+    return parsePrismaDecimal(rate.buyRate);
+  });
 }
 
 async function convert(amount, fromCurrency, toCurrency, date) {
@@ -124,13 +113,11 @@ async function formatMoney(amount, currency) {
 }
 
 function invalidateRateCache() {
-  cache.delPattern('currency:rate:');
+  cache.invalidate('rates:exchange:rate:*');
 }
 
 function invalidateSettingsCache() {
-  cache.del('currency:reportCurrency');
-  cache.del('currency:decimalPlaces');
-  cache.del('currency:roundingMode');
+  cache.invalidate('rates:exchange:*');
 }
 
 module.exports = {

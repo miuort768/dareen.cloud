@@ -4,6 +4,7 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 const ResponseHandler = require('../utils/responseHandler');
 const logger = require('../utils/logger');
 const cache = require('../utils/cache');
+const cacheService = require('../services/cacheService');
 const { prisma } = require('../utils/prisma');
 const { audit } = require('../services/auditService');
 const { createBackup, getBackupHistory } = require('../services/backupService');
@@ -15,13 +16,16 @@ router.use(checkRole(['admin']));
 // GET /api/system/settings-batch — returns all settings grouped
 router.get('/settings-batch', async (req, res) => {
     try {
-        const settings = await prisma.systemSetting.findMany();
-        const map = {};
-        settings.forEach(s => { map[s.key] = s.value; });
-        const financialSettings = await prisma.financialSetting.findMany();
-        const finMap = {};
-        financialSettings.forEach(s => { finMap[s.key] = s.value; });
-        res.json({ system: map, financial: finMap });
+        const result = await cacheService.wrap('system:settings-batch', 60000, async () => {
+            const settings = await prisma.systemSetting.findMany();
+            const map = {};
+            settings.forEach(s => { map[s.key] = s.value; });
+            const financialSettings = await prisma.financialSetting.findMany();
+            const finMap = {};
+            financialSettings.forEach(s => { finMap[s.key] = s.value; });
+            return { system: map, financial: finMap };
+        });
+        res.json(result);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }
@@ -35,8 +39,8 @@ router.post('/settings-batch', async (req, res) => {
         for (const { key, value } of settings) {
             await prisma.systemSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
         }
-        const cache = require('../utils/cache');
         cache.del('system:settings');
+        await cacheService.del('system:settings-batch');
         await audit(req.user.id, req.user.username, 'SETTINGS_BATCH_UPDATE', { count: settings.length }, 'system', null);
         res.json({ success: true });
     } catch (err) {
@@ -47,10 +51,13 @@ router.post('/settings-batch', async (req, res) => {
 // GET /api/system/financial-settings
 router.get('/financial-settings', async (req, res) => {
     try {
-        const settings = await prisma.financialSetting.findMany();
-        const map = {};
-        settings.forEach(s => { map[s.key] = s.value; });
-        res.json(map);
+        const result = await cacheService.wrap('system:financial-settings', 60000, async () => {
+            const settings = await prisma.financialSetting.findMany();
+            const map = {};
+            settings.forEach(s => { map[s.key] = s.value; });
+            return map;
+        });
+        res.json(result);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
     }

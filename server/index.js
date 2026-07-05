@@ -21,6 +21,7 @@ const correlationIdMiddleware = require('./middleware/correlationId');
 const { auditMiddleware } = require('./middleware/audit');
 const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
+const cache = require('./services/cacheService');
 
 const { authRouter } = require('./routes/auth');
 const { studentRouter } = require('./routes/students');
@@ -207,11 +208,14 @@ async function startServer() {
                     'notifications_enabled', 'auto_backup', 'chatbot_enabled',
                     'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
                     'reminder_minutes_before', 'library_whatsapp', 'library_telegram'];
-                const settings = await prisma.systemSetting.findMany({
-                    where: { key: { in: keys } }
+                const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
+                    const settings = await prisma.systemSetting.findMany({
+                        where: { key: { in: keys } }
+                    });
+                    const map = {};
+                    settings.forEach(s => map[s.key] = s.value);
+                    return map;
                 });
-                const settingsMap = {};
-                settings.forEach(s => settingsMap[s.key] = s.value);
                 res.json(settingsMap);
             } catch (err) {
                 res.status(500).json({ error: err.message });

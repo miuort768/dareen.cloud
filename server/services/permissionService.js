@@ -1,4 +1,7 @@
 const { prisma } = require('../utils/prisma');
+const cache = require('./cacheService');
+
+const PERMISSION_CACHE_TTL = 60000; // 60s
 
 async function getUserRoles(userId, model = 'users') {
     const userRoles = await prisma.userRole.findMany({
@@ -17,7 +20,7 @@ async function getUserRoles(userId, model = 'users') {
     return userRoles;
 }
 
-async function getUserPermissions(userId, model = 'users') {
+async function fetchUserPermissions(userId, model = 'users') {
     const roles = await getUserRoles(userId, model);
     const permissions = new Set();
     for (const ur of roles) {
@@ -26,6 +29,11 @@ async function getUserPermissions(userId, model = 'users') {
         }
     }
     return [...permissions];
+}
+
+async function getUserPermissions(userId, model = 'users') {
+    const key = `permissions:${userId}:${model}`;
+    return cache.wrap(key, PERMISSION_CACHE_TTL, () => fetchUserPermissions(userId, model));
 }
 
 async function hasPermission(userId, permissionKey, model = 'users') {

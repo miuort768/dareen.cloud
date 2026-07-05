@@ -205,6 +205,15 @@ function getRequestMetrics() {
   }
 }
 
+async function getCacheMetrics() {
+  try {
+    const cacheService = require('./cacheService');
+    return cacheService.getMetrics();
+  } catch {
+    return { mode: 'off' };
+  }
+}
+
 async function getOverview() {
   const timeout = (promise, ms) =>
     Promise.race([
@@ -212,13 +221,14 @@ async function getOverview() {
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms)),
     ]);
 
-  const [system, eventLoopDelay, auth, audit, queue, auditQueue, requestMetrics] = await Promise.all([
+  const [system, eventLoopDelay, auth, audit, queue, auditQueue, cache, requestMetrics] = await Promise.all([
     getSystemStats(),
     timeout(getEventLoopDelay(), 1000).catch(() => -1),
     getAuthStats(),
     getAuditStats(),
     timeout(getQueueStatus(), 3000).catch(() => ({ available: false, reason: 'timeout' })),
     timeout(getAuditQueueStatus(), 2000).catch(() => ({ mode: 'direct' })),
+    timeout(getCacheMetrics(), 1000).catch(() => ({ mode: 'off' })),
     getRequestMetrics(),
   ]);
 
@@ -232,6 +242,7 @@ async function getOverview() {
     audit,
     queue,
     auditQueue,
+    cache,
     requestMetrics,
     featureFlags: getFeatureFlags(),
   };

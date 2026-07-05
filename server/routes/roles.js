@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { prisma } = require('../utils/prisma');
 const { authMiddleware } = require('../middleware/auth');
+const cache = require('../services/cacheService');
 
 router.get('/', authMiddleware, async (req, res) => {
     try {
@@ -37,6 +38,7 @@ router.post('/', authMiddleware, async (req, res) => {
         const role = await prisma.role.create({
             data: { name, label, description },
         });
+        cache.invalidate('permissions:*');
         res.json(role);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -75,6 +77,7 @@ router.put('/:id/permissions', authMiddleware, async (req, res) => {
             where: { id: parseInt(id) },
             include: { permissions: { include: { permission: true } } },
         });
+        cache.invalidate('permissions:*');
         res.json(role);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -85,6 +88,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
         await prisma.role.delete({ where: { id: parseInt(id) } });
+        cache.invalidate('permissions:*');
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -117,6 +121,7 @@ router.post('/user/:userId', authMiddleware, async (req, res) => {
             where: { userId },
             include: { role: true },
         });
+        cache.invalidate('permissions:*');
         res.json(userRoles);
     } catch (err) {
         res.status(500).json({ error: err.message });
