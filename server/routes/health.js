@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const { prisma } = require('../utils/prisma');
 const { getAuthMode } = require('../services/authAccounts');
+const { getAuditMode } = require('../services/auditService');
 const ResponseHandler = require('../utils/responseHandler');
 
 function getFeatureFlags() {
   return {
     authMode: getAuthMode(),
-    auditEnabled: true,
+    auditMode: getAuditMode(),
     passwordResetEnabled: true,
-    version: '2.2',
+    version: '3.2',
   };
 }
 

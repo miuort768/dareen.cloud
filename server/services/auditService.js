@@ -3,6 +3,23 @@ const logger = require('../utils/logger');
 const { AUDIT_ACTIONS, isValidAction } = require('../constants/auditActions');
 const { AUDIT_STATUS, isValidStatus } = require('../constants/auditStatus');
 
+function getAuditMode() {
+  return (process.env.AUDIT_MODE || 'direct').toLowerCase();
+}
+
+function isQueueMode() {
+  return getAuditMode() === 'queue';
+}
+
+async function writeToQueue(entry) {
+  const { enqueue } = require('../queue/auditQueue');
+  return enqueue(entry);
+}
+
+async function writeDirect(entry) {
+  await prisma.auditLog.create({ data: entry });
+}
+
 const SENSITIVE_KEYS = new Set([
   'password', 'passwordHash', 'password_hash',
   'token', 'jwt', 'accessToken', 'refreshToken',
@@ -71,23 +88,32 @@ async function createAuditEntry({
 
   const finalStatus = isValidStatus(status) ? status : AUDIT_STATUS.SUCCESS;
 
+  const entry = {
+    action,
+    status: finalStatus,
+    accountId,
+    userId,
+    username,
+    entityType,
+    entityId,
+    ipAddress,
+    userAgent,
+    requestId,
+    metadata: sanitized,
+    details: details ? (typeof details === 'string' ? details : JSON.stringify(details)) : null,
+  };
+
+  if (isQueueMode() && !isCriticalAction(action)) {
+    try {
+      await writeToQueue(entry);
+      return;
+    } catch (queueErr) {
+      logger.warn('Audit queue fallback to direct write', { action, error: queueErr.message });
+    }
+  }
+
   try {
-    await prisma.auditLog.create({
-      data: {
-        action,
-        status: finalStatus,
-        accountId,
-        userId,
-        username,
-        entityType,
-        entityId,
-        ipAddress,
-        userAgent,
-        requestId,
-        metadata: sanitized,
-        details: details ? (typeof details === 'string' ? details : JSON.stringify(details)) : null,
-      },
-    });
+    await writeDirect(entry);
   } catch (err) {
     logger.error('Audit log database error', err, { action });
     if (isCriticalAction(action)) {
@@ -157,6 +183,8 @@ module.exports = {
   logMiddleware,
   sanitizeMetadata,
   isCriticalAction,
+  getAuditMode,
+  isQueueMode,
   ACTION_TYPES: AUDIT_ACTIONS,
   AUDIT_ACTIONS,
   AUDIT_STATUS,

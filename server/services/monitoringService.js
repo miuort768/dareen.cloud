@@ -1,6 +1,7 @@
 const os = require('os');
 const { prisma } = require('../utils/prisma');
 const { getAuthMode } = require('./authAccounts');
+const { getAuditMode } = require('./auditService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const logger = require('../utils/logger');
 
@@ -143,10 +144,27 @@ async function getQueueStatus() {
   }
 }
 
+async function getAuditQueueStatus() {
+  if (getAuditMode() !== 'queue') {
+    return { mode: 'direct' };
+  }
+  try {
+    const redis = require('../utils/redis');
+    if (redis.status() !== 'connected') {
+      return { mode: 'queue', available: false, reason: 'Redis not connected' };
+    }
+    const { getStatus } = require('../queue/auditQueue');
+    const counts = await getStatus();
+    return { mode: 'queue', available: true, ...counts };
+  } catch (err) {
+    return { mode: 'queue', available: false, reason: err.message };
+  }
+}
+
 function getFeatureFlags() {
   return {
     authMode: getAuthMode(),
-    auditEnabled: true,
+    auditMode: getAuditMode(),
     passwordResetEnabled: true,
     queueEnabled: false,
   };
@@ -175,12 +193,13 @@ async function getOverview() {
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms)),
     ]);
 
-  const [system, eventLoopDelay, auth, audit, queue, requestMetrics] = await Promise.all([
+  const [system, eventLoopDelay, auth, audit, queue, auditQueue, requestMetrics] = await Promise.all([
     getSystemStats(),
     timeout(getEventLoopDelay(), 1000).catch(() => -1),
     getAuthStats(),
     getAuditStats(),
     timeout(getQueueStatus(), 3000).catch(() => ({ available: false, reason: 'timeout' })),
+    timeout(getAuditQueueStatus(), 2000).catch(() => ({ mode: 'direct' })),
     getRequestMetrics(),
   ]);
 
@@ -193,9 +212,10 @@ async function getOverview() {
     auth,
     audit,
     queue,
+    auditQueue,
     requestMetrics,
     featureFlags: getFeatureFlags(),
   };
 }
 
-module.exports = { getOverview, getSystemStats, getEventLoopDelay, getAuthStats, getAuditStats, getQueueStatus, getFeatureFlags };
+module.exports = { getOverview, getSystemStats, getEventLoopDelay, getAuthStats, getAuditStats, getQueueStatus, getAuditQueueStatus, getFeatureFlags };
