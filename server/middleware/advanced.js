@@ -13,11 +13,15 @@ const sanitizeInput = (req, res, next) => {
         if (typeof val === 'string') {
             return val.trim()
                 .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, '')
-                .replace(/on\w+="[^"]*"/gmi, '')
-                .replace(/on\w+='[^']*'/gmi, '')
+                .replace(/<iframe\b[^>]*>([\s\S]*?)<\/iframe>/gmi, '')
+                .replace(/<object\b[^>]*>([\s\S]*?)<\/object>/gmi, '')
+                .replace(/<embed\b[^>]*>/gmi, '')
+                .replace(/<form\b[^>]*>([\s\S]*?)<\/form>/gmi, '')
+                .replace(/on\w+=["'][^"']*["']/gmi, '')
                 .replace(/on\w+=`[^`]*`/gmi, '')
                 .replace(/on\w+=\w+/gmi, '')
-                .replace(/javascript\s*:/gmi, '');
+                .replace(/javascript\s*:/gmi, '')
+                .replace(/data\s*:\s*text\s*\/\s*html/gmi, '');
         }
         if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
             const cleanObj = {};

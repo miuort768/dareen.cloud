@@ -617,10 +617,23 @@ model AuditLog {
   entityId   String?
   timestamp  DateTime @default(now())
 
+  // Sprint 2.1 — Enhanced Audit fields
+  accountId  String?
+  ipAddress  String?
+  userAgent  String?
+  status     String   @default("SUCCESS")
+  requestId  String?
+  metadata   Json?
+
   @@index([userId])
   @@index([action])
   @@index([entityType])
   @@index([timestamp])
+  @@index([accountId])
+  @@index([requestId])
+  @@index([status])
+  @@index([action, timestamp])
+  @@index([entityType, entityId])
   @@map("audit_logs")
 }
 
@@ -661,7 +674,23 @@ model Backup {
   @@map("backups")
 }
 
-// ========== RBAC (Phase 6) ==========
+// ========== Password Reset ==========
+
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  userId    String
+  userType  String
+  tokenHash String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, userType])
+  @@index([tokenHash])
+  @@map("password_reset_tokens")
+}
+
+// ========== RBAC ==========
 
 model Role {
   id          Int              @id @default(autoincrement())

@@ -5,6 +5,7 @@ const arabicReshaper = require('arabic-reshaper');
 const bidi = require('bidi-js');
 const path = require('path');
 const fs = require('fs');
+const fsp = fs.promises;
 const logger = require('../utils/logger');
 
 function reshape(text) {
@@ -23,16 +24,18 @@ const FONT_DIR = path.join(__dirname, '..', 'fonts');
 async function ensureArabicFont() {
     if (arabicFontPath) return arabicFontPath;
     const fontPath = path.join(FONT_DIR, FONT_FALLBACK_NAME);
-    if (fs.existsSync(fontPath)) {
+    try {
+        await fsp.access(fontPath);
         arabicFontPath = fontPath;
         return fontPath;
-    }
+    } catch { /* font not found, download */ }
+
     try {
-        fs.mkdirSync(FONT_DIR, { recursive: true });
+        await fsp.mkdir(FONT_DIR, { recursive: true });
         const response = await fetch(FONT_URL);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const buffer = Buffer.from(await response.arrayBuffer());
-        fs.writeFileSync(fontPath, buffer);
+        await fsp.writeFile(fontPath, buffer);
         arabicFontPath = fontPath;
         logger.info('Arabic font downloaded successfully');
         return fontPath;

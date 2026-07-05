@@ -3,6 +3,7 @@ const { getQueues, QUEUE_NAMES } = require('./queues');
 const logger = require('../../utils/logger');
 const path = require('path');
 const fs = require('fs');
+const fsp = fs.promises;
 
 const IMAGE_SIZES = {
     thumbnail: { width: 150, height: 150, fit: 'cover' },
@@ -43,8 +44,9 @@ class ImageWorker {
 
             const sharp = require('sharp');
             const metadata = await sharp(filePath).metadata();
+            const fileStat = await fsp.stat(filePath);
             metrics.original = {
-                size: fs.statSync(filePath).size,
+                size: fileStat.size,
                 width: metadata.width,
                 height: metadata.height,
                 format: metadata.format,
@@ -92,7 +94,7 @@ class ImageWorker {
 
                     await pipeline.toFile(outPath);
 
-                    const outStat = fs.statSync(outPath);
+                    const outStat = await fsp.stat(outPath);
                     const outMeta = await sharp(outPath).metadata();
 
                     metrics.variants[sizeName + '_' + fmt] = {
@@ -109,7 +111,7 @@ class ImageWorker {
             if (stripMetadata && (metrics.original.hasExif || metrics.original.hasIptc || metrics.original.hasXmp)) {
                 const strippedPath = path.join(uploadDir, filename + '.cleaned' + ext);
                 await sharp(filePath).withMetadata({ exif: undefined, icc: undefined, xmp: undefined }).toFile(strippedPath);
-                fs.renameSync(strippedPath, filePath);
+                await fsp.rename(strippedPath, filePath);
                 metrics.original.metadataStripped = true;
             }
 
@@ -133,9 +135,13 @@ class ImageWorker {
 
     async validate(filePath, mimeType) {
         if (!filePath) throw new Error('filePath is required');
-        if (!fs.existsSync(filePath)) throw new Error('File not found: ' + filePath);
+        try {
+            await fsp.access(filePath);
+        } catch {
+            throw new Error('File not found: ' + filePath);
+        }
 
-        const stat = fs.statSync(filePath);
+        const stat = await fsp.stat(filePath);
         if (stat.size === 0) throw new Error('File is empty');
         if (stat.size > MAX_FILE_SIZE) throw new Error('File exceeds max size (' + MAX_FILE_SIZE + ' bytes)');
 

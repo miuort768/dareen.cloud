@@ -7,6 +7,7 @@ const validate = require('../middleware/validation');
 const { createTeacherSchema, updateTeacherSchema } = require('../utils/validators');
 const ResponseHandler = require('../utils/responseHandler');
 const { prisma } = require('../utils/prisma');
+const { AUDIT_ACTIONS } = require('../constants/auditActions');
 
 const teacherSelect = { id: true, name: true, phone1: true, phone2: true, subject: true, price: true, email: true, username: true, currency: true };
 
@@ -46,6 +47,7 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSch
             where: { id: newId },
             select: teacherSelect
         });
+        req.audit({ action: AUDIT_ACTIONS.TEACHER_CREATED, entityType: 'teacher', entityId: newTeacher.id, metadata: { name: newTeacher.name } });
         res.status(201).json(newTeacher);
     } catch (err) {
         if (err.code === 'P2002') {
@@ -75,6 +77,7 @@ router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateTeacherS
             where: { id },
             select: teacherSelect
         });
+        req.audit({ action: AUDIT_ACTIONS.TEACHER_UPDATED, entityType: 'teacher', entityId: req.params.id });
         res.json(updated);
     } catch (err) {
         if (err.code === 'P2002') {
@@ -90,6 +93,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
     const { id } = req.params;
     try {
         await prisma.teacher.update({ where: { id }, data: { deletedAt: new Date() } });
+        req.audit({ action: AUDIT_ACTIONS.TEACHER_DELETED, entityType: 'teacher', entityId: req.params.id });
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting teacher', err, { id });
@@ -101,6 +105,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await prisma.teacher.updateMany({ where: { deletedAt: null }, data: { deletedAt: new Date() } });
+        req.audit({ action: AUDIT_ACTIONS.TEACHER_DELETED, entityType: 'teacher', metadata: { bulk: true, count: result.count || deletedCount } });
         res.json({ message: 'All teachers deleted' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete all teachers');

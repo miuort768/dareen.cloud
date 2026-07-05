@@ -18,6 +18,7 @@ const http = require('http');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 const monitoringMiddleware = require('./middleware/monitoring');
 const correlationIdMiddleware = require('./middleware/correlationId');
+const { auditMiddleware } = require('./middleware/audit');
 const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
 
@@ -48,6 +49,7 @@ const trialSessionsRouter = require('./routes/trial_sessions');
 const teacherAvailabilityRouter = require('./routes/teacher_availability');
 const { searchRouter } = require('./routes/search');
 const { exportRouter } = require('./routes/export');
+const auditRouter = require('./routes/audit');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -114,8 +116,10 @@ app.use(helmet({
 }));
 
 app.use(correlationIdMiddleware);
+app.use(auditMiddleware);
 app.use(monitoringMiddleware);
 app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 require('./routes/seo')(app);
 
@@ -123,6 +127,30 @@ async function startServer() {
     try {
         await prisma.$connect();
         console.log('Database connected successfully via Prisma');
+
+        // Ensure upload directories exist (avoid per-request sync mkdir)
+        const fsp = fs.promises;
+        const uploadDirs = [
+            path.join(__dirname, '../public/uploads/blog'),
+        ];
+        for (const dir of uploadDirs) {
+            await fsp.mkdir(dir, { recursive: true }).catch(() => {});
+        }
+
+        // Auto-sync Prisma schema for local SQLite databases
+        if ((process.env.DATABASE_URL || '').startsWith('file:')) {
+            try {
+                const { execSync } = require('child_process');
+                execSync('npx prisma db push', {
+                    cwd: __dirname,
+                    stdio: 'pipe',
+                    timeout: 30000,
+                    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
+                });
+            } catch (syncErr) {
+                console.warn('DB schema sync warning (non-fatal):', syncErr.message);
+            }
+        }
 
         app.set('trust proxy', 1);
 
@@ -224,6 +252,7 @@ async function startServer() {
         apiRouter.use('/search', searchRouter);
         apiRouter.use('/export', isAdmin, exportRouter);
         apiRouter.use('/roles', isAdmin, require('./routes/roles'));
+        apiRouter.use('/audit', isAdmin, auditRouter);
         apiRouter.use('/v1/executive', require('./routes/executive'));
 
         apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
@@ -244,6 +273,22 @@ async function startServer() {
 
         apiRouter.use((req, res) => {
             res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
+        });
+
+        // ✅ API router MUST come before static files and prerender
+        app.use('/api', apiRouter);
+
+        app.use((err, req, res, next) => {
+            const isDev = process.env.NODE_ENV === 'development';
+            logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
+            const { adminNotifyOnError } = require('./middleware/monitoring');
+            adminNotifyOnError()(err, req, res, () => {
+                res.status(500).json({
+                    error: 'Internal Server Error',
+                    message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
+                    details: isDev ? err.message : undefined
+                });
+            });
         });
 
         app.use(express.static(path.join(__dirname, '../dist'), {
@@ -267,21 +312,6 @@ async function startServer() {
                 }
             }
         }));
-
-        app.use('/api', apiRouter);
-
-        app.use((err, req, res, next) => {
-            const isDev = process.env.NODE_ENV === 'development';
-            logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
-            const { adminNotifyOnError } = require('./middleware/monitoring');
-            adminNotifyOnError()(err, req, res, () => {
-                res.status(500).json({
-                    error: 'Internal Server Error',
-                    message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
-                    details: isDev ? err.message : undefined
-                });
-            });
-        });
 
         prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
         prerender.set('crawlerUserAgents', [
@@ -365,10 +395,11 @@ async function startServer() {
             console.log(`${signal} received. Shutting down gracefully...`);
             serverInstance.close(async () => {
                 try {
+                    await logger.close();
                     await prisma.$disconnect();
                     process.exit(0);
                 } catch (err) {
-                    console.error('Error during database closure:', err);
+                    console.error('Error during shutdown:', err);
                     process.exit(1);
                 }
             });

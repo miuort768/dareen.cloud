@@ -11,11 +11,7 @@ const logger = require('../utils/logger');
 const UPLOAD_DIR = path.join(__dirname, '../../public/uploads/blog');
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const fs = require('fs');
-        if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-        cb(null, UPLOAD_DIR);
-    },
+    destination: (req, file, cb) => cb(null, UPLOAD_DIR),
     filename: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
         cb(null, `${uuidv4()}${ext}`);
@@ -67,8 +63,8 @@ router.post('/blog-image', authMiddleware, checkRole(['admin']), upload.single('
     res.json({ url, filename });
 });
 
-router.delete('/blog-image/:filename', authMiddleware, checkRole(['admin']), (req, res) => {
-    const fs = require('fs');
+router.delete('/blog-image/:filename', authMiddleware, checkRole(['admin']), async (req, res) => {
+    const fsp = require('fs').promises;
     const baseName = path.parse(req.params.filename).name;
     const dir = UPLOAD_DIR;
 
@@ -82,11 +78,12 @@ router.delete('/blog-image/:filename', authMiddleware, checkRole(['admin']), (re
     let deleted = 0;
     for (const pattern of patterns) {
         const filePath = path.join(dir, pattern);
-        if (fs.existsSync(filePath)) {
-            try {
-                fs.unlinkSync(filePath);
-                deleted++;
-            } catch (err) {
+        try {
+            await fsp.access(filePath);
+            await fsp.unlink(filePath);
+            deleted++;
+        } catch (err) {
+            if (err.code !== 'ENOENT') {
                 logger.warn('Failed to delete ' + pattern + ': ' + (err.message || err));
             }
         }

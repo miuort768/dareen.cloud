@@ -10,11 +10,11 @@ if (!fs.existsSync(LOG_DIR)) {
 const logFile = path.join(LOG_DIR, 'app.log');
 const errorFile = path.join(LOG_DIR, 'error.log');
 
-const writeToFile = (file, message) => {
-    try {
-        fs.appendFileSync(file, message + '\n');
-    } catch {}
-};
+const logStream = fs.createWriteStream(logFile, { flags: 'a' });
+const errorStream = fs.createWriteStream(errorFile, { flags: 'a' });
+
+logStream.on('error', () => {});
+errorStream.on('error', () => {});
 
 const sanitizeForFile = (obj) => {
     if (!obj) return '';
@@ -34,26 +34,32 @@ const logger = {
     info: (message, ...args) => {
         const line = `[INFO] [${new Date().toISOString()}] ${message} ${args.map(sanitizeForFile).join(' ')}`;
         console.log(line);
-        writeToFile(logFile, line);
+        logStream.write(line + '\n');
     },
     error: (message, error, ...args) => {
         const details = error?.stack || error?.message || error;
         const extra = args.map(sanitizeForFile).join(' ');
         const line = `[ERROR] [${new Date().toISOString()}] ${message} ${details} ${extra}`;
         console.error(line);
-        writeToFile(errorFile, line);
-        writeToFile(logFile, line);
+        errorStream.write(line + '\n');
+        logStream.write(line + '\n');
     },
     warn: (message, ...args) => {
         const line = `[WARN] [${new Date().toISOString()}] ${message} ${args.map(sanitizeForFile).join(' ')}`;
         console.warn(line);
-        writeToFile(logFile, line);
+        logStream.write(line + '\n');
     },
     debug: (message, ...args) => {
         if (process.env.NODE_ENV !== 'production') {
             const line = `[DEBUG] [${new Date().toISOString()}] ${message} ${args.map(sanitizeForFile).join(' ')}`;
             console.log(line);
         }
+    },
+    close: async () => {
+        await Promise.all([
+            new Promise(resolve => logStream.end(resolve)),
+            new Promise(resolve => errorStream.end(resolve)),
+        ]);
     }
 };
 

@@ -4,6 +4,7 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 const logger = require('../utils/logger');
 const ResponseHandler = require('../utils/responseHandler');
 const { prisma } = require('../utils/prisma');
+const { AUDIT_ACTIONS } = require('../constants/auditActions');
 
 const parentSelect = { id: true, name: true, phone: true, email: true, username: true };
 
@@ -34,6 +35,7 @@ router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
             data: { id: newId, name, phone, email: email || '', username: dbUsername, password: hashedPassword }
         });
         const newItem = await prisma.parent.findUnique({ where: { id: newId }, select: parentSelect });
+        req.audit({ action: AUDIT_ACTIONS.PARENT_CREATED, entityType: 'parent', entityId: newId, metadata: { name } });
         res.status(201).json(newItem);
     } catch (err) {
         if (err.code === 'P2002') {
@@ -55,6 +57,7 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
         }
         await prisma.parent.update({ where: { id }, data });
         const updated = await prisma.parent.findUnique({ where: { id }, select: parentSelect });
+        req.audit({ action: AUDIT_ACTIONS.PARENT_UPDATED, entityType: 'parent', entityId: req.params.id });
         res.json(updated);
     } catch (err) {
         if (err.code === 'P2002') {
@@ -69,6 +72,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
     const { id } = req.params;
     try {
         await prisma.parent.update({ where: { id }, data: { deletedAt: new Date() } });
+        req.audit({ action: AUDIT_ACTIONS.PARENT_DELETED, entityType: 'parent', entityId: req.params.id });
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting parent', err, { id });

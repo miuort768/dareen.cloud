@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createStudentSchema, updateStudentSchema } = require('../utils/validators');
 const { prisma } = require('../utils/prisma');
+const { AUDIT_ACTIONS } = require('../constants/auditActions');
 
 const studentInclude = {
     enrollments: true,
@@ -30,7 +33,8 @@ const mapStudent = (s, isTeacher = false) => {
 router.get('/', authMiddleware, async (req, res) => {
     try {
         const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
+        const rawLimit = parseInt(req.query.limit);
+        const limit = isNaN(rawLimit) ? rawLimit : Math.min(rawLimit, 200); // max 200 per page
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
         const isTeacher = req.user && req.user.role === 'teacher';
 
@@ -92,10 +96,9 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // 2. Add student
-router.post('/', validate(createStudentSchema), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), validate(createStudentSchema), async (req, res) => {
     const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password, currency } = req.body;
-    const newId = id || `std_${require('crypto').randomBytes(4).toString('hex')}`;
-    const bcrypt = require('bcrypt');
+    const newId = id || `std_${crypto.randomBytes(4).toString('hex')}`;
 
     try {
         let hashedPassword = null;
@@ -137,6 +140,7 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
             });
         });
 
+        req.audit({ action: AUDIT_ACTIONS.STUDENT_CREATED, entityType: 'student', entityId: student.id, metadata: { name: student.name } });
         res.status(201).json(mapStudent(student));
     } catch (err) {
         if (err.code === 'P2002') {
@@ -148,10 +152,9 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 });
 
 // 3. Update student
-router.put('/:id', validate(updateStudentSchema), async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateStudentSchema), async (req, res) => {
     const { id } = req.params;
     const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password, currency } = req.body;
-    const bcrypt = require('bcrypt');
 
     try {
         const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
@@ -208,6 +211,7 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
             });
         });
 
+        req.audit({ action: AUDIT_ACTIONS.STUDENT_UPDATED, entityType: 'student', entityId: req.params.id });
         res.json(mapStudent(student));
     } catch (err) {
         if (err.code === 'P2002') {
@@ -226,6 +230,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
             await tx.enrollment.deleteMany({ where: { studentId: id } });
             await tx.student.update({ where: { id }, data: { deletedAt: new Date() } });
         });
+        req.audit({ action: AUDIT_ACTIONS.STUDENT_DELETED, entityType: 'student', entityId: req.params.id });
         res.json({ message: 'Deleted successfully' });
     } catch (err) {
         logger.error('Error deleting student', err, { id });
@@ -240,6 +245,7 @@ router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
             await tx.enrollment.deleteMany();
             await tx.student.updateMany({ data: { deletedAt: new Date() } });
         });
+        req.audit({ action: AUDIT_ACTIONS.STUDENT_DELETED, entityType: 'student', metadata: { bulk: true, count: result.count || deletedCount } });
         res.json({ message: 'All students and enrollments deleted' });
     } catch (err) {
         logger.error('Error deleting all students', err);
@@ -248,7 +254,7 @@ router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 });
 
 // 6. Freeze / Unfreeze enrollment
-router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, async (req, res) => {
+router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { studentId, enrollmentId } = req.params;
     const { isFrozen, frozenReason } = req.body;
     try {
@@ -256,6 +262,7 @@ router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, asy
             where: { id: parseInt(enrollmentId), studentId },
             data: { nextSessionNotes: isFrozen ? `[مجمدة] ${frozenReason || ''}` : null }
         });
+        req.audit({ action: AUDIT_ACTIONS.STUDENT_UPDATED, entityType: 'enrollment', entityId: req.params.enrollmentId, metadata: { studentId: req.params.studentId, freeze: true } });
         res.json(updated);
     } catch (err) {
         logger.error('Error updating freeze status', err);

@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
@@ -8,6 +9,8 @@ const logger = require('../utils/logger');
 const ResponseHandler = require('../utils/responseHandler');
 const { prisma } = require('../utils/prisma');
 const { createRateLimiter } = require('../middleware/rateLimiter');
+const { AUDIT_ACTIONS } = require('../constants/auditActions');
+const { AUDIT_STATUS } = require('../constants/auditStatus');
 
 const router = express.Router();
 
@@ -37,37 +40,34 @@ router.post('/login', loginLimiter, async (req, res) => {
         let role = 'admin';
         let teacherName = null;
 
-        userData = await prisma.user.findUnique({ where: { username } });
-        role = 'admin';
+        try {
+            const [userRecord, teacherRecord, chatProfileRecord, parentRecord, studentRecord] = await Promise.all([
+                prisma.user.findUnique({ where: { username } }),
+                prisma.teacher.findFirst({
+                    where: { OR: [{ username }, { email: username }], deletedAt: null }
+                }),
+                prisma.chatProfile.findUnique({ where: { username } }),
+                prisma.parent.findFirst({
+                    where: { OR: [{ username }, { phone: username }], deletedAt: null }
+                }),
+                prisma.student.findFirst({
+                    where: { OR: [{ username }, { studentPhone: username }], deletedAt: null }
+                }),
+            ]);
 
-        if (!userData) {
-            userData = await prisma.teacher.findFirst({
-                where: { OR: [{ username }, { email: username }], deletedAt: null }
-            });
-            if (userData) { role = 'teacher'; teacherName = userData.name; }
-        }
-
-        if (!userData) {
-            userData = await prisma.chatProfile.findUnique({ where: { username } });
-            if (userData) role = 'chat_user';
-        }
-
-        if (!userData) {
-            userData = await prisma.parent.findFirst({
-                where: { OR: [{ username }, { phone: username }], deletedAt: null }
-            });
-            if (userData) role = 'parent';
-        }
-
-        if (!userData) {
-            userData = await prisma.student.findFirst({
-                where: { OR: [{ username }, { studentPhone: username }], deletedAt: null }
-            });
-            if (userData) role = 'student';
+            if (userRecord) { userData = userRecord; role = 'admin'; }
+            else if (teacherRecord) { userData = teacherRecord; role = 'teacher'; teacherName = teacherRecord.name; }
+            else if (chatProfileRecord) { userData = chatProfileRecord; role = 'chat_user'; }
+            else if (parentRecord) { userData = parentRecord; role = 'parent'; }
+            else if (studentRecord) { userData = studentRecord; role = 'student'; }
+        } catch (dbErr) {
+            logger.error('Auth database error', dbErr, { username });
+            return res.status(500).json({ error: 'Authentication service temporarily unavailable' });
         }
 
         if (!userData) {
             logger.warn(`Login failed: User '${username}' not found`);
+            req.audit({ action: AUDIT_ACTIONS.LOGIN_FAILED, status: AUDIT_STATUS.FAILURE, metadata: { attemptedUsername: username, reason: 'user_not_found' } });
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
@@ -78,6 +78,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 
         if (!isValidPassword) {
             logger.warn(`Login failed: Invalid password for user '${username}'`);
+            req.audit({ action: AUDIT_ACTIONS.LOGIN_FAILED, status: AUDIT_STATUS.FAILURE, metadata: { attemptedUsername: username, reason: 'invalid_password' } });
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
@@ -112,6 +113,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 
         const { password: _, ...finalUserData } = userData;
         logger.info(`User logged in: ${username} (${role})`);
+        req.audit({ action: AUDIT_ACTIONS.LOGIN_SUCCESS, entityType: role, entityId: userData.id });
 
         res.json({
             token,
@@ -177,6 +179,7 @@ router.post('/verify', verifyLimiter, async (req, res) => {
             try { userData.permissions = JSON.parse(userData.permissions); } catch (e) { userData.permissions = []; }
         }
 
+        req.audit({ action: AUDIT_ACTIONS.TOKEN_VERIFIED, entityType: decoded.role, entityId: decoded.id });
         res.json({ valid: true, user: userData });
     } catch (error) {
         res.json({ valid: false });
@@ -188,11 +191,21 @@ router.post('/refresh', async (req, res) => {
     if (!token) return res.status(400).json({ error: 'Token is required' });
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Verify user still exists in DB before issuing a new token
+        const modelMap = { admin: 'user', teacher: 'teacher', parent: 'parent', student: 'student', chat_user: 'chatProfile' };
+        const modelName = modelMap[decoded.role];
+        if (modelName) {
+            const exists = await prisma[modelName].findUnique({ where: { id: decoded.id }, select: { id: true } });
+            if (!exists) return res.status(401).json({ error: 'User no longer exists' });
+        }
+
         const newToken = jwt.sign(
             { id: decoded.id, username: decoded.username, role: decoded.role, phone: decoded.phone, teacherName: decoded.teacherName, token_version: decoded.token_version, permissions: decoded.permissions },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
         );
+        req.audit({ action: AUDIT_ACTIONS.REFRESH_TOKEN, entityType: decoded.role, entityId: decoded.id });
         res.json({ token: newToken });
     } catch {
         res.status(401).json({ error: 'Token expired or invalid' });
@@ -210,16 +223,157 @@ router.post('/logout-all', authMiddleware, logoutAllLimiter, async (req, res) =>
                 where: { id: req.user.id },
                 data: { tokenVersion: { increment: 1 } }
             });
-        } else if (req.user.role === 'chat_user') {
-            await prisma.chatProfile.update({
-                where: { id: req.user.id },
-                data: { password: req.user.password }
-            });
         }
+        // chat_user: no tokenVersion field — session invalidation not supported
+        req.audit({ action: AUDIT_ACTIONS.LOGOUT_ALL, entityType: req.user.role, entityId: req.user.id });
         res.json({ success: true, message: 'Logged out from all devices.' });
     } catch (error) {
         logger.error('Logout-all error', error);
         res.status(500).json({ error: 'Failed to logout from all devices.' });
+    }
+});
+
+// ── Password Reset Rate Limiter (per IP + per username) ──
+const passwordResetLimits = new Map();
+
+function passwordResetLimiter(req, res, next) {
+    const windowMs = 15 * 60 * 1000;
+    const max = 3;
+    const ip = req.ip || req.connection.remoteAddress;
+    const username = req.body.username || '';
+    const now = Date.now();
+
+    const getOrCreate = (key) => {
+        let entry = passwordResetLimits.get(key);
+        if (!entry || now > entry.resetTime) {
+            entry = { count: 0, resetTime: now + windowMs };
+            passwordResetLimits.set(key, entry);
+        }
+        return entry;
+    };
+
+    const ipEntry = getOrCreate(`rst:ip:${ip}`);
+    if (ipEntry.count >= max) {
+        return res.status(429).json({ error: 'محاولات كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' });
+    }
+    const userEntry = getOrCreate(`rst:user:${username}`);
+    if (userEntry.count >= max) {
+        return res.status(429).json({ error: 'محاولات كثيرة جداً لهذا المستخدم، يرجى المحاولة بعد 15 دقيقة' });
+    }
+    ipEntry.count++;
+    userEntry.count++;
+
+    if (passwordResetLimits.size > 2000) {
+        for (const [k, v] of passwordResetLimits) {
+            if (now > v.resetTime) passwordResetLimits.delete(k);
+        }
+    }
+    next();
+}
+
+// ── Forgot Password ──
+router.post('/forgot-password', passwordResetLimiter, async (req, res) => {
+    const { username, userType } = req.body;
+
+    if (!username || !userType) {
+        return res.status(400).json({ error: 'Username and user type are required' });
+    }
+
+    const validTypes = ['admin', 'teacher', 'student', 'parent', 'chat_user'];
+    if (!validTypes.includes(userType)) {
+        return res.status(400).json({ error: 'Invalid user type' });
+    }
+
+    try {
+        const modelMap = { admin: 'user', teacher: 'teacher', student: 'student', parent: 'parent', chat_user: 'chatProfile' };
+        const modelName = modelMap[userType];
+
+        let userRecord;
+        if (userType === 'admin' || userType === 'chat_user') {
+            userRecord = await prisma[modelName].findUnique({ where: { username } });
+        } else if (userType === 'teacher') {
+            userRecord = await prisma[modelName].findFirst({
+                where: { OR: [{ username }, { email: username }], deletedAt: null }
+            });
+        } else if (userType === 'parent') {
+            userRecord = await prisma[modelName].findFirst({
+                where: { OR: [{ username }, { phone: username }], deletedAt: null }
+            });
+        } else {
+            userRecord = await prisma[modelName].findFirst({
+                where: { OR: [{ username }, { studentPhone: username }], deletedAt: null }
+            });
+        }
+
+        if (!userRecord || !userRecord.password) {
+            return res.json({ success: true, message: 'If that user exists, a reset link has been sent.' });
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+        const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+        await prisma.passwordResetToken.deleteMany({ where: { userId: userRecord.id, userType } });
+        await prisma.passwordResetToken.create({ data: { userId: userRecord.id, userType, tokenHash, expiresAt } });
+
+        logger.info(`Password reset token generated for ${username} (${userType})`);
+        req.audit({ action: AUDIT_ACTIONS.PASSWORD_RESET_REQUESTED, entityType: userType, entityId: userRecord.id, metadata: { username } });
+
+        const response = { success: true, message: 'If that user exists, a reset link has been sent.' };
+        if (process.env.NODE_ENV === 'development') {
+            response.resetToken = token;
+            response.userId = userRecord.id;
+            response.userType = userType;
+        }
+        res.json(response);
+    } catch (err) {
+        logger.error('Forgot password error', err, { username, userType });
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// ── Reset Password ──
+router.post('/reset-password', async (req, res) => {
+    const { token, newPassword, userId, userType } = req.body;
+
+    if (!token || !newPassword || !userId || !userType) {
+        return res.status(400).json({ error: 'Token, new password, user ID, and user type are required' });
+    }
+    if (newPassword.length < 6) {
+        return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+
+    try {
+        const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+
+        const resetToken = await prisma.passwordResetToken.findFirst({
+            where: { userId, userType, tokenHash, usedAt: null, expiresAt: { gte: new Date() } },
+        });
+        if (!resetToken) {
+            return res.status(400).json({ error: 'Invalid or expired reset token' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const modelMap = { admin: 'user', teacher: 'teacher', student: 'student', parent: 'parent', chat_user: 'chatProfile' };
+        const modelName = modelMap[userType];
+
+        await prisma[modelName].update({ where: { id: userId }, data: { password: hashedPassword } });
+        await prisma.passwordResetToken.update({ where: { id: resetToken.id }, data: { usedAt: new Date() } });
+
+        if (userType === 'admin') {
+            await prisma[modelName].update({ where: { id: userId }, data: { tokenVersion: { increment: 1 } } });
+        } else {
+            try {
+                await prisma[modelName].update({ where: { id: userId }, data: { tokenVersion: { increment: 1 } } });
+            } catch { /* tokenVersion may not exist on this model */ }
+        }
+
+        logger.info(`Password reset completed for ${userId} (${userType})`);
+        req.audit({ action: AUDIT_ACTIONS.PASSWORD_RESET_COMPLETED, entityType: userType, entityId: userId });
+        res.json({ success: true, message: 'Password has been reset successfully' });
+    } catch (err) {
+        logger.error('Reset password error', err, { userId, userType });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
