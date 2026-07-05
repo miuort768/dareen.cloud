@@ -1,13 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { prisma } = require('../utils/prisma');
 const { hasPermission } = require('../services/permissionService');
-
-const modelMap = {
-    admin: 'user',
-    teacher: 'teacher',
-    student: 'student',
-    parent: 'parent',
-};
+const authAccounts = require('../services/authAccounts');
 
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -22,15 +15,9 @@ const authMiddleware = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (decoded.token_version !== undefined) {
-            const modelName = modelMap[decoded.role];
-            if (modelName) {
-                const current = await prisma[modelName].findUnique({
-                    where: { id: decoded.id },
-                    select: { tokenVersion: true }
-                });
-                if (current && current.tokenVersion !== decoded.token_version) {
-                    return res.status(401).json({ error: 'Session revoked. Please login again.' });
-                }
+            const versionOk = await authAccounts.checkTokenVersion(decoded.id, decoded.role, decoded.token_version);
+            if (!versionOk) {
+                return res.status(401).json({ error: 'Session revoked. Please login again.' });
             }
         }
 

@@ -577,6 +577,35 @@ model Notification {
   @@map("notifications")
 }
 
+// ========== Account Model (Unified Auth, Sprint 2.2) ==========
+
+enum AccountType {
+  ADMIN
+  TEACHER
+  PARENT
+  STUDENT
+  CHAT_USER
+}
+
+model Account {
+  id                  String      @id @default(cuid())
+  username            String      @unique
+  normalizedLogin     String      @unique
+  passwordHash        String
+  accountType         AccountType
+  entityId            String
+  tokenVersion        Int         @default(0)
+  isActive            Boolean     @default(true)
+  isLocked            Boolean     @default(false)
+  lastLoginAt         DateTime?
+  lastPasswordChangeAt DateTime?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@index([accountType, entityId])
+  @@map("accounts")
+}
+
 // ========== Phase 5: System Domain ==========
 
 model SystemSetting {
