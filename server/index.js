@@ -53,6 +53,7 @@ const { exportRouter } = require('./routes/export');
 const auditRouter = require('./routes/audit');
 const { healthRouter } = require('./routes/health');
 const { monitoringRouter } = require('./routes/monitoring');
+const enrollmentRouter = require('./routes/enrollment');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -126,6 +127,227 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 require('./routes/seo')(app);
 
+app.set('trust proxy', 1);
+
+const { createRateLimiter } = require('./middleware/rateLimiter');
+const limiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: process.env.NODE_ENV === 'development' ? 100000 : 3000,
+    message: 'Too many requests, please try again later.',
+    skipFailedRequests: false,
+});
+const strictLimiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
+});
+const moderateLimiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
+});
+app.use('/api/', (req, res, next) => {
+    if (req.path === '/health' || req.path === '/') return next();
+    limiter(req, res, next);
+});
+const apiRouter = express.Router();
+const { authMiddleware, checkRole, requirePermission } = require('./middleware/auth');
+const { isAdmin } = require('./middleware/permissions');
+
+apiRouter.use('/auth/login', strictLimiter);
+apiRouter.use('/auth/register', strictLimiter);
+apiRouter.use('/auth/forgot-password', strictLimiter);
+apiRouter.use('/auth/reset-password', strictLimiter);
+apiRouter.use('/auth/verify', moderateLimiter);
+apiRouter.use('/public-chat', moderateLimiter);
+
+apiRouter.use('/auth', authRouter);
+apiRouter.use('/blog', blogRouter);
+apiRouter.use('/upload', uploadRouter);
+apiRouter.get('/docs', (req, res) => {
+    res.json(require('./utils/apiDocs'));
+});
+
+apiRouter.get('/system/public-settings', async (req, res) => {
+    try {
+        const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
+            'notifications_enabled', 'auto_backup', 'chatbot_enabled',
+            'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
+            'reminder_minutes_before', 'library_whatsapp', 'library_telegram'];
+        const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
+            const settings = await prisma.systemSetting.findMany({
+                where: { key: { in: keys } }
+            });
+            const map = {};
+            settings.forEach(s => map[s.key] = s.value);
+            return map;
+        });
+        res.json(settingsMap);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+apiRouter.use('/public-chat', publicChatRouter);
+
+const jobsRouter = require('./routes/jobs');
+apiRouter.use('/jobs', jobsRouter);
+
+const contactRouter = require('./routes/contact');
+apiRouter.use('/contact', contactRouter);
+
+apiRouter.use(authMiddleware);
+apiRouter.use(sanitizeInput);
+apiRouter.use(activityAuditor);
+
+apiRouter.use('/live', liveRouter);
+apiRouter.use('/students', studentRouter);
+apiRouter.use('/teachers', teacherRouter);
+apiRouter.use('/parents', parentRouter);
+apiRouter.use('/evaluations', evaluationsRouter);
+apiRouter.use('/student-portal', studentPortalRouter);
+apiRouter.use('/sessions', sessionRouter);
+apiRouter.use('/notifications', notificationRouter);
+apiRouter.use('/system', isAdmin, systemRouter);
+apiRouter.use('/finance', isAdmin, financeRouter);
+apiRouter.use('/currencies', isAdmin, require('./routes/currencies').currenciesRouter);
+apiRouter.use('/tasks', tasksRouter);
+apiRouter.use('/active-sessions', activeSessionsRouter);
+apiRouter.use('/chat', chatRouter);
+apiRouter.use('/announcements', announcementsRouter);
+apiRouter.use('/forum', forumRouter);
+apiRouter.use('/appointments', appointmentsRouter);
+apiRouter.use('/push', pushRouter);
+apiRouter.use('/leads', leadsRouter);
+apiRouter.use('/trial-sessions', trialSessionsRouter);
+apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
+apiRouter.use('/search', searchRouter);
+apiRouter.use('/export', isAdmin, exportRouter);
+apiRouter.use('/roles', isAdmin, require('./routes/roles'));
+apiRouter.use('/audit', isAdmin, auditRouter);
+apiRouter.use('/monitoring', isAdmin, monitoringRouter);
+apiRouter.use('/enrollments', enrollmentRouter);
+apiRouter.use('/v1/executive', require('./routes/executive'));
+
+apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
+    req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;
+    invoiceRouter(req, res, next);
+});
+
+apiRouter.use('/invoices', isAdmin, (req, res, next) => {
+    if (req.url === '' || req.url === '/') req.url = '/teacher';
+    else if (!req.url.startsWith('/teacher') && !req.url.startsWith('/student')) req.url = '/teacher' + req.url;
+    invoiceRouter(req, res, next);
+});
+
+apiRouter.use('/users', isAdmin, (req, res, next) => {
+    req.url = '/users' + req.url;
+    systemRouter(req, res, next);
+});
+
+apiRouter.use((req, res) => {
+    res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
+});
+
+// Health & flags — no auth (liveness/readiness)
+app.use('/health', healthRouter);
+
+app.use('/api', apiRouter);
+
+app.use((err, req, res, next) => {
+    const isDev = process.env.NODE_ENV === 'development';
+    logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
+    const { adminNotifyOnError } = require('./middleware/monitoring');
+    adminNotifyOnError()(err, req, res, () => {
+        res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
+            details: isDev ? err.message : undefined
+        });
+    });
+});
+
+app.use(express.static(path.join(__dirname, '../dist'), {
+    maxAge: '1y',
+    immutable: true,
+    index: false,
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-cache');
+        } else if (filePath.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+    }
+}));
+
+app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads'), {
+    maxAge: '7d',
+    setHeaders: (res, filePath) => {
+        if (filePath.match(/\.(png|jpg|jpeg|gif|webp|avif|svg)$/)) {
+            res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
+        }
+    }
+}));
+
+prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
+prerender.set('crawlerUserAgents', [
+    'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
+    'twitterbot', 'rogerbot', 'linkedinbot', 'embedly',
+    'baiduspider', 'pinterestbot', 'slackbot-likex', 'vkshare',
+    'w3c_validator', 'redditbot', 'applebot', 'whatsapp',
+    'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
+    'ahrefsbot', 'dotbot'
+]);
+prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
+app.use(prerender);
+
+// RSS Feed (sitemap handled in routes/seo.js)
+app.get('/rss.xml', async (req, res) => {
+    try {
+        const posts = await prisma.blogPost.findMany({
+            select: { slug: true, title: true, excerpt: true, coverImage: true, date: true, author: true, category: true, subject: true, curriculum: true },
+            orderBy: { date: 'desc' },
+            take: 50
+        });
+        const items = posts.map(p => `
+            <item>
+                <title><![CDATA[${p.title}]]></title>
+                <link>https://dareen.cloud/books/${p.slug}</link>
+                <guid>https://dareen.cloud/books/${p.slug}</guid>
+                <description><![CDATA[${p.excerpt || ''}]]></description>
+                <author>${p.author}</author>
+                <category>${p.category || ''}${p.subject ? `, ${p.subject}` : ''}</category>
+                <pubDate>${new Date(p.date).toUTCString()}</pubDate>
+                ${p.coverImage ? `<enclosure url="https://dareen.cloud${p.coverImage}" type="image/jpeg" />` : ''}
+            </item>`).join('');
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>دارين السابعة - المدونة</title>
+        <link>https://dareen.cloud/books</link>
+        <description>أحدث المقالات والموارد التعليمية من دارين السابعة للتعليم والتدريب</description>
+        <language>ar</language>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+        <atom:link href="https://dareen.cloud/rss.xml" rel="self" type="application/rss+xml" />
+        ${items}
+    </channel>
+</rss>`;
+        res.header('Content-Type', 'application/rss+xml; charset=utf-8');
+        res.send(xml);
+    } catch (err) {
+        res.status(500).send('Error generating RSS feed');
+    }
+});
+
+const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/trial-sessions']);
+app.get(/(.*)/, (req, res) => {
+    const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');
+    res.status(isKnown ? 200 : 404).sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+// Export for testing (supertest needs the app without starting the server)
+module.exports = app;
+
 async function startServer() {
     try {
         await prisma.$connect();
@@ -155,228 +377,9 @@ async function startServer() {
             }
         }
 
-        app.set('trust proxy', 1);
-
         const { initQueueSystem } = require('./services');
         initQueueSystem().catch((err) => {
             console.error('Queue system init failed (non-fatal):', err.message);
-        });
-
-        const { createRateLimiter } = require('./middleware/rateLimiter');
-        const limiter = createRateLimiter({
-            windowMs: 15 * 60 * 1000,
-            max: process.env.NODE_ENV === 'development' ? 100000 : 3000,
-            message: 'Too many requests, please try again later.',
-            skipFailedRequests: false,
-        });
-
-        const strictLimiter = createRateLimiter({
-            windowMs: 15 * 60 * 1000,
-            max: 20,
-            message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
-        });
-        const moderateLimiter = createRateLimiter({
-            windowMs: 15 * 60 * 1000,
-            max: 100,
-            message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
-        });
-        app.use('/api/', (req, res, next) => {
-            if (req.path === '/health' || req.path === '/') return next();
-            limiter(req, res, next);
-        });
-        const apiRouter = express.Router();
-        const { authMiddleware, checkRole, requirePermission } = require('./middleware/auth');
-        const { isAdmin } = require('./middleware/permissions');
-
-        apiRouter.use('/auth/login', strictLimiter);
-        apiRouter.use('/auth/register', strictLimiter);
-        apiRouter.use('/auth/forgot-password', strictLimiter);
-        apiRouter.use('/auth/reset-password', strictLimiter);
-        apiRouter.use('/auth/verify', moderateLimiter);
-        apiRouter.use('/public-chat', moderateLimiter);
-
-        apiRouter.use('/auth', authRouter);
-        apiRouter.use('/blog', blogRouter);
-        apiRouter.use('/upload', uploadRouter);
-        apiRouter.get('/docs', (req, res) => {
-            res.json(require('./utils/apiDocs'));
-        });
-
-        apiRouter.get('/system/public-settings', async (req, res) => {
-            try {
-                const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
-                    'notifications_enabled', 'auto_backup', 'chatbot_enabled',
-                    'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-                    'reminder_minutes_before', 'library_whatsapp', 'library_telegram'];
-                const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
-                    const settings = await prisma.systemSetting.findMany({
-                        where: { key: { in: keys } }
-                    });
-                    const map = {};
-                    settings.forEach(s => map[s.key] = s.value);
-                    return map;
-                });
-                res.json(settingsMap);
-            } catch (err) {
-                res.status(500).json({ error: err.message });
-            }
-        });
-
-        apiRouter.use('/public-chat', publicChatRouter);
-
-        const jobsRouter = require('./routes/jobs');
-        apiRouter.use('/jobs', jobsRouter);
-
-        const contactRouter = require('./routes/contact');
-        apiRouter.use('/contact', contactRouter);
-
-        apiRouter.use(authMiddleware);
-        apiRouter.use(sanitizeInput);
-        apiRouter.use(activityAuditor);
-
-        apiRouter.use('/live', liveRouter);
-        apiRouter.use('/students', studentRouter);
-        apiRouter.use('/teachers', teacherRouter);
-        apiRouter.use('/parents', parentRouter);
-        apiRouter.use('/evaluations', evaluationsRouter);
-        apiRouter.use('/student-portal', studentPortalRouter);
-        apiRouter.use('/sessions', sessionRouter);
-        apiRouter.use('/notifications', notificationRouter);
-        apiRouter.use('/system', isAdmin, systemRouter);
-        apiRouter.use('/finance', isAdmin, financeRouter);
-        apiRouter.use('/currencies', isAdmin, require('./routes/currencies').currenciesRouter);
-        apiRouter.use('/tasks', tasksRouter);
-        apiRouter.use('/active-sessions', activeSessionsRouter);
-        apiRouter.use('/chat', chatRouter);
-        apiRouter.use('/announcements', announcementsRouter);
-        apiRouter.use('/forum', forumRouter);
-        apiRouter.use('/appointments', appointmentsRouter);
-        apiRouter.use('/push', pushRouter);
-        apiRouter.use('/leads', leadsRouter);
-        apiRouter.use('/trial-sessions', trialSessionsRouter);
-        apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
-        apiRouter.use('/search', searchRouter);
-        apiRouter.use('/export', isAdmin, exportRouter);
-        apiRouter.use('/roles', isAdmin, require('./routes/roles'));
-        apiRouter.use('/audit', isAdmin, auditRouter);
-        apiRouter.use('/monitoring', isAdmin, monitoringRouter);
-        apiRouter.use('/v1/executive', require('./routes/executive'));
-
-        apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
-            req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;
-            invoiceRouter(req, res, next);
-        });
-
-        apiRouter.use('/invoices', isAdmin, (req, res, next) => {
-            if (req.url === '' || req.url === '/') req.url = '/teacher';
-            else if (!req.url.startsWith('/teacher') && !req.url.startsWith('/student')) req.url = '/teacher' + req.url;
-            invoiceRouter(req, res, next);
-        });
-
-        apiRouter.use('/users', isAdmin, (req, res, next) => {
-            req.url = '/users' + req.url;
-            systemRouter(req, res, next);
-        });
-
-        apiRouter.use((req, res) => {
-            res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
-        });
-
-        // Health & flags — no auth (liveness/readiness)
-        app.use('/health', healthRouter);
-
-        // ✅ API router MUST come before static files and prerender
-        app.use('/api', apiRouter);
-
-        app.use((err, req, res, next) => {
-            const isDev = process.env.NODE_ENV === 'development';
-            logger.error('Unhandled Server Error', err, { path: req.path, user: req.user?.username || 'Guest' });
-            const { adminNotifyOnError } = require('./middleware/monitoring');
-            adminNotifyOnError()(err, req, res, () => {
-                res.status(500).json({
-                    error: 'Internal Server Error',
-                    message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
-                    details: isDev ? err.message : undefined
-                });
-            });
-        });
-
-        app.use(express.static(path.join(__dirname, '../dist'), {
-            maxAge: '1y',
-            immutable: true,
-            index: false,
-            setHeaders: (res, filePath) => {
-                if (filePath.endsWith('.html')) {
-                    res.setHeader('Cache-Control', 'no-cache');
-                } else if (filePath.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
-                    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-                }
-            }
-        }));
-
-        app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads'), {
-            maxAge: '7d',
-            setHeaders: (res, filePath) => {
-                if (filePath.match(/\.(png|jpg|jpeg|gif|webp|avif|svg)$/)) {
-                    res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
-                }
-            }
-        }));
-
-        prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
-        prerender.set('crawlerUserAgents', [
-            'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
-            'twitterbot', 'rogerbot', 'linkedinbot', 'embedly',
-            'baiduspider', 'pinterestbot', 'slackbot-likex', 'vkshare',
-            'w3c_validator', 'redditbot', 'applebot', 'whatsapp',
-            'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
-            'ahrefsbot', 'dotbot'
-        ]);
-        prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
-        app.use(prerender);
-
-        // RSS Feed (sitemap handled in routes/seo.js)
-        app.get('/rss.xml', async (req, res) => {
-            try {
-                const posts = await prisma.blogPost.findMany({
-                    select: { slug: true, title: true, excerpt: true, coverImage: true, date: true, author: true, category: true, subject: true, curriculum: true },
-                    orderBy: { date: 'desc' },
-                    take: 50
-                });
-                const items = posts.map(p => `
-                <item>
-                    <title><![CDATA[${p.title}]]></title>
-                    <link>https://dareen.cloud/books/${p.slug}</link>
-                    <guid>https://dareen.cloud/books/${p.slug}</guid>
-                    <description><![CDATA[${p.excerpt || ''}]]></description>
-                    <author>${p.author}</author>
-                    <category>${p.category || ''}${p.subject ? `, ${p.subject}` : ''}</category>
-                    <pubDate>${new Date(p.date).toUTCString()}</pubDate>
-                    ${p.coverImage ? `<enclosure url="https://dareen.cloud${p.coverImage}" type="image/jpeg" />` : ''}
-                </item>`).join('');
-                const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>دارين السابعة - المدونة</title>
-        <link>https://dareen.cloud/books</link>
-        <description>أحدث المقالات والموارد التعليمية من دارين السابعة للتعليم والتدريب</description>
-        <language>ar</language>
-        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-        <atom:link href="https://dareen.cloud/rss.xml" rel="self" type="application/rss+xml" />
-        ${items}
-    </channel>
-</rss>`;
-                res.header('Content-Type', 'application/rss+xml; charset=utf-8');
-                res.send(xml);
-            } catch (err) {
-                res.status(500).send('Error generating RSS feed');
-            }
-        });
-
-        const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/trial-sessions']);
-        app.get(/(.*)/, (req, res) => {
-            const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');
-            res.status(isKnown ? 200 : 404).sendFile(path.join(__dirname, '../dist/index.html'));
         });
 
         const server = http.createServer(app);
@@ -427,4 +430,6 @@ async function startServer() {
     }
 }
 
-startServer();
+if (process.env.NODE_ENV !== 'test') {
+    startServer();
+}

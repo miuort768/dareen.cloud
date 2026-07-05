@@ -116,6 +116,7 @@ model Enrollment {
   nextSessionNotes String?  @map("next_session_notes")
   isFrozen         Int?     @default(0) @map("isFrozen")
   frozenReason     String?  @map("frozenReason")
+  deletedAt       DateTime? @map("deleted_at")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
@@ -308,7 +309,9 @@ model StudentInvoice {
   paymentMethod String?
   notes         String?
   items         String?
-  isArchived    Int?     @default(0) @map("is_archived")
+  isArchived    Int?      @default(0) @map("is_archived")
+  paidAt        String?
+  deletedAt     DateTime?
 
   @@index([studentId])
   @@index([status])
@@ -328,7 +331,9 @@ model TeacherInvoice {
   status           String   @default("unpaid")
   personalExpenses Int?     @default(0) @map("personalExpenses")
   date             String
-  isArchived       Int?     @default(0) @map("is_archived")
+  isArchived       Int?      @default(0) @map("is_archived")
+  paidAt           String?
+  deletedAt        DateTime?
 
   @@index([teacherId])
   @@index([status])
