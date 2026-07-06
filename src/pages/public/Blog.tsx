@@ -204,7 +204,7 @@ export const Blog = () => {
             <div className="flex items-center justify-between mb-5 mt-2">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-card rounded-2xl shadow-sm border border-border dark:border-border">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-card rounded-card shadow-sm border border-border dark:border-border">
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center">
                       <BookOpen size={10} className="text-on-primary" />
                     </div>
@@ -220,26 +220,26 @@ export const Blog = () => {
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-2xl bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-info dark:hover:bg-info/30 transition-all">
+                  className="w-10 h-10 rounded-card bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-info dark:hover:bg-info/30 transition-all">
                   <Send size={16} className="text-info dark:text-info" />
                 </a>
                 <button onClick={() => setLibraryTheme(t => t === 'dark' ? 'light' : 'dark')}
-                  className="w-10 h-10 rounded-2xl bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-surface dark:hover:bg-card transition-all">
+                  className="w-10 h-10 rounded-card bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-surface dark:hover:bg-card transition-all">
                   {libraryTheme === 'dark' ? <Sun size={16} className="text-warning" /> : <Moon size={16} className="text-muted dark:text-muted" />}
                 </button>
               </div>
             </div>
 
-            <div className="relative bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-2xl overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
+            <div className="relative bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-card overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <p className="text-[18px] font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-info dark:text-info"> السابعة</span></p>
-                  <p className="text-[12px] font-bold text-on-primary dark:text-on-primary/90 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-[9px] text-on-primary/80 dark:text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <p className="text-lg font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-info dark:text-info"> السابعة</span></p>
+                  <p className="text-xs font-bold text-on-primary dark:text-on-primary/90 mb-2">أفضل الكتب والملخصات</p>
+                  <p className="text-xs text-on-primary/80 dark:text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                      className="bg-white dark:bg-card text-main dark:text-main text-[10px] font-bold px-4 py-2 rounded-full border border-border dark:border-border hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all w-full text-center block">
+                      className="bg-white dark:bg-card text-main dark:text-main text-micro font-bold px-4 py-2 rounded-full border border-border dark:border-border hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all w-full text-center block">
                       طلب حصة مجانية
                     </a>
                   </div>

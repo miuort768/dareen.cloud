@@ -29,7 +29,7 @@ export const TermsOfService = () => {
             {/* Hero Section */}
             <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-card">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-success/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-warning/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-main border border-border rounded-none shadow-sm mb-4">
@@ -38,7 +38,7 @@ export const TermsOfService = () => {
                     </div>
 
                     <h1 className="text-xl md:text-5xl font-black text-main mb-3 leading-tight font-heading">
-                        شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-success)] to--[var(--bg-success)] inline-block py-1">الاستخدام</span> والأحكام
+                        شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] inline-block py-1">الاستخدام</span> والأحكام
                     </h1>
 
                     <p className="text-sm md:text-lg text-muted max-w-2xl mx-auto leading-relaxed font-medium">
@@ -240,9 +240,9 @@ export const TermsOfService = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-8 relative overflow-hidden group rounded-2xl">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-8 relative overflow-hidden group rounded-card">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-warning/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-main mb-2">هل لديك استفسارات فنية؟</h2>
@@ -252,9 +252,9 @@ export const TermsOfService = () => {
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-card text-on-primary px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-success transition-all group relative overflow-hidden"
+                                className="inline-flex items-center justify-center gap-4 bg-card text-on-primary px-6 py-3 w-full sm:w-auto rounded-card font-bold hover:bg-success transition-all group relative overflow-hidden"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from--[var(--bg-success)] to-[var(--bg-success)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
                             </a>

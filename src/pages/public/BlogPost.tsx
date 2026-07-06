@@ -172,21 +172,21 @@ export const BlogPost = () => {
                             <div className="flex items-center gap-4 text-xs text-muted dark:text-muted font-medium">
                                 <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
                                 {post.readingTime ? <div className="flex items-center gap-1.5"><Clock size={14} /> <span>{post.readingTime} دقيقة قراءة</span></div> : null}
-                                <div className="bg-error-light dark:bg-error/30 text-error dark:text-error font-black text-[11px] sm:text-xs px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg"><User size={12} className="inline" /> {post.author}</div>
+                                <div className="bg-error-light dark:bg-error/30 text-error dark:text-error font-black text-xs sm:text-xs px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg"><User size={12} className="inline" /> {post.author}</div>
                                 {/* Mobile share buttons below author */}
                                 <div className="flex items-center gap-2 md:hidden mt-2">
-                                    <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 bg-success text-on-primary text-[11px] font-bold rounded-lg hover:opacity-80 transition-all">
+                                    <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 bg-success text-on-primary text-xs font-bold rounded-lg hover:opacity-80 transition-all">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 6.5a8.5 8.5 0 0 1-3.5 16.2"/><path d="M3 21l1.7-5.9a8.5 8.5 0 1 1 5.8 5.8L3 21z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
                                         <span>واتساب</span>
                                     </a>
-                                    <a href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 bg-info text-on-primary text-[11px] font-bold rounded-lg hover:opacity-80 transition-all">
+                                    <a href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 py-1.5 bg-info text-on-primary text-xs font-bold rounded-lg hover:opacity-80 transition-all">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.2 4.2L2.8 12.9c-.8.3-.7 1.5.1 1.7l5.1 1.4 2 6.3c.3.9 1.4.9 1.7 0L21.2 4.2z"/><path d="M11.9 15.7l6.5-6.5"/><path d="M9 21l3.4-5.8"/></svg>
                                         <span>تيليجرام</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 bg-card dark:bg-white text-main dark:text-main hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all font-bold text-sm rounded-xl">
+                        <Link to="/books" className="order-1 md:order-2 w-full md:w-auto inline-flex items-center justify-center md:justify-start gap-2 px-4 py-3 bg-card dark:bg-white text-main dark:text-main hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all font-bold text-sm rounded-card">
                             <ArrowRight size={16} />
                             <span>العودة لجميع المقالات</span>
                         </Link>
@@ -197,17 +197,17 @@ export const BlogPost = () => {
                     </h1>
                     {post.contentType !== 'more' && post.contentType !== 'foundation' && (post.curriculum || post.level || post.grade || post.term || post.subject) && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                        {post.curriculum && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-info-light dark:bg-info/10 text-info dark:text-info text-[11px] font-bold rounded-lg border border-info/50 dark:border-info/20"><BookOpen size={12} />{curriculumNames[post.curriculum] || post.curriculum}</span>}
-                        {post.level && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-success-light dark:bg-success/10 text-success dark:text-success text-[11px] font-bold rounded-lg border border-success/50 dark:border-success/20"><GraduationCap size={12} />{levelNames[post.level] || post.level}</span>}
-                        {post.grade && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary text-[11px] font-bold rounded-lg border border-primary/50 dark:border-primary/20"><School size={12} />الصف {gradeNames[post.grade] || post.grade}</span>}
-                        {post.term && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-warning-light dark:bg-warning/10 text-warning dark:text-warning text-[11px] font-bold rounded-lg border border-warning/50 dark:border-warning/20"><Tag size={12} />{termNames[post.term] || post.term}</span>}
-                        {post.subject && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-error-light dark:bg-error/10 text-error dark:text-error text-[11px] font-bold rounded-lg border border-error/50 dark:border-error/20"><BookOpen size={12} />{subjectNames[post.subject] || post.subject}</span>}
+                        {post.curriculum && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-info-light dark:bg-info/10 text-info dark:text-info text-xs font-bold rounded-lg border border-info/50 dark:border-info/20"><BookOpen size={12} />{curriculumNames[post.curriculum] || post.curriculum}</span>}
+                        {post.level && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-success-light dark:bg-success/10 text-success dark:text-success text-xs font-bold rounded-lg border border-success/50 dark:border-success/20"><GraduationCap size={12} />{levelNames[post.level] || post.level}</span>}
+                        {post.grade && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary text-xs font-bold rounded-lg border border-primary/50 dark:border-primary/20"><School size={12} />الصف {gradeNames[post.grade] || post.grade}</span>}
+                        {post.term && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-warning-light dark:bg-warning/10 text-warning dark:text-warning text-xs font-bold rounded-lg border border-warning/50 dark:border-warning/20"><Tag size={12} />{termNames[post.term] || post.term}</span>}
+                        {post.subject && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-error-light dark:bg-error/10 text-error dark:text-error text-xs font-bold rounded-lg border border-error/50 dark:border-error/20"><BookOpen size={12} />{subjectNames[post.subject] || post.subject}</span>}
                     </div>
                     )}
                     {post.tags && (
                     <div className="flex flex-wrap gap-2 mb-4">
                         {post.tags.split(',').map((tag: string, i: number) => (
-                            <span key={i} className="text-[10px] font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>
+                            <span key={i} className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>
                         ))}
                     </div>
                     )}
@@ -216,7 +216,7 @@ export const BlogPost = () => {
                 {/* Image + First Content Side by Side */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-                        <div className="w-full bg-surface dark:bg-card overflow-hidden shadow-xl rounded-2xl">
+                        <div className="w-full bg-surface dark:bg-card overflow-hidden shadow-xl rounded-card">
                             <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
                         </div>
                         <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main dark:text-main"
@@ -233,7 +233,7 @@ export const BlogPost = () => {
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-[11px] sm:text-sm rounded-xl hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card dark:bg-primary text-on-primary dark:text-on-primary'}`}>
+                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card dark:bg-primary text-on-primary dark:text-on-primary'}`}>
                                     <Download size={16} />
                                     <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || post.download_button_text || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل الملف'}</span>
                                 </button>
@@ -241,7 +241,7 @@ export const BlogPost = () => {
                             {post.watchLink && (
                                 <button onClick={(e) => handleButtonClick('watch', post.watchLink!, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'watch'}
-                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-[11px] sm:text-sm rounded-xl hover:bg-error-active transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}>
+                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error-active transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}>
                                     <Eye size={16} />
                                     <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'} (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'}</span>
                                 </button>
@@ -281,11 +281,11 @@ export const BlogPost = () => {
                         </div>
                         
                         <div className="flex items-center gap-3">
-                            <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن ' + post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-4 bg-success text-on-primary font-black text-sm rounded-xl hover:bg-success transition-all shadow-lg">
+                            <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن ' + post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-4 bg-success text-on-primary font-black text-sm rounded-card hover:bg-success transition-all shadow-lg">
                                 <MessageCircle size={18} />
                                 <span>لدي سؤال؟</span>
                             </a>
-                            <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-4 bg-card dark:bg-white text-main dark:text-main font-black text-sm rounded-xl shadow-lg hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all">
+                            <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-4 bg-card dark:bg-white text-main dark:text-main font-black text-sm rounded-card shadow-lg hover:bg-error dark:hover:bg-error hover:text-on-primary transition-all">
                                 <Play size={18} />
                                 ابدأ التعلم الآن
                             </Link>
@@ -299,12 +299,12 @@ export const BlogPost = () => {
                     <h2 className="text-2xl font-black text-main dark:text-on-primary mb-6">مقالات ذات صلة</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {relatedPosts.map((rp) => (
-                            <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-border dark:border-border">
+                            <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-card rounded-card overflow-hidden shadow-md hover:shadow-xl transition-all border border-border dark:border-border">
                                 <div className="aspect-[16/9] bg-surface dark:bg-card overflow-hidden">
                                     <img src={rp.coverImage || ''} alt={rp.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                                 </div>
                                 <div className="p-4">
-                                    <p className="text-[10px] font-bold text-muted mb-1">{rp.date}</p>
+                                    <p className="text-micro font-bold text-muted mb-1">{rp.date}</p>
                                     <h3 className="font-black text-sm text-main dark:text-on-primary group-hover:text-error transition-colors line-clamp-2">{rp.title}</h3>
                                     {rp.excerpt && <p className="text-xs text-muted dark:text-muted mt-1 line-clamp-2">{rp.excerpt}</p>}
                                 </div>

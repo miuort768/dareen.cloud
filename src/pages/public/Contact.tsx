@@ -89,7 +89,7 @@ export const Contact = () => {
                     <div className="text-center mb-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-1 md:mb-5">
                             <Sparkles size={13} className="text-primary dark:text-primary" />
-                            <span className="text-[10px] font-black text-primary dark:text-primary">نحن في خدمتك</span>
+                            <span className="text-micro font-black text-primary dark:text-primary">نحن في خدمتك</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-on-primary mb-1 md:mb-3">
                             تواصل مع{' '}
@@ -118,7 +118,7 @@ export const Contact = () => {
                                             <card.icon size={20} />
                                         </div>
                                         <div className="flex-grow min-w-0">
-                                            <p className="text-[9px] font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
+                                            <p className="text-micro font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
                                             <p className="text-sm font-bold text-main dark:text-on-primary truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@ export const Contact = () => {
                                     {/* Row: Name + Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-muted  block">الاسم الكامل</label>
+                                            <label className="text-micro font-black text-muted  block">الاسم الكامل</label>
                                             <input
                                                 type="text"
                                                 value={formData.name}
@@ -168,7 +168,7 @@ export const Contact = () => {
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-muted  block">رقم الهاتف</label>
+                                            <label className="text-micro font-black text-muted  block">رقم الهاتف</label>
                                             <input
                                                 required
                                                 type="tel"
@@ -185,7 +185,7 @@ export const Contact = () => {
 
                                     {/* Subject */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-muted  block">الموضوع</label>
+                                        <label className="text-micro font-black text-muted  block">الموضوع</label>
                                         <select
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
@@ -202,7 +202,7 @@ export const Contact = () => {
 
                                     {/* Message */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-muted  block">رسالتك</label>
+                                        <label className="text-micro font-black text-muted  block">رسالتك</label>
                                         <textarea
                                             rows={4}
                                             value={formData.message}
