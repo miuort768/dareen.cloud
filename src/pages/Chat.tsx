@@ -207,7 +207,7 @@ export const Chat: React.FC = () => {
                         markAsRead={markAsRead}
                     />
                 ) : (
-                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-background dark:bg-background relative border-l border-border dark:border-white/5">
+                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-background dark:bg-background relative border-s border-border dark:border-white/5">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
                         
                         <div className="z-10 text-center">

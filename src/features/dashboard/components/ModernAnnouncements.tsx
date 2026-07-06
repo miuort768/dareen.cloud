@@ -76,7 +76,7 @@ export const ModernAnnouncements: React.FC = () => {
                 <div 
                     onClick={() => setShowAcknowledge(true)}
                     className={cn(
-                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-l border-border dark:border-white/5",
+                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-s border-border dark:border-white/5",
                         type.bg
                     )}
                 >
@@ -155,7 +155,7 @@ export const ModernAnnouncements: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-background dark:bg-primary-active/50 p-5 md:p-8 mb-8 border-r-4 border-info rounded-xl">
+                            <div className="bg-background dark:bg-primary-active/50 p-5 md:p-8 mb-8 border-e-4 border-info rounded-xl">
                                 <p className="text-base font-normal text-main dark:text-dim leading-relaxed italic">
                                     "{current.content}"
                                 </p>

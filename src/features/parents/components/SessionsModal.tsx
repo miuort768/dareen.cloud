@@ -110,7 +110,7 @@ export const SessionsModal = ({
                                     {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-xl animate-pulse" />)}
                                 </div>
                             ) : (
-                                <div className="relative border-r-2 border-primary/10 pr-5 ms-2 space-y-4">
+                                <div className="relative border-e-2 border-primary/10 pr-5 ms-2 space-y-4">
                                     {(() => {
                                         const subj = viewingSubject as { subject: string };
                                         const filtered = childSessions

@@ -177,7 +177,7 @@ export const NotificationDropdown = () => {
 
             {isOpen && (
                 <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-primary-active/98  border-2 border-border dark:border-border rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.30)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="absolute -top-[10px] left-4 md:left-8 w-4 h-4 bg-white dark:bg-primary-active border-t-2 border-l-2 border-border dark:border-border rotate-45 hidden md:block" />
+                    <div className="absolute -top-[10px] left-4 md:left-8 w-4 h-4 bg-white dark:bg-primary-active border-t-2 border-s-2 border-border dark:border-border rotate-45 hidden md:block" />
                     
                     {/* Header */}
 

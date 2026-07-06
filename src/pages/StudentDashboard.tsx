@@ -246,7 +246,7 @@ export const StudentDashboard = () => {
                             <div className="flex-1 z-10 space-y-2">
                                 <h2 className={`text-2xl font-black leading-tight ${heroSlides[heroIndex].textColor}`}>
                                     {heroSlides[heroIndex].title}{' '}
-                                    <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
+                                    <span className="inline-block border-e-4 border-current pr-0.5 animate-pulse">|</span>
                                 </h2>
                                 <p className={`text-sm font-bold ${heroSlides[heroIndex].textColor} opacity-80`}>
                                     {heroSlides[heroIndex].subtitle}

@@ -28,7 +28,7 @@ export const PublicFooter = () => {
                                 دارين السابعة
                             </span>
                         </div>
-                        <p className="text-muted text-sm lg:text-xs leading-relaxed border-r-2 border-border pr-4">
+                        <p className="text-muted text-sm lg:text-xs leading-relaxed border-e-2 border-border pr-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.
                         </p>
                     </div>

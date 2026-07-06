@@ -113,7 +113,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                 {autoClose && (
                     <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-surface dark:bg-primary-active/60 overflow-hidden">
                         <div 
-                            className="h-full bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-info)] transition-all duration-75 ease-linear rounded-r-full"
+                            className="h-full bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-info)] transition-all duration-75 ease-linear rounded-e-full"
                             style={{ width: `${progress}%` }}
                         />
                     </div>

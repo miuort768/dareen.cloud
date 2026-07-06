@@ -293,7 +293,7 @@ export const About = () => {
                                     <div className="w-full lg:w-[40%] relative flex items-center">
                                         <div className="grid grid-cols-2 gap-3 w-full">
                                             <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-2 transition-all duration-700 group/card overflow-hidden min-h-[200px]">
-                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
+                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-e-2 border-primary transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
                                                     <div className="w-12 h-12 bg-primary/20 text-on-primary mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">
@@ -307,7 +307,7 @@ export const About = () => {
                                             </div>
 
                                             <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transition-all duration-700 group/card overflow-hidden min-h-[200px]">
-                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-warning transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
+                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-e-2 border-warning transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
                                                     <div className="w-12 h-12 bg-warning/20 text-warning mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">

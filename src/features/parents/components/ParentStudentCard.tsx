@@ -51,7 +51,7 @@ export const ParentStudentCard = ({
             </div>
 
             <div className="grid grid-cols-2 border-b border-border dark:border-border">
-                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-l border-border dark:border-border">
+                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-s border-border dark:border-border">
                     <div className="w-8 h-8 bg-primary-soft dark:bg-primary/10 rounded-xl flex items-center justify-center mb-1">
                         <BookOpen size={14} className="text-primary md:size-[16px]" />
                     </div>

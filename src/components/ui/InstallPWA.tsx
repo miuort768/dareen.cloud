@@ -179,7 +179,7 @@ export const InstallPWA = () => {
                     </div>
 
                     <div className="flex border-t-2 border-border">
-                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-micro font-medium text-muted hover:bg-surface transition-colors border-r border-border">عدم التذكير مجدداً</button>
+                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-micro font-medium text-muted hover:bg-surface transition-colors border-e border-border">عدم التذكير مجدداً</button>
                         <button onClick={handleDismiss} className="flex-1 py-3 text-micro font-medium bg-warning text-main hover:bg-warning transition-colors">فهمت، شكراً</button>
                     </div>
                 </div>

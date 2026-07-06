@@ -110,7 +110,7 @@ export const PublicNavbar = () => {
 
 
                         {isAuthenticated && isDesktop && (
-                            <div className="border-l border-border dark:border-border pl-4 h-8 items-center flex">
+                            <div className="border-s border-border dark:border-border pl-4 h-8 items-center flex">
                                 <NotificationDropdown />
                             </div>
                         )}

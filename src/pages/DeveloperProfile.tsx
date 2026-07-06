@@ -168,7 +168,7 @@ export const DeveloperProfile = () => {
                         </div>
                         <h2 className="text-lg font-black text-main dark:text-main">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
-                    <div className="border-r-4 border-error pr-4 space-y-3">
+                    <div className="border-e-4 border-error pr-4 space-y-3">
                         <p className="text-sm text-muted dark:text-muted leading-relaxed">
                             "الإتقان أساس النجاح والتطوير.
                         </p>

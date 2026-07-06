@@ -238,7 +238,7 @@ export const ParentDashboard = () => {
                     <div className="z-10 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-black leading-tight text-info-dark">
                             تعلّم بلا حدود{' '}
-                            <span className="inline-block border-r-4 border-current pr-1 animate-pulse">|</span>
+                            <span className="inline-block border-e-4 border-current pr-1 animate-pulse">|</span>
                         </h2>
                         <p className="text-base font-bold text-info-dark opacity-80">من أي مكان في العالم</p>
                         <p className="text-sm leading-relaxed text-info-dark opacity-70 max-w-md">
@@ -573,7 +573,7 @@ export const ParentDashboard = () => {
                                 <div className="z-10 space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-info-dark">
                                         تعلّم بلا حدود{' '}
-                                        <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
+                                        <span className="inline-block border-e-4 border-current pr-0.5 animate-pulse">|</span>
                                     </h2>
                                     <p className="text-sm font-bold text-info-dark opacity-80">من أي مكان في العالم</p>
                                     <p className="text-xs leading-relaxed text-info-dark opacity-70 max-w-none">

@@ -211,7 +211,7 @@ export const Tasks = () => {
                                     className={cn(
                                         "bg-white dark:bg-card rounded-none p-5 shadow-sm transition-all hover:shadow-md relative overflow-hidden",
                                         isCompleted && "opacity-60",
-                                        task.priority === 'high' ? "border-r-4 border-r-error" : task.priority === 'medium' ? "border-r-4 border-r-warning" : "border-r-4 border-r-primary"
+                                        task.priority === 'high' ? "border-e-4 border-e-error" : task.priority === 'medium' ? "border-e-4 border-e-warning" : "border-e-4 border-e-primary"
                                     )}
                                 >
                                     {!isCompleted && (

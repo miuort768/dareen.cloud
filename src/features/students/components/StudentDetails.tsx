@@ -201,7 +201,7 @@ export const StudentDetails = ({
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="text-center px-2 border-r border-border">
+                                                <div className="text-center px-2 border-e border-border">
                                                     <p className="text-micro font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
                                                     <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                                 </div>

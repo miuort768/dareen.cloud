@@ -124,10 +124,10 @@ export const TeacherDetails = ({
                 {/* Enrollment Section */}
                 <div className="space-y-4">
                     <div className="flex items-stretch h-9 w-fit group cursor-default">
-                        <div className="bg-card px-4 flex items-center justify-center border-y border-r border-border min-w-[44px] rounded-r-xl transition-colors">
+                        <div className="bg-card px-4 flex items-center justify-center border-y border-e border-border min-w-[44px] rounded-e-xl transition-colors">
                             <span className="text-xs font-medium text-primary">{enrolledStudents.length}</span>
                         </div>
-                        <div className="bg-gradient-to-l from-primary to-primary-light text-on-primary px-4 flex items-center justify-center rounded-l-xl relative overflow-hidden transition-all">
+                        <div className="bg-gradient-to-l from-primary to-primary-light text-on-primary px-4 flex items-center justify-center rounded-s-xl relative overflow-hidden transition-all">
                             <h4 className="text-micro text-on-primary font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
                         </div>
                     </div>
@@ -264,7 +264,7 @@ export const TeacherDetails = ({
                                 {teacherSessions.map(session => (
                                     <div key={session.id} className="bg-card border border-border p-3 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                                         <div className={cn(
-                                            "absolute top-0 right-0 w-1 h-full rounded-r-full",
+                                            "absolute top-0 right-0 w-1 h-full rounded-e-full",
                                             session.status === 'completed' ? "bg-success" : "bg-error"
                                         )} />
                                         

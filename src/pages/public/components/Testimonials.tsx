@@ -99,7 +99,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                         </p>
                                     </div>
 
-                                    {!isLarge && <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-transparent group-hover:border-primary/20 transition-all duration-700"></div>}
+                                    {!isLarge && <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-s-2 border-transparent group-hover:border-primary/20 transition-all duration-700"></div>}
                                 </div>
                             );
                         })}
