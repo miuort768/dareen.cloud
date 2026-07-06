@@ -148,7 +148,7 @@ export const AdminJobs = () => {
                             {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-primary/5 -ml-6 -mt-6 rotate-45 pointer-events-none border border-primary/10"></div>}
 
                             <div className={`p-6 relative z-10 transition-all duration-300 ${
-                                app.contacted ? 'line-through decoration-1 decoration-slate-400/50' : ''
+                                app.contacted ? 'line-through decoration-1 decoration-muted/50' : ''
                             }`}>
                                 {/* Academy branding */}
                                 <div className="flex justify-between items-start mb-6">

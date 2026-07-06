@@ -55,8 +55,8 @@ export const ParentAttendance = () => {
         <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-medium text-main dark:text-on-primary tracking-tight">ÓÌá ÇáÍÖæÑ æÇáÛíÇÈ</h1>
-                    <p className="text-sm text-muted font-normal dark:text-muted">ãÊÇÈÚÉ ÏÞíÞÉ áÍÖæÑ æÇäÕÑÇÝ ÇáÃÈäÇÁ Ýí ÇáÍÕÕ</p>
+                    <h1 className="text-2xl font-medium text-main dark:text-on-primary tracking-tight">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h1>
+                    <p className="text-sm text-muted font-normal dark:text-muted">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export const ParentAttendance = () => {
                         onChange={(e) => setSelectedChildId(e.target.value)}
                         className="bg-white dark:bg-card border border-border dark:border-border px-4 py-2 font-normal text-xs focus:outline-none focus:border-primary transition-all"
                     >
-                        <option value="all">ßá ÇáÃÈäÇÁ</option>
+                        <option value="all">ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
                         {children.map(c => (
                             <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
@@ -77,16 +77,16 @@ export const ParentAttendance = () => {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {/* Stats Sidebar */}
                 <div className="lg:col-span-1 space-y-4">
-                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-emerald-500">
+                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-success">
                         <Activity className="text-success mb-2" size={24} />
-                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">ÅÌãÇáí ÇáÍÖæÑ</h4>
+                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h4>
                         <div className="text-3xl font-medium mt-1">
                             {filteredSessions.filter(s => s.status === 'completed').length}
                         </div>
                     </div>
-                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-rose-500">
+                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-error">
                         <AlertCircle className="text-error mb-2" size={24} />
-                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">ÅÌãÇáí ÇáÛíÇÈ</h4>
+                        <h4 className="text-[10px] font-medium text-muted uppercase tracking-widest">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h4>
                         <div className="text-3xl font-medium mt-1">
                             {filteredSessions.filter(s => s.status === 'cancelled').length}
                         </div>
@@ -97,16 +97,16 @@ export const ParentAttendance = () => {
                 <div className="lg:col-span-3">
                     <div className="bg-white dark:bg-card border border-border dark:border-border shadow-sm overflow-hidden">
                         <div className="p-4 bg-background dark:bg-card/50 border-b border-border dark:border-border flex items-center justify-between">
-                            <h4 className="font-medium text-[10px] text-muted uppercase tracking-widest">ÇáÊÇÑíÎ æÇáÓÌá ÇáÒãäí</h4>
+                            <h4 className="font-medium text-[10px] text-muted uppercase tracking-widest">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h4>
                             <Calendar size={16} className="text-dim" />
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-right">
                                 <thead>
                                     <tr className="bg-background dark:bg-card/50 text-[10px] font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border">
-                                        <th className="px-6 py-4">ÇáÇÈä / ÇáãÇÏÉ</th>
-                                        <th className="px-6 py-4 text-center">ÇáÊæÞíÊ</th>
-                                        <th className="px-6 py-4 text-center">ÇáÍÇáÉ</th>
+                                        <th className="px-6 py-4">ï¿½ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</th>
+                                        <th className="px-6 py-4 text-center">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</th>
+                                        <th className="px-6 py-4 text-center">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border dark:divide-border">
@@ -132,12 +132,12 @@ export const ParentAttendance = () => {
                                                     {session.status === 'completed' ? (
                                                         <div className="flex items-center gap-2 px-3 py-1 bg-success-light text-success border border-success dark:bg-success/20 dark:text-success dark:border-success">
                                                             <CheckCircle2 size={12} />
-                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ÍÖÑ</span>
+                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ï¿½ï¿½ï¿½</span>
                                                         </div>
                                                     ) : (
                                                         <div className="flex items-center gap-2 px-3 py-1 bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error">
                                                             <XCircle size={12} />
-                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ÛÇÆÈ / ãõáÛì</span>
+                                                            <span className="text-[10px] font-medium uppercase tracking-widest">ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -146,7 +146,7 @@ export const ParentAttendance = () => {
                                     ))}
                                     {filteredSessions.length === 0 && (
                                         <tr>
-                                            <td colSpan={3} className="px-6 py-12 text-center text-muted font-normal uppercase text-[10px] tracking-widest italic">áÇ ÊæÌÏ ÓÌáÇÊ ÍÖæÑ ãÊÇÍÉ ÍÇáíÇð</td>
+                                            <td colSpan={3} className="px-6 py-12 text-center text-muted font-normal uppercase text-[10px] tracking-widest italic">ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</td>
                                         </tr>
                                     )}
                                 </tbody>

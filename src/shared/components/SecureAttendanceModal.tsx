@@ -137,7 +137,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     type="checkbox"
                                     checked={needsCompensation}
                                     onChange={(e) => setNeedsCompensation(e.target.checked)}
-                                    className="w-5 h-5 rounded-none accent-rose-600 cursor-pointer"
+                                    className="w-5 h-5 rounded-none accent-error cursor-pointer"
                                 />
                                 <div>
                                     <p className="text-sm font-black text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>

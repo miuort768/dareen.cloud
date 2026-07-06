@@ -232,7 +232,7 @@ export const Profile = () => {
                                         "aspect-square rounded-none transition-all relative group",
                                         c.class,
                                         themeColor === c.id 
-                                            ? "ring-4 ring-offset-4 ring-primary dark:ring-offset-slate-900 scale-105" 
+                                            ? "ring-4 ring-offset-4 ring-primary dark:ring-offset-background scale-105" 
                                             : "hover:scale-110 shadow-sm"
                                     )}
                                     title={c.label}

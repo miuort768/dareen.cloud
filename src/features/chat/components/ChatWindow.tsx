@@ -226,7 +226,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
                 ) : isLoadingMessages ? (
                     <div className="flex items-center justify-center h-full">
-                        <div className="w-8 h-8 border-2 border-success/30 border-t-emerald-500 rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-2 border-success/30 border-t-success rounded-full animate-spin" />
                     </div>
                 ) : filteredMessages.length === 0 ? (
                     <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
