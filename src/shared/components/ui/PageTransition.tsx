@@ -20,7 +20,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={location.pathname}
         variants={variants}
