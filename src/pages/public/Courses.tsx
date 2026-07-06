@@ -57,8 +57,17 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 export const Courses = () => {
-  const { adminPhone } = useSettingsStore();
-  const whatsappNumber = adminPhone.replace(/\D/g, '');
+  const { adminPhone, whatsappNumbers } = useSettingsStore();
+
+  const getNumber = (label: string): string => {
+    try {
+      const entries = JSON.parse(whatsappNumbers);
+      const found = entries.find((e: any) => e.label === label);
+      return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
+    } catch { return adminPhone.replace(/\D/g, ''); }
+  };
+
+  const whatsappNumber = getNumber('تواصل عبر واتساب');
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 

@@ -51,8 +51,23 @@ const heroSlides = [
 const stages = CATEGORIES;
 
 export const Home = () => {
-  const { adminPhone, heroBanners } = useSettingsStore();
-  const whatsappNumber = adminPhone.replace(/\D/g, '');
+  const { adminPhone, heroBanners, whatsappNumbers } = useSettingsStore();
+  const defaultNumber = adminPhone.replace(/\D/g, '');
+
+  const getNumber = (label: string): string => {
+    try {
+      const entries = JSON.parse(whatsappNumbers);
+      const found = entries.find((e: { label: string; phone: string }) => e.label === label);
+      return found ? found.phone.replace(/\D/g, '') : defaultNumber;
+    } catch {
+      return defaultNumber;
+    }
+  };
+
+  const requestFreeNumber = getNumber('طلب حصة مجانية');
+  const bookFreeNumber = getNumber('احجز حصتك المجانية الآن');
+  const memorizingNumber = getNumber('ابدأ الحفظ الآن');
+  const excellenceNumber = getNumber('ابدأ رحلة التميز');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [typewriterText, setTypewriterText] = useState("");
@@ -142,7 +157,7 @@ export const Home = () => {
 
         {/* Mobile Nav Buttons */}
         <div className="flex gap-1.5 mt-2 mb-3">
-          <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-primary text-on-primary text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+          <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-primary text-on-primary text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
             <Headphones className="w-2.5 h-2.5 shrink-0" />
             طلب حصة مجانية
           </a>
@@ -226,7 +241,7 @@ export const Home = () => {
         {/* How to Subscribe */}
         <AnimateOnScroll>
           <div className="mb-4">
-              <HowToSubscribe />
+              <HowToSubscribe whatsappNumber={bookFreeNumber} />
           </div>
         </AnimateOnScroll>
 
@@ -263,7 +278,7 @@ export const Home = () => {
             {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
               <motion.a
                 key={c.id}
-                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${c.title}`)}`}
+                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${c.title}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 16 }}
@@ -318,16 +333,16 @@ export const Home = () => {
           </AnimateOnScroll>
           <AnimateOnScroll>
             <div style={{ contentVisibility: 'auto' }}>
-              <WhyChooseUs />
+              <WhyChooseUs whatsappNumber={excellenceNumber} />
             </div>
           </AnimateOnScroll>
           <AnimateOnScroll>
             <div style={{ contentVisibility: 'auto' }}>
-              <QuranSection whatsappNumber={whatsappNumber} />
+              <QuranSection whatsappNumber={memorizingNumber} />
             </div>
           </AnimateOnScroll>
           <div className="hidden" style={{ contentVisibility: 'auto' }}>
-            <HowItWorks whatsappNumber={whatsappNumber} />
+            <HowItWorks whatsappNumber={bookFreeNumber} />
           </div>
           <AnimateOnScroll animation="slideLeft">
             <div style={{ contentVisibility: 'auto' }}>
@@ -350,24 +365,24 @@ export const Home = () => {
       {/* ─── Desktop content (unchanged) ─── */}
       <div className="hidden md:block">
         <AnimateOnScroll animation="scaleIn" duration={0.7}>
-          <HeroSection typewriterText={typewriterText} whatsappNumber={whatsappNumber} bannersArray={bannersArray} />
+          <HeroSection typewriterText={typewriterText} whatsappNumber={requestFreeNumber} bannersArray={bannersArray} />
         </AnimateOnScroll>
         <AnimateOnScroll>
           <StatsCounter />
         </AnimateOnScroll>
         <div style={{ contentVisibility: 'auto' }}>
           <AnimateOnScroll>
-            <WhyChooseUs />
+            <WhyChooseUs whatsappNumber={excellenceNumber} />
           </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
           <AnimateOnScroll>
-            <QuranSection whatsappNumber={whatsappNumber} />
+            <QuranSection whatsappNumber={memorizingNumber} />
           </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>
           <AnimateOnScroll>
-            <HowItWorks whatsappNumber={whatsappNumber} />
+            <HowItWorks whatsappNumber={bookFreeNumber} />
           </AnimateOnScroll>
         </div>
         <div style={{ contentVisibility: 'auto' }}>

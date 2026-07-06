@@ -5,8 +5,17 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const RefundPolicy = () => {
-    const { adminPhone } = useSettingsStore();
-    const whatsappNumber = adminPhone.replace(/\D/g, '');
+    const { adminPhone, whatsappNumbers } = useSettingsStore();
+
+    const getNumber = (label: string): string => {
+      try {
+        const entries = JSON.parse(whatsappNumbers);
+        const found = entries.find((e: any) => e.label === label);
+        return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
+      } catch { return adminPhone.replace(/\D/g, ''); }
+    };
+
+    const whatsappNumber = getNumber('تواصل مع قسم الحسابات');
 
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">

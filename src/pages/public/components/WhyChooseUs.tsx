@@ -28,7 +28,11 @@ const variantClasses: Record<string, { icon: string; bg: string }> = {
 
 const featureIcons = [ShieldCheck, Lightbulb, Heart];
 
-export const WhyChooseUs = () => {
+interface WhyChooseUsProps {
+    whatsappNumber?: string;
+}
+
+export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProps) => {
   return (
     <section className="relative overflow-hidden bg-white dark:bg-card pt-4 md:pt-10 pb-0">
       {/* Neon glow decorations */}
@@ -88,7 +92,7 @@ export const WhyChooseUs = () => {
                 نخبة من المعلمين المتخصصين في تدريس المناهج الكويتية والخليجية لضمان تفوق طفلك في الرياضيات والعلوم واللغات.
               </p>
               <a
-                href="https://wa.me/96500000000"
+                href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء برحلة التميز التعليمية')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-[11px] font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"

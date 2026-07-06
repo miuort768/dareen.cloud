@@ -5,7 +5,15 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const PrivacyPolicy = () => {
-    const { adminPhone } = useSettingsStore();
+    const { adminPhone, whatsappNumbers } = useSettingsStore();
+
+    const getNumber = (label: string): string => {
+      try {
+        const entries = JSON.parse(whatsappNumbers);
+        const found = entries.find((e: any) => e.label === label);
+        return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
+      } catch { return adminPhone.replace(/\D/g, ''); }
+    };
     return (
         <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main">
             <SEO
@@ -214,7 +222,7 @@ export const PrivacyPolicy = () => {
                             <p className="text-on-primary/80 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
-                                href={`https://wa.me/${adminPhone}`}
+                                href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-4 bg-white text-primary hover:bg-white/90 px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all group relative overflow-hidden shadow-lg border border-white/20"

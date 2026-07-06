@@ -5,7 +5,15 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const TermsOfWork = () => {
-    const { adminPhone } = useSettingsStore();
+    const { adminPhone, whatsappNumbers } = useSettingsStore();
+
+    const getNumber = (label: string): string => {
+      try {
+        const entries = JSON.parse(whatsappNumbers);
+        const found = entries.find((e: any) => e.label === label);
+        return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
+      } catch { return adminPhone.replace(/\D/g, ''); }
+    };
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO
@@ -238,7 +246,7 @@ export const TermsOfWork = () => {
                             <p className="text-muted mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
-                                href={`https://wa.me/${adminPhone}`}
+                                href={`https://wa.me/${getNumber('تواصل مع إدارة المعهد')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-4 bg-primary text-on-primary px-6 py-3 w-full sm:w-auto rounded-xl font-bold transition-all"

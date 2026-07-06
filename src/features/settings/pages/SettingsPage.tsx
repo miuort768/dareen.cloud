@@ -250,7 +250,7 @@ export const Settings = () => {
         { id: 'users', label: 'المستخدمون', icon: Users },
         { id: 'permissions', label: 'الصلاحيات', icon: KeyRound },
         { id: 'communications', label: 'الاتصالات', icon: MessageSquare },
-        { id: 'mobile', label: 'أرقام الواتساب', icon: MessageSquare },
+        { id: 'mobile', label: 'واتساب', icon: MessageSquare },
         { id: 'policies', label: 'السياسات', icon: Lock },
         { id: 'working-hours', label: 'أوقات العمل', icon: Clock },
         { id: 'attendance', label: 'الحضور', icon: UserCheck },
