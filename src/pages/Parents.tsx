@@ -92,7 +92,7 @@ export const Parents = () => {
                                             className="w-full pr-14 pl-4 py-3 bg-primary-soft text-main dark:text-on-primary placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
                                         />
                                     </div>
-                                    <div className="hidden lg:flex items-center gap-3 px-5 border-e border-border">
+                                    <div className="hidden lg:flex items-center gap-3 px-5 border-r border-border">
                                         <div className="w-8 h-8 flex items-center justify-center bg-primary-soft rounded-xl">
                                             <Users size={14} className="text-primary" />
                                         </div>

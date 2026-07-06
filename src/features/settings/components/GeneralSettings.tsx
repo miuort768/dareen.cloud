@@ -132,7 +132,7 @@ export const GeneralSettings = ({
                     </div>
                 </div>
 
-                <p className="text-micro text-dim bg-warning-soft px-3 py-2 border-e-2 border-warning">
+                <p className="text-micro text-dim bg-warning-soft px-3 py-2 border-r-2 border-warning">
                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
                 </p>
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">

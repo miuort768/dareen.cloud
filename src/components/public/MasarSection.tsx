@@ -18,7 +18,7 @@ export const MasarSection = () => {
                             <div className="absolute left-0 bottom-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
                         </div>
                         <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
-                            <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-s border-white/10 group">
+                            <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-l border-white/10 group">
                                 <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow pointer-events-none z-30"></div>
                                 <div className="relative w-full h-full flex items-center justify-center z-10">
                                     <div className="absolute w-64 h-64 bg-primary/20 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>

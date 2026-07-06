@@ -117,7 +117,7 @@ export const Sidebar = () => {
             <>
                 <div
                     className={cn(
-                        "hidden lg:flex bg-card h-screen border-s border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0",
+                        "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0",
                         collapsed ? "w-20" : "w-72"
                     )}
                 >
@@ -149,7 +149,7 @@ export const Sidebar = () => {
         <>
             <div
                 className={cn(
-                    "hidden lg:flex bg-card h-screen border-s border-border transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0",
+                    "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0",
                     collapsed ? "w-20" : "w-72"
                 )}
             >

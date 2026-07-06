@@ -41,7 +41,7 @@ export const StudentToolbar = ({
                         {filteredCount} / {totalCount} طالب
                     </div>
                     
-                    <div className="flex items-center gap-1.5 border-e border-white/20 pr-2 ms-1">
+                    <div className="flex items-center gap-1.5 border-r border-white/20 pr-2 ms-1">
                         <button onClick={onImport} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-70 hover:opacity-100 transition-all rounded-none bg-white/10" title="استيراد">
                             <Upload size={14} />
                         </button>

@@ -104,7 +104,7 @@ export const Login = () => {
                     
                     <div className="relative z-10 w-full max-w-md flex flex-col items-start justify-center p-8 text-right" dir="rtl">
                         <div className="mb-10 w-full">
-                            <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-s-4 border-accent shadow-md mb-10">
+                            <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-l-4 border-accent shadow-md mb-10">
                                 <CheckCircle className="text-accent" size={18} />
                                 <span className="text-xs font-black text-inverse uppercase tracking-[0.2em]">أفضل مدرسة افتراضية</span>
                             </div>
@@ -114,7 +114,7 @@ export const Login = () => {
                                 <span className="text-sm font-black uppercase text-main tracking-[0.2em]">منصة دارين السابعة</span>
                             </div>
                             
-                            <h2 className="text-section font-bold text-main mb-8 leading-tight border-e-8 border-success pr-8 min-h-[4.5rem]">
+                            <h2 className="text-section font-bold text-main mb-8 leading-tight border-r-8 border-success pr-8 min-h-[4.5rem]">
                                 {typedText}
                                 <span className="inline-block w-[5px] h-7 bg-success ms-2 animate-pulse align-middle"></span>
                             </h2>
@@ -123,7 +123,7 @@ export const Login = () => {
                         </div>
 
                         <div className="grid grid-cols-1 gap-5 w-full">
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-e-4 border-e-error">
+                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-r-4 border-r-error">
                                 <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error border border-border rounded-card">
                                     <Users size={24} />
                                 </div>
@@ -133,7 +133,7 @@ export const Login = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-e-4 border-e-success">
+                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-r-4 border-r-success">
                                 <div className="w-12 h-12 bg-success-soft flex items-center justify-center text-success border border-border rounded-card">
                                     <Trophy size={24} />
                                 </div>

@@ -112,7 +112,7 @@ export function NavigationSection() {
           <div className="w-56 rounded-card border border-border overflow-hidden">
             {['لوحة القيادة', 'الطلاب', 'المعلمين', 'المالية', 'الإعدادات'].map((item, i) => (
               <div key={item} className={`px-4 py-2.5 text-sm flex items-center gap-3 transition-colors ${
-                i === 1 ? 'bg-primary-soft text-primary font-semibold border-e-2 border-primary' : 'text-muted hover:bg-hover'
+                i === 1 ? 'bg-primary-soft text-primary font-semibold border-r-2 border-primary' : 'text-muted hover:bg-hover'
               }`}>
                 <div className={`w-2 h-2 rounded-full ${i === 1 ? 'bg-primary' : 'bg-border'}`} />
                 {item}

@@ -85,15 +85,15 @@ export const RefundPolicy = () => {
                             <div>
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">حالات طلب الاسترداد</h2>
                                 <div className="space-y-4 text-muted dark:text-muted">
-                                    <div className="p-4 bg-success-light/50 dark:bg-success/20 border-e-4 border-success">
+                                    <div className="p-4 bg-success-light/50 dark:bg-success/20 border-r-4 border-success">
                                         <h3 className="font-bold text-main dark:text-main mb-1">قبل بدء الدورة:</h3>
                                         <p>يمكن استرداد كامل المبلغ المدفوع (بعد خصم رسوم التحويل البنكي إن وجدت) إذا تم تقديم طلب الاسترداد قبل 48 ساعة على الأقل من موعد أول حصة.</p>
                                     </div>
-                                    <div className="p-4 bg-warning-light/50 dark:bg-warning/20 border-e-4 border-warning">
+                                    <div className="p-4 bg-warning-light/50 dark:bg-warning/20 border-r-4 border-warning">
                                         <h3 className="font-bold text-main dark:text-main mb-1">بعد الحصة الأولى (التجريبية):</h3>
                                         <p>إذا كانت الدورة تتيح حصة تجريبية ولم يرغب الطالب في الاستمرار، يمكنه طلب استرداد باقي المبلغ المدفوع في غضون 24 ساعة من انتهاء الحصة الأولى.</p>
                                     </div>
-                                    <div className="p-4 bg-background dark:bg-card/50 border-e-4 border-border">
+                                    <div className="p-4 bg-background dark:bg-card/50 border-r-4 border-border">
                                         <h3 className="font-bold text-main dark:text-main mb-1">خلال الدورة:</h3>
                                         <p>لا يتم استرداد الرسوم بمجرد تجاوز الحصة الثانية إلا في حالات الظروف القهرية التي يقدرها المعهد، مع خصم قيمة الحصص التي تم تقديمها بالفعل.</p>
                                     </div>

@@ -101,7 +101,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                             </div>
                         </div>
 
-                            <div className="mt-12 p-6 bg-white/[0.03] border-e-2 border-primary rounded-xl">
+                            <div className="mt-12 p-6 bg-white/[0.03] border-r-2 border-primary rounded-xl">
                             <p className="text-micro font-black text-muted uppercase tracking-widest mb-2 italic">حالة التقرير</p>
                             <p className="text-xs font-black text-success flex items-center gap-2">
                                 <CheckCircle2 size={14} /> معتمد وجاهز للتقفيل النهائي

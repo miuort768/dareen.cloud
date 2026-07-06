@@ -42,7 +42,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     <span>{showAddForm ? 'إلغاء العملية' : 'إضافة معلمة'}</span>
                 </button>
                 
-                <div className="flex items-center gap-2 border-e border-border pr-3 ms-1">
+                <div className="flex items-center gap-2 border-r border-border pr-3 ms-1">
                     <button onClick={onImport} className="w-10 h-10 flex items-center justify-center bg-surface border border-border text-muted hover:bg-primary hover:text-on-primary hover:border-primary rounded-xl transition-all group shadow-sm" title="استيراد">
                         <Upload size={14} />
                     </button>
