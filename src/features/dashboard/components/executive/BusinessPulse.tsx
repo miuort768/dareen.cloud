@@ -35,7 +35,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
     const offset = circumference - (pulse.score / 100) * circumference;
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border flex flex-col items-center">
+        <div className="rounded-3xl p-5 bg-white shadow-soft dark:bg-card border border-border dark:border-border flex flex-col items-center">
             <h3 className="text-sm font-semibold text-muted dark:text-muted mb-1">مؤشر الأداء العام</h3>
             <div className="relative w-36 h-32">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 140 130">

@@ -44,7 +44,7 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const statusColor = (s: string) => s === 'healthy' ? 'var(--bg-success)' : s === 'warning' ? 'var(--bg-warning)' : 'var(--bg-error)';
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-soft dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">حالة النظام</h3>
                 <Server size={18} className="text-muted" />

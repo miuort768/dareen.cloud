@@ -31,7 +31,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
     const sorted = [...sessions].sort((a, b) => a.minutesUntil - b.minutesUntil);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-soft dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">الجلسات القادمة</h3>
                 <Clock size={18} className="text-muted" />

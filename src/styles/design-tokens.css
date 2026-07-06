@@ -120,4 +120,6 @@
   --shadow-gold: 0 10px 30px -10px rgba(212, 175, 55, 0.3);
   --shadow-gold-hover: 0 20px 40px -10px rgba(212, 175, 55, 0.4);
   --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
+  --shadow-soft: 0 8px 30px 0 rgba(0, 0, 0, 0.06);
+  --shadow-broad: 0 32px 64px -12px rgba(0, 0, 0, 0.50);
 }

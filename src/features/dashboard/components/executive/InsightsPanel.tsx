@@ -54,7 +54,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
     };
 
     return (
-        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-soft border border-border dark:border-border">
             <div className="flex items-center gap-2 mb-4">
                 <TrendingUp size={18} className="text-primary" />
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">تحليلات ذكية</h3>

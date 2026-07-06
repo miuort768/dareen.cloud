@@ -22,7 +22,7 @@ export const ExecutiveKPI = memo(function ExecutiveKPI({ stats }: { stats: Execu
     const metrics = METRICS(stats);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-soft dark:bg-card border border-border dark:border-border">
             <h3 className="text-sm font-semibold text-muted dark:text-muted mb-4">المؤشرات الرئيسية</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {metrics.map((m) => (
