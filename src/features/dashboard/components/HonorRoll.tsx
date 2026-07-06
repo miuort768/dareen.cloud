@@ -21,7 +21,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
     if (topStudents.length === 0) return null;
 
-    const color = '#F59E0B';
+    const color = 'var(--bg-warning)';
 
     return (
         <div className="w-full mt-6" dir="rtl">

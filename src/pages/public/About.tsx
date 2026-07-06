@@ -91,13 +91,13 @@ export const About = () => {
                                         </div>
                                         <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Sparkles size={24} className="mb-4 text-on-primary/90" />
-                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_#0000004D]">إبداع مستمر</p>
+                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.30)]">إبداع مستمر</p>
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <div className="h-48 bg-primary-hover rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Target size={24} className="mb-4 text-on-primary/90" />
-                                            <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_#0000004D]">أهداف محققة</h4>
+                                            <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_rgba(0,0,0,0.30)]">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                             <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="تدريس فعال" width="400" height="320" loading="lazy" decoding="async" />
@@ -243,11 +243,11 @@ export const About = () => {
                             {/* Animated Border/Glow effect */}
                             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-warning)] to-[var(--bg-primary)] opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-sm"></div>
                             
-                            <div className="relative bg-primary p-8 md:p-12 shadow-[0_40px_100px_-15px_#00000099] border border-white/5">
+                            <div className="relative bg-primary p-8 md:p-12 shadow-[0_40px_100px_-15px_rgba(0,0,0,0.60)] border border-white/5">
                                 {/* Intricate Background Patterns */}
                                 <div className="absolute inset-0 opacity-10 pointer-events-none">
-                                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,#4F46E626,transparent_50%)]"></div>
-                                    <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,#8B5CF61A,transparent_50%)]"></div>
+                                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(79,70,229,0.15),transparent_50%)]"></div>
+                                    <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.10),transparent_50%)]"></div>
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
                                 </div>
 
@@ -272,7 +272,7 @@ export const About = () => {
                                             <Link
                                                 to="/courses"
                                                 onClick={() => window.scrollTo(0, 0)}
-                                                className="px-10 py-4 bg-white hover:bg-white/90 text-primary font-black text-lg shadow-[0_20px_40px_#00000033] transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-4 group"
+                                                className="px-10 py-4 bg-white hover:bg-white/90 text-primary font-black text-lg shadow-[0_20px_40px_rgba(0,0,0,0.20)] transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-4 group"
                                             >
                                                 <span>ابدأ رحلتك الآن</span>
                                                 <ArrowLeft size={20} className="group-hover:-translate-x-2 transition-transform" />

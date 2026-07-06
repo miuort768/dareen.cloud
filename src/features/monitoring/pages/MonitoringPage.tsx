@@ -51,7 +51,7 @@ export const MonitoringPage = () => {
                     ['الجلسات', data?.counts?.sessions || 0],
                     ['النسخ', data?.counts?.backups || 0],
                 ].map(([label, value]) => (
-                    <div key={label as string} style={{ background: '#f5f5f5', padding: 16, borderRadius: 8, textAlign: 'center' }}>
+                    <div key={label as string} style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8, textAlign: 'center' }}>
                         <div style={{ fontSize: 24, fontWeight: 'bold' }}>{value}</div>
                         <div style={{ color: '#666' }}>{label}</div>
                     </div>
@@ -59,12 +59,12 @@ export const MonitoringPage = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
-                <div style={{ background: '#f5f5f5', padding: 16, borderRadius: 8 }}>
+                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
                     <h3>الذاكرة</h3>
                     <div>المستخدم: {fmtBytes(data?.memory?.rss || 0)}</div>
                     <div>Heap: {fmtBytes(data?.memory?.heapUsed || 0)} / {fmtBytes(data?.memory?.heapTotal || 0)}</div>
                 </div>
-                <div style={{ background: '#f5f5f5', padding: 16, borderRadius: 8 }}>
+                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
                     <h3>النظام</h3>
                     <div>عمر التشغيل: {fmtUptime(data?.uptime || 0)}</div>
                     <div>قاعدة البيانات: {data?.database === 'connected' ? '✅ متصلة' : '❌ منفصلة'}</div>
@@ -73,7 +73,7 @@ export const MonitoringPage = () => {
             </div>
 
             {data?.slow && data.slow.length > 0 && (
-                <div style={{ background: '#fff3cd', padding: 16, borderRadius: 8, marginBottom: 24 }}>
+                <div style={{ background: 'rgba(255,193,7,0.20)', padding: 16, borderRadius: 8, marginBottom: 24 }}>
                     <h3>{'الطلبات البطيئة (>1s)'}</h3>
                     {data.slow.slice(-10).reverse().map((s, i) => (
                         <div key={i} style={{ fontSize: 13, margin: '4px 0' }}>
@@ -84,13 +84,13 @@ export const MonitoringPage = () => {
             )}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                <div style={{ background: '#f5f5f5', padding: 16, borderRadius: 8 }}>
+                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
                     <h3>حسب الطريقة</h3>
                     {Object.entries(data?.byMethod || {}).map(([k, v]) => (
                         <div key={k}>{k}: {v}</div>
                     ))}
                 </div>
-                <div style={{ background: '#f5f5f5', padding: 16, borderRadius: 8 }}>
+                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
                     <h3>حسب المسار</h3>
                     {Object.entries(data?.byPath || {}).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => (
                         <div key={k}>{k}: {v}</div>

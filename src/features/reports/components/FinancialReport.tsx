@@ -41,8 +41,8 @@ export const FinancialReport = ({
                     value={totalRevenue}
                     subValue={monthRevenue}
                     icon={TrendingUp}
-                    color="#10B981"
-                    subColor="#059669"
+                    color="var(--bg-success)"
+                    subColor="var(--bg-success)"
                     currency={reportCurrency}
                 />
                 <FinancialCard
@@ -50,8 +50,8 @@ export const FinancialReport = ({
                     value={totalExpenses}
                     subValue={monthExpenses}
                     icon={TrendingDown}
-                    color="#F43F5E"
-                    subColor="#E11D48"
+                    color="var(--bg-error)"
+                    subColor="var(--bg-error)"
                     currency={reportCurrency}
                 />
                 <FinancialCard
@@ -59,23 +59,23 @@ export const FinancialReport = ({
                     value={netProfit}
                     subValue={monthNetProfit}
                     icon={DollarSign}
-                    color="#6C4BFF"
-                    subColor="#6C4BFF"
+                    color="var(--bg-primary)"
+                    subColor="var(--bg-primary)"
                     currency={reportCurrency}
                 />
             </div>
 
             <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8B5CF612' }}>
-                        <FileText size={16} style={{ color: '#8B5CF6' }} />
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(139,92,246,0.07)' }}>
+                        <FileText size={16} style={{ color: 'var(--bg-primary)' }} />
                     </div>
                     <div>
                         <h3 className="text-xs font-bold text-main dark:text-on-primary mb-1">ملخص التقرير المالي</h3>
                         <p className="text-[11px] font-bold text-muted dark:text-muted leading-relaxed">
-                            تم تسجيل <span className="font-bold text-main dark:text-dim">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: '#059669' }}>{totalRevenue.toLocaleString()} {reportCurrency}</span>.
-                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: '#E11D48' }}>{totalExpenses.toLocaleString()} {reportCurrency}</span>،
-                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: '#6C4BFF' }}>{netProfit.toLocaleString()} {reportCurrency}</span>.
+                            تم تسجيل <span className="font-bold text-main dark:text-dim">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: 'var(--bg-success)' }}>{totalRevenue.toLocaleString()} {reportCurrency}</span>.
+                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: 'var(--bg-error)' }}>{totalExpenses.toLocaleString()} {reportCurrency}</span>،
+                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: 'var(--bg-primary)' }}>{netProfit.toLocaleString()} {reportCurrency}</span>.
                         </p>
                     </div>
                 </div>

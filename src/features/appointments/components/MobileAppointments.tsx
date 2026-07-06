@@ -483,7 +483,7 @@ export const MobileAppointments = () => {
                                             handleCompleteSession(selectedAppointment.id, e);
                                             setShowDetails(false);
                                         }}
-                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from--[var(--bg-success)] to--[var(--bg-success)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/30"
+                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/30"
                                     >
                                         <CheckCircle2 size={14} strokeWidth={1.5} />
                                         إتمام الحصة

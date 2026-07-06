@@ -42,7 +42,7 @@ export const handlers = [
     http.get(`${API_BASE}/system/settings`, () =>
         HttpResponse.json({
             academyName: 'دارين السابعة',
-            themeColor: '#4f46e5',
+            themeColor: 'var(--bg-primary)',
             currency: 'SAR',
         }),
     ),

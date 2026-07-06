@@ -205,28 +205,28 @@ export const MonthlyClosing: React.FC = () => {
                         title="صافي الربح المتوقع"
                         value={netProjectedProfit.toLocaleString()}
                         icon={TrendingUp}
-                        color="#6C4BFF"
+                        color="var(--bg-primary)"
                         subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`}
                     />
                     <StatItem
                         title="التحصيلات الفعلية"
                         value={totalActualCollections.toLocaleString()}
                         icon={Wallet}
-                        color="#10B981"
+                        color="var(--bg-success)"
                         subValue={`صافي التدفق: ${netActualCashFlow.toLocaleString()}`}
                     />
                     <StatItem
                         title="رواتب المعلمات"
                         value={totalTeacherPayout.toLocaleString()}
                         icon={ArrowDownRight}
-                        color="#F43F5E"
+                        color="var(--bg-error)"
                         subValue={`${payrollData.length} معلمة مسجلة`}
                     />
                     <StatItem
                         title="إجمالي الجلسات"
                         value={filteredSessions.length}
                         icon={ActivityIcon}
-                        color="#F59E0B"
+                        color="var(--bg-warning)"
                         subValue="كل الجلسات المكتملة"
                     />
                 </div>

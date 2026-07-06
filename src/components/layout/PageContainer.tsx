@@ -9,7 +9,7 @@ interface PageContainerProps {
 export const PageContainer = ({ children, className }: PageContainerProps) => (
     <div className={cn(
         "min-h-full pb-24 overflow-x-hidden relative",
-        "bg-gradient-to-br from-[var(--bg-background)] via-white to--[var(--bg-primary)]/30",
+        "bg-gradient-to-br from-[var(--bg-background)] via-white to-[var(--bg-primary)]/30",
         "dark:from-background dark:via-[var(--bg-background)] dark:to-[var(--bg-primary)]/20",
         className
     )} dir="rtl">

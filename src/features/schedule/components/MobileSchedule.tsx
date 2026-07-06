@@ -68,7 +68,7 @@ const TIME_SLOTS = [
 ];
 
 const TEACHER_COLORS = [
-    '#6C4BFF', '#10B981', '#F59E0B', '#F43F5E', '#14B8A6', '#8B5CF6', '#F97316'
+    'var(--bg-primary)', 'var(--bg-success)', 'var(--bg-warning)', 'var(--bg-error)', 'var(--bg-success)', 'var(--bg-primary)', 'var(--bg-warning)'
 ];
 
 const fadeUp = {
@@ -377,7 +377,7 @@ export const MobileSchedule = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#6C4BFF08', borderRight: '3px solid #6C4BFF' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', borderRight: '3px solid var(--bg-primary)' }}>
                                         <div>
                                             <span className="text-[8px] font-bold text-muted">الطالب</span>
                                             <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.studentName}</p>
@@ -386,7 +386,7 @@ export const MobileSchedule = () => {
                                         <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#10B98108', borderRight: '3px solid #10B981' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(16,185,129,0.03)', borderRight: '3px solid var(--bg-success)' }}>
                                         <div>
                                             <span className="text-[8px] font-bold text-muted">المعلمة</span>
                                             <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
@@ -394,7 +394,7 @@ export const MobileSchedule = () => {
                                         <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: '#F59E0B08', borderRight: '3px solid #F59E0B' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(245,158,11,0.03)', borderRight: '3px solid var(--bg-warning)' }}>
                                         <div>
                                             <span className="text-[8px] font-bold text-muted">الوقت</span>
                                             <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.time}</p>

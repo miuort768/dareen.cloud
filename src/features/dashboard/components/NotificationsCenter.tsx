@@ -145,7 +145,7 @@ export const NotificationsCenter = ({
     const filteredSmartAlerts = smartAlerts;
     const filteredRoomAlerts = roomAlerts;
 
-    const color = '#8B5CF6';
+    const color = 'var(--bg-primary)';
 
     return (
         <div className="w-full space-y-6" dir="rtl">
@@ -264,7 +264,7 @@ export const NotificationsCenter = ({
                                 {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 text-on-primary text-[8px] font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: '#22C55E' }}
+                                        className="h-8 px-4 text-on-primary text-[8px] font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: 'var(--bg-success)' }}
                                     >
                                         واتساب
                                     </button>

@@ -134,7 +134,7 @@ export const QuickSearch = () => {
                     <div className="max-h-[400px] overflow-y-auto custom-scrollbar p-2">
                         {isTeacher ? (
                             <div className="p-16 text-center">
-                                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] dark:from--[var(--bg-warning)]/30 dark:to--[var(--bg-warning)]/30 rounded-full flex items-center justify-center">
+                                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] dark:from-[var(--bg-warning)]/30 dark:to-[var(--bg-warning)]/30 rounded-full flex items-center justify-center">
                                     <Lock size={48} className="text-warning dark:text-warning" />
                                 </div>
                                 <h3 className="font-black text-xl text-main dark:text-dim mb-3">نعتذر بشدة</h3>

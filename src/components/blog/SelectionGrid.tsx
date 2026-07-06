@@ -37,7 +37,7 @@ export const SelectionGrid = ({
     if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
         return (
             <div className="pb-6">
-                <div className="bg-gradient-to-br from--[var(--bg-primary)] via--[var(--bg-primary)] to-white rounded-[32px] p-5 mb-6 shadow-sm border border-primary/50 mt-2 text-center">
+                <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white rounded-[32px] p-5 mb-6 shadow-sm border border-primary/50 mt-2 text-center">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full shadow-sm mb-3">
                         <BookOpen size={10} className="text-primary" />
                         <span className="text-[9px] font-black text-primary">
@@ -112,9 +112,9 @@ export const SelectionGrid = ({
                         </span>
                     </div>
                     <h2 className="text-2xl font-black text-main dark:text-main mb-3">
-                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)]">الصف الدراسي</span></>)
-                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)]">الترم</span></>)
-                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)]">المادة</span></>)}
+                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">الصف الدراسي</span></>)
+                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">الترم</span></>)
+                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">المادة</span></>)}
                     </h2>
                     <p className="text-sm text-muted dark:text-muted font-medium">
                         {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'

@@ -3,11 +3,11 @@ import { UpcomingSession } from '../../services/executiveService';
 import { Clock, GraduationCap, User } from 'lucide-react';
 
 const URGENCY_COLORS: Record<string, string> = {
-    now: '#ef4444',
-    very_soon: '#f59e0b',
-    soon: '#3b82f6',
-    within_hour: '#22c55e',
-    later: '#6b7280',
+    now: 'var(--bg-error)',
+    very_soon: 'var(--bg-warning)',
+    soon: 'var(--bg-info)',
+    within_hour: 'var(--bg-success)',
+    later: 'var(--text-muted)',
 };
 
 const URGENCY_LABELS: Record<string, string> = {
@@ -19,11 +19,11 @@ const URGENCY_LABELS: Record<string, string> = {
 };
 
 const TIME_COLORS: Record<string, string> = {
-    now: '#fef2f2',
-    very_soon: '#fffbeb',
-    soon: '#eff6ff',
-    within_hour: '#f0fdf4',
-    later: '#f9fafb',
+    now: 'rgba(244,63,94,0.05)',
+    very_soon: 'rgba(245,158,11,0.05)',
+    soon: 'rgba(59,130,246,0.05)',
+    within_hour: 'rgba(34,197,94,0.05)',
+    later: 'var(--bg-surface)',
 };
 
 export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { sessions: UpcomingSession[] }) {
@@ -31,7 +31,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
     const sorted = [...sessions].sort((a, b) => a.minutesUntil - b.minutesUntil);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">الجلسات القادمة</h3>
                 <Clock size={18} className="text-muted" />
@@ -42,8 +42,8 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                     <p className="text-xs text-muted dark:text-muted text-center py-4">لا توجد جلسات قادمة</p>
                 )}
                 {sorted.map((session) => {
-                    const urgencyColor = URGENCY_COLORS[session.urgency] || '#6b7280';
-                    const timeBg = TIME_COLORS[session.urgency] || '#f9fafb';
+                    const urgencyColor = URGENCY_COLORS[session.urgency] || 'var(--text-muted)';
+                    const timeBg = TIME_COLORS[session.urgency] || 'var(--bg-surface)';
                     return (
                         <div
                             key={session.id}

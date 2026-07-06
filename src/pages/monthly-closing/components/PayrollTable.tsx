@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>

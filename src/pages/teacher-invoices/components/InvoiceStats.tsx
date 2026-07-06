@@ -15,12 +15,12 @@ interface InvoiceStatsProps {
 }
 
 const items = [
-  { label: 'المعلمات', key: 'teachers', icon: Users, color: '#8B5CF6' },
-  { label: 'الإجمالي', key: 'total', icon: DollarSign, color: '#10B981' },
-  { label: 'المدفوع', key: 'paid', icon: CheckCircle2, color: '#2563EB' },
-  { label: 'المعلق', key: 'unpaid', icon: AlertCircle, color: '#F43F5E' },
-  { label: 'مصاريف', key: 'expenses', icon: CreditCard, color: '#F59E0B' },
-  { label: 'النسبة', key: 'percent', icon: Percent, color: '#E11D48' },
+  { label: 'المعلمات', key: 'teachers', icon: Users, color: 'var(--bg-primary)' },
+  { label: 'الإجمالي', key: 'total', icon: DollarSign, color: 'var(--bg-success)' },
+  { label: 'المدفوع', key: 'paid', icon: CheckCircle2, color: 'var(--bg-info)' },
+  { label: 'المعلق', key: 'unpaid', icon: AlertCircle, color: 'var(--bg-error)' },
+  { label: 'مصاريف', key: 'expenses', icon: CreditCard, color: 'var(--bg-warning)' },
+  { label: 'النسبة', key: 'percent', icon: Percent, color: 'var(--bg-error)' },
 ] as const;
 
 const getValue = (s: TeacherStats, key: string) => {

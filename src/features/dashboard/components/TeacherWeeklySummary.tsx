@@ -33,7 +33,7 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                 </div>
 
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_#00000080]">
+                    <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,0.50)]">
                         <div className="flex items-center gap-2">
                             <BookOpen size={14} className="text-primary" />
                             <span className="text-[10px] font-medium uppercase">الحصص المنجزة</span>
@@ -41,7 +41,7 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                         <span className="font-mono font-medium text-lg">{stats.weekTotalSessions}</span>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_#00000080]">
+                    <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,0.50)]">
                         <div className="flex items-center gap-2">
                             <Star size={14} className="text-warning" />
                             <span className="text-[10px] font-medium uppercase">توصيات أوسمة</span>

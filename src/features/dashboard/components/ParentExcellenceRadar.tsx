@@ -18,7 +18,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
     if (!achievements || achievements.length === 0) return null;
 
     return (
-        <div className="bg-card border-4 border-border p-6 flex flex-col justify-between shadow-[8px_8px_0px_0px_#FFFFFF1A] text-on-primary relative overflow-hidden group mb-8">
+        <div className="bg-card border-4 border-border p-6 flex flex-col justify-between shadow-[8px_8px_0px_0px_rgba(255,255,255,0.10)] text-on-primary relative overflow-hidden group mb-8">
             
             {/* Glossy overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>

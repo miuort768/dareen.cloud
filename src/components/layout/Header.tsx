@@ -152,7 +152,7 @@ export const Header = () => {
                     to={currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-dashboard' : currentUser?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard'}
                     className="flex items-center pr-2 border-r border-white/20 shrink-0 group transition-all"
                 >
-                    <div className="w-9 h-9 bg-gradient-to-br from-primary-light to-primary-soft flex items-center justify-center text-muted rounded-full shrink-0 border-2 border-success/30 dark:border-success/40 shadow-[0_0_12px_#34D39933] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
+                    <div className="w-9 h-9 bg-gradient-to-br from-primary-light to-primary-soft flex items-center justify-center text-muted rounded-full shrink-0 border-2 border-success/30 dark:border-success/40 shadow-[0_0_12px_rgba(52,211,153,0.20)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
                             <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
                         ) : (

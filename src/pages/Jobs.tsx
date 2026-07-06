@@ -396,7 +396,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={handleSubmit}
                                             disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
-                                            className="flex-1 md:flex-none px-8 py-3 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from--[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20"
+                                            className="flex-1 md:flex-none px-8 py-3 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20"
                                         >
                                             {loading ? (
                                                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

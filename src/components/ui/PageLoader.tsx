@@ -18,7 +18,7 @@ export const PageLoader = () => {
                     <div className="absolute inset-[-15px] rounded-full border-2 border-primary/5 dark:border-primary/10 animate-[spin_8s_linear_infinite]" />
                     <div className="absolute inset-[-30px] rounded-full border border-primary/5 dark:border-primary/10 animate-[spin_12s_linear_reverse_infinite]" />
 
-                    <div className="relative w-36 h-36 md:w-44 md:h-44 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[0_0_50px_#4F46E626] p-3 border border-border dark:border-white/10 overflow-hidden">
+                    <div className="relative w-36 h-36 md:w-44 md:h-44 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(79,70,229,0.15)] p-3 border border-border dark:border-white/10 overflow-hidden">
                         <img
                             src="/dareen_logo_new.jpg"
                             alt="شعار دارين للتعليم والتدريب"
@@ -50,7 +50,7 @@ export const PageLoader = () => {
                         initial={{ x: '-100%' }}
                         animate={{ x: '100%' }}
                         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via--[var(--bg-primary)] to-transparent w-full"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--bg-primary)] to-transparent w-full"
                     />
                     <motion.div
                         initial={{ x: '-100%' }}

@@ -22,8 +22,8 @@ interface OperationsDashboardProps {
 export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: OperationsDashboardProps) => {
     const adminPhone = useAdminPhone();
 
-    const subColor = '#22C55E';
-    const taskColor = '#38BDF8';
+    const subColor = 'var(--bg-success)';
+    const taskColor = 'var(--bg-info)';
 
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4" dir="rtl">
@@ -89,7 +89,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/students" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: '#0F172A' }}>
+                    <Link to="/students" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: 'var(--text-main)' }}>
                         إدارة كافة الطلاب
                         <ChevronLeft size={14} />
                     </Link>

@@ -22,9 +22,9 @@ const typeLabels: Record<string, string> = {
 };
 
 const typeColors: Record<string, string> = {
-    attendance: '#EF4444',
-    performance: '#F59E0B',
-    engagement: '#3B82F6',
+    attendance: 'var(--bg-error)',
+    performance: 'var(--bg-warning)',
+    engagement: 'var(--bg-info)',
 };
 
 const typeBg: Record<string, string> = {

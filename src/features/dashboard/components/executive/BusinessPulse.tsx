@@ -3,11 +3,11 @@ import { Activity, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 import { ExecutivePulse } from '../../services/executiveService';
 
 const PULSE_COLORS: Record<string, string> = {
-    excellent: '#22c55e',
-    good: '#3b82f6',
-    fair: '#f59e0b',
-    critical: '#ef4444',
-    unavailable: '#6b7280',
+    excellent: 'var(--bg-success)',
+    good: 'var(--bg-info)',
+    fair: 'var(--bg-warning)',
+    critical: 'var(--bg-error)',
+    unavailable: 'var(--text-muted)',
 };
 
 const PULSE_LABELS: Record<string, string> = {
@@ -27,7 +27,7 @@ const PULSE_ICONS: Record<string, typeof TrendingUp> = {
 };
 
 export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: ExecutivePulse }) {
-    const color = PULSE_COLORS[pulse.status] || '#6b7280';
+    const color = PULSE_COLORS[pulse.status] || 'var(--text-muted)';
     const LabelIcon = PULSE_ICONS[pulse.status] || Activity;
 
     const radius = 60;
@@ -35,14 +35,14 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
     const offset = circumference - (pulse.score / 100) * circumference;
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border flex flex-col items-center">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border flex flex-col items-center">
             <h3 className="text-sm font-semibold text-muted dark:text-muted mb-1">مؤشر الأداء العام</h3>
             <div className="relative w-36 h-32">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 140 130">
                     <path
                         d="M 20 110 A 60 60 0 1 1 120 110"
                         fill="none"
-                        stroke="#e5e7eb"
+                        stroke="var(--border)"
                         strokeWidth="10"
                         strokeLinecap="round"
                     />

@@ -34,7 +34,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from--[var(--bg-error)] to--[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_#EF44441A] dark:shadow-[0_8px_30px_#14B8A61A]"
+        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_rgba(239,68,68,0.10)] dark:shadow-[0_8px_30px_rgba(20,184,166,0.10)]"
       >
         {icon}
       </motion.div>

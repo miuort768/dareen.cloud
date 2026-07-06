@@ -76,13 +76,13 @@ const TIME_SLOTS = [
 ];
 
 const ACCENT_COLORS = [
-    { color: '#6C4BFF', label: 'بنفسجي' },
-    { color: '#10B981', label: 'أخضر' },
-    { color: '#F59E0B', label: 'عنبر' },
-    { color: '#F43F5E', label: 'وردي' },
-    { color: '#14B8A6', label: 'زيتي' },
-    { color: '#8B5CF6', label: 'بنفسجي فاتح' },
-    { color: '#F97316', label: 'برتقالي' },
+    { color: 'var(--bg-primary)', label: 'بنفسجي' },
+    { color: 'var(--bg-success)', label: 'أخضر' },
+    { color: 'var(--bg-warning)', label: 'عنبر' },
+    { color: 'var(--bg-error)', label: 'وردي' },
+    { color: 'var(--bg-success)', label: 'زيتي' },
+    { color: 'var(--bg-primary)', label: 'بنفسجي فاتح' },
+    { color: 'var(--bg-warning)', label: 'برتقالي' },
 ];
 
 export const Schedule = () => {
@@ -169,7 +169,7 @@ export const Schedule = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
-            <div className="w-8 h-8 border-2 border-border border-t-[#6C4BFF] rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-border border-t-[var(--bg-primary)] rounded-full animate-spin" />
             <p className="text-[11px] font-bold text-muted">جاري تحميل الجدول...</p>
         </div>
     );

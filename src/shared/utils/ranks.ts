@@ -14,17 +14,17 @@ export interface RankInfo {
 }
 
 export const STUDENT_RANKS: Rank[] = [
-    { name: 'شاطر ومجتهد', minPoints: 0, color: '#10b981', icon: '⭐', badgeColor: 'bg-success' },
-    { name: 'العبقري / العبقرية', minPoints: 1000, color: '#3b82f6', icon: '💡', badgeColor: 'bg-info' },
-    { name: 'بطل المعهد', minPoints: 2000, color: '#8b5cf6', icon: '🏅', badgeColor: 'bg-primary' },
-    { name: 'جوكر المعهد', minPoints: 3000, color: '#f59e0b', icon: '👑', badgeColor: 'bg-warning' },
+    { name: 'شاطر ومجتهد', minPoints: 0, color: 'var(--bg-success)', icon: '⭐', badgeColor: 'bg-success' },
+    { name: 'العبقري / العبقرية', minPoints: 1000, color: 'var(--bg-info)', icon: '💡', badgeColor: 'bg-info' },
+    { name: 'بطل المعهد', minPoints: 2000, color: 'var(--bg-primary)', icon: '🏅', badgeColor: 'bg-primary' },
+    { name: 'جوكر المعهد', minPoints: 3000, color: 'var(--bg-warning)', icon: '👑', badgeColor: 'bg-warning' },
 ];
 
 export const TEACHER_RANKS: Rank[] = [
-    { name: 'معلمة لورد', minPoints: 0, color: '#10b981', icon: '👩‍🏫', badgeColor: 'bg-success' },
-    { name: 'لورد مرشد', minPoints: 500, color: '#3b82f6', icon: '🧭', badgeColor: 'bg-info' },
-    { name: 'لورد خبير', minPoints: 2000, color: '#8b5cf6', icon: '🎓', badgeColor: 'bg-primary' },
-    { name: 'لورد النخبة', minPoints: 5000, color: '#000000', icon: '💎', badgeColor: 'bg-black' },
+    { name: 'معلمة لورد', minPoints: 0, color: 'var(--bg-success)', icon: '👩‍🏫', badgeColor: 'bg-success' },
+    { name: 'لورد مرشد', minPoints: 500, color: 'var(--bg-info)', icon: '🧭', badgeColor: 'bg-info' },
+    { name: 'لورد خبير', minPoints: 2000, color: 'var(--bg-primary)', icon: '🎓', badgeColor: 'bg-primary' },
+    { name: 'لورد النخبة', minPoints: 5000, color: 'rgba(0,0,0,1)', icon: '💎', badgeColor: 'bg-black' },
 ];
 
 export const getRankByPoints = (points: number, ranks: Rank[]): Rank => {

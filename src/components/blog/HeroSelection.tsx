@@ -15,7 +15,7 @@ interface HeroSelectionProps {
 
 export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="pb-6">
-        <div className="bg-gradient-to-br from--[var(--bg-primary)]/80 via-white to--[var(--bg-primary)]/30 dark:from-[var(--bg-primary-active)] dark:via-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-primary/50 dark:border-border">
+        <div className="bg-gradient-to-br from-[var(--bg-primary)]/80 via-white to-[var(--bg-primary)]/30 dark:from-[var(--bg-primary-active)] dark:via-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-primary/50 dark:border-border">
             <h2 className="text-xl font-black text-primary dark:text-primary leading-tight">
                 {view === 'types' ? (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">الخدمة</span></>
@@ -74,11 +74,11 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-main dark:text-main mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
                 {view === 'types' ? (
-                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)] dark:from--[var(--bg-primary)] dark:to-[var(--bg-primary)]">دارين</span> التعليمية</>
+                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] dark:from-[var(--bg-primary)] dark:to-[var(--bg-primary)]">دارين</span> التعليمية</>
                 ) : view === 'curriculums' ? (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)]">المنهج</span></>
+                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">المنهج</span></>
                 ) : (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from--[var(--bg-primary)] to-[var(--bg-primary)]">المرحلة</span></>
+                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">المرحلة</span></>
                 )}
             </h1>
             <p className="text-sm sm:text-base text-muted dark:text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">

@@ -26,7 +26,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
     return (
         <SectionCard>
             <div className="p-4 border-b border-border/50 dark:border-border/50">
-                <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="#10B981" />
+                <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="var(--bg-success)" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-right">

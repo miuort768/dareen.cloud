@@ -3,10 +3,10 @@ import { ExecutiveAlerts as AlertsType } from '../../services/executiveService';
 import { AlertTriangle, XCircle, Info, Clock } from 'lucide-react';
 
 const SEVERITY_CONFIG = {
-    critical: { icon: XCircle, color: '#ef4444', bg: '#fef2f2', label: 'حرج' },
-    warning: { icon: AlertTriangle, color: '#f59e0b', bg: '#fffbeb', label: 'تحذير' },
-    reminder: { icon: Clock, color: '#3b82f6', bg: '#eff6ff', label: 'تذكير' },
-    info: { icon: Info, color: '#6b7280', bg: '#f9fafb', label: 'معلومة' },
+    critical: { icon: XCircle, color: 'var(--bg-error)', bg: 'rgba(244,63,94,0.05)', label: 'حرج' },
+    warning: { icon: AlertTriangle, color: 'var(--bg-warning)', bg: 'rgba(245,158,11,0.05)', label: 'تحذير' },
+    reminder: { icon: Clock, color: 'var(--bg-info)', bg: 'rgba(59,130,246,0.05)', label: 'تذكير' },
+    info: { icon: Info, color: 'var(--text-muted)', bg: 'var(--bg-surface)', label: 'معلومة' },
 };
 
 type SeverityKey = keyof typeof SEVERITY_CONFIG;
@@ -33,7 +33,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
     const filtered = filter === 'all' ? allAlerts : allAlerts.filter(a => a.severity === filter);
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">التنبيهات</h3>
                 {counts.critical > 0 && (
@@ -46,7 +46,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
             <div className="flex gap-1 mb-3 overflow-x-auto pb-1">
                 {(['all', 'critical', 'warning', 'reminder', 'info'] as const).map((key) => {
                     const isActive = filter === key;
-                    const cfg = key === 'all' ? { color: '#6b7280', label: 'الكل' } : SEVERITY_CONFIG[key];
+                    const cfg = key === 'all' ? { color: 'var(--text-muted)', label: 'الكل' } : SEVERITY_CONFIG[key];
                     return (
                         <button
                             key={key}

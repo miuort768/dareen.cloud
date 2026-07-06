@@ -11,12 +11,12 @@ interface InvoiceStatsProps {
 }
 
 const stats = [
-  { label: 'المحصل', key: 'total', icon: TrendingUp, color: '#10B981' },
-  { label: 'معلق', key: 'pending', icon: Wallet, color: '#F59E0B' },
-  { label: 'متأخر', key: 'overdue', icon: AlertCircle, color: '#F43F5E' },
-  { label: 'الفواتير', key: 'count', icon: FileText, color: '#6C4BFF' },
-  { label: 'المدفوعة', key: 'paid', icon: CheckCircle, color: '#8B5CF6' },
-  { label: 'المعلقة', key: 'unpaid', icon: XCircle, color: '#E11D48' },
+  { label: 'المحصل', key: 'total', icon: TrendingUp, color: 'var(--bg-success)' },
+  { label: 'معلق', key: 'pending', icon: Wallet, color: 'var(--bg-warning)' },
+  { label: 'متأخر', key: 'overdue', icon: AlertCircle, color: 'var(--bg-error)' },
+  { label: 'الفواتير', key: 'count', icon: FileText, color: 'var(--bg-primary)' },
+  { label: 'المدفوعة', key: 'paid', icon: CheckCircle, color: 'var(--bg-primary)' },
+  { label: 'المعلقة', key: 'unpaid', icon: XCircle, color: 'var(--bg-error)' },
 ] as const;
 
 const getValue = (props: InvoiceStatsProps, key: string) => {

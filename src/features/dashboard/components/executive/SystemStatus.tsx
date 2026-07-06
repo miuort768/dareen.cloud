@@ -41,10 +41,10 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
 
     const uptimeHours = Math.round(health.uptime / 3600);
 
-    const statusColor = (s: string) => s === 'healthy' ? '#22c55e' : s === 'warning' ? '#f59e0b' : '#ef4444';
+    const statusColor = (s: string) => s === 'healthy' ? 'var(--bg-success)' : s === 'warning' ? 'var(--bg-warning)' : 'var(--bg-error)';
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">حالة النظام</h3>
                 <Server size={18} className="text-muted" />

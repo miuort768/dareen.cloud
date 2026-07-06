@@ -89,7 +89,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                 )}
             </div>
 
-            <div className="mt-2.5 bg-gradient-to-br from--[var(--bg-warning)] to--[var(--bg-warning)] rounded-xl p-2.5 text-on-primary flex items-center justify-between">
+            <div className="mt-2.5 bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] rounded-xl p-2.5 text-on-primary flex items-center justify-between">
                 <div>
                     <p className="text-[7px] font-bold text-warning">إجمالي حصص الشهر</p>
                     <p className="text-base font-black tabular-nums">{totalMonthSessions}</p>

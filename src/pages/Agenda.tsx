@@ -137,7 +137,7 @@ export const Agenda = () => {
             />
 
             {/* Quick Filters */}
-            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6" style={{ backgroundColor: '#F59E0B' }}>
+            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6" style={{ backgroundColor: 'var(--bg-warning)' }}>
                 <div className="flex gap-2 overflow-x-auto w-full md:w-auto custom-scrollbar">
                     {DAYS.map(day => (
                         <button

@@ -83,7 +83,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
 
                         {/* Footer Message */}
-                        <div className="p-6 bg-background text-on-primary rounded-none border-2 border-border text-center shadow-[6px_6px_0px_0px_#4F46E5]">
+                        <div className="p-6 bg-background text-on-primary rounded-none border-2 border-border text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
                             <p className="text-[10px] font-medium uppercase italic">نحن فخورون بتقدمك المستمر يا بطل! استمر في التألق.</p>
                         </div>
                     </div>

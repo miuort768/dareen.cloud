@@ -33,7 +33,7 @@ export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps
                     </div>
                     <div className="h-4 bg-white dark:bg-primary-active rounded-full border border-border dark:border-border overflow-hidden relative p-1">
                         <div
-                            className="h-full bg-gradient-to-r from-[var(--bg-primary)] to--[var(--bg-success)] rounded-full transition-all duration-1000 shadow-lg shadow-primary/20"
+                            className="h-full bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-success)] rounded-full transition-all duration-1000 shadow-lg shadow-primary/20"
                             style={{ width: `${stats.attendanceRate}%` }}
                         ></div>
                     </div>

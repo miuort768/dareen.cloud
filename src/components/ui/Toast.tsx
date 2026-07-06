@@ -45,7 +45,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
         },
         warning: {
             icon: AlertCircle,
-            gradient: 'from--[var(--bg-warning)]/20 to--[var(--bg-warning)]/5',
+            gradient: 'from-[var(--bg-warning)]/20 to-[var(--bg-warning)]/5',
             border: 'border-warning/40',
             iconBg: 'bg-warning',
             text: 'text-warning dark:text-warning',
@@ -53,7 +53,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
         },
         info: {
             icon: Info,
-            gradient: 'from--[var(--bg-info)]/20 to--[var(--bg-info)]/5',
+            gradient: 'from-[var(--bg-info)]/20 to-[var(--bg-info)]/5',
             border: 'border-info/40',
             iconBg: 'bg-info',
             text: 'text-info dark:text-info',

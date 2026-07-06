@@ -28,7 +28,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
                             {studentGrade?.charAt(0) || session.studentName.charAt(0)}
                         </div>
                         <div>
@@ -37,14 +37,14 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                                 <span className="text-[9px] font-normal text-muted uppercase">{studentGrade}</span>
                                 <span className="w-1 h-1 bg-card dark:bg-card"></span>
                                 <div className="flex items-center gap-1">
-                                    <BookOpen size={10} style={{ color: '#6C4BFF' }} />
+                                    <BookOpen size={10} style={{ color: 'var(--bg-primary)' }} />
                                     <span className="text-[9px] font-normal text-muted">{session.subject}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {session.status !== 'scheduled' && (
-                        <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? '#10B98112' : '#F43F5E12', color: session.status === 'completed' ? '#10B981' : '#F43F5E' }}>
+                        <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
                             {session.status === 'completed' ? 'منفذة' : 'ملغاة'}
                         </div>
                     )}
@@ -52,7 +52,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
 
                 <div className="bg-white dark:bg-primary-active p-3 rounded-xl border border-border dark:border-border">
                     <div className="flex items-center gap-2 mb-1.5">
-                        <Clock size={12} style={{ color: '#6C4BFF' }} />
+                        <Clock size={12} style={{ color: 'var(--bg-primary)' }} />
                         <span className="text-[9px] font-bold text-muted uppercase tracking-wide">موعد الحصة</span>
                     </div>
                     <div className="text-sm font-black font-mono text-main dark:text-on-primary tabular-nums">
@@ -63,7 +63,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="space-y-1.5">
                     <div className="flex justify-between items-center text-[9px] font-normal uppercase text-muted">
                         <div className="flex items-center gap-1.5">
-                            <Activity size={12} style={{ color: '#6C4BFF' }} />
+                            <Activity size={12} style={{ color: 'var(--bg-primary)' }} />
                             <span>تغطية الرصيد</span>
                         </div>
                             <div className="flex items-baseline gap-1 text-main dark:text-on-primary">

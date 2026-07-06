@@ -32,8 +32,8 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
 
                 <div className="p-5 space-y-5">
                     <div className="flex items-center gap-3 p-3 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#F59E0B12' }}>
-                            <Clock size={18} style={{ color: '#D97706' }} />
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(245,158,11,0.07)' }}>
+                            <Clock size={18} style={{ color: 'var(--bg-warning)' }} />
                         </div>
                         <div>
                             <p className="text-[10px] font-bold text-muted">{subject}</p>
@@ -71,9 +71,9 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                             />
                         </div>
 
-                        <div className="flex items-start gap-2 p-3 rounded-xl" style={{ backgroundColor: '#6C4BFF08', border: '1px solid #6C4BFF20' }}>
-                            <AlertCircle size={14} style={{ color: '#6C4BFF' }} className="flex-shrink-0 mt-0.5" />
-                            <p className="text-[9px] font-bold leading-relaxed" style={{ color: '#5B21B6' }}>
+                        <div className="flex items-start gap-2 p-3 rounded-xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', border: '1px solid rgba(108,75,255,0.13)' }}>
+                            <AlertCircle size={14} style={{ color: 'var(--bg-primary)' }} className="flex-shrink-0 mt-0.5" />
+                            <p className="text-[9px] font-bold leading-relaxed" style={{ color: 'var(--bg-primary)' }}>
                                 سيصل طلبك للإدارة فوراً للموافقة عليه، وسيتم إبلاغ ولي الأمر تلقائياً.
                             </p>
                         </div>

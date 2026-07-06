@@ -157,7 +157,7 @@ export const Chat: React.FC = () => {
             {/* Standard Global Header */}
             <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shadow-[0_0_15px_#34D3994D] shrink-0 bg-white/5 ">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shadow-[0_0_15px_rgba(52,211,153,0.30)] shrink-0 bg-white/5 ">
                         <img src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full object-cover" />
                     </div>
                     <div>
@@ -225,7 +225,7 @@ export const Chat: React.FC = () => {
                         </div>
                         
                         <div className="absolute bottom-10 flex items-center gap-2 text-muted dark:text-muted">
-                             <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_#10B98180]", isConnected ? "bg-success" : "bg-error")}></div>
+                             <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.50)]", isConnected ? "bg-success" : "bg-error")}></div>
                              <span className="text-[10px] font-medium uppercase tracking-widest">{isConnected ? "النظام متصل وآمن" : "غير متصل"}</span>
                         </div>
                     </div>

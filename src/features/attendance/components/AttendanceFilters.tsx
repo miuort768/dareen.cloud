@@ -48,7 +48,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
             <div className="bg-white dark:bg-primary-active border border-border dark:border-border rounded-2xl shadow-sm p-4">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
                             <SlidersHorizontal size={14} />
                         </div>
                         <div>
@@ -59,7 +59,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: '#F43F5E12', color: '#F43F5E' }}
+                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: 'rgba(244,63,94,0.07)', color: 'var(--bg-error)' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>
@@ -74,7 +74,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                     key={key}
                                     onClick={() => onPeriodChange(key)}
                                                     className={`px-3 py-1.5 text-[10px] font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-dim bg-surface dark:bg-primary-active hover:bg-surface'}`}
-                                                    style={periodFilter === key ? { backgroundColor: '#6C4BFF' } : {}}
+                                                    style={periodFilter === key ? { backgroundColor: 'var(--bg-primary)' } : {}}
                                 >
                                     {periodLabels[key]}
                                 </button>

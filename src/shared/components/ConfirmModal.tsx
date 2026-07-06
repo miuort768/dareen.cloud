@@ -58,10 +58,10 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-[0_32px_64px_-12px_#00000080] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-[0_32px_64px_-12px_rgba(0,0,0,0.50)] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 <div className={cn(
                     "h-1.5 w-full",
-                    isDestructive ? "bg-error shadow-[0_0_15px_#E11D4866]" : "bg-[var(--primary-color,#5c59f2)] shadow-[0_0_15px_#5C59F266]"
+                    isDestructive ? "bg-error shadow-[0_0_15px_rgba(225,29,72,0.40)]" : "bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"
                 )}></div>
 
                 <div className="absolute top-0 right-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -80,7 +80,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             "w-20 h-20 rounded-none flex items-center justify-center mb-8 border-2 rotate-3 shadow-xl",
                             isDestructive
                                 ? "bg-error-light text-error border-error dark:bg-error/20 dark:border-error/30"
-                                : "bg-primary-soft text-[var(--primary-color,#5c59f2)] border-primary dark:bg-primary-active/20 dark:border-primary/30"
+                                : "bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-primary dark:bg-primary-active/20 dark:border-primary/30"
                         )}>
                             <div className="-rotate-3">
                                 {isDestructive ? <Trash2 size={36} strokeWidth={1.5} /> : <AlertCircle size={36} strokeWidth={1.5} />}
@@ -105,7 +105,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                                     "px-6 h-14 text-on-primary font-black text-[11px] uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95 rounded-none",
                                     isDestructive
                                         ? "bg-error hover:bg-error shadow-error/20"
-                                        : "bg-[var(--primary-color,#5c59f2)] hover:opacity-90 shadow-primary/20"
+                                        : "bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 shadow-primary/20"
                                 )}
                             >
                                 {confirmText}

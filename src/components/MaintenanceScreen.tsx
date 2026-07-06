@@ -22,7 +22,7 @@ export const MaintenanceScreen = () => {
                 <div className="mb-12">
                     <h1 className="text-2xl md:text-4xl font-medium text-on-primary leading-tight tracking-tighter uppercase mb-8">
                         المنصة في وضع <br/> 
-                        <span className="text-primary underline decoration-4 decoration-[#5c59f2]/20 underline-offset-4">الصيانة الدورية</span>
+                        <span className="text-primary underline decoration-4 decoration-[var(--bg-primary)]/20 underline-offset-4">الصيانة الدورية</span>
                     </h1>
                     <p className="text-muted font-normal text-sm md:text-base leading-relaxed max-w-xs mx-auto">
                         نحن بصدد إجراء تحديثات جذرية لضمان أفضل تجربة تعليمية. 

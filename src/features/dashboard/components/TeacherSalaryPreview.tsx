@@ -40,7 +40,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                             <span>هدف الحصص: {stats.completedSessions}/{stats.sessionsGoal}</span>
                             <span>{Math.round(progress)}%</span>
                         </div>
-                        <div className="h-4 bg-card border-2 border-border shadow-[2px_2px_0px_0px_#FFFFFF33]">
+                        <div className="h-4 bg-card border-2 border-border shadow-[2px_2px_0px_0px_rgba(255,255,255,0.20)]">
                             <div 
                                 className="h-full bg-warning transition-all duration-1000 ease-out" 
                                 style={{ width: `${progress}%` }}

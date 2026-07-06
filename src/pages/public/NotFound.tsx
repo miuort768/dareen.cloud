@@ -14,7 +14,7 @@ export const NotFound = () => {
             <main className="flex-grow pt-24 md:pt-32 pb-24 relative flex items-center justify-center">
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                     <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from--[var(--bg-info)]/5 to--[var(--bg-primary)]/5 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">

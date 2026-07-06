@@ -207,7 +207,7 @@ export const AdminJobs = () => {
                                         <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${
                                             app.contacted ? 'opacity-30' : ''
                                         }`} style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
-                                            <BookOpen size={10} style={{ color: app.contacted ? '#94A3B8' : 'rgb(var(--color-primary))' }} />
+                                            <BookOpen size={10} style={{ color: app.contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[8px] font-bold text-muted uppercase tracking-widest mb-0.5">المناهج</p>
@@ -240,7 +240,7 @@ export const AdminJobs = () => {
 const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string; contacted?: boolean }) => (
     <div className={`flex items-center gap-2 ${contacted ? 'opacity-40' : ''}`}>
         <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
-            <Icon size={10} style={{ color: contacted ? '#94A3B8' : 'rgb(var(--color-primary))' }} />
+            <Icon size={10} style={{ color: contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
         </div>
         <div className="min-w-0">
             <p className="text-[8px] font-bold text-muted uppercase tracking-widest">{label}</p>

@@ -64,7 +64,7 @@ export const RolesPage = () => {
         <div style={{ padding: '20px', direction: 'rtl' }}>
             <h2>إدارة الصلاحيات</h2>
 
-            <div style={{ marginBottom: 24, padding: 16, background: '#f5f5f5', borderRadius: 8 }}>
+            <div style={{ marginBottom: 24, padding: 16, background: 'var(--bg-surface)', borderRadius: 8 }}>
                 <h3>إضافة دور جديد</h3>
                 <input placeholder="الاسم (مثل: manager)" value={newName} onChange={e => setNewName(e.target.value)} style={{ marginLeft: 8 }} />
                 <input placeholder="التسمية (مثل: مدير)" value={newLabel} onChange={e => setNewLabel(e.target.value)} style={{ marginLeft: 8 }} />
@@ -88,7 +88,7 @@ export const RolesPage = () => {
             {editingRole && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    background: '#00000080', display: 'flex',
+                    background: 'rgba(0,0,0,0.50)', display: 'flex',
                     justifyContent: 'center', alignItems: 'center', zIndex: 1000
                 }}>
                     <div style={{ background: '#fff', padding: 24, borderRadius: 8, maxHeight: '80vh', overflow: 'auto', width: 600 }}>

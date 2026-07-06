@@ -227,7 +227,7 @@ export const MobileAdminDashboard = ({
                             <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/30 dark:to--[var(--bg-success)]/20 flex items-center justify-center">
+                                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/30 dark:to-[var(--bg-success)]/20 flex items-center justify-center">
                                             <Award {...smallIconProps} className="text-success" />
                                         </div>
                                         <div>
@@ -250,10 +250,10 @@ export const MobileAdminDashboard = ({
 
                             {/* Quick Links */}
                             <motion.div className="grid grid-cols-2 gap-3" variants={stagger} initial="initial" animate="animate">
-                                <QuickLink icon={UserPlus} label="طالب جديد" color="#2563EB" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                                <QuickLink icon={FilePlus} label="فاتورة" color="#22C55E" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                                <QuickLink icon={Calendar} label="الجدول" color="#8B5CF6" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                                <QuickLink icon={Megaphone} label="لوحة الإعلانات" color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
+                                <QuickLink icon={UserPlus} label="طالب جديد" color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
+                                <QuickLink icon={FilePlus} label="فاتورة" color="var(--bg-success)" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
+                                <QuickLink icon={Calendar} label="الجدول" color="var(--bg-primary)" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
+                                <QuickLink icon={Megaphone} label="لوحة الإعلانات" color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
                             </motion.div>
                         </motion.div>
                     )}
@@ -269,12 +269,12 @@ export const MobileAdminDashboard = ({
                         >
                             <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">الإجراءات السريعة</motion.p>
                             <motion.div className="grid grid-cols-2 gap-3" variants={stagger} initial="initial" animate="animate">
-                                <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="#2563EB" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                                <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="#22C55E" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                                <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} color="#8B5CF6" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                                <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} color="#F97316" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
-                                <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} color="#38BDF8" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
-                                <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} color="#F59E0B" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
+                                <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
+                                <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="var(--bg-success)" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
+                                <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} color="var(--bg-primary)" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
+                                <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
+                                <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
+                                <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
                             </motion.div>
                         </motion.div>
                     )}
@@ -291,7 +291,7 @@ export const MobileAdminDashboard = ({
                             <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">المؤشرات المالية</motion.p>
 
                             <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border space-y-4">
-                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/20 dark:to--[var(--bg-success)]/20 border border-success dark:border-success/30">
+                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/20 dark:to-[var(--bg-success)]/20 border border-success dark:border-success/30">
                                     <div>
                                         <span className="text-[9px] font-bold text-success dark:text-success">الإيرادات</span>
                                         <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
@@ -301,7 +301,7 @@ export const MobileAdminDashboard = ({
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-error-soft)] to-[var(--bg-error-light)] dark:from--[var(--bg-error)]/20 dark:to--[var(--bg-error)]/20 border border-error dark:border-error/30">
+                                <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-error-soft)] to-[var(--bg-error-light)] dark:from-[var(--bg-error)]/20 dark:to-[var(--bg-error)]/20 border border-error dark:border-error/30">
                                     <div>
                                         <span className="text-[9px] font-bold text-error dark:text-error">المصروفات</span>
                                         <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
@@ -359,7 +359,7 @@ export const MobileAdminDashboard = ({
                                 </motion.div>
                             ) : (
                                 <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-8 text-center shadow-sm border border-border dark:border-border">
-                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from--[var(--bg-success)]/30 dark:to--[var(--bg-success)]/20 flex items-center justify-center mx-auto mb-3">
+                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/30 dark:to-[var(--bg-success)]/20 flex items-center justify-center mx-auto mb-3">
                                         <Bell size={24} strokeWidth={1.5} className="text-success" />
                                     </div>
                                     <p className="text-xs font-bold text-main dark:text-on-primary">لا توجد تنبيهات</p>
@@ -405,12 +405,12 @@ export const MobileAdminDashboard = ({
 
 
 const colorVarMap: Record<string, string> = {
-    '#2563EB': 'var(--bg-primary)',
-    '#22C55E': 'var(--bg-success)',
-    '#8B5CF6': 'var(--chart-4)',
-    '#F97316': 'var(--bg-warning)',
-    '#38BDF8': 'var(--bg-info)',
-    '#F59E0B': 'var(--bg-warning)',
+    'var(--bg-info)': 'var(--bg-primary)',
+    'var(--bg-success)': 'var(--bg-success)',
+    'var(--bg-primary)': 'var(--chart-4)',
+    'var(--bg-warning)': 'var(--bg-warning)',
+    'var(--bg-info)': 'var(--bg-info)',
+    'var(--bg-warning)': 'var(--bg-warning)',
 };
 
 const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; color: string; onClick?: () => void }) => (

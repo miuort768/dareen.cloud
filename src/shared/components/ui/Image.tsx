@@ -3,7 +3,7 @@ import { cn } from '../../../lib/utils';
 
 const FALLBACK_SRC =
   'data:image/svg+xml,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#e2e8f0" width="400" height="300"/><text fill="#94a3b8" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="155">تعذر تحميل الصورة</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="var(--border)" width="400" height="300"/><text fill="var(--text-dim)" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="155">تعذر تحميل الصورة</text></svg>'
   );
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {

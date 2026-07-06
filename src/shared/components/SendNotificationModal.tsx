@@ -34,9 +34,9 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-[0_32px_64px_-12px_#00000080] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-[0_32px_64px_-12px_rgba(0,0,0,0.50)] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 {/* Visual Header Accent */}
-                <div className="h-1.5 w-full bg-[var(--primary-color,#5c59f2)] shadow-[0_0_15px_#5C59F266]"></div>
+                <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"></div>
 
                 {/* Decorative Geometric Background */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -50,7 +50,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                     </button>
 
                     <div className="flex flex-col items-center text-center">
-                        <div className="w-20 h-20 bg-primary-soft text-[var(--primary-color,#5c59f2)] border-2 border-primary dark:bg-primary-active/20 dark:border-primary/30 flex items-center justify-center mb-6 shadow-xl rotate-3">
+                        <div className="w-20 h-20 bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-2 border-primary dark:bg-primary-active/20 dark:border-primary/30 flex items-center justify-center mb-6 shadow-xl rotate-3">
                             <div className="-rotate-3">
                                 <Bell size={36} strokeWidth={1.5} />
                             </div>
@@ -60,7 +60,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                             بث إشعار فوري
                         </h3>
                         <p className="text-muted dark:text-muted font-bold text-[10px] mb-8 uppercase tracking-widest">
-                            إلى: <span className="text-[var(--primary-color,#5c59f2)]">{recipientName}</span>
+                            إلى: <span className="text-[var(--primary-color,var(--bg-primary))]">{recipientName}</span>
                         </p>
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-right">
@@ -72,7 +72,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     placeholder="اكتب رسالتك هنا..."
-                                    className="w-full h-32 p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-none focus:outline-none focus:border-[var(--primary-color,#5c59f2)] dark:text-on-primary text-xs font-black resize-none leading-relaxed transition-all"
+                                    className="w-full h-32 p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] dark:text-on-primary text-xs font-black resize-none leading-relaxed transition-all"
                                 />
                             </div>
 
@@ -80,7 +80,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="submit"
                                     disabled={!message.trim()}
-                                    className="px-6 h-14 bg-[var(--primary-color,#5c59f2)] hover:opacity-90 text-on-primary font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
+                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
                                 >
                                     <div className="flex items-center justify-center gap-3">
                                         <span>إرسال التنبيه الآن</span>

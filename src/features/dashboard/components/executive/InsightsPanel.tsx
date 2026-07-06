@@ -47,14 +47,14 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
 
     const getStyle = (type: string) => {
         switch (type) {
-            case 'positive': return { bg: '#f0fdf4', color: '#22c55e' };
-            case 'negative': return { bg: '#fef2f2', color: '#ef4444' };
-            default: return { bg: '#f9fafb', color: '#6b7280' };
+            case 'positive': return { bg: 'rgba(34,197,94,0.05)', color: 'var(--bg-success)' };
+            case 'negative': return { bg: 'rgba(244,63,94,0.05)', color: 'var(--bg-error)' };
+            default: return { bg: 'var(--bg-surface)', color: 'var(--text-muted)' };
         }
     };
 
     return (
-        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to--[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-[0_8px_30px_#0000000F] border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border dark:border-border">
             <div className="flex items-center gap-2 mb-4">
                 <TrendingUp size={18} className="text-primary" />
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">تحليلات ذكية</h3>

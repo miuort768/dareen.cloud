@@ -3,16 +3,16 @@ import { PresenceUser } from '../../services/executiveService';
 import { Circle, Users } from 'lucide-react';
 
 const STATUS_COLORS: Record<string, string> = {
-    online: '#22c55e',
-    away: '#f59e0b',
-    offline: '#d1d5db',
+    online: 'var(--bg-success)',
+    away: 'var(--bg-warning)',
+    offline: 'var(--border-strong)',
 };
 
 export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users: PresenceUser[]; total: number }) {
     if (!users) return null;
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_#0000000F] dark:bg-card border border-border dark:border-border">
+        <div className="rounded-3xl p-5 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:bg-card border border-border dark:border-border">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-muted dark:text-muted">الحضور المباشر</h3>
                 <div className="flex items-center gap-2">
@@ -30,7 +30,7 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                         key={user.userId}
                         className="flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-surface dark:hover:bg-card/50"
                     >
-                        <Circle size={10} style={{ color: STATUS_COLORS[user.status] || '#d1d5db' }} fill={(STATUS_COLORS[user.status] || '#d1d5db')} />
+                        <Circle size={10} style={{ color: STATUS_COLORS[user.status] || 'var(--border-strong)' }} fill={(STATUS_COLORS[user.status] || 'var(--border-strong)')} />
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-main dark:text-on-primary truncate">{user.name}</p>
                             <p className="text-[11px] text-muted">

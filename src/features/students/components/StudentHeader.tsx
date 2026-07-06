@@ -21,7 +21,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
                     <h1 className="text-sm md:text-xl font-medium text-on-primary uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>
                     <div className="hidden md:flex items-center gap-3 mt-1.5">
                          <p className="text-[10px] text-on-error font-medium uppercase tracking-widest">الإدارة الأكاديمية • {count} طالب نشط</p>
-                         <span className="w-1.5 h-1.5 bg-white shadow-[0_0_8px_#FFFFFF80] animate-pulse"></span>
+                         <span className="w-1.5 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.50)] animate-pulse"></span>
                          <span className="text-[9px] font-medium text-on-error uppercase tracking-widest border border-white/20 px-2 py-0.5 bg-white/10">مركز التحكم</span>
                     </div>
                 </div>

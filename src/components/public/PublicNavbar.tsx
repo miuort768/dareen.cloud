@@ -51,7 +51,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 left-0 right-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_#0000001F] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
+            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 pr-2 group">

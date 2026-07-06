@@ -164,7 +164,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: '#6C4BFF12', color: '#6C4BFF' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
@@ -245,7 +245,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         </h5>
                         <button
                             onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
-                                    className="text-[9px] font-bold px-2 py-0.5 rounded-lg transition-all" style={{ backgroundColor: isEditing ? '#F43F5E12' : '#6C4BFF12', color: isEditing ? '#F43F5E' : '#6C4BFF' }}
+                                    className="text-[9px] font-bold px-2 py-0.5 rounded-lg transition-all" style={{ backgroundColor: isEditing ? 'rgba(244,63,94,0.07)' : 'rgba(108,75,255,0.07)', color: isEditing ? 'var(--bg-error)' : 'var(--bg-primary)' }}
                         >
                             {isEditing ? 'إلغاء' : 'تعديل'}
                         </button>
@@ -289,12 +289,12 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Notes */}
-                <div className="p-3 rounded-xl border relative" style={{ backgroundColor: '#F59E0B08', borderColor: '#F59E0B20' }}>
+                <div className="p-3 rounded-xl border relative" style={{ backgroundColor: 'rgba(245,158,11,0.03)', borderColor: 'rgba(245,158,11,0.13)' }}>
                     <div className="flex items-center justify-between mb-2">
-                        <h5 className="text-[9px] font-bold uppercase flex items-center gap-1.5" style={{ color: '#D97706' }}>
+                        <h5 className="text-[9px] font-bold uppercase flex items-center gap-1.5" style={{ color: 'var(--bg-warning)' }}>
                             <MessageSquare size={12} /> ملاحظات
                         </h5>
-                        {isSavingNotes && <span className="text-[8px] font-bold animate-pulse" style={{ color: '#D97706' }}>جاري الحفظ...</span>}
+                        {isSavingNotes && <span className="text-[8px] font-bold animate-pulse" style={{ color: 'var(--bg-warning)' }}>جاري الحفظ...</span>}
                     </div>
                     <textarea 
                         value={notes}
