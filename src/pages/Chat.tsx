@@ -163,8 +163,8 @@ export const Chat: React.FC = () => {
                     </div>
                     <div>
                         <div className="flex flex-col">
-                            <h1 className="text-lg md:text-2xl font-medium text-on-primary tracking-tighter uppercase">مركز المحادثات</h1>
-                            <p className="text-xs md:text-sm font-light text-dim uppercase tracking-widest mt-0.5">تواصل آمن ومباشر</p>
+                            <h1 className="text-lg md:text-2xl font-medium text-main tracking-tighter uppercase">مركز المحادثات</h1>
+                            <p className="text-xs md:text-sm font-light text-muted uppercase tracking-widest mt-0.5">تواصل آمن ومباشر</p>
                         </div>
                     </div>
                 </div>
