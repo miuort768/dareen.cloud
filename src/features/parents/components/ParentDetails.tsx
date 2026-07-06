@@ -98,7 +98,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                             <p className="font-bold text-sm text-main dark:text-on-primary uppercase tracking-tight">{child.name}</p>
                                             <p className="text-micro font-medium text-info uppercase tracking-widest mt-0.5">{child.grade}</p>
                                         </div>
-                                        <div className="w-9 h-9 bg-white dark:bg-primary-active border border-border dark:border-border flex items-center justify-center text-xs font-medium text-dim rounded-xl">
+                                        <div className="w-9 h-9 bg-white dark:bg-primary-active border border-border dark:border-border flex items-center justify-center text-xs font-medium text-dim dark:text-on-primary rounded-xl">
                                             {child.name.charAt(0)}
                                         </div>
                                     </div>

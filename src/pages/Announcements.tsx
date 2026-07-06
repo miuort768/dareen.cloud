@@ -283,7 +283,7 @@ export const Announcements = () => {
                                             onClick={() => setFormData({...formData, isActive: true})}
                                             className={cn(
                                                 "flex-1 font-bold text-micro rounded-xl transition-all active:scale-95",
-                                                formData.isActive ? "bg-success text-on-success shadow-sm" : "bg-surface dark:bg-card text-dim"
+                                                formData.isActive ? "bg-success text-on-success shadow-sm" : "bg-surface dark:bg-card text-dim dark:text-muted"
                                             )}
                                         >
                                             نشط
@@ -293,7 +293,7 @@ export const Announcements = () => {
                                             onClick={() => setFormData({...formData, isActive: false})}
                                             className={cn(
                                                 "flex-1 font-bold text-micro rounded-xl transition-all active:scale-95",
-                                                !formData.isActive ? "bg-warning text-on-warning shadow-sm" : "bg-surface dark:bg-card text-dim"
+                                                !formData.isActive ? "bg-warning text-on-warning shadow-sm" : "bg-surface dark:bg-card text-dim dark:text-muted"
                                             )}
                                         >
                                             مخفي

@@ -55,12 +55,12 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                 </div>
                             </div>
                             <div className="w-1/6">
-                                <span className="font-mono font-bold text-xs text-muted dark:text-dim flex items-center gap-1.5">
+                                <span className="font-mono font-bold text-xs text-muted dark:text-on-primary flex items-center gap-1.5">
                                     <Phone size={11} className="text-success" /> {lead.phone}
                                 </span>
                             </div>
                             <div className="w-1/6">
-                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface dark:bg-primary-active text-micro font-bold text-muted dark:text-dim border border-border dark:border-border rounded-xl">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface dark:bg-primary-active text-micro font-bold text-muted dark:text-on-primary border border-border dark:border-border rounded-xl">
                                     <Tag size={11} className="text-info" /> {lead.subject}
                                 </span>
                             </div>

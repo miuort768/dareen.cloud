@@ -78,12 +78,12 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                             <table className="w-full text-sm text-start">
                                 <thead className="bg-surface dark:bg-hover text-dim font-normal">
                                     <tr>
-                                        <th className="p-4">التاريخ</th>
-                                        <th className="p-4">اليوم</th>
-                                        <th className="p-4">المادة</th>
-                                        <th className="p-4">المعلم</th>
-                                        <th className="p-4">الوقت</th>
-                                        <th className="p-4">الحالة</th>
+                                        <th className="p-4 dark:text-muted">التاريخ</th>
+                                        <th className="p-4 dark:text-muted">اليوم</th>
+                                        <th className="p-4 dark:text-muted">المادة</th>
+                                        <th className="p-4 dark:text-muted">المعلم</th>
+                                        <th className="p-4 dark:text-muted">الوقت</th>
+                                        <th className="p-4 dark:text-muted">الحالة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border">

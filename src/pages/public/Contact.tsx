@@ -163,7 +163,7 @@ export const Contact = () => {
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim"
+                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim dark:placeholder:text-muted"
                                                 placeholder="أدخل اسمك الكريم..."
                                             />
                                         </div>
@@ -176,7 +176,7 @@ export const Contact = () => {
                                                 pattern="[0-9+\s]*"
                                                 value={formData.phone}
                                                 onChange={e => setFormData(p => ({ ...p, phone: e.target.value.replace(/[^0-9+\s]/g, '') }))}
-                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-end placeholder:text-dim"
+                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-end placeholder:text-dim dark:placeholder:text-muted"
                                                 placeholder="+965 XXXX XXXX"
                                                 dir="ltr"
                                             />

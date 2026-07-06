@@ -39,7 +39,7 @@ export const TermsOfWork = () => {
                 <div className="absolute bottom-0 end-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-primary-active/80 dark:md:bg-primary-active text-primary md:text-main dark:md:text-dim border border-primary/50 dark:border-primary/50 md:border-border dark:md:border-border rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-primary-active/80 dark:md:bg-primary-active text-primary md:text-main dark:md:text-on-primary border border-primary/50 dark:border-primary/50 md:border-border dark:md:border-border rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
                         <Briefcase size={12} className="text-primary" />
                         <span className="text-xs md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
                     </div>

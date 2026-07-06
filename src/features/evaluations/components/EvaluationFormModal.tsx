@@ -84,7 +84,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                         <div>
                             <label className="block text-micro md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
                             <textarea value={formData.notes} onChange={(e) => onChange({ ...formData, notes: e.target.value })} rows={2}
-                                className="w-full border border-border dark:border-border dark:bg-primary-active px-3 py-2 text-sm font-normal outline-none focus:ring-2 focus:ring-primary/30 resize-none placeholder:text-dim transition-all rounded-xl"
+                                className="w-full border border-border dark:border-border dark:bg-primary-active px-3 py-2 text-sm font-normal outline-none focus:ring-2 focus:ring-primary/30 resize-none placeholder:text-dim dark:placeholder:text-on-primary transition-all rounded-xl"
                                 placeholder="مثال: أداء ممتاز اليوم..." />
                         </div>
                     </form>

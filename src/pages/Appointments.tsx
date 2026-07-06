@@ -268,7 +268,7 @@ export const Appointments = () => {
                             placeholder="ابحث باسم الطالب أو المادة..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full ps-8 pe-8 py-2 border border-border text-xs font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card transition-all placeholder:text-dim text-main rounded-xl"
+                            className="w-full ps-8 pe-8 py-2 border border-border text-xs font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card transition-all placeholder:text-dim dark:placeholder:text-muted text-main rounded-xl"
                         />
                         {searchTerm && (
                             <button onClick={() => setSearchTerm('')} className="absolute end-2.5 top-1/2 -translate-y-1/2 text-dim hover:text-error transition-colors" aria-label="مسح البحث">

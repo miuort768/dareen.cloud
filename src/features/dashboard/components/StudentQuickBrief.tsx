@@ -80,7 +80,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                             <MessageSquare size={14} className="text-primary" />
                             <h4 className="text-micro font-medium uppercase">سياق ولي الأمر</h4>
                         </div>
-                        <div className="text-sm font-normal text-main dark:text-dim leading-relaxed bg-background dark:bg-primary-active/40 p-5 border-2 border-border rounded-none">
+                        <div className="text-sm font-normal text-main dark:text-on-primary leading-relaxed bg-background dark:bg-primary-active/40 p-5 border-2 border-border rounded-none">
                             {student.notes || 'لا توجد ملاحظات من ولي الأمر لهذا الطالب.'}
                         </div>
                     </div>

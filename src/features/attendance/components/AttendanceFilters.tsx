@@ -73,7 +73,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                 <button
                                     key={key}
                                     onClick={() => onPeriodChange(key)}
-                                                    className={`px-3 py-1.5 text-micro font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-dim bg-surface dark:bg-primary-active hover:bg-surface'}`}
+                                                    className={`px-3 py-1.5 text-micro font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-on-primary bg-surface dark:bg-primary-active hover:bg-surface'}`}
                                                     style={periodFilter === key ? { backgroundColor: 'var(--bg-primary)' } : {}}
                                 >
                                     {periodLabels[key]}

@@ -427,7 +427,7 @@ export const MobileSchedule = () => {
                                     <motion.button
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => { triggerHaptic('light'); navigate(`/students`); setShowDetails(false); }}
-                                        className="flex-1 py-3 rounded-2xl bg-surface dark:bg-primary-active text-muted dark:text-dim text-micro font-bold border border-border dark:border-border"
+                                        className="flex-1 py-3 rounded-2xl bg-surface dark:bg-primary-active text-muted dark:text-on-primary text-micro font-bold border border-border dark:border-border"
                                     >
                                         عرض الطالب
                                     </motion.button>

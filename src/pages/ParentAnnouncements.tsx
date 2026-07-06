@@ -20,10 +20,10 @@ import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
 
 const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; label: string; color: string; bg: string; border: string }> = {
-    urgent: { icon: AlertTriangle, label: 'зглА', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
-    holiday: { icon: Umbrella, label: 'елгри', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
-    event: { icon: Grid, label: 'щзгАМи', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
-    general: { icon: Bell, label: 'Дтяи', color: 'var(--text-dim)', bg: 'var(--bg-card)', border: 'var(--border)' },
+    urgent: { icon: AlertTriangle, label: 'О©╫О©╫О©╫О©╫', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
+    holiday: { icon: Umbrella, label: 'О©╫О©╫О©╫О©╫О©╫', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
+    event: { icon: Grid, label: 'О©╫О©╫О©╫О©╫О©╫О©╫', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
+    general: { icon: Bell, label: 'О©╫О©╫О©╫О©╫', color: 'var(--text-dim)', bg: 'var(--bg-card)', border: 'var(--border)' },
 };
 
 interface Announcement {
@@ -81,12 +81,12 @@ export const ParentAnnouncements = () => {
                         <Bell size={20} className="text-primary" />
                     </div>
                     <div>
-                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">чДги гАезАгЦ гАЦяърМ</span>
+                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫</span>
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <h1 className="text-xl md:text-2xl font-black text-main dark:text-inverse leading-tight">Дтяи езАгДгй гАЦДуи</h1>
-                    <p className="text-xs font-bold text-muted">гхч зАЛ гьАгз хцмок гАйДхМЕгй ФгАщзгАМгй огнА гАЦдсси</p>
+                    <h1 className="text-xl md:text-2xl font-black text-main dark:text-inverse leading-tight">О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫</h1>
+                    <p className="text-xs font-bold text-muted">О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫</p>
                 </div>
             </div>
 
@@ -95,37 +95,37 @@ export const ParentAnnouncements = () => {
                     <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
                     <input
                         type="text"
-                        placeholder="гхмк щМ гАцятМщ..."
+                        placeholder="О©╫О©╫О©╫О©╫ О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full ps-12 pe-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
+                        className="w-full ps-12 pe-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:placeholder:text-on-primary dark:text-on-primary"
                     />
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                     <FilterButton
-                        label="зяж гАъА"
+                        label="О©╫О©╫О©╫ О©╫О©╫О©╫О©╫"
                         active={filterType === 'all'}
                         onClick={() => setFilterType('all')}
                         icon={Grid}
                         activeColor="var(--bg-primary)"
                     />
                     <FilterButton
-                        label="зглА"
+                        label="О©╫О©╫О©╫О©╫"
                         active={filterType === 'urgent'}
                         onClick={() => setFilterType('urgent')}
                         icon={Zap}
                         activeColor="var(--bg-error)"
                     />
                     <FilterButton
-                        label="елгри"
+                        label="О©╫О©╫О©╫О©╫О©╫"
                         active={filterType === 'holiday'}
                         onClick={() => setFilterType('holiday')}
                         icon={Umbrella}
                         activeColor="var(--bg-warning)"
                     />
                     <FilterButton
-                        label="Дтяи"
+                        label="О©╫О©╫О©╫О©╫"
                         active={filterType === 'general'}
                         onClick={() => setFilterType('general')}
                         icon={Calendar}
@@ -174,16 +174,16 @@ export const ParentAnnouncements = () => {
                                         <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
                                             <ShieldCheck size={14} className="text-primary" />
                                         </div>
-                                        <span className="text-micro font-bold text-dim dark:text-muted">еогяи гАцъгоМЦМи</span>
+                                        <span className="text-micro font-bold text-dim dark:text-muted">О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫</span>
                                     </div>
                                     
                                     <a 
-                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`гсйщсгя хнуФу езАгД: ${ann.title}`)}`}
+                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
                                         className="text-primary border border-primary px-4 py-1.5 rounded-xl text-micro font-bold flex items-center gap-2 transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
                                     >
                                         <MessageCircle size={14} />
-                                        гсйщсгя
+                                        О©╫О©╫О©╫О©╫О©╫О©╫О©╫
                                     </a>
                                 </div>
                             </motion.div>
@@ -196,8 +196,8 @@ export const ParentAnnouncements = () => {
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 bg-primary-soft">
                             <Bell size={22} className="text-primary" />
                         </div>
-                        <h3 className="text-sm font-bold text-muted">Аг йФло ймоМкгй лоМои</h3>
-                        <p className="text-micro font-bold text-muted mt-1">сФщ йыЕя гАезАгДгй гАЕгЦи ЕДг</p>
+                        <h3 className="text-sm font-bold text-muted">О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫</h3>
+                        <p className="text-micro font-bold text-muted mt-1">О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫</p>
                     </div>
                 )}
             </div>

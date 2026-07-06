@@ -53,7 +53,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                             )}
                         </div>
                         <div className="bg-background dark:bg-primary-active/50 p-3 border border-border/50 dark:border-border/50 rounded-xl">
-                            <p className="text-micro font-normal text-muted dark:text-dim italic line-clamp-2 leading-relaxed">
+                            <p className="text-micro font-normal text-muted dark:text-on-primary italic line-clamp-2 leading-relaxed">
                                 &ldquo;{(lastEval.notes) || 'بدون ملاحظات'}&rdquo;
                             </p>
                             <p className="text-micro text-muted mt-1.5">{format(new Date(lastEval.created_at || lastEval.date), 'dd/MM/yyyy')}</p>
@@ -78,14 +78,14 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                     <button onClick={() => onAddEvaluation(student.id)} className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 rounded-xl">
                         <Plus size={12} /> أضف تقييم
                     </button>
-                    <button onClick={() => onViewHistory(student)} className="bg-surface dark:bg-primary-active hover:bg-surface dark:hover:bg-primary-active text-main dark:text-dim py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="bg-surface dark:bg-primary-active hover:bg-surface dark:hover:bg-primary-active text-main dark:text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
                         <History size={12} /> السجل ({studentEvals.length})
                     </button>
                 </div>
             )}
             {isParent && (
                 <div className="px-4 pb-4">
-                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface dark:bg-primary-active hover:bg-surface text-main dark:text-dim py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface dark:bg-primary-active hover:bg-surface text-main dark:text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
                         <History size={12} /> عرض السجل الكامل ({studentEvals.length})
                     </button>
                 </div>

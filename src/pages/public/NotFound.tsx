@@ -44,7 +44,7 @@ export const NotFound = () => {
                         </Link>
                         <Link
                             to="/courses"
-                            className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-dim text-sm font-black transition-all hover:border-border/30 dark:hover:border-border/30 active:scale-[0.98]"
+                            className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-on-primary text-sm font-black transition-all hover:border-border/30 dark:hover:border-border/30 active:scale-[0.98]"
                         >
                             <ArrowLeft size={16} />
                             تصفح الدورات

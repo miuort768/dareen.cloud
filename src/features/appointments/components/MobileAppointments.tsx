@@ -320,7 +320,7 @@ export const MobileAppointments = () => {
                     <select
                         value={filterDay}
                         onChange={(e) => setFilterDay(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-on-primary shadow-sm"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -328,7 +328,7 @@ export const MobileAppointments = () => {
                     <select
                         value={filterTeacher}
                         onChange={(e) => setFilterTeacher(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-on-primary shadow-sm"
                     >
                         <option value="all">كل المعلمات</option>
                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}

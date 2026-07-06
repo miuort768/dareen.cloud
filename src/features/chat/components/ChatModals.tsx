@@ -220,12 +220,12 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <p className="text-sm text-muted dark:text-muted mb-4 text-start">الأعضاء: {selectedUsers.length}</p>
                                     <div className="flex flex-wrap gap-2 justify-end">
                                         {selectedUsersObjects.slice(0, 5).map(u => (
-                                            <span key={u.id} className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-dim whitespace-nowrap">
+                                            <span key={u.id} className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-muted whitespace-nowrap">
                                                 {u.name}
                                             </span>
                                         ))}
                                         {selectedUsers.length > 5 && (
-                                            <span className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-dim">
+                                            <span className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-muted">
                                                 +{selectedUsers.length - 5}
                                             </span>
                                         )}

@@ -116,7 +116,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                                 <input
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono dark:text-main"
+                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono text-main dark:text-main"
                                     placeholder="اسم مستخدم فريد"
                                 />
                             </div>
@@ -129,7 +129,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono tracking-widest dark:text-main"
+                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono tracking-widest text-main dark:text-main"
                                     placeholder={initialData ? "••••••••" : "كلمة مرور قوية"}
                                 />
                             </div>
@@ -146,7 +146,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <textarea
                         value={formData.notes}
                         onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full px-6 py-4 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal min-h-[120px] transition-all"
+                        className="w-full px-6 py-4 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary text-main dark:text-main text-xs font-normal min-h-[120px] transition-all"
                         placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
                     />
                 </div>

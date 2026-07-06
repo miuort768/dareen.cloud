@@ -154,7 +154,7 @@ export const TrialSessions = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." className="w-full ps-9 pe-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." className="w-full ps-9 pe-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim dark:placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
             </div>
             <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all">
               <option value="">كل الحالات</option>

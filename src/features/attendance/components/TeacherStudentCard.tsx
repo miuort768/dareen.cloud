@@ -208,7 +208,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-dim hover:bg-surface rounded-xl font-bold text-micro uppercase transition-all shadow-sm active:scale-95"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-on-primary hover:bg-surface rounded-xl font-bold text-micro uppercase transition-all shadow-sm active:scale-95"
                     >
                         <Calendar size={14} /> إعادة جدولة
                     </button>

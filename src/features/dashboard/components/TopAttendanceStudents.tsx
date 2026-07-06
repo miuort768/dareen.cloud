@@ -63,14 +63,14 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                 <div className={cn(
                                     "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-black",
                                     i === 0 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
-                                    i === 1 ? "bg-surface text-main dark:bg-card dark:text-dim" :
+                                    i === 1 ? "bg-surface text-main dark:bg-card dark:text-muted" :
                                     i === 2 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
                                     "bg-surface dark:bg-primary-active text-muted dark:text-muted"
                                 )}>
                                     {i + 1}
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-micro font-bold text-main dark:text-dim truncate">{stu.name}</p>
+                                    <p className="text-micro font-bold text-main dark:text-on-primary truncate">{stu.name}</p>
                                 </div>
                             </div>
                             <div className="flex items-baseline gap-1">

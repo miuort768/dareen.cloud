@@ -298,7 +298,7 @@ export const MobileAttendance = () => {
                         <p className="text-micro font-bold text-error/70 dark:text-error/50 mt-1">غياب</p>
                     </div>
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-border/50 dark:border-border/50">
-                        <p className="text-lg font-black text-main dark:text-dim tabular-nums leading-none">{scheduledToday}</p>
+                        <p className="text-lg font-black text-main dark:text-on-primary tabular-nums leading-none">{scheduledToday}</p>
                         <p className="text-micro font-bold text-muted dark:text-muted mt-1">متبقي</p>
                     </div>
                 </div>
@@ -378,7 +378,7 @@ export const MobileAttendance = () => {
                                     <select
                                         value={filterTeacher}
                                         onChange={(e) => setFilterTeacher(e.target.value)}
-                                        className="text-micro font-bold bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-2 py-1 outline-none text-muted dark:text-dim"
+                                        className="text-micro font-bold bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-2 py-1 outline-none text-muted dark:text-on-primary"
                                     >
                                         <option value="all">كل المعلمات</option>
                                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}

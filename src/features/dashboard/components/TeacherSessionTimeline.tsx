@@ -67,7 +67,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                         ? "bg-success text-on-primary border-success" 
                                         : isCancelled 
                                         ? "bg-error text-on-primary border-error" 
-                                        : "bg-surface dark:bg-primary-active text-main dark:text-dim border-border dark:border-border"
+                                        : "bg-surface dark:bg-primary-active text-main dark:text-on-primary border-border dark:border-border"
                                 )}>
                                     {session.time}
                                 </div>

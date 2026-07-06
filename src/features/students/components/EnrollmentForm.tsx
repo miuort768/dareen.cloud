@@ -54,7 +54,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         required
                         value={form.teacher}
                         onChange={e => setForm({ ...form, teacher: e.target.value })}
-                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal dark:bg-hover dark:text-main"
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     >
                         <option value="">المعلمة</option>
                         {teachers.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
@@ -64,7 +64,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="المادة"
                         value={form.subject}
                         onChange={e => setForm({ ...form, subject: e.target.value })}
-                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal dark:bg-hover dark:text-main"
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -73,7 +73,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="المنهج"
                         value={form.curr}
                         onChange={e => setForm({ ...form, curr: e.target.value })}
-                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal dark:bg-hover dark:text-main"
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     />
                     <input
                         required
@@ -81,7 +81,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         placeholder="عدد الحصص"
                         value={form.totalSessions}
                         onChange={e => setForm({ ...form, totalSessions: e.target.value })}
-                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal dark:bg-hover dark:text-main"
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     />
                 </div>
 
@@ -91,7 +91,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                         <select
                             value={slotInput.day}
                             onChange={e => setSlotInput({ ...slotInput, day: e.target.value })}
-                            className="flex-1 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover dark:text-main"
+                            className="flex-1 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
                         >
                             <option value="">اليوم</option>
                             {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
@@ -100,7 +100,7 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                             placeholder="الساعة"
                             value={slotInput.hour}
                             onChange={e => setSlotInput({ ...slotInput, hour: e.target.value.replace(/^0+/, '') })}
-                            className="w-20 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover dark:text-main"
+                            className="w-20 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
                         />
                         <button type="button" onClick={handleAddSlot} className="bg-primary text-on-primary px-2"><Plus size={14} /></button>
                     </div>
