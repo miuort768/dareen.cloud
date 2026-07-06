@@ -41,6 +41,7 @@ export const useAutoFreezeThreshold = () => useSettingsStore(s => s.autoFreezeTh
 export const useTelegramHandle = () => useSettingsStore(s => s.telegramHandle);
 export const useHeroBanners = () => useSettingsStore(s => s.heroBanners);
 export const useReminderMinutesBefore = () => useSettingsStore(s => s.reminderMinutesBefore);
+export const useWhatsappNumbers = () => useSettingsStore(s => s.whatsappNumbers);
 export const useIsSettingsLoading = () => useSettingsStore(s => s.isSettingsLoading);
 export const useSetAcademyName = () => useSettingsStore(s => s.setAcademyName);
 export const useSetAcademyLogo = () => useSettingsStore(s => s.setAcademyLogo);
@@ -65,6 +66,7 @@ export const useSetAutoFreezeThreshold = () => useSettingsStore(s => s.setAutoFr
 export const useSetTelegramHandle = () => useSettingsStore(s => s.setTelegramHandle);
 export const useSetHeroBanners = () => useSettingsStore(s => s.setHeroBanners);
 export const useSetReminderMinutesBefore = () => useSettingsStore(s => s.setReminderMinutesBefore);
+export const useSetWhatsappNumbers = () => useSettingsStore(s => s.setWhatsappNumbers);
 
 /** @deprecated Use individual hooks (useCurrentUser, useSidebarCollapsed, etc.) for better re-render performance */
 export function useApp() {

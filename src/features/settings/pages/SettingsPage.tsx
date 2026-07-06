@@ -4,7 +4,7 @@ import {
     Shield, Activity, MessageSquare, Building2, Calendar, Coins,
     KeyRound, Clock, UserCheck, FileText, Award, HardDrive
 } from 'lucide-react';
-import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useSetAcademyAddress } from '../../../context/AppContext';
+import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useSetAcademyAddress, useWhatsappNumbers, useSetWhatsappNumbers } from '../../../context/AppContext';
 import { Skeleton } from '../../../components/ui/Skeleton';
 import { cn } from '../../../lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
@@ -124,7 +124,8 @@ export const Settings = () => {
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const [hapticEnabled, setHapticEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false');
+    const whatsappNumbers = useWhatsappNumbers();
+    const setWhatsappNumbers = useSetWhatsappNumbers();
 
     const fetchLogs = useCallback(async () => {
         try {
@@ -249,7 +250,7 @@ export const Settings = () => {
         { id: 'users', label: 'المستخدمون', icon: Users },
         { id: 'permissions', label: 'الصلاحيات', icon: KeyRound },
         { id: 'communications', label: 'الاتصالات', icon: MessageSquare },
-        { id: 'mobile', label: 'الموبايل', icon: Smartphone },
+        { id: 'mobile', label: 'أرقام الواتساب', icon: MessageSquare },
         { id: 'policies', label: 'السياسات', icon: Lock },
         { id: 'working-hours', label: 'أوقات العمل', icon: Clock },
         { id: 'attendance', label: 'الحضور', icon: UserCheck },
@@ -338,7 +339,7 @@ export const Settings = () => {
                     academyEmail={academyEmail} setAcademyEmail={setAcademyEmail}
                 />;
             case 'mobile':
-                return <MobileSettings hapticEnabled={hapticEnabled} setHapticEnabled={setHapticEnabled} showNotify={showNotify} />;
+                return <MobileSettings whatsappNumbers={whatsappNumbers} setWhatsappNumbers={setWhatsappNumbers} showNotify={showNotify} />;
             case 'policies':
                 return <PoliciesSettings
                     backdateLockEnabled={backdateLockEnabled} setBackdateLockEnabled={setBackdateLockEnabled}

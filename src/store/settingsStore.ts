@@ -27,6 +27,7 @@ interface SettingsState {
     reminderMinutesBefore: number;
     libraryWhatsapp: string;
     libraryTelegram: string;
+    whatsappNumbers: string;
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
@@ -55,6 +56,7 @@ interface SettingsState {
     setReminderMinutesBefore: (minutes: number) => Promise<void>;
     setLibraryWhatsapp: (phone: string) => Promise<void>;
     setLibraryTelegram: (handle: string) => Promise<void>;
+    setWhatsappNumbers: (numbers: string) => Promise<void>;
 }
 
 // Global CSS Theme injector
@@ -139,6 +141,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     reminderMinutesBefore: 30,
     libraryWhatsapp: '',
     libraryTelegram: '',
+    whatsappNumbers: JSON.stringify([
+        { label: 'تواصل عام', phone: '201015098836' },
+        { label: 'إدارة الأكاديمية', phone: '201015098836' }
+    ]),
     heroBanners: JSON.stringify([
         "انضم إلى أفضل منصة تعليمية",
         "تأسيس قوي لجميع المراحل",
@@ -204,6 +210,9 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 }
                 if (settings.library_whatsapp !== undefined && settings.library_whatsapp !== null) updates.libraryWhatsapp = String(settings.library_whatsapp);
                 if (settings.library_telegram !== undefined && settings.library_telegram !== null) updates.libraryTelegram = String(settings.library_telegram);
+                if (settings.whatsapp_numbers !== undefined && settings.whatsapp_numbers !== null) {
+                    try { JSON.parse(String(settings.whatsapp_numbers)); updates.whatsappNumbers = String(settings.whatsapp_numbers); } catch { /* keep default */ }
+                }
 
                 set({ ...updates, isSettingsLoading: false });
             } else {
@@ -319,6 +328,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setLibraryTelegram: async (handle) => {
         set({ libraryTelegram: handle });
         await updateSettingOnApi('library_telegram', handle);
+    },
+    setWhatsappNumbers: async (numbers) => {
+        set({ whatsappNumbers: numbers });
+        await updateSettingOnApi('whatsapp_numbers', numbers);
     }
 }));
 
