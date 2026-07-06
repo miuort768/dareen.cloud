@@ -37,6 +37,9 @@ export type { SwitchProps } from './Switch';
 export { Tabs }            from './Tabs';
 export type { TabsProps, Tab } from './Tabs';
 
+export { Table }           from './Table';
+export type { TableProps, Column } from './Table';
+
 export { Breadcrumb }      from './Breadcrumb';
 export type { BreadcrumbItem, BreadcrumbProps } from './Breadcrumb';
 
@@ -48,3 +51,6 @@ export { ChartTooltip }      from './ChartTooltip';
 
 export { ActivityFeed }      from './ActivityFeed';
 export type { ActivityItem, ActivityFeedProps } from './ActivityFeed';
+
+export { PageHeader }        from './PageHeader';
+export type { PageHeaderProps } from './PageHeader';

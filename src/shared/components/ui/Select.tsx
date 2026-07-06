@@ -22,7 +22,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={cn(
-              'w-full px-4 py-2.5 bg-card border border-border rounded-card text-sm font-medium outline-none transition-all duration-300 appearance-none cursor-pointer',
+              'w-full h-10 px-4 bg-card border border-border rounded-card text-sm font-medium outline-none transition-all duration-300 appearance-none cursor-pointer',
               'focus:border-primary focus:ring-2 focus:ring-focus',
               error ? 'border-error focus:border-error' : '',
               className
@@ -41,7 +41,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           <ChevronDown size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
         </div>
         {error && (
-          <span className="text-[11px] font-bold text-error">{error}</span>
+          <span className="text-xs font-bold text-error">{error}</span>
         )}
       </div>
     );

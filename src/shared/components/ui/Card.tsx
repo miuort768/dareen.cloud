@@ -10,7 +10,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'glass', hoverLift = true, children, ...props }, ref) => {
     const variants = {
-      glass: 'bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl border border-border shadow-sm',
+      glass: 'bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl border border-border shadow-card',
       elevated: 'bg-card border border-border shadow-md',
       sharp: 'bg-card border-2 border-strong shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#6366F126] rounded-none',
     };
@@ -23,7 +23,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <motion.div
         ref={ref}
         {...motionProps}
-        className={cn('p-6 rounded-2xl transition-all duration-300 border overflow-hidden relative', variants[variant], className)}
+        className={cn('p-6 rounded-card transition-all duration-300 border overflow-hidden relative', variants[variant], className)}
         {...props}
       >
         {children}

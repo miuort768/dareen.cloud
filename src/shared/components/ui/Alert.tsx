@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '../../../lib/utils';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'success' | 'warning' | 'error' | 'info';
+  variant?: 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
 
 const variants = {
@@ -10,6 +10,7 @@ const variants = {
   warning: 'bg-warning-soft border-warning text-warning-dark',
   error: 'bg-error-soft border-error text-error-dark',
   info: 'bg-info-soft border-info text-info-dark',
+  neutral: 'bg-surface border-border text-muted',
 };
 
 export const Alert: React.FC<AlertProps> = ({ className, variant = 'info', children, ...props }) => {

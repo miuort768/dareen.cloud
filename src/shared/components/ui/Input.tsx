@@ -20,7 +20,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           type={type}
           className={cn(
-            'w-full px-4 py-2.5 bg-card border border-border rounded-card text-sm font-medium outline-none transition-all duration-300',
+            'w-full h-10 px-4 bg-card border border-border rounded-card text-sm font-medium outline-none transition-all duration-300',
             'focus:border-primary focus:ring-2 focus:ring-focus',
             error ? 'border-error focus:border-error focus:ring-2 focus:ring-focus' : '',
             className
@@ -28,10 +28,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <span className="text-[11px] font-bold text-error">{error}</span>
+          <span className="text-xs font-bold text-error">{error}</span>
         )}
         {!error && helperText && (
-          <span className="text-[11px] text-muted">{helperText}</span>
+          <span className="text-xs text-muted">{helperText}</span>
         )}
       </div>
     );
@@ -66,10 +66,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <span className="text-[11px] font-bold text-error">{error}</span>
+          <span className="text-xs font-bold text-error">{error}</span>
         )}
         {!error && helperText && (
-          <span className="text-[11px] text-muted">{helperText}</span>
+          <span className="text-xs text-muted">{helperText}</span>
         )}
       </div>
     );

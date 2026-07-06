@@ -24,6 +24,11 @@ module.exports = {
         '5xl': ['var(--font-size-5xl)', { lineHeight: 'var(--line-height-5xl)' }],
         '6xl': ['var(--font-size-6xl)', { lineHeight: 'var(--line-height-6xl)' }],
         '7xl': ['var(--font-size-7xl)', { lineHeight: 'var(--line-height-7xl)' }],
+        'display': ['var(--font-size-display)', { lineHeight: 'var(--line-height-display)' }],
+        'section': ['var(--font-size-section)', { lineHeight: 'var(--line-height-section)' }],
+        'card-title': ['var(--font-size-card-title)', { lineHeight: 'var(--line-height-card-title)' }],
+        'button': ['var(--font-size-button)', { lineHeight: 'var(--line-height-button)' }],
+        'micro': ['var(--font-size-micro)', { lineHeight: 'var(--line-height-micro)' }],
       },
       colors: {
         /* ========== Legacy Colors (للمكونات الحالية — ستستبدل تدريجيًا) ========== */

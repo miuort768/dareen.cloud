@@ -77,7 +77,7 @@ export const Tabs: React.FC<TabsProps> = ({
             {tab.label}
             {tab.badge !== undefined && (
               <span className={cn(
-                'text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
+                'text-micro font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
                 isActive
                   ? variant === 'pills' ? 'bg-on-primary/20 text-on-primary' : 'bg-primary text-on-primary'
                   : 'bg-surface text-muted'

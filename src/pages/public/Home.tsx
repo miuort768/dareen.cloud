@@ -157,31 +157,31 @@ export const Home = () => {
 
         {/* Mobile Nav Buttons */}
         <div className="flex gap-1.5 mt-2 mb-3">
-          <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-primary text-on-primary text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+          <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-primary text-on-primary text-xs font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
             <Headphones className="w-2.5 h-2.5 shrink-0" />
             طلب حصة مجانية
           </a>
-          <Link to="/books" className="flex-1 bg-primary text-on-primary text-[9px] font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+          <Link to="/books" className="flex-1 bg-primary text-on-primary text-xs font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
             <Download className="w-2.5 h-2.5 shrink-0" />
             تحميل مذكرات مجانية
           </Link>
         </div>
 
         {/* Hero Carousel */}
-        <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-2xl overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
+        <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
           {heroSlides.map((slide, i) => (
             <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                   <h1 className="text-[18px] font-black text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-info"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-info -mt-0.5" /></span>}</h1>
-                  <p className="text-[12px] font-bold text-primary mb-0.5">{slide.subtitle}</p>
-                  <p className="text-[9px] text-muted leading-relaxed mb-3">{slide.desc}</p>
+                   <h1 className="text-lg font-black text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-info"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-info -mt-0.5" /></span>}</h1>
+                  <p className="text-xs font-bold text-primary mb-0.5">{slide.subtitle}</p>
+                  <p className="text-xs text-muted leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
-                    <Link to="/courses" className="bg-surface text-main text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-black/10 hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
+                    <Link to="/courses" className="bg-surface text-main text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
                       <Play className="w-3 h-3 fill-main" />
                       تصفح الدورات
                     </Link>
-                    <Link to="/login" className="bg-primary text-on-primary text-[10px] font-bold px-4 py-2 rounded-full shadow-lg shadow-black/20 hover:bg-primary-hover transition-all w-full text-center">
+                    <Link to="/login" className="bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-primary-hover transition-all w-full text-center">
                       تسجيل الدخول
                     </Link>
                   </div>
@@ -222,14 +222,14 @@ export const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className={`flex items-center gap-2 p-2 ${s.bg} rounded-xl shadow-sm border border-border transition-all`}
+                    className={`flex items-center gap-2 p-2 ${s.bg} rounded-card shadow-sm border border-border transition-all`}
                   >
-                    <div className={`w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center shrink-0`}>
+                    <div className={`w-10 h-10 rounded-card ${s.bg} flex items-center justify-center shrink-0`}>
                       <f.icon className={s.text} size={20} />
                     </div>
                     <div className="min-w-0">
-                      <span className="text-[11px] font-black text-main block leading-tight mb-0">{f.label}</span>
-                      <span className="text-[6px] text-muted font-medium block leading-tight">{f.desc}</span>
+                      <span className="text-xs font-black text-main block leading-tight mb-0">{f.label}</span>
+                      <span className="text-micro text-muted font-medium block leading-tight">{f.desc}</span>
                     </div>
                   </motion.div>
                 );
@@ -248,8 +248,8 @@ export const Home = () => {
         {/* Latest Courses */}
         <section className="px-1">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[18px] font-black text-main">أحدث الدورات</h2>
-            <Link to="/courses" className="text-[13px] font-bold text-primary flex items-center gap-1">
+            <h2 className="text-lg font-black text-main">أحدث الدورات</h2>
+            <Link to="/courses" className="text-sm font-bold text-primary flex items-center gap-1">
               عرض الكل
               <ChevronLeft className="w-3.5 h-3.5" />
             </Link>
@@ -261,7 +261,7 @@ export const Home = () => {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 ${
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                   activeCategory === cat.value
                     ? 'bg-primary text-on-primary shadow-md shadow-black/20'
                     : 'bg-surface text-muted border border-border'
@@ -284,7 +284,7 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                className="min-w-[180px] w-[180px] bg-surface rounded-xl shadow-sm border border-border overflow-hidden shrink-0 block"
+                className="min-w-[180px] w-[180px] bg-surface rounded-card shadow-sm border border-border overflow-hidden shrink-0 block"
               >
                 <div className="relative h-24 bg-surface overflow-hidden">
                   <img
@@ -295,7 +295,7 @@ export const Home = () => {
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
-                  <span className={`absolute top-2 right-2 text-[8px] font-black px-2 py-0.5 rounded-full shadow-sm ${
+                  <span className={`absolute top-2 right-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${
                     c.category === 'foundation' ? 'bg-success text-on-success' :
                     c.category === 'quran' ? 'bg-warning text-on-warning' :
                     c.category === 'gulf' ? 'bg-info text-on-info' :
@@ -305,16 +305,16 @@ export const Home = () => {
                   </span>
                 </div>
                 <div className="p-3">
-                  <h3 className="text-[12px] font-black text-main mb-0.5">{c.title}</h3>
-                  <p className="text-[9px] text-muted font-medium mb-2 line-clamp-1">{c.desc}</p>
+                  <h3 className="text-xs font-black text-main mb-0.5">{c.title}</h3>
+                  <p className="text-xs text-muted font-medium mb-2 line-clamp-1">{c.desc}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1">
                       <Users className="w-3 h-3 text-dim" />
-                      <span className="text-[9px] font-bold text-muted">{c.students}</span>
+                      <span className="text-xs font-bold text-muted">{c.students}</span>
                     </div>
                     <div className="flex items-center gap-0.5">
                       <Star className="w-3 h-3 text-warning fill-warning" />
-                      <span className="text-[9px] font-bold text-main">{c.rating}</span>
+                      <span className="text-xs font-bold text-main">{c.rating}</span>
                     </div>
                   </div>
                 </div>

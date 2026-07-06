@@ -91,26 +91,26 @@ export const Modal: React.FC<ModalProps> = ({
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            transition={{ type: 'spring', duration: 0.4 }}
+            transition={{ type: 'spring', duration: 0.3 }}
             className={cn(
-              'relative w-full max-w-lg bg-card backdrop-blur-xl border border-border rounded-3xl p-6 shadow-2xl z-10 overflow-hidden',
+              'relative w-full max-w-lg bg-card backdrop-blur-xl border border-border rounded-card shadow-card z-10 overflow-hidden',
               className
             )}
           >
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-5 px-6 pt-6">
               {title && (
                 <h3 className="text-base font-black text-main">{title}</h3>
               )}
               <button
                 onClick={handleClose}
-                className="text-muted hover:text-main transition-colors p-1.5 rounded-xl hover:bg-hover mr-auto focus:outline-none focus:ring-2 focus:ring-focus"
+                className="text-muted hover:text-main transition-colors p-1.5 rounded-card hover:bg-hover mr-auto focus:outline-none focus:ring-2 focus:ring-focus"
                 aria-label="إغلاق"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="text-right">
+            <div className="text-right px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {children}
             </div>
           </motion.div>

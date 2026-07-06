@@ -21,9 +21,9 @@ const variants = {
 };
 
 const sizes = {
-  sm: 'px-3 py-1.5 text-xs',
-  md: 'px-5 py-2.5 text-sm',
-  lg: 'px-7 py-3.5 text-base',
+  sm: 'h-9 px-3 text-xs',
+  md: 'h-10 px-5 text-button font-medium',
+  lg: 'h-12 px-7 text-lg',
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -43,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         whileTap={{ scale: 0.98 }}
         onClick={handleClick}
         className={cn(
-          'inline-flex items-center justify-center font-bold transition-all duration-300 rounded-card focus:outline-none focus:ring-2 focus:ring-focus',
+          'inline-flex items-center justify-center font-medium transition-all duration-300 rounded-card focus:outline-none focus:ring-2 focus:ring-focus',
           'active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none',
           variants[variant], sizes[size], className
         )}
