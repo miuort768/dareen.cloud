@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/authStore';
 import { useChatStore } from '../store/chatStore';
 import { useUnreadStore } from '../store/unreadStore';
 import { useChat, useMessages } from '../hooks/useChat';
+import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
@@ -158,7 +159,7 @@ export const Chat: React.FC = () => {
             <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shadow-[0_0_15px_rgba(52,211,153,0.30)] shrink-0 bg-white/5 ">
-                        <img src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full object-cover" />
+                        <Image src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full" />
                     </div>
                     <div>
                         <div className="flex flex-col">
@@ -211,7 +212,7 @@ export const Chat: React.FC = () => {
                         
                         <div className="z-10 text-center">
                             <div className="w-20 h-20 bg-white/5 dark:bg-white/5  border border-border dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
-                                <img src="/logo.png" alt="دارين" className="w-12 h-12 object-contain" />
+                                <Image src="/logo.png" alt="دارين" className="w-12 h-12" imgClassName="object-contain" />
                             </div>
                             <h2 className="text-3xl font-medium text-main dark:text-on-primary mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">

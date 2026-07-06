@@ -4,6 +4,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
+import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 
 export const Header = () => {
@@ -117,7 +118,7 @@ export const Header = () => {
             <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
                 <Link to="/" className="shrink-0">
                     <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(var(--color-primary),0.45)] hover:shadow-[0_0_22px_rgba(var(--color-primary),0.7)] transition-shadow duration-300">
-                        <img src="/dareen_logo_new.jpg" alt="الشعار" width={32} height={32} className="w-full h-full object-cover" />
+                        <Image src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full" />
                     </div>
                 </Link>
 
@@ -154,7 +155,7 @@ export const Header = () => {
                 >
                     <div className="w-9 h-9 bg-gradient-to-br from-primary-light to-primary-soft flex items-center justify-center text-muted rounded-full shrink-0 border-2 border-success/30 dark:border-success/40 shadow-[0_0_12px_rgba(52,211,153,0.20)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
-                            <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                            <Image src={currentUser.avatar} alt={currentUser.name} className="w-full h-full" />
                         ) : (
                             <User size={18} className="text-muted dark:text-success" />
                         )}

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { Building2, Phone, MapPin, Hash, Send, Image } from 'lucide-react';
+import { Building2, Phone, MapPin, Hash, Send, Image as ImageIcon } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, PrimaryBtn } from './SettingsUI';
 
 export const AcademyInfoSection = ({
@@ -45,11 +46,11 @@ export const AcademyInfoSection = ({
                         <FieldLabel>الشعار</FieldLabel>
                         <div className="flex items-center gap-3">
                             {localAcademyLogo && (
-                                <img src={localAcademyLogo} alt="Logo" className="w-12 h-12 rounded-lg object-cover border" />
+                                <Image src={localAcademyLogo} alt="Logo" className="w-12 h-12 rounded-lg border" />
                             )}
                             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
                             <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-xs font-bold text-muted hover:bg-hover rounded-xl transition-all">
-                                <Image size={14} /> {localAcademyLogo ? 'تغيير' : 'رفع'}
+                                <ImageIcon size={14} /> {localAcademyLogo ? 'تغيير' : 'رفع'}
                             </button>
                             {localAcademyLogo && (
                                 <button onClick={() => setLocalAcademyLogo('')} className="text-micro font-bold text-error hover:text-error-dark">إزالة</button>

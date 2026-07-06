@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { Image } from '../shared/components/ui';
 import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star, Settings, MessageCircle, Send } from 'lucide-react';
 import { api } from '../lib/api';
@@ -670,7 +671,7 @@ export const AdminBlog = () => {
                     {filteredPosts.map(post => (
                         <div key={post.id} className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
                             <div className="relative h-36 overflow-hidden">
-                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                                <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" />
                                 <div className="absolute top-2 right-2">
                                     <span className="text-micro font-bold px-2 py-1 rounded-lg bg-error text-on-error">{post.category}</span>
                                 </div>

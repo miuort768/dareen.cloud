@@ -39,3 +39,5 @@ export type { ActivityItem, ActivityFeedProps } from './ActivityFeed';
 
 export { PageHeader }        from './PageHeader';
 export type { PageHeaderProps } from './PageHeader';
+
+export { Image }               from './Image';

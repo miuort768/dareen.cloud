@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 import { useSettingsStore } from '../../store/settingsStore';
+import { Image } from '../../shared/components/ui';
 import { SEO } from '../../components/SEO';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -195,7 +196,7 @@ export const Home = () => {
                         <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" fetchPriority="high" />
                       </picture>
                     ) : (
-                      <img src={slide.image} alt={slide.alt} width="90" height="90" className="w-full h-auto object-contain drop-shadow-lg" loading="lazy" />
+                      <Image src={slide.image} alt={slide.alt} className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
                     )}
                   </div>
                   <div className="flex justify-center gap-1 -mt-1">

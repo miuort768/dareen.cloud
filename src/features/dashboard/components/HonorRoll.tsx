@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Star, Trophy, Crown, Sparkles } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 
 interface Student {
@@ -61,7 +62,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
                                 <div className="w-11 h-11 flex items-center justify-center mb-2 relative overflow-hidden rounded-xl shadow-inner text-on-primary" style={{ backgroundColor: `${color}50` }}>
                                     <span className="text-lg font-bold">{student.name.charAt(0)}</span>
-                                    {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />}
+                                    {student.avatar && <Image src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full" />}
                                 </div>
 
                                 <div className="w-full">

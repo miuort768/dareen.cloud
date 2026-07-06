@@ -4,6 +4,7 @@ import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, User } from 'luc
 import { useIsAuthenticated, useCurrentUser, useLogout } from '../../context/AppContext';
 import { confirm } from '../../lib/confirmDialog';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
+import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 
 export const PublicNavbar = () => {
@@ -123,7 +124,7 @@ export const PublicNavbar = () => {
                                 >
                                     <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary dark:border-primary shadow-sm group-hover:border-primary transition-all">
                                         {currentUser?.avatar ? (
-                                            <img src={currentUser.avatar} alt={currentUser.name} width="32" height="32" className="w-full h-full object-cover" />
+                                            <Image src={currentUser.avatar} alt={currentUser.name} className="w-full h-full" />
                                         ) : (
                                             <div className="w-full h-full bg-primary-soft dark:bg-primary flex items-center justify-center">
                                                 <User className="w-4 h-4 text-primary dark:text-primary" />

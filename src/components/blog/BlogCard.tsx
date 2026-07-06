@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Image } from '../../shared/components/ui';
 import { Zap, FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame, GraduationCap } from 'lucide-react';
 import { subjectNameMap } from './LibraryConfig';
 
@@ -119,7 +120,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
             <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
                 className="group block bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500 h-full flex flex-col">
                 <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-background dark:bg-card/30`}>
-                    <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} width="400" height="225" loading="lazy" decoding="async" className={`w-full h-full transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'object-cover group-hover:scale-105'}`} />
+                    <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" imgClassName={`transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'}`} />
                     <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-[var(--bg-card)]' : 'from-black/40'} to-transparent`} />
                     <div className="absolute top-3 right-3 z-10">
                         <span className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-card/90 backdrop-blur-sm text-primary dark:text-primary'}`}>{subjectNameMap[post.subject] || post.category}</span>

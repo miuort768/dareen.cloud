@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
+import { Image } from '../../shared/components/ui';
 import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
@@ -165,14 +166,11 @@ export const Courses = () => {
                   className="group relative bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-xl transition-all duration-500"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
-                    <img
+                    <Image
                       src={course.image}
                       alt={course.title}
-                      width="400"
-                      height="300"
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
+                      className="w-full h-full"
+                      imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
                     <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-[var(--bg-card)] to-transparent" />

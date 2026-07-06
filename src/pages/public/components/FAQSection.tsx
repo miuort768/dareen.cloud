@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 
 export const FAQSection = () => {
     return (
@@ -74,7 +75,7 @@ export const FAQSection = () => {
                             a: "نخدم طلابنا في المملكة العربية السعودية، الكويت، الإمارات، قطر، سلطنة عمان، ومملكة البحرين. كما نقدم خدماتنا للطلاب في الأردن ومصر. جميع معلمينا على دراية كاملة بالمناهج الدراسية في كل دولة."
                         }
                     ].map((item, idx) => {
-                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20 object-contain opacity-20" />];
+                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <Image src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20" imgClassName="object-contain opacity-20" />];
                         return (
                             <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative bg-white dark:bg-primary border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
                                 <div className="absolute -bottom-4 -left-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">

@@ -1,4 +1,5 @@
 import { Plus, X } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 
 interface StudentHeaderProps {
@@ -15,7 +16,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
 
             <div className="relative z-10 flex items-center gap-4">
                 <div className="w-12 h-12 overflow-hidden border-2 border-success shadow-lg shrink-0 bg-white/5 ">
-                        <img src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full object-cover" loading="lazy" />
+                        <Image src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full" />
                     </div>
                 <div>
                     <h1 className="text-sm md:text-xl font-medium text-on-primary uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>

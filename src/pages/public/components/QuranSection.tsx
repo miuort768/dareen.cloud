@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 
 interface QuranSectionProps {
     whatsappNumber: string;
@@ -74,7 +75,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <div className="flex -space-x-3 space-x-reverse">
                                         {[1, 2, 3].map(i => (
                                             <div key={i} className="w-10 h-10 rounded-full border-2 border-card bg-success-soft overflow-hidden shadow-sm">
-                                                <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="40" height="40" />
+                                                <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-10 h-10" />
                                             </div>
                                         ))}
                                         <div className="w-10 h-10 rounded-full border-2 border-card bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted shadow-sm">+5k</div>
@@ -200,7 +201,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
                                 <div key={i} className="w-9 h-9 rounded-full border-2 border-card bg-surface dark:bg-card overflow-hidden shadow-sm">
-                                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="36" height="36" className="w-full h-full object-cover" />
+                                    <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-full h-full" />
                                 </div>
                             ))}
                             <div className="w-9 h-9 rounded-full border-2 border-card bg-success flex items-center justify-center text-micro font-black text-on-success shadow-sm">5K+</div>

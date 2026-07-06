@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Virtuoso } from 'react-virtuoso';
+import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { useChatStore } from '../../../store/chatStore';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
@@ -123,11 +124,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
                         onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
                     >
-                        <img 
-                            src="/chat-avatar.jpg" 
-                            alt="avatar" 
-                            className="w-full h-full object-cover" 
-                        />
+                        <Image src="/chat-avatar.jpg" alt="avatar" className="w-full h-full" />
                     </div>
 
                     <div className="flex flex-col text-right">

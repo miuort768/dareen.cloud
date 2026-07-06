@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { useCurrentUser, useUpdateCurrentUser, useThemeColor, useSetThemeColor, useShowNotification } from '../context/AppContext';
 import type { User } from '../types/auth';
+import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
 import { triggerHaptic } from '../lib/haptics';
 
@@ -81,7 +82,7 @@ export const Profile = () => {
                     <div className="relative group">
                         <div className="w-24 h-24 md:w-32 md:h-32 rounded-none bg-surface dark:bg-primary-active border-4 border-white dark:border-border shadow-sm overflow-hidden flex items-center justify-center">
                             {currentUser?.avatar ? (
-                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" loading="lazy" />
+                                <Image src={currentUser.avatar} alt={currentUser.name} className="w-full h-full" />
                             ) : (
                                 <User size={48} className="text-muted" />
                             )}

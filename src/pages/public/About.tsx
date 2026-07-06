@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
+import { Image } from '../../shared/components/ui';
 import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart, ArrowLeft } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
@@ -87,7 +88,7 @@ export const About = () => {
                                 <div className="relative grid grid-cols-2 gap-4">
                                     <div className="pt-8 space-y-4">
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
-                                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="تعلم تعاوني" width="400" height="320" loading="lazy" decoding="async" />
+                                            <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full" alt="تعلم تعاوني" />
                                         </div>
                                         <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Sparkles size={24} className="mb-4 text-on-primary/90" />
@@ -100,7 +101,7 @@ export const About = () => {
                                             <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_rgba(0,0,0,0.30)]">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
-                                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="تدريس فعال" width="400" height="320" loading="lazy" decoding="async" />
+                                            <Image src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full" alt="تدريس فعال" />
                                         </div>
                                     </div>
                                 </div>

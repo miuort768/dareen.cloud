@@ -8,10 +8,12 @@ const FALLBACK_SRC =
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   withSkeleton?: boolean;
+  imgClassName?: string;
 }
 
 export const Image = ({
   className,
+  imgClassName,
   loading = 'lazy',
   decoding = 'async',
   withSkeleton,
@@ -44,6 +46,7 @@ export const Image = ({
         }}
         className={cn(
           'w-full h-full object-cover',
+          imgClassName,
           withSkeleton && !loaded && 'opacity-0',
           loaded && 'opacity-100 transition-opacity duration-300',
           error && 'opacity-80'

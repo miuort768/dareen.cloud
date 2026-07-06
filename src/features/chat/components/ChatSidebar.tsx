@@ -9,6 +9,7 @@ import { useDarkMode } from '../../../shared/hooks/useDarkMode';
 
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import type { Conversation } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
@@ -50,10 +51,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <div className="h-[60px] bg-surface dark:bg-card px-4 flex items-center justify-between shrink-0 border-b border-border/50 dark:border-white/5">
                 <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-success/30 dark:border-success/30 shadow-sm shrink-0">
-                        <img 
+                        <Image 
                             src="/chat-avatar.jpg" 
                             alt="avatar" 
-                            className="w-full h-full object-cover" 
+                            className="w-full h-full" 
                         />
                     </div>
                     <div className="flex flex-col text-right">
@@ -130,10 +131,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             >
                                 <div className="shrink-0 relative">
                                     <div className="w-12 h-12 rounded-full overflow-hidden bg-surface dark:bg-card border border-border dark:border-white/10 shadow-sm">
-                                        <img 
+                                        <Image 
                                             src="/chat-avatar.jpg" 
                                             alt="chat" 
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full"
                                         />
                                     </div>
                                 </div>

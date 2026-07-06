@@ -4,6 +4,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
+import { Image } from '../../shared/components/ui';
 import { Calendar, User, ArrowRight, Loader2, Download, Eye, MessageCircle, Play, BookOpen, GraduationCap, School, Tag, Clock } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -217,7 +218,7 @@ export const BlogPost = () => {
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
                         <div className="w-full bg-surface dark:bg-card overflow-hidden shadow-xl rounded-card">
-                            <img src={post.coverImage || ''} alt={post.title || ''} loading="lazy" decoding="async" className="w-full h-auto" />
+                            <Image src={post.coverImage || ''} alt={post.title || ''} className="w-full h-auto" />
                         </div>
                         <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main dark:text-main"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first, post.title)) }}
@@ -301,7 +302,7 @@ export const BlogPost = () => {
                         {relatedPosts.map((rp) => (
                             <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white dark:bg-card rounded-card overflow-hidden shadow-md hover:shadow-xl transition-all border border-border dark:border-border">
                                 <div className="aspect-[16/9] bg-surface dark:bg-card overflow-hidden">
-                                    <img src={rp.coverImage || ''} alt={rp.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                    <Image src={rp.coverImage || ''} alt={rp.title} className="w-full h-full group-hover:scale-105" />
                                 </div>
                                 <div className="p-4">
                                     <p className="text-micro font-bold text-muted mb-1">{rp.date}</p>

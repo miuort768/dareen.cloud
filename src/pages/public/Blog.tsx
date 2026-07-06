@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Image } from '../../shared/components/ui';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
@@ -247,7 +248,7 @@ export const Blog = () => {
                 <div className="relative shrink-0">
                   <div className="absolute inset-0 bg-primary-light/50 dark:bg-primary/30 rounded-full blur-xl" />
                   <div className="relative w-[90px]">
-                    <img src="/hero-child.png" alt="طفل يدرس على منصة دارين" width="90" height="90" loading="lazy" className="w-full h-auto object-contain drop-shadow-lg" />
+                    <Image src="/hero-child.png" alt="طفل يدرس على منصة دارين" className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>
