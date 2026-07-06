@@ -13,13 +13,13 @@ const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: Reac
     <div className="space-y-1.5">
         <label className="text-micro font-medium text-muted uppercase tracking-widest ms-1">{label}</label>
         <div className="relative group">
-            <div className="absolute end-0 top-0 bottom-0 w-10 flex items-center justify-center bg-primary/10 text-primary border-s border-primary/10 group-focus-within:bg-primary group-focus-within:text-on-primary transition-all rounded-e-xl">
+            <div className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center bg-primary/10 text-primary border-s border-primary/10 group-focus-within:bg-primary group-focus-within:text-on-primary transition-all rounded-e-xl">
                 <Icon size={14} />
             </div>
             <input
                 {...props}
                 className={cn(
-                    "w-full ps-4 pe-12 py-3 bg-white dark:bg-primary-active border border-border dark:border-border outline-none text-xs font-normal transition-all focus:border-primary dark:text-on-primary rounded-xl",
+                    "w-full pl-4 pr-12 py-3 bg-white dark:bg-primary-active border border-border dark:border-border outline-none text-xs font-normal transition-all focus:border-primary dark:text-on-primary rounded-xl",
                     props.className
                 )}
             />

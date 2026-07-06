@@ -17,8 +17,8 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
     return (
         <section className="py-4 md:py-6 bg-white dark:bg-card relative overflow-hidden transition-colors duration-500">
 
-            <div className="absolute top-0 start-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 end-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-6">
@@ -35,7 +35,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                     <div className="lg:hidden">
                         <div className="relative group">
                             <div className="p-4 bg-surface border border-border shadow-sm rounded-2xl relative overflow-hidden flex flex-col min-h-[140px]">
-                                <Quote size={30} className="text-primary opacity-10 absolute -top-1 -start-1" />
+                                <Quote size={30} className="text-primary opacity-10 absolute -top-1 -left-1" />
                                 
                                 <div className="relative z-10 flex flex-col h-full flex-grow">
                                     <div className="flex items-center justify-between mb-4">
@@ -74,7 +74,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     )}
                                 >
                                     <Quote size={isLarge ? 60 : 30} className={cn(
-                                        'absolute -top-2 -start-2 transition-all duration-700',
+                                        'absolute -top-2 -left-2 transition-all duration-700',
                                         isLarge ? 'text-on-success opacity-10' : 'text-primary opacity-5 group-hover:text-primary/15'
                                     )} />
                                     
@@ -99,7 +99,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                         </p>
                                     </div>
 
-                                    {!isLarge && <div className="absolute bottom-0 start-0 w-8 h-8 border-b-2 border-s-2 border-transparent group-hover:border-primary/20 transition-all duration-700"></div>}
+                                    {!isLarge && <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-s-2 border-transparent group-hover:border-primary/20 transition-all duration-700"></div>}
                                 </div>
                             );
                         })}

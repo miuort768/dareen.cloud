@@ -34,7 +34,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             {/* Reduced max-width to max-w-lg (roughly 25% smaller than 2xl/xl) */}
             <div className="bg-card w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
                 {/* Decoration */}
-                <div className="absolute top-0 end-0 w-32 h-32 bg-primary opacity-10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary opacity-10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
 
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-border no-print">
@@ -80,7 +80,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                 <p>هاتف: {adminPhone || '0123456789'}</p>
                             </div>
                         </div>
-                        <div className="text-start">
+                        <div className="text-left">
                             <h1 className="text-3xl font-medium text-main uppercase mb-2">فاتورة</h1>
                             <p className="text-xs font-medium text-primary font-mono">#{invoice.id.slice(0, 8).toUpperCase()}</p>
                             <div className={cn(
@@ -101,7 +101,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <p className="text-base font-medium text-main mb-1">{invoice.studentName}</p>
                             <p className="text-xs text-muted font-normal italic">{invoice.description}</p>
                         </div>
-                        <div className="text-start">
+                        <div className="text-left">
                             <div className="space-y-2">
                                 <div>
                                     <p className="text-micro text-dim font-medium uppercase tracking-widest">تاريخ الإصدار</p>
@@ -119,10 +119,10 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         <table className="w-full table-fixed border-collapse">
                             <thead>
                                 <tr className="border-b-2 border-border">
-                                    <th className="py-2 text-end text-micro font-medium uppercase w-1/4">التاريخ</th>
-                                    <th className="py-2 text-end text-micro font-medium uppercase w-1/4">المعلمة</th>
-                                    <th className="py-2 text-end text-micro font-medium uppercase w-1/4">المادة</th>
-                                    {!hidePricing && <th className="py-2 text-start text-micro font-medium uppercase w-1/4">الحساب</th>}
+                                    <th className="py-2 text-right text-micro font-medium uppercase w-1/4">التاريخ</th>
+                                    <th className="py-2 text-right text-micro font-medium uppercase w-1/4">المعلمة</th>
+                                    <th className="py-2 text-right text-micro font-medium uppercase w-1/4">المادة</th>
+                                    {!hidePricing && <th className="py-2 text-left text-micro font-medium uppercase w-1/4">الحساب</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-border">
@@ -155,7 +155,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                                     )}
                                                 </td>
                                                 {!hidePricing && (
-                                                    <td className="py-3 text-start text-xs font-medium font-mono text-main">
+                                                    <td className="py-3 text-left text-xs font-medium font-mono text-main">
                                                         {item.amount.toLocaleString()} <span className="text-micro">ج.م</span>
                                                     </td>
                                                 )}

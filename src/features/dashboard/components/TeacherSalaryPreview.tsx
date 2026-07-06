@@ -16,7 +16,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
         <div className="bg-success border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-on-primary relative overflow-hidden group">
             
             {/* Background pattern */}
-            <div className="absolute -bottom-4 -end-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all pointer-events-none"></div>
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all pointer-events-none"></div>
             
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-6 text-white/80">

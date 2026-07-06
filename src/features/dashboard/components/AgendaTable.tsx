@@ -11,7 +11,7 @@ interface AgendaTableProps {
 export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableProps) => {
     return (
         <div className="bg-white border border-primary dark:bg-card dark:border-border shadow-xl overflow-hidden relative group">
-            <div className="absolute top-0 end-0 w-1.5 h-full bg-primary transition-all"></div>
+            <div className="absolute top-0 right-0 w-1.5 h-full bg-primary transition-all"></div>
             <div className="p-5 border-b border-border dark:border-border flex items-center justify-between bg-primary-soft/30 dark:bg-primary/10">
                 <div className="flex items-center gap-4">
                     <div className="relative p-2.5 bg-primary shadow-lg shadow-primary/20 flex items-center justify-center">

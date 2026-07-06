@@ -95,7 +95,7 @@ export const TeacherDetails = ({
             <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none">
                 {/* Performance Gauge */}
                 <div className="p-5 bg-gradient-to-br from-primary-soft to-surface dark:from-primary-soft dark:to-surface border border-border rounded-2xl shadow-sm relative overflow-hidden">
-                    <div className="absolute top-0 end-0 w-16 h-16 bg-success/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-success/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
                     <div className="flex justify-between items-start mb-4">
                         <div>
                             <p className="text-micro font-medium text-muted uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
@@ -227,7 +227,7 @@ export const TeacherDetails = ({
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-l from-primary to-primary-light flex items-center justify-center text-on-primary shadow-sm">
                                 <Clock size={18} />
                             </div>
-                            <div className="text-end">
+                            <div className="text-right">
                                 <p className="text-micro font-bold text-main uppercase tracking-widest">سجل النشاطات المفصل</p>
                                 <p className="text-micro font-medium text-primary uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
@@ -264,7 +264,7 @@ export const TeacherDetails = ({
                                 {teacherSessions.map(session => (
                                     <div key={session.id} className="bg-card border border-border p-3 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                                         <div className={cn(
-                                            "absolute top-0 end-0 w-1 h-full rounded-e-full",
+                                            "absolute top-0 right-0 w-1 h-full rounded-e-full",
                                             session.status === 'completed' ? "bg-success" : "bg-error"
                                         )} />
                                         

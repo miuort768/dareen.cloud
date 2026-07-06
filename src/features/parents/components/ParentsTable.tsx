@@ -29,7 +29,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
             
             {/* ── Desktop View ── */}
             <div className="hidden md:block bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 shadow-sm overflow-hidden rounded-2xl">
-                <table className="w-full text-end border-collapse">
+                <table className="w-full text-right border-collapse">
                     <thead>
                         <tr className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                             <th className="px-6 py-4 font-bold text-micro uppercase tracking-widest text-on-primary text-center w-16">ID</th>

@@ -66,7 +66,7 @@ export const ActivityFeed = ({
   maxHeight,
   dir = 'rtl',
 }: ActivityFeedProps) => {
-  const lineSide = dir === 'rtl' ? 'end-4' : 'start-4';
+  const lineSide = dir === 'rtl' ? 'right-4' : 'left-4';
 
   return (
     <div className={cn('bg-card border border-border rounded-2xl shadow-sm p-5', className)}>

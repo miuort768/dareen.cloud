@@ -39,7 +39,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <h3 className="text-lg font-black text-main">{teacher.name}</h3>
                             <span className="text-micro font-bold px-2 py-0.5 inline-block mt-1 rounded-lg bg-primary-soft text-primary">{teacher.subject}</span>
                         </div>
-                        <div className="text-start">
+                        <div className="text-left">
                             <p className="text-micro font-bold text-muted uppercase mb-1">التاريخ</p>
                             <p className="text-xs font-black text-main">{new Date().toLocaleDateString('ar-EG')}</p>
                         </div>
@@ -62,7 +62,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                     <div>
                         <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
                         <div className="border border-border overflow-hidden rounded-xl">
-                            <table className="w-full text-end text-xs">
+                            <table className="w-full text-right text-xs">
                                 <thead className="bg-surface dark:bg-card">
                                     <tr>
                                         <th className="p-2.5 font-bold text-muted">التاريخ</th>

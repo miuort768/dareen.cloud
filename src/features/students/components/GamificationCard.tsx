@@ -29,7 +29,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
         <div className="space-y-3 md:space-y-4">
             {/* Total Points Card - Compact Style */}
             <div className="bg-primary p-3 md:p-4 shadow-sm relative overflow-hidden group rounded-2xl">
-                <div className="absolute top-0 end-0 w-16 h-16 bg-white/10 blur-2xl -translate-y-8 translate-x-8 transition-transform group-hover:scale-110"></div>
+                <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 blur-2xl -translate-y-8 translate-x-8 transition-transform group-hover:scale-110"></div>
                 <div className="flex items-center justify-between relative z-10">
                     <div>
                         <p className="text-micro md:text-micro font-medium text-on-primary uppercase tracking-widest mb-0.5 opacity-80">إجمالي نقاط الإنجاز</p>
@@ -81,7 +81,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                     <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-dim mb-3 flex items-center gap-1.5">
                         <History size={12} className="text-primary" /> سجل النشاط الأخير
                     </h3>
-                    <div className="flex-1 space-y-1.5 overflow-y-auto max-h-[150px] md:max-h-[200px] custom-scrollbar pe-1">
+                    <div className="flex-1 space-y-1.5 overflow-y-auto max-h-[150px] md:max-h-[200px] custom-scrollbar pr-1">
                         {pointLogs.length > 0 ? pointLogs.map((log) => (
                             <div key={log.id} className="flex items-center justify-between p-2 bg-surface dark:bg-hover border border-border transition-colors hover:border-primary dark:hover:border-primary rounded-xl">
                                 <div className="min-w-0">

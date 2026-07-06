@@ -39,12 +39,12 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"></div>
 
                 {/* Decorative Geometric Background */}
-                <div className="absolute top-0 end-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
                 <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 end-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
+                        className="absolute top-4 right-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
                     >
                         <X size={18} />
                     </button>
@@ -63,7 +63,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                             إلى: <span className="text-[var(--primary-color,var(--bg-primary))]">{recipientName}</span>
                         </p>
 
-                        <form onSubmit={handleSubmit} className="w-full space-y-6 text-end">
+                        <form onSubmit={handleSubmit} className="w-full space-y-6 text-right">
                             <div className="space-y-2">
                                 <label className="text-micro font-black text-muted uppercase tracking-[0.2em] ms-1">محتوى التنبيه</label>
                                 <textarea

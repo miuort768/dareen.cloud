@@ -101,7 +101,7 @@ export const ParentAttendance = () => {
                             <Calendar size={16} className="text-dim" />
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-end">
+                            <table className="w-full text-right">
                                 <thead>
                                     <tr className="bg-background dark:bg-card/50 text-micro font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border">
                                         <th className="px-6 py-4">����� / ������</th>

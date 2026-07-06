@@ -38,7 +38,7 @@ export const ChatManagement: React.FC<ChatManagementProps> = ({
             </div>
 
             <div className="overflow-x-auto rounded-none border border-border dark:border-border/50 shadow-sm">
-                <table className="w-full text-end border-collapse">
+                <table className="w-full text-right border-collapse">
                     <thead>
                         <tr className="bg-background dark:bg-card border-b border-border dark:border-border">
                             <th className="p-4 lg:p-5 text-xs font-medium text-muted uppercase tracking-widest">المستخدم</th>

@@ -36,9 +36,9 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
   return (
     <section className="relative overflow-hidden bg-white dark:bg-card pt-4 md:pt-10 pb-0">
       {/* Neon glow decorations */}
-      <div className="absolute -top-40 -end-40 w-80 h-80 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -start-40 w-80 h-80 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/3 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/3 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
@@ -63,7 +63,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative flex items-center gap-4 p-4 bg-white/80 dark:bg-primary/80 backdrop-blur-sm rounded-2xl border border-border shadow-sm">
                 {f.ribbon && (
-                  <div className="absolute -top-2 -start-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>
@@ -124,7 +124,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="relative p-6 bg-card rounded-2xl shadow-sm border border-border flex items-start gap-4 group hover:shadow-md transition-all">
                 {f.ribbon && (
-                  <div className="absolute -top-2 -start-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>
@@ -141,10 +141,10 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           })}
 
           <div className="md:col-span-3 p-6 md:p-8 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl shadow-lg relative overflow-hidden group">
-            <div className="absolute top-0 end-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 start-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">
-              <div className="flex-1 text-center lg:text-end">
+              <div className="flex-1 text-center lg:text-right">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 border border-white/20 rounded-full mb-3 mx-auto lg:mx-0">
                   <Award size={16} className="text-warning" />
                   <span className="text-xs font-bold text-on-primary opacity-90">التميز التعليمي</span>

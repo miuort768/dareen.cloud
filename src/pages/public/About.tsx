@@ -25,8 +25,8 @@ export const About = () => {
             {/* Hero Section */}
             <section className="relative pb-8 md:pt-32 md:pb-12 overflow-hidden bg-white dark:bg-background">
                 {/* Creative Background Elements - Premium Royal Theme */}
-                <div className="absolute top-0 end-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
-                <div className="absolute bottom-0 start-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
@@ -84,7 +84,7 @@ export const About = () => {
                         {/* Interactive Visual Side */}
                         <div className="w-full lg:w-1/2 order-2 lg:order-1">
                             <div className="relative">
-                                <div className="absolute top-0 end-0 w-full h-full bg-gradient-to-br from-[var(--bg-primary)]/10 to-[var(--bg-warning)]/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
+                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[var(--bg-primary)]/10 to-[var(--bg-warning)]/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
                                 <div className="relative grid grid-cols-2 gap-4">
                                     <div className="pt-8 space-y-4">
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
@@ -109,7 +109,7 @@ export const About = () => {
                         </div>
 
                         {/* Text Content */}
-                        <div className="w-full lg:w-1/2 order-1 lg:order-2 text-end">
+                        <div className="w-full lg:w-1/2 order-1 lg:order-2 text-right">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-none mb-4">
                                 <span className="text-micro font-black">تعرف عليـــنا</span>
                             </div>
@@ -150,7 +150,7 @@ export const About = () => {
             {/* Core Values Section - Enhanced */}
             <section className="py-4 md:py-6 bg-background dark:bg-card/50 relative overflow-hidden">
                 {/* Visual Separator */}
-                <div className="absolute top-0 start-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--bg-surface)] to-transparent"></div>
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--bg-surface)] to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
                     <AnimateOnScroll animation="fadeUp">
@@ -231,9 +231,9 @@ export const About = () => {
             {/* Final Call to Action - Redesigned with Creative Touches */}
             <section className="py-4 md:py-6 bg-white dark:bg-background relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
-                <div className="absolute top-0 start-0 w-full h-full pointer-events-none">
-                    <div className="absolute top-1/2 start-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>
-                    <div className="absolute top-1/2 end-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                    <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>
+                    <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -247,14 +247,14 @@ export const About = () => {
                             <div className="relative bg-primary p-8 md:p-12 shadow-[0_40px_100px_-15px_rgba(0,0,0,0.60)] border border-white/5">
                                 {/* Intricate Background Patterns */}
                                 <div className="absolute inset-0 opacity-10 pointer-events-none">
-                                    <div className="absolute top-0 start-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(79,70,229,0.15),transparent_50%)]"></div>
-                                    <div className="absolute bottom-0 end-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.10),transparent_50%)]"></div>
+                                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(79,70,229,0.15),transparent_50%)]"></div>
+                                    <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.10),transparent_50%)]"></div>
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
                                 </div>
 
                                 <div className="relative z-20 flex flex-col lg:flex-row items-stretch gap-12">
                                     {/* Content Side */}
-                                    <div className="w-full lg:w-[60%] text-center lg:text-end flex flex-col justify-center">
+                                    <div className="w-full lg:w-[60%] text-center lg:text-right flex flex-col justify-center">
                                         <div className="inline-flex items-center gap-3 px-6 py-2 bg-primary/10 border border-primary/20 mb-8 backdrop-blur-xl">
                                             <Sparkles className="w-4 h-4 text-on-primary animate-pulse" />
                                             <span className="text-xs font-black text-on-primary">انضم إلى عائلتنا</span>
@@ -293,7 +293,7 @@ export const About = () => {
                                     <div className="w-full lg:w-[40%] relative flex items-center">
                                         <div className="grid grid-cols-2 gap-3 w-full">
                                             <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-2 transition-all duration-700 group/card overflow-hidden min-h-[200px]">
-                                                <div className="absolute top-0 end-0 w-8 h-8 border-t-2 border-e-2 border-primary transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
+                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-e-2 border-primary transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
                                                     <div className="w-12 h-12 bg-primary/20 text-on-primary mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">
@@ -303,11 +303,11 @@ export const About = () => {
                                                     <span className="text-micro md:text-xs text-on-primary/80 font-black">طالب فعال</span>
                                                 </div>
                                                 
-                                                <div className="absolute -bottom-10 -start-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover/card:bg-primary/20 transition-all"></div>
+                                                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover/card:bg-primary/20 transition-all"></div>
                                             </div>
 
                                             <div className="relative p-6 md:p-8 bg-white/[0.03] border border-white/10 backdrop-blur-2xl flex flex-col items-center justify-center text-center transition-all duration-700 group/card overflow-hidden min-h-[200px]">
-                                                <div className="absolute top-0 end-0 w-8 h-8 border-t-2 border-e-2 border-warning transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
+                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-e-2 border-warning transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-20"></div>
                                                 
                                                 <div className="relative z-10">
                                                     <div className="w-12 h-12 bg-warning/20 text-warning mb-4 flex items-center justify-center group-hover/card:scale-110 transition-transform duration-500">
@@ -317,7 +317,7 @@ export const About = () => {
                                                     <span className="text-micro md:text-xs text-on-primary/80 font-black">نسبة نجاح</span>
                                                 </div>
 
-                                                <div className="absolute -bottom-10 -start-10 w-24 h-24 bg-warning/10 rounded-full blur-2xl group-hover/card:bg-warning/20 transition-all"></div>
+                                                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-warning/10 rounded-full blur-2xl group-hover/card:bg-warning/20 transition-all"></div>
                                             </div>
                                         </div>
                                         <div className="absolute inset-0 bg-primary/10 blur-[80px] -z-10"></div>

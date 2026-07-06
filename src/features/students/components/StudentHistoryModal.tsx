@@ -75,7 +75,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                         </div>
                     ) : (
                         <div className="bg-card border border-border overflow-hidden">
-                            <table className="w-full text-sm text-end">
+                            <table className="w-full text-sm text-right">
                                 <thead className="bg-surface dark:bg-hover text-dim font-normal">
                                     <tr>
                                         <th className="p-4">التاريخ</th>

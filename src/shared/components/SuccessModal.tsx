@@ -61,7 +61,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
     if (!isOpen && !isExiting) return null;
 
     return (
-        <div className="fixed bottom-6 start-6 z-[9999] w-full max-w-sm pointer-events-none px-4 sm:px-0" dir="rtl">
+        <div className="fixed bottom-6 left-6 z-[9999] w-full max-w-sm pointer-events-none px-4 sm:px-0" dir="rtl">
             <div className={cn(
                 'relative overflow-hidden bg-white/70 dark:bg-primary-active/75 backdrop-blur-lg',
                 'border border-success/30 dark:border-success/20 rounded-2xl p-4.5',
@@ -71,8 +71,8 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
             )}>
                 
                 {/* ── Glowing Ambient Background ── */}
-                <div className="absolute -top-12 -start-12 w-24 h-24 bg-success/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute -bottom-12 -end-12 w-24 h-24 bg-info/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -top-12 -left-12 w-24 h-24 bg-success/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-info/10 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="flex items-start gap-3.5 relative z-10">
                     
@@ -81,7 +81,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-info)] flex items-center justify-center text-on-primary shadow-[0_4px_12px_rgba(16,185,129,0.30)] animate-pulse">
                             <CheckCircle2 size={20} className="stroke-[2.5]" />
                         </div>
-                        <div className="absolute -top-1.5 -end-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">
+                        <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">
                             <Sparkles size={8} />
                         </div>
                     </div>
@@ -111,7 +111,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
 
                 {/* ── Smooth Progress Count Down Bar ── */}
                 {autoClose && (
-                    <div className="absolute bottom-0 start-0 end-0 h-[3px] bg-surface dark:bg-primary-active/60 overflow-hidden">
+                    <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-surface dark:bg-primary-active/60 overflow-hidden">
                         <div 
                             className="h-full bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-info)] transition-all duration-75 ease-linear rounded-e-full"
                             style={{ width: `${progress}%` }}

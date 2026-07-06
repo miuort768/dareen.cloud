@@ -164,23 +164,23 @@ export const AcademicReport = ({
                         </div>
                     </div>
                     <div className="relative w-full md:max-w-xs">
-                        <Search className="absolute end-3 top-1/2 -translate-y-1/2 text-dim" size={13} />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={13} />
                         <input
                             type="text"
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pe-9 ps-3 py-2 bg-card border border-border rounded-xl text-xs font-bold outline-none focus:border-chart-4 transition-all text-main placeholder:text-muted"
+                            className="w-full pr-9 pl-3 py-2 bg-card border border-border rounded-xl text-xs font-bold outline-none focus:border-chart-4 transition-all text-main placeholder:text-muted"
                         />
                     </div>
                 </div>
 
                 <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full text-end">
+                    <table className="w-full text-right">
                         <thead>
                             <tr className="bg-chart-4 text-on-primary">
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
-                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-end">اسم الطالب</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-right">اسم الطالب</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">الصف</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">الاشتراكات</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
@@ -220,7 +220,7 @@ export const AcademicReport = ({
                                                 <div className="flex-1 bg-surface h-2 rounded-xl overflow-hidden">
                                                     <div className={cn("h-full rounded-xl transition-all duration-700", progBg)} style={{ width: `${prog}%` }} />
                                                 </div>
-                                                <span className={cn("text-micro font-medium w-9 text-start", progText)}>{prog}%</span>
+                                                <span className={cn("text-micro font-medium w-9 text-left", progText)}>{prog}%</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -249,7 +249,7 @@ export const AcademicReport = ({
                             <div key={student.id} className="p-4 flex items-center gap-3">
                                 <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 relative bg-chart-4/10 text-chart-4">
                                     {student.name.charAt(0)}
-                                    <span className="absolute -top-1 -end-1 text-micro font-bold text-on-primary w-4 h-4 flex items-center justify-center rounded-full bg-chart-4">{globalIdx}</span>
+                                    <span className="absolute -top-1 -right-1 text-micro font-bold text-on-primary w-4 h-4 flex items-center justify-center rounded-full bg-chart-4">{globalIdx}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">

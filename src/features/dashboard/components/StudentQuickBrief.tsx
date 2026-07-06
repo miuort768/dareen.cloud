@@ -66,7 +66,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     {/* Reminder Row */}
                     {enrollment?.nextSessionNotes && (
                         <div className="bg-warning-light dark:bg-warning/10 p-5 border-2 border-warning rounded-none relative">
-                             <div className="absolute top-2 start-2">
+                             <div className="absolute top-2 left-2">
                                 <Sparkles size={16} className="text-warning/30" />
                              </div>
                              <p className="text-micro font-medium text-warning uppercase mb-2">تحضير الجلسة القادمة</p>

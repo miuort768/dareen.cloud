@@ -54,7 +54,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
 
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
-                <table className="w-full text-end">
+                <table className="w-full text-right">
                     <thead>
                         <tr className="bg-primary">
                             <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">#</th>
@@ -127,7 +127,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <div key={tx.id} className="p-4 flex items-center gap-3">
                             <div className={cn("w-10 h-10 flex items-center justify-center shrink-0 relative rounded-xl", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-error-soft text-error')}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                <span className="absolute -top-1 -end-1 text-micro font-bold w-4 h-4 flex items-center justify-center bg-primary text-on-primary rounded-md">{globalIdx}</span>
+                                <span className="absolute -top-1 -right-1 text-micro font-bold w-4 h-4 flex items-center justify-center bg-primary text-on-primary rounded-md">{globalIdx}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">

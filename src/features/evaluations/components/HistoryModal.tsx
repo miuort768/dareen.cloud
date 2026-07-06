@@ -57,7 +57,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                                         )}
                                     </div>
                                 </div>
-                                <p className="text-micro font-normal text-muted dark:text-muted italic leading-relaxed border-e-2 border-primary/30 pe-3">
+                                <p className="text-micro font-normal text-muted dark:text-muted italic leading-relaxed border-e-2 border-primary/30 pr-3">
                                     &ldquo;{ev.notes || 'لا يوجد ملاحظات'}&rdquo;
                                 </p>
                                 <div className="mt-2 pt-2 border-t border-border dark:border-border flex items-center gap-1.5">

@@ -43,7 +43,7 @@ export function DesignTokenSection() {
             const cssVar = `--space-${key.replace('.', '-')}`;
             return (
               <div key={key} className="flex items-center gap-4">
-                <span className="text-xs text-muted font-mono w-24 text-start shrink-0">{cssVar}</span>
+                <span className="text-xs text-muted font-mono w-24 text-left shrink-0">{cssVar}</span>
                 <span className="text-xs text-dim font-mono w-16 shrink-0">{value}</span>
                 <div
                   className="bg-primary rounded h-6 shrink-0"

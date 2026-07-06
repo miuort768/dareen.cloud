@@ -15,7 +15,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
     return (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3 bg-white border border-error dark:bg-error/20 dark:border-error/30 overflow-hidden shadow-sm relative group rounded-2xl">
-                <div className="absolute top-0 end-0 w-1.5 h-full bg-error group-hover:w-2 transition-all"></div>
+                <div className="absolute top-0 right-0 w-1.5 h-full bg-error group-hover:w-2 transition-all"></div>
                 <div className="p-5 border-b border-error dark:border-error/20 flex items-center justify-between bg-gradient-to-l from-[var(--bg-error)]/80 to-transparent dark:from-[var(--bg-error)]/10">
                     <div className="flex items-center gap-4">
                         <div className="relative">
@@ -36,7 +36,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                         <div className="px-4 py-1.5 bg-error text-on-primary text-xs font-medium shadow-lg shadow-error/30">
                             {stats.lowBalanceCount} طلاب متعثرين
                         </div>
-                        <p className="text-micro font-normal text-muted dark:text-muted uppercase tracking-widest ps-1">قائمة التجديد</p>
+                        <p className="text-micro font-normal text-muted dark:text-muted uppercase tracking-widest pl-1">قائمة التجديد</p>
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
             </div>
 
             <div className="bg-white border border-border p-6 dark:bg-primary-active dark:border-border shadow-sm relative overflow-hidden flex flex-col justify-between rounded-2xl">
-                <div className="absolute top-0 end-0 w-1 h-full bg-success"></div>
+                <div className="absolute top-0 right-0 w-1 h-full bg-success"></div>
                 <div>
                     <div className="flex items-center gap-2 mb-6 text-success">
                         <TrendingUp size={20} />

@@ -47,7 +47,7 @@ export const StudentDetails = ({
             <div className="relative p-6 bg-surface border-b border-border" dir="rtl">
                 <button
                     onClick={onClose}
-                    className="absolute start-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
+                    className="absolute left-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
                 >
                     <X size={18} />
                 </button>
@@ -87,7 +87,7 @@ export const StudentDetails = ({
                             </div>
                         </div>
                         {next && (
-                            <div className="text-start">
+                            <div className="text-left">
                                 <p className="text-micro font-normal text-dim uppercase">التالي</p>
                                 <p className="text-xs font-normal text-info">{next.name}</p>
                             </div>

@@ -99,22 +99,22 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="relative">
-                        <Search size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted" />
+                        <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
                         <input
                             type="text"
                             placeholder="اسم الطالب، المادة..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pe-9 ps-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all"
                         />
                     </div>
 
                     <div className="relative">
-                        <Filter size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                        <Filter size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full pe-9 ps-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">جميع الحالات</option>
                             <option value="scheduled">مجدولة</option>
@@ -124,11 +124,11 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                     </div>
 
                     <div className="relative">
-                        <GraduationCap size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                        <GraduationCap size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full pe-9 ps-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
+                            className="w-full pr-9 pl-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">كافة المعلمات</option>
                             {uniqueTeachers.map(teacher => (

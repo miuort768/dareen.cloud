@@ -25,7 +25,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
 
     return (
         <div className="hidden lg:block overflow-hidden bg-white dark:bg-primary-active shadow-sm rounded-2xl border border-border dark:border-border">
-            <table className="w-full text-end border-collapse">
+            <table className="w-full text-right border-collapse">
                 <thead>
                     <tr className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)]">
                         <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary">العميل</th>

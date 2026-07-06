@@ -129,8 +129,8 @@ export const Jobs = () => {
                         transition={{ duration: 0.5 }}
                         className="max-w-md w-full bg-white border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
                     >
-                        <div className="absolute top-0 end-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl" />
-                        <div className="absolute bottom-0 start-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl" />
                         <div className="relative z-10">
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -168,13 +168,13 @@ export const Jobs = () => {
             {/* Hero Banner */}
             <section className="relative pt-2 md:pt-28 pb-4 md:pb-12 overflow-hidden bg-gradient-to-br from-primary via-primary to-primary">
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-10 end-10 w-64 h-64 bg-white/5 rounded-full blur-[80px]" />
-                    <div className="absolute bottom-10 start-10 w-48 h-48 bg-white/5 rounded-full blur-[60px]" />
+                    <div className="absolute top-10 right-10 w-64 h-64 bg-white/5 rounded-full blur-[80px]" />
+                    <div className="absolute bottom-10 left-10 w-48 h-48 bg-white/5 rounded-full blur-[60px]" />
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
                 </div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col md:flex-row items-center gap-3 md:gap-10 max-w-5xl mx-auto">
-                        <div className="flex-1 text-center md:text-end">
+                        <div className="flex-1 text-center md:text-right">
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -216,7 +216,7 @@ export const Jobs = () => {
                         </motion.div>
                     </div>
                 </div>
-                <div className="absolute bottom-0 start-0 w-full h-10 md:h-16 bg-gradient-to-t from-background to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-10 md:h-16 bg-gradient-to-t from-background to-transparent" />
             </section>
 
             <main className="flex-grow -mt-4 md:-mt-6 relative z-20">
@@ -438,7 +438,7 @@ export const Jobs = () => {
                             <button
                                 type="button"
                                 onClick={() => setErrorMsg('')}
-                                className="absolute top-3 start-3 w-8 h-8 flex items-center justify-center text-muted dark:text-muted hover:text-muted dark:hover:text-dim transition-colors"
+                                className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center text-muted dark:text-muted hover:text-muted dark:hover:text-dim transition-colors"
                             >
                                 <X size={16} />
                             </button>

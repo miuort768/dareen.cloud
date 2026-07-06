@@ -23,7 +23,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                 <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" color="var(--bg-warning)" />
             </div>
             <div className="overflow-x-auto">
-                <table className="w-full text-end">
+                <table className="w-full text-right">
                     <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                         <tr>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary uppercase tracking-wider">الطالب</th>

@@ -81,7 +81,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="scale-75 md:scale-100">
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-1 -end-1 md:-top-2 md:-end-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-background text-main dark:text-on-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
+                                    <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-background text-main dark:text-on-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
                                         {step.id}
                                     </span>
                                 </div>
@@ -95,7 +95,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     </p>
                                 </div>
                                 
-                                <div className="hidden md:block absolute top-[45px] -end-2 w-1.5 h-1.5 rounded-full bg-surface dark:bg-primary-active group-last:hidden"></div>
+                                <div className="hidden md:block absolute top-[45px] -right-2 w-1.5 h-1.5 rounded-full bg-surface dark:bg-primary-active group-last:hidden"></div>
                             </motion.div>
                         ))}
                     </motion.div>

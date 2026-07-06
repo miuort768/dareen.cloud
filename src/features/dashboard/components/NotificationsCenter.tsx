@@ -249,7 +249,7 @@ export const NotificationsCenter = ({
                         </div>
                     </div>
 
-                    <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pe-1">
+                    <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert) => (
                             <div key={alert.id} className="flex items-center justify-between group p-3 bg-white dark:bg-primary-active rounded-xl shadow-sm border border-border/50 dark:border-border/50 transition-all">
                                 <div className="flex items-center gap-4 min-w-0">

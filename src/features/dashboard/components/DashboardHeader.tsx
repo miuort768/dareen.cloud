@@ -25,8 +25,8 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             "px-8 py-8 flex-col md:flex-row md:items-center justify-between gap-6"
         )} dir="rtl">
             {/* Blur orbs */}
-            <div className="absolute top-0 end-0 w-40 h-40 rounded-full blur-[60px] pointer-events-none dashboard-header-orb" />
-            <div className="absolute bottom-0 start-0 w-32 h-32 rounded-full blur-[50px] pointer-events-none dashboard-header-orb-subtle" />
+            <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-[60px] pointer-events-none dashboard-header-orb" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full blur-[50px] pointer-events-none dashboard-header-orb-subtle" />
 
             {/* Identity & Welcome */}
             <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
@@ -34,7 +34,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                     <span className="text-xl font-black text-on-primary">د</span>
                 </div>
 
-                <div className="text-end">
+                <div className="text-right">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-on-primary text-micro font-bold px-2.5 py-1 rounded-xl border border-white/10">
                             <ShieldCheck size={10} strokeWidth={1.5} />

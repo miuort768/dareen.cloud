@@ -51,7 +51,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="group bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-sm transition-all duration-500 h-full flex flex-col relative">
-                <div className={`absolute end-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
+                <div className={`absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
                 <div className="p-4 sm:p-5 flex flex-col flex-1">
                     <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-micro sm:text-micro font-black text-on-primary bg-gradient-to-r ${cardStyle.gradient} shadow-sm`}>
@@ -122,7 +122,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
                 <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-background dark:bg-card/30`}>
                     <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" imgClassName={`transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'}`} />
                     <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-[var(--bg-card)]' : 'from-black/40'} to-transparent`} />
-                    <div className="absolute top-3 end-3 z-10">
+                    <div className="absolute top-3 right-3 z-10">
                         <span className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg ${isCoursesStyle ? `bg-gradient-to-br ${badgeGradient}` : 'bg-white/90 dark:bg-card/90 backdrop-blur-sm text-primary dark:text-primary'}`}>{subjectNameMap[post.subject] || post.category}</span>
                     </div>
                 </div>

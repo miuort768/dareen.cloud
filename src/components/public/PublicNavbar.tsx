@@ -51,11 +51,11 @@ export const PublicNavbar = () => {
     }, [isDropdownOpen]);
 
     return (
-        <header className="fixed top-2 md:top-4 start-0 end-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
+        <header className="fixed top-2 md:top-4 left-0 right-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
             <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center gap-3 pe-2 group">
+                    <Link to="/" className="flex items-center gap-3 pr-2 group">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-primary-light rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
                              <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl flex items-center justify-center text-on-primary shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
@@ -110,7 +110,7 @@ export const PublicNavbar = () => {
 
 
                         {isAuthenticated && isDesktop && (
-                            <div className="border-s border-border dark:border-border ps-4 h-8 items-center flex">
+                            <div className="border-s border-border dark:border-border pl-4 h-8 items-center flex">
                                 <NotificationDropdown />
                             </div>
                         )}
@@ -134,7 +134,7 @@ export const PublicNavbar = () => {
                                     <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div className={`absolute start-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                <div className={`absolute left-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
                                         <p className="text-sm font-bold text-main dark:text-on-primary">{currentUser?.name}</p>
                                         <p className="text-xs text-muted dark:text-muted">{currentUser?.username}</p>
@@ -149,7 +149,7 @@ export const PublicNavbar = () => {
                                     </Link>
                                     <button
                                         onClick={async () => { if (!await confirm('هل أنت متأكد من تسجيل الخروج؟')) return; logout(); setIsDropdownOpen(false); }}
-                                        className="flex w-full items-center gap-2 text-end px-4 py-3 text-sm text-error hover:bg-error-light dark:hover:bg-error/30 transition-colors"
+                                        className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-error hover:bg-error-light dark:hover:bg-error/30 transition-colors"
                                         aria-label="تسجيل الخروج"
                                     >
                                         <LogOut className="w-5 h-5" />
@@ -179,7 +179,7 @@ export const PublicNavbar = () => {
 
                 {/* Mobile Menu - Floating Card Style */}
                     <div className={`
-                    absolute top-full start-0 end-0 mt-3 p-4 bg-white/95 dark:bg-card/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border/60 shadow-2xl
+                    absolute top-full left-0 right-0 mt-3 p-4 bg-white/95 dark:bg-card/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border/60 shadow-2xl
                     transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
                 `}>

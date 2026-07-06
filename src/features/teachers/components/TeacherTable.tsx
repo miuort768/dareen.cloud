@@ -30,7 +30,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
             {/* Desktop View */}
             <div className="hidden lg:block bg-card border border-border shadow-sm rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-end border-collapse">
+                    <table className="w-full text-right border-collapse">
                         <thead>
                             <tr className="bg-primary">
                                 <th className="px-6 py-4 font-bold text-micro uppercase tracking-[0.2em] text-on-primary opacity-80">المعلمة</th>
@@ -120,7 +120,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                                         <span className="text-micro font-bold px-1.5 py-0.5 uppercase rounded-xl bg-primary-soft text-primary">{teacher.subject}</span>
                                     </div>
                                 </div>
-                                <div className="text-start">
+                                <div className="text-left">
                                     <span className="text-xs font-bold text-success block leading-none">{teacher.price}</span>
                                     <span className="text-micro font-bold text-success opacity-60 uppercase">ج.م / حصة</span>
                                 </div>

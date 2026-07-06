@@ -27,11 +27,11 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
             
             {/* Header Section */}
             <div className="relative p-8 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] border-b border-white/5">
-                <div className="absolute top-0 end-0 w-32 h-32 bg-white/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
                 
                 <button
                     onClick={onClose}
-                    className="absolute start-4 top-4 text-white/60 hover:text-on-primary p-2 hover:bg-white/10 transition-all z-20 rounded-xl"
+                    className="absolute left-4 top-4 text-white/60 hover:text-on-primary p-2 hover:bg-white/10 transition-all z-20 rounded-xl"
                 >
                     <X size={18} />
                 </button>
@@ -120,7 +120,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                                                 style={{ width: `${(en.sessionsUsed / en.sessionsTotal) * 100}%` }} 
                                                             />
                                                         </div>
-                                                        <span className="font-bold font-mono text-micro min-w-[35px] text-end text-main dark:text-dim">
+                                                        <span className="font-bold font-mono text-micro min-w-[35px] text-right text-main dark:text-dim">
                                                             {en.sessionsUsed}/{en.sessionsTotal}
                                                         </span>
                                                     </div>
@@ -145,7 +145,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                             <h4 className="text-xs font-bold text-main dark:text-on-primary uppercase tracking-[0.2em]">الجدول العائلي الموحد</h4>
                         </div>
 
-                        <div className="space-y-3 pe-2">
+                        <div className="space-y-3 pr-2">
                             {details.familySchedule.length > 0 ? (() => {
                                 const grouped = details.familySchedule.reduce((acc, current) => {
                                     const key = `${current.studentName}-${current.subject}`;

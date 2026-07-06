@@ -59,7 +59,7 @@ function TableInner<T>({
           <th
             key={col.key}
             className={cn(
-              'px-5 py-3.5 text-xs font-bold text-end',
+              'px-5 py-3.5 text-xs font-bold text-right',
               thClass,
               col.hideOnMobile && 'hidden lg:table-cell',
               col.headerClassName
@@ -203,7 +203,7 @@ function TableInner<T>({
   return (
     <div className="w-full">
       <div className="hidden md:block overflow-x-auto rounded-card border border-border bg-card shadow-card">
-        <table className="w-full text-end border-collapse">
+        <table className="w-full text-right border-collapse">
           {renderHeader()}
           {renderBody()}
         </table>

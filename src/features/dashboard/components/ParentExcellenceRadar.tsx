@@ -41,7 +41,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
                                     <p className="text-micro font-normal text-warning uppercase leading-none mt-1">{ach.achievement}</p>
                                 </div>
                             </div>
-                            <div className="text-end">
+                            <div className="text-right">
                                 <span className="text-2xl font-medium italic tracking-tighter">+{ach.points}</span>
                                 <p className="text-micro font-medium uppercase opacity-40 tracking-widest leading-none">نقطة ذكاء</p>
                             </div>
