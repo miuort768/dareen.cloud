@@ -431,7 +431,7 @@ export const Forum = () => {
 
                                                         {/* Replies */}
                                                         {node.replies.length > 0 && (
-                                                            <div className="pr-7 space-y-2 border-r-2 border-primary dark:border-primary/30 mr-3">
+                                                            <div className="pr-7 space-y-2 border-r-2 border-primary dark:border-primary/30 ms-3">
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-2">
                                                                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border border-primary/50 dark:border-primary/30">

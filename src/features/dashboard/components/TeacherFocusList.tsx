@@ -118,7 +118,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                         }`}
                     >
                         {typeLabels[key]}
-                        <span className={`mr-1.5 text-micro ${activeFilter === key ? 'opacity-80' : 'opacity-50'}`}>
+                        <span className={`ms-1.5 text-micro ${activeFilter === key ? 'opacity-80' : 'opacity-50'}`}>
                             {counts[key as keyof typeof counts]}
                         </span>
                     </button>
@@ -157,7 +157,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                         </div>
 
                         {addingFor === student.id && (
-                            <div className="p-3 mt-2 mr-12 bg-success-light dark:bg-success/10 border border-success dark:border-success rounded-xl">
+                            <div className="p-3 mt-2 ms-12 bg-success-light dark:bg-success/10 border border-success dark:border-success rounded-xl">
                                 <div className="flex items-center gap-2 mb-2">
                                     <input
                                         type="text"

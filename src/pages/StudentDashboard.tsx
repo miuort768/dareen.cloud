@@ -218,7 +218,7 @@ export const StudentDashboard = () => {
                             </button>
                             {/* Live clock */}
                             <div className="px-2.5 py-1.5 rounded-card bg-hover backdrop-blur-sm text-primary font-medium text-micro tabular-nums">
-                                <Clock size={12} strokeWidth={1.5} className="inline ml-1" />
+                                <Clock size={12} strokeWidth={1.5} className="inline me-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
                         </div>

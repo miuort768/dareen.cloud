@@ -32,7 +32,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 {/* THE CARD CONTENT */}
                 <div className="p-8 relative print:p-0">
                     {/* Background Pattern */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-soft opacity-50 dark:opacity-70 -mr-8 -mt-8 rotate-45 pointer-events-none border border-primary-light"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-soft opacity-50 dark:opacity-70 -ms-8 -mt-8 rotate-45 pointer-events-none border border-primary-light"></div>
                     
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">

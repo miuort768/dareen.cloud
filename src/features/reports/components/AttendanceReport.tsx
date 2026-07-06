@@ -216,7 +216,7 @@ export const AttendanceReport = ({
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
                                             <p className="text-xs font-normal text-main truncate">{teacher.teacher}</p>
-                                            <span className={cn("text-micro font-medium ml-2 shrink-0", textColor)}>{rate}%</span>
+                                            <span className={cn("text-micro font-medium me-2 shrink-0", textColor)}>{rate}%</span>
                                         </div>
                                         <div className="flex items-center gap-3 mb-1.5">
                                             <span className="text-micro text-success font-normal">{teacher.completed} ✓</span>

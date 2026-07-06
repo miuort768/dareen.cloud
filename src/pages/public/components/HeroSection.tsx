@@ -22,7 +22,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في السعودية، الكويت، الامارات، قطر، وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والريان ومسقط وصلالة والمنامة والمحرق</span>
-                                <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-primary dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
+                                <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-primary dark:border-white me-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
                                 </span>

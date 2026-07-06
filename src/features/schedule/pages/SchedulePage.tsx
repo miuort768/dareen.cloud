@@ -259,7 +259,7 @@ export const Schedule = () => {
                                     )}>
                                         <span>{day}</span>
                                         {isToday(day) && (
-                                            <span className="mr-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />
+                                            <span className="ms-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />
                                         )}
                                     </div>
                                 ))}
@@ -276,7 +276,7 @@ export const Schedule = () => {
                                         slotIdx % 2 === 0 ? "bg-white dark:bg-primary-active" : "bg-background/30 dark:bg-background/20"
                                     )}>
                                         <div className="sticky right-0 z-10 p-2 text-micro font-bold text-muted border-l border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
-                                            <Clock size={10} className="ml-1 inline" />
+                                            <Clock size={10} className="me-1 inline" />
                                             {slot.label}
                                         </div>
 
@@ -341,7 +341,7 @@ export const Schedule = () => {
                                 </div>
                             );
                         })}
-                        <span className="text-micro font-bold text-muted mr-auto">
+                        <span className="text-micro font-bold text-muted ms-auto">
                             {filteredEvents.length} حصة
                         </span>
                     </div>

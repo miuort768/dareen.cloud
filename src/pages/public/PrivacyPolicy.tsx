@@ -86,7 +86,7 @@ export const PrivacyPolicy = () => {
                                 <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                     <div>
                                         <h3 className="font-bold text-main dark:text-on-primary mb-2">1. المعلومات الشخصية:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>الاسم الكامل</li>
                                             <li>عنوان البريد الإلكتروني</li>
                                             <li>رقم الهاتف</li>
@@ -96,7 +96,7 @@ export const PrivacyPolicy = () => {
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-main mb-2">2. معلومات الاستخدام:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>سجلات الحضور والغياب</li>
                                             <li>نتائج الاختبارات والتقييمات</li>
                                             <li>تفاعلات المنصة والدورات المسجلة</li>
@@ -105,7 +105,7 @@ export const PrivacyPolicy = () => {
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-main mb-2">3. المعلومات التقنية:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>عنوان IP</li>
                                             <li>نوع المتصفح والجهاز</li>
                                             <li>ملفات تعريف الارتباط (Cookies)</li>
@@ -126,7 +126,7 @@ export const PrivacyPolicy = () => {
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">كيف نستخدم معلوماتك</h2>
                                 <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                     <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>تقديم وتحسين خدماتنا التعليمية</li>
                                         <li>إدارة حسابات الطلاب والمعلمين</li>
                                         <li>التواصل معك بشأن الدورات والجداول والإشعارات المهمة</li>
@@ -150,7 +150,7 @@ export const PrivacyPolicy = () => {
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">حماية البيانات</h2>
                                 <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                     <p>نتخذ إجراءات أمنية صارمة لحماية معلوماتك الشخصية، بما في ذلك:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>تشفير البيانات أثناء النقل والتخزين</li>
                                         <li>جدران حماية وأنظمة كشف التسلل</li>
                                         <li>الوصول المحدود للموظفين المصرح لهم فقط</li>
@@ -172,7 +172,7 @@ export const PrivacyPolicy = () => {
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">مشاركة المعلومات</h2>
                                 <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                     <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك فقط في الحالات التالية:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>مع المعلمين المعنيين لتقديم الخدمات التعليمية</li>
                                         <li>مع أولياء الأمور (للطلاب القُصّر)</li>
                                         <li>مع مزودي الخدمات الذين يساعدوننا في تشغيل المنصة (بموجب اتفاقيات سرية)</li>
@@ -189,7 +189,7 @@ export const PrivacyPolicy = () => {
                             <h2 className="text-2xl font-black text-main dark:text-on-primary mb-4">حقوقك</h2>
                             <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                 <p>لديك الحق في:</p>
-                                <ul className="list-disc list-inside space-y-1 mr-4">
+                                <ul className="list-disc list-inside space-y-1 ms-4">
                                     <li>الوصول إلى معلوماتك الشخصية ومراجعتها</li>
                                     <li>طلب تصحيح أو تحديث معلوماتك</li>
                                     <li>طلب حذف حسابك وبياناتك</li>
@@ -214,8 +214,8 @@ export const PrivacyPolicy = () => {
 
                     {/* Support Button Section */}
                     <div className="flex flex-col items-center justify-center py-4 px-6 bg-primary border border-primary/20 mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -ms-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">هل لديك استفسارات فنية؟</h2>

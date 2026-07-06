@@ -89,7 +89,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                                     <p className="text-[6px] md:text-micro text-dim font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
                                 </div>
                                 <span className={cn(
-                                    "font-medium text-micro md:text-micro shrink-0 ml-1.5",
+                                    "font-medium text-micro md:text-micro shrink-0 me-1.5",
                                     log.amount > 0 ? "text-success" : "text-error"
                                 )}>
                                     {log.amount > 0 ? '+' : ''}{log.amount}

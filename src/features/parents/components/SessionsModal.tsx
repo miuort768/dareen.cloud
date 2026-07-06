@@ -41,7 +41,7 @@ export const SessionsModal = ({
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-lg bg-white dark:bg-primary-active shadow-xl rounded-2xl overflow-hidden border border-border dark:border-border flex flex-col max-h-[80vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
                 <div className="p-4 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -mr-12 -mt-12 blur-2xl rounded-full" />
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -ms-12 -mt-12 blur-2xl rounded-full" />
                     <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 blur-lg rounded-full"></div>
                     <div className="relative z-10 flex items-center gap-3">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
@@ -54,7 +54,7 @@ export const SessionsModal = ({
                             </p>
                         </div>
                     </div>
-                    <div className="relative z-10 flex items-center gap-2 mr-4">
+                    <div className="relative z-10 flex items-center gap-2 ms-4">
                         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-xl border border-white/10">
                             <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
                             <span className="text-micro text-white/60">→</span>
@@ -110,7 +110,7 @@ export const SessionsModal = ({
                                     {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-xl animate-pulse" />)}
                                 </div>
                             ) : (
-                                <div className="relative border-r-2 border-primary/10 pr-5 mr-2 space-y-4">
+                                <div className="relative border-r-2 border-primary/10 pr-5 ms-2 space-y-4">
                                     {(() => {
                                         const subj = viewingSubject as { subject: string };
                                         const filtered = childSessions

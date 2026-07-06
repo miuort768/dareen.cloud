@@ -62,7 +62,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         <span className="text-micro font-thin text-muted">تواصل أسهل وأسرع</span>
                     </div>
 
-                    <div className="flex items-center gap-1.5 mr-3 border-r border-border dark:border-white/10 pr-2">
+                    <div className="flex items-center gap-1.5 ms-3 border-r border-border dark:border-white/10 pr-2">
                         <button 
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                             className="p-1.5 text-muted hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
@@ -101,7 +101,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
             <div className="p-2 bg-white dark:bg-card border-b border-border dark:border-white/5">
                 <div className="relative flex items-center bg-hover dark:bg-card rounded-lg px-3 py-1.5 border-0 outline-none ring-0 transition-colors">
-                    <Search className="text-muted ml-3 shrink-0" size={18} />
+                    <Search className="text-muted me-3 shrink-0" size={18} />
                     <input
                         type="text"
                         placeholder="البحث أو بدء دردشة جديدة"
@@ -174,7 +174,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         </div>
 
                                         {(conv.unreadCount ?? 0) > 0 && (
-                                            <div className="bg-success text-on-primary text-xs font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center mr-2">
+                                            <div className="bg-success text-on-primary text-xs font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center ms-2">
                                                 {conv.unreadCount}
                                             </div>
                                         )}

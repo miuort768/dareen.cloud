@@ -164,7 +164,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 <option value="completed">حضور</option>
                                                 <option value="cancelled">غياب</option>
                                             </select>
-                                            <div className="flex gap-2 mr-auto">
+                                            <div className="flex gap-2 ms-auto">
                                                 <button
                                                     onClick={handleUpdate}
                                                     className="p-2 rounded-xl transition-all shadow-sm active:scale-95" style={{ backgroundColor: 'rgba(16,185,129,0.07)', color: 'var(--bg-success)' }}

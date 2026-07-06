@@ -64,7 +64,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
 
                     {lead.notes && (
                         <div className="mx-4 mb-3 bg-warning-light dark:bg-warning/10 border border-warning dark:border-warning/20 px-3 py-2 rounded-xl">
-                            <span className="text-micro font-bold text-warning dark:text-warning tracking-widest ml-2">ملاحظات</span>
+                            <span className="text-micro font-bold text-warning dark:text-warning tracking-widest me-2">ملاحظات</span>
                             <span className="text-xs text-muted dark:text-muted font-medium leading-relaxed">{lead.notes}</span>
                         </div>
                     )}

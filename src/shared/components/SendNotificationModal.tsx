@@ -65,7 +65,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-right">
                             <div className="space-y-2">
-                                <label className="text-micro font-black text-muted uppercase tracking-[0.2em] mr-1">محتوى التنبيه</label>
+                                <label className="text-micro font-black text-muted uppercase tracking-[0.2em] ms-1">محتوى التنبيه</label>
                                 <textarea
                                     required
                                     autoFocus

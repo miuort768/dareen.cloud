@@ -249,7 +249,7 @@ export const MobileSchedule = () => {
                                 {day}
                                 {isToday && (
                                     <span className={cn(
-                                        "mr-1.5 inline-block w-1.5 h-1.5 rounded-full",
+                                        "ms-1.5 inline-block w-1.5 h-1.5 rounded-full",
                                         isActive ? "bg-white" : "bg-primary"
                                     )} />
                                 )}

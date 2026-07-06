@@ -111,7 +111,7 @@ export const StatCard = ({
           <div className="mt-3 min-w-0">
             <p className={cn('text-2xl font-black tabular-nums tracking-tight leading-none', s.value)}>
               {value ?? '—'}
-              {unit && <span className={cn('text-xs font-bold mr-1', s.title)}>{unit}</span>}
+              {unit && <span className={cn('text-xs font-bold ms-1', s.title)}>{unit}</span>}
             </p>
             <p className={cn('text-xs font-medium mt-1 truncate', s.title)}>
               {title}

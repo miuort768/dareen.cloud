@@ -24,7 +24,7 @@ export const AttendanceModal = ({
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-2xl bg-white dark:bg-primary-active shadow-xl rounded-2xl overflow-hidden border border-border dark:border-border flex flex-col max-h-[90vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
                 <div className="p-5 bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-info)] text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 -ml-12 -mt-12 blur-2xl rounded-full" />
+                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 -me-12 -mt-12 blur-2xl rounded-full" />
                     <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/5 translate-y-8 translate-x-8 blur-lg rounded-full"></div>
                     <div className="relative z-10 flex items-center gap-4">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10 shadow-sm">

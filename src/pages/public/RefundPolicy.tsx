@@ -111,7 +111,7 @@ export const RefundPolicy = () => {
                             <div>
                                 <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">سياسة إلغاء الحصص</h2>
                                 <div className="space-y-4 text-muted dark:text-muted">
-                                    <ul className="list-disc list-inside space-y-3 mr-4">
+                                    <ul className="list-disc list-inside space-y-3 ms-4">
                                         <li><span className="font-bold">إلغاء الطالب:</span> يجب إخطار المعهد بالإلغاء قبل 24 ساعة من موعد الحصة. في حال الإلغاء المفاجئ، يتم احتساب الحصة كأنها تم تقديمها.</li>
                                         <li><span className="font-bold">إلغاء المعهد:</span> في حال اعتذار المعلم، يلتزم المعهد بتعويض الحصة في موعد آخر يناسب الطالب أو تمديد صلاحية الباقة.</li>
                                         <li><span className="font-bold">فوات الحصة:</span> غياب الطالب عن موعد الحصة المتفق عليه دون إخطار مسبق يُسقط حقه في التعويض أو الاسترداد لتلك الحصة.</li>
@@ -161,8 +161,8 @@ export const RefundPolicy = () => {
 
                     {/* Support Button Section */}
                     <div className="flex flex-col items-center justify-center py-6 px-6 bg-primary border border-primary mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -ms-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>

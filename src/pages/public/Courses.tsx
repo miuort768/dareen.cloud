@@ -53,7 +53,7 @@ const StarRating = ({ rating }: { rating: number }) => (
         className={star <= Math.floor(rating) ? 'text-warning fill-warning' : 'text-dim dark:text-muted fill-none'}
       />
     ))}
-    <span className="text-micro font-black text-muted mr-1">{rating}</span>
+    <span className="text-micro font-black text-muted ms-1">{rating}</span>
   </div>
 );
 

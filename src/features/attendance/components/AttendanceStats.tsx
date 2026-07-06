@@ -20,7 +20,7 @@ const StatItem = ({ title, value, icon: Icon, subLabel, color = 'var(--bg-primar
                 <p className="text-micro font-bold text-on-primary/70">{title}</p>
                 <p className="text-lg font-black leading-none mt-0.5 text-on-primary">
                     {value}
-                    {subLabel && <span className="text-micro font-bold text-on-primary/60 mr-1">{subLabel}</span>}
+                    {subLabel && <span className="text-micro font-bold text-on-primary/60 ms-1">{subLabel}</span>}
                 </p>
             </div>
         </div>

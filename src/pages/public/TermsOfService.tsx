@@ -76,7 +76,7 @@ export const TermsOfService = () => {
                                 <h2 className="text-2xl font-black text-main mb-3">الخدمات المقدمة</h2>
                                 <div className="space-y-2 text-muted">
                                     <p>يوفر دارين السابعة خدمات تعليمية عبر الإنترنت تشمل:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>دروس خصوصية مباشرة عبر الإنترنت</li>
                                         <li>دورات تعليمية في مختلف المواد والمناهج</li>
                                         <li>تحفيظ القرآن الكريم</li>
@@ -102,7 +102,7 @@ export const TermsOfService = () => {
                                 <div className="space-y-2 text-muted">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">1. إنشاء الحساب:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>يجب تقديم معلومات دقيقة وكاملة عند التسجيل</li>
                                             <li>يجب أن يكون عمر المستخدم 13 عامًا على الأقل، أو بموافقة ولي الأمر</li>
                                             <li>أنت مسؤول عن الحفاظ على سرية كلمة المرور الخاصة بك</li>
@@ -112,7 +112,7 @@ export const TermsOfService = () => {
                                     <div>
                                         <h3 className="font-bold text-main mb-2">2. إنهاء الحساب:</h3>
                                         <p>نحتفظ بالحق في تعليق أو إنهاء حسابك إذا:</p>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>انتهكت أي من هذه الشروط والأحكام</li>
                                             <li>قدمت معلومات كاذبة أو مضللة</li>
                                             <li>انخرطت في سلوك احتيالي أو غير قانوني</li>
@@ -135,7 +135,7 @@ export const TermsOfService = () => {
                                 <div className="space-y-2 text-muted">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">1. الأسعار:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>جميع الأسعار معروضة بالدينار الكويتي (KWD) ما لم يُذكر خلاف ذلك</li>
                                             <li>نحتفظ بالحق في تغيير الأسعار في أي وقت</li>
                                             <li>التغييرات في الأسعار لن تؤثر على الدورات المدفوعة مسبقًا</li>
@@ -143,7 +143,7 @@ export const TermsOfService = () => {
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-main mb-2">2. طرق الدفع:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>نقبل الدفع عبر البطاقات الائتمانية والتحويل البنكي</li>
                                             <li>يجب سداد الرسوم قبل بدء الدورة أو الحصة</li>
                                             <li>الفواتير غير المدفوعة قد تؤدي إلى تعليق الخدمة</li>
@@ -151,7 +151,7 @@ export const TermsOfService = () => {
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-main mb-2">3. سياسة الاسترداد:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>يمكن طلب استرداد كامل خلال 7 أيام من التسجيل إذا لم تبدأ الدورة</li>
                                             <li>بعد بدء الدورة، لا يمكن استرداد الرسوم إلا في حالات استثنائية</li>
                                             <li>الحصص الملغاة من قبل الطالب بدون إشعار مسبق (24 ساعة) غير قابلة للاسترداد</li>
@@ -173,7 +173,7 @@ export const TermsOfService = () => {
                                 <h2 className="text-2xl font-black text-main mb-3">قواعد السلوك</h2>
                                 <div className="space-y-2 text-muted">
                                     <p>عند استخدام منصتنا، توافق على:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>احترام المعلمين والطلاب الآخرين</li>
                                         <li>عدم مشاركة محتوى غير لائق أو مسيء</li>
                                         <li>عدم التحرش أو التنمر على أي شخص</li>
@@ -195,7 +195,7 @@ export const TermsOfService = () => {
                             <div className="space-y-2 text-muted">
                                 <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.</p>
                                 <p className="font-bold mt-4">يُحظر عليك:</p>
-                                <ul className="list-disc list-inside space-y-1 mr-4">
+                                <ul className="list-disc list-inside space-y-1 ms-4">
                                     <li>نسخ أو توزيع أو تعديل أي محتوى دون إذن كتابي</li>
                                     <li>استخدام المحتوى لأغراض تجارية</li>
                                     <li>إزالة أي علامات تجارية أو حقوق نشر</li>
@@ -209,7 +209,7 @@ export const TermsOfService = () => {
                         <h2 className="text-2xl font-black text-main mb-4">إخلاء المسؤولية</h2>
                         <div className="space-y-2 text-muted">
                             <p>يتم توفير الخدمات "كما هي" دون أي ضمانات من أي نوع. نحن لا نضمن:</p>
-                            <ul className="list-disc list-inside space-y-1 mr-4">
+                            <ul className="list-disc list-inside space-y-1 ms-4">
                                 <li>أن الخدمات ستكون متاحة دائمًا أو خالية من الأخطاء</li>
                                 <li>دقة أو اكتمال المحتوى التعليمي</li>
                                 <li>نتائج أكاديمية محددة</li>
@@ -241,8 +241,8 @@ export const TermsOfService = () => {
 
                     {/* Support Button Section */}
                     <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-8 relative overflow-hidden group rounded-card">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-warning/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-warning/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-main mb-2">هل لديك استفسارات فنية؟</h2>

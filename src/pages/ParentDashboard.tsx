@@ -703,7 +703,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                                                     <span className="text-xs font-bold text-muted dark:text-muted">{child.name}</span>
                                                 </div>
-                                                <div className="space-y-2 mr-4">
+                                                <div className="space-y-2 ms-4">
                                                     {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
                                                         <div key={idx} className="bg-primary-soft dark:bg-primary-soft p-3 rounded-card border border-primary dark:border-primary">
                                                             <div className="flex justify-between items-center mb-1">

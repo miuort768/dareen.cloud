@@ -68,7 +68,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
                                 <InputField type="time" value={d.end} onChange={e => updateTime(d.day, 'end', e.target.value)} className="w-24 md:w-28" />
                             </>
                         ) : (
-                            <span className="text-xs text-dim mr-4">إجازة</span>
+                            <span className="text-xs text-dim ms-4">إجازة</span>
                         )}
                     </div>
                 ))}

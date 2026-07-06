@@ -192,7 +192,7 @@ export const InstallPWA = () => {
             isDesktop ? 'bottom-4 right-4' : 'bottom-4 left-3 right-3'
         }`}>
             <div className={`bg-success border border-white/10  flex items-center gap-3 p-2.5 rounded-[20px] ${
-                isDesktop ? 'max-w-[280px] ml-auto' : ''
+                isDesktop ? 'max-w-[280px] me-auto' : ''
             }`}>
                 <div className="w-9 h-9 bg-white/10 text-on-primary flex items-center justify-center rounded-[14px] shrink-0  border border-white/10">
                     {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}

@@ -49,26 +49,26 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
             }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
-                        <label className="text-micro font-bold text-muted uppercase mr-1">اسم الطالب (اختياري)</label>
+                        <label className="text-micro font-bold text-muted uppercase ms-1">اسم الطالب (اختياري)</label>
                         <input name="name" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" placeholder="مثال: أم أحمد" />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-micro font-bold text-muted uppercase mr-1">المنهج</label>
+                        <label className="text-micro font-bold text-muted uppercase ms-1">المنهج</label>
                         <input name="curriculum" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
-                        <label className="text-micro font-bold text-muted uppercase mr-1">رقم الهاتف</label>
+                        <label className="text-micro font-bold text-muted uppercase ms-1">رقم الهاتف</label>
                         <input name="phone" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-micro font-bold text-muted uppercase mr-1">المادة المهتم بها</label>
+                        <label className="text-micro font-bold text-muted uppercase ms-1">المادة المهتم بها</label>
                         <input name="subject" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <label className="text-micro font-bold text-muted uppercase mr-1">الأولوية</label>
+                    <label className="text-micro font-bold text-muted uppercase ms-1">الأولوية</label>
                     <select name="priority" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all">
                         <option value="low">منخفضة</option>
                         <option value="medium">متوسطة</option>
@@ -76,7 +76,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                     </select>
                 </div>
                 <div className="space-y-1">
-                    <label className="text-micro font-bold text-muted uppercase mr-1">ملاحظات</label>
+                    <label className="text-micro font-bold text-muted uppercase ms-1">ملاحظات</label>
                     <textarea name="notes" rows={2} className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all resize-none" placeholder="اكتب أي تفاصيل..." />
                 </div>
                 <div className="flex gap-3">

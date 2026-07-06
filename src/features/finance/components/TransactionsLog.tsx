@@ -99,7 +99,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                             tx.type === 'income' ? 'text-success' : 'text-error'
                                         )}>
                                             {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
-                                            <span className="text-micro font-normal mr-0.5">{CURRENCY_SYMBOL}</span>
+                                            <span className="text-micro font-normal ms-0.5">{CURRENCY_SYMBOL}</span>
                                         </span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
@@ -132,7 +132,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">
                                     <h3 className="font-normal text-xs text-main truncate">{tx.description || 'معاملة'}</h3>
-                                    <span className={cn("text-sm font-medium font-mono mr-2 shrink-0", tx.type === 'income' ? 'text-success' : 'text-error')}>
+                                    <span className={cn("text-sm font-medium font-mono ms-2 shrink-0", tx.type === 'income' ? 'text-success' : 'text-error')}>
                                         {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
                                     </span>
                                 </div>

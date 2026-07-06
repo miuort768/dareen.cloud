@@ -54,7 +54,7 @@ export const DeveloperProfile = () => {
                             مؤسس منصة دارين السابعة
                         </p>
                     </div>
-                    <div className="flex gap-3 w-full md:w-auto md:mr-auto justify-center md:justify-end">
+                    <div className="flex gap-3 w-full md:w-auto md:ms-auto justify-center md:justify-end">
                         <a
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"

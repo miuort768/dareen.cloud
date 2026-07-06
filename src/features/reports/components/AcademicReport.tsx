@@ -254,7 +254,7 @@ export const AcademicReport = ({
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
                                         <p className="text-xs font-bold text-main truncate">{student.name}</p>
-                                        <span className={cn("text-micro font-bold ml-2 shrink-0", progText)}>{prog}%</span>
+                                        <span className={cn("text-micro font-bold me-2 shrink-0", progText)}>{prog}%</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5">
                                         <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-chart-4/10 text-chart-4">{student.grade}</span>

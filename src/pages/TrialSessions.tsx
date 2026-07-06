@@ -230,7 +230,7 @@ export const TrialSessions = () => {
                   </div>
                   {t.notes && (
                     <div className="mt-3 bg-warning-soft border border-warning px-3 py-1.5 rounded-xl">
-                      <span className="text-micro font-bold text-warning-dark tracking-widest ml-1.5">ملاحظات</span>
+                      <span className="text-micro font-bold text-warning-dark tracking-widest me-1.5">ملاحظات</span>
                       <span className="text-xs font-medium text-main">{t.notes}</span>
                     </div>
                   )}

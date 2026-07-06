@@ -33,7 +33,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
             </div>
 
             {/* List */}
-            <div className="space-y-3 overflow-y-auto max-h-[400px] pr-2 -mr-2 custom-scrollbar">
+            <div className="space-y-3 overflow-y-auto max-h-[400px] pr-2 -ms-2 custom-scrollbar">
                 {lowBalanceStudents.length > 0 ? (
                     lowBalanceStudents.map((item, idx) => (
                         <div key={idx} className="p-4 bg-background dark:bg-primary-active/30 rounded-none border-b border-border dark:border-border hover:bg-surface dark:hover:bg-primary-active transition-all flex items-center justify-between group">

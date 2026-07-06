@@ -82,7 +82,7 @@ export const TermsOfWork = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black text-main mb-3">مؤهلات المعلمين</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
                                         <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو حضوري</li>
                                         <li>اجتياز المقابلة الشخصية والتقييم العملي</li>
@@ -104,7 +104,7 @@ export const TermsOfWork = () => {
                                 <h2 className="text-xl md:text-2xl font-black text-main mb-3">قواعد السلوك المهني</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <p>يلتزم جميع المعلمين والموظفين بـ:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>الالتزام بمواعيد الحصص وعدم التأخير أكثر من 5 دقائق</li>
                                         <li>ارتداء الزي المناسب والمحترم أثناء الحصص</li>
                                         <li>لغة محترمة ومناسبة في التعامل مع الطلاب وأولياء الأمور</li>
@@ -127,7 +127,7 @@ export const TermsOfWork = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black text-main mb-3">الحضور والمواعيد</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>الدخول قبل موعد الحصة بـ 5 دقائق لضمان جاهزية التقنية</li>
                                         <li>خصم 25% عند التأخير لأكثر من 10 دقائق دون عذر.</li>
                                         <li>إبلاغ الإدارة قبل 24 ساعة لإلغاء الحصة.</li>
@@ -151,7 +151,7 @@ export const TermsOfWork = () => {
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">المكافآت:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>مكافأة التميز تُمنح بنهاية كل فصل دراسي.</li>
                                             <li>مكافأة الالتزام للمعلمين دون أي غياب شهريًا.</li>
                                             <li>مكافأة زيادة عدد الطلاب: عند وصول عدد الطلاب المسجلين لديه إلى 15 طالباً</li>
@@ -159,7 +159,7 @@ export const TermsOfWork = () => {
                                     </div>
                                     <div className="mt-4">
                                         <h3 className="font-bold text-main mb-2">الخصومات:</h3>
-                                        <ul className="list-disc list-inside space-y-1 mr-4">
+                                        <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>التأخير بدون عذر: خصم 25% من قيمة الحصة</li>
                                             <li>الغياب بدون إشعار: خصم قيمة الحصة كاملة</li>
                                             <li>شكوى واردة من ولي الأمر (بعد التحقق): إنذار أول ثم خصم</li>
@@ -181,7 +181,7 @@ export const TermsOfWork = () => {
                                 <h2 className="text-xl md:text-2xl font-black text-main mb-3">إنهاء التعاقد</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <p>يحق لدارين السابعة إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>الإخلال الجسيم بقواعد السلوك المهني</li>
                                         <li>أكثر من 5 غيابات شهريًا دون عذر مقبول.</li>
                                         <li>تلقي 3 شكاوى مؤكدة من أولياء الأمور خلال شهر واحد</li>
@@ -203,7 +203,7 @@ export const TermsOfWork = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black text-main mb-3">التطوير المهني</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
-                                    <ul className="list-disc list-inside space-y-1 mr-4">
+                                    <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>حضور ورش التطوير المهني إلزامي.</li>
                                         <li>تقييم أداء المعلم شهرياً من قبل المشرف الأكاديمي</li>
                                         <li>تقديم تقرير تقدم الطلاب بشكل أسبوعي للإدارة</li>
@@ -220,7 +220,7 @@ export const TermsOfWork = () => {
                         <h2 className="text-xl md:text-2xl font-black text-main mb-4">التعهد والالتزام</h2>
                         <div className="space-y-1 text-muted text-xs md:text-sm">
                             <p>بتوقيعك على هذه القوانين، فإنك تتعهد بـ:</p>
-                            <ul className="list-disc list-inside space-y-1 mr-4">
+                            <ul className="list-disc list-inside space-y-1 ms-4">
                                 <li>الالتزام بجميع القوانين والسياسات المذكورة أعلاه</li>
                                 <li>تقديم أفضل ما لديك من جهد وخبرة لخدمة طلاب المنصة</li>
                                 <li>التمثيل المشرف لدارين السابعة في جميع تعاملاتك</li>
@@ -238,8 +238,8 @@ export const TermsOfWork = () => {
 
                     {/* Support Button Section */}
                     <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-3 relative overflow-hidden group rounded-card mt-8">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-xl md:text-2xl font-black text-main mb-2">هل لديك استفسارات؟</h2>

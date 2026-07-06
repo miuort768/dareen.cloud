@@ -110,7 +110,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-micro font-normal text-dim uppercase mr-1">اسم المستخدم</label>
+                            <label className="text-micro font-normal text-dim uppercase ms-1">اسم المستخدم</label>
                             <div className="relative">
                                 <UserIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
@@ -122,7 +122,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-micro font-normal text-dim uppercase mr-1">كلمة المرور</label>
+                            <label className="text-micro font-normal text-dim uppercase ms-1">كلمة المرور</label>
                             <div className="relative">
                                 <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
@@ -167,7 +167,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
 const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => (
     <div className="space-y-2">
-        <label className="text-micro font-normal text-dim uppercase mr-1">{label}</label>
+        <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
             <select
@@ -191,7 +191,7 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-2">
-        <label className="text-micro font-normal text-dim uppercase mr-1">{label}</label>
+        <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
             <input

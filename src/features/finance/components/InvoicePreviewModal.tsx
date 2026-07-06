@@ -147,7 +147,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                                     {subject}
                                                     {status !== '-' && (
                                                         <span className={cn(
-                                                            "mr-2 px-1.5 py-0.5 text-micro rounded-sm",
+                                                            "ms-2 px-1.5 py-0.5 text-micro rounded-sm",
                                                             status === 'حضور' ? "bg-success-soft text-success" : "bg-error-soft text-error"
                                                         )}>
                                                             {status}

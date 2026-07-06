@@ -158,7 +158,7 @@ export const MobileAdminDashboard = ({
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="px-2.5 py-1.5 rounded-xl bg-surface/70 dark:bg-primary-active/70 backdrop-blur-sm text-primary dark:text-info font-medium text-micro tabular-nums">
-                                <Clock {...miniIconProps} className="inline ml-1" />
+                                <Clock {...miniIconProps} className="inline me-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
                         </div>

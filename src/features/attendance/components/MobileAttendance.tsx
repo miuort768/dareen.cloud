@@ -368,7 +368,7 @@ export const MobileAttendance = () => {
                             {/* Date selector */}
                             {!isTeacher && (
                                 <div className="flex items-center gap-2 bg-white dark:bg-primary-active rounded-2xl p-2 shadow-sm border border-border/50 dark:border-border/50">
-                                    <Calendar size={14} className="text-primary mr-1 shrink-0" />
+                                    <Calendar size={14} className="text-primary ms-1 shrink-0" />
                                     <input
                                         type="date"
                                         value={date}

@@ -129,8 +129,8 @@ export const Jobs = () => {
                         transition={{ duration: 0.5 }}
                         className="max-w-md w-full bg-white border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
                     >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -mr-16 -mt-16 blur-3xl" />
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16 blur-3xl" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl" />
                         <div className="relative z-10">
                             <motion.div
                                 initial={{ scale: 0 }}

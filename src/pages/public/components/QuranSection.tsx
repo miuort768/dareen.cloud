@@ -67,7 +67,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         onClick={() => window.scrollTo(0, 0)}
                                         className="px-8 py-3.5 bg-card text-muted border border-border font-bold text-sm hover:border-success hover:text-success hover:bg-success-soft transition-all flex items-center justify-center rounded-xl"
                                     >
-                                        <Sparkles size={16} className="ml-2" />
+                                        <Sparkles size={16} className="me-2" />
                                         تصفح المزيد
                                     </Link>
                                 </div>

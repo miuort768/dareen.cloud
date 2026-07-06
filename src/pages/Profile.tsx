@@ -128,7 +128,7 @@ export const Profile = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ������</label>
+                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 ms-1">����� ������</label>
                                 <input 
                                     type="text" 
                                     value={name}
@@ -138,7 +138,7 @@ export const Profile = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">��� �������� (�� ���� ������)</label>
+                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 ms-1">��� �������� (�� ���� ������)</label>
                                 <input 
                                     type="text" 
                                     value={currentUser?.username}
@@ -161,7 +161,7 @@ export const Profile = () => {
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">���� ���� �������</label>
+                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 ms-1">���� ���� �������</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
@@ -174,7 +174,7 @@ export const Profile = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ���� ����</label>
+                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 ms-1">����� ���� ����</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 

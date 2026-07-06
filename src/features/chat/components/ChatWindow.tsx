@@ -258,8 +258,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     <div className={cn(
                                         "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-sm relative",
                                         isMe 
-                                            ? "bg-success-light dark:bg-success rounded-[7.5px] rounded-tr-none mr-2" 
-                                            : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none ml-2"
+                                            ? "bg-success-light dark:bg-success rounded-[7.5px] rounded-tr-none ms-2" 
+                                            : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none me-2"
                                     )}>
                                         {isGroup && !isMe && (
                                             <span className="block text-xs font-normal text-primary mb-0.5 text-right">

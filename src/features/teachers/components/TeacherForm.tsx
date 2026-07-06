@@ -111,7 +111,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <label className="text-micro font-medium text-dim uppercase tracking-widest mr-1">العملة</label>
+                            <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">العملة</label>
                             <div className="relative group">
                                 <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-success transition-colors" size={12} />
                                 <select
@@ -201,7 +201,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-1.5">
-        <label className="text-micro font-medium text-dim uppercase tracking-widest mr-1">{label}</label>
+        <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={12} />}
             <input

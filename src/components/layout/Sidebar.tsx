@@ -203,7 +203,7 @@ export const Sidebar = () => {
                                 {item.name}
                             </span>
                             {collapsed && (
-                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-surface text-main text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
+                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:ms-2 rtl:left-full ltr:me-2 ltr:left-auto ltr:right-full px-2 py-1 bg-surface text-main text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
                                     {item.name}
                                 </div>
                             )}
