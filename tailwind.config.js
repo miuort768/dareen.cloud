@@ -157,6 +157,8 @@ module.exports = {
         gold: 'var(--shadow-gold)',
         'gold-hover': 'var(--shadow-gold-hover)',
         glass: 'var(--shadow-glass)',
+        soft: 'var(--shadow-soft)',
+        broad: 'var(--shadow-broad)',
       },
       keyframes: {
         shine: {

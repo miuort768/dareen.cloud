@@ -140,3 +140,8 @@ Every component MUST pass all checks before being marked complete:
 | S4A | P1 Codemod script with explicit map + regex pass | 5,004 named colors → 0 in single automated run |
 | S4A | P2 Audit: non-glass text-white → text-on-primary/inverse | 656 → 63 (all remaining justified as glass/decorative) |
 | S4A | Migration closed — Design System v1.0 is now a stable platform | No Sprint 5; future work is feature-led |
+| Jul 6 | Unused barrel exports removed (Modal, Select, Checkbox, Radio, Switch, Table, Image, Textarea, StaggeredList/Grid) | 12 unused components not in barrel; available for direct import |
+| Jul 6 | MonitoringPage refactored: all inline styles → Tailwind semantic | Fixed dark mode compatibility |
+| Jul 6 | Button RTL: `ml-/mr-` → `gap-2`; QuickSearch RTL: `ml-4` → `ms-auto me-0` | Direction-agnostic spacing |
+| Jul 6 | Codemod: 1,353 `text-[*]` → semantic typography tokens (145 files) | Removed 16 arbitrary pixel size variants; only `text-[6px]` (2) and `text-[var(...)]` (3) remain |
+| Jul 6 | Image component: added `imgClassName` prop, exported from barrel, migrated 25/32 native `<img>` → `<Image>` | 7 `<img>` remain inside `<picture>` elements (webp/avif) or raw HTML strings
