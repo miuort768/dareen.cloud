@@ -22,12 +22,12 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50" dir="rtl">
-            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-2xl rounded-none shadow-[16px_16px_0px_0px_#000] flex flex-col max-h-[95vh] overflow-hidden relative">
+            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-2xl rounded-none shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] flex flex-col max-h-[95vh] overflow-hidden relative">
                 
                 <div className="flex-1 overflow-y-auto p-10 pb-6 custom-scrollbar relative z-10">
                     {/* Brand / Logo */}
                     <div className="flex flex-col items-center justify-center text-center space-y-6 mb-12">
-                        <div className="w-16 h-16 bg-primary text-on-primary rounded-none flex items-center justify-center border-2 border-border shadow-[6px_6px_0px_0px_#000]">
+                        <div className="w-16 h-16 bg-primary text-on-primary rounded-none flex items-center justify-center border-2 border-border shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
                             <Award size={32} />
                         </div>
                         <div>
@@ -93,21 +93,21 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                 <div className="p-10 bg-background dark:bg-background border-t-2 border-border flex gap-4 pt-6">
                     <button 
                         onClick={() => onShare('whatsapp')}
-                        className="flex-1 h-14 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_#000] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-14 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                     >
                         <Share2 size={18} />
                         إرسال لولي الأمر
                     </button>
                     <button 
                         onClick={() => window.print()}
-                        className="flex-1 h-14 bg-white text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_#000] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-14 bg-white text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                     >
                         <FileDown size={18} />
                         تحميل PDF
                     </button>
                     <button 
                         onClick={onClose} 
-                        className="w-14 h-14 bg-background text-on-primary rounded-none border-2 border-border flex items-center justify-center hover:bg-error transition-colors shadow-[4px_4px_0px_0px_#000]"
+                        className="w-14 h-14 bg-background text-on-primary rounded-none border-2 border-border flex items-center justify-center hover:bg-error transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     >
                         <X size={24} />
                     </button>

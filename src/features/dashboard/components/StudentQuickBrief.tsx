@@ -32,7 +32,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/40" dir="rtl">
-            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_#000] flex flex-col max-h-[90vh] overflow-hidden">
+            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col max-h-[90vh] overflow-hidden">
                 
                 {/* Header Section */}
                 <div className="p-6 border-b-2 border-border bg-background dark:bg-primary-active">
@@ -122,14 +122,14 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 <div className="p-6 bg-background dark:bg-background border-t-2 border-border flex gap-4">
                     <button 
                         onClick={() => onGenerateReport?.(student)}
-                        className="flex-1 h-12 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_#000] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-12 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                     >
                         <Sparkles size={16} />
                         إصدار تقرير شهري
                     </button>
                     <button 
                         onClick={onClose}
-                        className="px-8 h-12 bg-background text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_#000] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000] transition-all active:translate-y-0 active:shadow-none"
+                        className="px-8 h-12 bg-background text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none"
                     >
                         إغلاق
                     </button>

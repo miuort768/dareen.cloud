@@ -21,7 +21,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
     ];
 
     return (
-        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_#000] relative overflow-hidden group">
+        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
             
             <div className="flex items-center gap-2 mb-6 text-main dark:text-on-primary">
                 <Target size={20} className="text-primary" />
@@ -37,7 +37,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                         <div key={idx} className="space-y-2">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className={cn("p-1.5 border-2 border-border shadow-[2px_2px_0px_0px_#000]", 
+                                    <div className={cn("p-1.5 border-2 border-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]", 
                                         isAchieved ? "bg-success text-on-primary" : "bg-surface text-muted"
                                     )}>
                                         {goal.icon}

@@ -183,12 +183,12 @@ export const NotificationDropdown = () => {
 
                     <div className="p-4 border-b-2 border-border dark:border-border flex items-center justify-between bg-background/50 dark:bg-primary-active/50">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary rounded-none flex items-center justify-center text-on-primary shadow-[2px_2px_0_#000]">
+                            <div className="w-8 h-8 bg-primary rounded-none flex items-center justify-center text-on-primary shadow-[2px_2px_0_rgba(0,0,0,1)]">
                                 <Bell size={16} />
                             </div>
                             <h3 className="font-medium text-xs uppercase tracking-widest text-main dark:text-on-primary">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-error text-on-primary text-micro font-medium px-2 py-0.5 shadow-[1px_1px_0_#000]">
+                                <span className="bg-error text-on-primary text-micro font-medium px-2 py-0.5 shadow-[1px_1px_0_rgba(0,0,0,1)]">
                                     {unreadCount} مـهـم
                                 </span>
                             )}

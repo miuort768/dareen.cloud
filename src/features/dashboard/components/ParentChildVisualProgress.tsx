@@ -26,7 +26,7 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                 const progress = level.next ? ((child.totalPoints || 0) / level.next) * 100 : 100;
 
                 return (
-                    <div key={child.id} className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_#000] relative group">
+                    <div key={child.id} className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative group">
                         
                         {/* Header: Level & Points */}
                         <div className="flex items-center justify-between mb-6">
@@ -89,7 +89,7 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                 href={`https://wa.me/${child.adminPhone?.replace(/\D/g, '')}?text=${encodeURIComponent(`شكراً جزيلاً للمعلمة ${child.teacherName} على جهودها الرائعة مع ${child.name}. وجدنا تقريرها متميزاً جداً!`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-5 py-2.5 bg-success text-main border-2 border-border font-medium text-micro uppercase tracking-widest shadow-[4px_4px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
+                                className="px-5 py-2.5 bg-success text-main border-2 border-border font-medium text-micro uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
                             >
                                 <Heart size={14} className="group-hover/btn:scale-125 transition-transform text-error fill-current" />
                                 شكراً معلمي

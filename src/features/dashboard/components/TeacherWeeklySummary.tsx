@@ -11,7 +11,7 @@ interface TeacherWeeklySummaryProps {
 
 export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
     return (
-        <div className="bg-primary border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_#000] text-on-primary relative overflow-hidden group">
+        <div className="bg-primary border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-on-primary relative overflow-hidden group">
             
             {/* Background pattern */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none group-hover:bg-white/20 transition-all"></div>

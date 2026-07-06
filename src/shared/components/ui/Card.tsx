@@ -12,7 +12,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     const variants = {
       glass: 'bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl border border-border shadow-card',
       elevated: 'bg-card border border-border shadow-md',
-      sharp: 'bg-card border-2 border-strong shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_rgba(99,102,241,0.15)] rounded-none',
+      sharp: 'bg-card border-2 border-strong shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(99,102,241,0.15)] rounded-none',
     };
 
     const motionProps = hoverLift && variant !== 'sharp'
