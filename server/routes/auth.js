@@ -39,10 +39,11 @@ router.post('/login', loginLimiter, async (req, res) => {
     try {
         let userData, role, teacherName;
         let authSource;
+        let authResult;
 
         try {
             const normalized = username.trim().toLowerCase();
-            const authResult = await authAccounts.authenticate(normalized, password);
+            authResult = await authAccounts.authenticate(normalized, password);
 
             if (!authResult) {
                 logger.warn(`Login failed: User '${username}' not found`);

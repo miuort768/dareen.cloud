@@ -612,6 +612,7 @@ model CompletedSession {
 
 model AuditLog {
   id         Int      @id @default(autoincrement())
+  eventId    String   @unique @default(uuid())
   userId     String?
   username   String?
   action     String
@@ -620,10 +621,23 @@ model AuditLog {
   entityId   String?
   timestamp  DateTime @default(now())
 
+  accountId  String?
+  ipAddress  String?
+  userAgent  String?
+  status     String   @default("SUCCESS")
+  requestId  String?
+  metadata   Json?
+
   @@index([userId])
   @@index([action])
   @@index([entityType])
   @@index([timestamp])
+  @@index([accountId])
+  @@index([requestId])
+  @@index([status])
+  @@index([action, timestamp])
+  @@index([entityType, entityId])
+  @@index([eventId])
   @@map("audit_logs")
 }
 
