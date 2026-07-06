@@ -13,9 +13,11 @@ export type { ModalProps } from './Modal';
 
 export { EmptyState }      from './EmptyState';
 
-export { StaggeredList, StaggeredGrid } from './StaggeredList';
-
 export { PageTransition }  from './PageTransition';
+
+export { Spinner }         from './Spinner';
+
+export { ErrorDisplay }    from './ErrorDisplay';
 
 export { Image }           from './Image';
 
