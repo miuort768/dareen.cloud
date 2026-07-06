@@ -142,8 +142,15 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     libraryWhatsapp: '',
     libraryTelegram: '',
     whatsappNumbers: JSON.stringify([
-        { label: 'تواصل عام', phone: '201015098836' },
-        { label: 'إدارة الأكاديمية', phone: '201015098836' }
+        { label: 'طلب حصة مجانية', phone: '201015098836' },
+        { label: 'احجز حصتك المجانية الآن', phone: '201015098836' },
+        { label: 'ابدأ رحلة التميز', phone: '201015098836' },
+        { label: 'ابدأ الحفظ الآن', phone: '201015098836' },
+        { label: 'تواصل عبر واتساب', phone: '201015098836' },
+        { label: 'تواصل معانا', phone: '201015098836' },
+        { label: 'تواصل مع الدعم الفني', phone: '201015098836' },
+        { label: 'تواصل مع قسم الحسابات', phone: '201015098836' },
+        { label: 'تواصل مع إدارة المعهد', phone: '201015098836' }
     ]),
     heroBanners: JSON.stringify([
         "انضم إلى أفضل منصة تعليمية",
