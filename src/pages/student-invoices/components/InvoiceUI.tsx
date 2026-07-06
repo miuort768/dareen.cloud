@@ -17,13 +17,13 @@ export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.Component
     </div>
     <div>
       <p className="text-sm font-bold text-main">{label}</p>
-      {sub && <p className="text-[10px] font-bold text-dim mt-0.5">{sub}</p>}
+      {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
     </div>
   </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-  <label className="block text-[10px] font-bold text-muted mb-1 uppercase tracking-wide">
+  <label className="block text-micro font-bold text-muted mb-1 uppercase tracking-wide">
     {children}
   </label>
 );

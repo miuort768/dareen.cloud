@@ -30,7 +30,7 @@ export const PoliciesSettings = ({
                             <p className="text-xs font-bold text-error flex items-center gap-1.5">
                                 <AlertCircle size={13} /> قفل التعديل بأثر رجعي
                             </p>
-                            <p className="text-[10px] text-error mt-1.5 leading-relaxed">
+                            <p className="text-micro text-error mt-1.5 leading-relaxed">
                                 يمنع الموظفين من إضافة أو تعديل حصص في تواريخ قديمة لضمان دقة السجلات المالية.
                             </p>
                         </div>
@@ -42,7 +42,7 @@ export const PoliciesSettings = ({
                 </div>
 
                 <div className="pt-2 border-t border-border">
-                    <p className="text-[11px] font-bold text-primary flex items-center gap-1.5 mb-3">
+                    <p className="text-xs font-bold text-primary flex items-center gap-1.5 mb-3">
                         <Wallet size={13} /> سياسة حساب العمولات
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -61,7 +61,7 @@ export const PoliciesSettings = ({
                                 )}
                             >
                                 <p className="text-xs font-bold">{opt.label}</p>
-                                <p className={cn('text-[9px] mt-0.5', teacherCommissionType === opt.id ? 'text-on-primary opacity-60' : 'text-muted')}>{opt.sub}</p>
+                                <p className={cn('text-micro mt-0.5', teacherCommissionType === opt.id ? 'text-on-primary opacity-60' : 'text-muted')}>{opt.sub}</p>
                                 {teacherCommissionType === opt.id && <CheckCircle2 size={12} className="mt-1 text-on-primary opacity-80" />}
                             </button>
                         ))}
@@ -75,7 +75,7 @@ export const PoliciesSettings = ({
             <div className="space-y-3">
                 <div className="p-4 bg-card border border-border">
                     <p className="text-xs font-bold text-info mb-1">حد الغياب المسموح</p>
-                    <p className="text-[10px] text-info leading-relaxed mb-3">
+                    <p className="text-micro text-info leading-relaxed mb-3">
                         إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
                     </p>
                     <div className="flex items-center gap-3">
@@ -102,10 +102,10 @@ export const PoliciesSettings = ({
                         </div>
                         <div>
                             <p className="text-xs font-bold text-error">إقفال الشهر المالي</p>
-                            <p className="text-[9px] text-error">منطقة الخطر</p>
+                            <p className="text-micro text-error">منطقة الخطر</p>
                         </div>
                     </div>
-                    <p className="text-[10px] text-muted leading-relaxed mb-3">
+                    <p className="text-micro text-muted leading-relaxed mb-3">
                         أرشفة كافة الحصص الحالية وتصفير الإحصائيات الشهرية. لا تستخدم هذا إلا بنهاية الشهر الفعلي.
                     </p>
                     <DangerBtn

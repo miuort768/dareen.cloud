@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, X, FileText, Printer, UserPlus, Sparkles, Plus, Trash2 } from 'lucide-react';
 import { useShowNotification } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -59,11 +59,11 @@ export const StudentInvoices = () => {
     const [formData, setFormData] = useState({
         studentId: '',
         amount: '',
-        description: 'ุฑุณูู… ุดูุฑูุฉ',
+        description: 'ัำๆใ ิๅัํษ',
         date: new Date().toLocaleDateString('en-CA'),
         dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
         status: 'pending' as 'paid' | 'pending' | 'overdue',
-        paymentMethod: 'ููุฏู',
+        paymentMethod: 'ไÞฯํ',
         notes: '',
         currency: 'KWD',
         items: [] as { description: string; date?: string; amount: number }[]
@@ -137,11 +137,11 @@ export const StudentInvoices = () => {
         setFormData({
             studentId: '',
             amount: '',
-            description: 'ุฑุณูู… ุดูุฑูุฉ',
+            description: 'ัำๆใ ิๅัํษ',
             date: new Date().toLocaleDateString('en-CA'),
             dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
             status: 'pending',
-            paymentMethod: 'ููุฏู',
+            paymentMethod: 'ไÞฯํ',
             notes: '',
             currency: 'KWD',
             items: []
@@ -165,7 +165,7 @@ export const StudentInvoices = () => {
             );
 
             const items = studentSessions.map((sess: { id: string; date: string; studentName?: string; teacherName?: string; price?: number; subject?: string; status?: string }) => ({
-                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'ุญุถูุฑ' : 'ุบูุงุจ'})`,
+                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'อึๆั' : 'Ûํวศ'})`,
                 amount: sess.price || student.sessionPrice || 0,
                 date: sess.date
             }));
@@ -173,7 +173,7 @@ export const StudentInvoices = () => {
             setFormData({
                 ...formData,
                 studentId,
-                description: subjects ? `ุฑุณูู…: ${subjects}` : 'ุฑุณูู… ุดูุฑูุฉ',
+                description: subjects ? `ัำๆใ: ${subjects}` : 'ัำๆใ ิๅัํษ',
                 amount: (items.length > 0 ? items.reduce((s, i) => s + i.amount, 0) : totalAmount).toString(),
                 items: items
             });
@@ -187,7 +187,7 @@ export const StudentInvoices = () => {
         setIsSaving(true);
         const student = students.find(s => s.id === formData.studentId);
         if (!student) {
-            showNotification('ุฎุทุฃ: ูุฑุฌู ุงุฎุชูุงุฑ ุทุงูุจ ุตุญูุญ', 'error');
+            showNotification('ฮุร: ํัฬ์ วฮสํวั ุวแศ ีอํอ', 'error');
             setIsSaving(false);
             return;
         }
@@ -214,10 +214,10 @@ export const StudentInvoices = () => {
             }
             fetchData();
             handleCancel();
-            showNotification(editingId ? 'ุชู… ุชุญุฏูุซ ุงููุงุชูุฑุฉ ุจูุฌุงุญ' : 'ุชู… ุฅุตุฏุงุฑ ุงููุงุชูุฑุฉ ุจูุฌุงุญ', 'success');
+            showNotification(editingId ? 'สใ สอฯํห วแÝวสๆัษ ศไฬวอ' : 'สใ ลีฯวั วแÝวสๆัษ ศไฬวอ', 'success');
         } catch (error) {
             console.error('Error saving invoice:', error);
-            const errorMessage = error.response?.data?.error || error.message || 'ุญุฏุซ ุฎุทุฃ ุฃุซูุงุก ุญูุธ ุงูุจูุงูุงุช';
+            const errorMessage = error.response?.data?.error || error.message || 'อฯห ฮุร รหไวม อÝู วแศํวไวส';
             showNotification(errorMessage, 'error');
         } finally {
             setIsSaving(false);
@@ -229,10 +229,10 @@ export const StudentInvoices = () => {
         try {
             await api.patch(`/studentInvoices/${invoice.id}`, { status: newStatus });
             fetchData();
-            showNotification('ุชู… ุชุญุฏูุซ ุญุงูุฉ ุงููุงุชูุฑุฉ', 'success');
+            showNotification('สใ สอฯํห อวแษ วแÝวสๆัษ', 'success');
         } catch (error) {
             console.error(error);
-            showNotification('ูุดู ุชุญุฏูุซ ุงูุญุงูุฉ', 'error');
+            showNotification('Ýิแ สอฯํห วแอวแษ', 'error');
         }
     };
 
@@ -241,10 +241,10 @@ export const StudentInvoices = () => {
         try {
             await api.delete(`/studentInvoices/${deletingId}`);
             fetchData();
-            showNotification('ุชู… ุญุฐู ุงููุงุชูุฑุฉ ุจูุฌุงุญ', 'success');
+            showNotification('สใ อะÝ วแÝวสๆัษ ศไฬวอ', 'success');
         } catch (error) {
             console.error('Error deleting invoice:', error);
-            showNotification(error.message || 'ูุดู ูู ุญุฐู ุงููุงุชูุฑุฉ', 'error');
+            showNotification(error.message || 'Ýิแ Ýํ อะÝ วแÝวสๆัษ', 'error');
         } finally {
             setDeletingId(null);
         }
@@ -259,10 +259,10 @@ export const StudentInvoices = () => {
             );
             await Promise.all(deletePromises);
             fetchData();
-            showNotification('ุชู… ุญุฐู ุฌู…ูุน ููุงุชูุฑ ุงูุทูุงุจ ุจูุฌุงุญ', 'success');
+            showNotification('สใ อะÝ ฬใํฺ Ýๆวสํั วแุแวศ ศไฬวอ', 'success');
         } catch (error) {
             console.error('Error deleting all invoices:', error);
-            showNotification('ุญุฏุซ ุฎุทุฃ ุฃุซูุงุก ู…ุญุงููุฉ ุญุฐู ุงููู', 'error');
+            showNotification('อฯห ฮุร รหไวม ใอวๆแษ อะÝ วแ฿แ', 'error');
         } finally {
             setLoading(false);
             setDeleteAllModalOpen(false);
@@ -294,13 +294,13 @@ export const StudentInvoices = () => {
                             <FileText size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">ููุงุชูุฑ ูุชุญุตูู ุงูุทูุงุจ</h1>
-                            <p className="text-[11px] font-bold text-on-primary opacity-70 mt-0.5">ุฅุฏุงุฑุฉ ุงูุชุฏููุงุช ุงูููุฏูุฉ ูุงูู…ุณุชุญูุงุช ุงูุฏุฑุงุณูุฉ</p>
+                            <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">Ýๆวสํั ๆสอีํแ วแุแวศ</h1>
+                            <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">ลฯวัษ วแสฯÝÞวส วแไÞฯํษ ๆวแใำสอÞวส วแฯัวำํษ</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
+                    <div className="flex items-center gap-2 text-xs font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
                         <Sparkles size={13} />
-                        {totalRevenue.toLocaleString()} ุฌ.ู… ุฅุฌู…ุงูู ุงูู…ุญุตู
+                        {totalRevenue.toLocaleString()} ฬ.ใ ลฬใวแํ วแใอีแ
                     </div>
                 </div>
 
@@ -319,7 +319,7 @@ export const StudentInvoices = () => {
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                                 <input
-                                    placeholder="ุจุญุซ ุจุงุณู… ุงูุทุงูุจ ุฃู ุงูุจูุงู..."
+                                    placeholder="ศอห ศวำใ วแุวแศ รๆ วแศํวไ..."
                                     className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary placeholder:opacity-50 bg-white/15"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -330,25 +330,25 @@ export const StudentInvoices = () => {
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
                             >
-                                <option value="all">ุฌู…ูุน ุงูุญุงูุงุช</option>
-                                <option value="paid">ู…ุฏููุนุฉ</option>
-                                <option value="pending">ู…ุนููุฉ</option>
-                                <option value="overdue">ู…ุชุฃุฎุฑุฉ</option>
+                                <option value="all">ฬใํฺ วแอวแวส</option>
+                                <option value="paid">ใฯÝๆฺษ</option>
+                                <option value="pending">ใฺแÞษ</option>
+                                <option value="overdue">ใสรฮัษ</option>
                             </select>
                         </div>
 
                         <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto no-scrollbar pb-1 lg:pb-0">
                             <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
                                 {showForm ? <X size={14} /> : <Plus size={14} />}
-                                {showForm ? 'ุฅูุบุงุก' : 'ุฅุตุฏุงุฑ ูุงุชูุฑุฉ'}
+                                {showForm ? 'ลแÛวม' : 'ลีฯวั Ýวสๆัษ'}
                             </PrimaryBtn>
-                            <SecondaryBtn onClick={handleImportStudents} title="ุงุณุชูุฑุงุฏ ู…ู ุณุฌู ุงูุญุตุต">
-                                <UserPlus size={14} /> ุงุณุชูุฑุงุฏ
+                            <SecondaryBtn onClick={handleImportStudents} title="วำสํัวฯ ใไ ำฬแ วแอีี">
+                                <UserPlus size={14} /> วำสํัวฯ
                             </SecondaryBtn>
-                            <SecondaryBtn onClick={() => window.print()} title="ุทุจุงุนุฉ ุงูุณุฌู">
+                            <SecondaryBtn onClick={() => window.print()} title="ุศวฺษ วแำฬแ">
                                 <Printer size={14} />
                             </SecondaryBtn>
-                            <DangerBtn onClick={() => setDeleteAllModalOpen(true)} title="ุญุฐู ุงููู">
+                            <DangerBtn onClick={() => setDeleteAllModalOpen(true)} title="อะÝ วแ฿แ">
                                 <Trash2 size={14} />
                             </DangerBtn>
                         </div>
@@ -379,8 +379,8 @@ export const StudentInvoices = () => {
                     isOpen={!!deletingId}
                     onClose={() => setDeletingId(null)}
                     onConfirm={confirmDelete}
-                    title="ุญุฐู ุงููุงุชูุฑุฉ"
-                    message="ูู ุฃูุช ู…ุชุฃูุฏ ู…ู ุญุฐู ูุฐู ุงููุงุชูุฑุฉ ููุงุฆูุงูุ"
+                    title="อะÝ วแÝวสๆัษ"
+                    message="ๅแ รไส ใสร฿ฯ ใไ อะÝ ๅะๅ วแÝวสๆัษ ไๅวฦํว๐ฟ"
                     isDestructive={true}
                 />
 
@@ -388,8 +388,8 @@ export const StudentInvoices = () => {
                     isOpen={deleteAllModalOpen}
                     onClose={() => setDeleteAllModalOpen(false)}
                     onConfirm={handleDeleteAll}
-                    title="ุญุฐู ุงููู"
-                    message="ุณูุชู… ุญุฐู ุฌู…ูุน ููุงุชูุฑ ุงูุทูุงุจ ุชู…ุงู…ุงู. ูุง ูู…ูู ุงูุชุฑุงุฌุน."
+                    title="อะÝ วแ฿แ"
+                    message="ำํสใ อะÝ ฬใํฺ Ýๆวสํั วแุแวศ สใวใว๐. แว ํใ฿ไ วแสัวฬฺ."
                     isDestructive={true}
                 />
 

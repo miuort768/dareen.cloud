@@ -117,8 +117,8 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                                 <Icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className={cn("font-normal text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
-                                <p className={cn("text-[9px] font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
+                                <p className={cn("font-normal text-xs tracking-tight truncate", c.text)}>{alert.title}</p>
+                                <p className={cn("text-micro font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
                             </div>
                             {typeof alert.action === 'function' && (
                                 <button

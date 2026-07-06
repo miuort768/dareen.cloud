@@ -253,16 +253,16 @@ export const MobileAppointments = () => {
             <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
                 <div className="grid grid-cols-3 gap-2">
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-primary/20">
-                        <p className="text-[18px] font-black text-primary tabular-nums leading-none">{todayCount}</p>
-                        <p className="text-[8px] font-bold text-primary/70 mt-1">اليوم</p>
+                        <p className="text-lg font-black text-primary tabular-nums leading-none">{todayCount}</p>
+                        <p className="text-micro font-bold text-primary/70 mt-1">اليوم</p>
                     </div>
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-success/50 dark:border-success/30">
-                        <p className="text-[18px] font-black text-success dark:text-success tabular-nums leading-none">{totalCount - completedCount}</p>
-                        <p className="text-[8px] font-bold text-success/70 mt-1">المتبقي</p>
+                        <p className="text-lg font-black text-success dark:text-success tabular-nums leading-none">{totalCount - completedCount}</p>
+                        <p className="text-micro font-bold text-success/70 mt-1">المتبقي</p>
                     </div>
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-info/50 dark:border-info/30">
-                        <p className="text-[18px] font-black text-primary dark:text-info tabular-nums leading-none">{totalCount}</p>
-                        <p className="text-[8px] font-bold text-info/70 mt-1">الإجمالي</p>
+                        <p className="text-lg font-black text-primary dark:text-info tabular-nums leading-none">{totalCount}</p>
+                        <p className="text-micro font-bold text-info/70 mt-1">الإجمالي</p>
                     </div>
                 </div>
             </motion.div>
@@ -290,10 +290,10 @@ export const MobileAppointments = () => {
                             ) : (
                                 <CheckCircle2 size={14} strokeWidth={1.5} />
                             )}
-                            <span className="text-[9px]">{tab.label}</span>
+                            <span className="text-micro">{tab.label}</span>
                             {tab.badge > 0 && (
                                 <span className={cn(
-                                    "text-[7px] font-bold px-1.5 py-0.5 rounded-full",
+                                    "text-micro font-bold px-1.5 py-0.5 rounded-full",
                                     activeTab === tab.id
                                         ? "bg-primary text-on-primary"
                                         : "bg-surface dark:bg-primary-active text-muted dark:text-muted"
@@ -320,7 +320,7 @@ export const MobileAppointments = () => {
                     <select
                         value={filterDay}
                         onChange={(e) => setFilterDay(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-[9px] font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -328,7 +328,7 @@ export const MobileAppointments = () => {
                     <select
                         value={filterTeacher}
                         onChange={(e) => setFilterTeacher(e.target.value)}
-                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-[9px] font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
+                        className="flex-1 px-3 py-2 bg-white dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-2xl outline-none text-muted dark:text-dim shadow-sm"
                     >
                         <option value="all">كل المعلمات</option>
                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}
@@ -353,7 +353,7 @@ export const MobileAppointments = () => {
                                     <div className="px-4 py-2.5 border-b border-border/50 dark:border-border/50 flex items-center justify-between">
                                         <h3 className="font-bold text-xs text-main dark:text-on-primary">{day}</h3>
                                         <span className={cn(
-                                            "text-[8px] font-bold px-2 py-0.5 rounded-lg",
+                                            "text-micro font-bold px-2 py-0.5 rounded-lg",
                                             appointments.length > 0 ? "bg-primary text-on-primary" : "bg-surface dark:bg-primary-active text-muted"
                                         )}>{appointments.length} موعد</span>
                                     </div>
@@ -374,27 +374,27 @@ export const MobileAppointments = () => {
                                                         <motion.button
                                                             whileTap={{ scale: 0.93 }}
                                                             onClick={(e) => handleCompleteSession(app.id, e)}
-                                                            className="px-2.5 py-1 bg-success text-on-primary text-[8px] font-bold rounded-xl flex items-center gap-1 shadow-sm"
+                                                            className="px-2.5 py-1 bg-success text-on-primary text-micro font-bold rounded-xl flex items-center gap-1 shadow-sm"
                                                         >
                                                             <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
                                                         </motion.button>
                                                     )}
                                                     {activeTab === 'completed' && (
-                                                        <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg bg-success-light dark:bg-success/30 text-success dark:text-success">
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-success-light dark:bg-success/30 text-success dark:text-success">
                                                             تم
                                                         </span>
                                                     )}
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black shrink-0 bg-primary/10 text-primary">
+                                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black shrink-0 bg-primary/10 text-primary">
                                                         {app.studentName.charAt(0)}
                                                     </div>
                                                     <div className="min-w-0 flex-1">
-                                                        <p className="text-[11px] font-bold text-main dark:text-on-primary leading-tight truncate">{app.studentName}</p>
+                                                        <p className="text-xs font-bold text-main dark:text-on-primary leading-tight truncate">{app.studentName}</p>
                                                         <div className="flex items-center gap-1.5">
-                                                            <span className="text-[7px] font-bold text-muted">{app.subject}</span>
-                                                            <span className="text-[7px] font-bold text-dim">·</span>
-                                                            <span className="text-[7px] font-bold text-muted truncate">{app.teacherName}</span>
+                                                            <span className="text-micro font-bold text-muted">{app.subject}</span>
+                                                            <span className="text-micro font-bold text-dim">·</span>
+                                                            <span className="text-micro font-bold text-muted truncate">{app.teacherName}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -440,7 +440,7 @@ export const MobileAppointments = () => {
                             <div className="px-5 pb-6 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-[9px] font-bold text-muted">تفاصيل الموعد</p>
+                                        <p className="text-micro font-bold text-muted">تفاصيل الموعد</p>
                                         <h3 className="text-sm font-black text-main dark:text-on-primary">{selectedAppointment.day}</h3>
                                     </div>
                                     <div className="px-3 py-1.5 rounded-xl bg-primary/10">
@@ -451,26 +451,26 @@ export const MobileAppointments = () => {
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary/[0.03] border-r-[3px] border-primary">
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">الطالب</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.studentName}</p>
-                                            <span className="text-[9px] font-bold text-primary">{selectedAppointment.studentGrade}</span>
+                                            <span className="text-micro font-bold text-muted">الطالب</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.studentName}</p>
+                                            <span className="text-micro font-bold text-primary">{selectedAppointment.studentGrade}</span>
                                         </div>
                                         <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success/[0.03] border-r-[3px] border-success">
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">المعلمة</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.teacherName}</p>
+                                            <span className="text-micro font-bold text-muted">المعلمة</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.teacherName}</p>
                                         </div>
                                         <ShieldCheck size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning/[0.03] border-r-[3px] border-warning">
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">المادة</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedAppointment.subject}</p>
-                                            <span className="text-[7px] font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning/10 text-warning">{selectedAppointment.curriculum}</span>
+                                            <span className="text-micro font-bold text-muted">المادة</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.subject}</p>
+                                            <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning/10 text-warning">{selectedAppointment.curriculum}</span>
                                         </div>
                                         <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
@@ -483,7 +483,7 @@ export const MobileAppointments = () => {
                                             handleCompleteSession(selectedAppointment.id, e);
                                             setShowDetails(false);
                                         }}
-                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/30"
+                                        className="w-full py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/30"
                                     >
                                         <CheckCircle2 size={14} strokeWidth={1.5} />
                                         إتمام الحصة

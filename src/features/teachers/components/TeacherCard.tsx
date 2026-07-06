@@ -18,7 +18,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 
                 {/* Header Actions - Hidden on Print */}
                 <div className="p-3 flex justify-between items-center border-b border-divider print:hidden bg-surface">
-                    <h3 className="font-medium text-[10px] uppercase tracking-widest text-muted italic">Faculty Identity Card</h3>
+                    <h3 className="font-medium text-micro uppercase tracking-widest text-muted italic">Faculty Identity Card</h3>
                     <div className="flex gap-1.5">
                         <button onClick={handlePrint} className="p-1.5 bg-card text-muted hover:text-info transition-colors shadow-sm">
                             <Printer size={16} />
@@ -39,7 +39,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-info">
                                 <Award size={18} />
-                                <span className="font-medium text-[10px] uppercase tracking-widest leading-none">أكاديمية دارين</span>
+                                <span className="font-medium text-micro uppercase tracking-widest leading-none">أكاديمية دارين</span>
                             </div>
                             <h2 className="text-xl font-medium text-main leading-none tracking-tighter">بطاقة هوية معلم</h2>
                         </div>
@@ -59,19 +59,19 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         {/* Details */}
                         <div className="w-full space-y-4 text-center" dir="rtl">
                             <div className="space-y-1">
-                                <label className="text-[9px] font-medium text-muted uppercase tracking-widest block">الاسم الثلاثي المعتمد</label>
+                                <label className="text-micro font-medium text-muted uppercase tracking-widest block">الاسم الثلاثي المعتمد</label>
                                 <p className="text-lg font-medium text-main tracking-tighter leading-none">{teacher.name}</p>
                             </div>
                             
                             <div className="grid grid-cols-2 gap-4 pt-2">
                                 <div className="space-y-1">
-                                    <label className="text-[9px] font-medium text-muted uppercase tracking-widest block text-center">التخصص</label>
+                                    <label className="text-micro font-medium text-muted uppercase tracking-widest block text-center">التخصص</label>
                                     <p className="text-xs font-medium text-info uppercase tracking-tighter text-center">
                                         {teacher.subject}
                                     </p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[9px] font-medium text-muted uppercase tracking-widest block text-center">كود الموظف</label>
+                                    <label className="text-micro font-medium text-muted uppercase tracking-widest block text-center">كود الموظف</label>
                                     <p className="text-xs font-medium text-muted text-center uppercase">#{teacher.id.slice(0, 6)}</p>
                                 </div>
                             </div>
@@ -86,8 +86,8 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                     {/* Footer / QR Code */}
                     <div className="mt-8 pt-6 border-t-2 border-dashed border-border flex items-center justify-between relative z-10">
                         <div className="space-y-0.5 text-right" dir="rtl">
-                            <p className="text-[8px] font-medium text-muted uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
-                            <p className="text-[7px] text-muted font-normal max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل دارين السابعة</p>
+                            <p className="text-micro font-medium text-muted uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
+                            <p className="text-micro text-muted font-normal max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل دارين السابعة</p>
                         </div>
                         <div className="p-1.5 bg-card border border-border">
                             <QRCodeSVG 

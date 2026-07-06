@@ -181,7 +181,7 @@ export const Jobs = () => {
                                 className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-white/10 border border-white/20 rounded-full mb-3 md:mb-4 backdrop-blur-sm"
                             >
                                 <Sparkles size={10} className="text-warning" />
-                                 <span className="text-[8px] md:text-[10px] font-black text-white/90">خطوة لتكون من العائلة</span>
+                                 <span className="text-micro md:text-micro font-black text-white/90">خطوة لتكون من العائلة</span>
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -210,7 +210,7 @@ export const Jobs = () => {
                             <div className="w-40 h-40 md:w-52 md:h-52 bg-white/10 rounded-[2rem] flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-2xl">
                                 <div className="text-center">
                                     <Building2 size={56} className="text-warning mx-auto mb-2" />
-                                    <span className="text-white/80 text-[10px] font-black block">نحن ننتظرك</span>
+                                    <span className="text-white/80 text-micro font-black block">نحن ننتظرك</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -236,7 +236,7 @@ export const Jobs = () => {
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card'}`} />
                                                     ))}
                                                 </div>
-                                                <span className="text-[10px] font-bold text-muted dark:text-dim bg-surface dark:bg-primary-active px-2.5 py-1 rounded-full hidden md:inline-block">
+                                                <span className="text-micro font-bold text-muted dark:text-dim bg-surface dark:bg-primary-active px-2.5 py-1 rounded-full hidden md:inline-block">
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
@@ -245,12 +245,12 @@ export const Jobs = () => {
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-primary-active text-muted'}`}>
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-micro font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-primary-active text-muted'}`}>
                                                 {step > s.id ? <CheckCircle2 size={14} /> : s.id}
                                             </div>
                                             {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-surface dark:bg-primary-active'}`} />}
                                         </div>
-                                        <span className={`text-[10px] font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
+                                        <span className={`text-micro font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
                                     </div>
                                 ))}
                             </div>
@@ -274,7 +274,7 @@ export const Jobs = () => {
                                                         <User size={16} className="text-primary" />
                                                         المعلومات الشخصية
                                                     </h3>
-                                                    <p className="text-[10px] text-muted dark:text-muted font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
+                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['name'] = el} icon={User} label="الاسم" name="name" value={form.name} onChange={handleChange} placeholder="الاسم الكامل" required autoComplete="name" />
                                                 <InputField ref={el => inputRefs.current['phone'] = el} icon={Phone} label="رقم الهاتف" name="phone" value={form.phone} onChange={handleChange} placeholder="مثال: 96512345678" type="tel" required inputMode="numeric" autoComplete="tel" />
@@ -289,7 +289,7 @@ export const Jobs = () => {
                                                         <GraduationCap size={16} className="text-primary" />
                                                         المؤهلات والوظيفة
                                                     </h3>
-                                                    <p className="text-[10px] text-muted dark:text-muted font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
+                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['position'] = el} icon={Briefcase} label="الوظيفة المطلوبة" name="position" value={form.position} onChange={handleChange} placeholder="معلمة رياضيات - معلمة لغة عربية ..." required autoComplete="organization-title" />
                                                 <InputField ref={el => inputRefs.current['qualification'] = el} icon={GraduationCap} label="المؤهل العلمي" name="qualification" value={form.qualification} onChange={handleChange} placeholder="بكالوريوس - ماجستير ..." required />
@@ -304,7 +304,7 @@ export const Jobs = () => {
                                                         <BookMarked size={16} className="text-primary" />
                                                         المادة التي تدرسها
                                                     </h3>
-                                                    <p className="text-[10px] text-muted dark:text-muted font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
+                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
                                                 </div>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                                     {subjects.map(s => (
@@ -342,12 +342,12 @@ export const Jobs = () => {
                                                         <Award size={16} className="text-primary" />
                                                         الخبرات
                                                     </h3>
-                                                    <p className="text-[10px] text-muted dark:text-muted font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
+                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['graduationYear'] = el} icon={Calendar} label="سنة التخرج" name="graduationYear" value={form.graduationYear} onChange={handleChange} placeholder="مثال: 2020" type="number" />
                                                 <InputField ref={el => inputRefs.current['onlineYears'] = el} icon={Globe} label="سنوات الخبرة في التدريس أون لاين" name="onlineYears" value={form.onlineYears} onChange={handleChange} placeholder="عدد السنوات" />
                                                 <div className="space-y-2">
-                                                    <label className="flex items-center gap-2 text-[10px] font-black text-muted dark:text-muted">
+                                                    <label className="flex items-center gap-2 text-micro font-black text-muted dark:text-muted">
                                                         <BookOpen size={12} className="text-primary shrink-0" />
                                                         المناهج التي قمت بتدريسها
                                                     </label>
@@ -477,11 +477,11 @@ interface InputFieldProps {
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
     <div className="space-y-1.5">
-        <label className="flex items-center gap-2 text-[10px] font-black text-muted dark:text-muted">
+        <label className="flex items-center gap-2 text-micro font-black text-muted dark:text-muted">
             <Icon size={12} className="text-primary shrink-0" />
             {label}
             {required && <span className="text-error">*</span>}
-            {!required && <span className="text-[9px] text-muted font-normal">(اختياري)</span>}
+            {!required && <span className="text-micro text-muted font-normal">(اختياري)</span>}
         </label>
         <input
             ref={ref}

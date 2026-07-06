@@ -23,7 +23,7 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                 </div>
 
                 <div className="mb-8">
-                    <p className="text-[10px] font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">نقاط مهنية جديدة (آخر ٧ أيام)</p>
+                    <p className="text-micro font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">نقاط مهنية جديدة (آخر ٧ أيام)</p>
                     <div className="flex items-baseline gap-2">
                         <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-pulse">
                             +{stats.weekTotalSessions * 5}
@@ -36,7 +36,7 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                     <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,0.50)]">
                         <div className="flex items-center gap-2">
                             <BookOpen size={14} className="text-primary" />
-                            <span className="text-[10px] font-medium uppercase">الحصص المنجزة</span>
+                            <span className="text-micro font-medium uppercase">الحصص المنجزة</span>
                         </div>
                         <span className="font-mono font-medium text-lg">{stats.weekTotalSessions}</span>
                     </div>
@@ -44,14 +44,14 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                     <div className="flex items-center justify-between p-3 bg-white text-main border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,0.50)]">
                         <div className="flex items-center gap-2">
                             <Star size={14} className="text-warning" />
-                            <span className="text-[10px] font-medium uppercase">توصيات أوسمة</span>
+                            <span className="text-micro font-medium uppercase">توصيات أوسمة</span>
                         </div>
                         <span className="font-mono font-medium text-lg">{stats.newBadgesRecommended}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/20 text-[9px] font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
+            <div className="mt-8 pt-4 border-t-2 border-white/20 text-micro font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
                 <TrendingUp size={12} />
                 <span>أداء متميز هذا الأسبوع! بطل مجموعتك هو: <span className="text-on-primary">{stats.bestStudentName || 'قيد التحديد'}</span></span>
             </div>

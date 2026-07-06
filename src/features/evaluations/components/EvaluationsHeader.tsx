@@ -18,18 +18,18 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
                     </div>
                     <div>
                         <h1 className="text-lg font-bold text-on-primary leading-tight">تقييم الطلاب والتحفيز</h1>
-                        <p className="text-[10px] font-bold text-white/70 mt-0.5 flex items-center gap-1">
+                        <p className="text-micro font-bold text-white/70 mt-0.5 flex items-center gap-1">
                             <Zap size={11} />نظام المكافآت الذكي والتقييم الأكاديمي الشامل
                         </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="px-3 py-1.5 flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-xl">
-                        <p className="text-[9px] font-bold text-white/70">إجمالي النقاط:</p>
-                        <p className="text-sm font-black text-on-primary tabular-nums">{totalXP} <span className="text-[9px] font-bold text-white/70">XP</span></p>
+                        <p className="text-micro font-bold text-white/70">إجمالي النقاط:</p>
+                        <p className="text-sm font-black text-on-primary tabular-nums">{totalXP} <span className="text-micro font-bold text-white/70">XP</span></p>
                     </div>
                     {showAddButton && (
-                        <button onClick={onAddClick} className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-on-primary font-bold text-[10px] px-3 py-2 shadow-sm active:scale-95 transition-all shrink-0 rounded-xl">
+                        <button onClick={onAddClick} className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-on-primary font-bold text-micro px-3 py-2 shadow-sm active:scale-95 transition-all shrink-0 rounded-xl">
                             <Plus size={14} /><span className="hidden sm:inline whitespace-nowrap">تقييم جديد</span>
                         </button>
                     )}
@@ -39,7 +39,7 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
             <div className="bg-white/80 backdrop-blur-xl shadow-sm border border-white/20 p-3 rounded-2xl">
                 <div className="relative">
                     <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/40 pointer-events-none" />
-                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full pr-9 pl-9 py-2 text-[11px] font-bold text-main dark:text-on-primary placeholder:text-muted outline-none transition-all rounded-xl bg-primary/5 border border-primary/10 focus:border-primary/30 focus:bg-white dark:focus:bg-primary-active" />
+                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full pr-9 pl-9 py-2 text-xs font-bold text-main dark:text-on-primary placeholder:text-muted outline-none transition-all rounded-xl bg-primary/5 border border-primary/10 focus:border-primary/30 focus:bg-white dark:focus:bg-primary-active" />
                     {searchTerm && <button onClick={() => onSearchChange('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-muted transition-colors"><X size={14} /></button>}
                 </div>
             </div>

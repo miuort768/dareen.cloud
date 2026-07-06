@@ -49,7 +49,7 @@ export function ColorSection() {
                     />
                     <div className="min-w-0">
                       <div className="text-xs font-mono text-main">{token}</div>
-                      <div className="text-[10px] text-muted font-mono truncate">{value}</div>
+                      <div className="text-micro text-muted font-mono truncate">{value}</div>
                     </div>
                   </div>
                 );

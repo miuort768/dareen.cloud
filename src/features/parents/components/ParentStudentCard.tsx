@@ -38,13 +38,13 @@ export const ParentStudentCard = ({
                         </div>
                         <div className="min-w-0">
                             <h3 className="text-base md:text-lg font-medium text-on-primary leading-tight truncate">{(student as { name: string }).name}</h3>
-                            <p className="text-primary text-[9px] md:text-[10px] font-medium uppercase tracking-widest mt-0.5">{student.grade || 'غير محدد'}</p>
+                            <p className="text-primary text-micro md:text-micro font-medium uppercase tracking-widest mt-0.5">{student.grade || 'غير محدد'}</p>
                         </div>
                     </div>
                     {totalPoints > 0 && (
                         <div className="flex flex-col items-center gap-0.5 bg-warning text-main px-1.5 py-1 shadow-md transform rotate-2 shrink-0 rounded-lg">
                             <Star size={12} className="fill-current md:size-[16px]" />
-                            <span className="text-[9px] font-medium">{totalPoints}</span>
+                            <span className="text-micro font-medium">{totalPoints}</span>
                         </div>
                     )}
                 </div>
@@ -55,14 +55,14 @@ export const ParentStudentCard = ({
                     <div className="w-8 h-8 bg-primary-soft dark:bg-primary/10 rounded-xl flex items-center justify-center mb-1">
                         <BookOpen size={14} className="text-primary md:size-[16px]" />
                     </div>
-                    <span className="text-[8px] md:text-[10px] font-medium text-muted uppercase">المواد</span>
+                    <span className="text-micro md:text-micro font-medium text-muted uppercase">المواد</span>
                     <span className="text-base md:text-lg font-medium text-main dark:text-on-primary">{enrollments.length}</span>
                 </div>
                 <div className="p-3 md:p-4 flex flex-col items-center justify-center">
                     <div className="w-8 h-8 bg-success-light dark:bg-success/10 rounded-xl flex items-center justify-center mb-1">
                         <TrendingUp size={14} className="text-success md:size-[16px]" />
                     </div>
-                    <span className="text-[8px] md:text-[10px] font-medium text-muted uppercase">الالتزام</span>
+                    <span className="text-micro md:text-micro font-medium text-muted uppercase">الالتزام</span>
                     <span className="text-base md:text-lg font-medium text-success dark:text-success">
                         {(() => {
                             if (enrollments.length === 0) return '0%';
@@ -75,7 +75,7 @@ export const ParentStudentCard = ({
             </div>
 
             <div className="p-4 md:p-5 space-y-3 flex-1">
-                <p className="text-[10px] font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border pb-2 flex items-center justify-between">
+                <p className="text-micro font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border pb-2 flex items-center justify-between">
                     تفاصيل المواد الدراسية
                     <CheckCircle2 size={12} className="text-dim" />
                 </p>
@@ -85,10 +85,10 @@ export const ParentStudentCard = ({
                             <div className="flex justify-between items-start mb-2">
                                 <div>
                                     <h4 className="text-sm font-medium text-main dark:text-on-primary">{en.subject}</h4>
-                                    <p className="text-[9px] text-muted dark:text-muted font-normal italic">المعلم: {en.teacher}</p>
+                                    <p className="text-micro text-muted dark:text-muted font-normal italic">المعلم: {en.teacher}</p>
                                 </div>
                                 <div className="text-left">
-                                    <span className="text-[10px] font-medium text-primary dark:text-primary">حضر {en.sessionsUsed} من {en.sessionsTotal}</span>
+                                    <span className="text-micro font-medium text-primary dark:text-primary">حضر {en.sessionsUsed} من {en.sessionsTotal}</span>
                                 </div>
                             </div>
                             <div className="w-full h-1.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
@@ -104,7 +104,7 @@ export const ParentStudentCard = ({
                     ))}
                     {enrollments.length === 0 && (
                         <div className="py-6 text-center">
-                            <p className="text-[10px] text-muted font-normal italic">لا توجد مواد مسجلة حالياً لهذا الابن</p>
+                            <p className="text-micro text-muted font-normal italic">لا توجد مواد مسجلة حالياً لهذا الابن</p>
                         </div>
                     )}
                 </div>
@@ -112,16 +112,16 @@ export const ParentStudentCard = ({
 
             <div className="p-4 md:p-5 pt-0 mt-auto space-y-2">
                 <div className="grid grid-cols-2 gap-2">
-                    <button onClick={() => onViewDates(student)} className="py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-[9px] md:text-[10px] font-medium uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
+                    <button onClick={() => onViewDates(student)} className="py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
                         <Calendar size={13} className="md:size-[14px]" />
                         حصص الطالب
                     </button>
-                    <button onClick={() => onViewAttendance(student)} className="py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-on-primary text-[9px] md:text-[10px] font-medium uppercase tracking-wider rounded-xl hover:bg-surface dark:hover:bg-primary-active hover:border-primary/30 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
+                    <button onClick={() => onViewAttendance(student)} className="py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-on-primary text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:bg-surface dark:hover:bg-primary-active hover:border-primary/30 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
                         <TrendingUp size={13} className="md:size-[14px]" />
                         نسبة الحضور
                     </button>
                 </div>
-                <button onClick={() => onViewAchievements(student)} className={cn("w-full py-2.5 text-[9px] md:text-[10px] font-medium uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]", hasAchievements ? "bg-surface dark:bg-primary-active text-primary border border-primary/30" : "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary hover:shadow-lg hover:shadow-primary/25")}>
+                <button onClick={() => onViewAchievements(student)} className={cn("w-full py-2.5 text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]", hasAchievements ? "bg-surface dark:bg-primary-active text-primary border border-primary/30" : "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary hover:shadow-lg hover:shadow-primary/25")}>
                     <Trophy size={14} />
                     {hasAchievements ? 'إغلاق سجل الإنجازات' : 'عرض حصاد الإنجازات والأوسمة'}
                 </button>
@@ -133,10 +133,10 @@ export const ParentStudentCard = ({
                         <div className="p-4 md:p-6 space-y-4">
                             <div className="flex items-center gap-2 mb-2">
                                 <Trophy size={16} className="text-warning" />
-                                <h4 className="text-[10px] font-medium text-main dark:text-on-primary uppercase tracking-widest">حصاد إنجازات الطالب</h4>
+                                <h4 className="text-micro font-medium text-main dark:text-on-primary uppercase tracking-widest">حصاد إنجازات الطالب</h4>
                             </div>
                             <GamificationCard totalPoints={totalPoints} badges={student.badges} pointLogs={pointLogs} />
-                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error text-on-primary text-[8px] font-medium uppercase tracking-widest rounded-xl shadow-sm shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
+                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error text-on-primary text-micro font-medium uppercase tracking-widest rounded-xl shadow-sm shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
                         </div>
                     </motion.div>
                 )}

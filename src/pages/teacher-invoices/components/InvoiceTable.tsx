@@ -28,7 +28,7 @@ const statusVariant: Record<string, 'success' | 'warning' | 'error'> = {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-[10px] font-bold">
+  <div className="w-7 h-7 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-micro font-bold">
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -49,12 +49,12 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
       <table className="w-full text-right text-sm border-collapse">
         <thead>
           <tr className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
-            <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent">المعلمة</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent">التخصص</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">المبلغ</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الصافي</th>
-            <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الحالة</th>
-            {!isTeacher && <th className="px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الإجراءات</th>}
+            <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent">المعلمة</th>
+            <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent">التخصص</th>
+            <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">المبلغ</th>
+            <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الصافي</th>
+            <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الحالة</th>
+            {!isTeacher && <th className="px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent text-center">الإجراءات</th>}
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
@@ -67,9 +67,9 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="text-[10px] font-medium text-dim">{inv.specialization}</span>
+                    <span className="text-micro font-medium text-dim">{inv.specialization}</span>
                   </td>
-                  <td className="px-4 py-3 font-mono text-[11px] font-bold text-muted">
+                  <td className="px-4 py-3 font-mono text-xs font-bold text-muted">
                     {inv.amount.toLocaleString()} ج.م
                   </td>
                   <td className="px-4 py-3 text-center">
@@ -116,20 +116,20 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                   <AvatarLetter name={inv.teacher} />
                   <div>
                     <p className="text-xs font-bold text-main">{inv.teacher}</p>
-                    <p className="text-[10px] text-dim">{inv.specialization}</p>
+                    <p className="text-micro text-dim">{inv.specialization}</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="text-[8px] font-bold text-dim uppercase mb-0.5">المبلغ</p>
+                    <p className="text-micro font-bold text-dim uppercase mb-0.5">المبلغ</p>
                     <span className="font-mono text-sm font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>
-                    <p className="text-[8px] font-bold text-dim uppercase mb-0.5">الصافي</p>
-                    <span className="text-[11px] font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
+                    <p className="text-micro font-bold text-dim uppercase mb-0.5">الصافي</p>
+                    <span className="text-xs font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
                   </div>
                 </div>
                 <Badge variant={statusVariant[inv.status] || 'error'} size="sm">

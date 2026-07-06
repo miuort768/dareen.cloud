@@ -23,10 +23,10 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                     </div>
                     <div>
                         <h3 className="text-sm font-medium text-main dark:text-on-primary uppercase tracking-tighter">تجديد الاشتراكات</h3>
-                        <p className="text-[10px] font-medium text-muted uppercase tracking-widest mt-1">المراقبة المالية</p>
+                        <p className="text-micro font-medium text-muted uppercase tracking-widest mt-1">المراقبة المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 bg-error-light dark:bg-error/20 text-error border border-error dark:border-error/20 px-3 py-1.5 rounded-none text-[10px] font-medium uppercase tracking-widest">
+                <div className="flex items-center gap-2 bg-error-light dark:bg-error/20 text-error border border-error dark:border-error/20 px-3 py-1.5 rounded-none text-micro font-medium uppercase tracking-widest">
                     <AlertCircle size={12} />
                     {stats.lowBalanceCount} طلاب استحقاق
                 </div>
@@ -49,13 +49,13 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                                 </div>
                                 <div className="min-w-0">
                                     <h4 className="font-medium text-xs text-main dark:text-on-primary truncate group-hover:text-primary transition-colors uppercase tracking-tight">{item.studentName}</h4>
-                                    <p className="text-[10px] font-medium text-muted truncate mt-1 uppercase tracking-widest">{item.subject}</p>
+                                    <p className="text-micro font-medium text-muted truncate mt-1 uppercase tracking-widest">{item.subject}</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-4 shrink-0">
                                 <span className={cn(
-                                    "text-[9px] font-medium px-2 py-0.5 rounded-none uppercase tracking-widest",
+                                    "text-micro font-medium px-2 py-0.5 rounded-none uppercase tracking-widest",
                                     item.remainingSessions === 0 ? "bg-error-light text-error" : "bg-warning-light text-warning"
                                 )}>
                                     {item.remainingSessions === 0 ? 'انتهاء' : `${item.remainingSessions} م` }
@@ -73,13 +73,13 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                 ) : (
                     <div className="flex flex-col items-center justify-center py-24 opacity-20 flex flex-col items-center">
                          <UserX size={48} className="text-dim mb-4" />
-                         <p className="text-[10px] font-medium uppercase tracking-[0.2em]">لا توجد أرصدة منخفضة</p>
+                         <p className="text-micro font-medium uppercase tracking-[0.2em]">لا توجد أرصدة منخفضة</p>
                     </div>
                 )}
             </div>
 
             <div className="mt-auto pt-6">
-                <button onClick={() => navigate('/attendance')} className="w-full h-11 flex items-center justify-center gap-2 bg-surface dark:bg-primary-active text-muted dark:text-muted font-medium text-[10px] uppercase tracking-widest hover:bg-primary hover:text-on-primary rounded-none transition-all active:scale-95 border border-border dark:border-border">
+                <button onClick={() => navigate('/attendance')} className="w-full h-11 flex items-center justify-center gap-2 bg-surface dark:bg-primary-active text-muted dark:text-muted font-medium text-micro uppercase tracking-widest hover:bg-primary hover:text-on-primary rounded-none transition-all active:scale-95 border border-border dark:border-border">
                     عرض كافة السجلات
                     <ChevronLeft size={16} />
                 </button>

@@ -25,7 +25,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                 </div>
 
                 <div className="mb-8">
-                    <p className="text-[10px] font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
+                    <p className="text-micro font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
                     <div className="flex items-baseline gap-2">
                         <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-in slide-in-from-bottom duration-500">
                             {stats.totalEarnings}
@@ -36,7 +36,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
 
                 <div className="space-y-4">
                     <div className="space-y-1.5">
-                        <div className="flex items-center justify-between text-[10px] font-medium uppercase">
+                        <div className="flex items-center justify-between text-micro font-medium uppercase">
                             <span>هدف الحصص: {stats.completedSessions}/{stats.sessionsGoal}</span>
                             <span>{Math.round(progress)}%</span>
                         </div>
@@ -48,14 +48,14 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                         </div>
                     </div>
 
-                    <div className="flex items-start gap-2 p-3 bg-success/30 border-2 border-success/50 text-[9px] font-medium uppercase italic leading-relaxed">
+                    <div className="flex items-start gap-2 p-3 bg-success/30 border-2 border-success/50 text-micro font-medium uppercase italic leading-relaxed">
                         <Info size={14} className="flex-shrink-0" />
                         <p>بناءً على {stats.completedSessions} حصة منجزة بمعدل {stats.pricePerSession} ريال/للحصة. </p>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/20 text-[9px] font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
+            <div className="mt-8 pt-4 border-t-2 border-white/20 text-micro font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
                 <TrendingUp size={12} />
                 <span>كلما أنجزتِ حصصاً أكثر، زادت نقاطك المهنية في اللورد كارد!</span>
             </div>

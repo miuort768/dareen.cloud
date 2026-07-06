@@ -83,7 +83,7 @@ export const ModernAnnouncements: React.FC = () => {
                     <div className="w-10 h-10 bg-white dark:bg-primary-active border border-border dark:border-border flex items-center justify-center shadow-sm rounded-xl">
                         <type.icon size={20} className={type.color} />
                     </div>
-                    <span className={cn("text-[9px] font-medium uppercase tracking-tight leading-none text-center", type.color)}>
+                    <span className={cn("text-micro font-medium uppercase tracking-tight leading-none text-center", type.color)}>
                         {type.label}
                     </span>
                 </div>
@@ -95,7 +95,7 @@ export const ModernAnnouncements: React.FC = () => {
                 >
                     <div className="absolute top-4 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-on-primary dark:bg-white dark:text-main rounded-lg">
                         <Sparkles size={10} className="text-warning" />
-                        <span className="text-[8px] font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
+                        <span className="text-micro font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
                     <AnimatePresence mode="wait">
@@ -151,7 +151,7 @@ export const ModernAnnouncements: React.FC = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-medium text-main dark:text-on-primary leading-tight uppercase tracking-tight">تأكيد القراءة</h3>
-                                    <p className="text-[9px] font-medium text-muted uppercase mt-0.5">إشعار الامتثال الهام</p>
+                                    <p className="text-micro font-medium text-muted uppercase mt-0.5">إشعار الامتثال الهام</p>
                                 </div>
                             </div>
 
@@ -164,14 +164,14 @@ export const ModernAnnouncements: React.FC = () => {
                             <div className="grid grid-cols-2 gap-3">
                                 <button 
                                     onClick={handleDismiss}
-                                    className="h-12 bg-info text-on-primary font-medium text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary-hover transition-all shadow-sm active:scale-[0.98] rounded-xl"
+                                    className="h-12 bg-info text-on-primary font-medium text-micro uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary-hover transition-all shadow-sm active:scale-[0.98] rounded-xl"
                                 >
                                     <Check size={16} />
                                     موافق، تم الاطلاع
                                 </button>
                                 <button 
                                     onClick={() => setShowAcknowledge(false)}
-                                    className="h-12 bg-white dark:bg-primary-active text-main dark:text-on-primary font-medium text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-surface border border-border dark:border-border transition-all shadow-sm active:scale-[0.98] rounded-xl"
+                                    className="h-12 bg-white dark:bg-primary-active text-main dark:text-on-primary font-medium text-micro uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-surface border border-border dark:border-border transition-all shadow-sm active:scale-[0.98] rounded-xl"
                                 >
                                     <X size={16} />
                                     إغلاق

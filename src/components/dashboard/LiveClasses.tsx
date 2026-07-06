@@ -102,14 +102,14 @@ export const LiveClasses = () => {
           </div>
           <div>
             <h3 className="font-bold text-sm text-main dark:text-on-primary">الحصص المباشرة</h3>
-            <p className="text-[9px] font-medium text-muted dark:text-muted">روابط Google Meet أو Zoom</p>
+            <p className="text-micro font-medium text-muted dark:text-muted">روابط Google Meet أو Zoom</p>
           </div>
         </div>
 
         {isTeacher && (
           <button
             onClick={() => setShowDialog(true)}
-            className="text-on-primary px-5 py-2 text-[10px] font-bold rounded-2xl transition-all active:scale-[0.97] flex items-center gap-2 shadow-sm hover:shadow-md bg-primary hover:bg-primary-hover"
+            className="text-on-primary px-5 py-2 text-micro font-bold rounded-2xl transition-all active:scale-[0.97] flex items-center gap-2 shadow-sm hover:shadow-md bg-primary hover:bg-primary-hover"
           >
             <Plus size={13} strokeWidth={1.5} /> بدء حصة جديدة
           </button>
@@ -122,7 +122,7 @@ export const LiveClasses = () => {
             <AlertCircle size={14} strokeWidth={1.5} className="shrink-0" />
             {error}
           </div>
-          <button onClick={fetchSessions} className="flex items-center gap-1 px-3 py-1.5 bg-error-light/50 dark:bg-error/30 hover:bg-error dark:hover:bg-error/50 rounded-xl text-[10px] font-bold transition-all">
+          <button onClick={fetchSessions} className="flex items-center gap-1 px-3 py-1.5 bg-error-light/50 dark:bg-error/30 hover:bg-error dark:hover:bg-error/50 rounded-xl text-micro font-bold transition-all">
             <RefreshCcw size={12} /> إعادة المحاولة
           </button>
         </div>
@@ -135,9 +135,9 @@ export const LiveClasses = () => {
       ) : sessions.length === 0 ? (
         <div className="p-10 text-center bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all">
           <Video size={36} strokeWidth={1.5} className="mx-auto mb-3 text-primary dark:text-primary" />
-          <p className="font-bold text-[11px] text-primary dark:text-primary">لا توجد حصص مباشرة حالياً</p>
+          <p className="font-bold text-xs text-primary dark:text-primary">لا توجد حصص مباشرة حالياً</p>
           {isTeacher && (
-            <p className="text-muted text-[10px] mt-2 font-medium">اضغط "بدء حصة جديدة" لبدء حصة</p>
+            <p className="text-muted text-micro mt-2 font-medium">اضغط "بدء حصة جديدة" لبدء حصة</p>
           )}
         </div>
       ) : (
@@ -147,7 +147,7 @@ export const LiveClasses = () => {
               key={session.id}
               className="p-5 flex flex-col justify-between group bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all hover:shadow-md hover:border-border dark:hover:border-border"
             >
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-on-primary text-[8px] font-bold w-fit bg-success">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-on-primary text-micro font-bold w-fit bg-success">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 مباشر
               </div>
@@ -158,12 +158,12 @@ export const LiveClasses = () => {
                 </h4>
                 <div className="flex items-center gap-2 text-muted dark:text-muted mb-1">
                   <Users size={12} strokeWidth={1.5} className="text-primary dark:text-primary" />
-                  <span className="text-[10px] font-medium">{session.teacherName}</span>
+                  <span className="text-micro font-medium">{session.teacherName}</span>
                   {session.subject && (
-                    <span className="text-[10px] text-muted">— {session.subject}</span>
+                    <span className="text-micro text-muted">— {session.subject}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted mt-1">
+                <div className="flex items-center gap-1.5 text-micro font-medium text-muted mt-1">
                   <span className="bg-surface dark:bg-primary-active px-2 py-0.5 rounded-lg">
                     {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
                   </span>
@@ -175,14 +175,14 @@ export const LiveClasses = () => {
                   href={session.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 text-on-primary py-3 text-[10px] font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.97] bg-primary hover:bg-primary-hover"
+                  className="flex-1 text-on-primary py-3 text-micro font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.97] bg-primary hover:bg-primary-hover"
                 >
                   <ExternalLink size={14} strokeWidth={1.5} />
                   انضم للحصة
                 </a>
                 <button
                   onClick={() => copyLink(session.meetingUrl || '')}
-                  className="px-3 py-3 text-[10px] font-bold rounded-2xl border border-border dark:border-border text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active transition-all flex items-center justify-center"
+                  className="px-3 py-3 text-micro font-bold rounded-2xl border border-border dark:border-border text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active transition-all flex items-center justify-center"
                   title="نسخ الرابط"
                 >
                   <Copy size={14} strokeWidth={1.5} />
@@ -190,7 +190,7 @@ export const LiveClasses = () => {
                 {isTeacher && (
                   <button
                     onClick={() => endSession(session.id)}
-                    className="px-3 py-3 text-[10px] font-bold rounded-2xl text-error border border-error dark:border-error hover:bg-error-light dark:hover:bg-error/20 transition-all flex items-center justify-center"
+                    className="px-3 py-3 text-micro font-bold rounded-2xl text-error border border-error dark:border-error hover:bg-error-light dark:hover:bg-error/20 transition-all flex items-center justify-center"
                     title="إنهاء الحصة"
                   >
                     <StopCircle size={14} strokeWidth={1.5} />
@@ -225,7 +225,7 @@ export const LiveClasses = () => {
                   <button
                     key={p.value}
                     onClick={() => setMeetingProvider(p.value)}
-                    className={`flex-1 py-3 px-2 text-[10px] font-bold rounded-2xl border-2 transition-all ${
+                    className={`flex-1 py-3 px-2 text-micro font-bold rounded-2xl border-2 transition-all ${
                       meetingProvider === p.value
                         ? 'border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary'
                         : 'border-border dark:border-border text-muted dark:text-muted hover:border-border'
@@ -254,7 +254,7 @@ export const LiveClasses = () => {
                 {meetingProvider === 'google_meet' && (
                   <button
                     onClick={openCreateMeet}
-                    className="px-3 py-3 text-[10px] font-bold rounded-2xl bg-success-light dark:bg-success/20 border border-success dark:border-success text-success dark:text-success hover:bg-success-light dark:hover:bg-success/30 transition-all whitespace-nowrap flex items-center gap-1"
+                    className="px-3 py-3 text-micro font-bold rounded-2xl bg-success-light dark:bg-success/20 border border-success dark:border-success text-success dark:text-success hover:bg-success-light dark:hover:bg-success/30 transition-all whitespace-nowrap flex items-center gap-1"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <Link size={14} /> إنشاء Meet

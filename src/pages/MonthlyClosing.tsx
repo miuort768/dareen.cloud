@@ -158,7 +158,7 @@ export const MonthlyClosing: React.FC = () => {
                         </div>
                         <div>
                             <h1 className="text-lg font-bold text-on-primary leading-tight">التقرير الشهري والإغلاق المالي</h1>
-                            <p className="text-[10px] font-bold text-white/70 mt-0.5">تحليل الأداء المالي والإداري للشهر الحالي</p>
+                            <p className="text-micro font-bold text-white/70 mt-0.5">تحليل الأداء المالي والإداري للشهر الحالي</p>
                         </div>
                     </div>
 
@@ -168,7 +168,7 @@ export const MonthlyClosing: React.FC = () => {
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
+                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
                             >
                                 {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
@@ -177,14 +177,14 @@ export const MonthlyClosing: React.FC = () => {
                         <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15 backdrop-blur-sm">
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none cursor-pointer w-24"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
-                            <span className="text-[9px] text-white/50">إلى</span>
+                            <span className="text-micro text-white/50">إلى</span>
                             <input
                                 type="date"
-                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none cursor-pointer w-24"
+                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none cursor-pointer w-24"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
@@ -246,7 +246,7 @@ export const MonthlyClosing: React.FC = () => {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as TabType)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-normal transition-all whitespace-nowrap",
+                                    "flex items-center gap-2 px-4 py-2 rounded-xl text-micro font-normal transition-all whitespace-nowrap",
                                     activeTab === tab.id
                                         ? "bg-primary-soft text-primary shadow-sm"
                                         : "text-muted hover:text-muted dark:hover:text-dim"

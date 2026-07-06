@@ -119,7 +119,7 @@ export const CurrenciesSection = ({
                                         <td className="py-2.5 px-3 text-muted">{c.name}</td>
                                         <td className="py-2.5 px-3 text-muted">{c.symbol}</td>
                                         <td className="py-2.5 px-3">
-                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-dim'}`}>
+                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-micro font-bold ${c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-dim'}`}>
                                                 {c.isActive ? 'نشط' : 'غير نشط'}
                                             </span>
                                         </td>

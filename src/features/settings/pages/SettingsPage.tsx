@@ -390,10 +390,10 @@ export const Settings = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">مركز الإعدادات</h1>
-                        <p className="text-[11px] font-bold text-on-primary opacity-70 mt-0.5">إدارة كافة إعدادات النظام من مكان واحد</p>
+                        <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">إدارة كافة إعدادات النظام من مكان واحد</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1.5 bg-white/15 text-on-primary">
+                <div className="flex items-center gap-2 text-micro font-bold px-3 py-1.5 bg-white/15 text-on-primary">
                     <SettingsIcon size={12} />
                     {TABS.find(t => t.id === activeTab)?.label}
                 </div>
@@ -406,7 +406,7 @@ export const Settings = () => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-3 text-[13px] font-bold whitespace-nowrap transition-all tracking-tight',
+                                'flex items-center gap-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-all tracking-tight',
                                 activeTab === tab.id
                                     ? 'bg-card text-primary shadow-sm'
                                     : 'text-on-primary opacity-70 hover:text-on-primary'

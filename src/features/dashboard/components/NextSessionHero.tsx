@@ -63,12 +63,12 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-1">
                     <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-                    <span className="text-primary text-[10px] font-bold uppercase tracking-wider">الحصة القادمة</span>
+                    <span className="text-primary text-micro font-bold uppercase tracking-wider">الحصة القادمة</span>
                 </div>
                 <h2 className="text-lg font-black text-on-primary leading-tight mb-0.5">
                     {nextSession.subject}
                 </h2>
-                <p className="text-primary text-[11px] font-bold">
+                <p className="text-primary text-xs font-bold">
                     {nextSession.studentName}
                 </p>
                 <div className="mt-4 flex items-center gap-3">

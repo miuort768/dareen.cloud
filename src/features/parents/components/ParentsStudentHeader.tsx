@@ -12,7 +12,7 @@ export const ParentsStudentHeader = ({ searchQuery, onSearchChange }: ParentsStu
                 <h1 className="text-lg md:text-2xl font-bold text-main dark:text-on-primary tracking-tight leading-none mb-1">
                     <span className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] bg-clip-text text-transparent">قائمة الأبناء</span>
                 </h1>
-                <p className="text-[9px] md:text-sm text-muted font-normal dark:text-muted uppercase tracking-widest leading-none">إدارة ومتابعة التفاصيل الدراسية</p>
+                <p className="text-micro md:text-sm text-muted font-normal dark:text-muted uppercase tracking-widest leading-none">إدارة ومتابعة التفاصيل الدراسية</p>
             </div>
             <div className="relative group w-full md:w-72">
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={16} />

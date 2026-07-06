@@ -157,7 +157,7 @@ export const NotificationsCenter = ({
                     </div>
                     <div>
                         <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">مركز العمليات الذكي</h3>
-                        <p className="text-[9px] font-medium text-muted mt-0.5">غرفة التحكم الذكية</p>
+                        <p className="text-micro font-medium text-muted mt-0.5">غرفة التحكم الذكية</p>
                     </div>
                 </div>
 
@@ -165,7 +165,7 @@ export const NotificationsCenter = ({
                     <button 
                         onClick={() => setActiveTab('smart')}
                         className={cn(
-                            "px-6 py-2 font-bold text-[9px] transition-all flex items-center gap-2 rounded-lg",
+                            "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-lg",
                             activeTab === 'smart' ? "shadow-sm" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
                         style={activeTab === 'smart' ? { backgroundColor: color, color: '#fff' } : {}}
@@ -176,7 +176,7 @@ export const NotificationsCenter = ({
                     <button 
                         onClick={() => setActiveTab('room')}
                         className={cn(
-                            "px-6 py-2 font-bold text-[9px] transition-all flex items-center gap-2 rounded-lg",
+                            "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-lg",
                             activeTab === 'room' ? "shadow-sm" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
                         style={activeTab === 'room' ? { backgroundColor: color, color: '#fff' } : {}}
@@ -197,10 +197,10 @@ export const NotificationsCenter = ({
                             </div>
                             <div>
                                 <h4 className="text-xs font-bold text-main dark:text-on-primary">النظام التحليلي</h4>
-                                <p className="text-[8px] font-medium text-muted mt-0.5">مراقبة الأنظمة الذكية</p>
+                                <p className="text-micro font-medium text-muted mt-0.5">مراقبة الأنظمة الذكية</p>
                             </div>
                         </div>
-                        <div className="px-3 py-1 rounded-lg shadow-sm text-on-primary text-[9px] font-bold" style={{ backgroundColor: color }}>
+                        <div className="px-3 py-1 rounded-lg shadow-sm text-on-primary text-micro font-bold" style={{ backgroundColor: color }}>
                             {filteredSmartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج
                         </div>
                     </div>
@@ -214,7 +214,7 @@ export const NotificationsCenter = ({
                                     </div>
                                     <div>
                                         <h3 className="font-bold text-xs text-main dark:text-on-primary">{alert.title}</h3>
-                                        <p className="text-[10px] font-medium mt-1 text-muted">{alert.desc}</p>
+                                        <p className="text-micro font-medium mt-1 text-muted">{alert.desc}</p>
                                     </div>
                                 </div>
                                 {typeof alert.action === 'function' && (
@@ -226,7 +226,7 @@ export const NotificationsCenter = ({
                         ))}
                         {filteredSmartAlerts.length === 0 && (
                             <div className="text-center py-16 bg-white dark:bg-primary-active rounded-xl border border-dashed border-border dark:border-border">
-                                <p className="text-[9px] font-bold text-muted">لا توجد بيانات ذكية حالياً</p>
+                                <p className="text-micro font-bold text-muted">لا توجد بيانات ذكية حالياً</p>
                             </div>
                         )}
                     </div>
@@ -241,10 +241,10 @@ export const NotificationsCenter = ({
                             </div>
                             <div>
                                 <h4 className="text-xs font-bold text-main dark:text-on-primary">غرفة العمليات</h4>
-                                <p className="text-[8px] font-medium text-muted mt-0.5">مركز العمليات المباشر</p>
+                                <p className="text-micro font-medium text-muted mt-0.5">مركز العمليات المباشر</p>
                             </div>
                         </div>
-                        <div className="px-3 py-1 rounded-lg shadow-sm text-on-primary text-[9px] font-bold" style={{ backgroundColor: color }}>
+                        <div className="px-3 py-1 rounded-lg shadow-sm text-on-primary text-micro font-bold" style={{ backgroundColor: color }}>
                             {filteredRoomAlerts.length} تنبيهات
                         </div>
                     </div>
@@ -257,26 +257,26 @@ export const NotificationsCenter = ({
                                         <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
-                                        <h4 className="text-[11px] font-bold text-main dark:text-on-primary truncate">{alert.title}</h4>
-                                        <p className="text-[9px] font-medium text-muted truncate mt-0.5">{alert.description}</p>
+                                        <h4 className="text-xs font-bold text-main dark:text-on-primary truncate">{alert.title}</h4>
+                                        <p className="text-micro font-medium text-muted truncate mt-0.5">{alert.description}</p>
                                     </div>
                                 </div>
                                 {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 text-on-primary text-[8px] font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: 'var(--bg-success)' }}
+                                        className="h-8 px-4 text-on-primary text-micro font-bold transition-all active:scale-[0.98] shadow-sm rounded-lg" style={{ backgroundColor: 'var(--bg-success)' }}
                                     >
                                         واتساب
                                     </button>
                                 ) : (
-                                    <Link to={alert.link || '#'} className="h-8 px-4 text-on-primary text-[8px] font-bold transition-all active:scale-[0.98] flex items-center justify-center shadow-sm rounded-lg" style={{ backgroundColor: color }}>
+                                    <Link to={alert.link || '#'} className="h-8 px-4 text-on-primary text-micro font-bold transition-all active:scale-[0.98] flex items-center justify-center shadow-sm rounded-lg" style={{ backgroundColor: color }}>
                                         عرض
                                     </Link>
                                 )}
                             </div>
                         )) : (
                             <div className="text-center py-16 bg-white dark:bg-primary-active rounded-xl border border-dashed border-border dark:border-border">
-                                <p className="text-[9px] font-bold text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
+                                <p className="text-micro font-bold text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         )}
                     </div>

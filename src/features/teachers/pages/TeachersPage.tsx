@@ -290,11 +290,11 @@ export const Teachers = () => {
                         </div>
                         <div>
                             <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">إدارة المعلمات</h1>
-                            <p className="text-[10px] font-bold text-on-primary opacity-70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <p className="text-micro font-bold text-on-primary opacity-70 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
-                                <span className="text-[9px] font-bold text-on-primary opacity-60">{teachers.length} معلمة</span>
+                                <span className="text-micro font-bold text-on-primary opacity-60">{teachers.length} معلمة</span>
                                 <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
-                                <span className="text-[8px] font-bold px-2 py-0.5 rounded-xl bg-white/15 backdrop-blur-sm text-on-primary border border-white/10">نشطة</span>
+                                <span className="text-micro font-bold px-2 py-0.5 rounded-xl bg-white/15 backdrop-blur-sm text-on-primary border border-white/10">نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -303,7 +303,7 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-[10px] md:text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
+                                "h-9 md:h-11 px-2 md:px-6 flex items-center justify-center gap-1 md:gap-3 text-micro md:text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95",
                                 showAddForm
                                 ? "bg-error text-on-error hover:bg-error-hover"
                                 : "bg-white/15 backdrop-blur-sm text-on-primary border border-white/20 hover:bg-white/25"

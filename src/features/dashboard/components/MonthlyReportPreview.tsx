@@ -32,7 +32,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
                         <div>
                             <h3 className="text-xl font-medium text-main dark:text-on-primary uppercase tracking-tight italic">تقرير التميز الأكاديمي</h3>
-                            <p className="text-[10px] font-medium text-muted uppercase mt-1">منصة دارين التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                            <p className="text-micro font-medium text-muted uppercase mt-1">منصة دارين التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                         </div>
                     </div>
 
@@ -40,12 +40,12 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         {/* Student Signature Header */}
                         <div className="flex items-center justify-between p-6 bg-background dark:bg-primary-active border-2 border-border rounded-none">
                             <div className="space-y-1 text-right">
-                                <p className="text-[9px] font-medium text-primary uppercase">نجمة أكاديمية</p>
+                                <p className="text-micro font-medium text-primary uppercase">نجمة أكاديمية</p>
                                 <h4 className="text-2xl font-medium text-main dark:text-on-primary uppercase tracking-tight">{student.name}</h4>
                             </div>
                             <div className="text-left bg-white dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-sm">
-                                <p className="text-[9px] font-medium text-muted uppercase mb-0.5">المستوى / المادة</p>
-                                <p className="text-[11px] font-medium text-primary uppercase">{student.grade} - {student.subject}</p>
+                                <p className="text-micro font-medium text-muted uppercase mb-0.5">المستوى / المادة</p>
+                                <p className="text-xs font-medium text-primary uppercase">{student.grade} - {student.subject}</p>
                             </div>
                         </div>
 
@@ -61,14 +61,14 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                                         <item.icon size={20} />
                                     </div>
                                     <p className="text-xl font-medium text-main dark:text-on-primary tabular-nums">{item.value}</p>
-                                    <p className="text-[8px] font-medium text-muted uppercase mt-1">{item.label}</p>
+                                    <p className="text-micro font-medium text-muted uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
                         </div>
 
                         {/* Qualitative Feedback */}
                         <div className="space-y-4 bg-background dark:bg-primary-active/20 p-6 border-2 border-border rounded-none">
-                            <p className="text-[10px] font-medium text-muted uppercase flex items-center gap-2">
+                            <p className="text-micro font-medium text-muted uppercase flex items-center gap-2">
                                 <CheckCircle2 size={14} className="text-primary" />
                                 التوصيات الأكاديمية ومسارات التطوير
                             </p>
@@ -84,7 +84,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
 
                         {/* Footer Message */}
                         <div className="p-6 bg-background text-on-primary rounded-none border-2 border-border text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
-                            <p className="text-[10px] font-medium uppercase italic">نحن فخورون بتقدمك المستمر يا بطل! استمر في التألق.</p>
+                            <p className="text-micro font-medium uppercase italic">نحن فخورون بتقدمك المستمر يا بطل! استمر في التألق.</p>
                         </div>
                     </div>
                 </div>

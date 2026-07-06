@@ -27,7 +27,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
         </div>
         <div>
             <p className="text-xs font-bold text-main">{label}</p>
-            {sub && <p className="text-[9px] font-bold text-dim mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -36,12 +36,12 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
     if (active && payload && payload.length) {
         return (
             <div className="bg-card border border-border shadow-xl text-main px-4 py-3 rounded-xl text-right min-w-[140px]" dir="rtl">
-                <p className="text-[10px] font-medium text-muted uppercase mb-2 pb-1 border-b border-border">{label}</p>
+                <p className="text-micro font-medium text-muted uppercase mb-2 pb-1 border-b border-border">{label}</p>
                 {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
                     <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
                         <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: entry.stroke || entry.fill }} />
-                            <span className="text-[10px] text-muted font-normal">{entry.name}</span>
+                            <span className="text-micro text-muted font-normal">{entry.name}</span>
                         </div>
                         <span className="text-sm font-medium font-mono text-main">{entry.value}</span>
                     </div>
@@ -79,8 +79,8 @@ export const AttendanceReport = ({
                             <item.icon size={16} style={{ color: item.color }} />
                         </div>
                         <p className="text-xl font-black font-mono" style={{ color: item.color }}>{item.value}</p>
-                        <p className="text-[9px] font-bold text-dim mt-1">{item.label}</p>
-                        <p className="text-[8px] font-bold text-dim mt-0.5">{item.sub}</p>
+                        <p className="text-micro font-bold text-dim mt-1">{item.label}</p>
+                        <p className="text-micro font-bold text-dim mt-0.5">{item.sub}</p>
                     </div>
                 ))}
             </div>
@@ -128,7 +128,7 @@ export const AttendanceReport = ({
                     ].map((l, i) => (
                         <div key={i} className="flex items-center gap-1.5">
                             <div className="w-5 h-0.5 rounded-full" style={{ backgroundColor: l.color }} />
-                            <span className="text-[10px] font-bold text-muted">{l.label}</span>
+                            <span className="text-micro font-bold text-muted">{l.label}</span>
                         </div>
                     ))}
                 </div>
@@ -147,12 +147,12 @@ export const AttendanceReport = ({
                     <table className="w-full text-right">
                         <thead>
                             <tr className="text-on-primary" style={{ background: 'linear-gradient(to left, var(--chart-4), color-mix(in srgb, var(--chart-4) 70%, white))' }}>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70">#</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-right">اسم المعلمة</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">مكتملة</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">ملغية</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center w-44">معدل الحضور</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-right">اسم المعلمة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">مكتملة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">ملغية</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center w-44">معدل الحضور</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
@@ -166,7 +166,7 @@ export const AttendanceReport = ({
                                     return (
                                         <tr key={index} className="hover:bg-hover transition-colors">
                                             <td className="px-5 py-3">
-                                                <span className="text-[10px] font-medium text-dim font-mono">
+                                                <span className="text-micro font-medium text-dim font-mono">
                                                     {medal || String(index + 1).padStart(2, '0')}
                                                 </span>
                                             </td>
@@ -189,7 +189,7 @@ export const AttendanceReport = ({
                                                             style={{ width: `${rate}%` }}
                                                         />
                                                     </div>
-                                                    <span className={cn("text-[10px] font-medium w-9 text-left", textColor)}>{rate}%</span>
+                                                    <span className={cn("text-micro font-medium w-9 text-left", textColor)}>{rate}%</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -216,12 +216,12 @@ export const AttendanceReport = ({
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
                                             <p className="text-xs font-normal text-main truncate">{teacher.teacher}</p>
-                                            <span className={cn("text-[10px] font-medium ml-2 shrink-0", textColor)}>{rate}%</span>
+                                            <span className={cn("text-micro font-medium ml-2 shrink-0", textColor)}>{rate}%</span>
                                         </div>
                                         <div className="flex items-center gap-3 mb-1.5">
-                                            <span className="text-[9px] text-success font-normal">{teacher.completed} ✓</span>
-                                            <span className="text-[9px] text-error font-normal">{teacher.cancelled} ✗</span>
-                                            <span className="text-[9px] text-dim font-normal">{teacher.total} إجمالي</span>
+                                            <span className="text-micro text-success font-normal">{teacher.completed} ✓</span>
+                                            <span className="text-micro text-error font-normal">{teacher.cancelled} ✗</span>
+                                            <span className="text-micro text-dim font-normal">{teacher.total} إجمالي</span>
                                         </div>
                                         <div className="h-1.5 bg-surface rounded-xl overflow-hidden">
                                             <div className={cn("h-full rounded-xl", barColor)} style={{ width: `${rate}%` }} />

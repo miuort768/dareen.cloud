@@ -62,7 +62,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     </div>
                     <div>
                         <h3 className="text-xl font-bold text-on-primary tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
-                        <p className="text-[10px] text-dim font-normal uppercase tracking-widest mt-1">
+                        <p className="text-micro text-dim font-normal uppercase tracking-widest mt-1">
                             {initialData ? 'أرشفة وتحديث السجل' : 'فتح سجل أكاديمي جديد'}
                         </p>
                     </div>
@@ -110,7 +110,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-normal text-dim uppercase mr-1">اسم المستخدم</label>
+                            <label className="text-micro font-normal text-dim uppercase mr-1">اسم المستخدم</label>
                             <div className="relative">
                                 <UserIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
@@ -122,7 +122,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-normal text-dim uppercase mr-1">كلمة المرور</label>
+                            <label className="text-micro font-normal text-dim uppercase mr-1">كلمة المرور</label>
                             <div className="relative">
                                 <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
@@ -141,7 +141,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="space-y-2">
                     <div className="flex items-center gap-3 mb-2">
                         <FileText size={14} className="text-dim" />
-                        <label className="text-[10px] font-normal text-dim uppercase">ملاحظات أكاديمية</label>
+                        <label className="text-micro font-normal text-dim uppercase">ملاحظات أكاديمية</label>
                     </div>
                     <textarea
                         value={formData.notes}
@@ -154,7 +154,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="flex items-center justify-end pt-6 border-t border-border">
                     <button
                         type="submit"
-                        className="px-10 py-3 bg-primary text-on-primary text-[11px] font-bold uppercase tracking-widest hover:bg-primary-hover flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-10 py-3 bg-primary text-on-primary text-xs font-bold uppercase tracking-widest hover:bg-primary-hover flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={16} />
                         {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}
@@ -167,7 +167,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
 const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => (
     <div className="space-y-2">
-        <label className="text-[10px] font-normal text-dim uppercase mr-1">{label}</label>
+        <label className="text-micro font-normal text-dim uppercase mr-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
             <select
@@ -191,7 +191,7 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-2">
-        <label className="text-[10px] font-normal text-dim uppercase mr-1">{label}</label>
+        <label className="text-micro font-normal text-dim uppercase mr-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
             <input

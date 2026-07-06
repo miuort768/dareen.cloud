@@ -56,7 +56,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                         <ExternalLink size={16} className="text-primary" />
                         <div>
                             <p className="text-sm font-bold text-primary">إدارة الأدوار المتقدمة</p>
-                            <p className="text-[10px] text-primary">صفحة منفصلة لإدارة الأدوار والصلاحيات بشكل متكامل</p>
+                            <p className="text-micro text-primary">صفحة منفصلة لإدارة الأدوار والصلاحيات بشكل متكامل</p>
                         </div>
                     </div>
                     <button onClick={() => navigate('/roles')} className="flex items-center gap-1.5 px-3 py-2 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-primary-hover transition-all">

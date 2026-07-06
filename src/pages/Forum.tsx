@@ -260,7 +260,7 @@ export const Forum = () => {
                             style={{ lineHeight: 1.8 }}
                         />
                         <div className="flex justify-between items-center">
-                            <p className="text-[10px] text-muted font-medium flex items-center gap-1.5">
+                            <p className="text-micro text-muted font-medium flex items-center gap-1.5">
                                 <ShieldCheck size={11} className="text-primary" /> نشر متوافق مع سياسات المنصة
                             </p>
                             <button
@@ -313,16 +313,16 @@ export const Forum = () => {
                                                 <div className="flex items-center gap-2 mb-0.5">
                                                     <h4 className="font-bold text-main dark:text-on-primary text-sm">{post.authorName}</h4>
                                                     {post.authorRole === 'admin' && (
-                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error/30">إدارة</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error/30">إدارة</span>
                                                     )}
                                                     {post.authorRole === 'teacher' && (
-                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-success-light text-success border border-success dark:bg-success/20 dark:text-success dark:border-success/30">معلم</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-success-light text-success border border-success dark:bg-success/20 dark:text-success dark:border-success/30">معلم</span>
                                                     )}
                                                     {post.authorRole === 'student' && (
-                                                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-info-light text-info border border-info dark:bg-info/20 dark:text-info dark:border-info/30">طالب</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-info-light text-info border border-info dark:bg-info/20 dark:text-info dark:border-info/30">طالب</span>
                                                     )}
                                                 </div>
-                                                <div className="flex items-center gap-1.5 text-[10px] text-muted font-medium">
+                                                <div className="flex items-center gap-1.5 text-micro text-muted font-medium">
                                                     <Clock size={9} />
                                                     <span>{formatDistanceToNow(new Date(post.created_at) > new Date() ? new Date() : new Date(post.created_at), { addSuffix: true, locale: ar })}</span>
                                                 </div>
@@ -348,7 +348,7 @@ export const Forum = () => {
                                                 </button>
                                                 {showMenuPostId === post.id && (
                                                     <div className="absolute left-0 top-full mt-1 w-36 bg-white dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
-                                                        <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-[10px] font-bold text-right text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
+                                                        <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-micro font-bold text-right text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
                                                             <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
                                                         </button>
                                                     </div>
@@ -369,7 +369,7 @@ export const Forum = () => {
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
                                             className={cn(
-                                                "flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold transition-all active:scale-95 rounded-xl",
+                                                "flex-1 py-2.5 flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 rounded-xl",
                                                 isLiked ? "text-primary bg-primary-soft dark:bg-primary-active/20" : "text-muted hover:text-muted hover:bg-surface dark:hover:bg-primary-active/50"
                                             )}
                                         >
@@ -378,14 +378,14 @@ export const Forum = () => {
                                         </button>
                                         <button 
                                             onClick={() => toggleComments(post.id)}
-                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold text-muted hover:text-muted transition-all active:scale-95 rounded-xl hover:bg-surface dark:hover:bg-primary-active/50 mx-1"
+                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-xs font-bold text-muted hover:text-muted transition-all active:scale-95 rounded-xl hover:bg-surface dark:hover:bg-primary-active/50 mx-1"
                                         >
                                             <MessageSquare size={15} />
                                             <span>{post.commentCount || 0} تعليق</span>
                                         </button>
                                         <button 
                                             onClick={() => handleReport(post.id)}
-                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-[11px] font-bold text-error hover:text-error transition-all active:scale-95 rounded-xl hover:bg-error-light dark:hover:bg-error/20"
+                                            className="flex-1 py-2.5 flex items-center justify-center gap-2 text-xs font-bold text-error hover:text-error transition-all active:scale-95 rounded-xl hover:bg-error-light dark:hover:bg-error/20"
                                         >
                                             <AlertTriangle size={15} />
                                             <span>بلاغ</span>
@@ -400,14 +400,14 @@ export const Forum = () => {
                                                     <div key={node.comment.id} className="space-y-3">
                                                         {/* Main Comment */}
                                                         <div className="flex gap-3">
-                                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-[10px] shrink-0 border-2 border-primary/50 dark:border-primary/30">
+                                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border-2 border-primary/50 dark:border-primary/30">
                                                                 {(node.comment.authorName?.[0] || '').toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
                                                                 <div className="bg-white dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border/50">
                                                                     <div className="flex justify-between items-center mb-1">
-                                                                        <h5 className="text-[11px] font-bold text-main dark:text-on-primary">{node.comment.authorName}</h5>
-                                                                        <span className="text-[9px] text-muted font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
+                                                                        <h5 className="text-xs font-bold text-main dark:text-on-primary">{node.comment.authorName}</h5>
+                                                                        <span className="text-micro text-muted font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                     </div>
                                                                     <p className="text-xs text-muted dark:text-dim leading-relaxed">{node.comment.content}</p>
                                                                     
@@ -419,10 +419,10 @@ export const Forum = () => {
                                                                                 setCommentTexts((prev) => ({ ...prev, [post.id]: newText }));
                                                                                 document.getElementById(`comment-input-${post.id}`)?.focus();
                                                                             }}
-                                                                            className="text-[10px] font-bold text-primary hover:text-primary transition-colors"
+                                                                            className="text-micro font-bold text-primary hover:text-primary transition-colors"
                                                                         >رد</button>
                                                                         {(isAdmin || currentUser?.id === node.comment.authorId) && (
-                                                                             <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-bold text-error hover:text-error transition-colors">حذف</button>
+                                                                             <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-micro font-bold text-error hover:text-error transition-colors">حذف</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -434,17 +434,17 @@ export const Forum = () => {
                                                             <div className="pr-7 space-y-2 border-r-2 border-primary dark:border-primary/30 mr-3">
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-2">
-                                                                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-[8px] shrink-0 border border-primary/50 dark:border-primary/30">
+                                                                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border border-primary/50 dark:border-primary/30">
                                                                             {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
                                                                         </div>
                                                                         <div className="flex-1 bg-white dark:bg-primary-active rounded-xl p-2.5 shadow-sm border border-border dark:border-border/50">
                                                                             <div className="flex justify-between items-center mb-0.5">
-                                                                                <h5 className="text-[10px] font-bold text-main dark:text-on-primary">{replyNode.comment.authorName}</h5>
-                                                                                <span className="text-[8px] text-muted">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
+                                                                                <h5 className="text-micro font-bold text-main dark:text-on-primary">{replyNode.comment.authorName}</h5>
+                                                                                <span className="text-micro text-muted">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                             </div>
-                                                                            <p className="text-[10px] text-muted dark:text-dim leading-relaxed">{replyNode.comment.content}</p>
+                                                                            <p className="text-micro text-muted dark:text-dim leading-relaxed">{replyNode.comment.content}</p>
                                                                             {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
-                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-1 text-[8px] font-bold text-error hover:text-error transition-colors">حذف</button>
+                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-1 text-micro font-bold text-error hover:text-error transition-colors">حذف</button>
                                                                             )}
                                                                         </div>
                                                                     </div>
@@ -487,11 +487,11 @@ export const Forum = () => {
                                         <div className="p-3.5 bg-warning-light dark:bg-warning/10 rounded-b-3xl border-t border-warning dark:border-warning/20 flex justify-between items-center">
                                             <div className="flex items-center gap-2 text-warning dark:text-warning">
                                                 <AlertTriangle size={13} />
-                                                <span className="text-[10px] font-bold">هذا المنشور ينتظر الموافقة</span>
+                                                <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success text-on-primary px-3.5 py-1.5 text-[9px] font-bold rounded-full transition-all active:scale-95">موافقة</button>
-                                                <button onClick={() => handleDeletePost(post.id)} className="bg-error hover:bg-error text-on-primary px-3.5 py-1.5 text-[9px] font-bold rounded-full transition-all active:scale-95">حذف</button>
+                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-full transition-all active:scale-95">موافقة</button>
+                                                <button onClick={() => handleDeletePost(post.id)} className="bg-error hover:bg-error text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-full transition-all active:scale-95">حذف</button>
                                             </div>
                                         </div>
                                     )}
@@ -509,9 +509,9 @@ export const Forum = () => {
                     <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
                     <div className="relative z-10 text-center md:text-right">
                         <h4 className="text-on-primary font-black text-base mb-1">إرشادات المنتدى</h4>
-                        <p className="text-primary text-[11px] font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
+                        <p className="text-primary text-xs font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
-                    <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="relative z-10 bg-white text-primary px-6 py-2.5 text-[11px] font-bold rounded-full hover:bg-primary-soft transition-all shadow-lg active:scale-95">
+                    <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="relative z-10 bg-white text-primary px-6 py-2.5 text-xs font-bold rounded-full hover:bg-primary-soft transition-all shadow-lg active:scale-95">
                         عرض الإرشادات
                     </button>
                 </div>

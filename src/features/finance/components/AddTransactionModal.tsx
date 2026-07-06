@@ -50,7 +50,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         </div>
                         <div>
                             <h3 className="text-base font-bold">تسجيل معاملة مالية</h3>
-                            <p className="text-[10px] font-medium text-on-primary opacity-70 tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
+                            <p className="text-micro font-medium text-on-primary opacity-70 tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
                         </div>
                     </div>
                     <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/10 transition-colors rounded-xl"><X size={18} /></button>
@@ -59,7 +59,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
+                            <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <Tag size={11} className="text-primary" /> نوع المعاملة
                             </label>
                             <select
@@ -72,7 +72,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
+                            <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <DollarSign size={11} className="text-primary" /> المبلغ المستحق
                             </label>
                             <input
@@ -89,7 +89,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
+                            <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <Info size={11} className="text-primary" /> التصنيف الحسابي
                             </label>
                             <input
@@ -102,7 +102,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
+                            <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <Calendar size={11} className="text-primary" /> تاريخ المعاملة
                             </label>
                             <input
@@ -116,7 +116,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-muted uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
+                        <label className="text-micro font-bold text-muted uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
                         <textarea
                             value={newTransaction.description}
                             onChange={e => setNewTransaction({ ...newTransaction, description: e.target.value })}

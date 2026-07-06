@@ -240,7 +240,7 @@ export const MobileSchedule = () => {
                                 whileTap={{ scale: 0.93 }}
                                 onClick={() => { triggerHaptic('light'); setSelectedDay(day); setSearchTerm(''); }}
                                 className={cn(
-                                    "px-3.5 py-2 rounded-2xl text-[10px] font-bold whitespace-nowrap transition-all border",
+                                    "px-3.5 py-2 rounded-2xl text-micro font-bold whitespace-nowrap transition-all border",
                                     isActive
                                         ? "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary border-primary shadow-sm shadow-primary/40"
                                         : "bg-white dark:bg-primary-active text-muted dark:text-muted border-border dark:border-border"
@@ -264,11 +264,11 @@ export const MobileSchedule = () => {
                 <div className="bg-white dark:bg-primary-active rounded-2xl p-3 shadow-sm border border-border/50 dark:border-border/50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <CalendarDays size={14} className="text-primary" strokeWidth={1.5} />
-                        <span className="text-[10px] font-bold text-muted dark:text-muted">{selectedDay}</span>
+                        <span className="text-micro font-bold text-muted dark:text-muted">{selectedDay}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <span className="text-lg font-black text-primary tabular-nums">{totalToday}</span>
-                        <span className="text-[8px] font-bold text-muted">حصة</span>
+                        <span className="text-micro font-bold text-muted">حصة</span>
                     </div>
                 </div>
             </motion.div>
@@ -302,7 +302,7 @@ export const MobileSchedule = () => {
                             >
                                 {/* Time column */}
                                 <div className="w-14 shrink-0 pt-1.5 text-center">
-                                    <span className="text-[9px] font-bold text-muted dark:text-muted tabular-nums">{slot.label}</span>
+                                    <span className="text-micro font-bold text-muted dark:text-muted tabular-nums">{slot.label}</span>
                                 </div>
                                 {/* Events */}
                                 <div className="flex-1 space-y-1.5 pb-2">
@@ -318,16 +318,16 @@ export const MobileSchedule = () => {
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[9px] font-black text-on-primary"
+                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black text-on-primary"
                                                             style={{ backgroundColor: color }}>
                                                             {event.studentName.charAt(0)}
                                                         </div>
                                                         <div>
-                                                            <p className="text-[11px] font-bold text-main dark:text-on-primary leading-tight">{event.studentName}</p>
-                                                            <p className="text-[8px] font-bold text-muted">{event.subject}</p>
+                                                            <p className="text-xs font-bold text-main dark:text-on-primary leading-tight">{event.studentName}</p>
+                                                            <p className="text-micro font-bold text-muted">{event.subject}</p>
                                                         </div>
                                                     </div>
-                                                    <span className="text-[7px] font-bold px-1.5 py-0.5 rounded-lg" style={{ backgroundColor: `${color}15`, color }}>
+                                                    <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg" style={{ backgroundColor: `${color}15`, color }}>
                                                         {event.teacherName}
                                                     </span>
                                                 </div>
@@ -342,7 +342,7 @@ export const MobileSchedule = () => {
                     <div className="py-16 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                         <CalendarDays size={28} className="mx-auto mb-2 text-dim dark:text-muted" strokeWidth={1.5} />
                         <p className="text-xs font-bold text-muted dark:text-muted">لا توجد حصص في هذا اليوم</p>
-                        <p className="text-[9px] font-medium text-dim dark:text-muted mt-1">اختر يوماً آخر من الأيام أعلاه</p>
+                        <p className="text-micro font-medium text-dim dark:text-muted mt-1">اختر يوماً آخر من الأيام أعلاه</p>
                     </div>
                 )}
             </div>
@@ -372,32 +372,32 @@ export const MobileSchedule = () => {
 
                             <div className="px-5 pb-6 space-y-4">
                                 <div className="text-center">
-                                    <p className="text-[9px] font-bold text-muted">تفاصيل الحصة</p>
+                                    <p className="text-micro font-bold text-muted">تفاصيل الحصة</p>
                                     <h3 className="text-sm font-black text-main dark:text-on-primary mt-0.5">{selectedEvent.day}</h3>
                                 </div>
 
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', borderRight: '3px solid var(--bg-primary)' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">الطالب</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.studentName}</p>
-                                            <span className="text-[9px] font-bold text-primary">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
+                                            <span className="text-micro font-bold text-muted">الطالب</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.studentName}</p>
+                                            <span className="text-micro font-bold text-primary">{selectedEvent.studentGrade} · {selectedEvent.subject}</span>
                                         </div>
                                         <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(16,185,129,0.03)', borderRight: '3px solid var(--bg-success)' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">المعلمة</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
+                                            <span className="text-micro font-bold text-muted">المعلمة</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
                                         </div>
                                         <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
                                     <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(245,158,11,0.03)', borderRight: '3px solid var(--bg-warning)' }}>
                                         <div>
-                                            <span className="text-[8px] font-bold text-muted">الوقت</span>
-                                            <p className="text-[13px] font-bold text-main dark:text-on-primary">{selectedEvent.time}</p>
+                                            <span className="text-micro font-bold text-muted">الوقت</span>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.time}</p>
                                         </div>
                                         <Clock size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
@@ -419,7 +419,7 @@ export const MobileSchedule = () => {
                                                 if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                             } catch { setShowDetails(false); }
                                         }}
-                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-primary/30"
+                                        className="flex-1 py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-sm shadow-primary/30"
                                     >
                                         <Video size={14} strokeWidth={1.5} />
                                         بدء بث مباشر
@@ -427,7 +427,7 @@ export const MobileSchedule = () => {
                                     <motion.button
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => { triggerHaptic('light'); navigate(`/students`); setShowDetails(false); }}
-                                        className="flex-1 py-3 rounded-2xl bg-surface dark:bg-primary-active text-muted dark:text-dim text-[10px] font-bold border border-border dark:border-border"
+                                        className="flex-1 py-3 rounded-2xl bg-surface dark:bg-primary-active text-muted dark:text-dim text-micro font-bold border border-border dark:border-border"
                                     >
                                         عرض الطالب
                                     </motion.button>

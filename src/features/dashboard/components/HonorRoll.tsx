@@ -36,7 +36,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                 لوحة الشرف
                                 <Sparkles style={{ color }} size={14} />
                             </h2>
-                            <p className="text-[9px] font-medium text-muted mt-0.5">الأداء المتميز</p>
+                            <p className="text-micro font-medium text-muted mt-0.5">الأداء المتميز</p>
                         </div>
                     </div>
                 </div>
@@ -65,10 +65,10 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                 </div>
 
                                 <div className="w-full">
-                                    <p className={cn("text-[10px] font-bold truncate mb-1", isFirst ? "text-warning dark:text-warning" : "text-main dark:text-on-primary")}>{student.name}</p>
+                                    <p className={cn("text-micro font-bold truncate mb-1", isFirst ? "text-warning dark:text-warning" : "text-main dark:text-on-primary")}>{student.name}</p>
                                     <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-on-primary" style={{ backgroundColor: color }}>
-                                        <span className="text-[9px] font-bold tabular-nums">{student.totalPoints}</span>
-                                        <span className="text-[7px] font-medium opacity-70">نقطة</span>
+                                        <span className="text-micro font-bold tabular-nums">{student.totalPoints}</span>
+                                        <span className="text-micro font-medium opacity-70">نقطة</span>
                                     </div>
                                 </div>
                             </div>

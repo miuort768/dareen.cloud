@@ -27,7 +27,7 @@ export const QuickActions = ({ navigate, onStartSession }: QuickActionsProps) =>
                 <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mx-auto mb-1.5", action.bg)}>
                     <action.icon size={18} className={action.color} />
                 </div>
-                <span className="block text-[9px] sm:text-[10px] font-bold text-muted leading-tight">
+                <span className="block text-micro sm:text-micro font-bold text-muted leading-tight">
                     {action.label}
                 </span>
             </button>

@@ -32,7 +32,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
         </div>
         <div>
             <p className="text-xs font-bold text-main">{label}</p>
-            {sub && <p className="text-[9px] font-bold text-muted mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -41,8 +41,8 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
     if (active && payload && payload.length) {
         return (
             <div className="bg-card border border-border shadow-xl px-4 py-3 rounded-xl" dir="rtl">
-                <p className="text-[10px] font-bold text-muted mb-1">{label}</p>
-                <p className="text-lg font-bold text-main tabular-nums">{payload[0].value} <span className="text-[10px] text-muted">طالب</span></p>
+                <p className="text-micro font-bold text-muted mb-1">{label}</p>
+                <p className="text-lg font-bold text-main tabular-nums">{payload[0].value} <span className="text-micro text-muted">طالب</span></p>
             </div>
         );
     }
@@ -112,11 +112,11 @@ export const AcademicReport = ({
                                         <div className="flex items-center justify-between mb-1">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-2 h-2 rounded-sm shrink-0" style={{ backgroundColor: color }} />
-                                                <span className="text-[11px] font-bold text-muted truncate max-w-[120px]">{entry.name}</span>
+                                                <span className="text-xs font-bold text-muted truncate max-w-[120px]">{entry.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[10px] font-bold text-muted tabular-nums">{entry.value}</span>
-                                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg text-on-primary" style={{ backgroundColor: color }}>{pct}%</span>
+                                                <span className="text-micro font-bold text-muted tabular-nums">{entry.value}</span>
+                                                <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg text-on-primary" style={{ backgroundColor: color }}>{pct}%</span>
                                             </div>
                                         </div>
                                         <div className="h-1.5 bg-surface rounded-xl overflow-hidden">
@@ -145,7 +145,7 @@ export const AcademicReport = ({
                             <item.icon size={16} style={{ color: item.color }} />
                         </div>
                         <p className="text-xl font-black tabular-nums" style={{ color: item.color }}>{item.value}</p>
-                        <p className="text-[9px] font-bold mt-1 text-muted">{item.label}</p>
+                        <p className="text-micro font-bold mt-1 text-muted">{item.label}</p>
                     </div>
                 ))}
             </div>
@@ -158,7 +158,7 @@ export const AcademicReport = ({
                         </div>
                         <div>
                             <p className="text-xs font-bold text-main">تقرير تقدم الطلاب</p>
-                            <p className="text-[9px] font-bold text-muted mt-0.5">
+                            <p className="text-micro font-bold text-muted mt-0.5">
                                 {sortedStudents.length} طالب • صفحة {page} من {totalPages}
                             </p>
                         </div>
@@ -179,13 +179,13 @@ export const AcademicReport = ({
                     <table className="w-full text-right">
                         <thead>
                             <tr className="bg-chart-4 text-on-primary">
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70">#</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-right">اسم الطالب</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">الصف</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">الاشتراكات</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center">المستخدمة</th>
-                                <th className="px-5 py-3 text-[9px] font-bold text-on-primary opacity-70 text-center w-40">التقدم</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-right">اسم الطالب</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">الصف</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">الاشتراكات</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المستخدمة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center w-40">التقدم</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-divider">
@@ -197,18 +197,18 @@ export const AcademicReport = ({
                                 return (
                                     <tr key={student.id} className="hover:bg-hover transition-colors">
                                         <td className="px-5 py-3">
-                                            <span className="text-[10px] font-medium text-dim tabular-nums">{String(globalIdx).padStart(2, '0')}</span>
+                                            <span className="text-micro font-medium text-dim tabular-nums">{String(globalIdx).padStart(2, '0')}</span>
                                         </td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-7 h-7 rounded-xl bg-chart-4/10 flex items-center justify-center text-[10px] font-black text-chart-4">
+                                                <div className="w-7 h-7 rounded-xl bg-chart-4/10 flex items-center justify-center text-micro font-black text-chart-4">
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <span className="text-xs font-bold text-main">{student.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-3 text-center">
-                                            <span className="inline-flex px-2 py-0.5 text-[9px] font-bold rounded-lg bg-chart-4/10 text-chart-4">
+                                            <span className="inline-flex px-2 py-0.5 text-micro font-bold rounded-lg bg-chart-4/10 text-chart-4">
                                                 {student.grade}
                                             </span>
                                         </td>
@@ -220,7 +220,7 @@ export const AcademicReport = ({
                                                 <div className="flex-1 bg-surface h-2 rounded-xl overflow-hidden">
                                                     <div className={cn("h-full rounded-xl transition-all duration-700", progBg)} style={{ width: `${prog}%` }} />
                                                 </div>
-                                                <span className={cn("text-[10px] font-medium w-9 text-left", progText)}>{prog}%</span>
+                                                <span className={cn("text-micro font-medium w-9 text-left", progText)}>{prog}%</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -249,16 +249,16 @@ export const AcademicReport = ({
                             <div key={student.id} className="p-4 flex items-center gap-3">
                                 <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 relative bg-chart-4/10 text-chart-4">
                                     {student.name.charAt(0)}
-                                    <span className="absolute -top-1 -right-1 text-[8px] font-bold text-on-primary w-4 h-4 flex items-center justify-center rounded-full bg-chart-4">{globalIdx}</span>
+                                    <span className="absolute -top-1 -right-1 text-micro font-bold text-on-primary w-4 h-4 flex items-center justify-center rounded-full bg-chart-4">{globalIdx}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
                                         <p className="text-xs font-bold text-main truncate">{student.name}</p>
-                                        <span className={cn("text-[10px] font-bold ml-2 shrink-0", progText)}>{prog}%</span>
+                                        <span className={cn("text-micro font-bold ml-2 shrink-0", progText)}>{prog}%</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg bg-chart-4/10 text-chart-4">{student.grade}</span>
-                                        <span className="text-[9px] text-muted font-bold">{student.usedSessions}/{student.totalSessions} حصة</span>
+                                        <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-chart-4/10 text-chart-4">{student.grade}</span>
+                                        <span className="text-micro text-muted font-bold">{student.usedSessions}/{student.totalSessions} حصة</span>
                                     </div>
                                     <div className="h-1.5 bg-surface rounded-xl overflow-hidden">
                                         <div className={cn("h-full rounded-xl", progBg)} style={{ width: `${prog}%` }} />
@@ -278,7 +278,7 @@ export const AcademicReport = ({
 
                 {totalPages > 1 && (
                     <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface">
-                        <p className="text-[10px] font-bold text-muted">
+                        <p className="text-micro font-bold text-muted">
                             {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, sortedStudents.length)} من {sortedStudents.length}
                         </p>
                         <div className="flex items-center gap-1">
@@ -294,7 +294,7 @@ export const AcademicReport = ({
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={cn(
-                                        'w-8 h-8 text-[11px] font-bold rounded-xl border shadow-sm active:scale-95 transition-all',
+                                        'w-8 h-8 text-xs font-bold rounded-xl border shadow-sm active:scale-95 transition-all',
                                         page === i + 1 ? 'border-chart-4 bg-chart-4 text-on-primary' : 'border-border bg-card text-muted'
                                     )}
                                 >

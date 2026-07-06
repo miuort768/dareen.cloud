@@ -142,13 +142,13 @@ export const Announcements = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-main leading-tight">الإعلانات</h1>
-                        <p className="text-[11px] font-bold text-muted mt-0.5">إدارة الإعلانات والتنبيهات</p>
+                        <p className="text-xs font-bold text-muted mt-0.5">إدارة الإعلانات والتنبيهات</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-info-soft text-info">
                         <span className="text-sm font-black leading-none">{announcements.filter(a => a.isActive).length}</span>
-                        <span className="text-[8px] font-bold leading-none">نشط</span>
+                        <span className="text-micro font-bold leading-none">نشط</span>
                     </div>
                     <button
                         onClick={() => {
@@ -159,7 +159,7 @@ export const Announcements = () => {
                         className="bg-primary text-on-primary h-10 px-4 flex items-center justify-center gap-2 hover:bg-primary-hover transition-all font-bold shadow-sm active:scale-95 rounded-xl"
                     >
                         <Plus size={16} />
-                        <span className="text-[10px] font-bold">إضافة إعلان</span>
+                        <span className="text-micro font-bold">إضافة إعلان</span>
                     </button>
                 </div>
             </div>
@@ -184,8 +184,8 @@ export const Announcements = () => {
                                             <Icon size={18} className={typeColorClasses(ann.type, 'text')} />
                                         </div>
                                         <div>
-                                            <span className={cn("text-[10px] font-bold inline-flex items-center px-2 py-0.5 rounded-lg mb-0.5", typeColorClasses(ann.type, 'badge'))}>{meta.label}</span>
-                                            <p className="font-bold text-[9px] text-muted">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
+                                            <span className={cn("text-micro font-bold inline-flex items-center px-2 py-0.5 rounded-lg mb-0.5", typeColorClasses(ann.type, 'badge'))}>{meta.label}</span>
+                                            <p className="font-bold text-micro text-muted">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
                                         </div>
                                     </div>
                                     
@@ -206,8 +206,8 @@ export const Announcements = () => {
                                 </div>
 
                                 <div className="space-y-2 md:space-y-3">
-                                    <h3 className="text-sm md:text-[17px] font-bold text-main leading-tight">{ann.title}</h3>
-                                    <p className="text-muted font-bold text-[10px] md:text-[11px] leading-relaxed line-clamp-4 border-r-2 border-border pr-2 md:pr-3">
+                                    <h3 className="text-sm md:text-base font-bold text-main leading-tight">{ann.title}</h3>
+                                    <p className="text-muted font-bold text-micro md:text-xs leading-relaxed line-clamp-4 border-r-2 border-border pr-2 md:pr-3">
                                         {ann.content}
                                     </p>
                                 </div>
@@ -215,7 +215,7 @@ export const Announcements = () => {
 
                             {!ann.isActive && (
                                 <div className="mt-5 pt-3 border-t border-dashed border-border">
-                                    <span className="text-[7px] font-bold text-warning-dark dark:text-warning flex items-center gap-1.5">
+                                    <span className="text-micro font-bold text-warning-dark dark:text-warning flex items-center gap-1.5">
                                         <Info size={10} /> غير نشط
                                     </span>
                                 </div>
@@ -250,7 +250,7 @@ export const Announcements = () => {
 
                         <form onSubmit={handleSave} className="p-6 space-y-5">
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">عنوان الإعلان / النبأ</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">عنوان الإعلان / النبأ</label>
                                 <input
                                     required
                                     type="text"
@@ -263,7 +263,7 @@ export const Announcements = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-[10px] font-bold text-muted mb-1.5">نوع الإعلان</label>
+                                    <label className="block text-micro font-bold text-muted mb-1.5">نوع الإعلان</label>
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
@@ -276,13 +276,13 @@ export const Announcements = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-bold text-muted mb-1.5">حالة النشر</label>
+                                    <label className="block text-micro font-bold text-muted mb-1.5">حالة النشر</label>
                                     <div className="flex gap-1 h-11">
                                         <button 
                                             type="button"
                                             onClick={() => setFormData({...formData, isActive: true})}
                                             className={cn(
-                                                "flex-1 font-bold text-[10px] rounded-xl transition-all active:scale-95",
+                                                "flex-1 font-bold text-micro rounded-xl transition-all active:scale-95",
                                                 formData.isActive ? "bg-success text-on-success shadow-sm" : "bg-surface dark:bg-card text-dim"
                                             )}
                                         >
@@ -292,7 +292,7 @@ export const Announcements = () => {
                                             type="button"
                                             onClick={() => setFormData({...formData, isActive: false})}
                                             className={cn(
-                                                "flex-1 font-bold text-[10px] rounded-xl transition-all active:scale-95",
+                                                "flex-1 font-bold text-micro rounded-xl transition-all active:scale-95",
                                                 !formData.isActive ? "bg-warning text-on-warning shadow-sm" : "bg-surface dark:bg-card text-dim"
                                             )}
                                         >
@@ -303,7 +303,7 @@ export const Announcements = () => {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">محتوى الإعلان</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">محتوى الإعلان</label>
                                 <textarea
                                     required
                                     rows={4}

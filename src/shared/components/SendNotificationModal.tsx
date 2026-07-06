@@ -59,13 +59,13 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                         <h3 className="text-2xl font-black text-main dark:text-on-primary mb-1 uppercase tracking-tighter italic">
                             بث إشعار فوري
                         </h3>
-                        <p className="text-muted dark:text-muted font-bold text-[10px] mb-8 uppercase tracking-widest">
+                        <p className="text-muted dark:text-muted font-bold text-micro mb-8 uppercase tracking-widest">
                             إلى: <span className="text-[var(--primary-color,var(--bg-primary))]">{recipientName}</span>
                         </p>
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-right">
                             <div className="space-y-2">
-                                <label className="text-[9px] font-black text-muted uppercase tracking-[0.2em] mr-1">محتوى التنبيه</label>
+                                <label className="text-micro font-black text-muted uppercase tracking-[0.2em] mr-1">محتوى التنبيه</label>
                                 <textarea
                                     required
                                     autoFocus
@@ -80,7 +80,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="submit"
                                     disabled={!message.trim()}
-                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
+                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
                                 >
                                     <div className="flex items-center justify-center gap-3">
                                         <span>إرسال التنبيه الآن</span>
@@ -90,7 +90,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-black text-[10px] uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
+                                    className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-black text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
                                 >
                                     إلغاء العملية
                                 </button>

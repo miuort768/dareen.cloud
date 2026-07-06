@@ -36,11 +36,11 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
                 <div className="text-right">
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-on-primary text-[9px] font-bold px-2.5 py-1 rounded-xl border border-white/10">
+                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-on-primary text-micro font-bold px-2.5 py-1 rounded-xl border border-white/10">
                             <ShieldCheck size={10} strokeWidth={1.5} />
                             {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
                         </span>
-                        <span className="inline-flex items-center gap-1 bg-success/20 backdrop-blur-sm text-success text-[8px] font-bold px-2 py-0.5 rounded-xl">
+                        <span className="inline-flex items-center gap-1 bg-success/20 backdrop-blur-sm text-success text-micro font-bold px-2 py-0.5 rounded-xl">
                             <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
                             نشط
                         </span>
@@ -54,7 +54,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                             {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
                         </span>
                         <span className="w-0.5 h-3 bg-white/20" />
-                        <span className="inline-flex items-center gap-1 text-[9px] text-white/60">
+                        <span className="inline-flex items-center gap-1 text-micro text-white/60">
                             <TrendingUp size={10} strokeWidth={1.5} className="text-white/50" />
                             النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%
                         </span>
@@ -74,7 +74,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 {currentUser?.role === 'admin' && (
                     <button
                         onClick={toggleTasbeeh}
-                        className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold bg-white/15 backdrop-blur-sm text-on-primary rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
+                        className="flex items-center gap-2 h-10 px-5 text-micro font-bold bg-white/15 backdrop-blur-sm text-on-primary rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
                     >
                         <Sparkles size={14} strokeWidth={1.5} />
                         المسبحة

@@ -68,7 +68,7 @@ export function DesignTokenSection() {
                   style={{ borderRadius: value }}
                 />
                 <span className="text-xs text-muted font-mono">{cssVar}</span>
-                <span className="text-[10px] text-dim font-mono">{value}</span>
+                <span className="text-micro text-dim font-mono">{value}</span>
               </div>
             );
           })}

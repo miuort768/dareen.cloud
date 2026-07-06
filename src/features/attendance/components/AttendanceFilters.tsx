@@ -53,13 +53,13 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         </div>
                         <div>
                             <h3 className="text-xs font-bold text-main dark:text-on-primary">فلترة السجلات</h3>
-                            <p className="text-[10px] font-bold text-muted">تخصيص عرض الجلسات</p>
+                            <p className="text-micro font-bold text-muted">تخصيص عرض الجلسات</p>
                         </div>
                     </div>
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-[10px] rounded-xl transition-all" style={{ backgroundColor: 'rgba(244,63,94,0.07)', color: 'var(--bg-error)' }}
+                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-micro rounded-xl transition-all" style={{ backgroundColor: 'rgba(244,63,94,0.07)', color: 'var(--bg-error)' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>
@@ -73,7 +73,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                 <button
                                     key={key}
                                     onClick={() => onPeriodChange(key)}
-                                                    className={`px-3 py-1.5 text-[10px] font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-dim bg-surface dark:bg-primary-active hover:bg-surface'}`}
+                                                    className={`px-3 py-1.5 text-micro font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-dim bg-surface dark:bg-primary-active hover:bg-surface'}`}
                                                     style={periodFilter === key ? { backgroundColor: 'var(--bg-primary)' } : {}}
                                 >
                                     {periodLabels[key]}
@@ -83,14 +83,14 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         {periodFilter === 'custom' && (
                             <div className="flex flex-wrap items-center gap-3 mt-3">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold text-muted">من</span>
+                                    <span className="text-micro font-bold text-muted">من</span>
                                     <input type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-[10px] font-bold outline-none focus:border-primary transition-all" />
+                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold text-muted">إلى</span>
+                                    <span className="text-micro font-bold text-muted">إلى</span>
                                     <input type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-[10px] font-bold outline-none focus:border-primary transition-all" />
+                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
                                 </div>
                             </div>
                         )}

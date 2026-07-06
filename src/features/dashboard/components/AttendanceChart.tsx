@@ -39,14 +39,14 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                     </svg>
                 </div>
                 <div className="space-y-1.5">
-                    <p className="text-[11px] font-bold text-main">
+                    <p className="text-xs font-bold text-main">
                         {rate >= 80 ? 'حضور ممتاز' : rate >= 50 ? 'حضور متوسط' : 'حضور منخفض'}
                     </p>
                     <div className="w-full bg-surface rounded-full h-1.5">
                         <div className="h-1.5 rounded-full transition-all duration-1000"
                             style={{ width: `${rate}%`, backgroundColor: getStrokeColor(rate) }} />
                     </div>
-                    <p className="text-[8px] font-medium text-dim">
+                    <p className="text-micro font-medium text-dim">
                         {rate >= 80 ? 'أداء متميز، استمر!' : rate >= 50 ? 'يمكن تحسينه بالمتابعة' : 'يحتاج إلى اهتمام'}
                     </p>
                 </div>

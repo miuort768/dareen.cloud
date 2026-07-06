@@ -36,10 +36,10 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         </div>
                         <div>
                             <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">تجديد الاشتراكات</h3>
-                            <p className="text-[9px] font-medium text-muted">إدارة التحصيل المالي</p>
+                            <p className="text-micro font-medium text-muted">إدارة التحصيل المالي</p>
                         </div>
                     </div>
-                    <div className="px-3 py-1 text-[9px] font-bold rounded-xl text-on-primary shadow-sm" style={{ backgroundColor: subColor }}>
+                    <div className="px-3 py-1 text-micro font-bold rounded-xl text-on-primary shadow-sm" style={{ backgroundColor: subColor }}>
                         {stats.lowBalanceCount} تنبيهات
                     </div>
                 </div>
@@ -49,12 +49,12 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         lowBalanceStudents.map((item, idx) => (
                             <div key={idx} className="p-3 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all flex items-center justify-between group/item">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[11px] transition-colors" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
+                                    <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs transition-colors" style={{ backgroundColor: `${subColor}12`, color: subColor }}>
                                         {item.studentName.charAt(0)}
                                     </div>
                                     <div className="min-w-0">
                                         <h4 className="font-bold text-xs text-main dark:text-on-primary truncate">{item.studentName}</h4>
-                                        <p className="text-[9px] font-medium text-muted mt-0.5 flex items-center gap-1">
+                                        <p className="text-micro font-medium text-muted mt-0.5 flex items-center gap-1">
                                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: subColor }} />
                                             {item.subject}
                                         </p>
@@ -63,7 +63,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
 
                                 <div className="flex items-center gap-3 shrink-0">
                                     <span className={cn(
-                                        "text-[8px] font-bold px-2 py-1 border rounded-xl shadow-sm",
+                                        "text-micro font-bold px-2 py-1 border rounded-xl shadow-sm",
                                         item.remainingSessions === 0 
                                             ? "text-error border-error bg-error-light dark:bg-error/20" 
                                             : "text-warning border-warning bg-warning-light dark:bg-warning/20"
@@ -83,13 +83,13 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     ) : (
                         <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                             <UserX size={24} className="mx-auto mb-2" style={{ color: `${subColor}40` }} />
-                            <p className="text-[9px] font-medium text-muted">لا توجد تجديدات معلقة</p>
+                            <p className="text-micro font-medium text-muted">لا توجد تجديدات معلقة</p>
                         </div>
                     )}
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/students" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: 'var(--text-main)' }}>
+                    <Link to="/students" className="w-full h-11 rounded-2xl text-on-primary text-micro font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: 'var(--text-main)' }}>
                         إدارة كافة الطلاب
                         <ChevronLeft size={14} />
                     </Link>
@@ -105,10 +105,10 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         </div>
                         <div>
                             <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">المهام والطلبات</h3>
-                            <p className="text-[9px] font-medium text-muted">سير العمليات التشغيلية</p>
+                            <p className="text-micro font-medium text-muted">سير العمليات التشغيلية</p>
                         </div>
                     </div>
-                    <div className="px-3 py-1 text-[9px] font-bold rounded-xl shadow-sm" style={{ backgroundColor: `${taskColor}20`, color: taskColor }}>
+                    <div className="px-3 py-1 text-micro font-bold rounded-xl shadow-sm" style={{ backgroundColor: `${taskColor}20`, color: taskColor }}>
                         {tasks.length} مهام نشطة
                     </div>
                 </div>
@@ -124,9 +124,9 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                         <div className="flex items-center gap-2 mt-1">
                                             <div className="flex items-center gap-1">
                                                 <Clock size={10} className="text-muted" />
-                                                <span className="text-[8px] font-medium text-muted">{task.dueDate}</span>
+                                                <span className="text-micro font-medium text-muted">{task.dueDate}</span>
                                             </div>
-                                            <span className="text-[8px] font-medium text-dim">[{task.priority}]</span>
+                                            <span className="text-micro font-medium text-dim">[{task.priority}]</span>
                                         </div>
                                     </div>
                                 </div>
@@ -139,13 +139,13 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     ) : (
                         <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                             <ListTodo size={24} className="mx-auto mb-2" style={{ color: `${taskColor}40` }} />
-                            <p className="text-[9px] font-medium text-muted">تم إنجاز كافة المهام</p>
+                            <p className="text-micro font-medium text-muted">تم إنجاز كافة المهام</p>
                         </div>
                     )}
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/tasks" className="w-full h-11 rounded-2xl text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: taskColor }}>
+                    <Link to="/tasks" className="w-full h-11 rounded-2xl text-on-primary text-micro font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style={{ backgroundColor: taskColor }}>
                         مركز المهام المتكامل
                         <ChevronLeft size={14} />
                     </Link>

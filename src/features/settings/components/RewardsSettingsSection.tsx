@@ -51,21 +51,21 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                     <div className="p-3 bg-warning-soft rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Star size={14} className="text-warning" />
-                            <span className="text-[11px] font-bold text-warning-dark">الشارة البرونزية</span>
+                            <span className="text-xs font-bold text-warning-dark">الشارة البرونزية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold1} onChange={e => setBadgeThreshold1(e.target.value)} />
                     </div>
                     <div className="p-3 bg-surface rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Trophy size={14} className="text-muted" />
-                            <span className="text-[11px] font-bold text-main">الشارة الفضية</span>
+                            <span className="text-xs font-bold text-main">الشارة الفضية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold2} onChange={e => setBadgeThreshold2(e.target.value)} />
                     </div>
                     <div className="p-3 bg-warning-soft rounded-xl border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Award size={14} className="text-warning-dark" />
-                            <span className="text-[11px] font-bold text-warning-dark">الشارة الذهبية</span>
+                            <span className="text-xs font-bold text-warning-dark">الشارة الذهبية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold3} onChange={e => setBadgeThreshold3(e.target.value)} />
                     </div>

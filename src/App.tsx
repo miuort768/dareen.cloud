@@ -182,7 +182,7 @@ function App() {
 
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
-        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-primary text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
+        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-primary text-micro font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
           <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
             onClick={() => navigate('/settings')}

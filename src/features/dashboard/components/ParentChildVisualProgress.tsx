@@ -31,7 +31,7 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                         {/* Header: Level & Points */}
                         <div className="flex items-center justify-between mb-6">
                             <div className="space-y-1">
-                                <p className="text-[10px] font-medium text-muted uppercase tracking-widest leading-none">مستوى الطالب</p>
+                                <p className="text-micro font-medium text-muted uppercase tracking-widest leading-none">مستوى الطالب</p>
                                 <h4 className={cn("text-sm font-medium uppercase tracking-tighter italic", level.color)}>{level.name}</h4>
                             </div>
                             <div className="text-right flex items-center gap-2">
@@ -51,24 +51,24 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                 ></div>
                             </div>
                             {level.next && (
-                                <p className="text-[9px] font-medium text-muted text-center uppercase tracking-widest">متبقي {level.next - child.totalPoints} نقطة للمستوى التالي!</p>
+                                <p className="text-micro font-medium text-muted text-center uppercase tracking-widest">متبقي {level.next - child.totalPoints} نقطة للمستوى التالي!</p>
                             )}
                         </div>
 
                         {/* Badges Section (Suggestion 3) */}
                         <div className="space-y-4 mb-8">
-                            <p className="text-[10px] font-medium text-muted uppercase tracking-widest border-b-2 border-border dark:border-border pb-2">معرض الأوسمة (Badge Wall)</p>
+                            <p className="text-micro font-medium text-muted uppercase tracking-widest border-b-2 border-border dark:border-border pb-2">معرض الأوسمة (Badge Wall)</p>
                             <div className="flex flex-wrap gap-3">
                                 {child.badges && child.badges.length > 0 ? child.badges.map((badge, idx) => (
                                     <div key={idx} className="p-2 bg-card text-on-primary border-2 border-white/20 hover:scale-110 transition-transform cursor-help group/badge relative">
                                         <Award size={18} className="text-warning" />
-                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-card text-[8px] font-medium uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-card text-micro font-medium uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
                                             {badge}
                                         </div>
                                     </div>
                                 )) : (
                                     <div className="p-4 border-2 border-dashed border-border dark:border-border flex items-center justify-center w-full">
-                                        <p className="text-[10px] font-medium text-dim uppercase tracking-widest italic">لا يوجد أوسمة بعد</p>
+                                        <p className="text-micro font-medium text-dim uppercase tracking-widest italic">لا يوجد أوسمة بعد</p>
                                     </div>
                                 )}
                             </div>
@@ -81,15 +81,15 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                     <Star size={18} className="fill-current" />
                                 </div>
                                 <div>
-                                    <h5 className="text-[10px] font-medium text-main dark:text-on-primary leading-none mb-1 uppercase tracking-tighter">{child.teacherName}</h5>
-                                    <p className="text-[9px] font-medium text-success uppercase tracking-widest leading-none">آخر تقييم: ممتاز</p>
+                                    <h5 className="text-micro font-medium text-main dark:text-on-primary leading-none mb-1 uppercase tracking-tighter">{child.teacherName}</h5>
+                                    <p className="text-micro font-medium text-success uppercase tracking-widest leading-none">آخر تقييم: ممتاز</p>
                                 </div>
                             </div>
                             <a 
                                 href={`https://wa.me/${child.adminPhone?.replace(/\D/g, '')}?text=${encodeURIComponent(`شكراً جزيلاً للمعلمة ${child.teacherName} على جهودها الرائعة مع ${child.name}. وجدنا تقريرها متميزاً جداً!`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-5 py-2.5 bg-success text-main border-2 border-border font-medium text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
+                                className="px-5 py-2.5 bg-success text-main border-2 border-border font-medium text-micro uppercase tracking-widest shadow-[4px_4px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
                             >
                                 <Heart size={14} className="group-hover/btn:scale-125 transition-transform text-error fill-current" />
                                 شكراً معلمي

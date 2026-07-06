@@ -85,7 +85,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                     <CheckCircle2 size={28} className="text-success" />
                 </div>
                 <h4 className="text-sm font-bold text-main dark:text-on-primary mb-1">كل شيء ممتاز!</h4>
-                <p className="text-[10px] text-muted dark:text-muted">جميع طلابك ملتزمون بالخطط والمواعيد حالياً.</p>
+                <p className="text-micro text-muted dark:text-muted">جميع طلابك ملتزمون بالخطط والمواعيد حالياً.</p>
             </div>
         </div>
     );
@@ -99,7 +99,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                     </div>
                     <div>
                         <h3 className="text-sm font-bold text-main dark:text-on-primary leading-tight">قائمة التركيز</h3>
-                        <p className="text-[9px] font-medium text-muted dark:text-muted mt-0.5">طلاب يحتاجون لاهتمامك</p>
+                        <p className="text-micro font-medium text-muted dark:text-muted mt-0.5">طلاب يحتاجون لاهتمامك</p>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                     <button
                         key={key}
                         onClick={() => setActiveFilter(key)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold whitespace-nowrap transition-all ${
+                        className={`px-3 py-1.5 rounded-lg text-micro font-bold whitespace-nowrap transition-all ${
                             activeFilter === key
                                 ? key === 'all'
                                     ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-sm'
@@ -118,7 +118,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                         }`}
                     >
                         {typeLabels[key]}
-                        <span className={`mr-1.5 text-[8px] ${activeFilter === key ? 'opacity-80' : 'opacity-50'}`}>
+                        <span className={`mr-1.5 text-micro ${activeFilter === key ? 'opacity-80' : 'opacity-50'}`}>
                             {counts[key as keyof typeof counts]}
                         </span>
                     </button>
@@ -139,10 +139,10 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                 <div className="min-w-0">
                                     <h4 className="text-xs font-bold text-main dark:text-on-primary truncate">{student.name}</h4>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                        <span className={`px-2 py-0.5 rounded text-[8px] font-bold ${typeBadge[student.type]}`}>
+                                        <span className={`px-2 py-0.5 rounded text-micro font-bold ${typeBadge[student.type]}`}>
                                             {typeLabels[student.type]}
                                         </span>
-                                        <span className="text-[9px] text-muted dark:text-muted truncate">{student.reason}</span>
+                                        <span className="text-micro text-muted dark:text-muted truncate">{student.reason}</span>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                 className="p-2 rounded-lg bg-primary-active dark:bg-surface text-on-primary dark:text-main hover:bg-success dark:hover:bg-success hover:text-on-primary transition-all flex items-center gap-1 shrink-0 shadow-sm"
                             >
                                 <Plus size={12} />
-                                <span className="text-[8px] font-bold">إضافة حصة</span>
+                                <span className="text-micro font-bold">إضافة حصة</span>
                             </button>
                         </div>
 
@@ -164,7 +164,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
                                         placeholder="المادة (مثال: رياضيات)"
-                                        className="flex-1 px-3 py-1.5 text-[10px] border border-border dark:border-border bg-white dark:bg-primary-active rounded-lg focus:outline-none focus:ring-2 focus:ring-success"
+                                        className="flex-1 px-3 py-1.5 text-micro border border-border dark:border-border bg-white dark:bg-primary-active rounded-lg focus:outline-none focus:ring-2 focus:ring-success"
                                         dir="rtl"
                                     />
                                     <button onClick={() => setAddingFor(null)} className="p-1.5 text-muted hover:text-muted dark:hover:text-dim rounded-lg hover:bg-surface dark:hover:bg-primary-active">
@@ -179,7 +179,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                                 for (let i = 0; i < num; i++) addSession(student.id, student.name);
                                             }}
                                             disabled={!subject.trim()}
-                                            className="flex-1 py-1.5 bg-success text-on-primary text-[10px] font-bold rounded-lg hover:bg-success transition-colors disabled:opacity-40"
+                                            className="flex-1 py-1.5 bg-success text-on-primary text-micro font-bold rounded-lg hover:bg-success transition-colors disabled:opacity-40"
                                         >
                                             +{num} {num === 1 ? 'حصة' : 'حصص'}
                                         </button>
@@ -192,7 +192,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                             }
                                         }}
                                         disabled={!subject.trim()}
-                                        className="px-3 py-1.5 bg-card text-on-primary text-[10px] font-bold rounded-lg hover:bg-primary-active transition-colors disabled:opacity-40"
+                                        className="px-3 py-1.5 bg-card text-on-primary text-micro font-bold rounded-lg hover:bg-primary-active transition-colors disabled:opacity-40"
                                     >
                                         مخصص
                                     </button>
@@ -203,7 +203,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                 ))}
             </div>
 
-            <div className="mt-4 flex items-center gap-1.5 text-[8px] text-muted dark:text-muted">
+            <div className="mt-4 flex items-center gap-1.5 text-micro text-muted dark:text-muted">
                 <Clock size={10} />
                 <span>يتم تحديث هذه القائمة دورياً بناءً على الحضور والتقييمات الأخيرة.</span>
             </div>

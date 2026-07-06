@@ -84,8 +84,8 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                     <div key={i} className={cn("flex items-start gap-2.5 p-3 rounded-xl border", alert.bg, alert.border)}>
                         <alert.icon size={15} className={cn("shrink-0 mt-0.5", alert.iconColor)} />
                         <div className="min-w-0">
-                            <p className={cn("text-[10px] font-bold", alert.text)}>{alert.title}</p>
-                            <p className="text-[8px] font-medium text-muted dark:text-muted mt-0.5 line-clamp-2">{alert.desc}</p>
+                            <p className={cn("text-micro font-bold", alert.text)}>{alert.title}</p>
+                            <p className="text-micro font-medium text-muted dark:text-muted mt-0.5 line-clamp-2">{alert.desc}</p>
                         </div>
                     </div>
                 ))}

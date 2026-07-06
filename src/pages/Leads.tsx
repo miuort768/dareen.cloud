@@ -135,19 +135,19 @@ export const Leads: React.FC = () => {
                         </div>
                         <div>
                             <h1 className="text-lg font-bold text-on-primary leading-tight">إدارة العملاء المتوقعين</h1>
-                            <p className="text-[10px] font-bold text-on-primary/70 mt-0.5">تتبع وإدارة العملاء المتوقعين</p>
+                            <p className="text-micro font-bold text-on-primary/70 mt-0.5">تتبع وإدارة العملاء المتوقعين</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
-                            "h-9 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold transition-all border rounded-xl",
+                            "h-9 px-3 flex items-center justify-center gap-1.5 text-micro font-bold transition-all border rounded-xl",
                             showLost
                                 ? "bg-white text-error border-border dark:bg-primary-active dark:text-on-primary dark:border-border"
                                 : "bg-white/15 backdrop-blur-sm text-on-primary border-white/20 hover:bg-white/25"
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                             <span>{showLost ? 'عرض' : 'المفقودين'}</span>
-                            {!showLost && <span className="bg-error text-on-primary text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
+                            {!showLost && <span className="bg-error text-on-primary text-micro font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
                         </button>
                         <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 border-0">
                             <Plus size={14} /> عميل جديد
@@ -173,7 +173,7 @@ export const Leads: React.FC = () => {
                         <div className="flex items-center gap-2 w-full md:w-auto">
                             <Filter size={14} className="text-muted hidden md:block shrink-0" />
                             <div className="relative w-full md:w-auto">
-                                <select className="w-full md:w-auto appearance-none bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-3 py-2 text-[11px] font-bold outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all text-main dark:text-on-primary" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                <select className="w-full md:w-auto appearance-none bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-3 py-2 text-xs font-bold outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all text-main dark:text-on-primary" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
                                     <option value="all" className="text-main">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>

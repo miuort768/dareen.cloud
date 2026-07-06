@@ -54,16 +54,16 @@ export const FixedExpensesManager = ({
                         </div>
                         <div>
                             <h2 className="text-sm font-normal text-main uppercase tracking-tight">المصروفات التشغيلية الثابتة</h2>
-                            <p className="text-[10px] text-dim font-normal uppercase tracking-wider">تحديث شهري تلقائي</p>
+                            <p className="text-micro text-dim font-normal uppercase tracking-wider">تحديث شهري تلقائي</p>
                         </div>
                     </div>
 
                     <div className="flex gap-2 w-full md:w-auto">
-                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-primary hover:bg-primary-hover text-on-primary px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 shadow-sm transition-all uppercase rounded-xl">
+                        <button onClick={onConvertAll} className="flex-1 md:flex-none justify-center bg-primary hover:bg-primary-hover text-on-primary px-4 py-1.5 text-micro font-bold flex items-center gap-2 shadow-sm transition-all uppercase rounded-xl">
                             <RefreshCcw size={14} />
                             ترحيل الكل
                         </button>
-                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-error px-4 py-1.5 text-[10px] font-bold flex items-center gap-2 transition-all uppercase shadow-sm rounded-xl bg-error-soft border border-error">
+                        <button onClick={onClearAll} className="flex-1 md:flex-none justify-center text-error px-4 py-1.5 text-micro font-bold flex items-center gap-2 transition-all uppercase shadow-sm rounded-xl bg-error-soft border border-error">
                             <Trash2 size={14} />
                             تصفير
                         </button>
@@ -73,7 +73,7 @@ export const FixedExpensesManager = ({
                 <div className="p-4 grid grid-cols-2 md:grid-cols-5 gap-3">
                     {expenses.map(item => (
                         <div key={item.id} className="p-3 bg-card border-border hover:border-primary transition-all group rounded-2xl">
-                            <label className="text-[9px] font-normal text-dim uppercase mb-2 block truncate">
+                            <label className="text-micro font-normal text-dim uppercase mb-2 block truncate">
                                 {item.name}
                             </label>
                             <div className="flex items-center gap-1.5">
@@ -82,7 +82,7 @@ export const FixedExpensesManager = ({
                                     amount={item.amount}
                                     onUpdate={onUpdateExpense}
                                 />
-                                <span className="text-[9px] font-normal text-dim uppercase">{CURRENCY_SYMBOL}</span>
+                                <span className="text-micro font-normal text-dim uppercase">{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                     ))}

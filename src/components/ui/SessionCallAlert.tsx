@@ -77,8 +77,8 @@ export const SessionCallAlert = () => {
                     <div className="p-5">
                         <div className="text-right mb-4">
                             <h4 className="font-medium text-main text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
-                            <p className="text-[10px] text-muted font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
-                            <p className="text-[10px] font-bold text-primary">
+                            <p className="text-micro text-muted font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
+                            <p className="text-micro font-bold text-primary">
                                 عبر {PROVIDER_NAMES[callData.meetingProvider] || callData.meetingProvider}
                             </p>
                         </div>

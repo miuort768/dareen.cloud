@@ -205,7 +205,7 @@ export const Students = () => {
                         </div>
                         <div>
                             <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">إدارة الطلاب</h1>
-                            <p className="text-[9px] md:text-[10px] font-bold text-white/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
+                            <p className="text-micro md:text-micro font-bold text-white/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -216,10 +216,10 @@ export const Students = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full md:w-52 border text-on-primary placeholder:text-white/50 text-[9px] md:text-[10px] font-bold px-7 py-1 outline-none transition-all rounded-2xl bg-white/15 border-white/20"
+                                className="w-full md:w-52 border text-on-primary placeholder:text-white/50 text-micro md:text-micro font-bold px-7 py-1 outline-none transition-all rounded-2xl bg-white/15 border-white/20"
                             />
                         </div>
-                        <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1 bg-card hover:bg-surface text-primary text-[9px] md:text-[10px] font-bold px-2 md:px-3 py-1 md:py-1.5 transition-all active:scale-[0.97] shadow-sm rounded-2xl"><Plus size={11} /> إضافة</button>
+                        <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1 bg-card hover:bg-surface text-primary text-micro md:text-micro font-bold px-2 md:px-3 py-1 md:py-1.5 transition-all active:scale-[0.97] shadow-sm rounded-2xl"><Plus size={11} /> إضافة</button>
                     </div>
                 </div>
 
@@ -241,8 +241,8 @@ export const Students = () => {
                             <span className="text-xs font-bold text-error">هل أنت متأكد من حذف جميع الطلاب؟</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-error text-on-error text-[10px] font-bold hover:bg-error-hover transition-all rounded-2xl">تأكيد الحذف</button>
-                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-card dark:bg-hover text-main text-[10px] font-bold border border-border transition-all rounded-2xl">إلغاء</button>
+                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-error text-on-error text-micro font-bold hover:bg-error-hover transition-all rounded-2xl">تأكيد الحذف</button>
+                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-card dark:bg-hover text-main text-micro font-bold border border-border transition-all rounded-2xl">إلغاء</button>
                         </div>
                     </div>
                 )}
@@ -254,7 +254,7 @@ export const Students = () => {
                         <select
                             value={filterGrade}
                             onChange={e => setFilterGrade(e.target.value)}
-                            className="border border-border bg-card dark:bg-hover text-main text-[11px] font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
+                            className="border border-border bg-card dark:bg-hover text-main text-xs font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
                         >
                             <option value="">المرحلة الدراسية (الكل)</option>
                             {uniqueGrades.map(g => (
@@ -267,7 +267,7 @@ export const Students = () => {
                         <select
                             value={filterCurriculum}
                             onChange={e => setFilterCurriculum(e.target.value)}
-                            className="border border-border bg-card dark:bg-hover text-main text-[11px] font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
+                            className="border border-border bg-card dark:bg-hover text-main text-xs font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
                         >
                             <option value="">المنهج (الكل)</option>
                             {uniqueCurriculums.map(c => (
@@ -294,7 +294,7 @@ export const Students = () => {
 
                 <div className="bg-card border border-border shadow-sm rounded-2xl">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-3">
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-dim">
+                        <div className="flex items-center gap-2 text-micro font-bold text-dim">
                             <span>{students.length} / {allStudents.length} طالب</span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -327,10 +327,10 @@ export const Students = () => {
                                     e.target.value = '';
                                 }}
                             />
-                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-1.5 bg-card dark:bg-hover hover:bg-surface text-muted text-[10px] font-bold px-2.5 py-1.5 border border-border transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Upload size={12} /> استيراد</button>
-                            <button onClick={() => downloadExport('students', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-success-soft text-success text-[10px] font-bold px-2.5 py-1.5 border border-success-soft transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileSpreadsheet size={12} /> Excel</button>
-                            <button onClick={() => downloadExport('students', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-error-soft text-error text-[10px] font-bold px-2.5 py-1.5 border border-error-soft transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileText size={12} /> PDF</button>
-                            <button onClick={() => setIsDeletingAll(true)} className="flex items-center gap-1.5 bg-card dark:bg-hover border border-border hover:bg-error hover:border-error hover:text-on-error text-error text-[10px] font-bold px-2.5 py-1.5 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Trash2 size={12} /></button>
+                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-1.5 bg-card dark:bg-hover hover:bg-surface text-muted text-micro font-bold px-2.5 py-1.5 border border-border transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Upload size={12} /> استيراد</button>
+                            <button onClick={() => downloadExport('students', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-success-soft text-success text-micro font-bold px-2.5 py-1.5 border border-success-soft transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileSpreadsheet size={12} /> Excel</button>
+                            <button onClick={() => downloadExport('students', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))} className="flex items-center gap-1.5 bg-error-soft text-error text-micro font-bold px-2.5 py-1.5 border border-error-soft transition-all shadow-sm active:scale-[0.97] rounded-2xl"><FileText size={12} /> PDF</button>
+                            <button onClick={() => setIsDeletingAll(true)} className="flex items-center gap-1.5 bg-card dark:bg-hover border border-border hover:bg-error hover:border-error hover:text-on-error text-error text-micro font-bold px-2.5 py-1.5 transition-all shadow-sm active:scale-[0.97] rounded-2xl"><Trash2 size={12} /></button>
                         </div>
                     </div>
                 </div>

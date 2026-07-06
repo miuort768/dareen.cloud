@@ -93,7 +93,7 @@ export const Profile = () => {
                             {currentUser?.name}
                         </h1>
                         <p className="text-muted dark:text-muted font-normal text-sm flex items-center justify-center md:justify-start gap-2">
-                            <span className="bg-primary-light dark:bg-primary/30 text-primary dark:text-primary px-3 py-0.5 rounded-full text-[10px] uppercase tracking-widest">
+                            <span className="bg-primary-light dark:bg-primary/30 text-primary dark:text-primary px-3 py-0.5 rounded-full text-micro uppercase tracking-widest">
                                 {currentUser?.role === 'admin' ? '���� ������' : 
                                  currentUser?.role === 'student' ? '����' : 
                                  currentUser?.role === 'parent' ? '��� ���' : '����'}
@@ -105,7 +105,7 @@ export const Profile = () => {
 
                     <div className="flex gap-2">
                          <div className="flex flex-col items-center px-4 py-2 bg-background dark:bg-primary-active/50 rounded-none border border-border dark:border-border">
-                            <span className="text-[10px] text-muted font-normal uppercase mb-1">����� ��������</span>
+                            <span className="text-micro text-muted font-normal uppercase mb-1">����� ��������</span>
                             <span className="text-xs font-medium text-main dark:text-dim">������ 2023</span>
                          </div>
                     </div>
@@ -127,7 +127,7 @@ export const Profile = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-[11px] font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ������</label>
+                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ������</label>
                                 <input 
                                     type="text" 
                                     value={name}
@@ -137,7 +137,7 @@ export const Profile = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-[11px] font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">��� �������� (�� ���� ������)</label>
+                                <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">��� �������� (�� ���� ������)</label>
                                 <input 
                                     type="text" 
                                     value={currentUser?.username}
@@ -160,7 +160,7 @@ export const Profile = () => {
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-[11px] font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">���� ���� �������</label>
+                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">���� ���� �������</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
@@ -173,7 +173,7 @@ export const Profile = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ���� ����</label>
+                                    <label className="block text-xs font-medium text-muted dark:text-muted uppercase tracking-widest mb-2 mr-1">����� ���� ����</label>
                                     <div className="relative">
                                         <input 
                                             type="password" 
@@ -186,7 +186,7 @@ export const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                            <p className="text-[10px] text-muted font-medium leading-relaxed bg-background dark:bg-primary-active/50 p-3 rounded-lg border border-border dark:border-border">
+                            <p className="text-micro text-muted font-medium leading-relaxed bg-background dark:bg-primary-active/50 p-3 rounded-lg border border-border dark:border-border">
                                 �����: ������ ���� �� ���� ����� ��� ���� ������. ������ ���� ������ �� ������� �� ��� �������.
                             </p>
                         </div>
@@ -221,7 +221,7 @@ export const Profile = () => {
                             <h2 className="font-medium text-main dark:text-on-primary tracking-tight">���� �������</h2>
                         </div>
 
-                        <p className="text-[11px] text-muted mb-4 font-normal uppercase tracking-tighter">���� ����� ���� ����� ������ ������</p>
+                        <p className="text-xs text-muted mb-4 font-normal uppercase tracking-tighter">���� ����� ���� ����� ������ ������</p>
                         
                         <div className="grid grid-cols-4 gap-3">
                             {THEME_COLORS.map(c => (

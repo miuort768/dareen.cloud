@@ -24,18 +24,18 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                         <div className="flex justify-between items-start mb-3">
                             <div>
                                 <h3 className="text-sm font-bold text-main leading-tight">{item.studentName}</h3>
-                                <p className="text-[10px] font-bold text-primary mt-0.5">{item.subject}</p>
+                                <p className="text-micro font-bold text-primary mt-0.5">{item.subject}</p>
                             </div>
                             <Badge variant="warning" size="sm">رصيد منخفض</Badge>
                         </div>
                         <div className="bg-surface dark:bg-card p-3 flex items-center justify-between mb-4 border border-border rounded-xl">
-                            <span className="text-[10px] font-bold text-muted">الحصص المتبقية</span>
+                            <span className="text-micro font-bold text-muted">الحصص المتبقية</span>
                             <span className="text-lg font-black text-main font-mono">{item.remaining}</span>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-success hover:brightness-90 text-on-success text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
-                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-primary hover:brightness-90 text-on-primary text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
+                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-success hover:brightness-90 text-on-success text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
+                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-primary hover:brightness-90 text-on-primary text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
                     </div>
                 </SectionCard>
             ))}

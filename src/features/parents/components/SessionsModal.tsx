@@ -49,16 +49,16 @@ export const SessionsModal = ({
                         </div>
                         <div className="text-right">
                             <h2 className="text-base font-medium leading-tight tracking-tight">{(viewingStudent as { name: string }).name}</h2>
-                            <p className="text-[9px] text-primary font-normal mt-0.5 uppercase tracking-widest opacity-80">
+                            <p className="text-micro text-primary font-normal mt-0.5 uppercase tracking-widest opacity-80">
                                 {viewingSubject ? `مواعيد حصص: ${(viewingSubject as { subject: string }).subject}` : 'سجل مواعيد الحصص'}
                             </p>
                         </div>
                     </div>
                     <div className="relative z-10 flex items-center gap-2 mr-4">
                         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-xl border border-white/10">
-                            <input type="date" className="bg-transparent border-none p-0 text-[10px] font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
-                            <span className="text-[10px] text-white/60">→</span>
-                            <input type="date" className="bg-transparent border-none p-0 text-[10px] font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
+                            <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
+                            <span className="text-micro text-white/60">→</span>
+                            <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
                         </div>
                     </div>
                     <button onClick={onClose} className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all"><X size={14} /></button>
@@ -73,7 +73,7 @@ export const SessionsModal = ({
                                         <div className="w-9 h-9 bg-primary-soft dark:bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all"><BookOpen size={16} /></div>
                                         <div>
                                             <h4 className="font-medium text-main dark:text-on-primary text-xs mb-0.5">{en.subject}</h4>
-                                            <p className="text-[8px] text-muted dark:text-muted font-normal uppercase tracking-tight">المعلمة: {en.teacher}</p>
+                                            <p className="text-micro text-muted dark:text-muted font-normal uppercase tracking-tight">المعلمة: {en.teacher}</p>
                                         </div>
                                     </div>
                                     <ChevronLeft size={16} className="text-dim dark:text-muted group-hover:text-primary transform group-hover:-translate-x-1 transition-all" />
@@ -83,7 +83,7 @@ export const SessionsModal = ({
                     ) : (
                         <div className="space-y-4">
                             <div className="flex items-center justify-between gap-2">
-                                <button onClick={() => { onSelectSubject(null); onPageChange(1); }} className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-primary-active border border-border dark:border-border rounded-xl text-[8px] font-medium text-primary uppercase tracking-widest hover:bg-primary-soft dark:hover:bg-primary-soft0/10 transition-all shadow-sm">
+                                <button onClick={() => { onSelectSubject(null); onPageChange(1); }} className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-primary-active border border-border dark:border-border rounded-xl text-micro font-medium text-primary uppercase tracking-widest hover:bg-primary-soft dark:hover:bg-primary-soft0/10 transition-all shadow-sm">
                                     <ChevronRight size={12} /> العودة للمواد
                                 </button>
                                 {(() => {
@@ -98,7 +98,7 @@ export const SessionsModal = ({
                                     return (
                                         <div className="flex items-center gap-2">
                                             <button disabled={sessionsPage === 1} onClick={() => onPageChange(Math.max(1, sessionsPage - 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border dark:border-border disabled:opacity-30 text-muted hover:bg-surface dark:hover:bg-primary-active transition-all"><ChevronRight size={14} /></button>
-                                            <span className="text-[9px] font-medium text-muted uppercase tracking-widest">{sessionsPage} / {totalPages}</span>
+                                            <span className="text-micro font-medium text-muted uppercase tracking-widest">{sessionsPage} / {totalPages}</span>
                                             <button disabled={sessionsPage === totalPages} onClick={() => onPageChange(Math.min(totalPages, sessionsPage + 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border dark:border-border disabled:opacity-30 text-muted hover:bg-surface dark:hover:bg-primary-active transition-all"><ChevronLeft size={14} /></button>
                                         </div>
                                     );
@@ -130,7 +130,7 @@ export const SessionsModal = ({
                                                             <div className="flex items-center gap-2">
                                                                 <p className="text-xs font-medium text-main dark:text-on-primary">{format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}</p>
                                                             </div>
-                                                            <div className={cn("px-2 py-0.5 rounded-full text-[8px] font-medium uppercase tracking-widest", session.status === 'completed' ? "bg-success text-on-primary" : "bg-error text-on-primary")}>
+                                                            <div className={cn("px-2 py-0.5 rounded-full text-micro font-medium uppercase tracking-widest", session.status === 'completed' ? "bg-success text-on-primary" : "bg-error text-on-primary")}>
                                                                 {session.status === 'completed' ? 'حضر' : 'غائب'}
                                                             </div>
                                                         </div>
@@ -138,7 +138,7 @@ export const SessionsModal = ({
                                                             <div className="mt-2 pt-2 border-t border-border dark:border-border">
                                                                 <div className="flex gap-1.5">
                                                                     <div className="w-0.5 bg-primary rounded-full shrink-0" />
-                                                                    <p className="text-[9px] text-muted dark:text-muted font-normal italic leading-relaxed">{session.notes}</p>
+                                                                    <p className="text-micro text-muted dark:text-muted font-normal italic leading-relaxed">{session.notes}</p>
                                                                 </div>
                                                             </div>
                                                         )}

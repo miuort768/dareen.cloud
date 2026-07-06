@@ -73,7 +73,7 @@ export const AppearanceSection = ({
                                     />
                                 </div>
                                 <span className={cn(
-                                    "text-[10px] font-medium tracking-tight transition-colors whitespace-nowrap",
+                                    "text-micro font-medium tracking-tight transition-colors whitespace-nowrap",
                                     themeColor === preset.id ? "text-primary" : "text-dim"
                                 )}>
                                     {preset.label}

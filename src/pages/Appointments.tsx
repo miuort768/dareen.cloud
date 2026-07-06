@@ -218,21 +218,21 @@ export const Appointments = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-main leading-tight">قائمة المواعيد الدراسية</h1>
-                        <p className="text-[11px] font-bold text-muted mt-0.5">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
+                        <p className="text-xs font-bold text-muted mt-0.5">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
                     </div>
                 </div>
                 {/* Quick stats inline */}
                 <div className="flex items-center gap-2 shrink-0">
                     <div className="px-3 py-1.5 text-center rounded-xl bg-primary-soft">
-                        <p className="text-[8px] font-bold text-primary">اليوم</p>
+                        <p className="text-micro font-bold text-primary">اليوم</p>
                         <p className="text-xl font-black tabular-nums leading-none text-primary">{todayAppointments}</p>
                     </div>
                     <div className="px-3 py-1.5 text-center rounded-xl bg-success-soft">
-                        <p className="text-[8px] font-bold text-success-dark">المتبقي</p>
+                        <p className="text-micro font-bold text-success-dark">المتبقي</p>
                         <p className="text-xl font-black tabular-nums leading-none text-success-dark">{remainingToday}</p>
                     </div>
                     <div className="px-3 py-1.5 text-center rounded-xl bg-info-soft">
-                        <p className="text-[8px] font-bold text-info">الإجمالي</p>
+                        <p className="text-micro font-bold text-info">الإجمالي</p>
                         <p className="text-xl font-black tabular-nums leading-none text-info">{totalAppointments}</p>
                     </div>
                 </div>
@@ -247,13 +247,13 @@ export const Appointments = () => {
                         </div>
                         <span className="text-xs font-bold text-muted">تصفية النتائج</span>
                         {hasActiveFilters && (
-                            <span className="text-[7px] font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">نشط</span>
+                            <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">نشط</span>
                         )}
                     </div>
                     {hasActiveFilters && (
                         <button
                             onClick={() => { setSearchTerm(''); setFilterDay('all'); setFilterTeacher('all'); }}
-                            className="flex items-center gap-1 px-2 py-1 text-[10px] font-bold rounded-xl shadow-sm active:scale-95 transition-all bg-error-soft text-error"
+                            className="flex items-center gap-1 px-2 py-1 text-micro font-bold rounded-xl shadow-sm active:scale-95 transition-all bg-error-soft text-error"
                         >
                             <X size={12} /> إعادة تعيين
                         </button>
@@ -282,7 +282,7 @@ export const Appointments = () => {
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-border text-[10px] font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
+                            className="w-full pr-8 pl-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
                         >
                             <option value="all">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -294,7 +294,7 @@ export const Appointments = () => {
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-border text-[10px] font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
+                            className="w-full pr-8 pl-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
                         >
                             <option value="all">كل المعلمات</option>
                             {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
@@ -316,7 +316,7 @@ export const Appointments = () => {
                             <div className="px-4 py-2.5 border-b border-border flex items-center justify-between bg-background">
                                 <h3 className="font-bold text-sm text-main">{day}</h3>
                                 <span className={cn(
-                                    "text-[9px] font-bold px-2 py-0.5 tabular-nums rounded-lg",
+                                    "text-micro font-bold px-2 py-0.5 tabular-nums rounded-lg",
                                     appointments.length > 0
                                         ? "text-on-primary"
                                         : "text-dim"
@@ -340,7 +340,7 @@ export const Appointments = () => {
                                                     <Clock size={12} className="text-primary" />
                                                     <span className="font-bold text-sm tabular-nums text-primary">{nextSession.time}</span>
                                                 </div>
-                                                <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">التالي</span>
+                                                <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">التالي</span>
                                             </div>
 
                                             {/* Student */}
@@ -351,7 +351,7 @@ export const Appointments = () => {
                                                 </div>
                                                 <div className="flex items-center gap-1.5">
                                                     <ShieldCheck size={10} className="shrink-0 text-success" />
-                                                    <span className="text-[9px] font-bold text-muted truncate">{nextSession.teacherName}</span>
+                                                    <span className="text-micro font-bold text-muted truncate">{nextSession.teacherName}</span>
                                                 </div>
                                             </div>
 
@@ -368,7 +368,7 @@ export const Appointments = () => {
                                         <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-2 bg-primary-soft">
                                             <Calendar size={18} className="text-primary" />
                                         </div>
-                                        <p className="text-[9px] font-bold text-primary">لا توجد مواعيد</p>
+                                        <p className="text-micro font-bold text-primary">لا توجد مواعيد</p>
                                     </div>
                                 )}
                             </div>
@@ -399,7 +399,7 @@ export const Appointments = () => {
                             {/* Panel Header */}
                             <div className="px-4 py-3 bg-primary text-on-primary flex items-center justify-between">
                                 <div>
-                                    <p className="text-[9px] font-bold text-on-primary/60">تفاصيل الموعد</p>
+                                    <p className="text-micro font-bold text-on-primary/60">تفاصيل الموعد</p>
                                     <h3 className="font-bold text-base">{selectedAppointment.day}</h3>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -419,9 +419,9 @@ export const Appointments = () => {
                                 {/* Student */}
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-primary-soft" style={{ borderRight: '3px solid var(--border-primary)' }}>
                                     <div>
-                                        <label className="block text-[8px] font-bold text-muted mb-0.5">الطالب</label>
+                                        <label className="block text-micro font-bold text-muted mb-0.5">الطالب</label>
                                         <h4 className="text-sm font-bold text-main">{selectedAppointment.studentName}</h4>
-                                        <span className="text-[9px] font-bold text-primary">{selectedAppointment.studentGrade}</span>
+                                        <span className="text-micro font-bold text-primary">{selectedAppointment.studentGrade}</span>
                                     </div>
                                     <User size={18} className="text-dim" />
                                 </div>
@@ -429,7 +429,7 @@ export const Appointments = () => {
                                 {/* Teacher */}
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-success-soft" style={{ borderRight: '3px solid var(--border-success)' }}>
                                     <div>
-                                        <label className="block text-[8px] font-bold text-muted mb-0.5">المعلمة</label>
+                                        <label className="block text-micro font-bold text-muted mb-0.5">المعلمة</label>
                                         <h4 className="text-sm font-bold text-main">{selectedAppointment.teacherName}</h4>
                                     </div>
                                     <ShieldCheck size={18} className="text-dim" />
@@ -438,9 +438,9 @@ export const Appointments = () => {
                                 {/* Subject */}
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-warning-soft" style={{ borderRight: '3px solid var(--border-warning)' }}>
                                     <div>
-                                        <label className="block text-[8px] font-bold text-muted mb-0.5">المادة</label>
+                                        <label className="block text-micro font-bold text-muted mb-0.5">المادة</label>
                                         <h4 className="text-sm font-bold text-main">{selectedAppointment.subject}</h4>
-                                        <span className="text-[8px] font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning-soft text-warning-dark">{selectedAppointment.curriculum}</span>
+                                        <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning-soft text-warning-dark">{selectedAppointment.curriculum}</span>
                                     </div>
                                     <BookOpen size={18} className="text-dim" />
                                 </div>

@@ -36,7 +36,7 @@ export const FAQSection = () => {
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary" />
-                        <span className="text-[9px] font-black text-muted dark:text-on-primary/70">لديك استفسار؟</span>
+                        <span className="text-micro font-black text-muted dark:text-on-primary/70">لديك استفسار؟</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main mb-3 font-heading">
                         الأسئلة <span className="text-primary">الشائعة</span>
@@ -92,7 +92,7 @@ export const FAQSection = () => {
                                     </summary>
                                     <div className="px-4 pb-4 pt-0">
                                         <div className="h-px w-full bg-gradient-to-r from-[var(--bg-primary)]/10 via-[var(--bg-surface)] dark:via-[var(--bg-primary)] to-transparent mb-3"></div>
-                                        <p className="text-[10px] md:text-xs text-main dark:text-on-primary leading-relaxed font-medium">
+                                        <p className="text-micro md:text-xs text-main dark:text-on-primary leading-relaxed font-medium">
                                             {item.a}
                                         </p>
                                     </div>

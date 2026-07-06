@@ -57,12 +57,12 @@ export const QuickActionsHub = () => {
                                 <h3 className="font-bold text-sm text-main leading-tight truncate">
                                     {action.title}
                                 </h3>
-                                <p className="text-[10px] font-medium mt-1 text-muted">
+                                <p className="text-micro font-medium mt-1 text-muted">
                                     {action.description}
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-1 text-[9px] font-bold text-muted group-hover:text-primary transition-colors">
+                            <div className="flex items-center gap-1 text-micro font-bold text-muted group-hover:text-primary transition-colors">
                                 <span>انتقال</span>
                                 <ArrowLeft size={12} strokeWidth={1.5} />
                             </div>

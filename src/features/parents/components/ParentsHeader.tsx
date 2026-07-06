@@ -30,24 +30,24 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                 <div>
                     <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">سجل أولياء الأمور</h1>
                     <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 bg-white/15 backdrop-blur-sm text-on-primary rounded-lg">{totalParents} ولي أمر</span>
-                        <span className="text-[9px] md:text-[10px] font-bold text-white/60">{totalLinkedStudents} طالب مرتبط</span>
+                        <span className="text-micro md:text-micro font-bold px-2 py-0.5 bg-white/15 backdrop-blur-sm text-on-primary rounded-lg">{totalParents} ولي أمر</span>
+                        <span className="text-micro md:text-micro font-bold text-white/60">{totalLinkedStudents} طالب مرتبط</span>
                     </div>
                 </div>
             </div>
 
             <div className="flex items-center gap-2">
                 <div className="hidden md:flex items-center gap-1 p-1 ml-2 bg-white/15 backdrop-blur-sm rounded-xl">
-                    <button onClick={onImport} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg">استيراد</button>
+                    <button onClick={onImport} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-micro font-bold transition-all rounded-lg">استيراد</button>
                     <div className="w-[1px] h-4 bg-white/20 mx-1" />
-                    <button onClick={onExportExcel} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg"><FileSpreadsheet size={12} /> Excel</button>
-                    <button onClick={onExportPDF} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-[10px] font-bold transition-all rounded-lg"><FileText size={12} /> PDF</button>
+                    <button onClick={onExportExcel} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-micro font-bold transition-all rounded-lg"><FileSpreadsheet size={12} /> Excel</button>
+                    <button onClick={onExportPDF} className="h-8 px-3 flex items-center gap-2 hover:bg-white/20 text-white/80 text-micro font-bold transition-all rounded-lg"><FileText size={12} /> PDF</button>
                 </div>
 
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl",
+                        "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl",
                         showAddForm 
                             ? "bg-error text-on-primary hover:bg-error" 
                             : "bg-white/20 backdrop-blur-sm text-on-primary hover:bg-white/30"

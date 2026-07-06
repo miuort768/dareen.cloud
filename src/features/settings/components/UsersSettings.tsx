@@ -22,7 +22,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                     </div>
                     <p className="text-sm font-normal text-main">الحسابات والمسؤولون</p>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-1 bg-primary-soft text-primary">
+                <span className="text-micro font-bold px-2.5 py-1 bg-primary-soft text-primary">
                     {users.length} حسابات
                 </span>
             </div>
@@ -51,18 +51,18 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                             </div>
                         </div>
                         <p className="font-normal text-sm text-main truncate">{u.name || u.username}</p>
-                        <p className="text-[10px] text-muted flex items-center gap-1 mt-1">
+                        <p className="text-micro text-muted flex items-center gap-1 mt-1">
                             <Shield size={10} className="text-primary" />
                             {u.permissions?.includes('*') ? 'Admin كامل' : `${u.permissions?.length || 0} صلاحيات`}
                         </p>
                         <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-border">
                             {u.permissions?.slice(0, 3).map(p => (
-                                <span key={p} className="text-[9px] font-normal bg-hover text-muted px-1.5 py-0.5 border border-border">
+                                <span key={p} className="text-micro font-normal bg-hover text-muted px-1.5 py-0.5 border border-border">
                                     {p}
                                 </span>
                             ))}
                             {(u.permissions?.length || 0) > 3 && (
-                                <span className="text-[9px] font-normal bg-primary-soft text-primary px-1.5 py-0.5">
+                                <span className="text-micro font-normal bg-primary-soft text-primary px-1.5 py-0.5">
                                     +{(u.permissions?.length || 0) - 3}
                                 </span>
                             )}
@@ -98,7 +98,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                 </div>
 
                 <div className="pt-2 border-t border-border">
-                    <p className="text-[10px] font-normal text-primary flex items-center gap-1.5 mb-2">
+                    <p className="text-micro font-normal text-primary flex items-center gap-1.5 mb-2">
                         <Shield size={11} /> قوالب صلاحيات سريعة
                     </p>
                     <div className="flex flex-wrap gap-1.5 mb-3">
@@ -110,13 +110,13 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                             <button
                                 key={role.label}
                                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                                className="px-2.5 py-1 bg-hover hover:bg-primary-soft hover:text-primary text-muted text-[10px] font-normal border border-border transition-all"
+                                className="px-2.5 py-1 bg-hover hover:bg-primary-soft hover:text-primary text-muted text-micro font-normal border border-border transition-all"
                             >
                                 {role.label}
                             </button>
                         ))}
                     </div>
-                    <p className="text-[10px] text-muted mb-2">تخصيص يدوي</p>
+                    <p className="text-micro text-muted mb-2">تخصيص يدوي</p>
                     <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-surface border border-border">
                         {AVAILABLE_PERMISSIONS.map((p: { id: string; label: string }) => (
                             <button
@@ -128,7 +128,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                     setNewUser({ ...newUser, permissions: perms });
                                 }}
                                 className={cn(
-                                    'p-2 text-[9px] font-normal border text-right transition-all',
+                                    'p-2 text-micro font-normal border text-right transition-all',
                                     newUser.permissions.includes(p.id)
                                         ? 'bg-primary text-on-primary border-primary'
                                         : 'bg-card text-muted border-border hover:border-primary'

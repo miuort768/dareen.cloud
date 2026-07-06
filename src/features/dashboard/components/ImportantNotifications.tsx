@@ -108,7 +108,7 @@ export const ImportantNotifications = ({
                         <h3 className="text-sm font-normal text-main dark:text-on-primary uppercase tracking-tight">غرفة التنبيهات</h3>
                     </div>
                 </div>
-                <div className="text-[10px] font-medium text-muted border border-border dark:border-border px-2 py-0.5">
+                <div className="text-micro font-medium text-muted border border-border dark:border-border px-2 py-0.5">
                     {visibleNotifications.length} حرجة
                 </div>
             </div>
@@ -124,18 +124,18 @@ export const ImportantNotifications = ({
                                 <note.icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-normal text-main dark:text-on-primary text-[11px] mb-1 truncate pr-4">
+                                <h4 className="font-normal text-main dark:text-on-primary text-xs mb-1 truncate pr-4">
                                     {note.title}
                                 </h4>
-                                <p className="text-[9px] text-muted dark:text-muted leading-none">{note.description}</p>
+                                <p className="text-micro text-muted dark:text-muted leading-none">{note.description}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 {'action' in note && note.action ? (
-                                    <button onClick={note.action} className="text-[9px] font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
+                                    <button onClick={note.action} className="text-micro font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
                                         {note.actionLabel}
                                     </button>
                                 ) : 'link' in note && note.link ? (
-                                    <Link to={note.link} className="text-[9px] font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
+                                    <Link to={note.link} className="text-micro font-normal text-primary border border-primary px-2 py-1 hover:bg-primary-soft">
                                         {note.actionLabel}
                                     </Link>
                                 ) : null}
@@ -147,7 +147,7 @@ export const ImportantNotifications = ({
                     ))
                 ) : (
                     <div className="py-10 text-center border border-dashed border-border">
-                        <p className="text-[10px] font-normal text-muted">لا توجد تنبيهات نشطة</p>
+                        <p className="text-micro font-normal text-muted">لا توجد تنبيهات نشطة</p>
                     </div>
                 )}
             </div>

@@ -138,9 +138,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             {selectedConv.displayName}
                         </h2>
                         {typingInThisConv.length > 0 ? (
-                            <span className="text-[12px] text-success font-normal animate-pulse">جاري الكتابة...</span>
+                            <span className="text-xs text-success font-normal animate-pulse">جاري الكتابة...</span>
                         ) : (
-                            <span className="text-[12px] text-muted dark:text-muted font-normal">
+                            <span className="text-xs text-muted dark:text-muted font-normal">
                                 {selectedConv.isGroup ? "مجموعة" : "محادثة مباشرة"}
                             </span>
                         )}
@@ -265,17 +265,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                             : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none ml-2"
                                     )}>
                                         {isGroup && !isMe && (
-                                            <span className="block text-[12.5px] font-normal text-primary mb-0.5 text-right">
+                                            <span className="block text-xs font-normal text-primary mb-0.5 text-right">
                                                 {msg.senderName}
                                             </span>
                                         )}
 
-                                        <div className="text-[14.2px] text-main leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
+                                        <div className="text-sm text-main leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
                                             {msg.content}
                                         </div>
                                         
                                         <div className="flex items-center justify-end gap-1 mt-1">
-                                            <span className="text-[10px] text-muted">
+                                            <span className="text-micro text-muted">
                                                 {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
                                                     ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
                                                     : '--:--'}

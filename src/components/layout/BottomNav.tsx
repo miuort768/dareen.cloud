@@ -69,7 +69,7 @@ export const BottomNav = () => {
                 />
               </div>
               <span className={cn(
-                "text-[10px] font-medium tracking-tight transition-all duration-200",
+                "text-micro font-medium tracking-tight transition-all duration-200",
                 isActive ? "text-primary" : "text-muted"
               )}>
                 {item.label}

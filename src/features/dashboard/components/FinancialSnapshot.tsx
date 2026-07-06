@@ -27,10 +27,10 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                             <item.icon size={15} className={item.color} />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-[9px] font-bold text-muted dark:text-muted">{item.label}</p>
+                            <p className="text-micro font-bold text-muted dark:text-muted">{item.label}</p>
                         </div>
                         <span className={cn("text-sm font-black tabular-nums", item.valueColor)}>
-                            {item.value.toLocaleString('ar-EG')} <span className="text-[9px] font-bold">د.ك</span>
+                            {item.value.toLocaleString('ar-EG')} <span className="text-micro font-bold">د.ك</span>
                         </span>
                     </div>
                 ))}

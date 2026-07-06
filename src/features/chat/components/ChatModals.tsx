@@ -118,7 +118,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                     <X size={12} />
                                                 </button>
                                             </div>
-                                            <span className="text-[10px] font-normal text-muted dark:text-muted truncate w-14 text-center">{user.name}</span>
+                                            <span className="text-micro font-normal text-muted dark:text-muted truncate w-14 text-center">{user.name}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -212,7 +212,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         className="w-full bg-transparent border-b-2 border-success/30 focus:border-success py-3 text-lg font-normal outline-none transition-colors text-main text-right"
                                     />
                                     <div className="flex justify-start mt-1">
-                                        <span className="text-[10px] font-normal text-muted">{groupName.length}/25</span>
+                                        <span className="text-micro font-normal text-muted">{groupName.length}/25</span>
                                     </div>
                                 </div>
 
@@ -220,12 +220,12 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <p className="text-sm text-muted dark:text-muted mb-4 text-right">الأعضاء: {selectedUsers.length}</p>
                                     <div className="flex flex-wrap gap-2 justify-end">
                                         {selectedUsersObjects.slice(0, 5).map(u => (
-                                            <span key={u.id} className="bg-surface dark:bg-card text-[12px] font-normal px-3 py-1 rounded-full dark:text-dim whitespace-nowrap">
+                                            <span key={u.id} className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-dim whitespace-nowrap">
                                                 {u.name}
                                             </span>
                                         ))}
                                         {selectedUsers.length > 5 && (
-                                            <span className="bg-surface dark:bg-card text-[12px] font-normal px-3 py-1 rounded-full dark:text-dim">
+                                            <span className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-dim">
                                                 +{selectedUsers.length - 5}
                                             </span>
                                         )}

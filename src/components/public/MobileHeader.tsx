@@ -29,9 +29,9 @@ export const MobileHeader = () => {
             <GraduationCap className="w-6 h-6 text-on-primary relative z-10" />
           </div>
           <div>
-            <p className="text-[17px] font-black text-main dark:text-on-primary leading-tight">دارين السابعة</p>
-            <p className="text-[9px] font-bold leading-tight text-primary dark:text-primary">أفضل مدرسة افتراضية</p>
-            <p className="text-[7px] text-primary dark:text-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
+            <p className="text-base font-black text-main dark:text-on-primary leading-tight">دارين السابعة</p>
+            <p className="text-micro font-bold leading-tight text-primary dark:text-primary">أفضل مدرسة افتراضية</p>
+            <p className="text-micro text-primary dark:text-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
         </Link>
         </div>
@@ -46,12 +46,12 @@ export const MobileHeader = () => {
           {menuOpen && (
             <div className="absolute top-12 left-0 bg-white dark:bg-primary rounded-2xl shadow-2xl border border-border dark:border-border overflow-hidden z-50 min-w-[180px]">
               {navItems.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-[12px] font-bold text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary/30 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-border last:border-0 whitespace-nowrap">
+                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary/30 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-border last:border-0 whitespace-nowrap">
                   <item.icon size={16} className="shrink-0" />
                   {item.label}
                 </Link>
               ))}
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-[12px] font-bold text-primary dark:text-on-primary hover:bg-info-light dark:hover:bg-info/30 transition-colors border-t border-border dark:border-border">
+              <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-on-primary hover:bg-info-light dark:hover:bg-info/30 transition-colors border-t border-border dark:border-border">
                 <LogIn size={14} />
                 تسجيل الدخول
               </Link>

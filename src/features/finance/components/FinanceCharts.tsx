@@ -32,11 +32,11 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-0.5 rounded bg-chart-2" />
-                                <span className="text-[9px] font-medium text-muted">إيرادات</span>
+                                <span className="text-micro font-medium text-muted">إيرادات</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-5 h-0.5 rounded bg-chart-3" />
-                                <span className="text-[9px] font-medium text-muted">مصروفات</span>
+                                <span className="text-micro font-medium text-muted">مصروفات</span>
                             </div>
                         </div>
                     }
@@ -60,19 +60,19 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                 if (!active || !payload?.length) return null;
                                 return (
                                     <div className="bg-card border border-border shadow-xl px-4 py-3 rounded-xl min-w-[150px]" dir="rtl">
-                                        <p className="text-[10px] font-bold text-main mb-2 pb-1 border-b border-divider">{label}</p>
+                                        <p className="text-micro font-bold text-main mb-2 pb-1 border-b border-divider">{label}</p>
                                         <div className="space-y-1.5">
                                             <div className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-1.5">
                                                     <TrendingUp size={10} className="text-chart-2" />
-                                                    <span className="text-[10px] font-bold text-muted">إيرادات</span>
+                                                    <span className="text-micro font-bold text-muted">إيرادات</span>
                                                 </div>
                                                 <span className="text-sm font-bold text-main tabular-nums">+{(payload[0]?.value ?? 0).toLocaleString()} {reportCurrency}</span>
                                             </div>
                                             <div className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-1.5">
                                                     <TrendingDown size={10} className="text-chart-3" />
-                                                    <span className="text-[10px] font-bold text-muted">مصروفات</span>
+                                                    <span className="text-micro font-bold text-muted">مصروفات</span>
                                                 </div>
                                                 <span className="text-sm font-bold text-main tabular-nums">-{payload[1]?.value.toLocaleString() || 0} {reportCurrency}</span>
                                             </div>
@@ -105,8 +105,8 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                                     const data = payload[0].payload;
                                                     return (
                                                         <div className="bg-card border border-border shadow-xl px-3 py-2 rounded-xl" dir="rtl">
-                                                            <p className="text-[9px] font-bold text-muted mb-1">{data.name}</p>
-                                                            <p className="text-sm font-bold text-main tabular-nums">{(data?.value ?? 0).toLocaleString()} <span className="text-[9px] text-muted">{reportCurrency}</span></p>
+                                                            <p className="text-micro font-bold text-muted mb-1">{data.name}</p>
+                                                            <p className="text-sm font-bold text-main tabular-nums">{(data?.value ?? 0).toLocaleString()} <span className="text-micro text-muted">{reportCurrency}</span></p>
                                                         </div>
                                                     );
                                                 }
@@ -115,14 +115,14 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                        <p className="text-[9px] font-bold text-muted">الإجمالي</p>
+                                        <p className="text-micro font-bold text-muted">الإجمالي</p>
                                         <p className="text-lg font-bold text-main tabular-nums leading-none">{(totalExpenses ?? 0).toLocaleString()}</p>
                                     </div>
                                 </>
                             ) : (
                                 <div className="h-full flex flex-col items-center justify-center opacity-40">
                                     <Filter size={32} className="text-muted mb-2" />
-                                    <p className="text-[10px] font-bold text-muted">لا توجد بيانات</p>
+                                    <p className="text-micro font-bold text-muted">لا توجد بيانات</p>
                                 </div>
                             )}
                         </div>
@@ -132,11 +132,11 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                                 <div key={entry.name} className="flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
                                         <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: `var(--chart-${(index % 6) + 1})` }} />
-                                        <span className="text-[10px] font-bold text-muted truncate max-w-[100px]">{entry.name}</span>
+                                        <span className="text-micro font-bold text-muted truncate max-w-[100px]">{entry.name}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="text-[10px] font-bold text-main tabular-nums">{(entry?.value ?? 0).toLocaleString()}</span>
-                                        <span className="text-[9px] font-bold bg-surface px-1.5 py-0.5 rounded-lg text-muted">
+                                        <span className="text-micro font-bold text-main tabular-nums">{(entry?.value ?? 0).toLocaleString()}</span>
+                                        <span className="text-micro font-bold bg-surface px-1.5 py-0.5 rounded-lg text-muted">
                                             {reportCurrency} {totalExpenses > 0 ? ((entry?.value ?? 0) / totalExpenses * 100).toFixed(0) : 0}%
                                         </span>
                                     </div>

@@ -170,7 +170,7 @@ export const Schedule = () => {
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
             <div className="w-8 h-8 border-2 border-border border-t-[var(--bg-primary)] rounded-full animate-spin" />
-            <p className="text-[11px] font-bold text-muted">جاري تحميل الجدول...</p>
+            <p className="text-xs font-bold text-muted">جاري تحميل الجدول...</p>
         </div>
     );
 
@@ -186,7 +186,7 @@ export const Schedule = () => {
                         </div>
                         <div>
                             <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">الجداول الدراسية</h1>
-                            <p className="text-[11px] font-bold text-white/70 mt-0.5">جدول الحصص الأسبوعي</p>
+                            <p className="text-xs font-bold text-white/70 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
                     </div>
 
@@ -199,7 +199,7 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 text-[10px] font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
+                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 text-micro font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
 
@@ -207,7 +207,7 @@ export const Schedule = () => {
                         <button
                             onClick={() => setFilterDay(prev => prev === todayDayName ? 'all' : todayDayName)}
                             className={cn(
-                                "h-9 px-2.5 text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5 border",
+                                "h-9 px-2.5 text-micro font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5 border",
                                 filterDay === todayDayName
                                     ? "bg-white/25 border-white/30 text-on-primary"
                                     : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-on-primary"
@@ -221,7 +221,7 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl outline-none focus:border-white/50 transition-all"
+                            className="h-9 px-2.5 bg-white/15 border border-white/20 text-on-primary text-micro font-bold rounded-xl outline-none focus:border-white/50 transition-all"
                         >
                             <option value="all" className="text-main">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -232,7 +232,7 @@ export const Schedule = () => {
                         {/* Print Button */}
                         <button
                             onClick={handlePrint}
-                            className="h-9 px-4 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
+                            className="h-9 px-4 bg-white/15 border border-white/20 text-on-primary text-micro font-bold rounded-xl shadow-sm hover:bg-white/30 transition-all active:scale-95 flex items-center gap-2"
                         >
                             <Printer size={13} />
                             طباعة
@@ -249,12 +249,12 @@ export const Schedule = () => {
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
                             <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
-                                <div className="sticky right-0 z-10 p-3 text-[9px] font-bold text-inverse border-l border-border bg-primary-active dark:bg-background">
+                                <div className="sticky right-0 z-10 p-3 text-micro font-bold text-inverse border-l border-border bg-primary-active dark:bg-background">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-[10px] font-bold text-center border-l border-border last:border-l-0 bg-primary-active dark:bg-background",
+                                        "p-3 text-micro font-bold text-center border-l border-border last:border-l-0 bg-primary-active dark:bg-background",
                                         isToday(day) ? "text-on-primary" : "text-inverse"
                                     )}>
                                         <span>{day}</span>
@@ -275,7 +275,7 @@ export const Schedule = () => {
                                         "grid grid-cols-[80px_repeat(7,1fr)]",
                                         slotIdx % 2 === 0 ? "bg-white dark:bg-primary-active" : "bg-background/30 dark:bg-background/20"
                                     )}>
-                                        <div className="sticky right-0 z-10 p-2 text-[9px] font-bold text-muted border-l border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
+                                        <div className="sticky right-0 z-10 p-2 text-micro font-bold text-muted border-l border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
                                             <Clock size={10} className="ml-1 inline" />
                                             {slot.label}
                                         </div>
@@ -301,11 +301,11 @@ export const Schedule = () => {
                                                         <div className="flex items-start gap-1.5 h-full">
                                                             <div className="w-1 h-full shrink-0 mt-0.5" style={{ backgroundColor: color }} />
                                                             <div className="min-w-0 flex-1">
-                                                                <p className="text-[9px] font-bold leading-tight mb-0.5 truncate" style={{ color }}>
+                                                                <p className="text-micro font-bold leading-tight mb-0.5 truncate" style={{ color }}>
                                                                     {event.studentName}
                                                                 </p>
-                                                                <p className="text-[7px] font-bold text-muted truncate">{event.subject}</p>
-                                                                <p className="text-[7px] font-bold text-muted truncate">{event.teacherName}</p>
+                                                                <p className="text-micro font-bold text-muted truncate">{event.subject}</p>
+                                                                <p className="text-micro font-bold text-muted truncate">{event.teacherName}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -318,7 +318,7 @@ export const Schedule = () => {
                                                     className="p-2 border-l last:border-l-0 border-b border-border/50 dark:border-border/50 min-h-[72px]"
                                                 >
                                                     {!isEmpty && (
-                                                        <div className="text-[7px] font-bold text-dim text-center">—</div>
+                                                        <div className="text-micro font-bold text-dim text-center">—</div>
                                                     )}
                                                 </div>
                                             );
@@ -331,17 +331,17 @@ export const Schedule = () => {
 
                     {/* Legend */}
                     <div className="border-t border-border/50 dark:border-border/50 p-4 flex flex-wrap items-center gap-4 bg-background/50 dark:bg-background/20 no-print">
-                        <span className="text-[9px] font-bold text-muted">دليل الألوان:</span>
+                        <span className="text-micro font-bold text-muted">دليل الألوان:</span>
                         {uniqueTeachers.map((teacher, idx) => {
                             const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
                             return (
                                 <div key={idx} className="flex items-center gap-1.5">
                                     <div className="w-2 h-2" style={{ backgroundColor: accent.color }} />
-                                    <span className="text-[8px] font-bold text-muted">{teacher}</span>
+                                    <span className="text-micro font-bold text-muted">{teacher}</span>
                                 </div>
                             );
                         })}
-                        <span className="text-[9px] font-bold text-muted mr-auto">
+                        <span className="text-micro font-bold text-muted mr-auto">
                             {filteredEvents.length} حصة
                         </span>
                     </div>
@@ -374,19 +374,19 @@ export const Schedule = () => {
                         </div>
                         <div className="p-5 space-y-4">
                             <div>
-                                <span className="text-[9px] font-bold text-muted block mb-1">الطالب</span>
+                                <span className="text-micro font-bold text-muted block mb-1">الطالب</span>
                                 <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.studentName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-muted block mb-1">المعلمة</span>
+                                <span className="text-micro font-bold text-muted block mb-1">المعلمة</span>
                                 <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-muted block mb-1">المادة</span>
+                                <span className="text-micro font-bold text-muted block mb-1">المادة</span>
                                 <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.subject}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-bold text-muted block mb-1">الموعد</span>
+                                <span className="text-micro font-bold text-muted block mb-1">الموعد</span>
                                 <p className="font-bold text-sm text-main dark:text-on-primary">{selectedEvent.day} - {selectedEvent.time}</p>
                             </div>
                         </div>
@@ -404,14 +404,14 @@ export const Schedule = () => {
                                         if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 text-on-primary text-[10px] font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
+                                className="flex-1 h-10 text-on-primary text-micro font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-white dark:bg-primary-active text-main dark:text-on-primary text-[10px] font-bold border border-border dark:border-border shadow-sm hover:bg-surface transition-all active:scale-95 rounded-xl"
+                                className="flex-1 h-10 bg-white dark:bg-primary-active text-main dark:text-on-primary text-micro font-bold border border-border dark:border-border shadow-sm hover:bg-surface transition-all active:scale-95 rounded-xl"
                             >
                                 عرض الطالب
                             </button>

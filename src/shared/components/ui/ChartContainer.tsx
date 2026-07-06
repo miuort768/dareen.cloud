@@ -26,7 +26,7 @@ export const ChartContainer = ({
         {title && (
           <div className="min-w-0">
             <h3 className="text-sm font-bold text-main">{title}</h3>
-            {subtitle && <p className="text-[9px] font-medium text-muted mt-0.5">{subtitle}</p>}
+            {subtitle && <p className="text-micro font-medium text-muted mt-0.5">{subtitle}</p>}
           </div>
         )}
         {headerExtra && <div className="shrink-0">{headerExtra}</div>}

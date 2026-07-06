@@ -24,7 +24,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/20 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-primary" />
-                        <span className="text-[9px] font-black text-primary">آراء يعتز بها</span>
+                        <span className="text-micro font-black text-primary">آراء يعتز بها</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main mb-3 font-heading leading-tight">
                         ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">أولياء الأمور؟</span>
@@ -39,7 +39,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                 
                                 <div className="relative z-10 flex flex-col h-full flex-grow">
                                     <div className="flex items-center justify-between mb-4">
-                                        <div className="bg-success-dark text-on-success px-3 py-1 rounded-full text-[10px] font-black">
+                                        <div className="bg-success-dark text-on-success px-3 py-1 rounded-full text-micro font-black">
                                             {reviews[currentIndex].name}
                                         </div>
                                         <div className="flex gap-0.5 text-warning">
@@ -80,7 +80,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     
                                     <div className="flex items-center justify-between mb-4">
                                         <div className={cn(
-                                            'px-4 py-1.5 rounded-full text-[11px] font-black shadow-sm transition-transform group-hover:scale-105',
+                                            'px-4 py-1.5 rounded-full text-xs font-black shadow-sm transition-transform group-hover:scale-105',
                                             isLarge ? 'bg-on-success text-success-dark' : 'bg-success-dark text-on-success'
                                         )}>
                                             {review.name}
@@ -93,7 +93,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                     <div>
                                         <p className={cn(
                                             'leading-relaxed font-medium italic',
-                                            isLarge ? 'text-sm text-on-success' : 'text-[11px] text-muted'
+                                            isLarge ? 'text-sm text-on-success' : 'text-xs text-muted'
                                         )}>
                                             "{review.content}"
                                         </p>

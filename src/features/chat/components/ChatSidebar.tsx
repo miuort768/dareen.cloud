@@ -58,7 +58,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     </div>
                     <div className="flex flex-col text-right">
                         <span className="text-sm font-normal text-main leading-tight">واتساب دارين</span>
-                        <span className="text-[10px] font-thin text-muted">تواصل أسهل وأسرع</span>
+                        <span className="text-micro font-thin text-muted">تواصل أسهل وأسرع</span>
                     </div>
 
                     <div className="flex items-center gap-1.5 mr-3 border-r border-border dark:border-white/10 pr-2">
@@ -144,14 +144,14 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                             {conv.isGroup && <ShieldCheck size={14} className="text-muted shrink-0" />}
                                             <h3 className={cn(
                                                 "font-normal text-main truncate",
-                                                conv.isGroup ? "text-[15px]" : "text-base"
+                                                conv.isGroup ? "text-button" : "text-base"
                                             )}>
                                                 {conv.displayName}
                                             </h3>
                                         </div>
                                         {conv.lastMessageTime && (
                                             <span className={cn(
-                                                "text-[12px] font-normal tracking-tight",
+                                                "text-xs font-normal tracking-tight",
                                                 (conv.unreadCount ?? 0) > 0 ? "text-success" : "text-muted"
                                             )}>
                                                 {conv.lastMessageTime && !isNaN(new Date(conv.lastMessageTime).getTime())
@@ -173,7 +173,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         </div>
 
                                         {(conv.unreadCount ?? 0) > 0 && (
-                                            <div className="bg-success text-on-primary text-[11px] font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center mr-2">
+                                            <div className="bg-success text-on-primary text-xs font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center mr-2">
                                                 {conv.unreadCount}
                                             </div>
                                         )}
@@ -192,7 +192,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <div className="bg-white/80 dark:bg-card/90  p-3 border-t border-success/10 text-center sticky bottom-0 z-[100] w-full">
                 <div className="flex items-center justify-center gap-2">
                     <ShieldCheck size={14} className="text-success animate-pulse" />
-                    <span className="text-[10px] text-success font-black uppercase tracking-[0.3em]">تواصل آمن ومشفر</span>
+                    <span className="text-micro text-success font-black uppercase tracking-[0.3em]">تواصل آمن ومشفر</span>
                 </div>
             </div>
         </div>

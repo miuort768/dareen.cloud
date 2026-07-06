@@ -32,10 +32,10 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                 <table className="w-full text-right">
                     <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
                         <tr>
-                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary uppercase tracking-wider">الطالب</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">المبلغ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">التاريخ</th>
-                            <th className="px-4 py-3 font-bold text-[10px] text-on-primary text-center">الحالة</th>
+                            <th className="px-4 py-3 font-bold text-micro text-on-primary uppercase tracking-wider">الطالب</th>
+                            <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">المبلغ</th>
+                            <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">التاريخ</th>
+                            <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">الحالة</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-border dark:divide-border">
@@ -43,12 +43,12 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                             <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <span className="block font-bold text-xs text-main dark:text-on-primary mb-0.5">{item.studentName}</span>
-                                    <span className="text-[9px] text-muted font-medium line-clamp-1">{item.description}</span>
+                                    <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
                                 </td>
                                 <td className="px-4 py-4 text-center font-bold text-xs text-success">
                                     {item.amount.toLocaleString()} ج.م
                                 </td>
-                                <td className="px-4 py-4 text-center text-[10px] text-muted font-mono">{item.date}</td>
+                                <td className="px-4 py-4 text-center text-micro text-muted font-mono">{item.date}</td>
                                 <td className="px-4 py-4 text-center">
                                     <button
                                         onClick={async () => {
@@ -57,7 +57,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                            "px-3 py-1 font-bold text-micro uppercase transition-all shadow-sm active:scale-95 rounded-xl",
                                             item.status === 'paid' ? "bg-success text-on-primary" : "text-error border border-error bg-error-light"
                                         )}
                                     >

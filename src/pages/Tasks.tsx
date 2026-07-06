@@ -136,18 +136,18 @@ export const Tasks = () => {
                         <div className="flex flex-col items-start">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-soft dark:bg-primary-soft border border-primary-light dark:border-primary-light rounded-full mb-3">
                                 <Sparkles size={10} className="text-primary dark:text-primary" />
-                                <span className="text-[9px] font-bold text-primary dark:text-inverse">مركز القيادة</span>
+                                <span className="text-micro font-bold text-primary dark:text-inverse">مركز القيادة</span>
                             </div>
                             <h1 className="text-xl font-black text-main dark:text-inverse leading-tight mb-1">
                                 مركز التحكم بالمهام
                             </h1>
-                            <p className="text-[11px] font-bold text-dim dark:text-muted">
+                            <p className="text-xs font-bold text-dim dark:text-muted">
                                 تتبع وإدارة جميع المهام الخاصة بك <span className="text-primary dark:text-primary">في مكان واحد</span>
                             </p>
                         </div>
                         <button
                             onClick={() => setShowAddForm(true)}
-                            className="group relative inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 font-bold text-[10px] uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-2xl shadow-sm"
+                            className="group relative inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 font-bold text-micro uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-2xl shadow-sm"
                         >
                             <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
                             إضافة مهمة جديدة
@@ -181,7 +181,7 @@ export const Tasks = () => {
                                 key={p}
                                 onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                                 className={cn(
-                                    "px-4 py-2.5 font-bold text-[10px] uppercase tracking-wider transition-all whitespace-nowrap rounded-2xl border shadow-sm",
+                                    "px-4 py-2.5 font-bold text-micro uppercase tracking-wider transition-all whitespace-nowrap rounded-2xl border shadow-sm",
                                     filterPriority === p
                                         ? "bg-primary border-primary text-on-primary shadow-lg"
                                         : "bg-white dark:bg-card border-border dark:border-border text-dim dark:text-muted hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary"
@@ -233,18 +233,18 @@ export const Tasks = () => {
                                             </div>
                                             <div className="flex items-center gap-1.5">
                                                 <Calendar size={11} className="text-muted" />
-                                                <span className="text-[9px] font-bold text-muted uppercase tracking-wider">الموعد: {task.dueDate}</span>
+                                                <span className="text-micro font-bold text-muted uppercase tracking-wider">الموعد: {task.dueDate}</span>
                                             </div>
                                         </div>
                                         <div className={cn(
-                                            "px-2.5 py-1 text-[8px] font-bold uppercase tracking-wider rounded-full border shrink-0",
+                                            "px-2.5 py-1 text-micro font-bold uppercase tracking-wider rounded-full border shrink-0",
                                             priorityBadge.colors
                                         )}>
                                             {priorityBadge.text}
                                         </div>
                                     </div>
 
-                                    <p className="text-dim dark:text-muted text-[11px] font-medium leading-relaxed mb-4 line-clamp-2">
+                                    <p className="text-dim dark:text-muted text-xs font-medium leading-relaxed mb-4 line-clamp-2">
                                         {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
                                     </p>
 
@@ -254,7 +254,7 @@ export const Tasks = () => {
                                                 <button
                                                     onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
                                                     className={cn(
-                                                        "inline-flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-2xl border transition-all shadow-sm",
+                                                        "inline-flex items-center gap-1.5 px-3 py-1.5 text-micro font-bold uppercase tracking-wider rounded-2xl border transition-all shadow-sm",
                                                         task.status === 'pending'
                                                             ? "text-primary border-primary bg-primary-soft hover:bg-primary-soft"
                                                             : "text-success-dark dark:text-success border-success bg-success-soft hover:bg-success-soft"
@@ -266,7 +266,7 @@ export const Tasks = () => {
                                             ) : (
                                                 <button
                                                     onClick={() => updateTaskStatus(task.id, 'pending')}
-                                                    className="inline-flex items-center gap-1 px-3 py-1.5 text-[9px] font-bold text-muted uppercase tracking-wider hover:text-dim dark:hover:text-dim transition-colors"
+                                                    className="inline-flex items-center gap-1 px-3 py-1.5 text-micro font-bold text-muted uppercase tracking-wider hover:text-dim dark:hover:text-dim transition-colors"
                                                 >
                                                     <RefreshCcw size={12} />
                                                     إعادة
@@ -289,7 +289,7 @@ export const Tasks = () => {
                                 <ClipboardList size={24} className="text-on-primary" />
                             </div>
                             <h2 className="text-base font-black text-main dark:text-inverse mb-1">قائمة المهام</h2>
-                            <p className="text-[9px] font-bold text-primary uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
+                            <p className="text-micro font-bold text-primary uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
                         </div>
                     )}
                 </div>
@@ -305,7 +305,7 @@ export const Tasks = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold text-main dark:text-inverse">إنشاء مهمة جديدة</h3>
-                                        <p className="text-[8px] font-bold text-muted uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
+                                        <p className="text-micro font-bold text-muted uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
                                     </div>
                                 </div>
                                 <button onClick={() => setShowAddForm(false)} className="p-3 bg-error rounded-xl text-on-error hover:bg-error-hover transition-colors">
@@ -316,7 +316,7 @@ export const Tasks = () => {
                             <form onSubmit={handleAddTask} className="p-5 space-y-4">
                                 <div className="space-y-3">
                                     <div className="space-y-1.5">
-                                        <label className="text-[9px] font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
+                                        <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
                                             <Sparkles size={10} className="text-primary" /> عنوان المهمة
                                         </label>
                                         <input
@@ -330,7 +330,7 @@ export const Tasks = () => {
 
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1.5">
-                                            <label className="text-[9px] font-bold text-dim dark:text-muted uppercase tracking-wider">درجة الأولوية</label>
+                                            <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">درجة الأولوية</label>
                                             <div className="relative">
                                                 <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                                 <select
@@ -345,7 +345,7 @@ export const Tasks = () => {
                                             </div>
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="text-[9px] font-bold text-dim dark:text-muted uppercase tracking-wider">تاريخ التسليم</label>
+                                            <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">تاريخ التسليم</label>
                                             <input
                                                 type="date"
                                                 className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:ring-2 focus:ring-focus"
@@ -356,7 +356,7 @@ export const Tasks = () => {
                                     </div>
 
                                     <div className="space-y-1.5">
-                                        <label className="text-[9px] font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
+                                        <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
                                             <ShieldCheck size={10} className="text-primary" /> وصف المهمة
                                         </label>
                                         <textarea

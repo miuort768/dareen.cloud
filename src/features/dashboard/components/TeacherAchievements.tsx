@@ -28,7 +28,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl p-4 mb-3 text-on-primary">
                 <div className="flex items-center gap-1.5 mb-2">
                     <Award size={12} className="text-primary" />
-                    <span className="text-[9px] font-bold text-primary">
+                    <span className="text-micro font-bold text-primary">
                         {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
                     </span>
                 </div>
@@ -36,10 +36,10 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     <span className="text-2xl font-black tabular-nums">
                         {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
                     </span>
-                    <span className="text-[10px] font-bold text-primary">ج.م</span>
+                    <span className="text-micro font-bold text-primary">ج.م</span>
                 </div>
                 {isTeacher && (
-                    <div className="mt-2.5 inline-flex items-center gap-1 px-2.5 py-1 bg-white/15 backdrop-blur-sm rounded-lg text-[9px] font-bold text-on-primary">
+                    <div className="mt-2.5 inline-flex items-center gap-1 px-2.5 py-1 bg-white/15 backdrop-blur-sm rounded-lg text-micro font-bold text-on-primary">
                         <Award size={10} />
                         {stats.teacherPoints || 0} XP
                     </div>
@@ -53,7 +53,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     </div>
                     <div>
                         <span className="text-lg font-black text-error dark:text-error tabular-nums">{expiredCount}</span>
-                        <p className="text-[8px] font-bold text-error">منتهي</p>
+                        <p className="text-micro font-bold text-error">منتهي</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-warning-light dark:bg-warning/10 border border-warning dark:border-warning/20">
@@ -62,7 +62,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     </div>
                     <div>
                         <span className="text-lg font-black text-warning dark:text-warning tabular-nums">{lowCount}</span>
-                        <p className="text-[8px] font-bold text-warning">مستحق</p>
+                        <p className="text-micro font-bold text-warning">مستحق</p>
                     </div>
                 </div>
             </div>

@@ -102,7 +102,7 @@ export const StatCard = ({
               </div>
             )}
             {badge && (
-              <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded-lg shrink-0', s.title)}>
+              <span className={cn('text-micro font-bold px-2 py-0.5 rounded-lg shrink-0', s.title)}>
                 {badge}
               </span>
             )}
@@ -113,11 +113,11 @@ export const StatCard = ({
               {value ?? '—'}
               {unit && <span className={cn('text-xs font-bold mr-1', s.title)}>{unit}</span>}
             </p>
-            <p className={cn('text-[11px] font-medium mt-1 truncate', s.title)}>
+            <p className={cn('text-xs font-medium mt-1 truncate', s.title)}>
               {title}
             </p>
             {subtitle && (
-              <p className={cn('text-[10px] font-medium mt-0.5 truncate opacity-60', s.title)}>
+              <p className={cn('text-micro font-medium mt-0.5 truncate opacity-60', s.title)}>
                 {subtitle}
               </p>
             )}

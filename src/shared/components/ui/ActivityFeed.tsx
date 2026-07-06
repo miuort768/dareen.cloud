@@ -74,7 +74,7 @@ export const ActivityFeed = ({
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="text-sm font-bold text-main">{title}</h3>
-            {subtitle && <p className="text-[9px] font-medium text-muted mt-0.5">{subtitle}</p>}
+            {subtitle && <p className="text-micro font-medium text-muted mt-0.5">{subtitle}</p>}
           </div>
         </div>
       )}
@@ -132,9 +132,9 @@ export const ActivityFeed = ({
                     )}
                   </div>
                   {item.description && (
-                    <p className="text-[10px] font-medium text-muted mt-0.5">{item.description}</p>
+                    <p className="text-micro font-medium text-muted mt-0.5">{item.description}</p>
                   )}
-                  <p className="text-[9px] font-bold text-dim mt-1">{item.time}</p>
+                  <p className="text-micro font-bold text-dim mt-1">{item.time}</p>
                 </div>
               </div>
             );

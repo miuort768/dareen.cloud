@@ -57,15 +57,15 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <Tag size={11} className="text-info shrink-0" />
                             <span className="text-xs font-bold text-muted dark:text-dim">{lead.subject}</span>
                             {lead.curriculum && (
-                                <span className="text-[9px] font-bold text-muted dark:text-muted">· {lead.curriculum}</span>
+                                <span className="text-micro font-bold text-muted dark:text-muted">· {lead.curriculum}</span>
                             )}
                         </div>
                     </div>
 
                     {lead.notes && (
                         <div className="mx-4 mb-3 bg-warning-light dark:bg-warning/10 border border-warning dark:border-warning/20 px-3 py-2 rounded-xl">
-                            <span className="text-[8px] font-bold text-warning dark:text-warning tracking-widest ml-2">ملاحظات</span>
-                            <span className="text-[11px] text-muted dark:text-muted font-medium leading-relaxed">{lead.notes}</span>
+                            <span className="text-micro font-bold text-warning dark:text-warning tracking-widest ml-2">ملاحظات</span>
+                            <span className="text-xs text-muted dark:text-muted font-medium leading-relaxed">{lead.notes}</span>
                         </div>
                     )}
 
@@ -74,7 +74,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                         <div className="flex items-center justify-between gap-2">
                             <select
                                 className={cn(
-                                    "px-2 py-1 text-[9px] font-bold border-0 outline-none cursor-pointer rounded-xl",
+                                    "px-2 py-1 text-micro font-bold border-0 outline-none cursor-pointer rounded-xl",
                                     statusConfig[lead.status].bg,
                                     statusConfig[lead.status].color
                                 )}

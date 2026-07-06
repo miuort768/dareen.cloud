@@ -15,10 +15,10 @@ const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor, cu
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: `${color}12` }}>
                 <Icon size={14} style={{ color }} />
             </div>
-            <h3 className="text-[11px] font-bold text-muted dark:text-muted">{title}</h3>
+            <h3 className="text-xs font-bold text-muted dark:text-muted">{title}</h3>
         </div>
         <p className="text-lg font-black text-main dark:text-on-primary tabular-nums">{value.toLocaleString()} {currency}</p>
-        <p className="text-[10px] font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
+        <p className="text-micro font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
     </div>
 );
 
@@ -72,7 +72,7 @@ export const FinancialReport = ({
                     </div>
                     <div>
                         <h3 className="text-xs font-bold text-main dark:text-on-primary mb-1">ملخص التقرير المالي</h3>
-                        <p className="text-[11px] font-bold text-muted dark:text-muted leading-relaxed">
+                        <p className="text-xs font-bold text-muted dark:text-muted leading-relaxed">
                             تم تسجيل <span className="font-bold text-main dark:text-dim">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: 'var(--bg-success)' }}>{totalRevenue.toLocaleString()} {reportCurrency}</span>.
                             المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: 'var(--bg-error)' }}>{totalExpenses.toLocaleString()} {reportCurrency}</span>،
                             مما حقق صافي ربح قدره <span className="font-bold" style={{ color: 'var(--bg-primary)' }}>{netProfit.toLocaleString()} {reportCurrency}</span>.

@@ -28,12 +28,12 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
             <table className="w-full text-right border-collapse">
                 <thead>
                     <tr className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)]">
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary">العميل</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary">التواصل</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary">المادة</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary">الحالة</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary text-center">الأولوية</th>
-                        <th className="px-5 py-3 font-bold text-[9px] tracking-wider text-on-primary text-center">إجراءات</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary">العميل</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary">التواصل</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary">المادة</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary">الحالة</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary text-center">الأولوية</th>
+                        <th className="px-5 py-3 font-bold text-micro tracking-wider text-on-primary text-center">إجراءات</th>
                     </tr>
                 </thead>
             </table>
@@ -60,14 +60,14 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                 </span>
                             </div>
                             <div className="w-1/6">
-                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface dark:bg-primary-active text-[10px] font-bold text-muted dark:text-dim border border-border dark:border-border rounded-xl">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface dark:bg-primary-active text-micro font-bold text-muted dark:text-dim border border-border dark:border-border rounded-xl">
                                     <Tag size={11} className="text-info" /> {lead.subject}
                                 </span>
                             </div>
                             <div className="w-1/6">
                                 <select
                                     className={cn(
-                                        "px-2 py-1 text-[9px] font-bold border-0 outline-none cursor-pointer rounded-xl",
+                                        "px-2 py-1 text-micro font-bold border-0 outline-none cursor-pointer rounded-xl",
                                         statusConfig[lead.status].bg,
                                         statusConfig[lead.status].color
                                     )}
@@ -129,7 +129,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                         {lead.notes && (
                             <div className="bg-warning-light/30 dark:bg-warning/10 px-5 py-2.5 border-b border-border dark:border-border/80">
                                 <div className="flex items-start gap-2 text-xs leading-relaxed text-muted dark:text-muted font-medium max-w-full">
-                                    <span className="text-[8px] font-bold text-warning dark:text-warning tracking-widest shrink-0 mt-0.5">ملاحظات</span>
+                                    <span className="text-micro font-bold text-warning dark:text-warning tracking-widest shrink-0 mt-0.5">ملاحظات</span>
                                     <span>{lead.notes}</span>
                                 </div>
                             </div>

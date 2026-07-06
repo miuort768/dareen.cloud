@@ -33,14 +33,14 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                         <Circle size={10} style={{ color: STATUS_COLORS[user.status] || 'var(--border-strong)' }} fill={(STATUS_COLORS[user.status] || 'var(--border-strong)')} />
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-main dark:text-on-primary truncate">{user.name}</p>
-                            <p className="text-[11px] text-muted">
+                            <p className="text-xs text-muted">
                                 {user.role === 'admin' ? 'مدير' : user.role === 'teacher' ? 'معلم' : user.role === 'parent' ? 'ولي أمر' : user.role === 'student' ? 'طالب' : user.role}
                                 {user.teachingSubject && ` · ${user.teachingSubject}`}
                                 {user.status === 'away' && ' · بعيد'}
                             </p>
                         </div>
                         {user.status === 'offline' && user.secondsAgo < 3600 && (
-                            <span className="text-[10px] text-muted whitespace-nowrap">منذ {user.secondsAgo < 60 ? `${user.secondsAgo}ث` : `${Math.round(user.secondsAgo / 60)}د`}</span>
+                            <span className="text-micro text-muted whitespace-nowrap">منذ {user.secondsAgo < 60 ? `${user.secondsAgo}ث` : `${Math.round(user.secondsAgo / 60)}د`}</span>
                         )}
                     </div>
                 ))}

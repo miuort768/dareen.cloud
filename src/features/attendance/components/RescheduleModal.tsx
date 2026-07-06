@@ -36,14 +36,14 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                             <Clock size={18} style={{ color: 'var(--bg-warning)' }} />
                         </div>
                         <div>
-                            <p className="text-[10px] font-bold text-muted">{subject}</p>
+                            <p className="text-micro font-bold text-muted">{subject}</p>
                             <h4 className="text-xs font-bold text-main dark:text-on-primary">{studentName}</h4>
                         </div>
                     </div>
 
                     <div className="space-y-4">
                         <div>
-                            <label className="text-[10px] font-bold text-muted mb-1.5 block">الموعد الجديد المقترح</label>
+                            <label className="text-micro font-bold text-muted mb-1.5 block">الموعد الجديد المقترح</label>
                             <div className="grid grid-cols-2 gap-3">
                                 <input
                                     type="date"
@@ -62,7 +62,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                         </div>
 
                         <div>
-                            <label className="text-[10px] font-bold text-muted mb-1.5 block">سبب التغيير</label>
+                            <label className="text-micro font-bold text-muted mb-1.5 block">سبب التغيير</label>
                             <textarea
                                 value={reason}
                                 onChange={(e) => setReason(e.target.value)}
@@ -73,7 +73,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
 
                         <div className="flex items-start gap-2 p-3 rounded-xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', border: '1px solid rgba(108,75,255,0.13)' }}>
                             <AlertCircle size={14} style={{ color: 'var(--bg-primary)' }} className="flex-shrink-0 mt-0.5" />
-                            <p className="text-[9px] font-bold leading-relaxed" style={{ color: 'var(--bg-primary)' }}>
+                            <p className="text-micro font-bold leading-relaxed" style={{ color: 'var(--bg-primary)' }}>
                                 سيصل طلبك للإدارة فوراً للموافقة عليه، وسيتم إبلاغ ولي الأمر تلقائياً.
                             </p>
                         </div>

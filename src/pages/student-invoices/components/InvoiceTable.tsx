@@ -38,7 +38,7 @@ const statusLabel: Record<string, string> = {
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="w-7 h-7 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-[10px] font-bold">
+  <div className="w-7 h-7 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-micro font-bold">
     {(name || '?')[0].toUpperCase()}
   </div>
 );
@@ -61,7 +61,7 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
           <tr className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
             {['اسم الطالب', 'البيان', 'المبلغ', 'الاستحقاق', 'الحالة', 'إجراءات'].map(h => (
               <th key={h} className={cn(
-                "px-4 py-3 text-[9px] font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent",
+                "px-4 py-3 text-micro font-bold text-on-primary opacity-70 tracking-wider border-b border-transparent",
                 h === 'المبلغ' || h === 'الاستحقاق' || h === 'الحالة' || h === 'إجراءات' ? 'text-center' : ''
               )}>{h}</th>
             ))}
@@ -77,17 +77,17 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
                 </div>
               </td>
               <td className="px-4 py-3">
-                <span className="text-[10px] font-medium text-dim truncate max-w-[150px] inline-block">{inv.description}</span>
+                <span className="text-micro font-medium text-dim truncate max-w-[150px] inline-block">{inv.description}</span>
               </td>
               <td className="px-4 py-3 text-center">
-                <span className="font-mono text-[11px] font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
+                <span className="font-mono text-xs font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
               </td>
               <td className="px-4 py-3 text-center">
-                <span className="text-[10px] font-medium text-dim">{inv.dueDate}</span>
+                <span className="text-micro font-medium text-dim">{inv.dueDate}</span>
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-center">
-                    <button onClick={() => toggleStatus(inv)} className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border transition-all rounded-lg", statusClasses[inv.status])}>
+                    <button onClick={() => toggleStatus(inv)} className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-micro border transition-all rounded-lg", statusClasses[inv.status])}>
                     {statusLabel[inv.status]}
                   </button>
                 </div>
@@ -123,23 +123,23 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
                   <AvatarLetter name={inv.studentName} />
                   <div>
                     <p className="text-xs font-bold text-main">{inv.studentName}</p>
-                    <p className="text-[10px] text-dim">{inv.description}</p>
+                    <p className="text-micro text-dim">{inv.description}</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="text-[8px] font-bold text-dim uppercase mb-0.5">المبلغ</p>
+                    <p className="text-micro font-bold text-dim uppercase mb-0.5">المبلغ</p>
                     <span className="font-mono text-sm font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>
-                    <p className="text-[8px] font-bold text-dim uppercase mb-0.5">الاستحقاق</p>
-                    <span className="text-[10px] font-medium text-muted">{inv.dueDate}</span>
+                    <p className="text-micro font-bold text-dim uppercase mb-0.5">الاستحقاق</p>
+                    <span className="text-micro font-medium text-muted">{inv.dueDate}</span>
                   </div>
                 </div>
-                <button onClick={() => toggleStatus(inv)} className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] border rounded-lg transition-all", statusClasses[inv.status])}>
+                <button onClick={() => toggleStatus(inv)} className={cn("inline-flex items-center gap-1.5 px-2 py-1 font-bold text-micro border rounded-lg transition-all", statusClasses[inv.status])}>
                   {statusLabel[inv.status]}
                 </button>
               </div>

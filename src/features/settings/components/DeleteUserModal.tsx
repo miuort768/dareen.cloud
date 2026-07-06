@@ -20,7 +20,7 @@ export const DeleteUserModal = ({ showDeleteModal, setShowDeleteModal, deleteUse
                     </div>
                     <div>
                         <p className="text-sm font-normal text-main">تأكيد حذف المستخدم</p>
-                        <p className="text-[10px] text-dim mt-0.5">هذا الإجراء نهائي</p>
+                        <p className="text-micro text-dim mt-0.5">هذا الإجراء نهائي</p>
                     </div>
                 </div>
                 <p className="text-xs text-muted mb-4">

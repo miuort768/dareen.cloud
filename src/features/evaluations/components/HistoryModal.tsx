@@ -29,7 +29,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                         </div>
                         <div>
                             <h3 className="text-sm font-bold">سجل التقييمات الكامل</h3>
-                            <p className="text-on-primary/70 text-[10px] font-medium">{student.name}</p>
+                            <p className="text-on-primary/70 text-micro font-medium">{student.name}</p>
                         </div>
                     </div>
                     <button onClick={onClose} aria-label="إغلاق" className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors rounded-xl"><X size={16} /></button>
@@ -42,27 +42,27 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                             <div key={ev.id} className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 shadow-sm hover:border-primary/20 transition-all group rounded-2xl">
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
-                                        <span className={cn("flex items-center gap-1.5 text-[9px] font-medium px-2 py-1", r.pill)}>
+                                        <span className={cn("flex items-center gap-1.5 text-micro font-medium px-2 py-1", r.pill)}>
                                             <r.icon size={10} strokeWidth={3} />
                                             {ev.rating}
                                         </span>
                                         {ev.points > 0 && (
-                                            <span className="text-[8px] font-bold px-2 py-0.5 bg-warning-light dark:bg-warning/20 text-warning dark:text-warning rounded-lg">+{ev.points} XP</span>
+                                            <span className="text-micro font-bold px-2 py-0.5 bg-warning-light dark:bg-warning/20 text-warning dark:text-warning rounded-lg">+{ev.points} XP</span>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <span className="text-[9px] font-normal text-muted tabular-nums">{format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}</span>
+                                        <span className="text-micro font-normal text-muted tabular-nums">{format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}</span>
                                         {canDelete(ev) && (
                                             <button onClick={() => onDelete(ev.id)} className="text-dim hover:text-error transition-colors p-1 hover:bg-error-light dark:hover:bg-error/20 rounded-xl"><Trash2 size={12} /></button>
                                         )}
                                     </div>
                                 </div>
-                                <p className="text-[10px] font-normal text-muted dark:text-muted italic leading-relaxed border-r-2 border-primary/30 pr-3">
+                                <p className="text-micro font-normal text-muted dark:text-muted italic leading-relaxed border-r-2 border-primary/30 pr-3">
                                     &ldquo;{ev.notes || 'لا يوجد ملاحظات'}&rdquo;
                                 </p>
                                 <div className="mt-2 pt-2 border-t border-border dark:border-border flex items-center gap-1.5">
                                     <User size={8} className="text-dim" />
-                                    <span className="text-[8px] font-normal text-muted">بواسطة: {ev.teacherName || 'نظام آلي'}</span>
+                                    <span className="text-micro font-normal text-muted">بواسطة: {ev.teacherName || 'نظام آلي'}</span>
                                 </div>
                             </div>
                         );
@@ -70,7 +70,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                     {studentEvals.length === 0 && (
                         <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border-2 border-dashed border-primary/30">
                             <History size={28} className="text-primary/30 mb-3 mx-auto" />
-                            <p className="text-[10px] font-bold text-muted">لا يوجد سجل تقييمات حالياً</p>
+                            <p className="text-micro font-bold text-muted">لا يوجد سجل تقييمات حالياً</p>
                         </div>
                     )}
                 </div>

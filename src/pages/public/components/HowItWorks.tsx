@@ -18,7 +18,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                 <div className="text-center mb-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-active dark:bg-primary-active text-on-primary rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-warning" />
-                        <span className="text-[10px] font-black ">ابدأ رحلتك</span>
+                        <span className="text-micro font-black ">ابدأ رحلتك</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-main dark:text-on-primary font-heading">
                         كيف تشترك في <span className="text-primary dark:text-primary">المعهد؟</span>
@@ -81,16 +81,16 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="scale-75 md:scale-100">
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-background text-main dark:text-on-primary rounded-full flex items-center justify-center text-[7px] md:text-[9px] font-black shadow-lg border border-border dark:border-border">
+                                    <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-background text-main dark:text-on-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
                                         {step.id}
                                     </span>
                                 </div>
 
                                 <div className="text-center px-1 md:px-4 w-full">
-                                    <div className="text-[12px] md:text-sm font-black text-main dark:text-on-primary mb-1 group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                                    <div className="text-xs md:text-sm font-black text-main dark:text-on-primary mb-1 group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                         {step.title}
                                     </div>
-                                    <p className="hidden sm:block text-[8px] md:text-[10px] text-muted dark:text-muted leading-tight font-bold">
+                                    <p className="hidden sm:block text-micro md:text-micro text-muted dark:text-muted leading-tight font-bold">
                                         {step.desc}
                                     </p>
                                 </div>

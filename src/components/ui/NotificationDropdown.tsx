@@ -169,7 +169,7 @@ export const NotificationDropdown = () => {
             >
                 <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgba(0,0,0,0.30)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.40)]" : "")} />
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-primary text-[10px] font-bold flex items-center justify-center border-2 border-white dark:border-border shadow-lg">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-primary text-micro font-bold flex items-center justify-center border-2 border-white dark:border-border shadow-lg">
                         {unreadCount}
                     </span>
                 )}
@@ -188,7 +188,7 @@ export const NotificationDropdown = () => {
                             </div>
                             <h3 className="font-medium text-xs uppercase tracking-widest text-main dark:text-on-primary">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-error text-on-primary text-[9px] font-medium px-2 py-0.5 shadow-[1px_1px_0_#000]">
+                                <span className="bg-error text-on-primary text-micro font-medium px-2 py-0.5 shadow-[1px_1px_0_#000]">
                                     {unreadCount} مـهـم
                                 </span>
                             )}
@@ -198,7 +198,7 @@ export const NotificationDropdown = () => {
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllAsRead}
-                                    className="text-[10px] sm:text-xs text-primary hover:text-primary font-medium dark:text-primary whitespace-nowrap"
+                                    className="text-micro sm:text-xs text-primary hover:text-primary font-medium dark:text-primary whitespace-nowrap"
                                 >
                                     تحديد الكل
                                 </button>
@@ -206,7 +206,7 @@ export const NotificationDropdown = () => {
                             {Array.isArray(notifications) && notifications.length > 0 && (
                                 <button
                                     onClick={clearAll}
-                                    className="text-[10px] sm:text-xs text-error hover:text-error font-medium dark:text-error whitespace-nowrap"
+                                    className="text-micro sm:text-xs text-error hover:text-error font-medium dark:text-error whitespace-nowrap"
                                 >
                                     حذف الكل
                                 </button>
@@ -221,7 +221,7 @@ export const NotificationDropdown = () => {
                                 <div className="p-1.5 bg-primary rounded-lg text-on-primary">
                                     <Smartphone size={14} />
                                 </div>
-                                <p className="text-[10px] sm:text-xs font-normal text-primary dark:text-primary">هل تريد ميزة الإشعارات الفورية؟</p>
+                                <p className="text-micro sm:text-xs font-normal text-primary dark:text-primary">هل تريد ميزة الإشعارات الفورية؟</p>
                             </div>
                             <button
                                 onClick={async () => {
@@ -232,7 +232,7 @@ export const NotificationDropdown = () => {
                                         showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success');
                                     }
                                 }}
-                                className="bg-primary text-on-primary text-[10px] font-medium px-3 py-1.5 rounded-lg hover:bg-primary-hover transition-colors shadow-sm"
+                                className="bg-primary text-on-primary text-micro font-medium px-3 py-1.5 rounded-lg hover:bg-primary-hover transition-colors shadow-sm"
                             >
                                 تفعيل الآن
                             </button>
@@ -270,18 +270,18 @@ export const NotificationDropdown = () => {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-start justify-between gap-2">
-                                                <h4 className="font-normal text-[11px] sm:text-sm text-main dark:text-on-primary">
+                                                <h4 className="font-normal text-xs sm:text-sm text-main dark:text-on-primary">
                                                     {notification.title}
                                                 </h4>
                                                 {!notification.read && (
                                                     <div className="w-1.5 h-1.5 bg-info rounded-full flex-shrink-0 mt-1"></div>
                                                 )}
                                             </div>
-                                            <p className="text-[10px] sm:text-xs text-muted dark:text-muted mt-1 line-clamp-2">
+                                            <p className="text-micro sm:text-xs text-muted dark:text-muted mt-1 line-clamp-2">
                                                 {notification.message}
                                             </p>
                                             <div className="flex items-center justify-between mt-2">
-                                                <span className="text-[9px] sm:text-xs text-muted dark:text-muted">
+                                                <span className="text-micro sm:text-xs text-muted dark:text-muted">
                                                     {formatDistanceToNow(new Date(notification.time), { addSuffix: true, locale: ar })}
                                                 </span>
                                                 <button

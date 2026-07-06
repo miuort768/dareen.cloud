@@ -42,9 +42,9 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                                     )}>
                                         {goal.icon}
                                     </div>
-                                    <span className="text-[10px] font-medium text-main dark:text-on-primary uppercase">{goal.name}</span>
+                                    <span className="text-micro font-medium text-main dark:text-on-primary uppercase">{goal.name}</span>
                                 </div>
-                                <div className="text-[10px] font-medium">
+                                <div className="text-micro font-medium">
                                     <span className={cn(isAchieved ? "text-success" : "text-primary")}>{goal.value}{goal.unit}</span>
                                     <span className="text-dim mx-1">/</span>
                                     <span className="text-muted">{goal.goal}{goal.unit}</span>
@@ -68,12 +68,12 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                 <div className="flex items-center gap-3">
                     <Award size={20} className="text-warning animate-bounce" />
                     <div>
-                        <p className="text-[9px] font-medium text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
+                        <p className="text-micro font-medium text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
                         <h4 className="text-xs font-medium uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
                     </div>
                 </div>
                 <div className="text-right">
-                    <p className="text-[8px] font-medium opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
+                    <p className="text-micro font-medium opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
                     <p className="text-lg font-medium tracking-tighter italic">{next ? pointsNeeded : 'MAX'}</p>
                 </div>
             </div>

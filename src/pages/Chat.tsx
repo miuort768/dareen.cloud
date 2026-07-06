@@ -216,7 +216,7 @@ export const Chat: React.FC = () => {
                             <h2 className="text-3xl font-medium text-main dark:text-on-primary mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
-                                <p className="text-[10px] text-primary font-medium uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
+                                <p className="text-micro text-primary font-medium uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
                             </div>
                             <p className="text-sm text-muted dark:text-muted max-w-sm mx-auto leading-relaxed font-medium">
@@ -226,7 +226,7 @@ export const Chat: React.FC = () => {
                         
                         <div className="absolute bottom-10 flex items-center gap-2 text-muted dark:text-muted">
                              <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.50)]", isConnected ? "bg-success" : "bg-error")}></div>
-                             <span className="text-[10px] font-medium uppercase tracking-widest">{isConnected ? "النظام متصل وآمن" : "غير متصل"}</span>
+                             <span className="text-micro font-medium uppercase tracking-widest">{isConnected ? "النظام متصل وآمن" : "غير متصل"}</span>
                         </div>
                     </div>
                 )}

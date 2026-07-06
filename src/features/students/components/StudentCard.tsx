@@ -59,17 +59,17 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                         {/* Details */}
                         <div className="flex-1 space-y-4 text-right" dir="rtl">
                             <div className="space-y-1">
-                                <label className="text-[10px] font-medium text-dim uppercase tracking-widest block">الاسم الكامل</label>
+                                <label className="text-micro font-medium text-dim uppercase tracking-widest block">الاسم الكامل</label>
                                 <p className="text-lg font-medium text-main tracking-tighter">{student.name}</p>
                             </div>
                             
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-medium text-dim uppercase tracking-widest block">الصف الدراسي</label>
+                                    <label className="text-micro font-medium text-dim uppercase tracking-widest block">الصف الدراسي</label>
                                     <p className="text-sm font-normal text-muted">{student.grade}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-medium text-dim uppercase tracking-widest block">كود الطالب</label>
+                                    <label className="text-micro font-medium text-dim uppercase tracking-widest block">كود الطالب</label>
                                     <p className="text-sm font-normal text-muted">#{student.id.slice(0, 6).toUpperCase()}</p>
                                 </div>
                             </div>
@@ -86,8 +86,8 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     {/* Footer / QR Code */}
                     <div className="mt-10 pt-6 border-t-2 border-dashed border-border flex items-center justify-between relative z-10">
                         <div className="space-y-1 text-right" dir="rtl">
-                            <p className="text-[9px] font-medium text-dim uppercase">نظام إدارة دارين السابعة</p>
-                            <p className="text-[8px] text-muted font-normal">يُرجى إبراز هذه البطاقة عند طلبها داخل المعهد</p>
+                            <p className="text-micro font-medium text-dim uppercase">نظام إدارة دارين السابعة</p>
+                            <p className="text-micro text-muted font-normal">يُرجى إبراز هذه البطاقة عند طلبها داخل المعهد</p>
                         </div>
                         <div className="p-2 bg-card border-2 border-border">
                             <QRCodeSVG 
@@ -101,7 +101,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
 
                     {/* Vertical Text Rind */}
                     <div className="absolute left-0 bottom-10 h-32 w-8 -rotate-90 flex items-center gap-2 pointer-events-none opacity-20">
-                         <span className="text-[8px] font-medium text-muted uppercase whitespace-nowrap tracking-[1em]">STU-ID-{student.id.slice(0,4)}</span>
+                         <span className="text-micro font-medium text-muted uppercase whitespace-nowrap tracking-[1em]">STU-ID-{student.id.slice(0,4)}</span>
                     </div>
                 </div>
 

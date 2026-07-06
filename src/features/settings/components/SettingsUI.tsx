@@ -68,13 +68,13 @@ export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; lab
         </div>
         <div>
             <p className="text-sm font-bold text-main">{label}</p>
-            {sub && <p className="text-[10px] font-bold text-dim mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
         </div>
     </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[11px] font-bold text-muted mb-1.5 uppercase tracking-wide">
+    <label className="block text-xs font-bold text-muted mb-1.5 uppercase tracking-wide">
         {children}
     </label>
 );
@@ -177,7 +177,7 @@ export const ToggleRow = ({
             </div>
             <div>
                 <p className="text-xs font-bold text-main">{label}</p>
-                {sub && <p className="text-[10px] font-bold text-dim mt-0.5">{sub}</p>}
+                {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
             </div>
         </div>
         <Toggle checked={checked} onChange={onChange} />

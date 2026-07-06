@@ -41,7 +41,7 @@ export const ChartTooltip = ({
           <div key={i} className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: entry.fill || entry.color }} />
-              <span className="text-[10px] font-bold text-muted">{entry.name}</span>
+              <span className="text-micro font-bold text-muted">{entry.name}</span>
             </div>
             <span className="text-xs font-black text-main tabular-nums">
               {formatValue(entry.value)}
@@ -50,7 +50,7 @@ export const ChartTooltip = ({
         ))}
       </div>
       <div className="mt-3 pt-2 border-t border-divider flex items-center justify-between">
-        <span className="text-[9px] font-bold text-dim">المجموع</span>
+        <span className="text-micro font-bold text-dim">المجموع</span>
         <span className="text-xs font-black text-main tabular-nums">{formatValue(total)}</span>
       </div>
     </div>

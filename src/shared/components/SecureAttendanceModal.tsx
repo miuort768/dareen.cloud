@@ -104,7 +104,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     {status === 'completed' && (
                         <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
                                     <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                                 </label>
                                 <textarea 
@@ -116,7 +116,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
                                     <Star size={12} className="text-warning" /> الواجب المطلوب
                                 </label>
                                 <input 
@@ -141,7 +141,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 />
                                 <div>
                                     <p className="text-sm font-black text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
-                                    <p className="text-[10px] font-bold text-error">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
+                                    <p className="text-micro font-bold text-error">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
                                 </div>
                             </label>
                         </div>

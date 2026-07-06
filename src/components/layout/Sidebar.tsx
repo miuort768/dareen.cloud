@@ -175,7 +175,7 @@ export const Sidebar = () => {
                             key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
-                                "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-[13px]",
+                                "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-sm",
                                 isActive
                                     ? "bg-primary-soft text-primary"
                                     : "text-muted hover:bg-hover hover:text-main",
@@ -190,7 +190,7 @@ export const Sidebar = () => {
                                     strokeWidth={collapsed ? 2.5 : 2}
                                 />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-error text-on-error text-[9px] font-medium rounded-full animate-pulse shadow-sm border border-border">
+                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full animate-pulse shadow-sm border border-border">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </span>
                                 )}
@@ -274,7 +274,7 @@ export const Sidebar = () => {
                                     <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
 
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-error text-on-error text-[10px] font-medium flex items-center justify-center rounded-full ring-2 ring-border shadow-sm md:animate-pulse">
+                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-error text-on-error text-micro font-medium flex items-center justify-center rounded-full ring-2 ring-border shadow-sm md:animate-pulse">
                                             {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                         </span>
                                     )}
@@ -312,7 +312,7 @@ export const Sidebar = () => {
                             <img src="/dareen_logo_new.jpg" alt="الشعار" width={32} height={32} className="w-8 h-8 object-contain" />
                             <div>
                                 <h2 className="text-base font-medium text-main leading-tight">{academyName}</h2>
-                                <p className="text-[10px] text-muted font-normal uppercase tracking-widest">قائمة الوصول السريع</p>
+                                <p className="text-micro text-muted font-normal uppercase tracking-widest">قائمة الوصول السريع</p>
                             </div>
                         </div>
                         <button
@@ -345,12 +345,12 @@ export const Sidebar = () => {
                                             )}>
                                                 <item.icon size={14} />
                                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-error text-on-error text-[8px] font-medium rounded-full shadow-sm border border-border">
+                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full shadow-sm border border-border">
                                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                                     </span>
                                                 )}
                                             </div>
-                                            <span className="text-[11px] font-normal tracking-tight truncate">{item.name}</span>
+                                            <span className="text-xs font-normal tracking-tight truncate">{item.name}</span>
                                         </>
                                     )}
                                 </NavLink>
@@ -366,7 +366,7 @@ export const Sidebar = () => {
                                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-none bg-error text-on-error font-normal hover:bg-error-hover transition-colors shadow-md"
                             >
                                 <LogOut size={16} />
-                                <span className="uppercase tracking-widest text-[10px]">تسجيل الخروج</span>
+                                <span className="uppercase tracking-widest text-micro">تسجيل الخروج</span>
                             </button>
                         </div>
                     </div>

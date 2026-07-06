@@ -25,7 +25,7 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                         <s.icon size={20} className="text-on-primary" />
                     </div>
                     <div className="min-w-0">
-                        <p className="text-[10px] font-bold text-on-primary opacity-70 leading-none">{s.label}</p>
+                        <p className="text-micro font-bold text-on-primary opacity-70 leading-none">{s.label}</p>
                         <p className="text-2xl font-black text-on-primary tabular-nums mt-1">{values[i]}</p>
                     </div>
                 </div>

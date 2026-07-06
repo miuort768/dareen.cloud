@@ -42,13 +42,13 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                     </div>
                     <h3 className="font-bold text-xl text-on-primary uppercase tracking-tighter mb-1">{parent.name}</h3>
                     <div className="flex items-center gap-2">
-                         <span className="text-[10px] font-medium text-white/70 uppercase tracking-widest bg-white/15 backdrop-blur-sm px-3 py-0.5 rounded-lg">
+                         <span className="text-micro font-medium text-white/70 uppercase tracking-widest bg-white/15 backdrop-blur-sm px-3 py-0.5 rounded-lg">
                             ID: {parent.id.substring(0, 8)}
                          </span>
                     </div>
                     
                     <div className="flex flex-col gap-2 mt-4 w-full max-w-[280px]">
-                        <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-[11px] font-medium text-on-primary group hover:bg-white/15 transition-colors rounded-xl">
+                        <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-xs font-medium text-on-primary group hover:bg-white/15 transition-colors rounded-xl">
                             <span className="text-white/50 uppercase tracking-widest">Phone</span>
                             <div className="flex items-center gap-2">
                                 <Phone size={11} className="text-success" />
@@ -56,7 +56,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                             </div>
                         </div>
                         {parent.email && (
-                            <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-[10px] font-medium text-white/80 group hover:bg-white/15 transition-colors rounded-xl">
+                            <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-micro font-medium text-white/80 group hover:bg-white/15 transition-colors rounded-xl">
                                 <span className="text-white/50 uppercase tracking-widest">Email</span>
                                 <div className="flex items-center gap-2">
                                     <Mail size={11} className="text-info" />
@@ -85,7 +85,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                 <div className="w-1.5 h-6 bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-full" />
                                 <h4 className="text-xs font-bold text-main dark:text-on-primary uppercase tracking-[0.2em]">الأبناء المسجلين</h4>
                             </div>
-                            <span className="text-[10px] font-medium bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary px-3 py-1 rounded-lg">
+                            <span className="text-micro font-medium bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary px-3 py-1 rounded-lg">
                                 {details.children.length}
                             </span>
                         </div>
@@ -96,7 +96,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                     <div className="flex justify-between items-center mb-4">
                                         <div>
                                             <p className="font-bold text-sm text-main dark:text-on-primary uppercase tracking-tight">{child.name}</p>
-                                            <p className="text-[10px] font-medium text-info uppercase tracking-widest mt-0.5">{child.grade}</p>
+                                            <p className="text-micro font-medium text-info uppercase tracking-widest mt-0.5">{child.grade}</p>
                                         </div>
                                         <div className="w-9 h-9 bg-white dark:bg-primary-active border border-border dark:border-border flex items-center justify-center text-xs font-medium text-dim rounded-xl">
                                             {child.name.charAt(0)}
@@ -105,12 +105,12 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                     {child.enrollments && child.enrollments.length > 0 && (
                                         <div className="space-y-3 pt-4 border-t border-border dark:border-border/50">
                                             {child.enrollments.map((en, idx) => (
-                                                <div key={idx} className="flex items-center justify-between text-[11px] font-normal">
+                                                <div key={idx} className="flex items-center justify-between text-xs font-normal">
                                                     <div className="flex items-center gap-2">
                                                         <BookOpen size={12} className="text-muted shrink-0" />
                                                         <div>
                                                             <span className="block text-main dark:text-on-primary font-bold">{en.subject}</span>
-                                                            <span className="block text-[9px] text-muted dark:text-muted">المعلمة: {en.teacher}</span>
+                                                            <span className="block text-micro text-muted dark:text-muted">المعلمة: {en.teacher}</span>
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-2">
@@ -120,7 +120,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                                                 style={{ width: `${(en.sessionsUsed / en.sessionsTotal) * 100}%` }} 
                                                             />
                                                         </div>
-                                                        <span className="font-bold font-mono text-[10px] min-w-[35px] text-right text-main dark:text-dim">
+                                                        <span className="font-bold font-mono text-micro min-w-[35px] text-right text-main dark:text-dim">
                                                             {en.sessionsUsed}/{en.sessionsTotal}
                                                         </span>
                                                     </div>
@@ -161,7 +161,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                         <div className="flex items-center justify-between mb-4">
                                             <div>
                                                 <p className="font-bold text-xs text-main dark:text-on-primary uppercase tracking-tight leading-none">{group.subject}</p>
-                                                <p className="text-[10px] font-medium text-warning uppercase tracking-widest mt-1.5">{group.student}</p>
+                                                <p className="text-micro font-medium text-warning uppercase tracking-widest mt-1.5">{group.student}</p>
                                             </div>
                                             <div className="w-8 h-8 bg-primary/5 dark:bg-primary-active flex items-center justify-center rounded-xl">
                                                 <Clock size={14} className="text-primary" />
@@ -169,7 +169,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                         </div>
                                         <div className="flex flex-wrap gap-2 pt-3 border-t border-border dark:border-border">
                                             {group.times.map((t, i) => (
-                                                <div key={i} className="flex items-center gap-3 px-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border text-[10px] font-medium rounded-xl">
+                                                <div key={i} className="flex items-center gap-3 px-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border text-micro font-medium rounded-xl">
                                                     <span className="text-muted uppercase">{t.day}</span>
                                                     <span className="w-1 h-1 bg-primary rounded-full" />
                                                     <span className="text-primary font-mono">{t.hour} {t.period === 'am' ? 'صباحاً' : 'مساءً'}</span>

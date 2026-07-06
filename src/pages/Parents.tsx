@@ -89,7 +89,7 @@ export const Parents = () => {
                                             placeholder="ابحث باسم ولي الأمر..."
                                             value={state.searchTerm}
                                             onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                            className="w-full pr-14 pl-4 py-3 bg-primary-soft text-main dark:text-on-primary placeholder:text-muted text-[11px] font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
+                                            className="w-full pr-14 pl-4 py-3 bg-primary-soft text-main dark:text-on-primary placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
                                         />
                                     </div>
                                     <div className="hidden lg:flex items-center gap-3 px-5 border-r border-border">
@@ -97,8 +97,8 @@ export const Parents = () => {
                                             <Users size={14} className="text-primary" />
                                         </div>
                                         <div>
-                                            <p className="text-[9px] font-bold text-dim">إجمالي أولياء الأمور</p>
-                                            <p className="text-[10px] font-bold text-primary">{state.filteredParents.length} / {state.totalParents}</p>
+                                            <p className="text-micro font-bold text-dim">إجمالي أولياء الأمور</p>
+                                            <p className="text-micro font-bold text-primary">{state.filteredParents.length} / {state.totalParents}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@ export const Parents = () => {
                                         <AlertCircle size={32} />
                                     </div>
                                     <h3 className="font-medium text-lg text-main dark:text-inverse mb-3 text-center uppercase tracking-tighter">تأكيد عملية الحذف</h3>
-                                    <p className="text-[11px] font-normal text-dim leading-relaxed mb-8 text-center uppercase tracking-widest">{state.confirmModal.message}</p>
+                                    <p className="text-xs font-normal text-dim leading-relaxed mb-8 text-center uppercase tracking-widest">{state.confirmModal.message}</p>
 
                                     <div className="flex gap-2">
                                         <button
@@ -168,7 +168,7 @@ export const Parents = () => {
                                                 actions.setConfirmModal({ ...state.confirmModal, show: false });
                                             }}
                                             className={cn(
-                                                "flex-1 py-4 text-on-primary font-medium text-[10px] shadow-sm transition-all active:scale-95 uppercase tracking-[0.2em] border rounded-xl",
+                                                "flex-1 py-4 text-on-primary font-medium text-micro shadow-sm transition-all active:scale-95 uppercase tracking-[0.2em] border rounded-xl",
                                                 state.confirmModal.variant === 'primary'
                                                     ? "bg-primary border-primary hover:bg-primary-hover shadow-lg"
                                                     : "bg-error border-error hover:bg-error-hover shadow-lg"
@@ -178,7 +178,7 @@ export const Parents = () => {
                                         </button>
                                         <button
                                             onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                            className="flex-1 py-4 bg-surface dark:bg-primary-active text-muted font-medium text-[10px] hover:bg-surface transition-all uppercase tracking-[0.2em] rounded-xl"
+                                            className="flex-1 py-4 bg-surface dark:bg-primary-active text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-[0.2em] rounded-xl"
                                         >
                                             إلغاء
                                         </button>

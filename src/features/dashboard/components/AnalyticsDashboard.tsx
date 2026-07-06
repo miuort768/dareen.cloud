@@ -61,7 +61,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         </div>
                         <div>
                             <h3 className="text-sm font-bold text-main">مركز تحليل البيانات</h3>
-                            <p className="text-[9px] font-medium text-muted mt-0.5">وحدة ذكاء الأعمال</p>
+                            <p className="text-micro font-medium text-muted mt-0.5">وحدة ذكاء الأعمال</p>
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         subtitle="التقدم الأكاديمي"
                         height={300}
                         headerExtra={
-                            <div className="px-4 py-1.5 rounded-lg bg-chart-2 text-on-success text-[11px] font-black tabular-nums">
+                            <div className="px-4 py-1.5 rounded-lg bg-chart-2 text-on-success text-xs font-black tabular-nums">
                                 {overallRate}%
                             </div>
                         }
@@ -111,11 +111,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                         if (!active || !payload?.length) return null;
                                         return (
                                             <div className="bg-card border border-border shadow-xl px-4 py-3 min-w-[140px] rounded-xl" dir="rtl">
-                                                <p className="text-[11px] font-bold text-main mb-1">{label}</p>
+                                                <p className="text-xs font-bold text-main mb-1">{label}</p>
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-2.5 h-2.5 rounded-full bg-chart-2" />
-                                                    <span className="text-[10px] font-bold text-muted">معدل الالتزام</span>
-                                                    <span className="text-[13px] font-black text-main tabular-nums">{payload[0].value}%</span>
+                                                    <span className="text-micro font-bold text-muted">معدل الالتزام</span>
+                                                    <span className="text-sm font-black text-main tabular-nums">{payload[0].value}%</span>
                                                 </div>
                                             </div>
                                         );
@@ -137,7 +137,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         subtitle="تحليلات المناهج"
                         height={280}
                         headerExtra={
-                            <div className="px-3 py-1.5 rounded-lg bg-chart-2 text-on-success text-[10px] font-bold">
+                            <div className="px-3 py-1.5 rounded-lg bg-chart-2 text-on-success text-micro font-bold">
                                 {students.length} مستخدم
                             </div>
                         }
@@ -157,10 +157,10 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                         if (!active || !payload?.length) return null;
                                         return (
                                             <div className="bg-card border border-border shadow-xl px-4 py-3 min-w-[150px] rounded-xl" dir="rtl">
-                                                <p className="text-[11px] font-bold text-main mb-1">{label}</p>
+                                                <p className="text-xs font-bold text-main mb-1">{label}</p>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-[10px] font-bold text-muted">الحصص</span>
-                                                    <span className="text-[14px] font-black text-main tabular-nums">{payload[0].value}</span>
+                                                    <span className="text-micro font-bold text-muted">الحصص</span>
+                                                    <span className="text-sm font-black text-main tabular-nums">{payload[0].value}</span>
                                                 </div>
                                             </div>
                                         );
@@ -184,7 +184,7 @@ const TabButton = ({ active, onClick, icon: Icon, label, color }: { active: bool
     <button 
         onClick={onClick}
         className={cn(
-            "flex-1 px-6 py-2 font-bold text-[9px] transition-all flex items-center justify-center gap-2 rounded-lg",
+            "flex-1 px-6 py-2 font-bold text-micro transition-all flex items-center justify-center gap-2 rounded-lg",
             !active && "text-muted hover:text-main"
         )}
         style={active ? { backgroundColor: color, color: '#fff' } : {}}
@@ -197,7 +197,7 @@ const TabButton = ({ active, onClick, icon: Icon, label, color }: { active: bool
 const StatPill = ({ icon: Icon, value, label, color }: { icon: React.ComponentType<{ size?: number }>; value: string | number; label: string; color: string }) => (
     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg" style={{ backgroundColor: `${color}15` }}>
         <Icon size={12} strokeWidth={2} style={{ color }} />
-        <span className="text-[10px] font-bold tabular-nums" style={{ color }}>{value}</span>
-        <span className="text-[8px] font-bold text-muted">{label}</span>
+        <span className="text-micro font-bold tabular-nums" style={{ color }}>{value}</span>
+        <span className="text-micro font-bold text-muted">{label}</span>
     </div>
 );

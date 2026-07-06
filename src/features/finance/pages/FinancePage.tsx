@@ -38,21 +38,21 @@ export const Finance = () => {
                             <h1 className="text-lg font-bold text-on-primary leading-tight">الإدارة المالية والحسابات</h1>
                             <div className="flex items-center gap-2 mt-1">
                                 <TrendingUp size={10} className="text-on-primary opacity-80" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-on-primary opacity-80">
+                                <span className="text-micro font-bold uppercase tracking-widest text-on-primary opacity-80">
                                     هامش الربح: {state.profitMargin}%
                                 </span>
                                 <span className="w-1 h-1 bg-white/30 rounded-full" />
-                                <span className="text-[10px] font-bold text-on-primary opacity-60">مركز التقارير الموحد</span>
+                                <span className="text-micro font-bold text-on-primary opacity-60">مركز التقارير الموحد</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2 no-print">
-                        <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-2 h-9 px-4 bg-white/15 backdrop-blur-sm hover:bg-white/30 text-on-primary text-[10px] font-bold transition-all rounded-xl shadow-sm border border-white/10">
+                        <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-2 h-9 px-4 bg-white/15 backdrop-blur-sm hover:bg-white/30 text-on-primary text-micro font-bold transition-all rounded-xl shadow-sm border border-white/10">
                             <CalendarCheck size={13} />
                             <span className="hidden sm:inline whitespace-nowrap">تسوية الشهر</span>
                         </button>
-                        <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-2 h-9 px-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-on-primary text-[10px] font-bold transition-all shadow-sm active:scale-95 rounded-xl">
+                        <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-2 h-9 px-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-on-primary text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl">
                             <Plus size={13} />
                             تسجيل معاملة
                         </button>

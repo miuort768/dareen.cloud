@@ -28,15 +28,15 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                             <h3 className="font-medium text-main dark:text-on-primary text-sm tracking-tight">تنبيهات تجديد الاشتراك</h3>
                             <div className="flex items-center gap-2">
                                 <div className="h-1.5 w-1.5 rounded-full bg-error animate-pulse"></div>
-                                <p className="text-[10px] font-medium text-error uppercase tracking-[0.15em] opacity-80">تتطلب متابعة فورية</p>
+                                <p className="text-micro font-medium text-error uppercase tracking-[0.15em] opacity-80">تتطلب متابعة فورية</p>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
-                        <div className="px-4 py-1.5 bg-error text-on-primary text-[11px] font-medium shadow-lg shadow-error/30">
+                        <div className="px-4 py-1.5 bg-error text-on-primary text-xs font-medium shadow-lg shadow-error/30">
                             {stats.lowBalanceCount} طلاب متعثرين
                         </div>
-                        <p className="text-[9px] font-normal text-muted dark:text-muted uppercase tracking-widest pl-1">قائمة التجديد</p>
+                        <p className="text-micro font-normal text-muted dark:text-muted uppercase tracking-widest pl-1">قائمة التجديد</p>
                     </div>
                 </div>
 
@@ -44,10 +44,10 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                     <table className="w-full">
                         <thead>
                             <tr className="bg-background/50 dark:bg-card/30 border-b border-border dark:border-border">
-                                <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الطالب</th>
-                                <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">المادة</th>
-                                <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الرصيد المتبقي</th>
-                                <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الإجراء</th>
+                                <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الطالب</th>
+                                <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">المادة</th>
+                                <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الرصيد المتبقي</th>
+                                <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الإجراء</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,7 +63,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                                         <td className="px-6 py-4 text-center">
                                             <div className="flex justify-center">
                                                 <span className={cn(
-                                                    "px-4 py-1.5 font-medium text-[10px] tracking-tighter shadow-sm",
+                                                    "px-4 py-1.5 font-medium text-micro tracking-tighter shadow-sm",
                                                     item.remainingSessions === 0
                                                         ? "bg-error text-on-primary shadow-error/20"
                                                         : "bg-warning-light/80 text-warning dark:bg-warning/20 dark:text-warning"
@@ -76,7 +76,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                                             <div className="flex justify-center">
                                                 <button
                                                     onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                                    className="bg-success text-on-primary px-4 py-1.5 text-[10px] font-medium uppercase hover:bg-success hover:shadow-lg hover:shadow-success/20 transition-all active:scale-95 flex items-center gap-2 group/btn"
+                                                    className="bg-success text-on-primary px-4 py-1.5 text-micro font-medium uppercase hover:bg-success hover:shadow-lg hover:shadow-success/20 transition-all active:scale-95 flex items-center gap-2 group/btn"
                                                 >
                                                     إرسال تذكير
                                                     <Phone size={12} className="group-hover/btn:rotate-12 transition-transform" />
@@ -101,10 +101,10 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                                 <div className="flex justify-between items-start mb-3">
                                     <div>
                                         <h4 className="font-medium text-main dark:text-on-primary text-sm mb-0.5">{item.studentName}</h4>
-                                        <p className="text-[10px] font-normal text-muted uppercase tracking-wide">{item.subject}</p>
+                                        <p className="text-micro font-normal text-muted uppercase tracking-wide">{item.subject}</p>
                                     </div>
                                     <span className={cn(
-                                        "px-2 py-0.5 font-medium text-[9px] uppercase tracking-tighter",
+                                        "px-2 py-0.5 font-medium text-micro uppercase tracking-tighter",
                                         item.remainingSessions === 0 ? "bg-error text-on-primary" : "bg-warning-light text-warning"
                                     )}>
                                         {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} حِصص`}
@@ -112,7 +112,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                                 </div>
                                 <button
                                     onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                    className="w-full bg-success text-on-primary py-2.5 text-[10px] font-medium uppercase flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                                    className="w-full bg-success text-on-primary py-2.5 text-micro font-medium uppercase flex items-center justify-center gap-2 active:scale-95 transition-transform"
                                 >
                                     إرسال تذكير عبر واتساب
                                     <Phone size={14} />
@@ -133,18 +133,18 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                         <h3 className="font-medium text-xs uppercase">{isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي المتوقع'}</h3>
                     </div>
                     <div className="mb-8 text-center flex flex-col items-center">
-                        <p className="text-[10px] font-medium text-muted mb-1">{isTeacher ? 'إجمالي مستحقاتك (بناءً على حصص الشهر)' : 'الإجمالي المستهدف من التجديد'}</p>
+                        <p className="text-micro font-medium text-muted mb-1">{isTeacher ? 'إجمالي مستحقاتك (بناءً على حصص الشهر)' : 'الإجمالي المستهدف من التجديد'}</p>
                         <h2 className="text-4xl font-medium text-main dark:text-on-primary tracking-tighter">
                             {isTeacher ? (stats.monthNetProfit || 0).toLocaleString() : stats.expectedCollection.toLocaleString()} <span className="text-lg opacity-30">ج.م</span>
                         </h2>
                     </div>
                     <div className="space-y-4">
                         <div className="flex items-center justify-between p-3 bg-background dark:bg-card">
-                            <span className="text-[10px] font-medium text-muted">منتهي</span>
+                            <span className="text-micro font-medium text-muted">منتهي</span>
                             <span className="font-mono font-medium text-error">{lowBalanceStudents.filter(s => s.remainingSessions === 0).length}</span>
                         </div>
                         <div className="flex items-center justify-between p-3 bg-background dark:bg-card">
-                            <span className="text-[10px] font-medium text-muted">أوشك على الانتهاء</span>
+                            <span className="text-micro font-medium text-muted">أوشك على الانتهاء</span>
                             <span className="font-mono font-medium text-warning">{lowBalanceStudents.filter(s => s.remainingSessions > 0).length}</span>
                         </div>
                     </div>

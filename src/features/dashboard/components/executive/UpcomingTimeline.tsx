@@ -57,7 +57,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                                 <span className="text-lg font-bold" style={{ color: urgencyColor }}>
                                     {session.minutesUntil < 60 ? `${session.minutesUntil}د` : `${Math.round(session.minutesUntil / 60)}س`}
                                 </span>
-                                <span className="text-[10px] text-muted">{URGENCY_LABELS[session.urgency]}</span>
+                                <span className="text-micro text-muted">{URGENCY_LABELS[session.urgency]}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold text-main dark:text-on-primary truncate">{session.subject}</p>
@@ -66,7 +66,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                                     <span className="flex items-center gap-1"><GraduationCap size={13} />{session.teacherName}</span>
                                 </div>
                             </div>
-                            <span className="text-[11px] text-muted whitespace-nowrap">{session.time}</span>
+                            <span className="text-xs text-muted whitespace-nowrap">{session.time}</span>
                         </div>
                     );
                 })}

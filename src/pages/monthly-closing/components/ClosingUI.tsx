@@ -17,7 +17,7 @@ export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.Component
         </div>
         <div>
             <p className="text-sm font-bold text-main">{label}</p>
-            {sub && <p className="text-[10px] text-muted mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro text-muted mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -62,9 +62,9 @@ export const StatItem = ({ title, value, icon: Icon, color, subValue }: { title:
                 <Icon size={20} className="text-on-primary" />
             </div>
             <div className="min-w-0">
-                <p className="text-[10px] font-bold text-on-primary/70">{title}</p>
+                <p className="text-micro font-bold text-on-primary/70">{title}</p>
                 <p className="text-lg font-black leading-none mt-0.5 text-on-primary">{value}</p>
-                {subValue && <p className="text-[9px] font-bold text-on-primary/60 mt-1">{subValue}</p>}
+                {subValue && <p className="text-micro font-bold text-on-primary/60 mt-1">{subValue}</p>}
             </div>
         </div>
     </div>

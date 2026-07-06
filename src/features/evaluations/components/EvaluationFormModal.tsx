@@ -32,7 +32,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                     <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4">
                         {!formData.studentId && (
                             <div>
-                                <label className="block text-[9px] md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">اختر الطالب</label>
+                                <label className="block text-micro md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">اختر الطالب</label>
                                 <select value={formData.studentId} onChange={(e) => onChange({ ...formData, studentId: e.target.value })} required
                                     className="w-full border border-border dark:border-border dark:bg-primary-active px-3 py-2 md:px-4 md:py-3 font-normal text-xs md:text-sm text-main dark:text-on-primary focus:ring-2 focus:ring-primary/30 outline-none rounded-xl">
                                     <option value="">-- اختر من قائمة طلابك --</option>
@@ -44,7 +44,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                         )}
 
                         <div>
-                            <label className="block text-[9px] md:text-xs font-medium text-muted mb-2 uppercase tracking-widest">مستوى التميز</label>
+                            <label className="block text-micro md:text-xs font-medium text-muted mb-2 uppercase tracking-widest">مستوى التميز</label>
                             <div className="grid grid-cols-4 gap-1.5 md:gap-3">
                                 {RATING_OPTIONS.map((opt) => {
                                     const isSelected = formData.rating === opt.value;
@@ -54,7 +54,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                                             className={cn("p-2 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1 rounded-xl",
                                                 isSelected ? cn(opt.bg, opt.border, opt.color, "shadow-sm scale-105") : "border-border dark:border-border bg-white dark:bg-primary-active text-muted hover:border-border")}>
                                             <OptIcon size={14} strokeWidth={isSelected ? 3 : 2} className={cn(isSelected && "animate-bounce")} />
-                                            <span className="text-[7px] md:text-[9px] font-medium uppercase tracking-widest leading-none">{opt.value}</span>
+                                            <span className="text-micro md:text-micro font-medium uppercase tracking-widest leading-none">{opt.value}</span>
                                         </button>
                                     );
                                 })}
@@ -63,11 +63,11 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
 
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <label className="text-[9px] md:text-xs font-medium text-muted uppercase tracking-widest">نقاط المكافأة (XP)</label>
+                                <label className="text-micro md:text-xs font-medium text-muted uppercase tracking-widest">نقاط المكافأة (XP)</label>
                                 <div className="flex gap-1.5">
                                     {[5, 10, 20, 50].map(p => (
                                         <button key={p} type="button" onClick={() => onChange({ ...formData, points: p })}
-                                            className="px-2 py-0.5 font-bold text-[9px] transition-colors rounded-xl" style={{ backgroundColor: 'rgba(245,158,11,0.07)', color: 'var(--bg-warning)', border: '1px solid rgba(245,158,11,0.19)' }}>+{p}</button>
+                                            className="px-2 py-0.5 font-bold text-micro transition-colors rounded-xl" style={{ backgroundColor: 'rgba(245,158,11,0.07)', color: 'var(--bg-warning)', border: '1px solid rgba(245,158,11,0.19)' }}>+{p}</button>
                                     ))}
                                 </div>
                             </div>
@@ -82,7 +82,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                         </div>
 
                         <div>
-                            <label className="block text-[9px] md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
+                            <label className="block text-micro md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
                             <textarea value={formData.notes} onChange={(e) => onChange({ ...formData, notes: e.target.value })} rows={2}
                                 className="w-full border border-border dark:border-border dark:bg-primary-active px-3 py-2 text-sm font-normal outline-none focus:ring-2 focus:ring-primary/30 resize-none placeholder:text-dim transition-all rounded-xl"
                                 placeholder="مثال: أداء ممتاز اليوم..." />

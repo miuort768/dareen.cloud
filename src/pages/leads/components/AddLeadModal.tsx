@@ -31,7 +31,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                     </div>
                     <h2 className="text-sm font-bold text-on-primary">إضافة عميل محتمل</h2>
                 </div>
-                <button onClick={() => setIsAddModalOpen(false)} className="text-[10px] font-bold text-on-primary/70 hover:text-on-primary transition-colors">إلغاء</button>
+                <button onClick={() => setIsAddModalOpen(false)} className="text-micro font-bold text-on-primary/70 hover:text-on-primary transition-colors">إلغاء</button>
             </div>
             <form ref={formRef} className="p-5 space-y-4" onSubmit={(e) => {
                 e.preventDefault();
@@ -49,35 +49,35 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
             }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
-                        <label className="text-[9px] font-bold text-muted uppercase mr-1">اسم الطالب (اختياري)</label>
-                        <input name="name" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" placeholder="مثال: أم أحمد" />
+                        <label className="text-micro font-bold text-muted uppercase mr-1">اسم الطالب (اختياري)</label>
+                        <input name="name" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" placeholder="مثال: أم أحمد" />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-[9px] font-bold text-muted uppercase mr-1">المنهج</label>
-                        <input name="curriculum" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
+                        <label className="text-micro font-bold text-muted uppercase mr-1">المنهج</label>
+                        <input name="curriculum" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
-                        <label className="text-[9px] font-bold text-muted uppercase mr-1">رقم الهاتف</label>
-                        <input name="phone" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
+                        <label className="text-micro font-bold text-muted uppercase mr-1">رقم الهاتف</label>
+                        <input name="phone" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-[9px] font-bold text-muted uppercase mr-1">المادة المهتم بها</label>
-                        <input name="subject" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
+                        <label className="text-micro font-bold text-muted uppercase mr-1">المادة المهتم بها</label>
+                        <input name="subject" required className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all" />
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-muted uppercase mr-1">الأولوية</label>
-                    <select name="priority" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all">
+                    <label className="text-micro font-bold text-muted uppercase mr-1">الأولوية</label>
+                    <select name="priority" className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all">
                         <option value="low">منخفضة</option>
                         <option value="medium">متوسطة</option>
                         <option value="high">عالية</option>
                     </select>
                 </div>
                 <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-muted uppercase mr-1">ملاحظات</label>
-                    <textarea name="notes" rows={2} className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-[11px] font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all resize-none" placeholder="اكتب أي تفاصيل..." />
+                    <label className="text-micro font-bold text-muted uppercase mr-1">ملاحظات</label>
+                    <textarea name="notes" rows={2} className="w-full bg-background dark:bg-primary-active border border-border dark:border-border px-3 py-2 text-xs font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main dark:text-on-primary rounded-xl transition-all resize-none" placeholder="اكتب أي تفاصيل..." />
                 </div>
                 <div className="flex gap-3">
                     <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-2.5">

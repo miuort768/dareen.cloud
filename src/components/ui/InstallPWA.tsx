@@ -142,36 +142,36 @@ export const InstallPWA = () => {
                     <div className="p-4 space-y-3 bg-white text-right">
                         {isIOS ? (
                             <>
-                                <p className="text-[11px] font-normal text-muted mb-3">اتبعي هذه الخطوات في Safari:</p>
+                                <p className="text-xs font-normal text-muted mb-3">اتبعي هذه الخطوات في Safari:</p>
                                 <div className="flex items-start gap-3 p-3 bg-background border border-border">
-                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-[10px] font-medium shrink-0">1</span>
+                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-micro font-medium shrink-0">1</span>
                                     <div>
                                         <p className="text-xs font-medium text-main flex items-center gap-1">
                                             اضغطي على زر المشاركة <Share size={12} className="text-info" />
                                         </p>
-                                        <p className="text-[10px] text-muted">في أسفل شاشة المتصفح</p>
+                                        <p className="text-micro text-muted">في أسفل شاشة المتصفح</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 bg-background border border-border">
-                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-[10px] font-medium shrink-0">2</span>
+                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-micro font-medium shrink-0">2</span>
                                     <div>
                                         <p className="text-xs font-medium text-main">مرري للأسفل</p>
-                                        <p className="text-[10px] text-muted">في قائمة المشاركة</p>
+                                        <p className="text-micro text-muted">في قائمة المشاركة</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 bg-background border border-border">
-                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-[10px] font-medium shrink-0">3</span>
+                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-micro font-medium shrink-0">3</span>
                                     <div>
                                         <p className="text-xs font-medium text-main">اضغطي "Add to Home Screen"</p>
-                                        <p className="text-[10px] text-muted">ثم اضغطي "Add" للتأكيد</p>
+                                        <p className="text-micro text-muted">ثم اضغطي "Add" للتأكيد</p>
                                     </div>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <p className="text-[11px] font-normal text-muted mb-3">اتبع هذا الدليل للتثبيت:</p>
+                                <p className="text-xs font-normal text-muted mb-3">اتبع هذا الدليل للتثبيت:</p>
                                 <div className="flex items-start gap-3 p-3 bg-background border border-border">
-                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-[10px] font-medium shrink-0">1</span>
+                                    <span className="w-6 h-6 bg-warning border border-border flex items-center justify-center text-micro font-medium shrink-0">1</span>
                                     <p className="text-xs font-medium text-main">اضغط على القائمة ثم "Add to Home Screen"</p>
                                 </div>
                             </>
@@ -179,8 +179,8 @@ export const InstallPWA = () => {
                     </div>
 
                     <div className="flex border-t-2 border-border">
-                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-[10px] font-medium text-muted hover:bg-surface transition-colors border-r border-border">عدم التذكير مجدداً</button>
-                        <button onClick={handleDismiss} className="flex-1 py-3 text-[10px] font-medium bg-warning text-main hover:bg-warning transition-colors">فهمت، شكراً</button>
+                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-micro font-medium text-muted hover:bg-surface transition-colors border-r border-border">عدم التذكير مجدداً</button>
+                        <button onClick={handleDismiss} className="flex-1 py-3 text-micro font-medium bg-warning text-main hover:bg-warning transition-colors">فهمت، شكراً</button>
                     </div>
                 </div>
             </div>
@@ -199,8 +199,8 @@ export const InstallPWA = () => {
                 </div>
 
                 <div className="flex-1 min-w-0 text-right">
-                    <h2 className="text-[10px] font-medium uppercase text-on-primary leading-tight">ثبتي التطبيق</h2>
-                    <p className="font-medium text-[9px] text-on-primary/70 truncate mt-0.5">
+                    <h2 className="text-micro font-medium uppercase text-on-primary leading-tight">ثبتي التطبيق</h2>
+                    <p className="font-medium text-micro text-on-primary/70 truncate mt-0.5">
                         {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}
                     </p>
                 </div>
@@ -208,7 +208,7 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-3 py-1.5 bg-white text-success font-medium uppercase text-[9px] rounded-lg hover:bg-surface transition-all flex items-center gap-1.5 active:scale-95"
+                        className="px-3 py-1.5 bg-white text-success font-medium uppercase text-micro rounded-lg hover:bg-surface transition-all flex items-center gap-1.5 active:scale-95"
                     >
                         {isIOS || isMacSafari ? <Share size={10} /> : <Download size={10} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}

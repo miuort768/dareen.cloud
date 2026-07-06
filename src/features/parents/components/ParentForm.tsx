@@ -11,7 +11,7 @@ interface ParentFormProps {
 
 const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: React.ComponentType<{ size?: number }>; } & Record<string, unknown>) => (
     <div className="space-y-1.5">
-        <label className="text-[9px] font-medium text-muted uppercase tracking-widest mr-1">{label}</label>
+        <label className="text-micro font-medium text-muted uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">
             <div className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center bg-primary/10 text-primary border-l border-primary/10 group-focus-within:bg-primary group-focus-within:text-on-primary transition-all rounded-r-xl">
                 <Icon size={14} />
@@ -45,7 +45,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                         <h3 className="font-medium text-sm text-on-primary uppercase tracking-widest">
                             {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
                         </h3>
-                        <p className="text-[9px] text-on-primary/70 font-normal uppercase tracking-widest mt-0.5">تأكد من صحة البيانات لضمان وصول الإشعارات</p>
+                        <p className="text-micro text-on-primary/70 font-normal uppercase tracking-widest mt-0.5">تأكد من صحة البيانات لضمان وصول الإشعارات</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                     <div className="pt-6 border-t border-border dark:border-border flex justify-end">
                         <button
                             type="submit"
-                            className="group flex items-center gap-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary px-10 py-4 font-bold text-[10px] uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95 rounded-xl"
+                            className="group flex items-center gap-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95 rounded-xl"
                         >
                             <Save size={14} className="group-hover:rotate-12 transition-transform" />
                             {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

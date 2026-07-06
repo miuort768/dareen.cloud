@@ -28,23 +28,23 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
                             {studentGrade?.charAt(0) || session.studentName.charAt(0)}
                         </div>
                         <div>
                             <h4 className="font-normal text-main dark:text-on-primary text-sm leading-tight">{session.studentName}</h4>
                             <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-[9px] font-normal text-muted uppercase">{studentGrade}</span>
+                                <span className="text-micro font-normal text-muted uppercase">{studentGrade}</span>
                                 <span className="w-1 h-1 bg-card dark:bg-card"></span>
                                 <div className="flex items-center gap-1">
                                     <BookOpen size={10} style={{ color: 'var(--bg-primary)' }} />
-                                    <span className="text-[9px] font-normal text-muted">{session.subject}</span>
+                                    <span className="text-micro font-normal text-muted">{session.subject}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {session.status !== 'scheduled' && (
-                        <div className="px-2 py-0.5 text-[9px] font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
+                        <div className="px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
                             {session.status === 'completed' ? 'منفذة' : 'ملغاة'}
                         </div>
                     )}
@@ -53,7 +53,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="bg-white dark:bg-primary-active p-3 rounded-xl border border-border dark:border-border">
                     <div className="flex items-center gap-2 mb-1.5">
                         <Clock size={12} style={{ color: 'var(--bg-primary)' }} />
-                        <span className="text-[9px] font-bold text-muted uppercase tracking-wide">موعد الحصة</span>
+                        <span className="text-micro font-bold text-muted uppercase tracking-wide">موعد الحصة</span>
                     </div>
                     <div className="text-sm font-black font-mono text-main dark:text-on-primary tabular-nums">
                         {session.time}
@@ -61,7 +61,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 </div>
 
                 <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-muted">
+                    <div className="flex justify-between items-center text-micro font-normal uppercase text-muted">
                         <div className="flex items-center gap-1.5">
                             <Activity size={12} style={{ color: 'var(--bg-primary)' }} />
                             <span>تغطية الرصيد</span>
@@ -88,7 +88,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     disabled={session.status === 'completed'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'completed'
                             ? 'bg-success text-on-primary'
                             : 'bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]'
@@ -100,7 +100,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     disabled={session.status === 'cancelled'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'cancelled'
                             ? 'bg-error border-error text-on-primary'
                             : 'bg-white dark:bg-primary-active border-border dark:border-border text-muted hover:text-error'
@@ -113,7 +113,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="px-5 pb-5 pt-0">
                     <button
                         onClick={() => onViewHistory(session.studentId, session.studentName, studentGrade, session.subject)}
-                        className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                        className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
                     >
                         <History size={14} /> سجل الطالب
                     </button>

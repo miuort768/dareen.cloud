@@ -151,13 +151,13 @@ export const MobileAdminDashboard = ({
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main dark:text-on-primary leading-tight">مركز القيادة</h1>
-                                <p className="text-[9px] font-medium text-muted dark:text-muted">
+                                <p className="text-micro font-medium text-muted dark:text-muted">
                                     {format(new Date(), 'eeee, d MMMM', { locale: ar })}
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="px-2.5 py-1.5 rounded-xl bg-surface/70 dark:bg-primary-active/70 backdrop-blur-sm text-primary dark:text-info font-medium text-[9px] tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-xl bg-surface/70 dark:bg-primary-active/70 backdrop-blur-sm text-primary dark:text-info font-medium text-micro tabular-nums">
                                 <Clock {...miniIconProps} className="inline ml-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -186,9 +186,9 @@ export const MobileAdminDashboard = ({
                                 )}
                             >
                                 <tab.icon {...smallIconProps} />
-                                <span className="text-[9px]">{tab.label}</span>
+                                <span className="text-micro">{tab.label}</span>
                                 {tab.badge !== undefined && tab.badge > 0 && (
-                                    <span className="absolute -top-1 -left-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary font-bold text-[7px] flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
+                                    <span className="absolute -top-1 -left-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
                                         {tab.badge}
                                     </span>
                                 )}
@@ -231,7 +231,7 @@ export const MobileAdminDashboard = ({
                                             <Award {...smallIconProps} className="text-success" />
                                         </div>
                                         <div>
-                                            <span className="text-[9px] font-bold text-success dark:text-success">اليوم</span>
+                                            <span className="text-micro font-bold text-success dark:text-success">اليوم</span>
                                             <h3 className="text-xs font-bold text-main dark:text-on-primary">معدل تنفيذ الحصص</h3>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ export const MobileAdminDashboard = ({
                                         className="h-full rounded-full bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-info)]"
                                     />
                                 </div>
-                                <p className="text-[9px] font-medium text-muted mt-2">تم تنفيذ {completedSessions} من {todaySessions} حصة</p>
+                                <p className="text-micro font-medium text-muted mt-2">تم تنفيذ {completedSessions} من {todaySessions} حصة</p>
                             </motion.div>
 
                             {/* Quick Links */}
@@ -267,7 +267,7 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-3"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">الإجراءات السريعة</motion.p>
+                            <motion.p {...fadeUp} className="text-micro font-bold text-muted px-1">الإجراءات السريعة</motion.p>
                             <motion.div className="grid grid-cols-2 gap-3" variants={stagger} initial="initial" animate="animate">
                                 <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
                                 <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="var(--bg-success)" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
@@ -288,12 +288,12 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-4"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">المؤشرات المالية</motion.p>
+                            <motion.p {...fadeUp} className="text-micro font-bold text-muted px-1">المؤشرات المالية</motion.p>
 
                             <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border space-y-4">
                                 <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/20 dark:to-[var(--bg-success)]/20 border border-success dark:border-success/30">
                                     <div>
-                                        <span className="text-[9px] font-bold text-success dark:text-success">الإيرادات</span>
+                                        <span className="text-micro font-bold text-success dark:text-success">الإيرادات</span>
                                         <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
                                     </div>
                                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] flex items-center justify-center text-on-primary shadow-sm shadow-success/40">
@@ -303,7 +303,7 @@ export const MobileAdminDashboard = ({
 
                                 <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[var(--bg-error-soft)] to-[var(--bg-error-light)] dark:from-[var(--bg-error)]/20 dark:to-[var(--bg-error)]/20 border border-error dark:border-error/30">
                                     <div>
-                                        <span className="text-[9px] font-bold text-error dark:text-error">المصروفات</span>
+                                        <span className="text-micro font-bold text-error dark:text-error">المصروفات</span>
                                         <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
                                     </div>
                                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] flex items-center justify-center text-on-primary shadow-sm shadow-error/40">
@@ -314,7 +314,7 @@ export const MobileAdminDashboard = ({
                                 <motion.button
                                     onClick={() => { triggerHaptic('light'); navigate('/finance'); }}
                                     whileTap={{ scale: 0.97 }}
-                                    className="w-full h-11 rounded-2xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-shadow active:scale-[0.98]"
+                                    className="w-full h-11 rounded-2xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-sm shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-shadow active:scale-[0.98]"
                                 >
                                     <Wallet {...smallIconProps} />
                                     لوحة المالية كاملة
@@ -333,7 +333,7 @@ export const MobileAdminDashboard = ({
                             transition={{ duration: 0.35, ease: 'easeOut' }}
                             className="space-y-4"
                         >
-                            <motion.p {...fadeUp} className="text-[10px] font-bold text-muted px-1">التنبيهات</motion.p>
+                            <motion.p {...fadeUp} className="text-micro font-bold text-muted px-1">التنبيهات</motion.p>
 
                             {lowBalanceCount > 0 ? (
                                 <motion.div {...fadeUp} className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-error dark:border-error/30">
@@ -343,13 +343,13 @@ export const MobileAdminDashboard = ({
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <h3 className="font-bold text-xs text-main dark:text-on-primary">إشعار مالي</h3>
-                                            <p className="text-[10px] font-medium text-muted dark:text-muted mt-1">
+                                            <p className="text-micro font-medium text-muted dark:text-muted mt-1">
                                                 يوجد {lowBalanceCount} طلاب بحاجة إلى تجديد الاشتراك
                                             </p>
                                             <motion.button
                                                 onClick={() => { triggerHaptic('medium'); navigate('/students'); }}
                                                 whileTap={{ scale: 0.95 }}
-                                                className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[9px] font-bold transition-all inline-flex items-center gap-1.5 shadow-sm shadow-info/30"
+                                                className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-sm shadow-info/30"
                                             >
                                                 <UserPlus {...miniIconProps} />
                                                 عرض الطلاب
@@ -363,7 +363,7 @@ export const MobileAdminDashboard = ({
                                         <Bell size={24} strokeWidth={1.5} className="text-success" />
                                     </div>
                                     <p className="text-xs font-bold text-main dark:text-on-primary">لا توجد تنبيهات</p>
-                                    <p className="text-[9px] font-medium text-muted mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
+                                    <p className="text-micro font-medium text-muted mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
                                 </motion.div>
                             )}
 
@@ -379,13 +379,13 @@ export const MobileAdminDashboard = ({
                                         </div>
                                         <div>
                                             <h4 className="text-xs font-bold text-on-primary">الدعم الفني</h4>
-                                            <p className="text-[9px] font-medium text-white/60">متاح 24/7</p>
+                                            <p className="text-micro font-medium text-white/60">متاح 24/7</p>
                                         </div>
                                     </div>
                                     <motion.button
                                         onClick={() => { triggerHaptic('heavy'); window.open('https://wa.me/message/DAREEN', '_blank'); }}
                                         whileTap={{ scale: 0.97 }}
-                                        className="w-full h-11 rounded-2xl bg-white/15 backdrop-blur-md text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm border border-white/10 hover:bg-white/25"
+                                        className="w-full h-11 rounded-2xl bg-white/15 backdrop-blur-md text-on-primary text-micro font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm border border-white/10 hover:bg-white/25"
                                     >
                                         <Headphones {...smallIconProps} />
                                         تواصل مع الدعم الفني
@@ -424,8 +424,8 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
         <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-sm text-on-primary">
             <Icon {...iconProps} />
         </div>
-        <span className="text-[10px] font-bold text-on-primary leading-none mt-1">{label}</span>
-        <span className="text-[8px] font-medium text-on-primary/70">{subtext}</span>
+        <span className="text-micro font-bold text-on-primary leading-none mt-1">{label}</span>
+        <span className="text-micro font-medium text-on-primary/70">{subtext}</span>
     </motion.button>
 );
 
@@ -441,7 +441,7 @@ const QuickLink = ({ icon: Icon, label, color, onClick }: { icon: React.Componen
         <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${cssVar} 7%, transparent)`, color: cssVar }}>
             <Icon size={16} strokeWidth={1.5} />
         </div>
-        <span className="text-[11px] font-bold text-main dark:text-on-primary">{label}</span>
+        <span className="text-xs font-bold text-main dark:text-on-primary">{label}</span>
     </motion.button>
     );
 };

@@ -62,7 +62,7 @@ export const Reports = () => {
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-normal transition-all whitespace-nowrap ${isActive ? 'bg-primary-soft text-primary shadow-sm' : 'text-muted hover:text-main'}`}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-micro font-normal transition-all whitespace-nowrap ${isActive ? 'bg-primary-soft text-primary shadow-sm' : 'text-muted hover:text-main'}`}
                         >
                             <Icon size={14} />
                             {tab.label}
@@ -87,18 +87,18 @@ export const Reports = () => {
                                         </div>
                                         <h2 className="text-base font-black text-main">ملخص الأداء العام</h2>
                                     </div>
-                                    <p className="text-[11px] font-bold text-muted leading-relaxed max-w-md">
+                                    <p className="text-xs font-bold text-muted leading-relaxed max-w-md">
                                         تقرير شامل يوضح الحالة الأكاديمية والمالية للمؤسسة. تم تحليل {state.totalEnrollments} اشتراك نشط عبر {uniqueSubjects} مادة مختلفة.
                                     </p>
                                 </div>
                                 <div className="flex items-center gap-4 p-4 rounded-xl border bg-surface border-border">
                                     <div>
-                                        <p className="text-[11px] font-bold text-primary">معدل الإنجاز</p>
+                                        <p className="text-xs font-bold text-primary">معدل الإنجاز</p>
                                         <p className="text-2xl font-black font-mono leading-none mt-1 text-main">{state.attendanceRate}%</p>
                                     </div>
                                     <div className="w-px h-10 bg-border" />
                                     <div>
-                                        <p className="text-[11px] font-bold text-success">النمو الشهري</p>
+                                        <p className="text-xs font-bold text-success">النمو الشهري</p>
                                         <p className="text-2xl font-black font-mono leading-none mt-1 text-main">+{Math.round((state.monthRevenue / (state.totalRevenue || 1)) * 100)}%</p>
                                     </div>
                                 </div>
@@ -120,8 +120,8 @@ export const Reports = () => {
                                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform ${v.iconBg}`}>
                                                 <Icon size={20} className={v.text} />
                                             </div>
-                                            <p className={`text-[11px] font-bold ${v.text}`}>{tab.label}</p>
-                                            <p className={`text-[10px] font-bold mt-1 ${v.text} opacity-60`}>انتقال سريع</p>
+                                            <p className={`text-xs font-bold ${v.text}`}>{tab.label}</p>
+                                            <p className={`text-micro font-bold mt-1 ${v.text} opacity-60`}>انتقال سريع</p>
                                         </div>
                                     </button>
                                 );
@@ -146,7 +146,7 @@ export const Reports = () => {
                                     </div>
                                     <div className="mt-auto">
                                         <p className="text-sm font-black font-mono leading-none" style={{ color: stat.color }}>{stat.value}</p>
-                                        <p className="text-[10px] font-bold mt-1 truncate text-muted">{stat.label}</p>
+                                        <p className="text-micro font-bold mt-1 truncate text-muted">{stat.label}</p>
                                     </div>
                                 </div>
                             ))}
@@ -159,9 +159,9 @@ export const Reports = () => {
                                       <div className="w-7 h-7 rounded-xl flex items-center justify-center bg-primary-soft">
                                          <BarChart3 size={14} className="text-primary" />
                                      </div>
-                                     <h3 className="text-[10px] font-bold text-muted">توزيع الاشتراكات حسب المادة</h3>
+                                     <h3 className="text-micro font-bold text-muted">توزيع الاشتراكات حسب المادة</h3>
                                  </div>
-                                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-success-soft text-success-dark">تحليل مباشر</span>
+                                 <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-success-soft text-success-dark">تحليل مباشر</span>
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {
@@ -172,9 +172,9 @@ export const Reports = () => {
                                         <div key={i} className="flex flex-col gap-2 p-3 rounded-2xl border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
                                             <div className="flex items-center justify-between">
                                                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
-                                                <p className="text-[10px] font-black font-mono" style={{ color }}>{pct}%</p>
+                                                <p className="text-micro font-black font-mono" style={{ color }}>{pct}%</p>
                                             </div>
-                                            <p className="text-[10px] font-bold text-muted truncate">{s.name}</p>
+                                            <p className="text-micro font-bold text-muted truncate">{s.name}</p>
                                             <div className="w-full h-1.5 rounded-xl overflow-hidden bg-surface">
                                                 <div className="h-full rounded-xl transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
                                             </div>

@@ -189,7 +189,7 @@ export const AdminBlog = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-main leading-tight">المقالات التعليمية</h1>
-                        <p className="text-[11px] font-bold text-muted mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
+                        <p className="text-xs font-bold text-muted mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
                     </div>
                 </div>
                 <button
@@ -213,7 +213,7 @@ export const AdminBlog = () => {
                     <h3 className="font-black text-sm text-main">إعدادات صفحة المكتبة</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">رقم واتساب المكتبة</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">رقم واتساب المكتبة</label>
                             <input type="text" value={libraryWhatsapp}
                                 onChange={(e) => setLibraryWhatsapp(e.target.value)}
                                 className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
@@ -222,7 +222,7 @@ export const AdminBlog = () => {
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">معرف تليجرام المكتبة</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">معرف تليجرام المكتبة</label>
                             <input type="text" value={libraryTelegram}
                                 onChange={(e) => setLibraryTelegram(e.target.value)}
                                 className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
@@ -297,7 +297,7 @@ export const AdminBlog = () => {
                     <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">عنوان المقال</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">عنوان المقال</label>
                                 <input
                                     required
                                     type="text"
@@ -308,7 +308,7 @@ export const AdminBlog = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">الرابط المختصر (Slug)</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">الرابط المختصر (Slug)</label>
                                 <div className="relative">
                                     <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
@@ -326,7 +326,7 @@ export const AdminBlog = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">التصنيف</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">التصنيف</label>
                                 <div className="relative">
                                     <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
@@ -339,7 +339,7 @@ export const AdminBlog = () => {
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">الكاتب</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">الكاتب</label>
                                 <input
                                     type="text"
                                     value={currentPost.author}
@@ -348,7 +348,7 @@ export const AdminBlog = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-muted mb-1.5">التاريخ</label>
+                                <label className="block text-micro font-bold text-muted mb-1.5">التاريخ</label>
                                 <input
                                     type="date"
                                     value={currentPost.date?.split('T')[0]}
@@ -359,10 +359,10 @@ export const AdminBlog = () => {
                         </div>
 
                         <div className="p-4 rounded-2xl bg-error-soft/50 border border-error/10">
-                            <p className="text-[10px] font-bold mb-4 text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
+                            <p className="text-micro font-bold mb-4 text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">نوع المحتوى</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">نوع المحتوى</label>
                                     <select value={currentPost.contentType} onChange={e => { const v = e.target.value; setCurrentPost(prev => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none">
                                         <option value="notes">مذكرات</option>
                                         <option value="solutions">حل كتب</option>
@@ -371,7 +371,7 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">المنهج</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">المنهج</label>
                                     <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="kuwait">الكويت</option>
@@ -381,7 +381,7 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">المرحلة</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">المرحلة</label>
                                     <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="primary">ابتدائي</option>
@@ -392,14 +392,14 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">الصف</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">الصف</label>
                                     <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>صف {g}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">الفصل</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">الفصل</label>
                                     <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون</option>
                                         <option value="1">الفصل الأول</option>
@@ -407,7 +407,7 @@ export const AdminBlog = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">المادة</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">المادة</label>
                                     <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} disabled={currentPost.contentType === 'foundation' || currentPost.contentType === 'more'} className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                         <option value="">بدون تحديد</option>
                                         <option value="arabic">عربي</option>
@@ -431,7 +431,7 @@ export const AdminBlog = () => {
                         {(currentPost.contentType === 'foundation' || currentPost.contentType === 'notes') && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="text-[10px] font-bold text-dim block mb-1">رابط المصدر</label>
+                                <label className="text-micro font-bold text-dim block mb-1">رابط المصدر</label>
                                 <div className="relative">
                                     <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input type="url" value={currentPost.source || ''} onChange={e => setCurrentPost({ ...currentPost, source: e.target.value })}
@@ -440,7 +440,7 @@ export const AdminBlog = () => {
                                 </div>
                             </div>
                             <div>
-                                <label className="text-[10px] font-bold text-dim block mb-1">حجم الملف</label>
+                                <label className="text-micro font-bold text-dim block mb-1">حجم الملف</label>
                                 <input type="text" value={currentPost.fileSize || ''} onChange={e => setCurrentPost({ ...currentPost, fileSize: e.target.value })}
                                     className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                     placeholder="2.5 MB" />
@@ -449,7 +449,7 @@ export const AdminBlog = () => {
                         )}
 
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">رابط الصورة الرئيسية</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">رابط الصورة الرئيسية</label>
                             <div className="relative">
                                 <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                 <input
@@ -483,14 +483,14 @@ export const AdminBlog = () => {
                                     onChange={(e) => setCurrentPost({ ...currentPost, isNew: e.target.checked })}
                                     className="w-4 h-4 rounded border-border text-error focus:ring-focus"
                                 />
-                                <span className="text-[10px] font-bold text-muted flex items-center gap-1">
+                                <span className="text-micro font-bold text-muted flex items-center gap-1">
                                     <Star size={12} className="text-warning" /> جديد
                                 </span>
                             </label>
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">الكلمات المفتاحية (Keywords) — مفصولة بفواصل</label>
                             <input
                                 type="text"
                                 value={currentPost.keywords}
@@ -501,7 +501,7 @@ export const AdminBlog = () => {
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">وصف مختصر (يظهر في محركات البحث)</label>
                             <textarea
                                 rows={2}
                                 value={currentPost.excerpt}
@@ -512,10 +512,10 @@ export const AdminBlog = () => {
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-bold text-muted mb-1.5">محتوى المقال (كود HTML)</label>
+                            <label className="block text-micro font-bold text-muted mb-1.5">محتوى المقال (كود HTML)</label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <span className="text-[10px] font-bold text-dim block mb-1.5">الجزء الأول</span>
+                                    <span className="text-micro font-bold text-dim block mb-1.5">الجزء الأول</span>
                                     <textarea
                                         rows={10}
                                         required
@@ -527,14 +527,14 @@ export const AdminBlog = () => {
                                 </div>
                                 <div className="flex flex-col gap-4">
                                     <div className="flex items-center justify-between p-3 bg-surface dark:bg-card/50 rounded-xl border border-border">
-                                        <span className="text-[10px] font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
+                                        <span className="text-micro font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
                                         <button type="button" onClick={() => setCurrentPost({ ...currentPost, showButtons: !currentPost.showButtons })}
                                             className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim dark:bg-hover'}`}>
                                             <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'left-0.5 translate-x-6' : 'left-0.5'}`} />
                                         </button>
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-dim mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
+                                        <label className="block text-micro font-bold text-dim mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
                                         <div className="relative">
                                             <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
@@ -546,13 +546,13 @@ export const AdminBlog = () => {
                                                 placeholder="https://..."
                                             />
                                         </div>
-                                        <label className="block text-[10px] font-bold text-dim mt-2 mb-1.5">نص زر التحميل</label>
+                                        <label className="block text-micro font-bold text-dim mt-2 mb-1.5">نص زر التحميل</label>
                                         <input type="text" value={currentPost.downloadButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, downloadButtonText: e.target.value })}
                                             className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
                                             placeholder="تحميل الملف" />
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-dim mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
+                                        <label className="block text-micro font-bold text-dim mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
                                         <div className="relative">
                                             <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
@@ -564,13 +564,13 @@ export const AdminBlog = () => {
                                                 placeholder="https://..."
                                             />
                                         </div>
-                                        <label className="block text-[10px] font-bold text-dim mt-2 mb-1.5">نص زر المشاهدة</label>
+                                        <label className="block text-micro font-bold text-dim mt-2 mb-1.5">نص زر المشاهدة</label>
                                         <input type="text" value={currentPost.watchButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, watchButtonText: e.target.value })}
                                             className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
                                             placeholder="مشاهدة الملف" />
                                     </div>
                                     <div className="flex-1">
-                                        <span className="text-[10px] font-bold text-dim block mb-1.5">الجزء الثاني</span>
+                                        <span className="text-micro font-bold text-dim block mb-1.5">الجزء الثاني</span>
                                         <textarea
                                             rows={6}
                                             value={contentPart2}
@@ -585,35 +585,35 @@ export const AdminBlog = () => {
 
                         {/* SEO Settings */}
                         <div className="p-4 rounded-2xl bg-primary-soft/50 border border-primary/10">
-                            <p className="text-[10px] font-bold mb-4 text-primary">⚙️ إعدادات SEO — ظهور المقال في محركات البحث</p>
+                            <p className="text-micro font-bold mb-4 text-primary">⚙️ إعدادات SEO — ظهور المقال في محركات البحث</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">عنوان SEO (إذا اختلف عن عنوان المقال)</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">عنوان SEO (إذا اختلف عن عنوان المقال)</label>
                                     <input type="text" value={currentPost.seoTitle || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoTitle: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">الوصف في SEO</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">الوصف في SEO</label>
                                     <input type="text" value={currentPost.seoDescription || ''} onChange={(e) => setCurrentPost({ ...currentPost, seoDescription: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">صورة OG (لمشاركة فيسبوك/واتساب)</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">صورة OG (لمشاركة فيسبوك/واتساب)</label>
                                     <input type="url" value={currentPost.ogImage || ''} onChange={(e) => setCurrentPost({ ...currentPost, ogImage: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">الكلمة المفتاحية الأساسية (Focus Keyword)</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">الكلمة المفتاحية الأساسية (Focus Keyword)</label>
                                     <input type="text" value={currentPost.focusKeyword || ''} onChange={(e) => setCurrentPost({ ...currentPost, focusKeyword: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">الوسوم (Tags) — مفصولة بفواصل</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">الوسوم (Tags) — مفصولة بفواصل</label>
                                     <input type="text" value={currentPost.tags || ''} onChange={(e) => setCurrentPost({ ...currentPost, tags: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-dim block mb-1">Canonical URL (إذا اختلف)</label>
+                                    <label className="text-micro font-bold text-dim block mb-1">Canonical URL (إذا اختلف)</label>
                                     <input type="url" value={currentPost.canonicalUrl || ''} onChange={(e) => setCurrentPost({ ...currentPost, canonicalUrl: e.target.value })}
                                         className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
                                 </div>
@@ -622,12 +622,12 @@ export const AdminBlog = () => {
                                 <label className="flex items-center gap-2 cursor-pointer">
                                     <input type="checkbox" checked={currentPost.robotsIndex !== false} onChange={(e) => setCurrentPost({ ...currentPost, robotsIndex: e.target.checked })}
                                         className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
-                                    <span className="text-[10px] font-bold text-muted">السماح بفهرسة المقال (Index)</span>
+                                    <span className="text-micro font-bold text-muted">السماح بفهرسة المقال (Index)</span>
                                 </label>
                                 <label className="flex items-center gap-2 cursor-pointer">
                                     <input type="checkbox" checked={currentPost.isFeatured || false} onChange={(e) => setCurrentPost({ ...currentPost, isFeatured: e.target.checked })}
                                         className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
-                                    <span className="text-[10px] font-bold text-muted flex items-center gap-1"><Star size={12} className="text-warning" /> مقال مميز</span>
+                                    <span className="text-micro font-bold text-muted flex items-center gap-1"><Star size={12} className="text-warning" /> مقال مميز</span>
                                 </label>
                             </div>
                         </div>
@@ -672,12 +672,12 @@ export const AdminBlog = () => {
                             <div className="relative h-36 overflow-hidden">
                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                 <div className="absolute top-2 right-2">
-                                    <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-error text-on-error">{post.category}</span>
+                                    <span className="text-micro font-bold px-2 py-1 rounded-lg bg-error text-on-error">{post.category}</span>
                                 </div>
                             </div>
                             <div className="p-3">
                                 <h3 className="font-bold text-main mb-1 line-clamp-2 text-sm">{post.title}</h3>
-                                <div className="flex items-center gap-2 text-[10px] font-bold text-muted mb-2">
+                                <div className="flex items-center gap-2 text-micro font-bold text-muted mb-2">
                                     <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
                                     <div className="flex items-center gap-1"><User size={12} /> {post.author}</div>
                                 </div>

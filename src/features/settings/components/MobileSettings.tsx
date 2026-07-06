@@ -96,7 +96,7 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
                     <p>• سياسة الخصوصية: <span dir="ltr" className="font-bold">تواصل مع الدعم الفني</span></p>
                     <p>• سياسة الاسترجاع: <span dir="ltr" className="font-bold">تواصل مع قسم الحسابات</span></p>
                     <p>• قوانين العمل: <span dir="ltr" className="font-bold">تواصل مع إدارة المعهد</span></p>
-                    <p className="mt-2 text-[11px] text-info font-bold">أي label غير موجود يستخدم رقم المسؤول (adminPhone) كبديل.</p>
+                    <p className="mt-2 text-xs text-info font-bold">أي label غير موجود يستخدم رقم المسؤول (adminPhone) كبديل.</p>
                 </div>
             </SectionCard>
         </div>

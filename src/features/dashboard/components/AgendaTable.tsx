@@ -19,21 +19,21 @@ export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableP
                     </div>
                     <div>
                         <h3 className="font-medium text-main dark:text-on-primary text-sm tracking-tight uppercase">جدول حصص اليوم</h3>
-                        <p className="text-[10px] font-medium text-primary uppercase tracking-widest opacity-80">أجندتك التعليمية ليوم {new Date().toLocaleDateString('ar-EG', { weekday: 'long' })}</p>
+                        <p className="text-micro font-medium text-primary uppercase tracking-widest opacity-80">أجندتك التعليمية ليوم {new Date().toLocaleDateString('ar-EG', { weekday: 'long' })}</p>
                     </div>
                 </div>
-                <Link to="/attendance" className="bg-white dark:bg-card border border-primary text-primary px-4 py-2 text-[10px] font-medium uppercase hover:bg-primary-soft transition-all">إدارة كل الحضور</Link>
+                <Link to="/attendance" className="bg-white dark:bg-card border border-primary text-primary px-4 py-2 text-micro font-medium uppercase hover:bg-primary-soft transition-all">إدارة كل الحضور</Link>
             </div>
 
             <div className="p-0 overflow-x-auto">
                 <table className="w-full">
                     <thead>
                         <tr className="bg-background/50 dark:bg-card/30 border-b border-border dark:border-border">
-                            <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الوقت</th>
-                            <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الطالب</th>
-                            <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">المادة</th>
-                            <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الحالة</th>
-                            <th className="px-6 py-4 text-[10px] font-medium text-muted uppercase tracking-widest text-center">الإجراءات السريعة</th>
+                            <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الوقت</th>
+                            <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الطالب</th>
+                            <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">المادة</th>
+                            <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الحالة</th>
+                            <th className="px-6 py-4 text-micro font-medium text-muted uppercase tracking-widest text-center">الإجراءات السريعة</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,11 +47,11 @@ export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableP
                                         <span className="font-medium text-main dark:text-on-primary text-xs">{session.studentName}</span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="px-2 py-1 bg-surface dark:bg-card text-muted text-[10px] font-normal uppercase">{session.subject}</span>
+                                        <span className="px-2 py-1 bg-surface dark:bg-card text-muted text-micro font-normal uppercase">{session.subject}</span>
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={cn(
-                                            "px-3 py-1 text-[10px] font-medium uppercase border",
+                                            "px-3 py-1 text-micro font-medium uppercase border",
                                             session.status === 'completed' ? "bg-success-light text-success border-success" :
                                                 session.status === 'cancelled' ? "bg-error-light text-error border-error" :
                                                     "bg-info-light text-info border-info"

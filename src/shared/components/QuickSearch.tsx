@@ -106,7 +106,7 @@ export const QuickSearch = () => {
             >
                 <Search size={16} />
                 <span className="text-sm font-bold">بحث سريع...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-border text-[10px] font-black rounded-none shadow-sm ms-auto me-0">Ctrl+K</kbd>
+                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-border text-micro font-black rounded-none shadow-sm ms-auto me-0">Ctrl+K</kbd>
             </button>
         );
     }
@@ -163,10 +163,10 @@ export const QuickSearch = () => {
                                         </div>
                                         <div className="flex-1">
                                             <h4 className="font-black text-sm uppercase tracking-tight">{result.title}</h4>
-                                            {result.subtitle && <p className={cn("text-[10px] font-bold mt-0.5", index === selectedIndex ? "text-primary" : "text-muted")}>{result.subtitle}</p>}
+                                            {result.subtitle && <p className={cn("text-micro font-bold mt-0.5", index === selectedIndex ? "text-primary" : "text-muted")}>{result.subtitle}</p>}
                                         </div>
                                         <span className={cn(
-                                            "text-[9px] font-black px-2 py-1 uppercase tracking-widest",
+                                            "text-micro font-black px-2 py-1 uppercase tracking-widest",
                                             index === selectedIndex ? "bg-white/10 text-on-primary" : "bg-surface dark:bg-card text-muted"
                                         )}>
                                             {result.type === 'page' ? 'صفحة' : result.type === 'student' ? 'طالب' : result.type === 'teacher' ? 'معلمة' : 'ولي أمر'}

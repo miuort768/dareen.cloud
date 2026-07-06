@@ -44,14 +44,14 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                             <h3 className="text-xs font-bold text-main">{subj.name}</h3>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex justify-between items-center text-[10px]">
+                            <div className="flex justify-between items-center text-micro">
                                 <span className="text-muted font-bold">صافي الربح</span>
                                 <span className="font-black text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
                             <div className="h-1 bg-surface overflow-hidden rounded-full">
                                 <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, (subj.profit / subj.income) * 100)}%` }} />
                             </div>
-                            <div className="flex justify-between items-center text-[9px] text-muted mt-1">
+                            <div className="flex justify-between items-center text-micro text-muted mt-1">
                                 <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
                             </div>
                         </div>

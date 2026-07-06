@@ -96,7 +96,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                                             <td className="p-4 font-mono">{session.time}</td>
                                             <td className="p-4">
                                                 <span className={cn(
-                                                    "px-2 py-1 text-[10px] font-medium uppercase tracking-widest",
+                                                    "px-2 py-1 text-micro font-medium uppercase tracking-widest",
                                                     session.status === 'completed' ? "bg-success-soft text-success border border-success-soft" :
                                                         "bg-error-soft text-error border border-error-soft"
                                                 )}>

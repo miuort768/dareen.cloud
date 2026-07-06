@@ -100,7 +100,7 @@ export const FloatingTasbeehWidget = () => {
                 onMouseDown={handleMouseDown}
                 onTouchStart={handleTouchStart}
             >
-                <span className="text-white/60 text-[9px] font-bold tracking-wider">المسبحة</span>
+                <span className="text-white/60 text-micro font-bold tracking-wider">المسبحة</span>
                 <button
                     onClick={close}
                     className="w-5 h-5 flex items-center justify-center bg-error/60 hover:bg-error text-on-primary rounded-full"
@@ -132,7 +132,7 @@ export const FloatingTasbeehWidget = () => {
                     </button>
                 </div>
 
-                <span className="text-white/25 text-[7px]">مسافة أو Enter للعد</span>
+                <span className="text-white/25 text-micro">مسافة أو Enter للعد</span>
             </div>
         </div>
     );

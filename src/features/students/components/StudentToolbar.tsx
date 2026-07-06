@@ -37,7 +37,7 @@ export const StudentToolbar = ({
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-on-primary opacity-70">
+                    <div className="px-3 py-1.5 text-micro font-bold text-on-primary opacity-70">
                         {filteredCount} / {totalCount} طالب
                     </div>
                     

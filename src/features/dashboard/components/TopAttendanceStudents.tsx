@@ -42,7 +42,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     return (
         <div className="bg-white dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border">
             <div className="flex items-center justify-between mb-2.5">
-                <h3 className="text-[11px] font-bold text-muted dark:text-muted flex items-center gap-1.5">
+                <h3 className="text-xs font-bold text-muted dark:text-muted flex items-center gap-1.5">
                     <Medal size={11} className="text-warning" />
                     الأكثر حضوراً
                 </h3>
@@ -61,7 +61,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(
-                                    "w-7 h-7 rounded-lg flex items-center justify-center text-[8px] font-black",
+                                    "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-black",
                                     i === 0 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
                                     i === 1 ? "bg-surface text-main dark:bg-card dark:text-dim" :
                                     i === 2 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
@@ -70,12 +70,12 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                     {i + 1}
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-[10px] font-bold text-main dark:text-dim truncate">{stu.name}</p>
+                                    <p className="text-micro font-bold text-main dark:text-dim truncate">{stu.name}</p>
                                 </div>
                             </div>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-base font-black text-main dark:text-on-primary tabular-nums">{stu.count}</span>
-                                <span className="text-[7px] font-bold text-warning">حصة</span>
+                                <span className="text-micro font-bold text-warning">حصة</span>
                             </div>
                         </div>
                     ))
@@ -84,14 +84,14 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div className="w-8 h-8 rounded-xl bg-surface dark:bg-primary-active flex items-center justify-center mb-1.5">
                             <User size={14} className="text-dim dark:text-muted" />
                         </div>
-                        <p className="text-[9px] font-bold text-muted">لا توجد سجلات حالياً</p>
+                        <p className="text-micro font-bold text-muted">لا توجد سجلات حالياً</p>
                     </div>
                 )}
             </div>
 
             <div className="mt-2.5 bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] rounded-xl p-2.5 text-on-primary flex items-center justify-between">
                 <div>
-                    <p className="text-[7px] font-bold text-warning">إجمالي حصص الشهر</p>
+                    <p className="text-micro font-bold text-warning">إجمالي حصص الشهر</p>
                     <p className="text-base font-black tabular-nums">{totalMonthSessions}</p>
                 </div>
                 <div className="w-7 h-7 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">

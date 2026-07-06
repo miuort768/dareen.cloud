@@ -20,7 +20,7 @@ export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDate
                 </div>
                 <div>
                     <h1 className="text-lg font-bold text-on-primary leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
-                    <p className="text-[10px] font-bold text-on-primary/70 mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
+                    <p className="text-micro font-bold text-on-primary/70 mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
                 </div>
             </div>
 
@@ -32,11 +32,11 @@ export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDate
                             type="date"
                             value={date}
                             onChange={(e) => onDateChange(e.target.value)}
-                            className="bg-transparent border-none p-0 text-[10px] font-bold text-on-primary outline-none focus:ring-0 cursor-pointer w-28"
+                            className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer w-28"
                         />
                     </div>
                 )}
-                <div className="flex items-center gap-2 text-[10px] font-bold rounded-xl px-3 py-1.5 bg-white/15 text-on-primary">
+                <div className="flex items-center gap-2 text-micro font-bold rounded-xl px-3 py-1.5 bg-white/15 text-on-primary">
                     <Sparkles size={12} />
                     Live System
                 </div>

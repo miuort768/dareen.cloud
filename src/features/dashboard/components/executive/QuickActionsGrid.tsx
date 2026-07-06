@@ -33,7 +33,7 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                             title={action.label}
                         >
                             <Icon size={24} className={action.color} />
-                            <span className={cn('text-[10px] font-medium leading-tight', action.color)}>{action.label}</span>
+                            <span className={cn('text-micro font-medium leading-tight', action.color)}>{action.label}</span>
                         </button>
                     );
                 })}

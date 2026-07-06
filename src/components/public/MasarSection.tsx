@@ -39,14 +39,14 @@ export const MasarSection = () => {
                                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-3 font-heading leading-tight">
                                     <span className="text-on-primary">مركز</span>                                     <span className="text-on-primary bg-primary px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-lg text-shadow-none whitespace-nowrap">دارين</span> <span className="text-on-primary">للمذكرات التعليمية</span>
                                 </h2>
-                                <p className="text-on-primary opacity-70 text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
+                                <p className="text-on-primary opacity-70 text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
                                     حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                                 </p>
                                 <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
-                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-on-primary">الكويت</span>
-                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-on-primary">السعودية</span>
-                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-on-primary">الإمارات</span>
-                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-bold text-on-primary">قطر</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-micro font-bold text-on-primary">الكويت</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-micro font-bold text-on-primary">السعودية</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-micro font-bold text-on-primary">الإمارات</span>
+                                    <span className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-micro font-bold text-on-primary">قطر</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                     <Link to="/books" className="px-10 py-4 bg-primary hover:bg-primary-hover text-on-primary rounded-xl font-black text-lg shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
@@ -86,7 +86,7 @@ export const MasarSection = () => {
                     <div className="bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-5 mb-5 flex items-center justify-between">
                         <div>
                             <h2 className="text-main dark:text-on-primary text-lg font-black">بوابة الكتب والملخصات</h2>
-                            <p className="text-muted dark:text-on-primary/70 text-[11px] font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
+                            <p className="text-muted dark:text-on-primary/70 text-xs font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
                         <div className="w-10 h-10 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
                             <Download size={20} className="text-primary dark:text-primary" />
@@ -101,11 +101,11 @@ export const MasarSection = () => {
                                 <span className="text-on-primary font-black text-sm">مركز دارين السابعة</span>
                                 <div className="absolute -bottom-1 right-0 w-full h-0.5 bg-white/80 rounded-full shadow-sm"></div>
                             </div>
-                            <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary text-[10px] font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
+                            <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary text-micro font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
                         </div>
 
                         {/* Description */}
-                        <p className="text-on-primary text-[12px] leading-relaxed mb-6 font-medium">
+                        <p className="text-on-primary text-xs leading-relaxed mb-6 font-medium">
                             حصريًا في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                         </p>
 
@@ -137,19 +137,19 @@ export const MasarSection = () => {
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
                                 <Shield size={20} className="text-primary dark:text-primary" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-[11px] font-bold leading-tight block">جودة مضمونة</span>
+                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">جودة مضمونة</span>
                         </div>
                         <div className="text-center bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-success-light dark:bg-success/30 flex items-center justify-center">
                                 <BadgeCheck size={20} className="text-success dark:text-success" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-[11px] font-bold leading-tight block">محتوى موثوق</span>
+                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">محتوى موثوق</span>
                         </div>
                         <div className="text-center bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-warning-light dark:bg-warning/30 flex items-center justify-center">
                                 <Headphones size={20} className="text-warning dark:text-warning" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-[11px] font-bold leading-tight block">دعم مستمر</span>
+                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">دعم مستمر</span>
                         </div>
                     </div>
                 </div>

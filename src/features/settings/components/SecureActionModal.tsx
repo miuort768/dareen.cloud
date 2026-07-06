@@ -28,7 +28,7 @@ export const SecureActionModal = ({ secureAction, secureInput, setSecureInput, s
                     <p className="text-xs text-muted leading-relaxed">{secureAction.description}</p>
 
                     <div className="w-full bg-surface p-4 border border-border space-y-3 text-right mt-2">
-                        <p className="text-[11px] font-normal text-muted">اكتب للتأكيد:</p>
+                        <p className="text-xs font-normal text-muted">اكتب للتأكيد:</p>
                         <div className="text-center font-normal text-error bg-error-soft py-1.5 text-xs select-all border border-error">
                             {secureAction.confirmWord}
                         </div>

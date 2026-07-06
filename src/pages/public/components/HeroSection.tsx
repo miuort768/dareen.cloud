@@ -18,7 +18,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary-soft border border-primary/50 dark:border-primary rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                                <span className="text-primary font-bold text-[10px] sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
+                                <span className="text-primary font-bold text-micro sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في السعودية، الكويت، الامارات، قطر، وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والريان ومسقط وصلالة والمنامة والمحرق</span>
@@ -27,7 +27,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-                            <p className="text-[11px] sm:text-xs text-muted leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
+                            <p className="text-xs sm:text-xs text-muted leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
                                 أفضل منصة تعليم عن بعد في السعودية، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -117,7 +117,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                 <div className="hidden md:grid grid-cols-4 gap-2 mt-3 max-w-6xl mx-auto">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
                         <div key={idx} className="bg-surface rounded-2xl p-2 shadow-sm border border-border flex items-center justify-between gap-1 group hover:shadow-md transition-all">
-                            <p className="text-[10px] lg:text-[11px] font-black text-main leading-tight flex-1">
+                            <p className="text-micro lg:text-xs font-black text-main leading-tight flex-1">
                                 {text}
                             </p>
                             <a
@@ -125,7 +125,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, bannersArray }: He
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`سجل الآن: ${text}`}
-                                className="shrink-0 px-2.5 py-1 bg-primary text-on-primary font-bold text-[9px] lg:text-[10px] rounded-xl hover:brightness-90 transition-all shadow-sm whitespace-nowrap"
+                                className="shrink-0 px-2.5 py-1 bg-primary text-on-primary font-bold text-micro lg:text-micro rounded-xl hover:brightness-90 transition-all shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن
                             </a>

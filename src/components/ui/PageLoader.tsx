@@ -40,7 +40,7 @@ export const PageLoader = () => {
                     <h2 className="text-3xl md:text-4xl font-heading font-medium text-main dark:text-on-primary tracking-tighter">
                         دارين <span className="text-primary dark:text-primary">للتعليم والتدريب</span>
                     </h2>
-                    <p className="text-muted dark:text-muted font-medium text-[10px] md:text-xs tracking-[0.4em] uppercase">
+                    <p className="text-muted dark:text-muted font-medium text-micro md:text-xs tracking-[0.4em] uppercase">
                         Darin of Education & Training
                     </p>
                 </div>
@@ -61,7 +61,7 @@ export const PageLoader = () => {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-[10px] font-medium text-primary dark:text-primary animate-pulse tracking-[0.2em] uppercase">
+                    <span className="text-micro font-medium text-primary dark:text-primary animate-pulse tracking-[0.2em] uppercase">
                         جاري تهيئة النظام
                     </span>
                     <div className="flex gap-1">

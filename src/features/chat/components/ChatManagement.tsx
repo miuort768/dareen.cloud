@@ -41,9 +41,9 @@ export const ChatManagement: React.FC<ChatManagementProps> = ({
                 <table className="w-full text-right border-collapse">
                     <thead>
                         <tr className="bg-background dark:bg-card border-b border-border dark:border-border">
-                            <th className="p-4 lg:p-5 text-[11px] font-medium text-muted uppercase tracking-widest">المستخدم</th>
-                            <th className="p-4 lg:p-5 text-[11px] font-medium text-muted uppercase tracking-widest">اسم المستخدم</th>
-                            <th className="p-4 lg:p-5 text-[11px] font-medium text-muted uppercase tracking-widest text-center">الإجراءات</th>
+                            <th className="p-4 lg:p-5 text-xs font-medium text-muted uppercase tracking-widest">المستخدم</th>
+                            <th className="p-4 lg:p-5 text-xs font-medium text-muted uppercase tracking-widest">اسم المستخدم</th>
+                            <th className="p-4 lg:p-5 text-xs font-medium text-muted uppercase tracking-widest text-center">الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-border dark:divide-border bg-white dark:bg-background">
@@ -57,7 +57,7 @@ export const ChatManagement: React.FC<ChatManagementProps> = ({
                                         <div>
                                             <span className="font-medium text-main dark:text-dim block">{p.name}</span>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <span className="px-2 py-0.5 bg-success-light text-success dark:bg-success/30 dark:text-success text-[9px] font-medium rounded uppercase border border-success dark:border-success">متصل</span>
+                                                <span className="px-2 py-0.5 bg-success-light text-success dark:bg-success/30 dark:text-success text-micro font-medium rounded uppercase border border-success dark:border-success">متصل</span>
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@ export const ChatManagement: React.FC<ChatManagementProps> = ({
                                 <td className="p-4 lg:p-6">
                                     <div className="flex flex-col">
                                         <span className="font-normal text-main dark:text-dim">@{p.username}</span>
-                                        <span className="text-[10px] text-muted font-normal uppercase tracking-widest mt-0.5 opacity-60">ID: {p.id.substring(0, 8)}</span>
+                                        <span className="text-micro text-muted font-normal uppercase tracking-widest mt-0.5 opacity-60">ID: {p.id.substring(0, 8)}</span>
                                     </div>
                                 </td>
                                 <td className="p-4 lg:p-5">

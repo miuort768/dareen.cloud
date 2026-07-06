@@ -327,10 +327,10 @@ export const TeacherInvoices = () => {
                     </div>
                     <div>
                         <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">فواتير المعلمات</h1>
-                        <p className="text-[11px] font-bold text-on-primary opacity-70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
+                        <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
+                <div className="flex items-center gap-2 text-xs font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
                     <Sparkles size={13} />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي المستحقات
                 </div>
@@ -355,14 +355,14 @@ export const TeacherInvoices = () => {
                                 <div className="flex items-center gap-1">
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-on-primary outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer" 
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
-                                    <span className="text-[10px] font-bold text-on-primary opacity-50">إلى</span>
+                                    <span className="text-micro font-bold text-on-primary opacity-50">إلى</span>
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-on-primary outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer" 
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />

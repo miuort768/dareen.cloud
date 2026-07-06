@@ -106,17 +106,17 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             <p className="text-base font-bold text-on-primary">{studentName}</p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {studentGrade && (
-                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
                                         الصف {studentGrade}
                                     </span>
                                 )}
                                 {studentCurriculum && (
-                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
                                         {studentCurriculum}
                                     </span>
                                 )}
                                 {studentSubject && (
-                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--text-on-primary)' }}>
                                         منهج {studentSubject}
                                     </span>
                                 )}
@@ -154,12 +154,12 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 type="date"
                                                 value={editingSession.date}
                                                 onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
-                                                className="px-3 py-2 text-[10px] font-bold border border-border dark:border-border rounded-xl bg-white dark:bg-primary-active outline-none focus:border-primary transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border dark:border-border rounded-xl bg-white dark:bg-primary-active outline-none focus:border-primary transition-all"
                                             />
                                             <select
                                                 value={editingSession.status}
                                                 onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
-                                                className="px-3 py-2 text-[10px] font-bold border border-border dark:border-border rounded-xl bg-white dark:bg-primary-active outline-none focus:border-primary transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border dark:border-border rounded-xl bg-white dark:bg-primary-active outline-none focus:border-primary transition-all"
                                             >
                                                 <option value="completed">حضور</option>
                                                 <option value="cancelled">غياب</option>
@@ -191,7 +191,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                     <div className="flex items-center gap-2">
                                                         <Calendar size={14} className="text-muted" />
                                                         <p className="text-sm font-bold text-main dark:text-on-primary">{session.date}</p>
-                                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(100,116,139,0.07)', color: 'var(--text-muted)' }}>{session.day}</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(100,116,139,0.07)', color: 'var(--text-muted)' }}>{session.day}</span>
                                                     </div>
                                                     <p className="text-xs font-bold text-muted mt-0.5">{session.subject} - {session.time}</p>
                                                     
@@ -199,14 +199,14 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                         <div className="mt-3 space-y-2 pb-1">
                                                             {session.topics && (
                                                                 <div className="flex gap-2">
-                                                                    <span className="text-[9px] font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg" style={{ backgroundColor: 'rgba(16,185,129,0.07)', color: 'var(--bg-success)' }}>المنجز</span>
-                                                                    <p className="text-[11px] font-bold text-main dark:text-dim leading-relaxed" style={{ borderRight: '2px solid', borderRightColor: 'rgba(16,185,129,0.13)', paddingRight: '8px' }}>{session.topics}</p>
+                                                                    <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg" style={{ backgroundColor: 'rgba(16,185,129,0.07)', color: 'var(--bg-success)' }}>المنجز</span>
+                                                                    <p className="text-xs font-bold text-main dark:text-dim leading-relaxed" style={{ borderRight: '2px solid', borderRightColor: 'rgba(16,185,129,0.13)', paddingRight: '8px' }}>{session.topics}</p>
                                                                 </div>
                                                             )}
                                                             {session.homework && (
                                                                 <div className="flex gap-2">
-                                                                    <span className="text-[9px] font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg" style={{ backgroundColor: 'rgba(245,158,11,0.07)', color: 'var(--bg-warning)' }}>الواجب</span>
-                                                                    <p className="text-[11px] font-bold text-muted dark:text-muted leading-relaxed" style={{ borderRight: '2px solid', borderRightColor: 'rgba(245,158,11,0.13)', paddingRight: '8px' }}>{session.homework}</p>
+                                                                    <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg" style={{ backgroundColor: 'rgba(245,158,11,0.07)', color: 'var(--bg-warning)' }}>الواجب</span>
+                                                                    <p className="text-xs font-bold text-muted dark:text-muted leading-relaxed" style={{ borderRight: '2px solid', borderRightColor: 'rgba(245,158,11,0.13)', paddingRight: '8px' }}>{session.homework}</p>
                                                                 </div>
                                                             )}
                                                         </div>
@@ -215,7 +215,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                             </div>
 
                                             <div className="flex items-center gap-3 ps-0 p-4">
-                                                <span className="text-[10px] font-bold px-2 py-1 rounded-xl" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
+                                                <span className="text-micro font-bold px-2 py-1 rounded-xl" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
                                                     {session.status === 'completed' ? 'حضور' : 'غياب'}
                                                 </span>
 

@@ -38,11 +38,11 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-[11px] font-bold text-main dark:text-dim truncate">{task.title}</p>
+                                <p className="text-xs font-bold text-main dark:text-dim truncate">{task.title}</p>
                                 <div className="flex items-center gap-2 mt-0.5">
-                                    <span className="text-[9px] font-medium text-muted dark:text-muted">{task.dueDate}</span>
+                                    <span className="text-micro font-medium text-muted dark:text-muted">{task.dueDate}</span>
                                     {task.priority === 'high' && (
-                                        <span className="text-[7px] font-bold text-error bg-error-light dark:bg-error/20 px-1.5 py-0.5 rounded">عاجل</span>
+                                        <span className="text-micro font-bold text-error bg-error-light dark:bg-error/20 px-1.5 py-0.5 rounded">عاجل</span>
                                     )}
                                 </div>
                             </div>
@@ -53,14 +53,14 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                         <div className="w-10 h-10 rounded-xl bg-surface dark:bg-primary-active flex items-center justify-center mb-2">
                             <ListTodo size={18} className="text-dim dark:text-muted" />
                         </div>
-                        <p className="text-[10px] font-bold text-muted">لا توجد مهام نشطة حالياً</p>
+                        <p className="text-micro font-bold text-muted">لا توجد مهام نشطة حالياً</p>
                     </div>
                 )}
             </div>
 
             <Link
                 to="/tasks"
-                className="mt-3 w-full h-9 flex items-center justify-center bg-primary hover:bg-primary text-on-primary text-[10px] font-bold rounded-xl transition-all active:scale-[0.98]"
+                className="mt-3 w-full h-9 flex items-center justify-center bg-primary hover:bg-primary text-on-primary text-micro font-bold rounded-xl transition-all active:scale-[0.98]"
             >
                 عرض كافة المهام
             </Link>

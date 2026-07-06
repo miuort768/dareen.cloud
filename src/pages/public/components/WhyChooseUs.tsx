@@ -63,7 +63,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative flex items-center gap-4 p-4 bg-white/80 dark:bg-primary/80 backdrop-blur-sm rounded-2xl border border-border shadow-sm">
                 {f.ribbon && (
-                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>
@@ -73,7 +73,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 </div>
                 <div>
                   <h3 className={`text-sm font-black ${vc.icon}`}>{f.title}</h3>
-                  <p className="text-[10px] text-muted font-medium leading-relaxed mt-0.5">{f.desc}</p>
+                  <p className="text-micro text-muted font-medium leading-relaxed mt-0.5">{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -85,17 +85,17 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/10 rounded-full mb-3">
                 <Star size={12} className="text-warning" />
-                <span className="text-[9px] font-bold text-on-primary opacity-80">التميز التعليمي</span>
+                <span className="text-micro font-bold text-on-primary opacity-80">التميز التعليمي</span>
               </div>
               <h3 className="text-lg font-black text-on-primary font-heading mb-2">بيئة تعليمية متطورة</h3>
-              <p className="text-[9px] text-on-primary opacity-70 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
+              <p className="text-micro text-on-primary opacity-70 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
                 نخبة من المعلمين المتخصصين في تدريس المناهج الكويتية والخليجية لضمان تفوق طفلك في الرياضيات والعلوم واللغات.
               </p>
               <a
                 href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء برحلة التميز التعليمية')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-[11px] font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
+                className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
               >
                 ابدأ رحلة التميز الآن
                 <ArrowLeft size={14} />
@@ -105,12 +105,12 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               <div className="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
                 <Star size={16} className="text-warning mx-auto mb-1" />
                 <div className="text-lg font-black text-on-primary">10+</div>
-                <div className="text-[9px] text-on-primary opacity-50 font-bold">سنوات خبرة</div>
+                <div className="text-micro text-on-primary opacity-50 font-bold">سنوات خبرة</div>
               </div>
               <div className="p-3 bg-white/5 border border-white/10 rounded-xl text-center">
                 <Users size={16} className="text-info mx-auto mb-1" />
                 <div className="text-lg font-black text-on-primary">70+</div>
-                <div className="text-[9px] text-on-primary opacity-50 font-bold">معلم خبير</div>
+                <div className="text-micro text-on-primary opacity-50 font-bold">معلم خبير</div>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="relative p-6 bg-card rounded-2xl shadow-sm border border-border flex items-start gap-4 group hover:shadow-md transition-all">
                 {f.ribbon && (
-                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-[7px] font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>

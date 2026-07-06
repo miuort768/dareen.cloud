@@ -77,7 +77,7 @@ export const TeacherDetails = ({
                         </div>
                         <div className="min-w-0">
                             <h3 className="font-bold text-base md:text-lg text-on-primary truncate">{teacher.name}</h3>
-                            <span className="text-[9px] font-bold text-on-primary opacity-60 bg-white/10 border border-white/10 px-2 py-0.5 uppercase tracking-widest rounded-xl">{teacher.subject}</span>
+                            <span className="text-micro font-bold text-on-primary opacity-60 bg-white/10 border border-white/10 px-2 py-0.5 uppercase tracking-widest rounded-xl">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2 md:gap-3">
@@ -98,14 +98,14 @@ export const TeacherDetails = ({
                     <div className="absolute top-0 right-0 w-16 h-16 bg-success/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
                     <div className="flex justify-between items-start mb-4">
                         <div>
-                            <p className="text-[8px] font-medium text-muted uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
+                            <p className="text-micro font-medium text-muted uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-2xl font-medium text-main italic tracking-tighter">{monthlySessions}</span>
-                                <span className="text-[9px] font-medium text-muted uppercase tracking-widest">جلسة منجزة</span>
+                                <span className="text-micro font-medium text-muted uppercase tracking-widest">جلسة منجزة</span>
                             </div>
                         </div>
                         <div className={cn(
-                            "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium uppercase tracking-tighter rounded-xl",
+                            "flex items-center gap-1 px-2.5 py-1 text-micro font-medium uppercase tracking-tighter rounded-xl",
                             performanceChange >= 0 ? "bg-success text-on-success shadow-sm" : "bg-error text-on-error shadow-sm"
                         )}>
                             <TrendingUp size={10} className={performanceChange < 0 ? "rotate-180" : ""} />
@@ -128,7 +128,7 @@ export const TeacherDetails = ({
                             <span className="text-xs font-medium text-primary">{enrolledStudents.length}</span>
                         </div>
                         <div className="bg-gradient-to-l from-primary to-primary-light text-on-primary px-4 flex items-center justify-center rounded-l-xl relative overflow-hidden transition-all">
-                            <h4 className="text-[10px] text-on-primary font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
+                            <h4 className="text-micro text-on-primary font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -149,11 +149,11 @@ export const TeacherDetails = ({
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
                                                 <h5 className="font-medium text-xs text-main uppercase">{student.name}</h5>
-                                                {isLow && <span className="text-[8px] font-medium text-error bg-error-soft border border-border px-1.5 py-0.5 animate-pulse uppercase rounded-xl">رصيد منخفض</span>}
+                                                {isLow && <span className="text-micro font-medium text-error bg-error-soft border border-border px-1.5 py-0.5 animate-pulse uppercase rounded-xl">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[9px] font-medium text-muted uppercase bg-surface px-1.5 py-0.5 border border-border rounded-xl">{student.grade}</span>
-                                                <span className="text-[9px] font-medium text-muted uppercase">{enrollment.subject}</span>
+                                                <span className="text-micro font-medium text-muted uppercase bg-surface px-1.5 py-0.5 border border-border rounded-xl">{student.grade}</span>
+                                                <span className="text-micro font-medium text-muted uppercase">{enrollment.subject}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -182,7 +182,7 @@ export const TeacherDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "w-4 h-4 border flex items-center justify-center text-[7px] font-medium font-mono rounded transition-all",
+                                                        "w-4 h-4 border flex items-center justify-center text-micro font-medium font-mono rounded transition-all",
                                                         idx < actualUsed 
                                                             ? "bg-success border-success text-on-success shadow-sm" 
                                                             : idx === actualUsed 
@@ -197,7 +197,7 @@ export const TeacherDetails = ({
 
                                         <div className="pt-3 border-t border-border flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-medium text-muted uppercase mb-1">
+                                                <div className="flex justify-between text-micro font-medium text-muted uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span className="tabular-nums">{progressPercent}%</span>
                                                 </div>
@@ -206,7 +206,7 @@ export const TeacherDetails = ({
                                                 </div>
                                             </div>
                                             <div className="text-center px-2">
-                                                <p className="text-[8px] font-medium text-muted uppercase leading-none mb-0.5">الرصيد</p>
+                                                <p className="text-micro font-medium text-muted uppercase leading-none mb-0.5">الرصيد</p>
                                                 <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                             </div>
                                         </div>
@@ -228,8 +228,8 @@ export const TeacherDetails = ({
                                 <Clock size={18} />
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] font-bold text-main uppercase tracking-widest">سجل النشاطات المفصل</p>
-                                <p className="text-[8px] font-medium text-primary uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
+                                <p className="text-micro font-bold text-main uppercase tracking-widest">سجل النشاطات المفصل</p>
+                                <p className="text-micro font-medium text-primary uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
                         <CheckCircle2 size={16} className="text-primary" />
@@ -251,7 +251,7 @@ export const TeacherDetails = ({
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold uppercase tracking-tighter text-on-primary">سجل نشاطات المعلمة</h3>
-                                    <p className="text-[9px] text-on-primary opacity-60 font-medium uppercase tracking-widest">{teacher.name}</p>
+                                    <p className="text-micro text-on-primary opacity-60 font-medium uppercase tracking-widest">{teacher.name}</p>
                                 </div>
                             </div>
                             <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-error rounded-xl transition-all">
@@ -274,14 +274,14 @@ export const TeacherDetails = ({
                                                     <Calendar size={12} />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-[10px] font-medium text-main uppercase tracking-tight truncate">{session.studentName}</p>
-                                                    <p className="text-[7px] font-medium text-muted uppercase tracking-widest">{session.date}</p>
+                                                    <p className="text-micro font-medium text-main uppercase tracking-tight truncate">{session.studentName}</p>
+                                                    <p className="text-micro font-medium text-muted uppercase tracking-widest">{session.date}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         
                                         <div className="flex items-center justify-between pt-3 border-t border-border">
-                                            <div className="flex items-center gap-1.5 text-[8px] font-medium text-muted uppercase tracking-widest">
+                                            <div className="flex items-center gap-1.5 text-micro font-medium text-muted uppercase tracking-widest">
                                                 <Clock size={8} /> {session.time}
                                             </div>
                                             {!isTeacherView && (

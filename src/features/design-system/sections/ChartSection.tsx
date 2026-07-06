@@ -10,12 +10,12 @@ export function ChartSection() {
         <div className="flex items-end gap-3 h-40">
           {mockChartData.map(d => (
             <div key={d.name} className="flex-1 flex flex-col items-center gap-1">
-              <span className="text-[10px] text-muted">{d.value}</span>
+              <span className="text-micro text-muted">{d.value}</span>
               <div
                 className="w-full rounded-t bg-primary transition-all"
                 style={{ height: `${(d.value / maxVal) * 100}%` }}
               />
-              <span className="text-[10px] text-muted">{d.name}</span>
+              <span className="text-micro text-muted">{d.name}</span>
             </div>
           ))}
         </div>

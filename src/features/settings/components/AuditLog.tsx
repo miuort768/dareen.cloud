@@ -15,7 +15,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                 </div>
                 <div>
                     <p className="text-sm font-bold text-main">سجل الرقابة</p>
-                    <p className="text-[10px] font-bold text-muted">سجل تدقيق النشاط العام</p>
+                    <p className="text-micro font-bold text-muted">سجل تدقيق النشاط العام</p>
                 </div>
             </div>
             <SecondaryBtn onClick={fetchLogs}>
@@ -27,20 +27,20 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
             <table className="w-full text-right text-sm">
                 <thead>
                     <tr className="bg-hover">
-                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">التوقيت</th>
-                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">المسؤول</th>
-                        <th className="px-4 py-3 text-[10px] font-bold text-muted tracking-wide">الإجراء</th>
+                        <th className="px-4 py-3 text-micro font-bold text-muted tracking-wide">التوقيت</th>
+                        <th className="px-4 py-3 text-micro font-bold text-muted tracking-wide">المسؤول</th>
+                        <th className="px-4 py-3 text-micro font-bold text-muted tracking-wide">الإجراء</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
                     {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
                         <tr key={idx} className="hover:bg-hover transition-colors group">
-                            <td className="px-4 py-3 font-mono text-[10px] text-muted" dir="ltr">
+                            <td className="px-4 py-3 font-mono text-micro text-muted" dir="ltr">
                                 {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
                             </td>
                             <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 flex items-center justify-center text-[10px] font-bold bg-primary-soft text-primary">
+                                    <div className="w-6 h-6 flex items-center justify-center text-micro font-bold bg-primary-soft text-primary">
                                         {log.username?.[0]?.toUpperCase() || 'A'}
                                     </div>
                                     <span className="text-xs font-medium text-main">{log.username}</span>
@@ -58,7 +58,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             <td colSpan={3} className="py-16 text-center">
                                 <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
                                 <p className="text-sm font-normal text-muted">لا توجد سجلات</p>
-                                <p className="text-[10px] text-dim mt-1">لا يوجد نشاط مسجل</p>
+                                <p className="text-micro text-dim mt-1">لا يوجد نشاط مسجل</p>
                             </td>
                         </tr>
                     )}
@@ -67,11 +67,11 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
         </div>
 
         <div className="flex items-center justify-between mt-3 px-1">
-            <div className="flex items-center gap-1.5 text-[10px] text-muted">
+            <div className="flex items-center gap-1.5 text-micro text-muted">
                 <div className="w-1.5 h-1.5 bg-success rounded-full animate-ping" />
                 المراقبة نشطة
             </div>
-            <span className="text-[10px] text-dim">{auditLogs.length} سجل</span>
+            <span className="text-micro text-dim">{auditLogs.length} سجل</span>
         </div>
     </SectionCard>
 );

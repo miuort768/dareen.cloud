@@ -62,7 +62,7 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                             {health.database?.status === 'connected' ? 'متصل' : health.database?.status === 'error' ? 'خطأ' : 'غير معروف'}
                         </span>
                         {health.database?.latency > 0 && (
-                            <span className="text-[10px] text-muted">{health.database.latency}ms</span>
+                            <span className="text-micro text-muted">{health.database.latency}ms</span>
                         )}
                     </div>
                 </div>

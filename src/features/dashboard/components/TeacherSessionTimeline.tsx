@@ -30,12 +30,12 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                     </div>
                     <div>
                         <h3 className="font-medium text-sm text-main dark:text-on-primary uppercase tracking-tight">الجدول الزمني</h3>
-                        <p className="text-[9px] text-muted dark:text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
+                        <p className="text-micro text-muted dark:text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
                 <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-primary border border-success rounded-none shadow-sm">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                    <span className="text-[9px] font-medium uppercase">LIVE NOW</span>
+                    <span className="text-micro font-medium uppercase">LIVE NOW</span>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             {/* Time + status icon */}
                             <div className="flex items-center justify-between mb-4">
                                 <div className={cn(
-                                    "px-2 py-0.5 rounded-none text-[10px] font-medium tabular-nums border",
+                                    "px-2 py-0.5 rounded-none text-micro font-medium tabular-nums border",
                                     isCompleted 
                                         ? "bg-success text-on-primary border-success" 
                                         : isCancelled 
@@ -87,7 +87,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                     "w-1.5 h-1.5 rounded-none border border-border dark:border-border",
                                     isCompleted ? "bg-success" : isCancelled ? "bg-error" : "bg-primary"
                                 )} />
-                                <p className="text-[9px] font-normal text-muted dark:text-muted truncate uppercase">
+                                <p className="text-micro font-normal text-muted dark:text-muted truncate uppercase">
                                     {session.subject}
                                 </p>
                             </div>
@@ -95,7 +95,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             {/* Status label */}
                             <div className="mt-4 pt-3 border-t border-border dark:border-border flex justify-between items-center">
                                 <span className={cn(
-                                    "text-[9px] font-medium uppercase",
+                                    "text-micro font-medium uppercase",
                                     isCompleted ? "text-success" : isCancelled ? "text-error" : "text-primary"
                                 )}>
                                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
@@ -109,7 +109,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                     <div className="w-9 h-9 bg-white text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
-                                    <span className="font-medium text-[9px] uppercase">بدء الحصة</span>
+                                    <span className="font-medium text-micro uppercase">بدء الحصة</span>
                                 </button>
                             )}
                         </div>

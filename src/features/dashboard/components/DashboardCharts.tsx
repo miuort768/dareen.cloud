@@ -24,11 +24,11 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-chart-2/10">
                         <DollarSign size={11} strokeWidth={2} className="text-chart-2" />
-                        <span className="text-[10px] font-bold tabular-nums text-chart-2">{totalRevenue.toLocaleString()} ج.م</span>
+                        <span className="text-micro font-bold tabular-nums text-chart-2">{totalRevenue.toLocaleString()} ج.م</span>
                     </div>
                     <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-chart-3/10">
                         <TrendingUp size={11} strokeWidth={2} className="text-chart-3" />
-                        <span className="text-[10px] font-bold tabular-nums text-chart-3">{totalExpenses.toLocaleString()} ج.م</span>
+                        <span className="text-micro font-bold tabular-nums text-chart-3">{totalExpenses.toLocaleString()} ج.م</span>
                     </div>
                 </div>
             }

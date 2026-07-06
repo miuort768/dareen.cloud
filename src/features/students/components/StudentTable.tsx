@@ -23,12 +23,12 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-primary">
                             <tr>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest">توصيف الطالب</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest text-center">المستوى</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest text-center">الاشتراكات</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest text-center">الحصص</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest text-center">مؤشر التقدم</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-on-primary opacity-70 uppercase tracking-widest text-center">إجراءات</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest">توصيف الطالب</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest text-center">المستوى</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest text-center">الاشتراكات</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest text-center">الحصص</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest text-center">مؤشر التقدم</th>
+                                <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest text-center">إجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
@@ -56,23 +56,23 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                                                 <div>
                                                     <p className="font-bold text-xs text-main leading-tight">{student.name}</p>
                                                     {hasLowBalance && (
-                                                        <span className="text-[9px] font-bold text-error uppercase tracking-tighter bg-error-soft px-1">رصيد منخفض ⚠️</span>
+                                                        <span className="text-micro font-bold text-error uppercase tracking-tighter bg-error-soft px-1">رصيد منخفض ⚠️</span>
                                                     )}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-2xl bg-primary-soft text-primary">
+                                            <span className="text-micro font-bold px-2 py-0.5 rounded-2xl bg-primary-soft text-primary">
                                                 {student.grade}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-[11px] rounded-2xl bg-primary-soft text-primary">
+                                            <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-xs rounded-2xl bg-primary-soft text-primary">
                                                 {student.enrollments?.length || 0}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-[11px] font-normal text-muted font-mono">
+                                            <span className="text-xs font-normal text-muted font-mono">
                                                 {totalUsed} <span className="text-dim">/</span> {totalExpected}
                                             </span>
                                         </td>
@@ -87,7 +87,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                                                         style={{ width: `${progress}%` }}
                                                     ></div>
                                                 </div>
-                                                <span className="text-[10px] font-normal text-dim font-mono">{progress}%</span>
+                                                <span className="text-micro font-normal text-dim font-mono">{progress}%</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
@@ -129,7 +129,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-bold text-main leading-tight mb-1">{student.name}</h4>
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 uppercase rounded-none bg-primary-soft text-primary">{student.grade}</span>
+                                        <span className="text-micro font-bold px-1.5 py-0.5 uppercase rounded-none bg-primary-soft text-primary">{student.grade}</span>
                                     </div>
                                 </div>
                                 <div className="flex gap-1">
@@ -141,21 +141,21 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                             
                             <div className="grid grid-cols-3 gap-3 mb-4">
                                 <div className="p-2 text-center rounded-2xl bg-primary-soft">
-                                    <span className="text-[8px] font-bold text-primary block mb-1">العقود</span>
+                                    <span className="text-micro font-bold text-primary block mb-1">العقود</span>
                                     <span className="text-xs font-black text-primary">{student.enrollments?.length || 0}</span>
                                 </div>
                                 <div className="p-2 text-center rounded-2xl bg-success-soft">
-                                    <span className="text-[8px] font-bold text-success block mb-1">المستخدم</span>
+                                    <span className="text-micro font-bold text-success block mb-1">المستخدم</span>
                                     <span className="text-xs font-black text-success">{totalUsed}</span>
                                 </div>
                                 <div className="p-2 text-center rounded-2xl bg-warning-soft">
-                                    <span className="text-[8px] font-bold text-warning block mb-1">الرصيد</span>
+                                    <span className="text-micro font-bold text-warning block mb-1">الرصيد</span>
                                     <span className={cn("text-xs font-black", hasLowBalance ? "text-error" : "text-warning")}>{totalExpected - totalUsed}</span>
                                 </div>
                             </div>
 
                             <div className="space-y-1.5">
-                                <div className="flex justify-between text-[9px] font-normal text-dim uppercase tracking-widest">
+                                <div className="flex justify-between text-micro font-normal text-dim uppercase tracking-widest">
                                     <span>معدل الاستهلاك</span>
                                     <span className="font-mono">{progress}%</span>
                                 </div>
@@ -177,7 +177,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
             {students.length === 0 && (
                 <div className="py-24 text-center opacity-40">
                     <GraduationCap size={48} className="mx-auto mb-4 text-dim" />
-                    <p className="text-[10px] font-normal text-dim uppercase tracking-[4px]">لا توجد بيانات طلاب حالياً</p>
+                    <p className="text-micro font-normal text-dim uppercase tracking-[4px]">لا توجد بيانات طلاب حالياً</p>
                 </div>
             )}
         </div>

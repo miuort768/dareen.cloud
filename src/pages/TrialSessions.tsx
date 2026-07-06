@@ -121,10 +121,10 @@ export const TrialSessions = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-on-primary leading-tight">الحصص التجريبية</h1>
-              <p className="text-[10px] font-bold text-on-primary opacity-70 mt-0.5">إدارة الحصص التجريبية للطلاب الجدد</p>
+              <p className="text-micro font-bold text-on-primary opacity-70 mt-0.5">إدارة الحصص التجريبية للطلاب الجدد</p>
             </div>
           </div>
-          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm border border-white/20 text-on-primary text-[11px] font-bold rounded-xl hover:bg-white/25 transition-all shadow-sm active:scale-95">
+          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm border border-white/20 text-on-primary text-xs font-bold rounded-xl hover:bg-white/25 transition-all shadow-sm active:scale-95">
             <Plus size={14} /> إضافة حصة
           </button>
         </div>
@@ -142,7 +142,7 @@ export const TrialSessions = () => {
                 <s.icon size={20} className="text-on-primary" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] font-bold text-on-primary opacity-70 leading-none">{s.title}</p>
+                <p className="text-micro font-bold text-on-primary opacity-70 leading-none">{s.title}</p>
                 <p className="text-xl font-black text-on-primary tabular-nums mt-1">{s.value}</p>
               </div>
             </div>
@@ -156,7 +156,7 @@ export const TrialSessions = () => {
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." className="w-full pr-9 pl-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
             </div>
-            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-[11px] font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all">
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all">
               <option value="">كل الحالات</option>
               <option value="pending">قيد الانتظار</option>
               <option value="completed">تم</option>
@@ -188,7 +188,7 @@ export const TrialSessions = () => {
                     </div>
                     <div>
                       <h3 className="text-xs font-bold text-main leading-tight">{t.studentName}</h3>
-                      <span className={cn("text-[9px] font-bold", statusTextColor[t.status] || statusTextColor.pending)}>{statusLabels[t.status]}</span>
+                      <span className={cn("text-micro font-bold", statusTextColor[t.status] || statusTextColor.pending)}>{statusLabels[t.status]}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
@@ -201,28 +201,28 @@ export const TrialSessions = () => {
                 </div>
                 <div className="px-4 py-3">
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
                       <Phone size={11} className="text-primary shrink-0" />
                       <span className="truncate">{t.parentPhone}</span>
                     </div>
                     {t.subject && (
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
                         <BookOpen size={11} className="text-primary shrink-0" />
                         <span className="truncate">{t.subject}</span>
                       </div>
                     )}
                     {t.teacherName && (
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
                         <GraduationCap size={11} className="text-warning shrink-0" />
                         <span className="truncate">{t.teacherName}</span>
                       </div>
                     )}
-                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
                       <Calendar size={11} className="text-success shrink-0" />
                       <span>{t.date}</span>
                     </div>
                     {t.time && (
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
                         <Clock size={11} className="text-info shrink-0" />
                         <span>{t.time}</span>
                       </div>
@@ -230,8 +230,8 @@ export const TrialSessions = () => {
                   </div>
                   {t.notes && (
                     <div className="mt-3 bg-warning-soft border border-warning px-3 py-1.5 rounded-xl">
-                      <span className="text-[8px] font-bold text-warning-dark tracking-widest ml-1.5">ملاحظات</span>
-                      <span className="text-[11px] font-medium text-main">{t.notes}</span>
+                      <span className="text-micro font-bold text-warning-dark tracking-widest ml-1.5">ملاحظات</span>
+                      <span className="text-xs font-medium text-main">{t.notes}</span>
                     </div>
                   )}
                 </div>
@@ -250,10 +250,10 @@ export const TrialSessions = () => {
               </div>
               <form onSubmit={e => { e.preventDefault(); addMutation.mutate(form); }} className="p-5 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">المعلمة</label>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">المعلمة</label>
                     <select value={form.teacherName} onChange={e => {
                       const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
                       setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
@@ -264,10 +264,10 @@ export const TrialSessions = () => {
                       ))}
                     </select>
                   </div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
                 </div>
-                <div><label className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
                 <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xs font-bold rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}</button>
               </form>
             </motion.div>

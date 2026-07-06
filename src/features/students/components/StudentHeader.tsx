@@ -20,9 +20,9 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
                 <div>
                     <h1 className="text-sm md:text-xl font-medium text-on-primary uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>
                     <div className="hidden md:flex items-center gap-3 mt-1.5">
-                         <p className="text-[10px] text-on-error font-medium uppercase tracking-widest">الإدارة الأكاديمية • {count} طالب نشط</p>
+                         <p className="text-micro text-on-error font-medium uppercase tracking-widest">الإدارة الأكاديمية • {count} طالب نشط</p>
                          <span className="w-1.5 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.50)] animate-pulse"></span>
-                         <span className="text-[9px] font-medium text-on-error uppercase tracking-widest border border-white/20 px-2 py-0.5 bg-white/10">مركز التحكم</span>
+                         <span className="text-micro font-medium text-on-error uppercase tracking-widest border border-white/20 px-2 py-0.5 bg-white/10">مركز التحكم</span>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "h-12 px-6 flex items-center justify-center gap-2 text-[11px] font-medium uppercase tracking-widest transition-all shadow-sm active:scale-95 border",
+                        "h-12 px-6 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-widest transition-all shadow-sm active:scale-95 border",
                         showAddForm 
                         ? "bg-card text-error border-white hover:bg-error-soft" 
                         : "bg-primary text-on-primary border-primary hover:bg-primary-hover"

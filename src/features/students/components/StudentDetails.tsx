@@ -62,9 +62,9 @@ export const StudentDetails = ({
                             <RankBadge rank={rank} size="sm" />
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[10px] font-normal text-info bg-info-soft px-1.5 py-0.5 uppercase">{student.grade}</span>
-                            <span className="text-[10px] font-normal text-success bg-success-soft px-1.5 py-0.5">{points} XP</span>
-                            <button onClick={() => setShowCard(true)} className="text-[10px] font-normal text-dim hover:text-info flex items-center gap-1">
+                            <span className="text-micro font-normal text-info bg-info-soft px-1.5 py-0.5 uppercase">{student.grade}</span>
+                            <span className="text-micro font-normal text-success bg-success-soft px-1.5 py-0.5">{points} XP</span>
+                            <button onClick={() => setShowCard(true)} className="text-micro font-normal text-dim hover:text-info flex items-center gap-1">
                                 <UserCircle2 size={12} />
                                 بطاقة الطالب
                             </button>
@@ -82,14 +82,14 @@ export const StudentDetails = ({
                                 <Trophy size={18} />
                             </div>
                             <div>
-                                <p className="text-[9px] font-normal text-dim uppercase">الرتبة الحالية</p>
+                                <p className="text-micro font-normal text-dim uppercase">الرتبة الحالية</p>
                                 <p className="text-sm font-medium text-main">{rank.name}</p>
                             </div>
                         </div>
                         {next && (
                             <div className="text-left">
-                                <p className="text-[9px] font-normal text-dim uppercase">التالي</p>
-                                <p className="text-[11px] font-normal text-info">{next.name}</p>
+                                <p className="text-micro font-normal text-dim uppercase">التالي</p>
+                                <p className="text-xs font-normal text-info">{next.name}</p>
                             </div>
                         )}
                     </div>
@@ -103,7 +103,7 @@ export const StudentDetails = ({
                                     className="h-full bg-primary"
                                 />
                             </div>
-                            <div className="flex justify-between text-[9px] font-normal text-dim uppercase">
+                            <div className="flex justify-between text-micro font-normal text-dim uppercase">
                                 <span>متبقي {pointsNeeded} XP</span>
                                 <span className="font-mono">{points} / {next.minPoints}</span>
                             </div>
@@ -114,14 +114,14 @@ export const StudentDetails = ({
                 {/* Account Details */}
                 <div className="grid grid-cols-2 gap-3">
 <div className="p-3 bg-surface border border-transparent">
-                        <p className="text-[9px] font-normal text-dim uppercase mb-1">اسم المستخدم</p>
+                        <p className="text-micro font-normal text-dim uppercase mb-1">اسم المستخدم</p>
                         <p className="text-xs font-normal text-info font-mono">@{student.username || '—'}</p>
                     </div>
                     <div className="p-3 bg-surface border border-transparent">
-                        <p className="text-[9px] font-normal text-dim uppercase mb-1">حالة المصادقة</p>
+                        <p className="text-micro font-normal text-dim uppercase mb-1">حالة المصادقة</p>
                         <div className="flex items-center gap-1.5">
                             <div className={cn("w-1.5 h-1.5", student.username ? "bg-success" : "bg-error")} />
-                            <p className="text-[10px] font-normal text-muted">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
+                            <p className="text-micro font-normal text-muted">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
                         </div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@ export const StudentDetails = ({
                 {/* Enrollments */}
                 <div className="space-y-6">
                     <div className="flex items-center justify-between border-b border-border pb-2">
-                        <h4 className="text-[10px] font-normal text-dim uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
-                        <span className="text-[9px] font-normal bg-surface text-muted px-2 py-0.5">{student.enrollments.length} برامج</span>
+                        <h4 className="text-micro font-normal text-dim uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
+                        <span className="text-micro font-normal bg-surface text-muted px-2 py-0.5">{student.enrollments.length} برامج</span>
                     </div>
 
                     <div className="space-y-4">
@@ -150,13 +150,13 @@ export const StudentDetails = ({
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
                                                 <h5 className="font-bold text-xs text-main">{en.subject}</h5>
-                                                {isLow && <span className="text-[8px] font-normal text-error bg-error-soft px-1 animate-pulse">رصيد منخفض</span>}
+                                                {isLow && <span className="text-micro font-normal text-error bg-error-soft px-1 animate-pulse">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="w-4 h-4 bg-hover flex items-center justify-center">
                                                     <User size={8} className="text-dim" />
                                                 </div>
-                                                <span className="text-[9px] font-normal text-muted">{en.teacher}</span>
+                                                <span className="text-micro font-normal text-muted">{en.teacher}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
@@ -177,7 +177,7 @@ export const StudentDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                    "w-4 h-4 border flex items-center justify-center text-[7px] font-normal font-mono transition-all",
+                                                    "w-4 h-4 border flex items-center justify-center text-micro font-normal font-mono transition-all",
                                                     idx < actualUsed 
                                                         ? "bg-success border-success text-inverse" 
                                                         : idx === actualUsed 
@@ -192,7 +192,7 @@ export const StudentDetails = ({
 
                                         <div className="pt-3 border-t border-border flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-normal text-dim uppercase mb-1">
+                                                <div className="flex justify-between text-micro font-normal text-dim uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span>{progressPercent}%</span>
                                                 </div>
@@ -202,12 +202,12 @@ export const StudentDetails = ({
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="text-center px-2 border-r border-border">
-                                                    <p className="text-[8px] font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
+                                                    <p className="text-micro font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
                                                     <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                                 </div>
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                                    className="w-6 h-6 bg-primary text-on-primary text-[10px] font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm"
+                                                    className="w-6 h-6 bg-primary text-on-primary text-micro font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm"
                                                 >
                                                     <Plus size={12} strokeWidth={3} />
                                                 </button>
@@ -221,7 +221,7 @@ export const StudentDetails = ({
                                                 <button
                                                     key={num}
                                                     onClick={() => { onAddSessions?.(i, num); setAddingSessionsIndex(null); }}
-                                                    className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-[10px] font-mono transition-all"
+                                                    className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-micro font-mono transition-all"
                                                 >
                                                     +{num} حصة
                                                 </button>
@@ -234,7 +234,7 @@ export const StudentDetails = ({
                                                         setAddingSessionsIndex(null);
                                                     }
                                                 }}
-                                                className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-[10px] font-mono transition-all"
+                                                className="flex-1 py-1.5 bg-hover hover:bg-primary hover:text-on-primary text-muted font-normal text-micro font-mono transition-all"
                                             >
                                                 مخصص
                                             </button>

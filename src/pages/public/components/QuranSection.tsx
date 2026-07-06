@@ -96,21 +96,21 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                             <Clock className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main text-xs mb-1">أوقات مرنة</h3>
-                                        <p className="text-[10px] text-muted leading-tight font-medium">اختر مواعيدك المفضلة</p>
+                                        <p className="text-micro text-muted leading-tight font-medium">اختر مواعيدك المفضلة</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card border border-border rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-warning-soft text-warning flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main text-xs mb-1">متابعة دقيقة</h3>
-                                        <p className="text-[10px] text-muted leading-tight font-medium">تقارير إنجاز أسبوعية</p>
+                                        <p className="text-micro text-muted leading-tight font-medium">تقارير إنجاز أسبوعية</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card border border-border rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-success-soft text-success flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main text-xs mb-1">معلمون مجازون</h3>
-                                        <p className="text-[10px] text-muted leading-tight font-medium">نخبة الحفاظ المبدعون</p>
+                                        <p className="text-micro text-muted leading-tight font-medium">نخبة الحفاظ المبدعون</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
                                         <Link to="/contact" className="p-4 bg-primary rounded-2xl shadow-lg text-on-primary flex flex-col items-center text-center transition-all hover:brightness-90 cursor-pointer">
@@ -118,7 +118,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                                 <Sparkles className="w-5 h-5" />
                                             </div>
                                             <h3 className="font-black text-on-primary text-xs mb-1">جرب مجاناً</h3>
-                                            <p className="text-on-primary opacity-80 text-[10px] leading-tight font-medium">حصة تجريبية للمشتركين</p>
+                                            <p className="text-on-primary opacity-80 text-micro leading-tight font-medium">حصة تجريبية للمشتركين</p>
                                         </Link>
                                     </motion.div>
                                 </motion.div>
@@ -141,13 +141,13 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="flex items-center justify-center mb-5 mt-2">
                         <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 dark:bg-success-soft border border-success rounded-full shadow-sm">
                             <span className="w-2 h-2 rounded-full bg-success animate-pulse"></span>
-                            <span className="text-success-dark dark:text-success font-bold text-[11px] tracking-wide">برامج حفظ متميزة</span>
+                            <span className="text-success-dark dark:text-success font-bold text-xs tracking-wide">برامج حفظ متميزة</span>
                         </div>
                     </div>
 
                     {/* Hero Title */}
                     <div className="text-center mb-5">
-                        <h2 className="text-[26px] leading-[1.2] font-black text-main font-heading">
+                        <h2 className="text-2xl leading-[1.2] font-black text-main font-heading">
                             رحلتك مع{" "}
                             <span className="text-success relative inline-block">
                                 كتاب الله
@@ -194,7 +194,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <span className="text-sm font-bold text-muted">/5</span>
                                 <Star size={14} className="text-warning fill-warning" />
                             </div>
-                            <div className="text-[11px] text-muted font-medium mt-0.5">من قبل آلاف الطلاب</div>
+                            <div className="text-xs text-muted font-medium mt-0.5">من قبل آلاف الطلاب</div>
                         </div>
                         <div className="h-10 w-px bg-success opacity-40 dark:opacity-40"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
@@ -203,7 +203,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" width="36" height="36" className="w-full h-full object-cover" />
                                 </div>
                             ))}
-                            <div className="w-9 h-9 rounded-full border-2 border-card bg-success flex items-center justify-center text-[10px] font-black text-on-success shadow-sm">5K+</div>
+                            <div className="w-9 h-9 rounded-full border-2 border-card bg-success flex items-center justify-center text-micro font-black text-on-success shadow-sm">5K+</div>
                         </div>
                     </div>
 
@@ -213,29 +213,29 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="w-11 h-11 bg-warning-soft rounded-2xl flex items-center justify-center mb-3">
                                 <ClipboardCheck size={22} className="text-warning" />
                             </div>
-                            <h3 className="font-black text-main text-[13px] mb-1">متابعة دقيقة</h3>
-                            <p className="text-muted text-[10px] leading-relaxed">تقارير إنجاز أسبوعية</p>
+                            <h3 className="font-black text-main text-sm mb-1">متابعة دقيقة</h3>
+                            <p className="text-muted text-micro leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-primary-soft rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-primary" />
                             </div>
-                            <h3 className="font-black text-main text-[13px] mb-1">أوقات مرنة</h3>
-                            <p className="text-muted text-[10px] leading-relaxed">اختر مواعيدك المفضلة</p>
+                            <h3 className="font-black text-main text-sm mb-1">أوقات مرنة</h3>
+                            <p className="text-muted text-micro leading-relaxed">اختر مواعيدك المفضلة</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-primary border-0 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
                                 <Sparkles size={22} className="text-on-primary" />
                             </div>
-                            <h3 className="font-black text-on-primary text-[13px] mb-1">جرب مجانًا</h3>
-                            <p className="text-on-primary opacity-80 text-[10px] leading-relaxed">حصة تجريبية للمشتركين</p>
+                            <h3 className="font-black text-on-primary text-sm mb-1">جرب مجانًا</h3>
+                            <p className="text-on-primary opacity-80 text-micro leading-relaxed">حصة تجريبية للمشتركين</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card border border-border rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-success-soft rounded-2xl flex items-center justify-center mb-3">
                                 <Mic size={22} className="text-success" />
                             </div>
-                            <h3 className="font-black text-main text-[13px] mb-1">معلمون مجازون</h3>
-                            <p className="text-muted text-[10px] leading-relaxed">نخبة الحفاظ المبدعين</p>
+                            <h3 className="font-black text-main text-sm mb-1">معلمون مجازون</h3>
+                            <p className="text-muted text-micro leading-relaxed">نخبة الحفاظ المبدعين</p>
                         </motion.div>
                     </motion.div>
 

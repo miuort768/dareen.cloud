@@ -35,7 +35,7 @@ export const MaintenanceScreen = () => {
                     <div className="w-full max-w-[280px] h-2 bg-white/5 border border-white/10 rounded-full overflow-hidden p-0.5">
                         <div className="h-full bg-primary rounded-full shadow-lg shadow-primary/30" style={{ width: '75%' }} />
                     </div>
-                    <span className="text-[10px] font-medium text-primary uppercase tracking-[0.5em] animate-pulse">
+                    <span className="text-micro font-medium text-primary uppercase tracking-[0.5em] animate-pulse">
                         العمل جاري الآن
                     </span>
                 </div>

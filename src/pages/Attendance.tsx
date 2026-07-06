@@ -37,7 +37,7 @@ const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ 
         </div>
         <div>
             <p className="text-sm font-bold text-main leading-none">{label}</p>
-            {sub && <p className="text-[10px] font-bold text-muted mt-1">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-muted mt-1">{sub}</p>}
         </div>
     </div>
 );
@@ -408,10 +408,10 @@ export const Attendance = () => {
                                             </div>
                                             <div>
                                                 <h3 className="text-xs font-bold text-on-primary">قائمة الطلاب: {teacher}</h3>
-                                                <p className="text-[9px] font-bold text-on-primary/70 tracking-wider">إدارة الحصص والتحضير</p>
+                                                <p className="text-micro font-bold text-on-primary/70 tracking-wider">إدارة الحصص والتحضير</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-bold px-3 py-1 rounded-lg bg-white/15 text-on-primary">
+                                        <div className="text-micro font-bold px-3 py-1 rounded-lg bg-white/15 text-on-primary">
                                             {filteredTStudents.length} طالب
                                         </div>
                                     </div>
@@ -447,23 +447,23 @@ export const Attendance = () => {
                                                                 <div>
                                                                     <h4 className="font-bold text-main text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-bold text-muted bg-card px-1.5 py-0.5 rounded-lg border border-border">
+                                                                        <span className="text-micro font-bold text-muted bg-card px-1.5 py-0.5 rounded-lg border border-border">
                                                                             {student.grade}
                                                                         </span>
-                                                                        <p className="text-[9px] font-bold text-muted flex items-center gap-1">
+                                                                        <p className="text-micro font-bold text-muted flex items-center gap-1">
                                                                             <BookOpen size={10} className="text-primary" />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-bold px-2 py-0.5 rounded-lg uppercase animate-pulse bg-warning-soft text-warning-dark">
+                                                            <div className="text-micro font-bold px-2 py-0.5 rounded-lg uppercase animate-pulse bg-warning-soft text-warning-dark">
                                                                 انتظار
                                                             </div>
                                                         </div>
 
                                                         <div className="space-y-1.5">
-                                                            <div className="flex justify-between items-center text-[9px] font-bold uppercase text-muted">
+                                                            <div className="flex justify-between items-center text-micro font-bold uppercase text-muted">
                                                                 <span>تغطية الحصص</span>
                                                                 <span className="text-main tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
@@ -482,21 +482,21 @@ export const Attendance = () => {
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 disabled={isLogging}
-                                                                className="py-2.5 bg-success hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-success font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-success hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-success font-bold text-micro rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                                                 disabled={isLogging}
-                                                                className="py-2.5 bg-error hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-error font-bold text-[10px] rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
+                                                                className="py-2.5 bg-error hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-error font-bold text-micro rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-95"
                                                             >
                                                                 غياب
                                                             </button>
                                                         </div>
                                                         <button
                                                             onClick={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                                            className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] hover:brightness-90 text-on-primary font-bold text-[10px] rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                                                            className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] hover:brightness-90 text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
                                                         >
                                                             <History size={14} /> سجل الطالب
                                                         </button>

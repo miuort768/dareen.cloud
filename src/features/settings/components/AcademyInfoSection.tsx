@@ -52,7 +52,7 @@ export const AcademyInfoSection = ({
                                 <Image size={14} /> {localAcademyLogo ? 'تغيير' : 'رفع'}
                             </button>
                             {localAcademyLogo && (
-                                <button onClick={() => setLocalAcademyLogo('')} className="text-[10px] font-bold text-error hover:text-error-dark">إزالة</button>
+                                <button onClick={() => setLocalAcademyLogo('')} className="text-micro font-bold text-error hover:text-error-dark">إزالة</button>
                             )}
                         </div>
                     </div>

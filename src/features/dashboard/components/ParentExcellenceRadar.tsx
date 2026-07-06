@@ -38,19 +38,19 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
                                 </div>
                                 <div>
                                     <h4 className="text-sm font-medium uppercase tracking-tighter text-white/90">{ach.studentName}</h4>
-                                    <p className="text-[10px] font-normal text-warning uppercase leading-none mt-1">{ach.achievement}</p>
+                                    <p className="text-micro font-normal text-warning uppercase leading-none mt-1">{ach.achievement}</p>
                                 </div>
                             </div>
                             <div className="text-right">
                                 <span className="text-2xl font-medium italic tracking-tighter">+{ach.points}</span>
-                                <p className="text-[8px] font-medium uppercase opacity-40 tracking-widest leading-none">نقطة ذكاء</p>
+                                <p className="text-micro font-medium uppercase opacity-40 tracking-widest leading-none">نقطة ذكاء</p>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-[9px] font-medium uppercase tracking-widest text-white/40">
+            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-micro font-medium uppercase tracking-widest text-white/40">
                 <span>تم التحديث: اليوم</span>
                 <div onClick={() => navigate('/parent-students')} className="flex items-center gap-1 group-hover:text-warning transition-colors cursor-pointer">
                     عرض كافة الإنجازات <ChevronLeft size={12} />

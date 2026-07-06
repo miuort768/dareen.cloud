@@ -23,7 +23,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     placeholder="ابحث عن معلمة باسمها أو تخصصها..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-6 pr-10 py-2.5 bg-surface border border-border rounded-xl outline-none text-[11px] font-bold text-main placeholder:text-dim focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
+                    className="w-full pl-6 pr-10 py-2.5 bg-surface border border-border rounded-xl outline-none text-xs font-bold text-main placeholder:text-dim focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
                 />
             </div>
 
@@ -32,7 +32,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "h-10 px-6 flex items-center gap-2 text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
+                        "h-10 px-6 flex items-center gap-2 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95",
                         showAddForm 
                         ? "bg-error text-on-error hover:bg-error-hover" 
                         : "bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/25"

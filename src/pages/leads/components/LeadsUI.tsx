@@ -20,7 +20,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)]',
-            'text-on-primary text-[11px] font-bold px-4 py-2.5 rounded-xl transition-all active:scale-95 shadow-sm shadow-success/20',
+            'text-on-primary text-xs font-bold px-4 py-2.5 rounded-xl transition-all active:scale-95 shadow-sm shadow-success/20',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -44,7 +44,7 @@ export const StatItem = ({ title, value, icon: Icon }: { title: string, value: s
                 <Icon size={20} className="text-on-primary" />
             </div>
             <div className="min-w-0">
-                <p className="text-[10px] font-bold text-on-primary/70 leading-none">{title}</p>
+                <p className="text-micro font-bold text-on-primary/70 leading-none">{title}</p>
                 <p className="text-xl font-black text-on-primary tabular-nums mt-1">{value}</p>
             </div>
         </div>

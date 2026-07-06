@@ -93,7 +93,7 @@ export const AdminJobs = () => {
                         </div>
                         <div>
                             <h1 className="text-xl font-black text-on-primary">طلبات التوظيف</h1>
-                            <p className="text-[10px] font-bold text-white/70">{apps.length} طلب</p>
+                            <p className="text-micro font-bold text-white/70">{apps.length} طلب</p>
                         </div>
                     </div>
                     <div className="flex gap-2 w-full md:w-auto">
@@ -154,7 +154,7 @@ export const AdminJobs = () => {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <Award size={14} className={app.contacted ? 'text-dim' : 'text-primary'} />
-                                        <span className="font-medium text-[8px] uppercase tracking-[0.2em] text-muted">أكاديمية دارين</span>
+                                        <span className="font-medium text-micro uppercase tracking-[0.2em] text-muted">أكاديمية دارين</span>
                                     </div>
                                     <div className="flex gap-1">
                                         <button
@@ -188,14 +188,14 @@ export const AdminJobs = () => {
                                         <h3 className={`text-sm font-bold ${
                                             app.contacted ? 'text-muted' : 'text-on-primary'
                                         }`}>{app.name}</h3>
-                                        <p className={`text-[10px] font-bold uppercase tracking-tighter mt-0.5 ${
+                                        <p className={`text-micro font-bold uppercase tracking-tighter mt-0.5 ${
                                             app.contacted ? 'text-muted' : 'text-on-primary'
                                         }`}>{app.position}</p>
                                     </div>
                                 </div>
 
                                 {/* Details Grid */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-[11px] border-t border-border pt-4">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-xs border-t border-border pt-4">
                                     <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} />
                                     <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
@@ -210,8 +210,8 @@ export const AdminJobs = () => {
                                             <BookOpen size={10} style={{ color: app.contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
                                         </div>
                                         <div className="min-w-0">
-                                            <p className="text-[8px] font-bold text-muted uppercase tracking-widest mb-0.5">المناهج</p>
-                                            <span className={`text-[10px] font-bold ${
+                                            <p className="text-micro font-bold text-muted uppercase tracking-widest mb-0.5">المناهج</p>
+                                            <span className={`text-micro font-bold ${
                                                 app.contacted ? 'text-dim' : 'text-muted'
                                             }`}>{app.curriculums || '-'}</span>
                                         </div>
@@ -243,8 +243,8 @@ const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ s
             <Icon size={10} style={{ color: contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
         </div>
         <div className="min-w-0">
-            <p className="text-[8px] font-bold text-muted uppercase tracking-widest">{label}</p>
-            <span className={`text-[10px] font-bold truncate block ${contacted ? 'text-dim' : 'text-main'}`}>{value}</span>
+            <p className="text-micro font-bold text-muted uppercase tracking-widest">{label}</p>
+            <span className={`text-micro font-bold truncate block ${contacted ? 'text-dim' : 'text-main'}`}>{value}</span>
         </div>
     </div>
 );

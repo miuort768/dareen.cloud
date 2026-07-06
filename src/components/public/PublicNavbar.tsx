@@ -67,10 +67,10 @@ export const PublicNavbar = () => {
                             "flex-col items-center pt-0.5 text-center",
                             isAuthenticated ? "hidden md:flex" : "flex"
                         )}>
-                            <p className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary)]">
+                            <p className="site-title text-sm md:text-base font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary)]">
                                 دارين السابعة
                             </p>
-                            <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-primary dark:text-primary font-bold mt-0.5 italic">
+                            <span className="hidden md:inline-flex items-center gap-1.5 text-xs text-primary dark:text-primary font-bold mt-0.5 italic">
                                 <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary dark:text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M2 10 C10 2 18 2 20 10 C22 18 30 18 38 10" />
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
@@ -81,7 +81,7 @@ export const PublicNavbar = () => {
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
                                 </svg>
                             </span>
-                            <span className="md:hidden text-[9px] text-primary dark:text-primary font-bold mt-0.5 bg-primary-soft/80 dark:bg-primary/40 px-2 py-0.5 rounded-md italic">
+                            <span className="md:hidden text-micro text-primary dark:text-primary font-bold mt-0.5 bg-primary-soft/80 dark:bg-primary/40 px-2 py-0.5 rounded-md italic">
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>

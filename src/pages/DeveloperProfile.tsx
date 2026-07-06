@@ -148,7 +148,7 @@ export const DeveloperProfile = () => {
                                         <Icon size={18} className="text-on-primary" />
                                     </div>
                                     <h3 className="text-sm font-bold text-main dark:text-main">{v.title}</h3>
-                                    <p className="text-[10px] text-muted dark:text-muted">{v.desc}</p>
+                                    <p className="text-micro text-muted dark:text-muted">{v.desc}</p>
                                 </div>
                             );
                         })}

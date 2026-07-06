@@ -290,16 +290,16 @@ export const MobileAttendance = () => {
             <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
                 <div className="grid grid-cols-3 gap-2">
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-success/50 dark:border-success/30">
-                        <p className="text-[18px] font-black text-success dark:text-success tabular-nums leading-none">{completedToday}</p>
-                        <p className="text-[8px] font-bold text-success/70 dark:text-success/50 mt-1">حضور</p>
+                        <p className="text-lg font-black text-success dark:text-success tabular-nums leading-none">{completedToday}</p>
+                        <p className="text-micro font-bold text-success/70 dark:text-success/50 mt-1">حضور</p>
                     </div>
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-error/50 dark:border-error/30">
-                        <p className="text-[18px] font-black text-error dark:text-error tabular-nums leading-none">{cancelledToday}</p>
-                        <p className="text-[8px] font-bold text-error/70 dark:text-error/50 mt-1">غياب</p>
+                        <p className="text-lg font-black text-error dark:text-error tabular-nums leading-none">{cancelledToday}</p>
+                        <p className="text-micro font-bold text-error/70 dark:text-error/50 mt-1">غياب</p>
                     </div>
                     <div className="bg-white dark:bg-primary-active rounded-2xl p-3 text-center shadow-sm border border-border/50 dark:border-border/50">
-                        <p className="text-[18px] font-black text-main dark:text-dim tabular-nums leading-none">{scheduledToday}</p>
-                        <p className="text-[8px] font-bold text-muted dark:text-muted mt-1">متبقي</p>
+                        <p className="text-lg font-black text-main dark:text-dim tabular-nums leading-none">{scheduledToday}</p>
+                        <p className="text-micro font-bold text-muted dark:text-muted mt-1">متبقي</p>
                     </div>
                 </div>
             </motion.div>
@@ -323,7 +323,7 @@ export const MobileAttendance = () => {
                             )}
                         >
                             {tab.id === 'record' ? <Activity size={14} strokeWidth={1.5} /> : <History size={14} strokeWidth={1.5} />}
-                            <span className="text-[9px]">{tab.label}</span>
+                            <span className="text-micro">{tab.label}</span>
                         </motion.button>
                     ))}
                 </div>
@@ -358,7 +358,7 @@ export const MobileAttendance = () => {
                                 <motion.button
                                     onClick={() => { triggerHaptic('medium'); handleBulkAttendance(); }}
                                     whileTap={{ scale: 0.97 }}
-                                    className="w-full py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-[10px] font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/40"
+                                    className="w-full py-3 rounded-2xl bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-sm shadow-success/40"
                                 >
                                     <CheckCircle2 size={14} strokeWidth={1.5} />
                                     تسجيل حضور اليوم بالكامل
@@ -373,12 +373,12 @@ export const MobileAttendance = () => {
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
-                                        className="flex-1 bg-transparent text-[10px] font-bold text-main dark:text-on-primary outline-none"
+                                        className="flex-1 bg-transparent text-micro font-bold text-main dark:text-on-primary outline-none"
                                     />
                                     <select
                                         value={filterTeacher}
                                         onChange={(e) => setFilterTeacher(e.target.value)}
-                                        className="text-[9px] font-bold bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-2 py-1 outline-none text-muted dark:text-dim"
+                                        className="text-micro font-bold bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-2 py-1 outline-none text-muted dark:text-dim"
                                     >
                                         <option value="all">كل المعلمات</option>
                                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}
@@ -426,12 +426,12 @@ export const MobileAttendance = () => {
                                             <div key={teacher} className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 overflow-hidden">
                                                 <div className="px-4 py-2.5 border-b border-border/50 dark:border-border/50 flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-[10px] font-black" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
                                                             {teacher.charAt(0)}
                                                         </div>
-                                                        <span className="text-[11px] font-bold text-main dark:text-on-primary">{teacher}</span>
+                                                        <span className="text-xs font-bold text-main dark:text-on-primary">{teacher}</span>
                                                     </div>
-                                                    <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
                                                         {filtered.length} طالب
                                                     </span>
                                                 </div>
@@ -456,10 +456,10 @@ export const MobileAttendance = () => {
                                                                             {getGradeDisplay(student.name, student.grade)}
                                                                         </div>
                                                                         <div>
-                                                                            <p className="text-[11px] font-bold text-main dark:text-on-primary">{student.name}</p>
+                                                                            <p className="text-xs font-bold text-main dark:text-on-primary">{student.name}</p>
                                                                             <div className="flex items-center gap-1.5">
-                                                                                <span className="text-[8px] font-bold text-muted px-1 py-0.5 rounded border border-border dark:border-border">{student.grade}</span>
-                                                                                <span className="text-[8px] font-bold text-primary flex items-center gap-0.5">
+                                                                                <span className="text-micro font-bold text-muted px-1 py-0.5 rounded border border-border dark:border-border">{student.grade}</span>
+                                                                                <span className="text-micro font-bold text-primary flex items-center gap-0.5">
                                                                                     <BookOpen size={8} /> {enrollment.subject}
                                                                                 </span>
                                                                             </div>
@@ -467,7 +467,7 @@ export const MobileAttendance = () => {
                                                                     </div>
                                                                     {session ? (
                                                                         <span className={cn(
-                                                                            "text-[8px] font-bold px-2 py-0.5 rounded-lg",
+                                                                            "text-micro font-bold px-2 py-0.5 rounded-lg",
                                                                             session.status === 'completed' ? 'bg-success-light dark:bg-success/30 text-success dark:text-success' :
                                                                             session.status === 'cancelled' ? 'bg-error-light dark:bg-error/30 text-error dark:text-error' :
                                                                             'bg-warning-light dark:bg-warning/30 text-warning dark:text-warning'
@@ -475,7 +475,7 @@ export const MobileAttendance = () => {
                                                                             {session.status === 'completed' ? 'تم' : session.status === 'cancelled' ? 'غائب' : 'مجدول'}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="text-[8px] font-bold px-2 py-0.5 rounded-lg bg-warning-light dark:bg-warning/30 text-warning dark:text-warning">
+                                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-warning-light dark:bg-warning/30 text-warning dark:text-warning">
                                                                             انتظار
                                                                         </span>
                                                                     )}
@@ -490,14 +490,14 @@ export const MobileAttendance = () => {
                                                                     <motion.button
                                                                         whileTap={{ scale: 0.93 }}
                                                                         onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                        className="flex-1 py-2 bg-success hover:bg-success text-on-primary text-[9px] font-bold rounded-xl flex items-center justify-center gap-1"
+                                                                        className="flex-1 py-2 bg-success hover:bg-success text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1"
                                                                     >
                                                                         <CheckCircle2 size={11} /> حضور
                                                                     </motion.button>
                                                                     <motion.button
                                                                         whileTap={{ scale: 0.93 }}
                                                                         onClick={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                                                        className="flex-1 py-2 bg-primary hover:bg-primary-hover text-on-primary text-[9px] font-bold rounded-xl flex items-center justify-center gap-1"
+                                                                        className="flex-1 py-2 bg-primary hover:bg-primary-hover text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1"
                                                                     >
                                                                         <History size={11} /> السجل
                                                                     </motion.button>
@@ -538,7 +538,7 @@ export const MobileAttendance = () => {
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => { triggerHaptic('light'); setPeriodFilter(p); }}
                                             className={cn(
-                                                "flex-1 py-2 rounded-xl text-[9px] font-bold transition-all",
+                                                "flex-1 py-2 rounded-xl text-micro font-bold transition-all",
                                                 periodFilter === p
                                                     ? "bg-primary text-on-primary shadow-sm"
                                                     : "text-muted dark:text-muted"
@@ -575,16 +575,16 @@ export const MobileAttendance = () => {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <p className="text-[10px] font-bold text-main dark:text-on-primary">{session.studentName}</p>
-                                                    <p className="text-[8px] font-bold text-muted">{session.subject} · {session.teacherName}</p>
+                                                    <p className="text-micro font-bold text-main dark:text-on-primary">{session.studentName}</p>
+                                                    <p className="text-micro font-bold text-muted">{session.subject} · {session.teacherName}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[8px] font-bold text-muted tabular-nums">{session.time}</span>
+                                                <span className="text-micro font-bold text-muted tabular-nums">{session.time}</span>
                                                 <motion.button
                                                     whileTap={{ scale: 0.93 }}
                                                     onClick={() => handleViewHistory(session.studentId, session.studentName, undefined, session.subject)}
-                                                    className="px-2 py-1 rounded-xl bg-surface dark:bg-primary-active text-muted dark:text-muted text-[8px] font-bold"
+                                                    className="px-2 py-1 rounded-xl bg-surface dark:bg-primary-active text-muted dark:text-muted text-micro font-bold"
                                                 >
                                                     <History size={10} />
                                                 </motion.button>
@@ -595,7 +595,7 @@ export const MobileAttendance = () => {
                                     <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border">
                                         <History className="mx-auto mb-2 text-dim dark:text-muted" size={28} strokeWidth={1.5} />
                                         <p className="text-xs font-bold text-muted dark:text-muted">لا توجد جلسات مسجلة</p>
-                                        <p className="text-[9px] font-medium text-dim dark:text-muted mt-1">لـ {periodLabel}</p>
+                                        <p className="text-micro font-medium text-dim dark:text-muted mt-1">لـ {periodLabel}</p>
                                     </div>
                                 )}
                             </div>
@@ -685,12 +685,12 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
                         {student.name.charAt(0)}
                     </div>
                     <div>
-                        <p className="text-[12px] font-bold text-main dark:text-on-primary leading-tight">{student.name}</p>
+                        <p className="text-xs font-bold text-main dark:text-on-primary leading-tight">{student.name}</p>
                         <div className="flex items-center gap-1.5 mt-0.5">
                             {student.grade && (
-                                <span className="text-[7px] font-bold text-muted dark:text-muted px-1.5 py-0.5 rounded border border-border dark:border-border">{student.grade}</span>
+                                <span className="text-micro font-bold text-muted dark:text-muted px-1.5 py-0.5 rounded border border-border dark:border-border">{student.grade}</span>
                             )}
-                            <span className="text-[8px] font-bold text-primary flex items-center gap-1">
+                            <span className="text-micro font-bold text-primary flex items-center gap-1">
                                 <BookOpen size={9} strokeWidth={1.5} />
                                 {enrollment.subject}
                             </span>
@@ -699,11 +699,11 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
                 </div>
                 <div className="text-left">
                     {todaySlot ? (
-                        <span className="text-[8px] font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                        <span className="text-micro font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
                             {todaySlot.hour}:00 {todaySlot.period === 'am' ? 'ص' : 'م'}
                         </span>
                     ) : (
-                        <span className="text-[8px] font-bold text-muted dark:text-muted bg-surface dark:bg-primary-active px-2 py-1 rounded-lg">
+                        <span className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-primary-active px-2 py-1 rounded-lg">
                             بدون موعد
                         </span>
                     )}
@@ -717,21 +717,21 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
                         progressPct > 85 ? 'bg-error' : progressPct > 60 ? 'bg-warning' : 'bg-success'
                     )} style={{ width: `${progressPct}%` }} />
                 </div>
-                <span className="text-[7px] font-bold text-muted dark:text-muted tabular-nums">{used}/{total}</span>
+                <span className="text-micro font-bold text-muted dark:text-muted tabular-nums">{used}/{total}</span>
             </div>
 
             <div className="flex gap-1.5">
                 <motion.button
                     whileTap={{ scale: 0.93 }}
                     onClick={onAttend}
-                    className="flex-1 py-2.5 bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-[9px] font-bold rounded-xl flex items-center justify-center gap-1 shadow-sm shadow-success/30"
+                    className="flex-1 py-2.5 bg-gradient-to-l from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-sm shadow-success/30"
                 >
                     <CheckCircle2 size={12} strokeWidth={1.5} /> حضور
                 </motion.button>
                 <motion.button
                     whileTap={{ scale: 0.93 }}
                     onClick={onHistory}
-                    className="flex-1 py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-[9px] font-bold rounded-xl flex items-center justify-center gap-1 shadow-sm shadow-primary/30"
+                    className="flex-1 py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-sm shadow-primary/30"
                 >
                     <History size={12} strokeWidth={1.5} /> السجل
                 </motion.button>

@@ -41,7 +41,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                                             {student.name}
                                         </h4>
                                         {index < 3 && (
-                                            <div className="flex items-center gap-1 bg-warning text-main px-1.5 py-0.5 text-[8px] font-medium border border-border shadow-[1px_1px_0px_0px_black] animate-pulse">
+                                            <div className="flex items-center gap-1 bg-warning text-main px-1.5 py-0.5 text-micro font-medium border border-border shadow-[1px_1px_0px_0px_black] animate-pulse">
                                                 <Zap size={8} className="fill-current" />
                                                 <span>أداء مبهر</span>
                                             </div>
@@ -49,7 +49,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                                     </div>
                                     <div className="flex items-center gap-1.5 mt-0.5">
                                         <RankBadge rank={rank} size="sm" />
-                                        <p className="text-[9px] font-medium text-muted uppercase tracking-widest leading-none">{student.grade}</p>
+                                        <p className="text-micro font-medium text-muted uppercase tracking-widest leading-none">{student.grade}</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                                         <Star size={10} className="fill-current" />
                                         <span className="text-sm font-medium tracking-tighter">{student.totalPoints || 0}</span>
                                     </div>
-                                    <span className="text-[8px] font-medium text-muted uppercase leading-none">نقطة</span>
+                                    <span className="text-micro font-medium text-muted uppercase leading-none">نقطة</span>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
             <div className="mt-6 pt-6 border-t-2 border-border dark:border-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <TrendingUp size={14} className="text-success" />
-                    <span className="text-[10px] font-medium text-muted">نشاط المجموعة مرتفع هذا الأسبوع</span>
+                    <span className="text-micro font-medium text-muted">نشاط المجموعة مرتفع هذا الأسبوع</span>
                 </div>
             </div>
         </div>

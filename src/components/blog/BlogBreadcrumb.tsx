@@ -28,11 +28,11 @@ export const BlogBreadcrumb = ({ items, currentName, onBack, onHome, showChangeB
 
             <div className="flex gap-2 mb-4 sm:mb-8">
                 {showChangeButton && (
-                    <button onClick={onBack} className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary text-on-primary hover:bg-primary-hover text-[11px] sm:text-xs font-black rounded-xl sm:rounded-2xl transition-all shadow-sm">
+                    <button onClick={onBack} className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary text-on-primary hover:bg-primary-hover text-xs sm:text-xs font-black rounded-xl sm:rounded-2xl transition-all shadow-sm">
                         <ArrowLeft size={14} /><span>تغيير المادة</span>
                     </button>
                 )}
-                <button onClick={onHome} className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary text-on-primary hover:bg-primary-hover text-[11px] sm:text-xs font-black rounded-xl sm:rounded-2xl transition-all shadow-sm">
+                <button onClick={onHome} className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-primary text-on-primary hover:bg-primary-hover text-xs sm:text-xs font-black rounded-xl sm:rounded-2xl transition-all shadow-sm">
                     <Library size={14} /><span>الرئيسية</span>
                 </button>
             </div>

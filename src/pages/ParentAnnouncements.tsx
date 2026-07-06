@@ -81,12 +81,12 @@ export const ParentAnnouncements = () => {
                         <Bell size={20} className="text-primary" />
                     </div>
                     <div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">ﬁ‰«… «·≈⁄·«„ «·„—ﬂ“Ì</span>
+                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">ﬁ‰«… «·≈⁄·«„ «·„—ﬂ“Ì</span>
                     </div>
                 </div>
                 <div className="space-y-1">
                     <h1 className="text-xl md:text-2xl font-black text-main dark:text-inverse leading-tight">‰‘—… ≈⁄·«‰«  «·„‰’…</h1>
-                    <p className="text-[11px] font-bold text-muted">«»ﬁ ⁄·Ï «ÿ·«⁄ »√ÕœÀ «· ‰»ÌÂ«  Ê«·›⁄«·Ì«  œ«Œ· «·„ƒ””…</p>
+                    <p className="text-xs font-bold text-muted">«»ﬁ ⁄·Ï «ÿ·«⁄ »√ÕœÀ «· ‰»ÌÂ«  Ê«·›⁄«·Ì«  œ«Œ· «·„ƒ””…</p>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@ export const ParentAnnouncements = () => {
                         placeholder="«»ÕÀ ›Ì «·√—‘Ì›..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-[13px] font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
+                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
                     />
                 </div>
 
@@ -150,11 +150,11 @@ export const ParentAnnouncements = () => {
                                 className="bg-white dark:bg-primary-active rounded-2xl p-5 md:p-6 shadow-sm border border-border/50 dark:border-border/50 relative overflow-hidden flex flex-col"
                             >
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="flex items-center gap-2 text-muted text-[10px] font-bold">
+                                    <div className="flex items-center gap-2 text-muted text-micro font-bold">
                                         <Clock size={12} />
                                         {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                                     </div>
-                                    <span className="px-3 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 shadow-sm" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
+                                    <span className="px-3 py-1 rounded-lg text-micro font-bold flex items-center gap-1.5 shadow-sm" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
                                         {ann.type === 'urgent' && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
                                         {config.label}
                                     </span>
@@ -164,7 +164,7 @@ export const ParentAnnouncements = () => {
                                     <h3 className="text-sm md:text-lg font-bold text-main dark:text-inverse leading-tight">
                                         {ann.title}
                                     </h3>
-                                    <p className="text-[11px] md:text-xs text-dim dark:text-muted font-bold leading-relaxed line-clamp-4">
+                                    <p className="text-xs md:text-xs text-dim dark:text-muted font-bold leading-relaxed line-clamp-4">
                                         {ann.content}
                                     </p>
                                 </div>
@@ -174,13 +174,13 @@ export const ParentAnnouncements = () => {
                                         <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
                                             <ShieldCheck size={14} className="text-primary" />
                                         </div>
-                                        <span className="text-[9px] font-bold text-dim dark:text-muted">≈œ«—… «·√ﬂ«œÌ„Ì…</span>
+                                        <span className="text-micro font-bold text-dim dark:text-muted">≈œ«—… «·√ﬂ«œÌ„Ì…</span>
                                     </div>
                                     
                                     <a 
                                         href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`«” ›”«— »Œ’Ê’ ≈⁄·«‰: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
-                                        className="text-primary border border-primary px-4 py-1.5 rounded-xl text-[10px] font-bold flex items-center gap-2 transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
+                                        className="text-primary border border-primary px-4 py-1.5 rounded-xl text-micro font-bold flex items-center gap-2 transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
                                     >
                                         <MessageCircle size={14} />
                                         «” ›”«—
@@ -197,7 +197,7 @@ export const ParentAnnouncements = () => {
                             <Bell size={22} className="text-primary" />
                         </div>
                         <h3 className="text-sm font-bold text-muted">·«  ÊÃœ  ÕœÌÀ«  ÃœÌœ…</h3>
-                        <p className="text-[10px] font-bold text-muted mt-1">”Ê›  ŸÂ— «·≈⁄·«‰«  «·Â«„… Â‰«</p>
+                        <p className="text-micro font-bold text-muted mt-1">”Ê›  ŸÂ— «·≈⁄·«‰«  «·Â«„… Â‰«</p>
                     </div>
                 )}
             </div>
@@ -210,7 +210,7 @@ const FilterButton = ({ label, active, onClick, icon: Icon, activeColor }: { lab
     <button
         onClick={onClick}
         className={cn(
-            "flex items-center justify-between px-4 py-3.5 rounded-xl text-[10px] md:text-xs font-bold transition-all border shadow-sm active:scale-95",
+            "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border shadow-sm active:scale-95",
             active 
                 ? "text-on-primary border-transparent" 
                 : "bg-white dark:bg-primary-active text-muted dark:text-muted border-border/50 dark:border-border/50 hover:bg-surface dark:hover:bg-primary-active"

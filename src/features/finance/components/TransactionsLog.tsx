@@ -13,9 +13,9 @@ interface TransactionsLogProps {
 const PAGE_SIZE = 15;
 
 const StatusBadge = ({ status }: { status: string }) => {
-    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-success bg-success-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><CheckCircle2 size={9} /> معتمدة</span>;
-    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-warning bg-warning-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><Clock size={9} /> مراجعة</span>;
-    return <span className="inline-flex items-center gap-1 text-[9px] font-bold text-dim bg-surface px-2 py-0.5 uppercase tracking-wide rounded-lg"><X size={9} /> ملغاة</span>;
+    if (status === 'completed') return <span className="inline-flex items-center gap-1 text-micro font-bold text-success bg-success-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><CheckCircle2 size={9} /> معتمدة</span>;
+    if (status === 'pending') return <span className="inline-flex items-center gap-1 text-micro font-bold text-warning bg-warning-soft px-2 py-0.5 uppercase tracking-wide rounded-lg"><Clock size={9} /> مراجعة</span>;
+    return <span className="inline-flex items-center gap-1 text-micro font-bold text-dim bg-surface px-2 py-0.5 uppercase tracking-wide rounded-lg"><X size={9} /> ملغاة</span>;
 };
 
 export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: TransactionsLogProps) => {
@@ -38,14 +38,14 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                     </div>
                     <div>
                         <h2 className="text-xs font-medium text-main uppercase tracking-widest">سجل العمليات المالية</h2>
-                        <p className="text-[9px] text-dim font-normal mt-0.5 uppercase tracking-wide">
+                        <p className="text-micro text-dim font-normal mt-0.5 uppercase tracking-wide">
                             {totalCount} معاملة • صفحة {page} من {totalPages}
                         </p>
                     </div>
                 </div>
                 <button
                     onClick={onDeleteAll}
-                    className="flex items-center gap-2 px-4 py-2 text-[9px] font-bold transition-all uppercase tracking-widest shadow-sm rounded-xl bg-error-soft text-error border border-error hover:bg-error hover:text-on-error hover:border-error"
+                    className="flex items-center gap-2 px-4 py-2 text-micro font-bold transition-all uppercase tracking-widest shadow-sm rounded-xl bg-error-soft text-error border border-error hover:bg-error hover:text-on-error hover:border-error"
                 >
                     <Trash2 size={12} />
                     تصفير الأرشيف
@@ -57,13 +57,13 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                 <table className="w-full text-right">
                     <thead>
                         <tr className="bg-primary">
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">#</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">النوع</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70">البيان</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التصنيف</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التاريخ</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">القيمة</th>
-                            <th className="px-5 py-3 text-[9px] font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">الحالة</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">#</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">النوع</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70">البيان</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التصنيف</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">التاريخ</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">القيمة</th>
+                            <th className="px-5 py-3 text-micro font-bold uppercase tracking-widest text-on-primary opacity-70 text-center">الحالة</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
@@ -72,7 +72,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                             return (
                                 <tr key={tx.id} className="hover:bg-hover transition-colors">
                                     <td className="px-5 py-3 text-center">
-                                        <span className="text-[10px] font-medium text-dim font-mono">{String(globalIdx).padStart(2, '0')}</span>
+                                        <span className="text-micro font-medium text-dim font-mono">{String(globalIdx).padStart(2, '0')}</span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
                                         <div className={cn("w-8 h-8 flex items-center justify-center mx-auto rounded-xl", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-error-soft text-error')}>
@@ -81,15 +81,15 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                     </td>
                                     <td className="px-5 py-3">
                                         <p className="text-xs font-normal text-main">{tx.description || 'بدون وصف'}</p>
-                                        <p className="text-[9px] text-dim font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
+                                        <p className="text-micro text-dim font-normal mt-0.5 font-mono">#{tx.id.substring(0, 8)}</p>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className={cn("inline-block px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide rounded-lg", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-primary-soft text-primary')}>
+                                        <span className={cn("inline-block px-2 py-0.5 text-micro font-bold uppercase tracking-wide rounded-lg", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-primary-soft text-primary')}>
                                             {tx.category}
                                         </span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
-                                        <span className="text-[10px] font-normal text-muted font-mono">
+                                        <span className="text-micro font-normal text-muted font-mono">
                                             {new Date(tx.date).toLocaleDateString('ar-EG')}
                                         </span>
                                     </td>
@@ -99,7 +99,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                             tx.type === 'income' ? 'text-success' : 'text-error'
                                         )}>
                                             {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
-                                            <span className="text-[9px] font-normal mr-0.5">{CURRENCY_SYMBOL}</span>
+                                            <span className="text-micro font-normal mr-0.5">{CURRENCY_SYMBOL}</span>
                                         </span>
                                     </td>
                                     <td className="px-5 py-3 text-center">
@@ -111,7 +111,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                             <tr>
                                 <td colSpan={7} className="px-6 py-16 text-center">
                                     <DollarSign size={32} className="mx-auto text-dim mb-2" />
-                                    <p className="text-[10px] font-medium text-dim uppercase tracking-widest">لا توجد عمليات مسجلة</p>
+                                    <p className="text-micro font-medium text-dim uppercase tracking-widest">لا توجد عمليات مسجلة</p>
                                 </td>
                             </tr>
                         )}
@@ -127,7 +127,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         <div key={tx.id} className="p-4 flex items-center gap-3">
                             <div className={cn("w-10 h-10 flex items-center justify-center shrink-0 relative rounded-xl", tx.type === 'income' ? 'bg-success-soft text-success' : 'bg-error-soft text-error')}>
                                 {tx.type === 'income' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                <span className="absolute -top-1 -right-1 text-[8px] font-bold w-4 h-4 flex items-center justify-center bg-primary text-on-primary rounded-md">{globalIdx}</span>
+                                <span className="absolute -top-1 -right-1 text-micro font-bold w-4 h-4 flex items-center justify-center bg-primary text-on-primary rounded-md">{globalIdx}</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-0.5">
@@ -137,9 +137,9 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[9px] font-normal text-dim">{tx.category}</span>
+                                    <span className="text-micro font-normal text-dim">{tx.category}</span>
                                     <span className="w-1 h-1 bg-border rounded-full" />
-                                    <span className="text-[9px] text-dim font-mono">{new Date(tx.date).toLocaleDateString('ar-EG')}</span>
+                                    <span className="text-micro text-dim font-mono">{new Date(tx.date).toLocaleDateString('ar-EG')}</span>
                                     <span className="w-1 h-1 bg-border rounded-full" />
                                     <StatusBadge status={tx.status} />
                                 </div>
@@ -149,7 +149,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                 }) : (
                     <div className="py-16 text-center">
                         <DollarSign size={32} className="mx-auto text-dim mb-2" />
-                        <p className="text-[10px] font-medium text-dim uppercase tracking-widest">خالٍ من البيانات</p>
+                        <p className="text-micro font-medium text-dim uppercase tracking-widest">خالٍ من البيانات</p>
                     </div>
                 )}
             </div>
@@ -157,7 +157,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
             {/* Pagination */}
             {totalPages > 1 && (
                 <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface">
-                    <p className="text-[10px] font-bold text-dim">
+                    <p className="text-micro font-bold text-dim">
                         {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, transactions.length)} من {transactions.length}
                     </p>
                     <div className="flex items-center gap-1">
@@ -173,7 +173,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                                 key={i}
                                 onClick={() => setPage(i + 1)}
                                 className={cn(
-                                    "w-8 h-8 text-[11px] font-medium border transition-all rounded-xl",
+                                    "w-8 h-8 text-xs font-medium border transition-all rounded-xl",
                                     page === i + 1
                                         ? "bg-primary text-on-primary border-primary"
                                         : "bg-card border-border text-muted hover:border-primary"

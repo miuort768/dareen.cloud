@@ -55,7 +55,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                         <item.icon size={20} />
                     </div>
                     <span className="text-sm font-black text-center leading-tight">{item.name}</span>
-                    {item.sub && <span className="text-[11px] text-on-primary/70 font-bold">{item.sub}</span>}
+                    {item.sub && <span className="text-xs text-on-primary/70 font-bold">{item.sub}</span>}
                 </button>
             ))}
         </div>
@@ -67,7 +67,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
         <div className="w-full lg:w-[55%] text-center lg:text-right">
             <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-5">
                 <BookOpen size={13} className="text-primary dark:text-primary" />
-                <span className="text-[10px] font-black text-primary dark:text-primary">
+                <span className="text-micro font-black text-primary dark:text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
             </div>
@@ -109,7 +109,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                             <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors duration-300" />
                             <item.icon size={20} className="relative z-10" />
                             <span className="relative z-10 text-xs sm:text-sm font-black text-center leading-tight">{item.name}</span>
-                            {item.sub && <span className="relative z-10 text-[9px] text-on-primary/70 font-bold">{item.sub}</span>}
+                            {item.sub && <span className="relative z-10 text-micro text-on-primary/70 font-bold">{item.sub}</span>}
                         </button>
                     </div>
                 ))}

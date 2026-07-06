@@ -18,7 +18,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                         <Snowflake size={32} className="animate-spin-slow" />
                     </div>
                     <h3 className="text-xl font-bold text-on-warning uppercase tracking-tighter">وضع الصيانة الشامل</h3>
-                    <p className="text-[10px] text-on-warning/80 font-bold uppercase tracking-widest mt-1">بروتوكول تجميد النظام</p>
+                    <p className="text-micro text-on-warning/80 font-bold uppercase tracking-widest mt-1">بروتوكول تجميد النظام</p>
                 </div>
 
                 <div className="p-6 space-y-6">
@@ -29,7 +29,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                             </div>
                             <div>
                                 <p className="text-xs font-bold text-main uppercase">تعطيل الدخول</p>
-                                <p className="text-[10px] text-muted">سيتم منع كافة الطلاب والمعلمين من تسجيل الدخول فوراً.</p>
+                                <p className="text-micro text-muted">سيتم منع كافة الطلاب والمعلمين من تسجيل الدخول فوراً.</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-4">
@@ -38,7 +38,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                             </div>
                             <div>
                                 <p className="text-xs font-bold text-main uppercase">إنهاء الجلسات</p>
-                                <p className="text-[10px] text-muted">سيتم تسجيل خروج كافة المستخدمين المتصلين حالياً.</p>
+                                <p className="text-micro text-muted">سيتم تسجيل خروج كافة المستخدمين المتصلين حالياً.</p>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                     <div className="flex gap-3 pt-2">
                         <button
                             onClick={() => setShowMaintenanceModal(false)}
-                            className="flex-1 py-3 border border-border text-muted text-[11px] font-bold uppercase tracking-widest hover:bg-hover transition-all shadow-sm active:scale-95"
+                            className="flex-1 py-3 border border-border text-muted text-xs font-bold uppercase tracking-widest hover:bg-hover transition-all shadow-sm active:scale-95"
                         >
                             إلغاء الأمر
                         </button>
@@ -57,7 +57,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                                     showNotify('تم تفعيل وضع الصيانة بنجاح');
                                 });
                             }}
-                            className="flex-1 py-3 bg-warning text-on-warning text-[11px] font-bold uppercase tracking-widest hover:brightness-90 transition-all shadow-sm active:scale-95"
+                            className="flex-1 py-3 bg-warning text-on-warning text-xs font-bold uppercase tracking-widest hover:brightness-90 transition-all shadow-sm active:scale-95"
                         >
                             تأكيد التجميد
                         </button>

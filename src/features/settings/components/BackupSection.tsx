@@ -70,11 +70,11 @@ export const BackupSection = ({
                                 <div className="flex items-center gap-2">
                                     <Clock size={12} className="text-dim" />
                                     <span className="text-xs text-muted">{new Date(b.createdAt).toLocaleString('ar')}</span>
-                                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${b.status === 'completed' ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning-dark'}`}>
+                                    <span className={`text-micro px-1.5 py-0.5 rounded font-bold ${b.status === 'completed' ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning-dark'}`}>
                                         {b.status}
                                     </span>
                                 </div>
-                                <span className="text-[10px] text-dim">{formatSize(b.size)}</span>
+                                <span className="text-micro text-dim">{formatSize(b.size)}</span>
                             </div>
                         ))}
                     </div>
@@ -84,7 +84,7 @@ export const BackupSection = ({
             <div className="pt-4 border-t border-border flex items-center justify-between">
                 <div>
                     <p className="text-xs font-bold text-error">منطقة خطرة</p>
-                    <p className="text-[10px] text-dim">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
+                    <p className="text-micro text-dim">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
                 </div>
                 <div className="flex gap-2">
                     <SecondaryBtn onClick={triggerArchive}>أرشفة الموسم</SecondaryBtn>
