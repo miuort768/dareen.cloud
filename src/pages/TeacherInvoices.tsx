@@ -342,12 +342,12 @@ export const TeacherInvoices = () => {
                 <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
+                                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                                 <input
                                     placeholder="بحث باسم المعلمة..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full rounded-xl pr-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary bg-white/15"
+                                    className="w-full rounded-xl ps-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary bg-white/15"
                                 />
                             </div>
                             <div className="flex items-center gap-2 rounded-xl px-3 py-2 bg-white/15">

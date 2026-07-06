@@ -77,14 +77,14 @@ export const ParentAttendance = () => {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {/* Stats Sidebar */}
                 <div className="lg:col-span-1 space-y-4">
-                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-success">
+                    <div className="bg-card p-6 text-on-primary border-s-4 border-s-success">
                         <Activity className="text-success mb-2" size={24} />
                         <h4 className="text-micro font-medium text-muted uppercase tracking-widest">������ ������</h4>
                         <div className="text-3xl font-medium mt-1">
                             {filteredSessions.filter(s => s.status === 'completed').length}
                         </div>
                     </div>
-                    <div className="bg-card p-6 text-on-primary border-r-4 border-r-error">
+                    <div className="bg-card p-6 text-on-primary border-s-4 border-s-error">
                         <AlertCircle className="text-error mb-2" size={24} />
                         <h4 className="text-micro font-medium text-muted uppercase tracking-widest">������ ������</h4>
                         <div className="text-3xl font-medium mt-1">
@@ -101,7 +101,7 @@ export const ParentAttendance = () => {
                             <Calendar size={16} className="text-dim" />
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-right">
+                            <table className="w-full text-start">
                                 <thead>
                                     <tr className="bg-background dark:bg-card/50 text-micro font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border">
                                         <th className="px-6 py-4">����� / ������</th>

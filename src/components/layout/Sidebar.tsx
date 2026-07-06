@@ -117,7 +117,7 @@ export const Sidebar = () => {
             <>
                 <div
                     className={cn(
-                        "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0",
+                        "hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0",
                         collapsed ? "w-20" : "w-72"
                     )}
                 >
@@ -131,7 +131,7 @@ export const Sidebar = () => {
                             </div>
                             <span className={cn(
                                 "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
-                                collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
+                                collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pe-3"
                             )}>
                                 دارين السابعة
                             </span>
@@ -149,7 +149,7 @@ export const Sidebar = () => {
         <>
             <div
                 className={cn(
-                    "hidden lg:flex bg-card h-screen border-l border-border transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0",
+                    "hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col fixed top-0 start-0 z-50 shrink-0",
                     collapsed ? "w-20" : "w-72"
                 )}
             >
@@ -163,7 +163,7 @@ export const Sidebar = () => {
                         </div>
                         <span className={cn(
                             "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
-                            collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
+                            collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pe-3"
                         )}>
                             نظام دارين السابعة
                         </span>
@@ -191,7 +191,7 @@ export const Sidebar = () => {
                                     strokeWidth={collapsed ? 2.5 : 2}
                                 />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full animate-pulse shadow-sm border border-border">
+                                    <span className="absolute -top-1.5 -start-1.5 w-4 h-4 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full animate-pulse shadow-sm border border-border">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </span>
                                 )}
@@ -203,7 +203,7 @@ export const Sidebar = () => {
                                 {item.name}
                             </span>
                             {collapsed && (
-                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:ms-2 rtl:left-full ltr:me-2 ltr:left-auto ltr:right-full px-2 py-1 bg-surface text-main text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
+                                <div className="absolute end-full top-1/2 -translate-y-1/2 rtl:ms-2 rtl:end-full ltr:me-2 ltr:end-auto ltr:start-full px-2 py-1 bg-surface text-main text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg">
                                     {item.name}
                                 </div>
                             )}
@@ -246,7 +246,7 @@ export const Sidebar = () => {
             </div>
 
             <div className={cn(
-                "lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-2 z-[100] overflow-hidden max-w-full transition-transform duration-300",
+                "lg:hidden fixed bottom-0 end-0 start-0 h-[70px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-2 z-[100] overflow-hidden max-w-full transition-transform duration-300",
                 activeConversationId ? "translate-y-[100%]" : "translate-y-0"
             )}>
                 {[
@@ -275,7 +275,7 @@ export const Sidebar = () => {
                                     <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
 
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-error text-on-error text-micro font-medium flex items-center justify-center rounded-full ring-2 ring-border shadow-sm md:animate-pulse">
+                                        <span className="absolute -top-2 -start-2 w-5 h-5 bg-error text-on-error text-micro font-medium flex items-center justify-center rounded-full ring-2 ring-border shadow-sm md:animate-pulse">
                                             {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                         </span>
                                     )}
@@ -303,7 +303,7 @@ export const Sidebar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                 />
                 <div className={cn(
-                    "absolute bottom-0 left-0 right-0 bg-card p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10 w-full max-w-full",
+                    "absolute bottom-0 end-0 start-0 bg-card p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10 w-full max-w-full",
                     mobileMenuOpen ? "translate-y-0" : "translate-y-full"
                 )}>
                     <div className="w-12 h-1 bg-surface mx-auto mb-4 shrink-0" />
@@ -346,7 +346,7 @@ export const Sidebar = () => {
                                             )}>
                                                 <item.icon size={14} />
                                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full shadow-sm border border-border">
+                                                    <span className="absolute -top-1 -start-1 w-3.5 h-3.5 flex items-center justify-center bg-error text-on-error text-micro font-medium rounded-full shadow-sm border border-border">
                                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                                     </span>
                                                 )}

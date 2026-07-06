@@ -113,11 +113,11 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <div className="space-y-1.5">
                             <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">العملة</label>
                             <div className="relative group">
-                                <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-success transition-colors" size={12} />
+                                <DollarSign className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-success transition-colors" size={12} />
                                 <select
                                     value={formData.currency}
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
-                                    className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main text-xs font-medium transition-all pr-10 appearance-none"
+                                    className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main text-xs font-medium transition-all ps-10 appearance-none"
                                 >
                                     <option value="KWD">د.ك (KWD)</option>
                                     <option value="SAR">﷼ (SAR)</option>
@@ -156,11 +156,11 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                     <button type="button" onClick={generateUsername} className="text-micro text-primary font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <User className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
+                                    <User className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono text-main transition-all"
                                         placeholder="اسم المستخدم"
                                     />
                                 </div>
@@ -171,12 +171,12 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                     <button type="button" onClick={generatePassword} className="text-micro text-primary font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
+                                    <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
                                     <input
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono tracking-widest text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono tracking-widest text-main transition-all"
                                         placeholder="كلمة المرور"
                                     />
                                 </div>
@@ -203,7 +203,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
     <div className="space-y-1.5">
         <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">{label}</label>
         <div className="relative group">
-            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={12} />}
+            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={12} />}
             <input
                 required={required}
                 type={type}
@@ -212,7 +212,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 onChange={e => onChange(e.target.value)}
                 className={cn(
                     "w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main text-xs font-medium transition-all",
-                    Icon && "pr-10",
+                    Icon && "ps-10",
                     dir === 'ltr' && "font-mono"
                 )}
                 placeholder={placeholder}

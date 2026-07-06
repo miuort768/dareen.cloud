@@ -76,7 +76,7 @@ export const Profile = () => {
         <div className="min-h-full bg-background dark:bg-background pb-20 font-sans" dir="rtl">
             {/* Header Area */}
             <div className="bg-white dark:bg-primary-active border-b border-border dark:border-border px-6 py-8 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+                <div className="absolute top-0 start-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
                 
                 <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6 relative z-10">
                     <div className="relative group">
@@ -89,7 +89,7 @@ export const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="text-center md:text-right flex-1">
+                    <div className="text-center md:text-start flex-1">
                         <h1 className="text-2xl md:text-3xl font-medium text-main dark:text-on-primary mb-1 uppercase tracking-tighter">
                             {currentUser?.name}
                         </h1>
@@ -167,10 +167,10 @@ export const Profile = () => {
                                             type="password" 
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full bg-background dark:bg-primary-active/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-main dark:text-on-primary focus:ring-2 focus:ring-error/20 transition-all"
+                                            className="w-full bg-background dark:bg-primary-active/50 border-none rounded-none px-4 py-3 ps-10 text-sm font-normal text-main dark:text-on-primary focus:ring-2 focus:ring-error/20 transition-all"
                                             placeholder="��������"
                                         />
-                                        <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                        <Lock className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     </div>
                                 </div>
                                 <div>
@@ -180,10 +180,10 @@ export const Profile = () => {
                                             type="password" 
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="w-full bg-background dark:bg-primary-active/50 border-none rounded-none px-4 py-3 pr-10 text-sm font-normal text-main dark:text-on-primary focus:ring-2 focus:ring-error/20 transition-all"
+                                            className="w-full bg-background dark:bg-primary-active/50 border-none rounded-none px-4 py-3 ps-10 text-sm font-normal text-main dark:text-on-primary focus:ring-2 focus:ring-error/20 transition-all"
                                             placeholder="��������"
                                         />
-                                        <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                        <CheckCircle2 className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +250,7 @@ export const Profile = () => {
 
                     {/* Quick Stats or Info */}
                     <div className="bg-gradient-to-br from-[var(--bg-primary)] to-primary rounded-none p-6 text-on-primary shadow-sm relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
+                        <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
                         <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
                              ���� ��������
                         </h3>

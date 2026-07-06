@@ -179,7 +179,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             </div>
                         </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-start">
                         <span className="text-micro font-normal text-muted block mb-0.5">التقدم</span>
                         <div className="flex items-center justify-end gap-1">
                              <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-error" : "text-primary")} />
@@ -256,7 +256,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 text-micro font-bold text-muted dark:text-muted rounded-xl">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
-                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-border dark:border-border">
+                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border dark:border-border">
                                         <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-primary"><Edit size={10} /></button>
                                         <button onClick={() => onDeleteSlot(student, en, i)} aria-label="حذف الموعد" className="text-error"><Trash2 size={10} /></button>
                                     </div>

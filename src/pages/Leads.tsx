@@ -167,7 +167,7 @@ export const Leads: React.FC = () => {
                 <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl rounded-2xl shadow-sm border border-border dark:border-border mb-6 p-4">
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="relative flex-1">
-                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                             <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." className="w-full bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-9 py-2 outline-none text-xs font-bold text-main dark:text-on-primary placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="flex items-center gap-2 w-full md:w-auto">
@@ -177,7 +177,7 @@ export const Leads: React.FC = () => {
                                     <option value="all" className="text-main">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
-                                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-muted" size={12} />
+                                <ChevronDown className="absolute start-2 top-1/2 -translate-y-1/2 pointer-events-none text-muted" size={12} />
                             </div>
                         </div>
                     </div>

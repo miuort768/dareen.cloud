@@ -13,7 +13,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, error, options, placeholder, id, ...props }, ref) => {
     const selectId = id || `select-${Math.random().toString(36).slice(2, 9)}`;
     return (
-      <div className="w-full flex flex-col gap-1.5 text-right" dir="rtl">
+      <div className="w-full flex flex-col gap-1.5 text-start" dir="rtl">
         {label && (
           <label htmlFor={selectId} className="text-xs font-bold text-main">{label}</label>
         )}
@@ -38,7 +38,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
           </select>
-          <ChevronDown size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+          <ChevronDown size={16} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
         </div>
         {error && (
           <span className="text-xs font-bold text-error">{error}</span>

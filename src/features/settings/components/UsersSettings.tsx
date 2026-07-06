@@ -128,7 +128,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                     setNewUser({ ...newUser, permissions: perms });
                                 }}
                                 className={cn(
-                                    'p-2 text-micro font-normal border text-right transition-all',
+                                    'p-2 text-micro font-normal border text-start transition-all',
                                     newUser.permissions.includes(p.id)
                                         ? 'bg-primary text-on-primary border-primary'
                                         : 'bg-card text-muted border-border hover:border-primary'

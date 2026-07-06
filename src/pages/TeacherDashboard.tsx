@@ -61,8 +61,8 @@ export const TeacherDashboard = () => {
         <>
             {/* ─── Desktop version ─── */}
             <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-surface via-card to-success-soft font-sans" dir="rtl">
-                <div className="absolute top-0 right-1/4 w-96 h-96 bg-success opacity-10 dark:opacity-5 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-primary-light opacity-40 dark:opacity-20 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 start-1/4 w-96 h-96 bg-success opacity-10 dark:opacity-5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-primary-light opacity-40 dark:opacity-20 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 max-w-[1600px] mx-auto px-4 space-y-6">
                     <DashboardHeader isTeacher={true} currentUser={currentUser} />
 
@@ -156,7 +156,7 @@ export const TeacherDashboard = () => {
                             <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-card flex items-center justify-center relative">
                                     <Bell size={15} className="text-on-primary opacity-80" />
-                                    <span className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-error rounded-full border border-primary" />
+                                    <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border border-primary" />
                                 </div>
                             </div>
                         </div>

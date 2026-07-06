@@ -102,9 +102,9 @@ export const Login = () => {
                 <div className="hidden md:flex md:w-1/2 bg-transparent relative flex-col justify-center items-center">
                     <div className="absolute inset-0 z-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(var(--text-main) 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }}></div>
                     
-                    <div className="relative z-10 w-full max-w-md flex flex-col items-start justify-center p-8 text-right" dir="rtl">
+                    <div className="relative z-10 w-full max-w-md flex flex-col items-start justify-center p-8 text-start" dir="rtl">
                         <div className="mb-10 w-full">
-                            <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-l-4 border-accent shadow-md mb-10">
+                            <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-e-4 border-accent shadow-md mb-10">
                                 <CheckCircle className="text-accent" size={18} />
                                 <span className="text-xs font-black text-inverse uppercase tracking-[0.2em]">أفضل مدرسة افتراضية</span>
                             </div>
@@ -114,7 +114,7 @@ export const Login = () => {
                                 <span className="text-sm font-black uppercase text-main tracking-[0.2em]">منصة دارين السابعة</span>
                             </div>
                             
-                            <h2 className="text-section font-bold text-main mb-8 leading-tight border-r-8 border-success pr-8 min-h-[4.5rem]">
+                            <h2 className="text-section font-bold text-main mb-8 leading-tight border-s-8 border-success ps-8 min-h-[4.5rem]">
                                 {typedText}
                                 <span className="inline-block w-[5px] h-7 bg-success ms-2 animate-pulse align-middle"></span>
                             </h2>
@@ -123,21 +123,21 @@ export const Login = () => {
                         </div>
 
                         <div className="grid grid-cols-1 gap-5 w-full">
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-r-4 border-r-error">
+                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-error">
                                 <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error border border-border rounded-card">
                                     <Users size={24} />
                                 </div>
-                                <div className="text-right">
+                                <div className="text-start">
                                     <div className="text-xs font-black text-muted uppercase tracking-widest mb-1">ثقة الطلاب</div>
                                     <div className="text-card-title font-black text-main">+5,000 طالب</div>
                                 </div>
                             </div>
 
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-r-4 border-r-success">
+                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-success">
                                 <div className="w-12 h-12 bg-success-soft flex items-center justify-center text-success border border-border rounded-card">
                                     <Trophy size={24} />
                                 </div>
-                                <div className="text-right">
+                                <div className="text-start">
                                     <div className="text-xs font-black text-muted uppercase tracking-widest mb-1">إنجازاتنا</div>
                                     <div className="text-card-title font-black text-main">نخبة الأوائل</div>
                                 </div>
@@ -166,16 +166,16 @@ export const Login = () => {
                     <div className="w-full max-w-md relative z-10">
                         <div className="text-center mb-8">
                             <div className="w-24 h-24 sm:w-28 sm:h-28 bg-main rounded-card flex items-center justify-center text-inverse mx-auto mb-6 relative shadow-card overflow-visible">
-                                <Crown className="absolute -top-7 -left-3 text-accent drop-shadow-lg transform -rotate-12 z-30" size={50} strokeWidth={2.5} fill="var(--bg-accent)" />
+                                <Crown className="absolute -top-7 -end-3 text-accent drop-shadow-lg transform -rotate-12 z-30" size={50} strokeWidth={2.5} fill="var(--bg-accent)" />
 
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 z-20 w-40 mt-1">
+                                <div className="absolute top-1/2 end-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 z-20 w-40 mt-1">
                                     <div className="relative w-14 h-14 bg-card rounded-card border-[5px] border-error overflow-hidden shadow-inner flex shrink-0">
                                         <div className="absolute inset-0 flex items-center justify-center bg-surface/50">
                                             <div className={`w-4 h-4 bg-main rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
+                                                <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
                                             </div>
                                         </div>
-                                        <div className={`absolute top-0 left-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
                                     </div>
 
                                     <div className="w-4 h-1.5 bg-main rounded-full shrink-0 -mt-2"></div>
@@ -183,10 +183,10 @@ export const Login = () => {
                                     <div className="relative w-14 h-14 bg-card rounded-card border-[5px] border-success overflow-hidden shadow-inner flex shrink-0">
                                         <div className="absolute inset-0 flex items-center justify-center bg-surface/50">
                                             <div className={`w-4 h-4 bg-main rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
+                                                <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
                                             </div>
                                         </div>
-                                        <div className={`absolute top-0 left-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
                                     </div>
                                 </div>
                             </div>
@@ -224,13 +224,13 @@ export const Login = () => {
                                         placeholder="أدخل كلمة المرور..."
                                         leftIcon={<Lock size={20} className="text-dim" />}
                                         required
-                                        className="pl-10"
+                                        className="pe-10"
                                         style={{ fontFamily: showPassword ? 'inherit' : 'caption' } as React.CSSProperties}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute left-3 top-[38px] text-dim hover:text-main transition-colors"
+                                        className="absolute end-3 top-[38px] text-dim hover:text-main transition-colors"
                                         tabIndex={-1}
                                     >
                                         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}

@@ -262,27 +262,27 @@ export const Appointments = () => {
                 <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-3">
                     {/* Search */}
                     <div className="relative">
-                        <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
+                        <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                         <input
                             type="text"
                             placeholder="ابحث باسم الطالب أو المادة..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pr-8 pl-8 py-2 border border-border text-xs font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card transition-all placeholder:text-dim text-main rounded-xl"
+                            className="w-full ps-8 pe-8 py-2 border border-border text-xs font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card transition-all placeholder:text-dim text-main rounded-xl"
                         />
                         {searchTerm && (
-                            <button onClick={() => setSearchTerm('')} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-dim hover:text-error transition-colors" aria-label="مسح البحث">
+                            <button onClick={() => setSearchTerm('')} className="absolute end-2.5 top-1/2 -translate-y-1/2 text-dim hover:text-error transition-colors" aria-label="مسح البحث">
                                 <X size={11} />
                             </button>
                         )}
                     </div>
                     {/* Day Filter */}
                     <div className="relative">
-                        <Filter size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
+                        <Filter size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
+                            className="w-full ps-8 pe-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
                         >
                             <option value="all">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -290,11 +290,11 @@ export const Appointments = () => {
                     </div>
                     {/* Teacher Filter */}
                     <div className="relative">
-                        <GraduationCap size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
+                        <GraduationCap size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
+                            className="w-full ps-8 pe-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl"
                         >
                             <option value="all">كل المعلمات</option>
                             {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}

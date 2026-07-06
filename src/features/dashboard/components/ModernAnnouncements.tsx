@@ -76,7 +76,7 @@ export const ModernAnnouncements: React.FC = () => {
                 <div 
                     onClick={() => setShowAcknowledge(true)}
                     className={cn(
-                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-l border-border dark:border-white/5",
+                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-e border-border dark:border-white/5",
                         type.bg
                     )}
                 >
@@ -93,7 +93,7 @@ export const ModernAnnouncements: React.FC = () => {
                     onClick={() => setShowAcknowledge(true)}
                     className="flex-1 p-6 md:p-8 relative cursor-pointer group"
                 >
-                    <div className="absolute top-4 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-on-primary dark:bg-white dark:text-main rounded-lg">
+                    <div className="absolute top-4 end-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-on-primary dark:bg-white dark:text-main rounded-lg">
                         <Sparkles size={10} className="text-warning" />
                         <span className="text-micro font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
@@ -105,7 +105,7 @@ export const ModernAnnouncements: React.FC = () => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -10 }}
                             transition={{ duration: 0.3 }}
-                            className="pr-1 mt-4"
+                            className="ps-1 mt-4"
                         >
                             <h4 className="text-main dark:text-on-primary font-medium text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
                                 {current.title}
@@ -118,7 +118,7 @@ export const ModernAnnouncements: React.FC = () => {
 
                     {/* Navigation */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-4 left-6 flex gap-2" onClick={e => e.stopPropagation()}>
+                        <div className="absolute bottom-4 end-6 flex gap-2" onClick={e => e.stopPropagation()}>
                             <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-primary-active text-main dark:text-on-primary border border-border dark:border-border hover:bg-surface dark:hover:bg-primary-active transition-all rounded-xl"><ChevronRight size={16} /></button>
                             <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-primary-active text-main dark:text-on-primary border border-border dark:border-border hover:bg-surface dark:hover:bg-primary-active transition-all rounded-xl"><ChevronLeft size={16} /></button>
                         </div>
@@ -127,9 +127,9 @@ export const ModernAnnouncements: React.FC = () => {
             </div>
 
             {/* Progress Bar */}
-            <div className="absolute bottom-0 right-0 h-1 bg-surface dark:bg-primary-active w-full" />
+            <div className="absolute bottom-0 start-0 h-1 bg-surface dark:bg-primary-active w-full" />
             <motion.div 
-                className="absolute bottom-0 right-0 h-1 bg-info"
+                className="absolute bottom-0 start-0 h-1 bg-info"
                 initial={{ width: "0%" }}
                 animate={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
                 transition={{ duration: 0.5 }}
@@ -155,7 +155,7 @@ export const ModernAnnouncements: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-background dark:bg-primary-active/50 p-5 md:p-8 mb-8 border-r-4 border-info rounded-xl">
+                            <div className="bg-background dark:bg-primary-active/50 p-5 md:p-8 mb-8 border-s-4 border-info rounded-xl">
                                 <p className="text-base font-normal text-main dark:text-dim leading-relaxed italic">
                                     "{current.content}"
                                 </p>

@@ -193,7 +193,7 @@ export const Schedule = () => {
                     <div className="flex items-center gap-2 no-print">
                         {/* Search */}
                         <div className="relative">
-                            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
+                            <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
@@ -249,12 +249,12 @@ export const Schedule = () => {
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
                             <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
-                                <div className="sticky right-0 z-10 p-3 text-micro font-bold text-inverse border-l border-border bg-primary-active dark:bg-background">
+                                <div className="sticky start-0 z-10 p-3 text-micro font-bold text-inverse border-e border-border bg-primary-active dark:bg-background">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-micro font-bold text-center border-l border-border last:border-l-0 bg-primary-active dark:bg-background",
+                                        "p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background",
                                         isToday(day) ? "text-on-primary" : "text-inverse"
                                     )}>
                                         <span>{day}</span>
@@ -275,7 +275,7 @@ export const Schedule = () => {
                                         "grid grid-cols-[80px_repeat(7,1fr)]",
                                         slotIdx % 2 === 0 ? "bg-white dark:bg-primary-active" : "bg-background/30 dark:bg-background/20"
                                     )}>
-                                        <div className="sticky right-0 z-10 p-2 text-micro font-bold text-muted border-l border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
+                                        <div className="sticky start-0 z-10 p-2 text-micro font-bold text-muted border-e border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
                                             <Clock size={10} className="me-1 inline" />
                                             {slot.label}
                                         </div>
@@ -293,10 +293,10 @@ export const Schedule = () => {
                                                     <div
                                                         key={`${day}-${slot.hour}`}
                                                         onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
-                                                        className="p-1.5 border-l last:border-l-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
+                                                        className="p-1.5 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
                                                         style={{ backgroundColor: `${color}08` }}
                                                     >
-                                                        <div className="absolute top-0 right-0 w-full h-0.5" style={{ backgroundColor: color }} />
+                                                        <div className="absolute top-0 start-0 w-full h-0.5" style={{ backgroundColor: color }} />
 
                                                         <div className="flex items-start gap-1.5 h-full">
                                                             <div className="w-1 h-full shrink-0 mt-0.5" style={{ backgroundColor: color }} />
@@ -315,7 +315,7 @@ export const Schedule = () => {
                                             return (
                                                 <div
                                                     key={`${day}-${slot.hour}`}
-                                                    className="p-2 border-l last:border-l-0 border-b border-border/50 dark:border-border/50 min-h-[72px]"
+                                                    className="p-2 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 min-h-[72px]"
                                                 >
                                                     {!isEmpty && (
                                                         <div className="text-micro font-bold text-dim text-center">—</div>

@@ -29,8 +29,8 @@ export const ParentStudentCard = ({
     return (
         <div className="bg-white dark:bg-primary-active border border-border dark:border-border shadow-sm rounded-2xl overflow-hidden group hover:border-primary/30 hover:shadow-md transition-all duration-300 flex flex-col">
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] p-4 md:p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -translate-y-12 translate-x-12 rotate-45 group-hover:scale-110 transition-transform rounded-full blur-xl"></div>
-                <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 rounded-full blur-lg"></div>
+                <div className="absolute top-0 start-0 w-24 h-24 bg-white/10 -translate-y-12 translate-x-12 rotate-45 group-hover:scale-110 transition-transform rounded-full blur-xl"></div>
+                <div className="absolute bottom-0 end-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 rounded-full blur-lg"></div>
                 <div className="relative z-10 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 md:gap-4">
                         <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 backdrop-blur-sm flex items-center justify-center text-on-primary border border-white/20 rounded-xl shrink-0 shadow-lg shadow-black/10">
@@ -51,7 +51,7 @@ export const ParentStudentCard = ({
             </div>
 
             <div className="grid grid-cols-2 border-b border-border dark:border-border">
-                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-l border-border dark:border-border">
+                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-e border-border dark:border-border">
                     <div className="w-8 h-8 bg-primary-soft dark:bg-primary/10 rounded-xl flex items-center justify-center mb-1">
                         <BookOpen size={14} className="text-primary md:size-[16px]" />
                     </div>
@@ -87,7 +87,7 @@ export const ParentStudentCard = ({
                                     <h4 className="text-sm font-medium text-main dark:text-on-primary">{en.subject}</h4>
                                     <p className="text-micro text-muted dark:text-muted font-normal italic">المعلم: {en.teacher}</p>
                                 </div>
-                                <div className="text-left">
+                                <div className="text-end">
                                     <span className="text-micro font-medium text-primary dark:text-primary">حضر {en.sessionsUsed} من {en.sessionsTotal}</span>
                                 </div>
                             </div>

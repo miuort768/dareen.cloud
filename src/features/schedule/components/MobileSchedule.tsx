@@ -217,13 +217,13 @@ export const MobileSchedule = () => {
             {/* Search */}
             <div className="px-4 pt-3 pb-1">
                 <div className="relative">
-                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
+                    <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
+                        className="w-full ps-8 pe-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                     />
                 </div>
             </div>
@@ -313,7 +313,7 @@ export const MobileSchedule = () => {
                                                 key={event.id}
                                                 whileTap={{ scale: 0.97 }}
                                                 onClick={() => { triggerHaptic('light'); setSelectedEvent(event); setShowDetails(true); }}
-                                                className="bg-white dark:bg-primary-active rounded-2xl p-3 shadow-sm border-r-[3px] cursor-pointer active:scale-[0.97] transition-all"
+                                                className="bg-white dark:bg-primary-active rounded-2xl p-3 shadow-sm border-e-[3px] cursor-pointer active:scale-[0.97] transition-all"
                                                 style={{ borderRightColor: color }}
                                             >
                                                 <div className="flex items-center justify-between">

@@ -98,11 +98,11 @@ export const AdminJobs = () => {
                     </div>
                     <div className="flex gap-2 w-full md:w-auto">
                         <div className="relative flex-1 md:w-44">
-                            <BookMarked className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                            <BookMarked className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
                             <select
                                 value={subjectFilter}
                                 onChange={e => setSubjectFilter(e.target.value)}
-                                className="w-full bg-white/15 text-on-primary py-3 pr-10 pl-3 text-xs font-bold focus:outline-none border border-white/20 appearance-none cursor-pointer"
+                                className="w-full bg-white/15 text-on-primary py-3 ps-10 pe-3 text-xs font-bold focus:outline-none border border-white/20 appearance-none cursor-pointer"
                             >
                                 <option value="" className="text-main">كل المواد</option>
                                 {allSubjects.map(s => (
@@ -111,13 +111,13 @@ export const AdminJobs = () => {
                             </select>
                         </div>
                         <div className="relative flex-1 md:w-48">
-                            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+                            <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-white/50" size={16} />
                             <input
                                 type="text"
                                 placeholder="بحث..."
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-white/15 text-on-primary placeholder:text-white/50 py-3 pr-12 pl-4 text-xs font-bold focus:outline-none border border-white/20"
+                                className="w-full bg-white/15 text-on-primary placeholder:text-white/50 py-3 ps-12 pe-4 text-xs font-bold focus:outline-none border border-white/20"
                             />
                         </div>
                     </div>
@@ -145,7 +145,7 @@ export const AdminJobs = () => {
                             }`}></div>
 
                             {/* Decorative pattern */}
-                            {!app.contacted && <div className="absolute top-0 left-0 w-24 h-24 bg-primary/5 -me-6 -mt-6 rotate-45 pointer-events-none border border-primary/10"></div>}
+                            {!app.contacted && <div className="absolute top-0 end-0 w-24 h-24 bg-primary/5 -me-6 -mt-6 rotate-45 pointer-events-none border border-primary/10"></div>}
 
                             <div className={`p-6 relative z-10 transition-all duration-300 ${
                                 app.contacted ? 'line-through decoration-1 decoration-muted/50' : ''
@@ -182,9 +182,9 @@ export const AdminJobs = () => {
                                 }`}>
                                     <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center relative overflow-hidden shrink-0">
                                         <span className="text-base font-bold text-on-primary">{app.name[0]}</span>
-                                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/50"></div>
+                                        <div className="absolute bottom-0 end-0 w-full h-0.5 bg-white/50"></div>
                                     </div>
-                                    <div className="text-right">
+                                    <div className="text-start">
                                         <h3 className={`text-sm font-bold ${
                                             app.contacted ? 'text-muted' : 'text-on-primary'
                                         }`}>{app.name}</h3>

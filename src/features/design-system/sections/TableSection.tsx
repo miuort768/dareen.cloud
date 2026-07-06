@@ -8,10 +8,10 @@ export function TableSection() {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-surface border-b">
-              <th className="text-right p-3 font-semibold text-muted">الاسم</th>
-              <th className="text-right p-3 font-semibold text-muted">المادة</th>
-              <th className="text-right p-3 font-semibold text-muted">الحالة</th>
-              <th className="text-right p-3 font-semibold text-muted">الدرجة</th>
+              <th className="text-start p-3 font-semibold text-muted">الاسم</th>
+              <th className="text-start p-3 font-semibold text-muted">المادة</th>
+              <th className="text-start p-3 font-semibold text-muted">الحالة</th>
+              <th className="text-start p-3 font-semibold text-muted">الدرجة</th>
             </tr>
           </thead>
           <tbody>

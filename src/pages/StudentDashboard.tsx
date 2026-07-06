@@ -214,7 +214,7 @@ export const StudentDashboard = () => {
                                 className="relative w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-card transition-colors"
                             >
                                 <Bell size={16} strokeWidth={1.5} />
-                                <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-card" />
+                                <span className="absolute top-1 start-1 w-2 h-2 bg-error rounded-full border-2 border-card" />
                             </button>
                             {/* Live clock */}
                             <div className="px-2.5 py-1.5 rounded-card bg-hover backdrop-blur-sm text-primary font-medium text-micro tabular-nums">
@@ -246,7 +246,7 @@ export const StudentDashboard = () => {
                             <div className="flex-1 z-10 space-y-2">
                                 <h2 className={`text-2xl font-black leading-tight ${heroSlides[heroIndex].textColor}`}>
                                     {heroSlides[heroIndex].title}{' '}
-                                    <span className="inline-block border-r-4 border-current pr-0.5 animate-pulse">|</span>
+                                    <span className="inline-block border-s-4 border-current ps-0.5 animate-pulse">|</span>
                                 </h2>
                                 <p className={`text-sm font-bold ${heroSlides[heroIndex].textColor} opacity-80`}>
                                     {heroSlides[heroIndex].subtitle}
@@ -279,7 +279,7 @@ export const StudentDashboard = () => {
                                         {heroSlides[heroIndex].emoji}
                                     </div>
                                     {/* Floating badge */}
-                                    <div className="absolute -bottom-2 -right-2 bg-card rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
+                                    <div className="absolute -bottom-2 -start-2 bg-card rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
                                         <span className="text-micro font-bold text-main">🇰🇼</span>
                                     </div>
                                 </div>
@@ -371,7 +371,7 @@ export const StudentDashboard = () => {
                                                 {en.subject || 'دورة تعليمية'}
                                             </h3>
                                         </div>
-                                        <p className="text-micro text-dim text-right mb-2">
+                                        <p className="text-micro text-dim text-start mb-2">
                                             {en.level || `${used} من ${total} حصة`}
                                         </p>
                                         {/* Progress Bar */}
@@ -406,7 +406,7 @@ export const StudentDashboard = () => {
                                 </span>
                                 <h3 className="text-sm font-black text-main">أساسيات البرمجة</h3>
                             </div>
-                            <p className="text-micro text-dim text-right mb-2">المستوى المبتدئ</p>
+                            <p className="text-micro text-dim text-start mb-2">المستوى المبتدئ</p>
                             <div className="relative">
                                 <div className="h-2 bg-hover rounded-full overflow-hidden">
                                     <motion.div
@@ -416,7 +416,7 @@ export const StudentDashboard = () => {
                                         className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
                                     />
                                 </div>
-                                <span className="text-micro font-bold text-primary mt-1 block text-left">60%</span>
+                                <span className="text-micro font-bold text-primary mt-1 block text-end">60%</span>
                             </div>
                         </div>
                     </div>
@@ -455,7 +455,7 @@ export const StudentDashboard = () => {
             {/* ══════════════════ ACTIVITY & POINTS ══════════════════ */}
             {pointLogs.length > 0 && (
                 <div className="px-4 py-3">
-                    <h2 className="text-lg font-black text-main mb-3 text-right">آخر النشاطات</h2>
+                    <h2 className="text-lg font-black text-main mb-3 text-start">آخر النشاطات</h2>
                     <div className="space-y-2">
                         {pointLogs.slice(0, 3).map((log, i) => (
                             <div
@@ -478,8 +478,8 @@ export const StudentDashboard = () => {
                     <div className="absolute top-[-20px] left-[-20px] w-28 h-28 bg-white/10 rounded-full blur-2xl" />
                     <div className="absolute bottom-[-15px] right-[20%] w-20 h-20 bg-white/10 rounded-full blur-xl" />
                     <div className="relative z-10">
-                        <h3 className="text-on-primary font-black text-lg mb-1 text-right">تحتاج مساعدة؟</h3>
-                        <p className="text-on-primary opacity-80 text-xs mb-4 text-right">فريقنا جاهز لمساعدتك في أي وقت</p>
+                        <h3 className="text-on-primary font-black text-lg mb-1 text-start">تحتاج مساعدة؟</h3>
+                        <p className="text-on-primary opacity-80 text-xs mb-4 text-start">فريقنا جاهز لمساعدتك في أي وقت</p>
                         <a
                             href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
                             target="_blank"
@@ -524,7 +524,7 @@ const MobileBottomNav = ({
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-black/10">
+        <nav className="fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-black/10">
             <div className="flex items-center justify-around h-[68px] px-2">
                 {navItems.map((item) => {
                     const Icon = item.icon;
@@ -560,7 +560,7 @@ const MobileBottomNav = ({
                                         {item.label}
                                     </span>
                                     {isActive && (
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-full" />
+                                        <div className="absolute top-0 end-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-full" />
                                     )}
                                 </>
                             )}

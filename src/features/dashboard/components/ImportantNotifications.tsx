@@ -113,7 +113,7 @@ export const ImportantNotifications = ({
                 </div>
             </div>
 
-            <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
+            <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar ps-1">
                 {visibleNotifications.length > 0 ? (
                     visibleNotifications.map((note) => (
                         <div key={note.id} className="p-3 bg-background/50 dark:bg-primary-active/30 rounded-none border border-border dark:border-border transition-all hover:bg-white flex items-center gap-3 group relative">
@@ -124,7 +124,7 @@ export const ImportantNotifications = ({
                                 <note.icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-normal text-main dark:text-on-primary text-xs mb-1 truncate pr-4">
+                                <h4 className="font-normal text-main dark:text-on-primary text-xs mb-1 truncate ps-4">
                                     {note.title}
                                 </h4>
                                 <p className="text-micro text-muted dark:text-muted leading-none">{note.description}</p>

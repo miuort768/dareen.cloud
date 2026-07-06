@@ -39,11 +39,11 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                     <div className="space-y-8">
                         {/* Student Signature Header */}
                         <div className="flex items-center justify-between p-6 bg-background dark:bg-primary-active border-2 border-border rounded-none">
-                            <div className="space-y-1 text-right">
+                            <div className="space-y-1 text-start">
                                 <p className="text-micro font-medium text-primary uppercase">نجمة أكاديمية</p>
                                 <h4 className="text-2xl font-medium text-main dark:text-on-primary uppercase tracking-tight">{student.name}</h4>
                             </div>
-                            <div className="text-left bg-white dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-sm">
+                            <div className="text-end bg-white dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-sm">
                                 <p className="text-micro font-medium text-muted uppercase mb-0.5">المستوى / المادة</p>
                                 <p className="text-xs font-medium text-primary uppercase">{student.grade} - {student.subject}</p>
                             </div>

@@ -71,29 +71,29 @@ export const AcademyInfoSection = ({
                     <div>
                         <FieldLabel>رقم الهاتف</FieldLabel>
                         <div className="relative">
-                            <Phone size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
-                            <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="pr-9" placeholder="مثال: 201015098836" />
+                            <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="ps-9" placeholder="مثال: 201015098836" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>البريد الإلكتروني</FieldLabel>
                         <div className="relative">
-                            <Send size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
-                            <InputField value={academyEmail} onChange={e => setAcademyEmail(e.target.value)} className="pr-9" placeholder="email@example.com" />
+                            <Send size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={academyEmail} onChange={e => setAcademyEmail(e.target.value)} className="ps-9" placeholder="email@example.com" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>تيليجرام</FieldLabel>
                         <div className="relative">
-                            <Hash size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
-                            <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} className="pr-9" placeholder="dareen_app" />
+                            <Hash size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} className="ps-9" placeholder="dareen_app" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>رابط واتساب</FieldLabel>
                         <div className="relative">
-                            <MapPin size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" />
-                            <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="pr-9" placeholder="رقم الواتساب" />
+                            <MapPin size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="ps-9" placeholder="رقم الواتساب" />
                         </div>
                     </div>
                 </div>

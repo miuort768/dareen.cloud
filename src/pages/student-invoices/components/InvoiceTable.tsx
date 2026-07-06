@@ -56,7 +56,7 @@ const ActionButton = ({ icon: Icon, onClick, title, hoverClass }: { icon: React.
 export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, setPreviewInvoice, setDeletingId }: InvoiceTableProps) => (
   <>
     <SectionCard className="hidden md:block overflow-hidden">
-      <table className="w-full text-right text-sm border-collapse">
+      <table className="w-full text-start text-sm border-collapse">
         <thead>
           <tr className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
             {['اسم الطالب', 'البيان', 'المبلغ', 'الاستحقاق', 'الحالة', 'إجراءات'].map(h => (

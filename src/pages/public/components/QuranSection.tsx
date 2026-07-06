@@ -8,7 +8,7 @@ interface QuranSectionProps {
 }
 
 const LeafDecoration = () => (
-    <div className="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none overflow-hidden opacity-60">
+    <div className="absolute top-0 start-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none overflow-hidden opacity-60">
         <svg viewBox="0 0 200 200" className="w-full h-full">
             <defs>
                 <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -31,8 +31,8 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
         <>
             {/* Desktop version */}
             <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-white dark:bg-card transition-colors duration-500">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
                     <div className="max-w-6xl mx-auto bg-success-soft dark:bg-card border border-success dark:border-success rounded-2xl shadow-sm overflow-hidden">
                         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center p-6 md:p-10">
@@ -44,7 +44,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-main leading-tight font-heading">
                                     رحلتك مع <span className="text-success relative inline-block">
                                         كتاب الله
-                                        <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <svg className="absolute -bottom-2 end-0 w-full h-3" viewBox="0 0 100 10" preserveAspectRatio="none">
                                             <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" className="text-success opacity-30" />
                                         </svg>
                                     </span> تبدأ بخطوة
@@ -81,7 +81,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         <div className="w-10 h-10 rounded-full border-2 border-card bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted shadow-sm">+5k</div>
                                     </div>
                                     <div className="h-8 w-px bg-success opacity-40 dark:opacity-40"></div>
-                                    <div className="text-right">
+                                    <div className="text-start">
                                         <div className="text-sm font-bold text-main flex items-center gap-1">
                                             4.9/5
                                             <Star className="w-4 h-4 text-warning fill-warning" />
@@ -134,8 +134,8 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
-                <div className="absolute top-40 -left-20 w-64 h-64 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-40 -end-20 w-64 h-64 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -start-20 w-80 h-80 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-5">
                     {/* Badge */}
@@ -152,7 +152,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             رحلتك مع{" "}
                             <span className="text-success relative inline-block">
                                 كتاب الله
-                                <svg className="absolute -bottom-1.5 left-0 w-full h-3" viewBox="0 0 120 12" preserveAspectRatio="none">
+                                <svg className="absolute -bottom-1.5 end-0 w-full h-3" viewBox="0 0 120 12" preserveAspectRatio="none">
                                     <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" className="text-success opacity-40" />
                                 </svg>
                             </span>
@@ -189,7 +189,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
 
                     {/* Rating + Users */}
                     <div className="flex items-center justify-center gap-4 mb-8">
-                        <div className="text-left">
+                        <div className="text-end">
                             <div className="flex items-center gap-1.5">
                                 <span className="text-lg font-black text-main">4.9</span>
                                 <span className="text-sm font-bold text-muted">/5</span>

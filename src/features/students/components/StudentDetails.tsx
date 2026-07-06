@@ -47,7 +47,7 @@ export const StudentDetails = ({
             <div className="relative p-6 bg-surface border-b border-border" dir="rtl">
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
+                    className="absolute end-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
                 >
                     <X size={18} />
                 </button>
@@ -87,7 +87,7 @@ export const StudentDetails = ({
                             </div>
                         </div>
                         {next && (
-                            <div className="text-left">
+                            <div className="text-end">
                                 <p className="text-micro font-normal text-dim uppercase">التالي</p>
                                 <p className="text-xs font-normal text-info">{next.name}</p>
                             </div>
@@ -201,7 +201,7 @@ export const StudentDetails = ({
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="text-center px-2 border-r border-border">
+                                                <div className="text-center px-2 border-s border-border">
                                                     <p className="text-micro font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
                                                     <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                                 </div>

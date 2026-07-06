@@ -114,7 +114,7 @@ export const QuickSearch = () => {
     return (
         <>
             <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] animate-in fade-in duration-300" onClick={() => setIsOpen(false)} />
-            <div className="fixed top-24 left-1/2 -translate-x-1/2 w-full max-w-2xl z-[70] px-4 animate-in zoom-in-95 duration-200">
+            <div className="fixed top-24 end-1/2 -translate-x-1/2 w-full max-w-2xl z-[70] px-4 animate-in zoom-in-95 duration-200">
                 <div className="bg-white dark:bg-card border-t-4 border-primary shadow-2xl overflow-hidden rounded-none">
                     <div className="flex items-center gap-4 p-5 bg-background dark:bg-card/50">
                         <Search className="text-primary" size={24} />
@@ -125,7 +125,7 @@ export const QuickSearch = () => {
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="ابحث عن طالب، معلمة، أو صفحة عبر النظام..."
-                            className="flex-1 bg-transparent outline-none text-lg font-bold text-main dark:text-on-primary placeholder-gray-400 text-right"
+                            className="flex-1 bg-transparent outline-none text-lg font-bold text-main dark:text-on-primary placeholder-gray-400 text-start"
                             dir="rtl"
                         />
                         <button onClick={() => setIsOpen(false)} className="text-muted hover:text-error"><X size={20} /></button>
@@ -151,7 +151,7 @@ export const QuickSearch = () => {
                                         key={`${result.type}-${result.id}`}
                                         onClick={() => handleSelect(result)}
                                         className={cn(
-                                            "w-full flex items-center gap-4 p-4 transition-all text-right group",
+                                            "w-full flex items-center gap-4 p-4 transition-all text-start group",
                                             index === selectedIndex ? "bg-primary text-on-primary shadow-lg" : "hover:bg-primary-soft text-main dark:text-dim dark:hover:bg-primary/10"
                                         )}
                                     >

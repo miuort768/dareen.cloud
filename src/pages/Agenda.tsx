@@ -156,13 +156,13 @@ export const Agenda = () => {
                 </div>
 
                 <div className="relative w-full md:w-64 shrink-0">
-                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
                     <input
                         type="text"
                         placeholder="بحث عن طالب..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 pr-10 py-2 text-xs font-bold outline-none rounded-none"
+                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 ps-10 py-2 text-xs font-bold outline-none rounded-none"
                     />
                 </div>
             </div>
@@ -177,7 +177,7 @@ export const Agenda = () => {
                         )}>
                             {/* Status Stripe */}
                             <div className={cn(
-                                "absolute top-0 right-0 w-1.5 h-full transition-all",
+                                "absolute top-0 start-0 w-1.5 h-full transition-all",
                                 app.isDone ? "bg-success" : "bg-warning scale-y-50 group-hover:scale-y-100"
                             )}></div>
 

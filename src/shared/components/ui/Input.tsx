@@ -11,7 +11,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, error, helperText, type = 'text', id, ...props }, ref) => {
     const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
     return (
-      <div className="w-full flex flex-col gap-1.5 text-right" dir="rtl">
+      <div className="w-full flex flex-col gap-1.5 text-start" dir="rtl">
         {label && (
           <label htmlFor={inputId} className="text-xs font-bold text-main">{label}</label>
         )}
@@ -50,7 +50,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, label, error, helperText, id, ...props }, ref) => {
     const textareaId = id || `textarea-${Math.random().toString(36).slice(2, 9)}`;
     return (
-      <div className="w-full flex flex-col gap-1.5 text-right" dir="rtl">
+      <div className="w-full flex flex-col gap-1.5 text-start" dir="rtl">
         {label && (
           <label htmlFor={textareaId} className="text-xs font-bold text-main">{label}</label>
         )}

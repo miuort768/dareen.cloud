@@ -45,7 +45,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
     return (
         <div className={cn(
-            "w-full lg:w-[400px] flex flex-col bg-white dark:bg-card shrink-0 overflow-hidden relative border-r border-border dark:border-border max-w-full overflow-x-hidden",
+            "w-full lg:w-[400px] flex flex-col bg-white dark:bg-card shrink-0 overflow-hidden relative border-s border-border dark:border-border max-w-full overflow-x-hidden",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
             <div className="h-[60px] bg-surface dark:bg-card px-4 flex items-center justify-between shrink-0 border-b border-border/50 dark:border-white/5">
@@ -57,12 +57,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             className="w-full h-full" 
                         />
                     </div>
-                    <div className="flex flex-col text-right">
+                    <div className="flex flex-col text-start">
                         <span className="text-sm font-normal text-main leading-tight">واتساب دارين</span>
                         <span className="text-micro font-thin text-muted">تواصل أسهل وأسرع</span>
                     </div>
 
-                    <div className="flex items-center gap-1.5 ms-3 border-r border-border dark:border-white/10 pr-2">
+                    <div className="flex items-center gap-1.5 ms-3 border-s border-border dark:border-white/10 ps-2">
                         <button 
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                             className="p-1.5 text-muted hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
@@ -107,7 +107,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         placeholder="البحث أو بدء دردشة جديدة"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="flex-1 bg-transparent border-0 focus:ring-0 focus:outline-none ring-0 text-sm py-1 px-4 text-right text-main placeholder:text-muted/80 font-medium"
+                        className="flex-1 bg-transparent border-0 focus:ring-0 focus:outline-none ring-0 text-sm py-1 px-4 text-start text-main placeholder:text-muted/80 font-medium"
                     />
                 </div>
             </div>
@@ -139,7 +139,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                     </div>
                                 </div>
 
-                                <div className="flex-1 min-w-0 border-b border-border dark:border-border pb-3 mt-1 text-right">
+                                <div className="flex-1 min-w-0 border-b border-border dark:border-border pb-3 mt-1 text-start">
                                     <div className="flex items-center justify-between mb-0.5">
                                         <div className="flex items-center gap-1.5 overflow-hidden">
                                             {conv.isGroup && <ShieldCheck size={14} className="text-muted shrink-0" />}

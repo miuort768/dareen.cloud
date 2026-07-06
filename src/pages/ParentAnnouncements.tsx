@@ -92,13 +92,13 @@ export const ParentAnnouncements = () => {
 
             <div className="space-y-3">
                 <div className="relative">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
+                    <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
                     <input
                         type="text"
                         placeholder="ÇÈÍË Ýí ÇáÃÑÔíÝ..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
+                        className="w-full ps-12 pe-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:text-on-primary"
                     />
                 </div>
 

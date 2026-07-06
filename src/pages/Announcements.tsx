@@ -207,7 +207,7 @@ export const Announcements = () => {
 
                                 <div className="space-y-2 md:space-y-3">
                                     <h3 className="text-sm md:text-base font-bold text-main leading-tight">{ann.title}</h3>
-                                    <p className="text-muted font-bold text-micro md:text-xs leading-relaxed line-clamp-4 border-r-2 border-border pr-2 md:pr-3">
+                                    <p className="text-muted font-bold text-micro md:text-xs leading-relaxed line-clamp-4 border-s-2 border-border ps-2 md:ps-3">
                                         {ann.content}
                                     </p>
                                 </div>

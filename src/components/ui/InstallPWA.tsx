@@ -130,7 +130,7 @@ export const InstallPWA = () => {
                     <div className="bg-warning border-b-2 border-border px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Smartphone size={18} className="text-main" />
-                            <h2 className="font-medium text-sm text-main uppercase tracking-tighter text-right">
+                            <h2 className="font-medium text-sm text-main uppercase tracking-tighter text-start">
                                 ثبتي التطبيق
                             </h2>
                         </div>
@@ -139,7 +139,7 @@ export const InstallPWA = () => {
                         </button>
                     </div>
 
-                    <div className="p-4 space-y-3 bg-white text-right">
+                    <div className="p-4 space-y-3 bg-white text-start">
                         {isIOS ? (
                             <>
                                 <p className="text-xs font-normal text-muted mb-3">اتبعي هذه الخطوات في Safari:</p>
@@ -179,7 +179,7 @@ export const InstallPWA = () => {
                     </div>
 
                     <div className="flex border-t-2 border-border">
-                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-micro font-medium text-muted hover:bg-surface transition-colors border-r border-border">عدم التذكير مجدداً</button>
+                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-micro font-medium text-muted hover:bg-surface transition-colors border-s border-border">عدم التذكير مجدداً</button>
                         <button onClick={handleDismiss} className="flex-1 py-3 text-micro font-medium bg-warning text-main hover:bg-warning transition-colors">فهمت، شكراً</button>
                     </div>
                 </div>
@@ -189,7 +189,7 @@ export const InstallPWA = () => {
 
     return (
         <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
-            isDesktop ? 'bottom-4 right-4' : 'bottom-4 left-3 right-3'
+            isDesktop ? 'bottom-4 start-4' : 'bottom-4 end-3 start-3'
         }`}>
             <div className={`bg-success border border-white/10  flex items-center gap-3 p-2.5 rounded-[20px] ${
                 isDesktop ? 'max-w-[280px] me-auto' : ''
@@ -198,7 +198,7 @@ export const InstallPWA = () => {
                     {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
                 </div>
 
-                <div className="flex-1 min-w-0 text-right">
+                <div className="flex-1 min-w-0 text-start">
                     <h2 className="text-micro font-medium uppercase text-on-primary leading-tight">ثبتي التطبيق</h2>
                     <p className="font-medium text-micro text-on-primary/70 truncate mt-0.5">
                         {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}

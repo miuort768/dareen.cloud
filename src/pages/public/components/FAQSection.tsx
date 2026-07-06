@@ -5,8 +5,8 @@ import { Image } from '../../../shared/components/ui';
 export const FAQSection = () => {
     return (
         <section className="py-4 md:py-6 bg-surface dark:bg-background relative overflow-hidden transition-colors duration-500" id="faq">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] dark:opacity-[0.02]">
                 <svg className="w-full h-full" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -21,12 +21,12 @@ export const FAQSection = () => {
                     <rect width="100%" height="100%" fill="url(#islamic-pattern)" />
                 </svg>
             </div>
-            <div className="absolute top-10 left-10 w-32 h-32 opacity-[0.03] dark:opacity-[0.015] pointer-events-none">
+            <div className="absolute top-10 end-10 w-32 h-32 opacity-[0.03] dark:opacity-[0.015] pointer-events-none">
                 <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 0 L122 78 L200 78 L138 128 L160 200 L100 150 L40 200 L62 128 L0 78 L78 78 Z" fill="currentColor" className="text-primary" />
                 </svg>
             </div>
-            <div className="absolute bottom-10 right-10 w-40 h-40 opacity-[0.025] dark:opacity-[0.01] pointer-events-none">
+            <div className="absolute bottom-10 start-10 w-40 h-40 opacity-[0.025] dark:opacity-[0.01] pointer-events-none">
                 <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 15 C130 15 155 40 155 70 C155 100 130 125 100 125 C70 125 45 100 45 70 C45 40 70 15 100 15 Z" stroke="currentColor" strokeWidth="1.5" className="text-primary" />
                     <path d="M100 35 C120 35 135 50 135 70 C135 90 120 105 100 105 C80 105 65 90 65 70 C65 50 80 35 100 35 Z" stroke="currentColor" strokeWidth="1" className="text-primary" />
@@ -78,10 +78,10 @@ export const FAQSection = () => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <Image src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20" imgClassName="object-contain opacity-20" />];
                         return (
                             <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative bg-white dark:bg-primary border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
-                                <div className="absolute -bottom-4 -left-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                                <div className="absolute -bottom-4 -end-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
+                                <div className="absolute top-0 start-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
                                 <details className="group relative z-10">
                                     <summary className="flex items-center justify-between p-4 cursor-pointer list-none">
                                         <h3 className="text-xs md:text-sm font-black text-main dark:text-on-primary group-hover:text-primary dark:group-hover:text-primary transition-colors">

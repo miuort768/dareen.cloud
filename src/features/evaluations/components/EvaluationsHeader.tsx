@@ -38,9 +38,9 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
 
             <div className="bg-white/80 backdrop-blur-xl shadow-sm border border-white/20 p-3 rounded-2xl">
                 <div className="relative">
-                    <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/40 pointer-events-none" />
-                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full pr-9 pl-9 py-2 text-xs font-bold text-main dark:text-on-primary placeholder:text-muted outline-none transition-all rounded-xl bg-primary/5 border border-primary/10 focus:border-primary/30 focus:bg-white dark:focus:bg-primary-active" />
-                    {searchTerm && <button onClick={() => onSearchChange('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-muted transition-colors"><X size={14} /></button>}
+                    <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-primary/40 pointer-events-none" />
+                    <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)} placeholder="ابحث عن طالب باسمه أو صفه..." className="w-full ps-9 pe-9 py-2 text-xs font-bold text-main dark:text-on-primary placeholder:text-muted outline-none transition-all rounded-xl bg-primary/5 border border-primary/10 focus:border-primary/30 focus:bg-white dark:focus:bg-primary-active" />
+                    {searchTerm && <button onClick={() => onSearchChange('')} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted hover:text-muted transition-colors"><X size={14} /></button>}
                 </div>
             </div>
         </div>

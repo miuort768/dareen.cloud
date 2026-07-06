@@ -79,8 +79,8 @@ export const Contact = () => {
 
             <main className="flex-grow md:pt-28 pb-2 relative overflow-hidden">
                 {/* Subtle background glows */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-success/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+                <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-primary/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 end-0 w-[400px] h-[400px] bg-success/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
                 <div className="container mx-auto px-4 relative z-10 max-w-5xl">
 
@@ -176,7 +176,7 @@ export const Contact = () => {
                                                 pattern="[0-9+\s]*"
                                                 value={formData.phone}
                                                 onChange={e => setFormData(p => ({ ...p, phone: e.target.value.replace(/[^0-9+\s]/g, '') }))}
-                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-left placeholder:text-dim"
+                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-end placeholder:text-dim"
                                                 placeholder="+965 XXXX XXXX"
                                                 dir="ltr"
                                             />
@@ -189,7 +189,7 @@ export const Contact = () => {
                                         <select
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
-                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat pr-10"
+                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
                                             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundPosition: 'right 14px center' }}
                                         >
                                             <option>استفسار عن دورة تعليمية</option>

@@ -72,7 +72,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                         <h4 className="text-xs font-medium uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
                     </div>
                 </div>
-                <div className="text-right">
+                <div className="text-start">
                     <p className="text-micro font-medium opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
                     <p className="text-lg font-medium tracking-tighter italic">{next ? pointsNeeded : 'MAX'}</p>
                 </div>

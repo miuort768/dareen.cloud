@@ -105,11 +105,11 @@ export const CurrenciesSection = ({
                         <table className="w-full text-xs">
                             <thead>
                                 <tr className="border-b border-border">
-                                    <th className="text-right py-2 px-3 text-muted font-bold">الرمز</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">الاسم</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">الرمز</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">الحالة</th>
-                                    <th className="text-left py-2 px-3 text-muted font-bold"></th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">الرمز</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">الاسم</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">الرمز</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">الحالة</th>
+                                    <th className="text-end py-2 px-3 text-muted font-bold"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,7 +123,7 @@ export const CurrenciesSection = ({
                                                 {c.isActive ? 'نشط' : 'غير نشط'}
                                             </span>
                                         </td>
-                                        <td className="py-2.5 px-3 text-left">
+                                        <td className="py-2.5 px-3 text-end">
                                             <div className="flex items-center gap-1 justify-end">
                                                 {localCurrency !== c.code && (
                                                     <button onClick={() => setAsDefault(c.code)} className="p-1.5 rounded-lg hover:bg-info-soft text-info transition-all" title="تعيين كافتراضي">
@@ -165,12 +165,12 @@ export const CurrenciesSection = ({
                         <table className="w-full text-xs">
                             <thead>
                                 <tr className="border-b border-border">
-                                    <th className="text-right py-2 px-3 text-muted font-bold">من</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">إلى</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">الشراء</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">البيع</th>
-                                    <th className="text-right py-2 px-3 text-muted font-bold">التاريخ</th>
-                                    <th className="text-left py-2 px-3 text-muted font-bold"></th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">من</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">إلى</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">الشراء</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">البيع</th>
+                                    <th className="text-start py-2 px-3 text-muted font-bold">التاريخ</th>
+                                    <th className="text-end py-2 px-3 text-muted font-bold"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,7 +181,7 @@ export const CurrenciesSection = ({
                                         <td className="py-2 px-3 text-muted">{r.buyRate}</td>
                                         <td className="py-2 px-3 text-muted">{r.sellRate}</td>
                                         <td className="py-2 px-3 text-dim">{new Date(r.effectiveDate).toLocaleDateString('ar')}</td>
-                                        <td className="py-2 px-3 text-left">
+                                        <td className="py-2 px-3 text-end">
                                             <button onClick={() => removeRate(r.id)} className="p-1.5 rounded-lg hover:bg-error-soft text-error transition-all"><Trash2 size={13} /></button>
                                         </td>
                                     </tr>

@@ -59,12 +59,12 @@ export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps
                 ) : (
                     <div className="grid grid-cols-2 gap-6">
                         <div className="p-6 bg-primary/5 border border-primary/10 rounded-[2rem] relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
+                            <div className="absolute top-0 start-0 w-24 h-24 bg-primary opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
                             <p className="text-xs font-normal text-primary dark:text-primary uppercase mb-2">فواتير مدفوعة</p>
                             <h4 className="text-2xl font-medium text-main dark:text-on-primary tabular-nums">{stats.paidInvoices}</h4>
                         </div>
                         <div className="p-6 bg-error/5 border border-error/10 rounded-[2rem] relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-error opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
+                            <div className="absolute top-0 start-0 w-24 h-24 bg-error opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
                             <p className="text-xs font-normal text-error dark:text-error uppercase mb-2">فواتير معلقة</p>
                             <h4 className="text-2xl font-medium text-main dark:text-on-primary tabular-nums">{stats.pendingInvoices}</h4>
                         </div>

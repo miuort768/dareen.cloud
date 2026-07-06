@@ -41,13 +41,13 @@ export const SessionsModal = ({
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-lg bg-white dark:bg-primary-active shadow-xl rounded-2xl overflow-hidden border border-border dark:border-border flex flex-col max-h-[80vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
                 <div className="p-4 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -ms-12 -mt-12 blur-2xl rounded-full" />
-                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 blur-lg rounded-full"></div>
+                    <div className="absolute top-0 start-0 w-24 h-24 bg-white/10 -ms-12 -mt-12 blur-2xl rounded-full" />
+                    <div className="absolute bottom-0 end-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 blur-lg rounded-full"></div>
                     <div className="relative z-10 flex items-center gap-3">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
                             <Calendar size={20} className="text-on-primary" />
                         </div>
-                        <div className="text-right">
+                        <div className="text-start">
                             <h2 className="text-base font-medium leading-tight tracking-tight">{(viewingStudent as { name: string }).name}</h2>
                             <p className="text-micro text-primary font-normal mt-0.5 uppercase tracking-widest opacity-80">
                                 {viewingSubject ? `مواعيد حصص: ${(viewingSubject as { subject: string }).subject}` : 'سجل مواعيد الحصص'}
@@ -68,7 +68,7 @@ export const SessionsModal = ({
                     {!viewingSubject ? (
                         <div className="grid grid-cols-1 gap-3">
                             {enrollments.map((en, idx: number) => (
-                                <button key={idx} onClick={() => onSelectSubject(en)} className="p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-xl hover:border-primary/30 hover:shadow-sm hover:bg-white dark:hover:bg-primary-active transition-all text-right group flex items-center justify-between">
+                                <button key={idx} onClick={() => onSelectSubject(en)} className="p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-xl hover:border-primary/30 hover:shadow-sm hover:bg-white dark:hover:bg-primary-active transition-all text-start group flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="w-9 h-9 bg-primary-soft dark:bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all"><BookOpen size={16} /></div>
                                         <div>
@@ -110,7 +110,7 @@ export const SessionsModal = ({
                                     {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-xl animate-pulse" />)}
                                 </div>
                             ) : (
-                                <div className="relative border-r-2 border-primary/10 pr-5 ms-2 space-y-4">
+                                <div className="relative border-s-2 border-primary/10 ps-5 ms-2 space-y-4">
                                     {(() => {
                                         const subj = viewingSubject as { subject: string };
                                         const filtered = childSessions

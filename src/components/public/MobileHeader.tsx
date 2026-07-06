@@ -44,7 +44,7 @@ export const MobileHeader = () => {
             {menuOpen ? <X className="w-5 h-5 text-muted dark:text-on-primary" /> : <Menu className="w-5 h-5 text-muted dark:text-on-primary" />}
           </button>
           {menuOpen && (
-            <div className="absolute top-12 left-0 bg-white dark:bg-primary rounded-2xl shadow-2xl border border-border dark:border-border overflow-hidden z-50 min-w-[180px]">
+            <div className="absolute top-12 end-0 bg-white dark:bg-primary rounded-2xl shadow-2xl border border-border dark:border-border overflow-hidden z-50 min-w-[180px]">
               {navItems.map((item) => (
                 <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary/30 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-border last:border-0 whitespace-nowrap">
                   <item.icon size={16} className="shrink-0" />

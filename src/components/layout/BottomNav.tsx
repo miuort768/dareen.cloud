@@ -40,7 +40,7 @@ export const BottomNav = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-card/90 backdrop-blur-2xl border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
+    <nav className="md:hidden fixed bottom-0 end-0 start-0 z-[50] bg-card/90 backdrop-blur-2xl border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
       <div className="flex justify-around items-center h-[72px] px-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;

@@ -20,7 +20,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
             {/* Desktop View */}
             <div className="hidden md:block bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-right border-collapse">
+                    <table className="w-full text-start border-collapse">
                         <thead className="bg-primary">
                             <tr>
                                 <th className="px-6 py-3 font-bold text-micro text-on-primary opacity-70 uppercase tracking-widest">توصيف الطالب</th>

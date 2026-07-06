@@ -28,8 +28,8 @@ export const TermsOfService = () => {
 
             {/* Hero Section */}
             <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-card">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-success/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-warning/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute top-0 start-0 w-96 h-96 bg-success/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 end-0 w-64 h-64 bg-warning/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-main border border-border rounded-none shadow-sm mb-4">
@@ -241,8 +241,8 @@ export const TermsOfService = () => {
 
                     {/* Support Button Section */}
                     <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-8 relative overflow-hidden group rounded-card">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-warning/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
+                        <div className="absolute top-0 start-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 end-0 w-32 h-32 bg-warning/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-main mb-2">هل لديك استفسارات فنية؟</h2>

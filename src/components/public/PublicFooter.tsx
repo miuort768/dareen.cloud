@@ -12,9 +12,9 @@ export const PublicFooter = () => {
                 <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-primary-soft rounded-full blur-[120px]"></div>
                 <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-primary-soft rounded-full blur-[120px]"></div>
 
-                <div className="absolute top-10 left-10 w-20 h-20 border border-border/20 rotate-45"></div>
-                <div className="absolute bottom-20 right-10 w-32 h-32 border border-border/20 -rotate-12"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(99,102,241,0.06) 10px, rgba(99,102,241,0.06) 20px)' }}></div>
+                <div className="absolute top-10 end-10 w-20 h-20 border border-border/20 rotate-45"></div>
+                <div className="absolute bottom-20 start-10 w-32 h-32 border border-border/20 -rotate-12"></div>
+                <div className="absolute top-1/2 end-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(99,102,241,0.06) 10px, rgba(99,102,241,0.06) 20px)' }}></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -28,7 +28,7 @@ export const PublicFooter = () => {
                                 دارين السابعة
                             </span>
                         </div>
-                        <p className="text-muted text-sm lg:text-xs leading-relaxed border-r-2 border-border pr-4">
+                        <p className="text-muted text-sm lg:text-xs leading-relaxed border-s-2 border-border ps-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.
                         </p>
                     </div>
@@ -115,7 +115,7 @@ export const PublicFooter = () => {
                 </div>
 
                 <div className="border-t border-border pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
-                    <div className="text-center md:text-right">
+                    <div className="text-center md:text-start">
                         <p className="text-muted text-sm">
                             &copy; {new Date().getFullYear()} <span className="text-main font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
                         </p>

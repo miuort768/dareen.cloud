@@ -46,7 +46,7 @@ export const DeveloperProfile = () => {
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center shadow-xl shadow-primary dark:shadow-primary">
                         <Code size={28} className="text-on-primary" />
                     </div>
-                    <div className="text-center md:text-right">
+                    <div className="text-center md:text-start">
                         <h1 className="text-2xl md:text-3xl font-black text-main dark:text-on-primary">
                             مستر احمد عبدالله
                         </h1>
@@ -168,7 +168,7 @@ export const DeveloperProfile = () => {
                         </div>
                         <h2 className="text-lg font-black text-main dark:text-main">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
-                    <div className="border-r-4 border-error pr-4 space-y-3">
+                    <div className="border-s-4 border-error ps-4 space-y-3">
                         <p className="text-sm text-muted dark:text-muted leading-relaxed">
                             "الإتقان أساس النجاح والتطوير.
                         </p>
@@ -191,7 +191,7 @@ export const DeveloperProfile = () => {
                     transition={{ delay: 0.5 }}
                     className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-3xl p-6 md:p-8 shadow-xl shadow-primary dark:shadow-primary text-on-primary relative overflow-hidden"
                 >
-                    <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
+                    <div className="absolute top-0 end-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
                     <div className="relative z-10 text-center space-y-4">
                         <h3 className="text-xl font-black">تواصل معي</h3>
                         <p className="text-sm text-on-primary/80">يسعدني التواصل معاك</p>

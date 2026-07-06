@@ -114,7 +114,7 @@ export const MobileAdminDashboard = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="pb-4 text-right overflow-x-hidden relative bg-background dark:bg-background"
+            className="pb-4 text-start overflow-x-hidden relative bg-background dark:bg-background"
             dir="rtl"
         >
 
@@ -188,7 +188,7 @@ export const MobileAdminDashboard = ({
                                 <tab.icon {...smallIconProps} />
                                 <span className="text-micro">{tab.label}</span>
                                 {tab.badge !== undefined && tab.badge > 0 && (
-                                    <span className="absolute -top-1 -left-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
+                                    <span className="absolute -top-1 -end-1 min-w-[16px] h-[16px] bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
                                         {tab.badge}
                                     </span>
                                 )}
@@ -370,8 +370,8 @@ export const MobileAdminDashboard = ({
                             {/* Support Card — glassmorphism style */}
                             <motion.div {...fadeUp} className="relative rounded-2xl p-5 shadow-sm overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
                                 <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
-                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-                                <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-info-light/10 rounded-full blur-xl" />
+                                <div className="absolute -top-10 -start-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+                                <div className="absolute -bottom-8 -end-8 w-24 h-24 bg-info-light/10 rounded-full blur-xl" />
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/10">

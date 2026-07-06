@@ -343,13 +343,13 @@ export const MobileAttendance = () => {
                         >
                             {/* Search */}
                             <div className="relative">
-                                <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
+                                <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                                 <input
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     placeholder="ابحث باسم الطالب أو المادة..."
-                                    className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
+                                    className="w-full ps-8 pe-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                                 />
                             </div>
 
@@ -697,7 +697,7 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
                         </div>
                     </div>
                 </div>
-                <div className="text-left">
+                <div className="text-end">
                     {todaySlot ? (
                         <span className="text-micro font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
                             {todaySlot.hour}:00 {todaySlot.period === 'am' ? 'ص' : 'م'}

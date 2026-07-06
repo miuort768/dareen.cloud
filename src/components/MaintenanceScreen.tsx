@@ -7,8 +7,8 @@ export const MaintenanceScreen = () => {
     return (
         <div className="h-dvh w-full bg-gradient-to-br from-background via-card to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
             {/* Geometric Accents */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-primary/10" />
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-primary/10" />
+            <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-primary/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-primary/10" />
+            <div className="absolute bottom-0 end-0 w-[300px] h-[300px] bg-primary/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-primary/10" />
 
             <div className="relative z-10 max-w-xl w-full">
                 {/* Status Icon */}
@@ -43,7 +43,7 @@ export const MaintenanceScreen = () => {
 
             {/* Bottom Button Area */}
             {adminPhone && (
-                <div className="absolute bottom-12 left-6 right-6 flex flex-col items-center">
+                <div className="absolute bottom-12 end-6 start-6 flex flex-col items-center">
                     <a
                         href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
                         target="_blank"

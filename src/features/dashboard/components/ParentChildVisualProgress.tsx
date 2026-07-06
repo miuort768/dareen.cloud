@@ -34,7 +34,7 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                 <p className="text-micro font-medium text-muted uppercase tracking-widest leading-none">مستوى الطالب</p>
                                 <h4 className={cn("text-sm font-medium uppercase tracking-tighter italic", level.color)}>{level.name}</h4>
                             </div>
-                            <div className="text-right flex items-center gap-2">
+                            <div className="text-start flex items-center gap-2">
                                 <TrendingUp size={16} className="text-primary" />
                                 <span className="text-2xl font-medium italic tracking-tighter">{child.totalPoints || 0}</span>
                             </div>
@@ -62,7 +62,7 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                 {child.badges && child.badges.length > 0 ? child.badges.map((badge, idx) => (
                                     <div key={idx} className="p-2 bg-card text-on-primary border-2 border-white/20 hover:scale-110 transition-transform cursor-help group/badge relative">
                                         <Award size={18} className="text-warning" />
-                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-card text-micro font-medium uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
+                                        <div className="absolute bottom-full end-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-card text-micro font-medium uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
                                             {badge}
                                         </div>
                                     </div>

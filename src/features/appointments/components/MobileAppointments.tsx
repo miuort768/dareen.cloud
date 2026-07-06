@@ -307,13 +307,13 @@ export const MobileAppointments = () => {
             {/* Filters */}
             <div className="px-4 pb-2 space-y-2">
                 <div className="relative">
-                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
+                    <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث باسم الطالب أو المادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
+                        className="w-full ps-8 pe-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                     />
                 </div>
                 <div className="flex gap-2">
@@ -449,7 +449,7 @@ export const MobileAppointments = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary/[0.03] border-r-[3px] border-primary">
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary/[0.03] border-e-[3px] border-primary">
                                         <div>
                                             <span className="text-micro font-bold text-muted">الطالب</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.studentName}</p>
@@ -458,7 +458,7 @@ export const MobileAppointments = () => {
                                         <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success/[0.03] border-r-[3px] border-success">
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success/[0.03] border-e-[3px] border-success">
                                         <div>
                                             <span className="text-micro font-bold text-muted">المعلمة</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.teacherName}</p>
@@ -466,7 +466,7 @@ export const MobileAppointments = () => {
                                         <ShieldCheck size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning/[0.03] border-r-[3px] border-warning">
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning/[0.03] border-e-[3px] border-warning">
                                         <div>
                                             <span className="text-micro font-bold text-muted">المادة</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedAppointment.subject}</p>

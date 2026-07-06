@@ -110,7 +110,7 @@ export const Modal: React.FC<ModalProps> = ({
               </button>
             </div>
 
-            <div className="text-right px-6 pb-6 max-h-[70vh] overflow-y-auto">
+            <div className="text-start px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {children}
             </div>
           </motion.div>

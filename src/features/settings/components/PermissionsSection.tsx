@@ -84,7 +84,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                             <button
                                 key={p.id}
                                 onClick={() => togglePerm(p.id)}
-                                className={`text-xs font-bold px-3 py-2 rounded-xl border transition-all text-right ${
+                                className={`text-xs font-bold px-3 py-2 rounded-xl border transition-all text-start ${
                                     isSelected
                                         ? 'bg-primary-soft border-primary text-primary'
                                         : 'bg-surface border-border text-muted hover:bg-hover'
