@@ -207,8 +207,8 @@ export const ParentDashboard = () => {
         <>
             {/* ─── Desktop version ─── */}
             <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-background via-card to-warning-soft dark:from-bg-surface dark:via-bg-surface dark:to-warning-soft/20 font-sans" dir="rtl">
-                <div className="absolute top-0 right-1/4 w-96 h-96 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 end-1/4 w-96 h-96 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 start-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 max-w-[1600px] mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 
                 <div className="relative bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
@@ -238,7 +238,7 @@ export const ParentDashboard = () => {
                     <div className="z-10 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-black leading-tight text-info-dark">
                             تعلّم بلا حدود{' '}
-                            <span className="inline-block border-e-4 border-current pr-1 animate-pulse">|</span>
+                            <span className="inline-block border-e-4 border-current pe-1 animate-pulse">|</span>
                         </h2>
                         <p className="text-base font-bold text-info-dark opacity-80">من أي مكان في العالم</p>
                         <p className="text-sm leading-relaxed text-info-dark opacity-70 max-w-md">
@@ -404,7 +404,7 @@ export const ParentDashboard = () => {
                                         <p className="text-micro font-medium text-muted">{task.studentName}</p>
                                     </div>
                                 </div>
-                                <div className="text-left font-bold text-micro text-dim">
+                                <div className="text-start font-bold text-micro text-dim">
                                     {task.time}
                                 </div>
                             </div>
@@ -457,8 +457,8 @@ export const ParentDashboard = () => {
                 </div>
 
                 <div className="bg-gradient-to-br from-warning to-warning rounded-card p-5 text-on-warning flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
-                    <div className="text-center md:text-right relative z-10">
+                    <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
+                    <div className="text-center md:text-end relative z-10">
                         <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
                         <p className="text-xs font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
                     </div>
@@ -573,7 +573,7 @@ export const ParentDashboard = () => {
                                 <div className="z-10 space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-info-dark">
                                         تعلّم بلا حدود{' '}
-                                        <span className="inline-block border-e-4 border-current pr-0.5 animate-pulse">|</span>
+                                        <span className="inline-block border-e-4 border-current pe-0.5 animate-pulse">|</span>
                                     </h2>
                                     <p className="text-sm font-bold text-info-dark opacity-80">من أي مكان في العالم</p>
                                     <p className="text-xs leading-relaxed text-info-dark opacity-70 max-w-none">
@@ -725,7 +725,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <h2 className="text-main dark:text-inverse text-sm font-black">التقدم الأكاديمي</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
+                                    <div className="absolute top-0 start-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
                                     <div className="relative z-10">
                                         <div className="flex justify-between items-center mb-3">
                                             <h3 className="text-xs font-black">التقدم الأكاديمي العام</h3>
@@ -765,7 +765,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                                     <p className="text-micro text-muted dark:text-muted">{task.studentName}</p>
                                                 </div>
                                             </div>
-                                            <div className="text-left font-bold text-micro text-dim dark:text-dim">{task.time}</div>
+                                            <div className="text-start font-bold text-micro text-dim dark:text-dim">{task.time}</div>
                                         </div>
                                     ))}
                                     {todayTasks.length === 0 && (
@@ -821,7 +821,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <h2 className="text-main dark:text-inverse text-sm font-black">الدعم الفني</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
+                                    <div className="absolute top-0 start-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
                                     <div className="relative z-10 flex items-center justify-between">
                                         <div>
                                             <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
@@ -843,7 +843,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
             </div>
 
             {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
-            <div className="block md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-primary-active border-t border-border dark:border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
+            <div className="block md:hidden fixed bottom-0 start-0 end-0 z-50 bg-white dark:bg-primary-active border-t border-border dark:border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
                 <div className="flex items-center justify-around h-[68px] px-2">
                     {[
                         { id: 'profile', label: 'حسابي', icon: User },

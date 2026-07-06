@@ -54,7 +54,7 @@ export const PoliciesSettings = ({
                                 key={opt.id}
                                 onClick={() => { setTeacherCommissionType(opt.id); showNotify(`الحساب: ${opt.label}`); }}
                                 className={cn(
-                                    'p-3 border text-right transition-all',
+                                    'p-3 border text-end transition-all',
                                     teacherCommissionType === opt.id
                                         ? 'bg-primary text-on-primary border-primary shadow-sm'
                                         : 'bg-card text-muted border-border hover:border-primary'

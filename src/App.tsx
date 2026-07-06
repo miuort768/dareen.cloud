@@ -175,7 +175,7 @@ function App() {
       {/* Skip to main content for keyboard users */}
       <a
         href="#main-content"
-        className="fixed top-2 right-2 z-[99999] -translate-y-20 focus:translate-y-0 bg-primary text-on-primary px-4 py-2 text-sm font-bold shadow-lg transition-transform duration-200 outline-none"
+        className="fixed top-2 end-2 z-[99999] -translate-y-20 focus:translate-y-0 bg-primary text-on-primary px-4 py-2 text-sm font-bold shadow-lg transition-transform duration-200 outline-none"
       >
         تخطي إلى المحتوى الرئيسي
       </a>

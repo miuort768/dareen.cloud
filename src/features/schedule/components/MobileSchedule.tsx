@@ -217,13 +217,13 @@ export const MobileSchedule = () => {
             {/* Search */}
             <div className="px-4 pt-3 pb-1">
                 <div className="relative">
-                    <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted" />
+                    <Search size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                        className="w-full pr-8 pl-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
+                        className="w-full pe-8 ps-8 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted dark:placeholder:text-muted text-main dark:text-on-primary shadow-sm"
                     />
                 </div>
             </div>

@@ -317,7 +317,7 @@ export const StudentInvoices = () => {
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
                             <div className="relative flex-1 max-w-md">
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
+                                <Search className="absolute end-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                                 <input
                                     placeholder="ÈÍË ÈÇÓã ÇáØÇáÈ Ãæ ÇáÈíÇä..."
                                     className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary placeholder:opacity-50 bg-white/15"

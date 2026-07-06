@@ -44,8 +44,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
     return (
         <section className="relative overflow-hidden bg-white dark:bg-card rounded-3xl shadow-inner">
             {/* Soft glow background */}
-            <div className="absolute top-20 -right-20 w-60 h-60 bg-accent/10 dark:bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-20 -end-20 w-60 h-60 bg-accent/10 dark:bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-40 -start-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
@@ -81,7 +81,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     {steps.map((s, i) => (
                         <div key={i} className="bg-card rounded-2xl border border-border shadow-sm p-3.5 flex flex-col items-center text-center relative">
                             {/* Number Badge */}
-                            <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary dark:bg-primary flex items-center justify-center shadow-md">
+                            <div className="absolute -top-2 -end-2 w-5 h-5 rounded-full bg-primary dark:bg-primary flex items-center justify-center shadow-md">
                                 <span className="text-micro font-black text-on-primary">{s.num}</span>
                             </div>
                             {/* Icon Box */}

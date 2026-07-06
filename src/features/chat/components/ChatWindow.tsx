@@ -127,7 +127,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         <Image src="/chat-avatar.jpg" alt="avatar" className="w-full h-full" />
                     </div>
 
-                    <div className="flex flex-col text-right">
+                    <div className="flex flex-col text-end">
                         <h2 className={cn(
                             "font-medium text-main leading-tight truncate max-w-[150px] md:max-w-[300px]",
                             selectedConv.isGroup ? "text-sm" : "text-base"
@@ -156,7 +156,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     placeholder="بحث..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-muted"
+                                    className="bg-transparent border-none text-xs text-end w-full focus:ring-0 placeholder:text-muted"
                                     autoFocus
                                 />
                             )}
@@ -185,25 +185,25 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     <motion.div 
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-card shadow-sm z-[100] py-2 rounded-md"
+                                        className="absolute top-full start-0 mt-2 w-48 bg-white dark:bg-card shadow-sm z-[100] py-2 rounded-md"
                                     >
                                         <button
                                             onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-3 text-sm text-muted hover:bg-hover dark:hover:bg-hover transition-colors"
+                                            className="w-full text-end px-4 py-3 text-sm text-muted hover:bg-hover dark:hover:bg-hover transition-colors"
                                         >
                                             معلومات المحادثة
                                         </button>
                                         {selectedConv.isGroup && (
                                             <button
                                                 onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                                className="w-full text-right px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover dark:hover:bg-hover transition-colors font-normal"
+                                                className="w-full text-end px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover dark:hover:bg-hover transition-colors font-normal"
                                             >
                                                 تعديل المجموعة
                                             </button>
                                         )}
                                         <button
                                             onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-3 text-sm text-error hover:bg-hover dark:hover:bg-hover transition-colors"
+                                            className="w-full text-end px-4 py-3 text-sm text-error hover:bg-hover dark:hover:bg-hover transition-colors"
                                         >
                                             حذف الدردشة
                                         </button>
@@ -262,12 +262,12 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                             : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none me-2"
                                     )}>
                                         {isGroup && !isMe && (
-                                            <span className="block text-xs font-normal text-primary mb-0.5 text-right">
+                                            <span className="block text-xs font-normal text-primary mb-0.5 text-end">
                                                 {msg.senderName}
                                             </span>
                                         )}
 
-                                        <div className="text-sm text-main leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
+                                        <div className="text-sm text-main leading-[1.4] whitespace-pre-wrap text-end tracking-tight">
                                             {msg.content}
                                         </div>
                                         
@@ -303,7 +303,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-20 left-6 w-10 h-10 bg-white dark:bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover"
+                        className="absolute bottom-20 start-6 w-10 h-10 bg-white dark:bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
@@ -348,7 +348,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             }
                         }}
                         placeholder="اكتب رسالة"
-                        className="w-full bg-white dark:bg-card text-main text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-success shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
+                        className="w-full bg-white dark:bg-card text-main text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-success shadow-sm max-h-32 resize-none text-end scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
                     />
                 </div>
 

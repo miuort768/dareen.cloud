@@ -42,7 +42,7 @@ export const MouseGlow: React.FC = () => {
 
             {/* 2. Outer Interactive Ring */}
             <motion.div 
-                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-primary/30 dark:border-primary/40"
+                className="fixed top-0 start-0 w-8 h-8 rounded-full border border-primary/30 dark:border-primary/40"
                 style={{
                     x: springX,
                     y: springY,
@@ -58,7 +58,7 @@ export const MouseGlow: React.FC = () => {
 
             {/* 3. Inner Crisp Dot */}
             <motion.div 
-                className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-primary dark:bg-primary shadow-[0_0_15px_rgba(79,70,229,0.80)]"
+                className="fixed top-0 start-0 w-1.5 h-1.5 rounded-full bg-primary dark:bg-primary shadow-[0_0_15px_rgba(79,70,229,0.80)]"
                 style={{
                     x: mouseX,
                     y: mouseY,

@@ -24,7 +24,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
         </div>
 
         <div className="overflow-x-auto border border-border">
-            <table className="w-full text-right text-sm">
+            <table className="w-full text-end text-sm">
                 <thead>
                     <tr className="bg-hover">
                         <th className="px-4 py-3 text-micro font-bold text-muted tracking-wide">التوقيت</th>

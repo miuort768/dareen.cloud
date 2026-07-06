@@ -58,8 +58,8 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
             "bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary-active)]",
             "dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-primary)]"
         )}>
-            <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 end-0 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 start-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-1">
                     <div className="w-2 h-2 bg-success rounded-full animate-pulse" />

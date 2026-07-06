@@ -112,11 +112,11 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                         <div className="space-y-2">
                             <label className="text-micro font-normal text-dim uppercase ms-1">اسم المستخدم</label>
                             <div className="relative">
-                                <UserIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
+                                <UserIcon className="absolute end-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono dark:text-main"
+                                    className="w-full ps-4 pe-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono dark:text-main"
                                     placeholder="اسم مستخدم فريد"
                                 />
                             </div>
@@ -124,12 +124,12 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                         <div className="space-y-2">
                             <label className="text-micro font-normal text-dim uppercase ms-1">كلمة المرور</label>
                             <div className="relative">
-                                <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
+                                <Key className="absolute end-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono tracking-widest dark:text-main"
+                                    className="w-full ps-4 pe-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono tracking-widest dark:text-main"
                                     placeholder={initialData ? "••••••••" : "كلمة مرور قوية"}
                                 />
                             </div>
@@ -169,14 +169,14 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
     <div className="space-y-2">
         <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
         <div className="relative group">
-            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
+            {Icon && <Icon className="absolute end-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
             <select
                 required={required}
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
                     "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal appearance-none",
-                    Icon && "pr-10",
+                    Icon && "pe-10",
                     !value && "text-dim"
                 )}
             >
@@ -193,7 +193,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
     <div className="space-y-2">
         <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
         <div className="relative group">
-            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
+            {Icon && <Icon className="absolute end-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
             <input
                 required={required}
                 type={type}
@@ -202,7 +202,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 onChange={e => onChange(e.target.value)}
                 className={cn(
                     "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal transition-all",
-                    Icon && "pr-10",
+                    Icon && "pe-10",
                     dir === 'ltr' && "font-mono"
                 )}
                 placeholder={placeholder}

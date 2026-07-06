@@ -257,13 +257,13 @@ export const AdminBlog = () => {
 
             <div className="bg-card p-4 border border-border shadow-sm space-y-4 rounded-2xl">
                 <div className="relative flex-grow">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={20} />
+                    <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-dim" size={20} />
                     <input
                         type="text"
                         placeholder="بحث عن مقالات أو تصنيفات..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-surface dark:bg-card border border-border pr-12 py-3 focus:outline-none focus:ring-2 focus:ring-focus transition-all font-bold text-sm rounded-xl outline-none"
+                        className="w-full bg-surface dark:bg-card border border-border pe-12 py-3 focus:outline-none focus:ring-2 focus:ring-focus transition-all font-bold text-sm rounded-xl outline-none"
                     />
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
@@ -311,13 +311,13 @@ export const AdminBlog = () => {
                             <div>
                                 <label className="block text-micro font-bold text-muted mb-1.5">الرابط المختصر (Slug)</label>
                                 <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                    <LinkIcon className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
                                         required
                                         type="text"
                                         value={currentPost.slug}
                                         onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value.replace(/\s+/g, '-').toLowerCase() })}
-                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 ps-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-start rounded-xl outline-none"
                                         dir="ltr"
                                         placeholder="أفضل-نصائح-الدراسة"
                                     />
@@ -329,12 +329,12 @@ export const AdminBlog = () => {
                             <div>
                                 <label className="block text-micro font-bold text-muted mb-1.5">التصنيف</label>
                                 <div className="relative">
-                                    <Tag className="absolute right-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                    <Tag className="absolute end-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input
                                         type="text"
                                         value={currentPost.category}
                                         onChange={(e) => setCurrentPost({ ...currentPost, category: e.target.value })}
-                                        className="w-full bg-surface dark:bg-card border border-border pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border pe-10 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                         placeholder="مثل: نصائح دراسية"
                                     />
                                 </div>
@@ -434,9 +434,9 @@ export const AdminBlog = () => {
                             <div>
                                 <label className="text-micro font-bold text-dim block mb-1">رابط المصدر</label>
                                 <div className="relative">
-                                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                    <LinkIcon className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                     <input type="url" value={currentPost.source || ''} onChange={e => setCurrentPost({ ...currentPost, source: e.target.value })}
-                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
+                                        className="w-full bg-surface dark:bg-card border border-border px-4 py-3 ps-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-start rounded-xl outline-none"
                                         dir="ltr" placeholder="https://..." />
                                 </div>
                             </div>
@@ -452,12 +452,12 @@ export const AdminBlog = () => {
                         <div>
                             <label className="block text-micro font-bold text-muted mb-1.5">رابط الصورة الرئيسية</label>
                             <div className="relative">
-                                <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                <ImageIcon className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                 <input
                                     type="url"
                                     value={currentPost.coverImage}
                                     onChange={(e) => setCurrentPost({ ...currentPost, coverImage: e.target.value })}
-                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
+                                    className="w-full bg-surface dark:bg-card border border-border px-4 py-3 ps-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-start rounded-xl outline-none"
                                     dir="ltr"
                                     placeholder="https://..."
                                 />
@@ -531,43 +531,43 @@ export const AdminBlog = () => {
                                         <span className="text-micro font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
                                         <button type="button" onClick={() => setCurrentPost({ ...currentPost, showButtons: !currentPost.showButtons })}
                                             className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim dark:bg-hover'}`}>
-                                            <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'left-0.5 translate-x-6' : 'left-0.5'}`} />
+                                            <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'start-0.5 translate-x-6' : 'start-0.5'}`} />
                                         </button>
                                     </div>
                                     <div>
                                         <label className="block text-micro font-bold text-dim mb-1.5 flex items-center gap-1.5"><Download size={12} /> رابط التحميل</label>
                                         <div className="relative">
-                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                            <LinkIcon className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
                                                 type="url"
                                                 value={currentPost.downloadLink || ''}
                                                 onChange={(e) => setCurrentPost({ ...currentPost, downloadLink: e.target.value })}
-                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
+                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 ps-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-start rounded-xl outline-none"
                                                 dir="ltr"
                                                 placeholder="https://..."
                                             />
                                         </div>
                                         <label className="block text-micro font-bold text-dim mt-2 mb-1.5">نص زر التحميل</label>
                                         <input type="text" value={currentPost.downloadButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, downloadButtonText: e.target.value })}
-                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
+                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-end rounded-xl outline-none"
                                             placeholder="تحميل الملف" />
                                     </div>
                                     <div>
                                         <label className="block text-micro font-bold text-dim mb-1.5 flex items-center gap-1.5"><Eye size={12} /> رابط المشاهدة</label>
                                         <div className="relative">
-                                            <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
+                                            <LinkIcon className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
                                             <input
                                                 type="url"
                                                 value={currentPost.watchLink || ''}
                                                 onChange={(e) => setCurrentPost({ ...currentPost, watchLink: e.target.value })}
-                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-left rounded-xl outline-none"
+                                                className="w-full bg-surface dark:bg-card border border-border px-4 py-3 ps-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-start rounded-xl outline-none"
                                                 dir="ltr"
                                                 placeholder="https://..."
                                             />
                                         </div>
                                         <label className="block text-micro font-bold text-dim mt-2 mb-1.5">نص زر المشاهدة</label>
                                         <input type="text" value={currentPost.watchButtonText || ''} onChange={(e) => setCurrentPost({ ...currentPost, watchButtonText: e.target.value })}
-                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-right rounded-xl outline-none"
+                                            className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-end rounded-xl outline-none"
                                             placeholder="مشاهدة الملف" />
                                     </div>
                                     <div className="flex-1">
@@ -672,7 +672,7 @@ export const AdminBlog = () => {
                         <div key={post.id} className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
                             <div className="relative h-36 overflow-hidden">
                                 <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" />
-                                <div className="absolute top-2 right-2">
+                                <div className="absolute top-2 end-2">
                                     <span className="text-micro font-bold px-2 py-1 rounded-lg bg-error text-on-error">{post.category}</span>
                                 </div>
                             </div>

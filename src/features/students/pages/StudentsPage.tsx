@@ -210,7 +210,7 @@ export const Students = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="relative">
-                            <Search size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50" />
+                            <Search size={13} className="absolute end-2.5 top-1/2 -translate-y-1/2 text-white/50" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
@@ -348,7 +348,7 @@ export const Students = () => {
                         />
                     </div>
                 ) : (
-                    <div className="animate-in slide-in-from-right-8 duration-500">
+                    <div className="animate-in slide-in-from-end-8 duration-500">
                         {selectedStudent && (
                             <StudentDetails
                                 student={selectedStudent}

@@ -98,9 +98,9 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         value={searchUser}
                                         onChange={(e) => setSearchUser(e.target.value)}
                                         placeholder="ابحث عن اسم أو رقم..."
-                                        className="w-full bg-surface dark:bg-card border-none py-2 pr-10 pl-4 rounded-lg text-sm focus:ring-0 text-right"
+                                        className="w-full bg-surface dark:bg-card border-none py-2 pe-10 ps-4 rounded-lg text-sm focus:ring-0 text-end"
                                     />
-                                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted font-normal" size={18} />
+                                    <Search className="absolute end-3 top-1/2 -translate-y-1/2 text-muted font-normal" size={18} />
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                 {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
-                                                    className="absolute -top-0 -right-0 bg-background0 text-on-primary rounded-full p-0.5 border-2 border-white dark:border-card hover:bg-error transition-colors"
+                                                    className="absolute -top-0 -end-0 bg-background0 text-on-primary rounded-full p-0.5 border-2 border-white dark:border-card hover:bg-error transition-colors"
                                                 >
                                                     <X size={12} />
                                                 </button>
@@ -134,7 +134,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         <div className="w-12 h-12 bg-success text-on-primary rounded-full flex items-center justify-center shadow-sm">
                                             <UsersIcon size={24} />
                                         </div>
-                                        <span className="font-normal text-main text-right">إنشاء مجموعة جديدة</span>
+                                        <span className="font-normal text-main text-end">إنشاء مجموعة جديدة</span>
                                     </button>
                                 )}
 
@@ -158,7 +158,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                 <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-full flex items-center justify-center font-medium text-primary dark:text-primary shadow-sm transition-all border-2 border-white dark:border-border">
                                                     {user.name.charAt(0)}
                                                 </div>
-                                                <div className="text-right">
+                                                <div className="text-end">
                                                     <p className="font-normal text-base text-main">{user.name}</p>
                                                     <p className="text-xs text-muted dark:text-muted">@{user.username}</p>
                                                 </div>
@@ -177,7 +177,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                             {/* Floating Next Button */}
                             {isCreatingGroup && selectedUsers.length > 0 && (
-                                <div className="absolute bottom-6 left-6 animate-in slide-in-from-bottom-5 fade-in duration-300">
+                                <div className="absolute bottom-6 start-6 animate-in slide-in-from-bottom-5 fade-in duration-300">
                                     <button 
                                         onClick={handleNextStep}
                                         className="bg-success text-on-primary p-4 rounded-full shadow-sm hover:scale-110 active:scale-95 transition-all"
@@ -189,7 +189,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         </>
                     ) : (
                         /* Step 2: Group Info */
-                        <div className="flex-1 flex flex-col p-6 animate-in slide-in-from-right-5 fade-in duration-300">
+                        <div className="flex-1 flex flex-col p-6 animate-in slide-in-from-end-5 fade-in duration-300">
                             <div className="flex flex-col items-center mb-10">
                                 <div onClick={() => avatarInputRef.current?.click()} className="w-40 h-40 bg-surface dark:bg-card rounded-full flex items-center justify-center text-muted relative group cursor-pointer shadow-inner">
                                     <Camera size={48} />
@@ -209,7 +209,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         autoFocus
                                         onChange={(e) => setGroupName(e.target.value)}
                                         placeholder="اسم المجموعة..."
-                                        className="w-full bg-transparent border-b-2 border-success/30 focus:border-success py-3 text-lg font-normal outline-none transition-colors text-main text-right"
+                                        className="w-full bg-transparent border-b-2 border-success/30 focus:border-success py-3 text-lg font-normal outline-none transition-colors text-main text-end"
                                     />
                                     <div className="flex justify-start mt-1">
                                         <span className="text-micro font-normal text-muted">{groupName.length}/25</span>
@@ -217,7 +217,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 </div>
 
                                 <div className="pt-6">
-                                    <p className="text-sm text-muted dark:text-muted mb-4 text-right">الأعضاء: {selectedUsers.length}</p>
+                                    <p className="text-sm text-muted dark:text-muted mb-4 text-end">الأعضاء: {selectedUsers.length}</p>
                                     <div className="flex flex-wrap gap-2 justify-end">
                                         {selectedUsersObjects.slice(0, 5).map(u => (
                                             <span key={u.id} className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-dim whitespace-nowrap">
@@ -258,10 +258,10 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {showDeleteConfirm && (
                 <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                     <div className="bg-white dark:bg-card w-full max-w-sm shadow-sm rounded-lg p-6">
-                        <h3 className="text-xl font-normal text-error mb-4 text-right">
+                        <h3 className="text-xl font-normal text-error mb-4 text-end">
                             {deleteType === 'all_conversations' ? 'حذف كافة المحادثات؟' : 'هل تريد الحذف؟'}
                         </h3>
-                        <p className="text-muted dark:text-dim mb-8 text-sm text-right leading-relaxed">
+                        <p className="text-muted dark:text-dim mb-8 text-sm text-end leading-relaxed">
                             {deleteType === 'all_conversations' 
                                 ? 'سيتم مسح جميع سجلات الدردشة الخاصة بك نهائياً. لا يمكن التراجع عن هذا الإجراء.' 
                                 : `هل أنت متأكد من حذف ${itemToDelete && 'displayName' in itemToDelete ? (itemToDelete as { displayName: string }).displayName : 'هذا العنصر'}؟`}

@@ -179,7 +179,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             </div>
                         </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-end">
                         <span className="text-micro font-normal text-muted block mb-0.5">التقدم</span>
                         <div className="flex items-center justify-end gap-1">
                              <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-error" : "text-primary")} />

@@ -19,7 +19,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                 <h3 className="font-medium text-xs uppercase tracking-tighter">أبطال مجموعتك (أعلى النقاط)</h3>
             </div>
 
-            <div className="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1">
+            <div className="space-y-3 flex-1 overflow-y-auto custom-scrollbar pe-1">
                 {students.map((student, index) => {
                     const rank = getRankByPoints(student.totalPoints || 0, STUDENT_RANKS);
                     

@@ -12,7 +12,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
     return (
         <div className="relative overflow-hidden bg-error px-4 md:px-8 py-8 flex flex-row items-center justify-between gap-4 border-b border-error-hover shadow-sm" dir="rtl">
             {/* Geometric Background Element */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
+            <div className="absolute top-0 end-0 w-64 h-64 bg-white/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
 
             <div className="relative z-10 flex items-center gap-4">
                 <div className="w-12 h-12 overflow-hidden border-2 border-success shadow-lg shrink-0 bg-white/5 ">

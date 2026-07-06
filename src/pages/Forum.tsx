@@ -230,12 +230,12 @@ export const Forum = () => {
             {/* ════════ HEADER ════════ */}
             <div className="relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] rounded-3xl shadow-xl shadow-primary/30 border border-white/10 px-6 py-8 mx-4 mt-4 mb-6">
                 {/* Decorative blobs */}
-                <div className="absolute -top-16 -right-16 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
-                <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-info-light/15 rounded-full blur-[100px] pointer-events-none" />
-                <div className="absolute top-1/3 left-1/4 w-2 h-2 bg-white/30 rounded-full" />
-                <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-primary/40 rounded-full" />
-                <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white/20 rounded-full" />
-                <div className="absolute top-1/4 right-1/4 w-3 h-3 border border-white/10 rounded-full" />
+                <div className="absolute -top-16 -end-16 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute -bottom-20 -start-20 w-72 h-72 bg-info-light/15 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute top-1/3 start-1/4 w-2 h-2 bg-white/30 rounded-full" />
+                <div className="absolute top-1/2 end-1/3 w-1.5 h-1.5 bg-primary/40 rounded-full" />
+                <div className="absolute bottom-1/4 start-1/3 w-1 h-1 bg-white/20 rounded-full" />
+                <div className="absolute top-1/4 end-1/4 w-3 h-3 border border-white/10 rounded-full" />
                 <div className="relative z-10 flex flex-col items-center text-center">
                     <div className="w-14 h-14 bg-white/15 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 border border-white/20 shadow-lg shadow-primary/20">
                         <Sparkles size={26} className="text-on-primary" />
@@ -347,8 +347,8 @@ export const Forum = () => {
                                                     <MoreHorizontal size={17} />
                                                 </button>
                                                 {showMenuPostId === post.id && (
-                                                    <div className="absolute left-0 top-full mt-1 w-36 bg-white dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
-                                                        <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-micro font-bold text-right text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
+                                                    <div className="absolute start-0 top-full mt-1 w-36 bg-white dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
+                                                        <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-micro font-bold text-end text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
                                                             <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
                                                         </button>
                                                     </div>
@@ -431,7 +431,7 @@ export const Forum = () => {
 
                                                         {/* Replies */}
                                                         {node.replies.length > 0 && (
-                                                            <div className="pr-7 space-y-2 border-e-2 border-primary dark:border-primary/30 ms-3">
+                                                            <div className="pe-7 space-y-2 border-e-2 border-primary dark:border-primary/30 ms-3">
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-2">
                                                                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border border-primary/50 dark:border-primary/30">
@@ -467,13 +467,13 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب رداً على هذا المنشور..."
-                                                        className="w-full bg-white dark:bg-primary-active rounded-full pl-10 pr-4 py-2.5 text-xs font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
+                                                        className="w-full bg-white dark:bg-primary-active rounded-full ps-10 pe-4 py-2.5 text-xs font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button
                                                         onClick={() => handleAddComment(post.id)}
                                                         disabled={!(commentTexts[post.id] || '').trim()}
-                                                        className="absolute left-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
+                                                        className="absolute start-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
                                                     >
                                                         <Send size={11} />
                                                     </button>
@@ -505,9 +505,9 @@ export const Forum = () => {
             {/* ════════ HELP / GUIDELINES ════════ */}
             <div className="max-w-[700px] mx-auto px-4 mt-10 mb-8">
                 <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden shadow-xl shadow-primary/30">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-y-12 translate-x-12 rotate-45 rounded-3xl pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
-                    <div className="relative z-10 text-center md:text-right">
+                    <div className="absolute top-0 end-0 w-32 h-32 bg-white/10 -translate-y-12 translate-x-12 rotate-45 rounded-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 start-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
+                    <div className="relative z-10 text-center md:text-end">
                         <h4 className="text-on-primary font-black text-base mb-1">إرشادات المنتدى</h4>
                         <p className="text-primary text-xs font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>

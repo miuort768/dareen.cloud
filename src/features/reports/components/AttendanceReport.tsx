@@ -35,7 +35,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-card border border-border shadow-xl text-main px-4 py-3 rounded-xl text-right min-w-[140px]" dir="rtl">
+            <div className="bg-card border border-border shadow-xl text-main px-4 py-3 rounded-xl text-end min-w-[140px]" dir="rtl">
                 <p className="text-micro font-medium text-muted uppercase mb-2 pb-1 border-b border-border">{label}</p>
                 {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
                     <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
@@ -144,11 +144,11 @@ export const AttendanceReport = ({
 
                 {/* Desktop Table */}
                 <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full text-right">
+                    <table className="w-full text-end">
                         <thead>
                             <tr className="text-on-primary" style={{ background: 'linear-gradient(to left, var(--chart-4), color-mix(in srgb, var(--chart-4) 70%, white))' }}>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
-                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-right">اسم المعلمة</th>
+                                <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-end">اسم المعلمة</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">مكتملة</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">ملغية</th>
@@ -189,7 +189,7 @@ export const AttendanceReport = ({
                                                             style={{ width: `${rate}%` }}
                                                         />
                                                     </div>
-                                                    <span className={cn("text-micro font-medium w-9 text-left", textColor)}>{rate}%</span>
+                                                    <span className={cn("text-micro font-medium w-9 text-start", textColor)}>{rate}%</span>
                                                 </div>
                                             </td>
                                         </tr>

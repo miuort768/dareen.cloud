@@ -26,7 +26,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
             className
           )} />
           <div className={cn(
-            'absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white dark:bg-surface shadow-sm transition-transform',
+            'absolute top-0.5 start-0.5 w-5 h-5 rounded-full bg-white dark:bg-surface shadow-sm transition-transform',
             'peer-checked:translate-x-4'
           )} />
         </div>

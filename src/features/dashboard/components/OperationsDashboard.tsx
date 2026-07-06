@@ -44,7 +44,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     </div>
                 </div>
 
-                <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
+                <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pe-1">
                     {lowBalanceStudents.length > 0 ? (
                         lowBalanceStudents.map((item, idx) => (
                             <div key={idx} className="p-3 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all flex items-center justify-between group/item">
@@ -113,7 +113,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     </div>
                 </div>
 
-                <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pr-1">
+                <div className="flex-1 space-y-2 overflow-y-auto max-h-[380px] custom-scrollbar pe-1">
                     {tasks.length > 0 ? (
                         tasks.slice(0, 10).map((task) => (
                             <div key={task.id} className="p-3 bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all flex items-center justify-between">

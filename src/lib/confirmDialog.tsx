@@ -68,7 +68,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                         "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 start-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
                             <X size={15} />
                         </button>
 
@@ -81,7 +81,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                                 {title}
                             </h3>
 
-                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 text-right max-w-[280px]">
+                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 text-end max-w-[280px]">
                                 {options.message}
                             </p>
 
@@ -138,7 +138,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                         "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 start-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-dim transition-colors" aria-label="إغلاق">
                             <X size={15} />
                         </button>
 

@@ -125,9 +125,9 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 pr-12 py-4 rounded-card bg-white dark:bg-card/80 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold dark:focus:shadow-lg"
+                className="w-full px-5 pe-12 py-4 rounded-card bg-white dark:bg-card/80 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold dark:focus:shadow-lg"
               />
-              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-dim dark:text-muted w-5 h-5 group-focus-within:text-primary transition-colors" />
+              <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-dim dark:text-muted w-5 h-5 group-focus-within:text-primary transition-colors" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -175,13 +175,13 @@ export const Courses = () => {
 
                     <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-[var(--bg-card)] to-transparent" />
 
-                    <div className="absolute top-3 right-3 z-10">
+                    <div className="absolute top-3 end-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
                         {CATEGORIES.find(c => c.value === course.category)?.label || course.category}
                       </div>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 z-10">
+                    <div className="absolute bottom-3 start-3 z-10">
                       <div className="bg-white/90 dark:bg-primary-active/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />
                       </div>

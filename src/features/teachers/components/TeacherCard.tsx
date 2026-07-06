@@ -32,7 +32,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 {/* THE CARD CONTENT */}
                 <div className="p-8 relative print:p-0">
                     {/* Background Pattern */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-soft opacity-50 dark:opacity-70 -ms-8 -mt-8 rotate-45 pointer-events-none border border-primary-light"></div>
+                    <div className="absolute top-0 end-0 w-32 h-32 bg-primary-soft opacity-50 dark:opacity-70 -ms-8 -mt-8 rotate-45 pointer-events-none border border-primary-light"></div>
                     
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">
@@ -53,7 +53,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         {/* Photo Placeholder */}
                         <div className="w-28 h-32 bg-surface border-2 border-border flex items-center justify-center relative shadow-inner overflow-hidden">
                             <User size={48} className="text-dim" />
-                            <div className="absolute bottom-0 left-0 w-full h-1 bg-info"></div>
+                            <div className="absolute bottom-0 start-0 w-full h-1 bg-info"></div>
                         </div>
 
                         {/* Details */}
@@ -85,7 +85,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
 
                     {/* Footer / QR Code */}
                     <div className="mt-8 pt-6 border-t-2 border-dashed border-border flex items-center justify-between relative z-10">
-                        <div className="space-y-0.5 text-right" dir="rtl">
+                        <div className="space-y-0.5 text-end" dir="rtl">
                             <p className="text-micro font-medium text-muted uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
                             <p className="text-micro text-muted font-normal max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل دارين السابعة</p>
                         </div>

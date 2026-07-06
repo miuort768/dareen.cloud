@@ -64,12 +64,12 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     isDestructive ? "bg-error shadow-[0_0_15px_rgba(225,29,72,0.40)]" : "bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"
                 )}></div>
 
-                <div className="absolute top-0 right-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-0 end-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
                 <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
+                        className="absolute top-4 end-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
                         aria-label="إغلاق"
                     >
                         <X size={18} />

@@ -61,7 +61,7 @@ export const SessionCallAlert = () => {
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                className="fixed bottom-16 left-4 right-4 md:left-auto md:right-8 md:bottom-8 z-[1000] md:w-[400px]"
+                className="fixed bottom-16 start-4 end-4 md:start-auto md:end-8 md:bottom-8 z-[1000] md:w-[400px]"
             >
                 <div className="bg-white border-4 border-border shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] p-1 overflow-hidden">
                     <div className="bg-primary p-3 flex justify-between items-center border-b-2 border-border">
@@ -75,7 +75,7 @@ export const SessionCallAlert = () => {
                     </div>
                     
                     <div className="p-5">
-                        <div className="text-right mb-4">
+                        <div className="text-end mb-4">
                             <h4 className="font-medium text-main text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
                             <p className="text-micro text-muted font-normal mb-1 uppercase tracking-tighter">الحصة: {callData.subject}</p>
                             <p className="text-micro font-bold text-primary">

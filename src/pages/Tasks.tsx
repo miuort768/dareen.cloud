@@ -166,13 +166,13 @@ export const Tasks = () => {
                 {/* Search & Filters */}
                 <div className="flex flex-col md:flex-row gap-3 items-center">
                     <div className="relative flex-1 w-full">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-primary" size={14} />
+                        <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-primary" size={14} />
                         <input
                             type="text"
                             placeholder="ابحث عن مهمة..."
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-white dark:bg-card border border-border rounded-2xl py-3 px-4 pr-10 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:border-primary dark:focus:border-primary transition-all placeholder:text-muted dark:placeholder:text-muted shadow-sm"
+                            className="w-full bg-white dark:bg-card border border-border rounded-2xl py-3 px-4 pe-10 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:border-primary dark:focus:border-primary transition-all placeholder:text-muted dark:placeholder:text-muted shadow-sm"
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-2 w-full md:flex md:w-auto">
@@ -216,7 +216,7 @@ export const Tasks = () => {
                                 >
                                     {!isCompleted && (
                                         <div className={cn(
-                                            "absolute top-0 left-0 w-24 h-24 -translate-x-12 -translate-y-12 rounded-full opacity-5",
+                                            "absolute top-0 start-0 w-24 h-24 -translate-x-12 -translate-y-12 rounded-full opacity-5",
                                             task.priority === 'high' ? "bg-error" : task.priority === 'medium' ? "bg-warning" : "bg-primary"
                                         )} />
                                     )}
@@ -332,9 +332,9 @@ export const Tasks = () => {
                                         <div className="space-y-1.5">
                                             <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">درجة الأولوية</label>
                                             <div className="relative">
-                                                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                                                <ChevronDown size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                                 <select
-                                                    className="appearance-none w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 pr-8 pl-4 text-xs font-bold text-main dark:text-inverse cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
+                                                    className="appearance-none w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 pe-8 ps-4 text-xs font-bold text-main dark:text-inverse cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
                                                     value={newTask.priority}
                                                     onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                                 >

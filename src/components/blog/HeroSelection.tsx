@@ -64,7 +64,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
-        <div className="w-full lg:w-[55%] text-center lg:text-right">
+        <div className="w-full lg:w-[55%] text-center lg:text-end">
             <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-5">
                 <BookOpen size={13} className="text-primary dark:text-primary" />
                 <span className="text-micro font-black text-primary dark:text-primary">
@@ -115,7 +115,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                 ))}
             </div>
         </div>
-        <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-left-8 duration-700 delay-300">
+        <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-start-8 duration-700 delay-300">
             <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center">
                 <div className="absolute inset-4 border border-dashed border-primary/15 rounded-full" />
                 <div className="absolute inset-12 border border-dashed border-primary/8 rounded-full" />

@@ -9,13 +9,13 @@ export const MasarSection = () => {
         <>
             {/* ─── Desktop version ─── */}
             <section className="hidden md:block py-4 bg-white dark:bg-background relative overflow-hidden transition-colors duration-500">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute top-0 start-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 end-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary)] shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
-                            <div className="absolute right-0 top-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
-                            <div className="absolute left-0 bottom-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+                            <div className="absolute end-0 top-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="absolute start-0 bottom-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
                         </div>
                         <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
                             <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-s border-white/10 group">
@@ -29,7 +29,7 @@ export const MasarSection = () => {
                                     </picture>
                                 </div>
                             </div>
-                            <div className="w-full lg:w-[60%] p-6 md:p-12 lg:p-14 text-on-primary relative z-20 text-center lg:text-right flex flex-col justify-center">
+                            <div className="w-full lg:w-[60%] p-6 md:p-12 lg:p-14 text-on-primary relative z-20 text-center lg:text-end flex flex-col justify-center">
                                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
                                         <Download className="w-3.5 h-3.5 text-warning animate-pulse" />
@@ -68,8 +68,8 @@ export const MasarSection = () => {
             {/* ─── Mobile version ─── */}
             <section className="block md:hidden relative overflow-hidden bg-background dark:bg-background pt-3 pb-4">
                 {/* Decorative blobs */}
-                <div className="absolute top-20 -right-20 w-60 h-60 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -left-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-20 -end-20 w-60 h-60 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -start-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-4">
                     {/* Hero Banner Image */}
@@ -99,7 +99,7 @@ export const MasarSection = () => {
                         <div className="flex items-center gap-4 mb-4">
                             <div className="relative">
                                 <span className="text-on-primary font-black text-sm">مركز دارين السابعة</span>
-                                <div className="absolute -bottom-1 right-0 w-full h-0.5 bg-white/80 rounded-full shadow-sm"></div>
+                                <div className="absolute -bottom-1 end-0 w-full h-0.5 bg-white/80 rounded-full shadow-sm"></div>
                             </div>
                             <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary text-micro font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
                         </div>

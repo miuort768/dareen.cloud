@@ -296,7 +296,7 @@ export const Home = () => {
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
-                  <span className={`absolute top-2 right-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${
+                  <span className={`absolute top-2 end-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${
                     c.category === 'foundation' ? 'bg-success text-on-success' :
                     c.category === 'quran' ? 'bg-warning text-on-warning' :
                     c.category === 'gulf' ? 'bg-info text-on-info' :

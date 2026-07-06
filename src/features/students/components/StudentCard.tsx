@@ -32,7 +32,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                 {/* THE CARD CONTENT */}
                 <div className="p-8 relative print:p-0">
                     {/* Background Pattern */}
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-surface border-e-8 border-t-8 border-border -ms-16 -mt-16 rotate-45 pointer-events-none"></div>
+                    <div className="absolute top-0 end-0 w-48 h-48 bg-surface border-e-8 border-t-8 border-border -ms-16 -mt-16 rotate-45 pointer-events-none"></div>
                     
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">
@@ -53,11 +53,11 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                         {/* Student Photo Placeholder / Icon */}
                         <div className="w-32 h-40 bg-hover border-4 border-border flex items-center justify-center relative shadow-inner">
                             <User size={64} className="text-dim" />
-                            <div className="absolute bottom-0 left-0 w-full h-1 bg-primary"></div>
+                            <div className="absolute bottom-0 start-0 w-full h-1 bg-primary"></div>
                         </div>
 
                         {/* Details */}
-                        <div className="flex-1 space-y-4 text-right" dir="rtl">
+                        <div className="flex-1 space-y-4 text-end" dir="rtl">
                             <div className="space-y-1">
                                 <label className="text-micro font-medium text-dim uppercase tracking-widest block">الاسم الكامل</label>
                                 <p className="text-lg font-medium text-main tracking-tighter">{student.name}</p>
@@ -85,7 +85,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
 
                     {/* Footer / QR Code */}
                     <div className="mt-10 pt-6 border-t-2 border-dashed border-border flex items-center justify-between relative z-10">
-                        <div className="space-y-1 text-right" dir="rtl">
+                        <div className="space-y-1 text-end" dir="rtl">
                             <p className="text-micro font-medium text-dim uppercase">نظام إدارة دارين السابعة</p>
                             <p className="text-micro text-muted font-normal">يُرجى إبراز هذه البطاقة عند طلبها داخل المعهد</p>
                         </div>
@@ -100,7 +100,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     </div>
 
                     {/* Vertical Text Rind */}
-                    <div className="absolute left-0 bottom-10 h-32 w-8 -rotate-90 flex items-center gap-2 pointer-events-none opacity-20">
+                    <div className="absolute start-0 bottom-10 h-32 w-8 -rotate-90 flex items-center gap-2 pointer-events-none opacity-20">
                          <span className="text-micro font-medium text-muted uppercase whitespace-nowrap tracking-[1em]">STU-ID-{student.id.slice(0,4)}</span>
                     </div>
                 </div>

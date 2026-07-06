@@ -68,7 +68,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
             "group relative flex items-center gap-4 p-4 min-w-[320px] max-w-[420px] rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2  transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
             "bg-white dark:bg-primary-active",
             border,
-            isExiting ? "opacity-0 scale-95 translate-x-10" : "animate-in slide-in-from-right-12 fade-in",
+            isExiting ? "opacity-0 scale-95 translate-x-10" : "animate-in slide-in-from-end-12 fade-in",
             "hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5"
         )}>
             {/* Background Gradient Overlay */}
@@ -83,7 +83,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
             </div>
 
             {/* Content Section */}
-            <div className="flex-1 z-10 text-right">
+            <div className="flex-1 z-10 text-end">
                 <p className={cn("font-medium text-xs sm:text-sm tracking-tight leading-relaxed", text)}>
                     {message}
                 </p>
@@ -98,7 +98,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
             </button>
 
             {/* Premium Progress Bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden opacity-40">
+            <div className="absolute bottom-0 start-0 end-0 h-1 overflow-hidden opacity-40">
                 <div
                     className={cn("h-full", progressBar)}
                     style={{ 
@@ -126,7 +126,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
 
 export const ToastContainer = ({ toasts, onClose }: { toasts: ToastProps[]; onClose: (id: string) => void }) => {
     return (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 z-[200] flex flex-col items-center md:items-end gap-3 pointer-events-none">
+        <div className="fixed bottom-4 start-4 end-4 md:start-auto md:end-8 md:bottom-8 z-[200] flex flex-col items-center md:items-end gap-3 pointer-events-none">
             <div className="pointer-events-auto flex flex-col gap-3 w-full max-w-[420px]">
                 {toasts.map(toast => (
                     <Toast key={toast.id} {...toast} onClose={onClose} />
