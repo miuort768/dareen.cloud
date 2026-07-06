@@ -211,21 +211,21 @@ export const ParentDashboard = () => {
                 <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 max-w-[1600px] mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 
-                <div className="relative bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-2xl p-4 md:p-5 shadow-lg flex items-center justify-between">
+                <div className="relative bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-warning to-warning rounded-xl flex items-center justify-center text-on-warning shadow-lg">
+                        <div className="w-12 h-12 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-lg">
                             <User size={22} />
                         </div>
                         <div>
                             <h1 className="text-base md:text-lg font-black text-main dark:text-inverse">
                                 مرحباً... {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                             </h1>
-                            <p className="text-[11px] md:text-xs font-medium text-dim">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                            <p className="text-xs md:text-xs font-medium text-dim">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                         </div>
                     </div>
                     <button 
                         onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                        className="w-10 h-10 bg-white/70 dark:bg-primary-active/70 text-dim hover:text-error flex items-center justify-center rounded-xl border border-border dark:border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
+                        className="w-10 h-10 bg-white/70 dark:bg-primary-active/70 text-dim hover:text-error flex items-center justify-center rounded-card border border-border dark:border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
                     >
                         <LogOut size={18} />
                     </button>
@@ -279,16 +279,16 @@ export const ParentDashboard = () => {
                         return (
                             <div
                                 key={idx}
-                                className="flex-1 bg-card rounded-2xl p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
+                                className="flex-1 bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
                             >
                                 <div
-                                    className="w-9 h-9 rounded-xl flex items-center justify-center"
+                                    className="w-9 h-9 rounded-card flex items-center justify-center"
                                     style={{ backgroundColor: item.bg }}
                                 >
                                     <Icon size={18} style={{ color: item.color }} />
                                 </div>
                                 <span className="text-sm font-black text-main">{item.value}</span>
-                                <span className="text-[10px] text-muted font-medium">{item.label}</span>
+                                <span className="text-micro text-muted font-medium">{item.label}</span>
                             </div>
                         );
                     })}
@@ -304,14 +304,14 @@ export const ParentDashboard = () => {
                         {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string; studentId?: string; startedAt?: string }) => {
                             const child = children.find(c => c.id === session.studentId);
                             return (
-                                <div key={session.id} className="bg-gradient-to-r from-warning to-warning text-on-warning p-4 rounded-2xl shadow-lg flex items-center justify-between">
+                                <div key={session.id} className="bg-gradient-to-r from-warning to-warning text-on-warning p-4 rounded-card shadow-lg flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
+                                        <div className="w-10 h-10 bg-white/20 rounded-card flex items-center justify-center animate-pulse">
                                             <Clock size={20} />
                                         </div>
                                         <div>
                                             <h3 className="font-bold text-sm">حصة جارية الآن!</h3>
-                                            <p className="text-[10px] font-medium opacity-90">
+                                            <p className="text-micro font-medium opacity-90">
                                                 {child?.name || session.studentId} — {session.subject}
                                             </p>
                                         </div>
@@ -330,7 +330,7 @@ export const ParentDashboard = () => {
                 </div>
 
                 {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
-                    <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-2xl p-4 md:p-5 shadow-lg">
+                    <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-3">
                             <MessageSquare className="text-warning" size={16} />
                             <h3 className="text-sm md:text-lg font-medium text-main dark:text-inverse">الواجبات والملاحظات</h3>
@@ -340,16 +340,16 @@ export const ParentDashboard = () => {
                                 <div key={child.id} className="space-y-1">
                                         <div className="flex items-center gap-2 px-1">
                                             <div className="w-1.5 h-1.5 rounded-full bg-warning" />
-                                            <span className="text-[11px] font-medium text-muted dark:text-muted uppercase tracking-widest">{child.name}</span>
+                                            <span className="text-xs font-medium text-muted dark:text-muted uppercase tracking-widest">{child.name}</span>
                                     </div>
                                     <div className="space-y-2">
                                         {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
-                                            <div key={idx} className="bg-warning-soft dark:bg-warning-soft p-3 rounded-xl border border-warning dark:border-warning">
+                                            <div key={idx} className="bg-warning-soft dark:bg-warning-soft p-3 rounded-card border border-warning dark:border-warning">
                                                 <div className="flex justify-between items-center mb-1">
-                                                    <span className="text-[11px] font-medium text-warning-dark dark:text-warning uppercase tracking-widest">{en.subject}</span>
-                                                    <span className="text-[11px] font-normal text-muted">{en.teacher}</span>
+                                                    <span className="text-xs font-medium text-warning-dark dark:text-warning uppercase tracking-widest">{en.subject}</span>
+                                                    <span className="text-xs font-normal text-muted">{en.teacher}</span>
                                                 </div>
-                                                <p className="text-[10px] font-normal text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
+                                                <p className="text-micro font-normal text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -359,7 +359,7 @@ export const ParentDashboard = () => {
                     </div>
                 )}
 
-                <div className="bg-gradient-to-br from-warning to-warning rounded-2xl p-5 md:p-6 text-on-warning shadow-lg relative overflow-hidden">
+                <div className="bg-gradient-to-br from-warning to-warning rounded-card p-5 md:p-6 text-on-warning shadow-lg relative overflow-hidden">
                     <div className="relative z-10">
                         <div className="flex justify-between items-start mb-4">
                             <div>
@@ -371,7 +371,7 @@ export const ParentDashboard = () => {
                         </div>
                         
                         <div className="space-y-1">
-                            <div className="flex justify-between items-center text-[10px] font-medium opacity-90">
+                            <div className="flex justify-between items-center text-micro font-medium opacity-90">
                                 <span>الهدف: 100</span>
                                 <span>{stats.academicProgress}%</span>
                             </div>
@@ -379,7 +379,7 @@ export const ParentDashboard = () => {
                                 <motion.div 
                                     initial={{ width: 0 }}
                                     animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }}
-                                    className="h-full bg-white rounded-full shadow-[0_0_10px_#FFFFFF80]"
+                                    className="h-full bg-white rounded-full shadow-[0_0_10px_var(--bg-shadow)]"
                                 />
                             </div>
                         </div>
@@ -389,29 +389,29 @@ export const ParentDashboard = () => {
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 px-1">
                         <Calendar className="text-warning-dark dark:text-warning" size={16} />
-                        <h3 className="text-[11px] font-medium text-main dark:text-inverse uppercase tracking-widest italic">جدول حصص اليوم</h3>
+                        <h3 className="text-xs font-medium text-main dark:text-inverse uppercase tracking-widest italic">جدول حصص اليوم</h3>
                     </div>
 
                     <div className="space-y-2">
                         {todayTasks.map((task, idx) => (
-                            <div key={idx} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-xl p-3 shadow-lg flex items-center justify-between">
+                            <div key={idx} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-center justify-between">
                                  <div className="flex items-center gap-2">
                                     <div className="w-9 h-9 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-sm">
                                         <BookOpen size={16} />
                                     </div>
                                     <div>
-                                        <h4 className="text-[11px] font-bold text-main dark:text-inverse">{task.subject}</h4>
-                                        <p className="text-[10px] font-medium text-muted">{task.studentName}</p>
+                                        <h4 className="text-xs font-bold text-main dark:text-inverse">{task.subject}</h4>
+                                        <p className="text-micro font-medium text-muted">{task.studentName}</p>
                                     </div>
                                 </div>
-                                <div className="text-left font-bold text-[10px] text-dim">
+                                <div className="text-left font-bold text-micro text-dim">
                                     {task.time}
                                 </div>
                             </div>
                         ))}
                         {todayTasks.length === 0 && (
-                            <div className="py-6 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-xl">
-                                <p className="text-muted font-medium text-[10px]">لا توجد مهام اليوم</p>
+                            <div className="py-6 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                                <p className="text-muted font-medium text-micro">لا توجد مهام اليوم</p>
                             </div>
                         )}
                     </div>
@@ -420,21 +420,21 @@ export const ParentDashboard = () => {
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 px-1">
                         <Star className="text-warning" size={16} />
-                        <h3 className="text-[11px] font-medium text-main dark:text-inverse uppercase tracking-widest italic">آخر النشاطات</h3>
+                        <h3 className="text-xs font-medium text-main dark:text-inverse uppercase tracking-widest italic">آخر النشاطات</h3>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {allPointLogs.slice(0, 4).map((log, i) => (
-                            <div key={i} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-xl p-3 shadow-lg flex items-start gap-3">
+                            <div key={i} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-start gap-3">
                                 <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-sm shrink-0">
                                     <Star size={14} fill="currentColor" />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <p className="text-[10px] font-bold text-warning-dark dark:text-warning mb-0.5 truncate">{log.studentName}</p>
-                                    <h4 className="text-[10px] font-medium text-main dark:text-main leading-snug">
+                                    <p className="text-micro font-bold text-warning-dark dark:text-warning mb-0.5 truncate">{log.studentName}</p>
+                                    <h4 className="text-micro font-medium text-main dark:text-main leading-snug">
                                         تلقى {log.amount} نقطة: {log.action}
                                     </h4>
-                                    <p className="text-[10px] font-medium text-muted dark:text-muted mt-1 flex items-center gap-1">
+                                    <p className="text-micro font-medium text-muted dark:text-muted mt-1 flex items-center gap-1">
                                         <Clock size={8} />
                                         {log.timestamp ? (() => {
                                             try {
@@ -449,23 +449,23 @@ export const ParentDashboard = () => {
                             </div>
                         ))}
                         {allPointLogs.length === 0 && (
-                            <div className="col-span-full py-8 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-xl">
-                                <p className="text-muted font-medium text-[10px]">لا توجد نشاطات حديثة للأبناء</p>
+                            <div className="col-span-full py-8 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                                <p className="text-muted font-medium text-micro">لا توجد نشاطات حديثة للأبناء</p>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-warning to-warning rounded-2xl p-5 text-on-warning flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg relative overflow-hidden">
+                <div className="bg-gradient-to-br from-warning to-warning rounded-card p-5 text-on-warning flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
                     <div className="text-center md:text-right relative z-10">
                         <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
-                        <p className="text-[11px] font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
+                        <p className="text-xs font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
                     </div>
                     <a 
                         href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="bg-card text-warning-dark px-5 py-3 rounded-xl font-bold text-[10px] flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center"
+                        className="bg-card text-warning-dark px-5 py-3 rounded-card font-bold text-micro flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center"
                     >
                         <div className="w-6 h-6 bg-gradient-to-br from-warning to-warning text-on-warning rounded-lg flex items-center justify-center">
                             <MessageSquare size={12} />
@@ -486,10 +486,10 @@ export const ParentDashboard = () => {
                             <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
                                 <LayoutDashboard size={12} className="text-on-primary" />
                             </div>
-                            <h2 className="text-dim dark:text-muted text-[11px] font-bold tracking-wide">لوحة التحكم</h2>
+                            <h2 className="text-dim dark:text-muted text-xs font-bold tracking-wide">لوحة التحكم</h2>
                         </div>
                         {/* Profile row */}
-                        <div className="bg-white dark:bg-primary-active/90 rounded-3xl p-3.5 shadow-[0_2px_16px_#0000000A] dark:shadow-[0_2px_16px_#00000033] flex items-center justify-between">
+                        <div className="bg-white dark:bg-primary-active/90 rounded-3xl p-3.5 shadow-[0_2px_16px_var(--bg-shadow)] dark:shadow-[0_2px_16px_var(--bg-shadow)] flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg">
                                     <User size={18} className="text-on-primary" />
@@ -498,10 +498,10 @@ export const ParentDashboard = () => {
                                     <h1 className="text-main dark:text-inverse font-black text-base leading-tight">
                                         أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                     </h1>
-                                    <p className="text-[10px] font-medium text-muted dark:text-muted mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                                    <p className="text-micro font-medium text-muted dark:text-muted mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                                     <div className="flex items-center gap-1.5 mt-0.5">
                                         <div className="w-1.5 h-1.5 rounded-full bg-success" />
-                                        <p className="text-muted dark:text-muted text-[11px] font-bold">
+                                        <p className="text-muted dark:text-muted text-xs font-bold">
                                             {children.length > 0
                                                 ? [...children].sort((a, b) => a.id.localeCompare(b.id))[0]?.name || 'طالب'
                                                 : 'طالب'}
@@ -509,47 +509,47 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover dark:bg-primary-active/60 rounded-2xl flex items-center justify-center text-muted dark:text-muted active:scale-90 transition-transform hover:bg-hover dark:hover:bg-primary-active" aria-label="تسجيل الخروج">
+                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover dark:bg-primary-active/60 rounded-card flex items-center justify-center text-muted dark:text-muted active:scale-90 transition-transform hover:bg-hover dark:hover:bg-primary-active" aria-label="تسجيل الخروج">
                                 <LogOut size={16} />
                             </button>
                         </div>
                         {/* Stats pills — premium card style */}
                         <div className="flex items-center gap-2 mt-2">
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-success-soft flex items-center justify-center">
                                     <TrendingUp size={13} className="text-success-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{stats.academicProgress}%</span>
-                                    <span className="text-muted dark:text-muted text-[9px] font-bold tracking-wide">الالتزام</span>
+                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">الالتزام</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-info-soft flex items-center justify-center">
                                     <BookOpen size={13} className="text-info-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
-                                    <span className="text-muted dark:text-muted text-[9px] font-bold tracking-wide">المادة</span>
+                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">المادة</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-2xl py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center">
                                     <Users size={13} className="text-primary" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{stats.childCount}</span>
-                                    <span className="text-muted dark:text-muted text-[9px] font-bold tracking-wide">الأبناء</span>
+                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">الأبناء</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Tab bar */}
                     <div className="px-4 pb-4">
-                        <div className="flex gap-1 bg-white dark:bg-primary-active/90 rounded-2xl p-1 shadow-md border border-border">
+                        <div className="flex gap-1 bg-white dark:bg-primary-active/90 rounded-card p-1 shadow-md border border-border">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-card text-xs font-bold transition-all duration-200 ${
                                         activeTab === tab.id
                                             ? 'bg-gradient-to-br from-primary to-primary-light text-on-primary shadow-md'
                                             : 'text-dim dark:text-muted hover:bg-hover dark:hover:bg-primary-active/50'
@@ -605,23 +605,23 @@ export const ParentDashboard = () => {
                                     <h2 className="text-main dark:text-inverse text-sm font-black">التنقل السريع</h2>
                                 </div>
                                 <div className="grid grid-cols-3 gap-2">
-                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center text-on-primary shadow-sm">
+                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-sm">
                                             <Users size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-[10px] font-bold">ملفات الأبناء</span>
+                                        <span className="text-main dark:text-inverse text-micro font-bold">ملفات الأبناء</span>
                                     </button>
-                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-2xl flex items-center justify-center text-on-info shadow-sm">
+                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-card flex items-center justify-center text-on-info shadow-sm">
                                             <LayoutDashboard size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-[10px] font-bold">المنتدى</span>
+                                        <span className="text-main dark:text-inverse text-micro font-bold">المنتدى</span>
                                     </button>
-                                    <button onClick={() => navigate('/chat')} className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-2xl flex items-center justify-center text-on-success shadow-sm">
+                                    <button onClick={() => navigate('/chat')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-card flex items-center justify-center text-on-success shadow-sm">
                                             <MessageSquare size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-[10px] font-bold">الدردشة</span>
+                                        <span className="text-main dark:text-inverse text-micro font-bold">الدردشة</span>
                                     </button>
                                 </div>
                             </section>
@@ -638,16 +638,16 @@ export const ParentDashboard = () => {
                                         return (
                                             <div
                                                 key={idx}
-className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
+className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
                                             >
                                                 <div
-                                                    className="w-9 h-9 rounded-xl flex items-center justify-center"
+                                                    className="w-9 h-9 rounded-card flex items-center justify-center"
                                                     style={{ backgroundColor: item.bg }}
                                                 >
                                                     <Icon size={18} style={{ color: item.color }} />
                                                 </div>
                                                 <span className="text-sm font-black text-main">{item.value}</span>
-                                                <span className="text-[10px] text-muted font-medium">{item.label}</span>
+                                                <span className="text-micro text-muted font-medium">{item.label}</span>
                                             </div>
                                         );
                                     })}
@@ -660,14 +660,14 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                     {activeTimers.map((session: { id: string; studentName: string; teacherName: string; subject: string; studentId?: string; startedAt?: string }) => {
                                         const child = children.find(c => c.id === session.studentId);
                                         return (
-                                            <div key={session.id} className="bg-gradient-to-l from-primary to-primary-light text-on-primary p-3.5 rounded-2xl shadow-lg flex items-center justify-between active:scale-[0.99] transition-transform">
+                                            <div key={session.id} className="bg-gradient-to-l from-primary to-primary-light text-on-primary p-3.5 rounded-card shadow-lg flex items-center justify-between active:scale-[0.99] transition-transform">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
+                                                    <div className="w-9 h-9 bg-white/20 rounded-card flex items-center justify-center animate-pulse">
                                                         <Clock size={18} />
                                                     </div>
                                                     <div>
                                                         <h3 className="font-bold text-xs">حصة جارية الآن!</h3>
-                                                        <p className="text-[9px] font-medium text-white/80">{child?.name || session.studentId} — {session.subject}</p>
+                                                        <p className="text-micro font-medium text-white/80">{child?.name || session.studentId} — {session.subject}</p>
                                                     </div>
                                                 </div>
                                                 <div className="text-xl font-bold font-mono tracking-widest">{formatTime(session.startedAt)}</div>
@@ -681,7 +681,7 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                     <div className="w-1 h-4 bg-primary rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">البث المباشر</h2>
                                 </div>
-                                <div className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md overflow-hidden">
+                                <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
                                 </div>
                             </section>
@@ -696,21 +696,21 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                         <div className="w-1 h-4 bg-warning rounded-full" />
                                         <h2 className="text-main dark:text-inverse text-sm font-black">الواجبات والملاحظات</h2>
                                     </div>
-                                    <div className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3.5 space-y-3">
+                                    <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5 space-y-3">
                                         {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
                                             <div key={child.id}>
                                                 <div className="flex items-center gap-2 mb-1.5">
                                                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                                    <span className="text-[11px] font-bold text-muted dark:text-muted">{child.name}</span>
+                                                    <span className="text-xs font-bold text-muted dark:text-muted">{child.name}</span>
                                                 </div>
                                                 <div className="space-y-2 mr-4">
                                                     {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
-                                                        <div key={idx} className="bg-primary-soft dark:bg-primary-soft p-3 rounded-xl border border-primary dark:border-primary">
+                                                        <div key={idx} className="bg-primary-soft dark:bg-primary-soft p-3 rounded-card border border-primary dark:border-primary">
                                                             <div className="flex justify-between items-center mb-1">
-                                                                <span className="text-[11px] font-bold text-primary dark:text-primary">{en.subject}</span>
-                                                                <span className="text-[9px] text-muted dark:text-muted">{en.teacher}</span>
+                                                                <span className="text-xs font-bold text-primary dark:text-primary">{en.subject}</span>
+                                                                <span className="text-micro text-muted dark:text-muted">{en.teacher}</span>
                                                             </div>
-                                                            <p className="text-[10px] text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
+                                                            <p className="text-micro text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -724,7 +724,7 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                     <div className="w-1 h-4 bg-success rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">التقدم الأكاديمي</h2>
                                 </div>
-                                <div className="bg-gradient-to-br from-primary to-primary rounded-2xl p-4 text-on-primary shadow-lg relative overflow-hidden">
+                                <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
                                     <div className="relative z-10">
                                         <div className="flex justify-between items-center mb-3">
@@ -732,12 +732,12 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                             <Award size={18} className="text-on-primary opacity-60" />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <div className="flex justify-between text-[9px] text-white/70">
+                                            <div className="flex justify-between text-micro text-white/70">
                                                 <span>الهدف: 100</span>
                                                 <span>{stats.academicProgress}%</span>
                                             </div>
                                             <div className="w-full h-2 bg-white/15 rounded-full overflow-hidden">
-                                                <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_#FFFFFF66]" />
+                                                <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_var(--bg-shadow)]" />
                                             </div>
                                         </div>
                                     </div>
@@ -752,27 +752,27 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                 <div className="w-1 h-4 bg-primary rounded-full" />
                                 <h2 className="text-main dark:text-inverse text-sm font-black">جدول حصص اليوم</h2>
                             </div>
-                            <div className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3.5">
+                            <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5">
                                 <div className="space-y-2">
                                     {todayTasks.map((task, idx) => (
-                                        <div key={idx} className="bg-background dark:bg-primary-active/50 rounded-xl p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
+                                        <div key={idx} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center text-on-primary shadow-sm">
+                                                <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-sm">
                                                     <BookOpen size={16} />
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-[11px] font-bold text-main dark:text-inverse">{task.subject}</h4>
-                                                    <p className="text-[9px] text-muted dark:text-muted">{task.studentName}</p>
+                                                    <h4 className="text-xs font-bold text-main dark:text-inverse">{task.subject}</h4>
+                                                    <p className="text-micro text-muted dark:text-muted">{task.studentName}</p>
                                                 </div>
                                             </div>
-                                            <div className="text-left font-bold text-[10px] text-dim dark:text-dim">{task.time}</div>
+                                            <div className="text-left font-bold text-micro text-dim dark:text-dim">{task.time}</div>
                                         </div>
                                     ))}
                                     {todayTasks.length === 0 && (
                                         <div className="py-8 text-center">
                                             <Calendar size={36} className="mx-auto text-muted dark:text-muted mb-3" />
-                                            <p className="text-muted dark:text-muted font-bold text-[13px]">لا توجد حصص اليوم</p>
-                                            <p className="text-dim dark:text-dim text-[10px] mt-1">يوم هادئ بلا حصص!</p>
+                                            <p className="text-muted dark:text-muted font-bold text-sm">لا توجد حصص اليوم</p>
+                                            <p className="text-dim dark:text-dim text-micro mt-1">يوم هادئ بلا حصص!</p>
                                         </div>
                                     )}
                                 </div>
@@ -787,17 +787,17 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                     <div className="w-1 h-4 bg-warning rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">آخر النشاطات</h2>
                                 </div>
-                                <div className="bg-white dark:bg-primary-active/80 rounded-2xl shadow-md p-3.5">
+                                <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5">
                                     <div className="space-y-2">
                                         {allPointLogs.slice(0, 4).map((log, i) => (
-                                            <div key={i} className="bg-background dark:bg-primary-active/50 rounded-xl p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
-                                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-xl flex items-center justify-center text-on-warning shadow-sm shrink-0">
+                                            <div key={i} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
+                                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-sm shrink-0">
                                                     <Star size={13} fill="currentColor" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="text-[10px] font-bold text-warning-dark dark:text-warning mb-0.5 truncate">{log.studentName}</p>
-                                                    <p className="text-[10px] text-main dark:text-main leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
-                                                    <p className="text-[9px] text-muted dark:text-muted mt-1 flex items-center gap-1">
+                                                    <p className="text-micro font-bold text-warning-dark dark:text-warning mb-0.5 truncate">{log.studentName}</p>
+                                                    <p className="text-micro text-main dark:text-main leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
+                                                    <p className="text-micro text-muted dark:text-muted mt-1 flex items-center gap-1">
                                                         <Clock size={7} />
                                                         {log.timestamp ? (() => {
                                                             try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
@@ -808,8 +808,8 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                             </div>
                                         ))}
                                         {allPointLogs.length === 0 && (
-                                            <div className="py-5 text-center bg-background dark:bg-primary-active/50 border-2 border-dashed border-border rounded-xl">
-                                                <p className="text-muted dark:text-muted font-medium text-[10px]">لا توجد نشاطات حديثة</p>
+                                            <div className="py-5 text-center bg-background dark:bg-primary-active/50 border-2 border-dashed border-border rounded-card">
+                                                <p className="text-muted dark:text-muted font-medium text-micro">لا توجد نشاطات حديثة</p>
                                             </div>
                                         )}
                                     </div>
@@ -820,15 +820,15 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                     <div className="w-1 h-4 bg-error rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">الدعم الفني</h2>
                                 </div>
-                                <div className="bg-gradient-to-br from-primary to-primary rounded-2xl p-4 text-on-primary shadow-lg relative overflow-hidden">
+                                <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
                                     <div className="relative z-10 flex items-center justify-between">
                                         <div>
                                             <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
-                                            <p className="text-[9px] text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
+                                            <p className="text-micro text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                         </div>
                                         <a href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`} target="_blank" rel="noopener noreferrer"
-                                            className="bg-card text-primary px-3.5 py-2.5 rounded-xl font-bold text-[10px] flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
+                                            className="bg-card text-primary px-3.5 py-2.5 rounded-card font-bold text-micro flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
                                             <MessageSquare size={13} />
                                             تواصل
                                         </a>
@@ -878,7 +878,7 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
                                             className={`transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted dark:text-muted'}`}
                                             strokeWidth={isActive ? 2.5 : 1.5}
                                         />
-                                        <span className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted dark:text-muted'}`}>
+                                        <span className={`text-micro font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted dark:text-muted'}`}>
                                             {item.label}
                                         </span>
                                     </>
@@ -895,11 +895,11 @@ className="flex-1 bg-card dark:bg-card rounded-2xl p-3 shadow-sm border border-b
 const NavButton = ({ label, icon: Icon, onClick }: { label: string; icon: React.ComponentType<{ size?: number }>; onClick?: () => void }) => (
     <button 
         onClick={onClick}
-        className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-white dark:hover:bg-primary-active shadow-lg group"
+        className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-white dark:hover:bg-primary-active shadow-lg group"
     >
-        <div className="w-10 h-10 bg-gradient-to-br from-warning to-warning rounded-xl flex items-center justify-center text-on-warning shadow-sm group-hover:scale-110 transition-transform">
+        <div className="w-10 h-10 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-sm group-hover:scale-110 transition-transform">
             <Icon size={18} />
         </div>
-        <span className="text-[10px] font-bold text-dim dark:text-muted">{label}</span>
+        <span className="text-micro font-bold text-dim dark:text-muted">{label}</span>
     </button>
 );

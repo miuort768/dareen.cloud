@@ -192,32 +192,32 @@ export const StudentDashboard = () => {
                 <div className="px-4 pt-3 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-on-primary shadow-sm shadow-black/10">
+                            <div className="w-9 h-9 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-on-primary shadow-sm shadow-black/10">
                                 <GraduationCap size={18} strokeWidth={1.5} />
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">الرئيسية</h1>
-                                <p className="text-[9px] font-medium text-muted">طالب</p>
+                                <p className="text-micro font-medium text-muted">طالب</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
                             {/* Dark mode toggle */}
                             <button
                                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-xl transition-colors"
+                                className="w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-card transition-colors"
                             >
                                 {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
                             </button>
                             {/* Bell */}
                             <button
                                 onClick={() => navigate('/parent-announcements')}
-                                className="relative w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-xl transition-colors"
+                                className="relative w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-card transition-colors"
                             >
                                 <Bell size={16} strokeWidth={1.5} />
                                 <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-card" />
                             </button>
                             {/* Live clock */}
-                            <div className="px-2.5 py-1.5 rounded-xl bg-hover backdrop-blur-sm text-primary font-medium text-[9px] tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-card bg-hover backdrop-blur-sm text-primary font-medium text-micro tabular-nums">
                                 <Clock size={12} strokeWidth={1.5} className="inline ml-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -275,12 +275,12 @@ export const StudentDashboard = () => {
                             {/* Hero Illustration */}
                             <div className="shrink-0 relative z-10">
                                     <div className="w-[110px] h-[120px] relative">
-                                    <div className="w-full h-full rounded-2xl overflow-hidden bg-white/30 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
+                                    <div className="w-full h-full rounded-card overflow-hidden bg-white/30 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
                                         {heroSlides[heroIndex].emoji}
                                     </div>
                                     {/* Floating badge */}
                                     <div className="absolute -bottom-2 -right-2 bg-card rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
-                                        <span className="text-[9px] font-bold text-main">🇰🇼</span>
+                                        <span className="text-micro font-bold text-main">🇰🇼</span>
                                     </div>
                                 </div>
                             </div>
@@ -321,11 +321,11 @@ export const StudentDashboard = () => {
                                 className="flex flex-col items-center gap-1.5"
                             >
                                 <div
-                                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${variantBg[item.variant]}`}
+                                    className={`w-12 h-12 rounded-card flex items-center justify-center shadow-sm ${variantBg[item.variant]}`}
                                 >
                                     <Icon size={22} className={variantText[item.variant]} />
                                 </div>
-                                <span className="text-[10px] font-semibold text-muted text-center leading-tight">
+                                <span className="text-micro font-semibold text-muted text-center leading-tight">
                                     {item.label}
                                 </span>
                             </motion.button>
@@ -355,23 +355,23 @@ export const StudentDashboard = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="bg-card rounded-2xl p-4 shadow-sm border border-border flex items-center gap-3"
+                                    className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3"
                                 >
                                     {/* Course Icon */}
-                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
+                                    <div className="w-14 h-14 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
                                         <BookOpen size={22} className="text-on-primary" />
                                     </div>
                                     {/* Info */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-[10px] font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
+                                            <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
                                                 متابعة
                                             </span>
                                             <h3 className="text-sm font-black text-main truncate max-w-[140px]">
                                                 {en.subject || 'دورة تعليمية'}
                                             </h3>
                                         </div>
-                                        <p className="text-[10px] text-dim text-right mb-2">
+                                        <p className="text-micro text-dim text-right mb-2">
                                             {en.level || `${used} من ${total} حصة`}
                                         </p>
                                         {/* Progress Bar */}
@@ -385,7 +385,7 @@ export const StudentDashboard = () => {
                                                 />
                                             </div>
                                             <div className="flex justify-between mt-1">
-                                                <span className="text-[10px] font-bold text-primary">{progress}%</span>
+                                                <span className="text-micro font-bold text-primary">{progress}%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -395,18 +395,18 @@ export const StudentDashboard = () => {
                     </div>
                 ) : (
                     /* Demo Card */
-                    <div className="bg-card rounded-2xl p-4 shadow-sm border border-border flex items-center gap-3">
-                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
+                    <div className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3">
+                        <div className="w-14 h-14 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
                             <span className="text-2xl">💻</span>
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                                <span className="text-[10px] font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
+                                <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
                                     متابعة
                                 </span>
                                 <h3 className="text-sm font-black text-main">أساسيات البرمجة</h3>
                             </div>
-                            <p className="text-[10px] text-dim text-right mb-2">المستوى المبتدئ</p>
+                            <p className="text-micro text-dim text-right mb-2">المستوى المبتدئ</p>
                             <div className="relative">
                                 <div className="h-2 bg-hover rounded-full overflow-hidden">
                                     <motion.div
@@ -416,7 +416,7 @@ export const StudentDashboard = () => {
                                         className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
                                     />
                                 </div>
-                                <span className="text-[10px] font-bold text-primary mt-1 block text-left">60%</span>
+                                <span className="text-micro font-bold text-primary mt-1 block text-left">60%</span>
                             </div>
                         </div>
                     </div>
@@ -437,15 +437,15 @@ export const StudentDashboard = () => {
                         return (
                             <div
                                 key={idx}
-                                className="bg-card rounded-2xl p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
+                                className="bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
                             >
                                 <div
-                                    className={`w-9 h-9 rounded-xl flex items-center justify-center ${bgClass}`}
+                                    className={`w-9 h-9 rounded-card flex items-center justify-center ${bgClass}`}
                                 >
                                     <Icon size={18} className={textClass} />
                                 </div>
                                 <span className="text-sm font-black text-main">{item.value}</span>
-                                <span className="text-[10px] text-dim font-medium">{item.label}</span>
+                                <span className="text-micro text-dim font-medium">{item.label}</span>
                             </div>
                         );
                     })}
@@ -460,7 +460,7 @@ export const StudentDashboard = () => {
                         {pointLogs.slice(0, 3).map((log, i) => (
                             <div
                                 key={i}
-                                className="bg-card rounded-2xl px-4 py-3 shadow-sm border border-border flex items-center justify-between"
+                                className="bg-card rounded-card px-4 py-3 shadow-sm border border-border flex items-center justify-between"
                             >
                                 <span className="text-xs font-bold text-success bg-success-soft px-2 py-1 rounded-full">
                                     +{log.amount} نقطة
@@ -484,7 +484,7 @@ export const StudentDashboard = () => {
                             href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform"
+                            className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-card font-black text-sm shadow-lg active:scale-95 transition-transform"
                         >
                             <MessageSquare size={16} />
                             تواصل الآن
@@ -555,7 +555,7 @@ const MobileBottomNav = ({
                                         strokeWidth={isActive ? 2.5 : 1.5}
                                     />
                                     <span
-                                        className={`text-[9px] font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-dim'}`}
+                                        className={`text-micro font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-dim'}`}
                                     >
                                         {item.label}
                                     </span>
