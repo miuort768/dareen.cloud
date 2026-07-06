@@ -2,14 +2,11 @@
 export { Button }          from './Button';
 export type { ButtonProps } from './Button';
 
-export { Input, Textarea } from './Input';
-export type { InputProps, TextareaProps } from './Input';
+export { Input } from './Input';
+export type { InputProps } from './Input';
 
 export { Card }            from './Card';
 export type { CardProps }  from './Card';
-
-export { Modal }           from './Modal';
-export type { ModalProps } from './Modal';
 
 export { EmptyState }      from './EmptyState';
 
@@ -19,28 +16,14 @@ export { Spinner }         from './Spinner';
 
 export { ErrorDisplay }    from './ErrorDisplay';
 
-export { Image }           from './Image';
-
 export { Badge }           from './Badge';
 export type { BadgeProps } from './Badge';
 
 export { Alert }           from './Alert';
 export type { AlertProps } from './Alert';
 
-export { Select }          from './Select';
-export type { SelectProps } from './Select';
-
-export { Checkbox, Radio } from './Checkbox';
-export type { CheckboxProps, RadioProps } from './Checkbox';
-
-export { Switch }          from './Switch';
-export type { SwitchProps } from './Switch';
-
 export { Tabs }            from './Tabs';
 export type { TabsProps, Tab } from './Tabs';
-
-export { Table }           from './Table';
-export type { TableProps, Column } from './Table';
 
 export { Breadcrumb }      from './Breadcrumb';
 export type { BreadcrumbItem, BreadcrumbProps } from './Breadcrumb';

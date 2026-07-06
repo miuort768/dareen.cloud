@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { settingsService } from '../../settings/services/settingsService';
+import { RefreshCw } from 'lucide-react';
+import { Spinner } from '../../../shared/components/ui/Spinner';
 
 interface MonitoringData {
     total: number;
@@ -30,71 +32,80 @@ export const MonitoringPage = () => {
 
     useEffect(() => { load(); const t = setInterval(load, 15000); return () => clearInterval(t); }, []);
 
-    if (loading && !data) return <div style={{ padding: 20 }}>جاري التحميل...</div>;
+    if (loading && !data) return <div className="p-5"><Spinner /></div>;
 
     const fmtBytes = (b: number) => b > 1073741824 ? `${(b / 1073741824).toFixed(1)} GB` : b > 1048576 ? `${(b / 1048576).toFixed(1)} MB` : `${(b / 1024).toFixed(1)} KB`;
     const fmtUptime = (s: number) => { const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600; const m = Math.floor(s / 60); return `${d}d ${h}h ${m}m`; };
 
     return (
-        <div style={{ padding: 20, direction: 'rtl', maxWidth: 900, margin: '0 auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                <h2>مراقبة النظام</h2>
-                <button onClick={load}>تحديث</button>
+        <div className="p-5 max-w-[900px] mx-auto space-y-5" dir="rtl">
+            <div className="flex items-center justify-between">
+                <h2 className="text-section font-bold text-main">مراقبة النظام</h2>
+                <button onClick={load} className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary text-sm font-bold rounded-xl hover:bg-primary-hover active:bg-primary-active transition-all active:scale-95 shadow-sm">
+                    <RefreshCw size={16} />
+                    تحديث
+                </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 24 }}>
-                {[
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                {([
                     ['الطلبات', data?.total || 0],
                     ['الأخطاء', data?.errors || 0],
                     ['البطيئة', data?.slow?.length || 0],
                     ['المستخدمين', data?.counts?.users || 0],
                     ['الجلسات', data?.counts?.sessions || 0],
                     ['النسخ', data?.counts?.backups || 0],
-                ].map(([label, value]) => (
-                    <div key={label as string} style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8, textAlign: 'center' }}>
-                        <div style={{ fontSize: 24, fontWeight: 'bold' }}>{value}</div>
-                        <div style={{ color: '#666' }}>{label}</div>
+                ] as const).map(([label, value]) => (
+                    <div key={label} className="bg-surface dark:bg-card p-4 rounded-card text-center border border-border">
+                        <div className="text-2xl font-bold text-main">{value}</div>
+                        <div className="text-sm text-muted mt-1">{label}</div>
                     </div>
                 ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
-                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
-                    <h3>الذاكرة</h3>
-                    <div>المستخدم: {fmtBytes(data?.memory?.rss || 0)}</div>
-                    <div>Heap: {fmtBytes(data?.memory?.heapUsed || 0)} / {fmtBytes(data?.memory?.heapTotal || 0)}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-surface dark:bg-card p-4 rounded-card border border-border">
+                    <h3 className="text-sm font-bold text-main mb-2">الذاكرة</h3>
+                    <div className="text-sm text-muted">المستخدم: {fmtBytes(data?.memory?.rss || 0)}</div>
+                    <div className="text-sm text-muted">Heap: {fmtBytes(data?.memory?.heapUsed || 0)} / {fmtBytes(data?.memory?.heapTotal || 0)}</div>
                 </div>
-                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
-                    <h3>النظام</h3>
-                    <div>عمر التشغيل: {fmtUptime(data?.uptime || 0)}</div>
-                    <div>قاعدة البيانات: {data?.database === 'connected' ? '✅ متصلة' : '❌ منفصلة'}</div>
-                    <div>آخر تحديث: {data?.timestamp ? new Date(data.timestamp).toLocaleString('ar-SA') : ''}</div>
+                <div className="bg-surface dark:bg-card p-4 rounded-card border border-border">
+                    <h3 className="text-sm font-bold text-main mb-2">النظام</h3>
+                    <div className="text-sm text-muted">عمر التشغيل: {fmtUptime(data?.uptime || 0)}</div>
+                    <div className="text-sm text-muted">قاعدة البيانات: {data?.database === 'connected' ? '✅ متصلة' : '❌ منفصلة'}</div>
+                    <div className="text-sm text-muted">آخر تحديث: {data?.timestamp ? new Date(data.timestamp).toLocaleString('ar-SA') : ''}</div>
                 </div>
             </div>
 
             {data?.slow && data.slow.length > 0 && (
-                <div style={{ background: 'rgba(255,193,7,0.20)', padding: 16, borderRadius: 8, marginBottom: 24 }}>
-                    <h3>{'الطلبات البطيئة (>1s)'}</h3>
-                    {data.slow.slice(-10).reverse().map((s, i) => (
-                        <div key={i} style={{ fontSize: 13, margin: '4px 0' }}>
-                            {s.method} {s.path} — {(s.duration / 1000).toFixed(1)}s
-                        </div>
-                    ))}
+                <div className="bg-warning/10 p-4 rounded-card border border-warning/20">
+                    <h3 className="text-sm font-bold text-main mb-2">الطلبات البطيئة (&gt;1s)</h3>
+                    <div className="space-y-1">
+                        {data.slow.slice(-10).reverse().map((s, i) => (
+                            <div key={i} className="text-xs text-muted font-medium">
+                                {s.method} {s.path} — {(s.duration / 1000).toFixed(1)}s
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
-                    <h3>حسب الطريقة</h3>
-                    {Object.entries(data?.byMethod || {}).map(([k, v]) => (
-                        <div key={k}>{k}: {v}</div>
-                    ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-surface dark:bg-card p-4 rounded-card border border-border">
+                    <h3 className="text-sm font-bold text-main mb-2">حسب الطريقة</h3>
+                    <div className="space-y-1">
+                        {Object.entries(data?.byMethod || {}).map(([k, v]) => (
+                            <div key={k} className="text-sm text-muted">{k}: {v}</div>
+                        ))}
+                    </div>
                 </div>
-                <div style={{ background: 'var(--bg-surface)', padding: 16, borderRadius: 8 }}>
-                    <h3>حسب المسار</h3>
-                    {Object.entries(data?.byPath || {}).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => (
-                        <div key={k}>{k}: {v}</div>
-                    ))}
+                <div className="bg-surface dark:bg-card p-4 rounded-card border border-border">
+                    <h3 className="text-sm font-bold text-main mb-2">حسب المسار</h3>
+                    <div className="space-y-1">
+                        {Object.entries(data?.byPath || {}).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => (
+                            <div key={k} className="text-sm text-muted">{k}: {v}</div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

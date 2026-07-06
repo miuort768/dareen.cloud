@@ -106,7 +106,7 @@ export const QuickSearch = () => {
             >
                 <Search size={16} />
                 <span className="text-sm font-bold">بحث سريع...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-border text-[10px] font-black rounded-none shadow-sm ml-4">Ctrl+K</kbd>
+                <kbd className="hidden lg:inline-block px-1.5 py-0.5 bg-white border border-border text-[10px] font-black rounded-none shadow-sm ms-auto me-0">Ctrl+K</kbd>
             </button>
         );
     }
