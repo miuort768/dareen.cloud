@@ -208,7 +208,7 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-3 py-1.5 bg-white dark:bg-card text-success font-medium uppercase text-micro rounded-lg hover:bg-surface dark:hover:bg-card transition-all flex items-center gap-1.5 active:scale-95"
+                        className="px-3 py-1.5 bg-white text-success font-medium uppercase text-micro rounded-lg hover:bg-surface dark:hover:bg-white/80 transition-all flex items-center gap-1.5 active:scale-95"
                     >
                         {isIOS || isMacSafari ? <Share size={10} /> : <Download size={10} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
