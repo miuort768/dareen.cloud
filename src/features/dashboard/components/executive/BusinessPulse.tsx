@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Activity, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Activity, TrendingUp, AlertTriangle } from 'lucide-react';
 import { ExecutivePulse } from '../../services/executiveService';
 
 const PULSE_COLORS: Record<string, string> = {
@@ -30,45 +30,68 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
     const color = PULSE_COLORS[pulse.status] || 'var(--text-muted)';
     const LabelIcon = PULSE_ICONS[pulse.status] || Activity;
 
-    const radius = 60;
+    const radius = 70;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (pulse.score / 100) * circumference;
 
     return (
-        <div className="rounded-3xl p-5 bg-white shadow-soft dark:bg-card border border-border dark:border-border flex flex-col items-center">
-            <h3 className="text-sm font-semibold text-muted dark:text-muted mb-1">مؤشر الأداء العام</h3>
-            <div className="relative w-36 h-32">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 140 130">
-                    <path
-                        d="M 20 110 A 60 60 0 1 1 120 110"
-                        fill="none"
-                        stroke="var(--border)"
-                        strokeWidth="10"
-                        strokeLinecap="round"
-                    />
-                    <path
-                        d="M 20 110 A 60 60 0 1 1 120 110"
-                        fill="none"
-                        stroke={color}
-                        strokeWidth="10"
-                        strokeLinecap="round"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={offset}
-                        style={{ transition: 'stroke-dashoffset 0.8s ease' }}
-                    />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold" style={{ color }}>{pulse.score}</span>
+        <div className="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 dark:border-border/50 shadow-lg shadow-black/5">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-soft/20 via-transparent to-info/10 dark:from-primary-soft/5 dark:to-info/5 pointer-events-none" />
+            <div className="relative p-5 flex flex-col items-center">
+                <h3 className="text-sm font-semibold text-muted dark:text-muted/80 mb-2">مؤشر الأداء العام</h3>
+                <div className="relative w-40 h-40">
+                    <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
+                        <defs>
+                            <linearGradient id="pulseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor={color} stopOpacity="0.4" />
+                                <stop offset="100%" stopColor={color} stopOpacity="1" />
+                            </linearGradient>
+                            <filter id="pulseGlow">
+                                <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor={color} floodOpacity="0.5" />
+                            </filter>
+                        </defs>
+                        <circle
+                            cx="80" cy="80" r={radius}
+                            fill="none"
+                            stroke="var(--border)"
+                            strokeWidth="10"
+                            strokeLinecap="round"
+                        />
+                        <circle
+                            cx="80" cy="80" r={radius}
+                            fill="none"
+                            stroke="url(#pulseGradient)"
+                            strokeWidth="10"
+                            strokeLinecap="round"
+                            strokeDasharray={circumference}
+                            strokeDashoffset={offset}
+                            filter="url(#pulseGlow)"
+                            style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                        />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span
+                            className="text-4xl font-bold tabular-nums"
+                            style={{ color }}
+                        >
+                            {pulse.score}
+                        </span>
+                        <span className="text-micro text-muted dark:text-muted/60 mt-0.5">/ 100</span>
+                    </div>
                 </div>
+                <span
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mt-3 backdrop-blur-md border border-white/10"
+                    style={{
+                        backgroundColor: color + '20',
+                        color,
+                        borderColor: color + '40',
+                    }}
+                >
+                    <LabelIcon size={12} />
+                    {PULSE_LABELS[pulse.status] || 'غير متاح'}
+                </span>
+                <p className="text-xs text-muted/70 dark:text-muted/50 text-center mt-3 leading-relaxed max-w-[200px]">{pulse.message}</p>
             </div>
-            <span
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold"
-                style={{ backgroundColor: color + '22', color }}
-            >
-                <LabelIcon size={12} />
-                {PULSE_LABELS[pulse.status] || 'غير متاح'}
-            </span>
-            <p className="text-xs text-muted dark:text-muted text-center mt-2 leading-relaxed">{pulse.message}</p>
         </div>
     );
 });

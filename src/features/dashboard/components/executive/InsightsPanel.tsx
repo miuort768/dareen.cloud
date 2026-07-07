@@ -1,11 +1,16 @@
 import { memo } from 'react';
 import { ExecutiveStats } from '../../services/executiveService';
-import { Lightbulb, TrendingUp } from 'lucide-react';
+import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react';
 
-export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
-    if (!stats) return null;
+type InsightType = 'positive' | 'negative' | 'neutral';
 
-    const insights: { text: string; type: 'positive' | 'negative' | 'neutral' }[] = [];
+interface Insight {
+    text: string;
+    type: InsightType;
+}
+
+function buildInsights(stats: ExecutiveStats): Insight[] {
+    const insights: Insight[] = [];
 
     if (stats.occupancyRate < 60) {
         insights.push({ text: `نسبة الإشغال ${stats.occupancyRate}% — يمكن تحسين استغلال الموارد.`, type: 'negative' });
@@ -45,35 +50,52 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
         insights.push({ text: `${stats.lateStarts} تأخير اليوم — متابعة الالتزام بالمواعيد.`, type: 'negative' });
     }
 
-    const getStyle = (type: string) => {
-        switch (type) {
-            case 'positive': return { bg: 'rgba(34,197,94,0.05)', color: 'var(--bg-success)' };
-            case 'negative': return { bg: 'rgba(244,63,94,0.05)', color: 'var(--bg-error)' };
-            default: return { bg: 'var(--bg-surface)', color: 'var(--text-muted)' };
-        }
-    };
+    return insights;
+}
+
+const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; color: string; bg: string }> = {
+    positive: { icon: TrendingUp, color: 'var(--bg-success)', bg: 'rgba(34,197,94,0.08)' },
+    negative: { icon: TrendingDown, color: 'var(--bg-error)', bg: 'rgba(244,63,94,0.08)' },
+    neutral: { icon: Target, color: 'var(--bg-info)', bg: 'rgba(59,130,246,0.08)' },
+};
+
+export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
+    if (!stats) return null;
+    const insights = buildInsights(stats);
 
     return (
-        <div className="rounded-3xl p-5 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-info)] dark:from-[var(--bg-card)] dark:to-[var(--bg-card)] shadow-soft border border-border dark:border-border">
-            <div className="flex items-center gap-2 mb-4">
-                <TrendingUp size={18} className="text-primary" />
-                <h3 className="text-sm font-semibold text-muted dark:text-muted">تحليلات ذكية</h3>
-            </div>
+        <div className="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 dark:border-border/50 shadow-lg shadow-black/5">
+            <div className="absolute inset-0 bg-gradient-to-br from-info/10 via-transparent to-primary-soft/10 dark:from-info/5 dark:to-primary-soft/5 pointer-events-none" />
+            <div className="relative p-5">
+                <div className="flex items-center gap-2 mb-4">
+                    <Lightbulb size={16} className="text-primary" />
+                    <h3 className="text-sm font-semibold text-muted dark:text-muted/80">تحليلات ذكية</h3>
+                </div>
 
-            <div className="space-y-2">
-                {insights.map((insight, i) => {
-                    const style = getStyle(insight.type);
-                    return (
-                        <div
-                            key={i}
-                            className="flex items-start gap-2.5 p-2.5 rounded-xl"
-                            style={{ backgroundColor: style.bg }}
-                        >
-                            <Lightbulb size={16} style={{ color: style.color }} className="mt-0.5 flex-shrink-0" />
-                            <p className="text-sm text-main dark:text-dim leading-relaxed">{insight.text}</p>
-                        </div>
-                    );
-                })}
+                <div className="space-y-2">
+                    {insights.length === 0 && (
+                        <p className="text-xs text-muted/50 dark:text-muted/30 text-center py-4">لا توجد تحليلات متاحة</p>
+                    )}
+                    {insights.map((insight, i) => {
+                        const cfg = TYPE_CONFIG[insight.type];
+                        const Icon = cfg.icon;
+                        return (
+                            <div
+                                key={i}
+                                className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group"
+                                style={{ backgroundColor: cfg.bg }}
+                            >
+                                <div
+                                    className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                                    style={{ backgroundColor: cfg.color + '20' }}
+                                >
+                                    <Icon size={14} style={{ color: cfg.color }} />
+                                </div>
+                                <p className="text-sm text-main dark:text-on-primary/80 leading-relaxed">{insight.text}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
