@@ -79,7 +79,7 @@ export const FAQSection = () => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <HelpCircle size={80} />];
                         const isOpen = openIdx === idx;
                         return (
-                            <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative bg-white dark:bg-primary border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
+                            <div key={idx} className="relative bg-white dark:bg-primary border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
                                 <div className="absolute -bottom-4 -end-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>
@@ -102,7 +102,7 @@ export const FAQSection = () => {
                                         </div>
                                     )}
                                     </div>
-                                </motion.div>
+                                </div>
                             );
                         })}
                     </motion.div>

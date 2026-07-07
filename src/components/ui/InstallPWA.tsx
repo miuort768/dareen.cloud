@@ -126,7 +126,7 @@ export const InstallPWA = () => {
     if (showIOSGuide) {
         return (
             <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40  p-4">
-                <div className="bg-white border-2 border-border shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
+                <div className="bg-white dark:bg-card border-2 border-border shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
                     <div className="bg-warning border-b-2 border-border px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Smartphone size={18} className="text-main" />
@@ -139,7 +139,7 @@ export const InstallPWA = () => {
                         </button>
                     </div>
 
-                    <div className="p-4 space-y-3 bg-white text-start">
+                    <div className="p-4 space-y-3 bg-white dark:bg-surface text-start">
                         {isIOS ? (
                             <>
                                 <p className="text-xs font-normal text-muted mb-3">اتبعي هذه الخطوات في Safari:</p>
@@ -194,13 +194,13 @@ export const InstallPWA = () => {
             <div className={`bg-success border border-white/10  flex items-center gap-3 p-2.5 rounded-[20px] ${
                 isDesktop ? 'max-w-[280px] me-auto' : ''
             }`}>
-                <div className="w-9 h-9 bg-white/10 text-on-primary flex items-center justify-center rounded-[14px] shrink-0  border border-white/10">
+                    <div className="w-9 h-9 bg-white/10 text-on-success flex items-center justify-center rounded-[14px] shrink-0  border border-white/10">
                     {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
                 </div>
 
                 <div className="flex-1 min-w-0 text-start">
-                    <h2 className="text-micro font-medium uppercase text-on-primary leading-tight">ثبتي التطبيق</h2>
-                    <p className="font-medium text-micro text-on-primary/70 truncate mt-0.5">
+                    <h2 className="text-micro font-medium uppercase text-on-success leading-tight">ثبتي التطبيق</h2>
+                        <p className="font-medium text-micro text-on-success/70 truncate mt-0.5">
                         {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}
                     </p>
                 </div>
@@ -208,14 +208,14 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-3 py-1.5 bg-white text-success font-medium uppercase text-micro rounded-lg hover:bg-surface transition-all flex items-center gap-1.5 active:scale-95"
+                        className="px-3 py-1.5 bg-white dark:bg-card text-success font-medium uppercase text-micro rounded-lg hover:bg-surface dark:hover:bg-card transition-all flex items-center gap-1.5 active:scale-95"
                     >
                         {isIOS || isMacSafari ? <Share size={10} /> : <Download size={10} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
                     </button>
                     <button
                         onClick={handleDismiss}
-                        className="p-1.5 bg-white/10 text-on-primary hover:bg-error hover:text-on-primary transition-colors rounded-full"
+                        className="p-1.5 bg-white/10 text-on-success hover:bg-error hover:text-on-error transition-colors rounded-full"
                         aria-label="إغلاق"
                     >
                         <X size={12} />
