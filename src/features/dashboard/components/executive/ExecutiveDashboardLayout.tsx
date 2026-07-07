@@ -42,7 +42,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
         );
     }
 
-    if (error || !data) {
+    if (error || !data || !data.pulse || !data.stats) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
                 <p className="text-muted">تعذر تحميل بيانات لوحة القيادة</p>
@@ -50,7 +50,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
         );
     }
 
-    const { stats, alerts, pulse, health, presence, upcoming, activity } = data;
+    const { stats, alerts = { critical: [], warning: [], reminder: [], info: [] }, pulse, health = {}, presence = [], upcoming = [], activity = [] } = data;
 
     return (
         <div className="space-y-5">

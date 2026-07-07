@@ -92,7 +92,7 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const cpuLoad = health.cpu?.load || 0;
     const cpuStatus = cpuLoad > 90 ? 'critical' : cpuLoad > 70 ? 'warning' : 'healthy';
 
-    const uptimeHours = Math.round(health.uptime / 3600);
+    const uptimeHours = health.uptime ? Math.round(health.uptime / 3600) : 0;
 
     return (
         <div className="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 dark:border-border/50 shadow-lg shadow-black/5">
