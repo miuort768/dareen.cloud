@@ -52,7 +52,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 end-0 start-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative desktop-light">
+            <nav className="bg-white/90 dark:bg-card backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border px-4 md:px-6 py-2 md:py-3 relative desktop-light">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 ps-2 group">
@@ -68,10 +68,10 @@ export const PublicNavbar = () => {
                             "flex-col items-center pt-0.5 text-center",
                             isAuthenticated ? "hidden md:flex" : "flex"
                         )}>
-                            <p className="site-title text-sm md:text-base font-black leading-tight text-primary dark:text-on-primary">
+                            <p className="site-title text-sm md:text-base font-black leading-tight text-primary dark:text-on-primary md:dark:text-primary">
                                 دارين السابعة
                             </p>
-                            <span className="hidden md:inline-flex items-center gap-1.5 text-xs text-primary dark:text-on-primary/90 font-bold mt-0.5 italic">
+                            <span className="hidden md:inline-flex items-center gap-1.5 text-xs text-primary dark:text-on-primary md:dark:text-primary font-bold mt-0.5 italic">
                                 <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary dark:text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M2 10 C10 2 18 2 20 10 C22 18 30 18 38 10" />
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
@@ -136,13 +136,13 @@ export const PublicNavbar = () => {
                                 </button>
                                 <div className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
-                                        <p className="text-sm font-bold text-main dark:text-on-primary">{currentUser?.name}</p>
+                                        <p className="text-sm font-bold text-main">{currentUser?.name}</p>
                                         <p className="text-xs text-muted">{currentUser?.username}</p>
                                     </div>
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center gap-2 px-4 py-3 text-sm text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary hover:text-primary transition-colors"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm text-main hover:bg-primary-soft dark:hover:bg-primary hover:text-primary transition-colors"
                                     >
                                         <Sparkles className="w-5 h-5 text-primary" />
                                         لوحة التحكم
@@ -179,7 +179,7 @@ export const PublicNavbar = () => {
 
                 {/* Mobile Menu - Floating Card Style */}
                     <div className={`
-                    absolute top-full end-0 start-0 mt-3 p-4 bg-white/95 dark:bg-card/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border/60 shadow-2xl
+                    absolute top-full end-0 start-0 mt-3 p-4 bg-white/95 dark:bg-card backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border shadow-2xl
                     transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
                 `}>
