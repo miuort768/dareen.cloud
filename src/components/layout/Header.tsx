@@ -112,7 +112,7 @@ export const Header = () => {
             "shadow-sm shadow-black/10",
             "px-4 md:px-6 max-w-full",
             "md:translate-y-0 rounded-b-xl lg:rounded-xl",
-            "md:top-2 md:border",
+            "md:top-2 md:border md:border-border",
             "translate-y-0"
         )}>
             <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
