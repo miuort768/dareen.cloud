@@ -52,7 +52,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 end-0 start-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative">
+            <nav className="bg-white/90 dark:bg-card/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border/60 px-4 md:px-6 py-2 md:py-3 relative desktop-light">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 ps-2 group">
@@ -96,7 +96,7 @@ export const PublicNavbar = () => {
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
                                     ? 'bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
-                                    : 'text-muted dark:text-white/80 hover:bg-primary-soft dark:hover:bg-primary hover:text-primary dark:hover:text-on-primary'
+                                    : 'text-muted hover:bg-primary-soft hover:text-primary'
                                     }`}
                             >
                                 {item.name}
@@ -119,7 +119,7 @@ export const PublicNavbar = () => {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-3 text-main dark:text-white/90 hover:text-primary transition-all px-2 md:px-4 py-2 group"
+                                    className="flex items-center gap-3 text-main hover:text-primary transition-all px-2 md:px-4 py-2 group"
                                     aria-label={isDropdownOpen ? 'إغلاق القائمة' : 'فتح قائمة المستخدم'}
                                 >
                                     <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary dark:border-primary shadow-sm group-hover:border-primary transition-all">
@@ -137,7 +137,7 @@ export const PublicNavbar = () => {
                                 <div className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
                                         <p className="text-sm font-bold text-main dark:text-on-primary">{currentUser?.name}</p>
-                                        <p className="text-xs text-muted dark:text-white/80">{currentUser?.username}</p>
+                                        <p className="text-xs text-muted">{currentUser?.username}</p>
                                     </div>
                                     <Link
                                         to="/dashboard"

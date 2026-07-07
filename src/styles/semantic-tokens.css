@@ -171,3 +171,20 @@
   --text-info-dark: #7dd3fc;
   --border-info: #0284c7;
 }
+
+/* Force light mode for desktop header/dropdown in dark mode */
+@media (min-width: 768px) {
+  .dark .desktop-light {
+    --bg-card: #ffffff;
+    --bg-primary-soft: #eef2ff;
+    --border: #e2e8f0;
+    --border-primary: #4f46e5;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --bg-primary: #4f46e5;
+    --bg-primary-hover: #4338ca;
+    --bg-primary-active: #3730a3;
+    --bg-primary-light: #e0e7ff;
+  }
+}
