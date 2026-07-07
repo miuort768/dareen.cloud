@@ -3,7 +3,16 @@ import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headp
 import { useSettingsStore } from '../../store/settingsStore';
 
 export const MasarSection = () => {
-    const { adminPhone } = useSettingsStore();
+    const { adminPhone, whatsappNumbers } = useSettingsStore();
+    const contactUsNumber = (() => {
+        try {
+            const entries = JSON.parse(whatsappNumbers);
+            const found = entries.find((e: { label: string; phone: string }) => e.label === 'تواصل معانا');
+            return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
+        } catch {
+            return adminPhone.replace(/\D/g, '');
+        }
+    })();
 
     return (
         <>
@@ -39,7 +48,7 @@ export const MasarSection = () => {
                                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-3 font-heading leading-tight">
                                     <span className="text-on-primary">مركز</span>                                     <span className="text-on-primary bg-primary px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-lg text-shadow-none whitespace-nowrap">دارين</span> <span className="text-on-primary">للمذكرات التعليمية</span>
                                 </h2>
-                                <p className="text-on-primary opacity-70 text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
+                                <p className="text-on-primary text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
                                     حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                                 </p>
                                 <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
@@ -54,7 +63,7 @@ export const MasarSection = () => {
                                         <span>تحميل مذكرة</span>
                                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                     </Link>
-                                    <a href={`https://wa.me/${adminPhone}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-on-primary rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
+                                    <a href={`https://wa.me/${contactUsNumber}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-on-primary rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40">
                                         <MessageCircle className="w-6 h-6" />
                                         <span>تواصل معنا</span>
                                     </a>
@@ -120,7 +129,7 @@ export const MasarSection = () => {
                                 <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                             </Link>
                             <a
-                                href={`https://wa.me/${adminPhone}`}
+                                href={`https://wa.me/${contactUsNumber}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full py-3.5 bg-white/5 backdrop-blur-sm border border-white/20 text-on-primary font-bold text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-3 rounded-2xl"

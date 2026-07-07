@@ -17,9 +17,9 @@ export const HeroSection = ({ typewriterText, whatsappNumber, signupNowNumber, b
                 <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary-soft via-primary-soft to-card dark:from-card dark:via-card dark:to-card rounded-2xl shadow-sm border border-primary/30 dark:border-border overflow-hidden">
                     <div className="flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6 p-6 md:p-10">
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary-soft border border-primary/50 dark:border-primary rounded-full mb-4 mx-auto mt-4 lg:mt-0">
-                                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                                <span className="text-primary font-bold text-micro sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary border border-primary/50 dark:border-primary-hover rounded-full mb-4 mx-auto mt-4 lg:mt-0">
+                                <span className="w-2 h-2 rounded-full bg-primary dark:bg-on-primary animate-pulse"></span>
+                                <span className="text-primary dark:text-on-primary font-bold text-micro sm:text-xs">منصة تعليم عن بعد رائدة في السعودية والكويت والخليج</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في السعودية، الكويت، الامارات، قطر، وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والريان ومسقط وصلالة والمنامة والمحرق</span>
