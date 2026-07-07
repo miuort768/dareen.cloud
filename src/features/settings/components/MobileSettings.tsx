@@ -90,7 +90,7 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
             <SectionCard>
                 <SectionTitle icon={MessageSquare} label="الربط بالأزرار" sub="راجع labels المستخدمة" />
                 <div className="space-y-2 text-xs text-dim">
-                    <p>• الصفحة الرئيسية: <span dir="ltr" className="font-bold">طلب حصة مجانية</span>، <span dir="ltr" className="font-bold">احجز حصتك المجانية الآن</span>، <span dir="ltr" className="font-bold">ابدأ رحلة التميز</span>، <span dir="ltr" className="font-bold">ابدأ الحفظ الآن</span></p>
+                    <p>• الصفحة الرئيسية: <span dir="ltr" className="font-bold">طلب حصة مجانية</span>، <span dir="ltr" className="font-bold">احجز حصتك المجانية الآن</span>، <span dir="ltr" className="font-bold">ابدأ رحلة التميز</span>، <span dir="ltr" className="font-bold">ابدأ الحفظ الآن</span>، <span dir="ltr" className="font-bold">سجل الآن</span></p>
                     <p>• صفحة الدورات: <span dir="ltr" className="font-bold">تواصل عبر واتساب</span></p>
                     <p>• الزر الجانبي: <span dir="ltr" className="font-bold">تواصل معانا</span></p>
                     <p>• سياسة الخصوصية: <span dir="ltr" className="font-bold">تواصل مع الدعم الفني</span></p>

@@ -69,6 +69,7 @@ export const Home = () => {
   const bookFreeNumber = getNumber('احجز حصتك المجانية الآن');
   const memorizingNumber = getNumber('ابدأ الحفظ الآن');
   const excellenceNumber = getNumber('ابدأ رحلة التميز');
+  const signupNowNumber = getNumber('سجل الآن');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [typewriterText, setTypewriterText] = useState("");
@@ -366,7 +367,7 @@ export const Home = () => {
       {/* ─── Desktop content (unchanged) ─── */}
       <div className="hidden md:block">
         <AnimateOnScroll animation="scaleIn" duration={0.7}>
-          <HeroSection typewriterText={typewriterText} whatsappNumber={requestFreeNumber} bannersArray={bannersArray} />
+          <HeroSection typewriterText={typewriterText} whatsappNumber={requestFreeNumber} signupNowNumber={signupNowNumber} bannersArray={bannersArray} />
         </AnimateOnScroll>
         <AnimateOnScroll>
           <StatsCounter />

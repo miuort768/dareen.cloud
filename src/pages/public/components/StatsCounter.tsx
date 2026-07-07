@@ -32,7 +32,7 @@ export const StatsCounter = () => {
         { icon: GraduationCap, target: 200, suffix: '+', label: 'معلم معتمد', variant: 'default' },
         { icon: BookOpen, target: 10000, suffix: '+', label: 'حصة تعليمية', variant: 'default' },
         { icon: Award, target: 5, suffix: '+', label: 'سنوات من التميز', variant: 'default' },
-        { icon: Globe, target: 7, suffix: '', label: 'نخدم في 7 دول', variant: 'default', duration: 3000 },
+        { icon: Globe, target: 7, suffix: '', label: 'نخدم في 7 دول', variant: 'default', duration: 8000 },
     ];
 
     return (

@@ -20,10 +20,10 @@ const features = [
   },
 ];
 
-const variantClasses: Record<string, { icon: string; bg: string }> = {
-  success: { icon: 'text-success', bg: 'bg-success-soft' },
-  primary: { icon: 'text-primary', bg: 'bg-primary-soft' },
-  accent: { icon: 'text-accent', bg: 'bg-accent-soft' },
+const variantClasses: Record<string, { icon: string; bg: string; card: string }> = {
+  success: { icon: 'text-on-success', bg: 'bg-white/10', card: 'bg-success dark:bg-success' },
+  primary: { icon: 'text-on-primary', bg: 'bg-white/10', card: 'bg-primary dark:bg-primary' },
+  accent: { icon: 'text-on-accent', bg: 'bg-white/10', card: 'bg-accent dark:bg-accent' },
 };
 
 const featureIcons = [ShieldCheck, Lightbulb, Heart];
@@ -61,7 +61,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             const Icon = featureIcons[i];
             const vc = variantClasses[f.variant];
             return (
-              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative flex items-center gap-4 p-4 bg-white/80 dark:bg-primary/80 backdrop-blur-sm rounded-2xl border border-border shadow-sm">
+              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className={`relative flex items-center gap-4 p-4 ${vc.card} backdrop-blur-sm rounded-2xl shadow-sm`}>
                 {f.ribbon && (
                   <div className="absolute -top-2 -end-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
@@ -73,7 +73,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 </div>
                 <div>
                   <h3 className={`text-sm font-black ${vc.icon}`}>{f.title}</h3>
-                  <p className="text-micro text-muted font-medium leading-relaxed mt-0.5">{f.desc}</p>
+                  <p className={`text-micro ${vc.icon} opacity-80 font-medium leading-relaxed mt-0.5`}>{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -122,7 +122,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             const Icon = featureIcons[i];
             const vc = variantClasses[f.variant];
             return (
-              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="relative p-6 bg-card rounded-2xl shadow-sm border border-border flex items-start gap-4 group hover:shadow-md transition-all">
+              <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className={`relative p-6 ${vc.card} rounded-2xl shadow-sm flex items-start gap-4 group hover:shadow-md transition-all`}>
                 {f.ribbon && (
                   <div className="absolute -top-2 -end-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
@@ -134,7 +134,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 </div>
                 <div>
                   <h3 className={`text-base font-black ${vc.icon} mb-1`}>{f.title}</h3>
-                  <p className="text-xs text-muted leading-relaxed font-medium">{f.desc}</p>
+                  <p className={`text-xs ${vc.icon} opacity-80 leading-relaxed font-medium`}>{f.desc}</p>
                 </div>
               </motion.div>
             );

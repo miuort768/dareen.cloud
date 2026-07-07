@@ -146,6 +146,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         { label: 'احجز حصتك المجانية الآن', phone: '201015098836' },
         { label: 'ابدأ رحلة التميز', phone: '201015098836' },
         { label: 'ابدأ الحفظ الآن', phone: '201015098836' },
+        { label: 'سجل الآن', phone: '201015098836' },
         { label: 'تواصل عبر واتساب', phone: '201015098836' },
         { label: 'تواصل معانا', phone: '201015098836' },
         { label: 'تواصل مع الدعم الفني', phone: '201015098836' },
