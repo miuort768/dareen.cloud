@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
-import { Image } from '../../../shared/components/ui';
 
 export const FAQSection = () => {
     const [openIdx, setOpenIdx] = useState<number | null>(null);
@@ -39,7 +38,7 @@ export const FAQSection = () => {
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary" />
-                        <span className="text-micro font-black text-muted dark:text-on-primary/70">لديك استفسار؟</span>
+                        <span className="text-micro font-black text-muted dark:text-white/70">لديك استفسار؟</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main mb-3 font-heading">
                         الأسئلة <span className="text-primary">الشائعة</span>
@@ -77,7 +76,7 @@ export const FAQSection = () => {
                             a: "نخدم طلابنا في المملكة العربية السعودية، الكويت، الإمارات، قطر، سلطنة عمان، ومملكة البحرين. كما نقدم خدماتنا للطلاب في الأردن ومصر. جميع معلمينا على دراية كاملة بالمناهج الدراسية في كل دولة."
                         }
                     ].map((item, idx) => {
-                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <Image src="/dareen_logo_new.jpg" alt="شعار دارين" className="w-20 h-20" imgClassName="object-contain opacity-20" />];
+                        const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <HelpCircle size={80} />];
                         const isOpen = openIdx === idx;
                         return (
                             <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="relative bg-white dark:bg-primary border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
@@ -86,7 +85,7 @@ export const FAQSection = () => {
                                 </div>
                                 <div className="absolute top-0 start-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
                                 <div className="relative z-10">
-                                    <button onClick={() => setOpenIdx(isOpen ? null : idx)} className="flex items-center justify-between w-full p-4 cursor-pointer text-start" aria-expanded={isOpen}>
+                                    <button type="button" onClick={() => setOpenIdx(isOpen ? null : idx)} className="flex items-center justify-between w-full p-4 cursor-pointer text-start" aria-expanded={isOpen}>
                                         <h3 className="text-xs md:text-sm font-black text-main dark:text-on-primary group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                             {item.q}
                                         </h3>
