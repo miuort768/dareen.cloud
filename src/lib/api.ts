@@ -58,7 +58,7 @@ class ApiClient {
     }
 
     private async handleResponse<T>(response: Response, url?: string, init?: RequestInit): Promise<T> {
-        if (response.status === 401 && url && url !== `${this.baseUrl}/auth/refresh`) {
+        if (response.status === 401 && url && !url.includes('/auth/login') && url !== `${this.baseUrl}/auth/refresh`) {
             if (!this.refreshing) {
                 this.refreshing = this.refreshToken();
             }

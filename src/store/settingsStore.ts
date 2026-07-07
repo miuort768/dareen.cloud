@@ -173,7 +173,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 if (settings.admin_phone !== undefined && settings.admin_phone !== null) updates.adminPhone = String(settings.admin_phone);
                 if (settings.theme_color !== undefined && settings.theme_color !== null) {
                     updates.themeColor = settings.theme_color;
-                    applyThemeColor(settings.theme_color);
+                    const savedColor = localStorage.getItem('app_theme_color');
+                    if (!savedColor) {
+                        applyThemeColor(settings.theme_color);
+                    }
                 } else {
                     applyThemeColor(get().themeColor);
                 }
