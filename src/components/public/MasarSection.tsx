@@ -114,7 +114,7 @@ export const MasarSection = () => {
                         </div>
 
                         {/* Description */}
-                        <p className="text-on-primary text-xs leading-relaxed mb-6 font-medium">
+                        <p className="text-on-primary text-micro leading-relaxed mb-6 font-medium">
                             حصريًا في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                         </p>
 

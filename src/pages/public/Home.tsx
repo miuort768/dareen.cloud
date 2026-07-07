@@ -177,7 +177,7 @@ export const Home = () => {
                 <div className="flex-1">
                    <h1 className="text-lg font-black text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-info"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-info -mt-0.5" /></span>}</h1>
                   <p className="text-xs font-bold text-primary mb-0.5">{slide.subtitle}</p>
-                  <p className="text-xs text-muted leading-relaxed mb-3">{slide.desc}</p>
+                   <p className="text-micro text-muted leading-relaxed mb-3">{slide.desc}</p>
                   <div className="flex flex-col gap-1.5">
                     <Link to="/courses" className="bg-surface text-main text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
                       <Play className="w-3 h-3 fill-main" />
@@ -230,8 +230,8 @@ export const Home = () => {
                       <f.icon className={s.text} size={20} />
                     </div>
                     <div className="min-w-0">
-                      <span className="text-xs font-black text-main block leading-tight mb-0">{f.label}</span>
-                      <span className="text-micro text-muted font-medium block leading-tight">{f.desc}</span>
+                      <span className="text-micro font-black text-main block leading-tight mb-0">{f.label}</span>
+                      <span className="text-[9px] text-muted font-medium block leading-tight">{f.desc}</span>
                     </div>
                   </motion.div>
                 );
