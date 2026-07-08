@@ -53,6 +53,7 @@ router.post('/', async (req, res) => {
                 graduationYear: graduationYear || '',
                 onlineYears: onlineYears || '',
                 curriculums: curriculums || '',
+                subject: subject || '',
             }
         });
         res.status(201).json({ message: 'تم تقديم الطلب بنجاح' });

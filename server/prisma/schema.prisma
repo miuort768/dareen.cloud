@@ -440,6 +440,7 @@ model JobApplication {
   position        String
   qualification   String
   grade           String?
+  subject         String?
   graduationYear  String?
   onlineYears     String?
   curriculums     String?
