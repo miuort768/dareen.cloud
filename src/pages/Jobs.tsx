@@ -127,7 +127,7 @@ export const Jobs = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        className="max-w-md w-full bg-white border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
+                        className="max-w-lg w-full bg-white border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
                     >
                         <div className="absolute top-0 start-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl" />
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl" />
@@ -136,12 +136,12 @@ export const Jobs = () => {
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                                className="w-20 h-20 bg-success-light flex items-center justify-center mx-auto mb-6 border-2 border-success"
+                                className="w-24 h-24 bg-success-light flex items-center justify-center mx-auto mb-6 border-2 border-success"
                             >
-                                <CheckCircle2 size={40} className="text-success" />
+                                <CheckCircle2 size={48} className="text-success" />
                             </motion.div>
-                            <h2 className="text-2xl font-black text-main mb-2">تم استلام طلبك!</h2>
-                            <p className="text-sm text-muted font-medium">سنقوم بمراجعة طلبك والتواصل معك في أقرب فرصة. بارك الله فيك.</p>
+                            <h2 className="text-3xl md:text-4xl font-black text-main mb-3">تم استلام طلبك!</h2>
+                            <p className="text-base md:text-lg text-muted font-medium">سنقوم بمراجعة طلبك والتواصل معك في أقرب فرصة. بارك الله فيك.</p>
                         </div>
                     </motion.div>
                 </main>
@@ -180,8 +180,8 @@ export const Jobs = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-white/10 border border-white/20 rounded-full mb-3 md:mb-4 backdrop-blur-sm"
                             >
-                                <Sparkles size={10} className="text-warning" />
-                                 <span className="text-micro md:text-micro font-black text-white/90">خطوة لتكون من العائلة</span>
+                                <Sparkles size={12} className="text-warning" />
+                                 <span className="text-xs md:text-sm font-black text-white/90">خطوة لتكون من العائلة</span>
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -196,7 +196,7 @@ export const Jobs = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-white/80 text-xs md:text-base max-w-lg leading-relaxed font-medium mb-4 md:mb-0"
+                                className="text-white/80 text-xs md:text-lg max-w-lg leading-relaxed font-medium mb-4 md:mb-0"
                             >
                                 نبحث عن معلمات متميزات للتدريس أون لاين.<br /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
                             </motion.p>
@@ -220,7 +220,7 @@ export const Jobs = () => {
             </section>
 
             <main className="flex-grow -mt-4 md:-mt-6 relative z-20">
-                <div className="container mx-auto px-4 max-w-2xl">
+                <div className="container mx-auto px-4 max-w-3xl">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -228,15 +228,15 @@ export const Jobs = () => {
                         className="bg-white dark:bg-primary-active shadow-xl shadow-sm/50 dark:shadow-card/50 border border-border dark:border-border"
                     >
                         {/* Progress Steps */}
-                        <div className="p-3 md:p-8 border-b border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
+                        <div className="p-4 md:p-10 border-b border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm font-black text-main dark:text-on-primary">تقديم طلب التوظيف</h2>
+                                <h2 className="text-sm md:text-lg font-black text-main dark:text-on-primary">تقديم طلب التوظيف</h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card'}`} />
                                                     ))}
                                                 </div>
-                                                <span className="text-micro font-bold text-muted dark:text-dim bg-surface dark:bg-primary-active px-2.5 py-1 rounded-full hidden md:inline-block">
+                                                <span className="text-xs font-bold text-muted dark:text-dim bg-surface dark:bg-primary-active px-3 py-1.5 rounded-full hidden md:inline-block">
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
@@ -245,19 +245,19 @@ export const Jobs = () => {
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-micro font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-primary-active text-muted'}`}>
-                                                {step > s.id ? <CheckCircle2 size={14} /> : s.id}
+                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-primary-active text-muted'}`}>
+                                                {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                                             </div>
                                             {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-surface dark:bg-primary-active'}`} />}
                                         </div>
-                                        <span className={`text-micro font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
+                                        <span className={`text-xs font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         <form onSubmit={(e) => { e.preventDefault(); if (step < totalSteps) nextStep(); }} onKeyDown={handleKeyDown}>
-                            <div className="p-3 md:p-8">
+                            <div className="p-4 md:p-10">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={step}
@@ -265,16 +265,16 @@ export const Jobs = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -12 }}
                                         transition={{ duration: 0.2 }}
-                                        className="space-y-5"
+                                        className="space-y-5 md:space-y-6"
                                     >
                                         {step === 1 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
                                                         <User size={16} className="text-primary" />
                                                         المعلومات الشخصية
                                                     </h3>
-                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
+                                                    <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['name'] = el} icon={User} label="الاسم" name="name" value={form.name} onChange={handleChange} placeholder="الاسم الكامل" required autoComplete="name" />
                                                 <InputField ref={el => inputRefs.current['phone'] = el} icon={Phone} label="رقم الهاتف" name="phone" value={form.phone} onChange={handleChange} placeholder="مثال: 96512345678" type="tel" required inputMode="numeric" autoComplete="tel" />
@@ -285,11 +285,11 @@ export const Jobs = () => {
                                         {step === 2 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
                                                         <GraduationCap size={16} className="text-primary" />
                                                         المؤهلات والوظيفة
                                                     </h3>
-                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
+                                                    <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['position'] = el} icon={Briefcase} label="الوظيفة المطلوبة" name="position" value={form.position} onChange={handleChange} placeholder="معلمة رياضيات - معلمة لغة عربية ..." required autoComplete="organization-title" />
                                                 <InputField ref={el => inputRefs.current['qualification'] = el} icon={GraduationCap} label="المؤهل العلمي" name="qualification" value={form.qualification} onChange={handleChange} placeholder="بكالوريوس - ماجستير ..." required />
@@ -300,18 +300,18 @@ export const Jobs = () => {
                                         {step === 3 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
                                                         <BookMarked size={16} className="text-primary" />
                                                         المادة التي تدرسها
                                                     </h3>
-                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
+                                                    <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
                                                 </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                                     {subjects.map(s => (
                                                         <label
                                                             key={s}
                                                             onClick={() => setForm(prev => ({ ...prev, subject: s }))}
-                                                            className={`flex items-center gap-3 p-3 md:p-4 border-2 cursor-pointer transition-all min-h-[52px] ${
+                                                            className={`flex items-center gap-3 p-4 md:p-5 border-2 cursor-pointer transition-all min-h-[60px] md:min-h-[68px] ${
                                                                  form.subject === s
                                                                      ? 'border-primary bg-primary-soft dark:bg-primary/30'
                                                                      : 'border-border dark:border-border bg-background dark:bg-primary-active/50 hover:border-border dark:hover:border-border'
@@ -338,16 +338,16 @@ export const Jobs = () => {
                                         {step === 4 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
                                                         <Award size={16} className="text-primary" />
                                                         الخبرات
                                                     </h3>
-                                                    <p className="text-micro text-muted dark:text-muted font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
+                                                    <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
                                                 </div>
                                                 <InputField ref={el => inputRefs.current['graduationYear'] = el} icon={Calendar} label="سنة التخرج" name="graduationYear" value={form.graduationYear} onChange={handleChange} placeholder="مثال: 2020" type="number" />
                                                 <InputField ref={el => inputRefs.current['onlineYears'] = el} icon={Globe} label="سنوات الخبرة في التدريس أون لاين" name="onlineYears" value={form.onlineYears} onChange={handleChange} placeholder="عدد السنوات" />
                                                 <div className="space-y-2">
-                                                    <label className="flex items-center gap-2 text-micro font-black text-muted dark:text-muted">
+                                                    <label className="flex items-center gap-2 text-micro md:text-xs font-black text-muted dark:text-muted">
                                                         <BookOpen size={12} className="text-primary shrink-0" />
                                                         المناهج التي قمت بتدريسها
                                                     </label>
@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border p-4 min-h-[90px] text-sm font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
+                                                            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -369,13 +369,13 @@ export const Jobs = () => {
                             </div>
 
                             {/* Actions */}
-                            <div className="p-6 md:p-8 border-t border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
+                            <div className="p-4 md:p-10 border-t border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
                                 <div className="flex items-center justify-between gap-3">
                                     <button
                                         type="button"
                                         onClick={prevStep}
                                         disabled={step === 1}
-                                        className="px-5 py-3 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-dim font-black text-xs transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-surface dark:hover:bg-primary-active"
+                                        className="px-5 md:px-6 py-3 md:py-4 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-dim font-black text-xs md:text-sm transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-surface dark:hover:bg-primary-active"
                                     >
                                         <ChevronRight size={14} />
                                         السابق
@@ -386,7 +386,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={nextStep}
                                             disabled={!canProceed()}
-                                            className="flex-1 md:flex-none px-8 py-3 bg-primary hover:bg-primary-hover text-on-primary font-black text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-primary hover:bg-primary-hover text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
                                         >
                                             التالي
                                             <ChevronLeft size={14} />
@@ -396,7 +396,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={handleSubmit}
                                             disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
-                                            className="flex-1 md:flex-none px-8 py-3 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20"
+                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20"
                                         >
                                             {loading ? (
                                                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -477,11 +477,11 @@ interface InputFieldProps {
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
     <div className="space-y-1.5">
-        <label className="flex items-center gap-2 text-micro font-black text-muted dark:text-muted">
+        <label className="flex items-center gap-2 text-micro md:text-xs font-black text-muted dark:text-muted">
             <Icon size={12} className="text-primary shrink-0" />
             {label}
             {required && <span className="text-error">*</span>}
-            {!required && <span className="text-micro text-muted font-normal">(اختياري)</span>}
+            {!required && <span className="text-micro md:text-xs text-muted font-normal">(اختياري)</span>}
         </label>
         <input
             ref={ref}
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border py-3 px-4 text-sm font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
+            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
         />
     </div>
 ));
