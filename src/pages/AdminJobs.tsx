@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { api } from '../lib/api';
-import { ConfirmModal } from '../shared/components/ConfirmModal';
+import { confirm } from '../lib/confirmDialog';
 
 interface JobApp {
     id: string;
@@ -30,7 +30,6 @@ export const AdminJobs = () => {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [subjectFilter, setSubjectFilter] = useState('');
-    const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
     const mountedRef = useRef(true);
 
     useEffect(() => {
@@ -53,13 +52,19 @@ export const AdminJobs = () => {
     }, []);
 
     const handleDelete = async (id: string) => {
+        const confirmed = await confirm('هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء.', {
+            title: 'حذف الطلب',
+            confirmText: 'حذف',
+            cancelText: 'تراجع',
+            isDestructive: true
+        });
+        if (!confirmed) return;
         try {
             await api.delete(`/jobs/${id}`);
             setApps(apps.filter(a => a.id !== id));
         } catch (err) {
             console.error(err);
         }
-        setDeleteTarget(null);
     };
 
     const handleContacted = async (id: string) => {
@@ -168,7 +173,7 @@ export const AdminJobs = () => {
                                         >
                                             <CheckCircle2 size={20} />
                                         </button>
-                                        <button onClick={() => setDeleteTarget(app.id)} className="p-2 border-2 border-transparent rounded-sm text-dim hover:text-error hover:border-error hover:bg-error/10 transition-all" aria-label="حذف الطلب">
+                                        <button onClick={() => handleDelete(app.id)} className="p-2 border-2 border-transparent rounded-sm text-dim hover:text-error hover:border-error hover:bg-error/10 transition-all" aria-label="حذف الطلب">
                                             <Trash2 size={20} />
                                         </button>
                                     </div>
@@ -223,16 +228,6 @@ export const AdminJobs = () => {
                 )}
             </div>
 
-            <ConfirmModal
-                isOpen={deleteTarget !== null}
-                onClose={() => setDeleteTarget(null)}
-                onConfirm={() => deleteTarget && handleDelete(deleteTarget)}
-                title="حذف الطلب"
-                message="هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء."
-                confirmText="حذف"
-                cancelText="تراجع"
-                isDestructive
-            />
         </div>
     );
 };
