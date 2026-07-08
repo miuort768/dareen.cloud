@@ -138,16 +138,6 @@ async function updateStudent(id, data, user) {
   const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
 
   const student = await prisma.$transaction(async (tx) => {
-    const existingEnrollments = await tx.enrollment.findMany({
-      where: { studentId: id },
-      select: { teacher: true, subject: true, sessionsUsed: true, nextSessionNotes: true },
-    });
-    const preservedMap = {};
-    existingEnrollments.forEach(en => {
-      const key = `${(en.teacher || '').trim().toLowerCase()}-${(en.subject || '').trim().toLowerCase()}`;
-      preservedMap[key] = { used: en.sessionsUsed, notes: en.nextSessionNotes };
-    });
-
     const updateData = {
       name, grade, parentPhone, studentPhone, curriculum, notes,
       sessionPrice: sessionPrice || 0, currency: currency || 'KWD',
@@ -158,9 +148,22 @@ async function updateStudent(id, data, user) {
     }
     await tx.student.update({ where: { id }, data: updateData });
 
-    await tx.enrollment.deleteMany({ where: { studentId: id } });
+    if (enrollments !== undefined && Array.isArray(enrollments)) {
+      const existingEnrollments = await tx.enrollment.findMany({
+        where: { studentId: id },
+        select: { id: true, sessionsUsed: true, nextSessionNotes: true },
+      });
+      const existingIds = new Set(existingEnrollments.map(e => e.id));
+      const incomingIds = new Set(enrollments.map(e => e.id).filter(Boolean));
 
-    if (enrollments && enrollments.length > 0) {
+      const idsToDelete = [...existingIds].filter(eId => !incomingIds.has(eId));
+      if (idsToDelete.length > 0) {
+        await tx.enrollment.updateMany({
+          where: { id: { in: idsToDelete.map(Number) } },
+          data: { deletedAt: new Date() },
+        });
+      }
+
       for (const e of enrollments) {
         let finalTeacherId = e.teacherId || null;
         if (!finalTeacherId && e.teacher) {
@@ -168,19 +171,27 @@ async function updateStudent(id, data, user) {
           if (teacher) finalTeacherId = teacher.id;
         }
 
-        const matchKey = `${(e.teacher || '').trim().toLowerCase()}-${(e.subject || '').trim().toLowerCase()}`;
-        const preservedData = preservedMap[matchKey] || {};
-        const preservedUsed = preservedData.used !== undefined ? preservedData.used : (e.sessionsUsed || 0);
-        const finalNotes = e.nextSessionNotes !== undefined ? e.nextSessionNotes : (preservedData.notes || null);
-
-        await tx.enrollment.create({
-          data: {
-            studentId: id, teacher: e.teacher, teacherId: finalTeacherId,
-            subject: e.subject, curr: e.curr,
-            sessionsTotal: e.sessionsTotal || 0, sessionsUsed: preservedUsed,
-            schedule: JSON.stringify(e.schedule || []), nextSessionNotes: finalNotes,
-          },
-        });
+        if (e.id && existingIds.has(e.id)) {
+          await tx.enrollment.update({
+            where: { id: parseInt(e.id) },
+            data: {
+              teacher: e.teacher, teacherId: finalTeacherId,
+              subject: e.subject, curr: e.curr,
+              sessionsTotal: e.sessionsTotal || 0,
+              schedule: JSON.stringify(e.schedule || []),
+              nextSessionNotes: e.nextSessionNotes || null,
+            },
+          });
+        } else {
+          await tx.enrollment.create({
+            data: {
+              studentId: id, teacher: e.teacher, teacherId: finalTeacherId,
+              subject: e.subject, curr: e.curr,
+              sessionsTotal: e.sessionsTotal || 0, sessionsUsed: e.sessionsUsed || 0,
+              schedule: JSON.stringify(e.schedule || []), nextSessionNotes: e.nextSessionNotes || null,
+            },
+          });
+        }
       }
     }
 

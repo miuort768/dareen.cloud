@@ -108,7 +108,7 @@ async function getTeacherEnrollments(teacherId) {
 }
 
 async function createEnrollment(data, user) {
-  const { studentId, teacherId, teacher, subject, curr, sessionsTotal, schedule, nextSessionNotes } = data;
+  const { studentId, teacherId, teacher, subject, curr, sessionsTotal, schedule, sessions, nextSessionNotes } = data;
 
   if (!studentId || !subject) {
     throw Object.assign(new Error('studentId and subject are required'), { statusCode: 400 });
@@ -134,17 +134,41 @@ async function createEnrollment(data, user) {
   }
 
   const enrollment = await prisma.$transaction(async (tx) => {
-    return tx.enrollment.create({
+    const created = await tx.enrollment.create({
       data: {
         studentId, teacherId: teacherId || null,
         teacherFallback: teacher || null,
         subject, curr: curr || student.currency || null,
         sessionsTotal: sessionsTotal || 0,
-        schedule: schedule ? JSON.stringify(schedule) : null,
+        schedule: schedule && schedule.length > 0 ? JSON.stringify(schedule) : null,
         nextSessionNotes: nextSessionNotes || null,
       },
       include: enrollmentInclude,
     });
+
+    if (sessions && sessions.length > 0) {
+      const price = teacherId
+        ? (await tx.teacher.findUnique({ where: { id: teacherId }, select: { price: true } }))?.price || 0
+        : 0;
+      for (const s of sessions) {
+        await tx.session.create({
+          data: {
+            studentId,
+            studentName: student.name,
+            teacherId: teacherId || null,
+            teacherName: teacher || null,
+            subject: subject || null,
+            date: s.date,
+            day: s.day || null,
+            time: s.time || null,
+            status: 'pending',
+            price,
+          },
+        });
+      }
+    }
+
+    return created;
   });
 
   await invalidateEnrollmentCaches(enrollment.id, studentId, teacherId);

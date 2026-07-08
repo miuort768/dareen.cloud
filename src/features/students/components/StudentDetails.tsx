@@ -20,6 +20,7 @@ interface StudentDetailsProps {
     onAddSessions?: (index: number, amount: number) => void;
     onFreezeEnrollment?: (enrollmentId: string, isFrozen: boolean, reason?: string) => void;
     teachers: Teacher[];
+    isAddingEnrollment?: boolean;
 }
 
 export const StudentDetails = ({
@@ -31,7 +32,8 @@ export const StudentDetails = ({
     onSendReminder,
     onAddSessions,
     onFreezeEnrollment,
-    teachers
+    teachers,
+    isAddingEnrollment
 }: StudentDetailsProps) => {
     const [addingSessionsIndex, setAddingSessionsIndex] = useState<number | null>(null);
     const [showHistory, setShowHistory] = useState(false);
@@ -254,7 +256,7 @@ export const StudentDetails = ({
                                     <h4 className="font-medium text-xs text-main uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
                                 </div>
                             </div>
-                            <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
+                            <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} isLoading={isAddingEnrollment} />
                         </div>
                     </div>
                 </div>

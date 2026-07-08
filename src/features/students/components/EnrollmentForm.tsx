@@ -1,28 +1,32 @@
 import { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Loader2 } from 'lucide-react';
 import type { Teacher } from '../../teachers/types';
 import type { ScheduleSlot } from '../types';
 
 interface EnrollmentFormProps {
     teachers: Teacher[];
     onSubmit: (data: {
+        teacherId?: string;
         teacher: string;
         subject: string;
         curr: string;
         totalSessions: number;
         schedule: ScheduleSlot[];
     }) => void;
+    isLoading?: boolean;
 }
 
-export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
+export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentFormProps) => {
     const [form, setForm] = useState({
-        teacher: '',
+        teacherId: '',
         subject: '',
         curr: '',
         totalSessions: ''
     });
     const [schedule, setSchedule] = useState<ScheduleSlot[]>([]);
     const [slotInput, setSlotInput] = useState({ day: '', hour: '', period: 'pm' });
+
+    const selectedTeacher = teachers.find(t => t.id === form.teacherId);
 
     const handleAddSlot = () => {
         if (!slotInput.day || !slotInput.hour) return;
@@ -37,11 +41,14 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit({
-            ...form,
+            teacherId: form.teacherId || undefined,
+            teacher: selectedTeacher?.name || '',
+            subject: form.subject,
+            curr: form.curr,
             totalSessions: Number(form.totalSessions) || 0,
             schedule
         });
-        setForm({ teacher: '', subject: '', curr: '', totalSessions: '' });
+        setForm({ teacherId: '', subject: '', curr: '', totalSessions: '' });
         setSchedule([]);
     };
 
@@ -52,12 +59,12 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                 <div className="grid grid-cols-2 gap-2">
                     <select
                         required
-                        value={form.teacher}
-                        onChange={e => setForm({ ...form, teacher: e.target.value })}
+                        value={form.teacherId}
+                        onChange={e => setForm({ ...form, teacherId: e.target.value })}
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     >
                         <option value="">المعلمة</option>
-                        {teachers.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
+                        {teachers.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
                     </select>
                     <input
                         required
@@ -114,8 +121,9 @@ export const EnrollmentForm = ({ teachers, onSubmit }: EnrollmentFormProps) => {
                     </div>
                 </div>
 
-                <button type="submit" className="w-full bg-primary text-on-primary py-3 text-xs font-medium uppercase tracking-widest hover:bg-primary-hover transition-all mt-2 shadow-sm">
-                    تأكيد وحفظ الاشتراك
+                <button type="submit" disabled={isLoading} className="w-full bg-primary text-on-primary py-3 text-xs font-medium uppercase tracking-widest hover:bg-primary-hover transition-all mt-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                    {isLoading ? <Loader2 size={14} className="animate-spin" /> : null}
+                    {isLoading ? 'جاري الحفظ...' : 'تأكيد وحفظ الاشتراك'}
                 </button>
             </form>
         </div>

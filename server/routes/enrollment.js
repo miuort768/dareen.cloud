@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../utils/logger');
 const { authMiddleware, checkRole } = require('../middleware/auth');
+const validate = require('../middleware/validation');
+const { createEnrollmentSchema, updateEnrollmentSchema } = require('../utils/validators');
 const enrollmentService = require('../services/enrollmentService');
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
@@ -45,7 +47,7 @@ router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   }
 });
 
-router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), validate(createEnrollmentSchema), async (req, res) => {
   try {
     const enrollment = await enrollmentService.createEnrollment(req.body, req.user);
     res.status(201).json(enrollment);

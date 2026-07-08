@@ -156,7 +156,28 @@ const createTeacherInvoiceSchema = z.object({
     personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
 });
 
-// --- Lead Schemas ---
+// --- Enrollment Schemas ---
+const createEnrollmentSchema = z.object({
+    studentId: z.string().min(1, "Student ID is required"),
+    teacherId: z.string().nullable().optional(),
+    teacher: z.string().optional().or(z.literal('')),
+    subject: z.string().min(1, "Subject is required"),
+    curr: z.string().optional().or(z.literal('')),
+    sessionsTotal: z.number().int().min(0).default(0),
+    schedule: z.array(z.object({
+        day: z.string(),
+        hour: z.string(),
+        period: z.string().optional()
+    })).optional().default([]),
+    sessions: z.array(z.object({
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        day: z.string().optional(),
+        time: z.string().optional()
+    })).optional().default([]),
+    nextSessionNotes: z.string().nullable().optional()
+});
+
+const updateEnrollmentSchema = createEnrollmentSchema.partial();
 const createLeadSchema = z.object({
     id: z.string().optional(),
     studentName: z.string().min(1, "Student name is required").trim(),
@@ -190,6 +211,9 @@ module.exports = {
     updateStudentInvoiceSchema: createStudentInvoiceSchema.partial(),
     createTeacherInvoiceSchema,
     updateTeacherInvoiceSchema: createTeacherInvoiceSchema.partial(),
+    createEnrollmentSchema,
+    updateEnrollmentSchema,
+
     createLeadSchema,
     updateLeadSchema
 };

@@ -4,7 +4,7 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { Search, AlertCircle, Plus, TrendingUp, Upload, Trash2, BookOpen, GraduationCap, FileSpreadsheet, FileText } from 'lucide-react';
+import { Search, AlertCircle, Plus, TrendingUp, Upload, Trash2, BookOpen, GraduationCap, FileSpreadsheet, FileText, Loader2 } from 'lucide-react';
 
 // Shared Components
 import { PageLoader } from '../../../components/ui/PageLoader';
@@ -24,6 +24,7 @@ import { downloadExport } from '../../../lib/download';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 
 interface EnrollmentFormData {
+    teacherId?: string;
     teacher: string;
     subject: string;
     curr: string;
@@ -71,6 +72,7 @@ export const Students = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [isDeletingAll, setIsDeletingAll] = useState(false);
+    const [isAddingEnrollment, setIsAddingEnrollment] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const loading = loadingStudents || loadingTeachers;
@@ -110,48 +112,36 @@ export const Students = () => {
 
     const handleAddEnrollment = async (enrollData: EnrollmentFormData) => {
         if (!selectedStudent) return;
+        setIsAddingEnrollment(true);
 
         try {
-            const sessionInfos = generateSessionDates(enrollData.schedule, enrollData.totalSessions);
-            const teacherObj = teachers.find(t => t.name === enrollData.teacher);
-
-            for (const info of sessionInfos) {
-                await api.post('/sessions', {
-                    studentId: selectedStudent.id,
-                    studentName: selectedStudent.name,
-                    teacherId: teacherObj?.id,
-                    teacherName: enrollData.teacher,
-                    subject: enrollData.subject,
-                    date: info.date.toISOString().split('T')[0],
-                    day: info.slot.day,
-                    time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
-                    status: 'pending',
-                    price: teacherObj?.price || 0
-                });
-            }
-
-            const newEnrollment: Enrollment = {
+            const created = await api.post('/enrollments', {
+                studentId: selectedStudent.id,
+                teacherId: enrollData.teacherId || null,
                 teacher: enrollData.teacher,
-                teacherId: teacherObj?.id,
                 subject: enrollData.subject,
                 curr: enrollData.curr,
                 sessionsTotal: enrollData.totalSessions,
-                sessionsUsed: 0,
-                schedule: enrollData.schedule
-            };
+                schedule: enrollData.schedule,
+                sessions: generateSessionDates(enrollData.schedule, enrollData.totalSessions).map(info => ({
+                    date: info.date.toISOString().split('T')[0],
+                    day: info.slot.day,
+                    time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
+                }))
+            });
 
+            queryClient.invalidateQueries({ queryKey: ['students'] });
             const updatedStudent = {
                 ...selectedStudent,
-                enrollments: [...(selectedStudent.enrollments || []), newEnrollment]
+                enrollments: [...(selectedStudent.enrollments || []), created]
             };
-
-            updateStudent(updatedStudent);
             setSelectedStudent(updatedStudent);
-            queryClient.invalidateQueries({ queryKey: ['students'] });
             showNotification('تم إضافة الاشتراك والجلسات بنجاح', 'success');
         } catch (error) {
             console.error('Error adding enrollment:', error);
             showNotification(error?.message || 'فشل إضافة الاشتراك', 'error');
+        } finally {
+            setIsAddingEnrollment(false);
         }
     };
 
@@ -356,6 +346,7 @@ export const Students = () => {
                                 onClose={() => setShowDetails(false)}
                                 onAddEnrollment={handleAddEnrollment}
                                 onAddSessions={handleAddSessions}
+                                isAddingEnrollment={isAddingEnrollment}
                             />
                         )}
                     </div>

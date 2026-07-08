@@ -10,10 +10,20 @@ export const generateSessionDates = (schedule: ScheduleSlot[], total: number): {
     let count = 0;
     let loops = 0;
 
-    // Safety limit to avoid infinite loops
+    if (schedule.length === 0) return results;
+
+    // Align to the first schedule day
+    const firstDayName = schedule[0].day;
+    const firstDayNum = dayMap[firstDayName];
+    if (firstDayNum !== undefined) {
+        const currentDay = current.getDay();
+        let diff = (firstDayNum - currentDay + 7) % 7;
+        if (diff === 0) diff = 7; // Start next week if today matches
+        current.setDate(current.getDate() + diff);
+    }
+
     while (count < total && loops < 365) {
         const currentDayName = Object.keys(dayMap).find(key => dayMap[key] === current.getDay());
-        // Find ALL slots for this day, not just find(...) which returns only the first one if multiple exist for same day
         const daySlots = schedule.filter(s => s.day === currentDayName);
 
         for (const slot of daySlots) {
