@@ -53,7 +53,6 @@ const MonitoringPage = lazy(() => import('./features/monitoring/pages/Monitoring
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
-import { FloatingTasbeehWidget } from './components/tasbeeh/FloatingTasbeehWidget';
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
@@ -203,7 +202,6 @@ function App() {
       <Suspense fallback={null}>
         <SocketInitLayer />
       </Suspense>
-      {isAuthenticated && currentUser?.role === 'admin' && <FloatingTasbeehWidget />}
       <Suspense fallback={<PageLoader />}>
         <main id="main-content">
         <Routes>

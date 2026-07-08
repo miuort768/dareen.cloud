@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Clock, Calendar, ShieldCheck, Sparkles, TrendingUp } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import { cn } from '../../../lib/utils';
-import { useTasbeehStore } from '../../../store/tasbeehStore';
 
 interface DashboardHeaderProps {
     isTeacher: boolean;
@@ -11,7 +10,6 @@ interface DashboardHeaderProps {
 
 export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
-    const toggleTasbeeh = useTasbeehStore((s) => s.toggle);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -70,17 +68,6 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
-
-                {currentUser?.role === 'admin' && (
-                    <button
-                        onClick={toggleTasbeeh}
-                        className="flex items-center gap-2 h-10 px-5 text-micro font-bold bg-white/15 backdrop-blur-sm text-on-primary rounded-2xl border border-white/10 active:scale-[0.97] transition-all hover:bg-white/25 shadow-sm"
-                    >
-                        <Sparkles size={14} strokeWidth={1.5} />
-                        المسبحة
-                        <Sparkles size={10} strokeWidth={1.5} className="text-info" />
-                    </button>
-                )}
             </div>
         </div>
     );
