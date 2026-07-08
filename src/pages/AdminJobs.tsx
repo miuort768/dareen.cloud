@@ -56,7 +56,8 @@ export const AdminJobs = () => {
             title: 'حذف الطلب',
             confirmText: 'حذف',
             cancelText: 'تراجع',
-            isDestructive: true
+            isDestructive: true,
+            icon: <Trash2 size={28} />
         });
         if (!confirmed) return;
         try {
@@ -167,13 +168,13 @@ export const AdminJobs = () => {
                                             className={`p-2 border-2 rounded-sm transition-all ${
                                                 app.contacted
                                                     ? 'text-success border-success bg-success-light'
-                                                    : 'text-dim border-transparent hover:text-success hover:border-success hover:bg-success/10'
+                                                    : 'text-success border-success bg-success/10 hover:bg-success-light'
                                             }`}
                                             title="تم التواصل"
                                         >
                                             <CheckCircle2 size={20} />
                                         </button>
-                                        <button onClick={() => handleDelete(app.id)} className="p-2 border-2 border-transparent rounded-sm text-dim hover:text-error hover:border-error hover:bg-error/10 transition-all" aria-label="حذف الطلب">
+                                        <button onClick={() => handleDelete(app.id)} className="p-2 border-2 border-error rounded-sm text-error bg-error/10 hover:bg-error-light transition-all" aria-label="حذف الطلب">
                                             <Trash2 size={20} />
                                         </button>
                                     </div>

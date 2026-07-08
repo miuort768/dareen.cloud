@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom/client';
-import { AlertCircle, X, LogOut, Info } from 'lucide-react';
+import { AlertCircle, X, LogOut, Info, Trash2 } from 'lucide-react';
 import { cn } from './utils';
 
 interface ConfirmProps {
@@ -9,6 +9,7 @@ interface ConfirmProps {
     confirmText?: string;
     cancelText?: string;
     isDestructive?: boolean;
+    icon?: React.ReactNode;
 }
 
 let container: HTMLDivElement | null = null;
@@ -149,7 +150,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                     ? "bg-error-light dark:bg-error/10 text-error"
                                     : "bg-primary-soft dark:bg-primary/10 text-primary"
                             )}>
-                                {isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />}
+                                {options.icon || (isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />)}
                             </div>
 
                             <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">
