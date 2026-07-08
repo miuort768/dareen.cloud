@@ -135,11 +135,12 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
 
-            if (!studentPrice && body.studentId) {
-                const student = await tx.student.findUnique({ where: { id: body.studentId }, select: { sessionPrice: true, currency: true } });
-                if (student) {
-                    studentPrice = student.sessionPrice;
-                }
+            const student = body.studentId
+                ? await tx.student.findUnique({ where: { id: body.studentId }, select: { sessionPrice: true, currency: true } })
+                : null;
+
+            if (!studentPrice && student) {
+                studentPrice = student.sessionPrice ?? 0;
             }
 
             const teacherRow = body.teacherId
@@ -148,7 +149,7 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
                     ? await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true, currency: true } })
                     : null;
 
-            const finalTeacherId = body.teacherId || (teacherRow ? teacherRow.id : null);
+            const finalTeacherId = body.teacherId ?? (teacherRow ? teacherRow.id : null);
             if (teacherRow) teacherPrice = teacherRow.price;
 
             // Phase 2B: Currency snapshot
@@ -174,7 +175,7 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
             await tx.session.create({
                 data: {
                     id, studentId: body.studentId, studentName: body.studentName || '',
-                    teacherId: finalTeacherId || '', teacherName: body.teacherName || '',
+                    teacherId: finalTeacherId, teacherName: body.teacherName || '',
                     subject: body.subject || '', date: body.date, day: body.day || '',
                     time: body.time || '', price: studentPrice, teacherPrice,
                     studentCurrency, teacherCurrency,

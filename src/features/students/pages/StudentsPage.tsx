@@ -151,7 +151,7 @@ export const Students = () => {
             showNotification('تم إضافة الاشتراك والجلسات بنجاح', 'success');
         } catch (error) {
             console.error('Error adding enrollment:', error);
-            showNotification('فشل إضافة الاشتراك', 'error');
+            showNotification(error?.message || 'فشل إضافة الاشتراك', 'error');
         }
     };
 
