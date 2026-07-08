@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft, Zap } from 'lucide-react';
 
 const features = [
   {
@@ -44,6 +44,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
         {/* Section Header */}
         <div className="text-center mb-4 md:mb-6">
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2">
+            <Zap className="w-5 h-5 text-warning fill-warning md:hidden" />
             <span>لماذا{' '}</span>
             <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xl md:text-4xl inline-block">
               تختارنا؟

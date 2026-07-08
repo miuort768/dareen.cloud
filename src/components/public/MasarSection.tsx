@@ -158,7 +158,7 @@ export const MasarSection = () => {
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-warning-light dark:bg-warning/30 flex items-center justify-center">
                                 <Headphones size={20} className="text-warning dark:text-warning" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">دعم مستمر</span>
+                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">دعم مستمر طوال اليوم</span>
                         </div>
                     </div>
                 </div>

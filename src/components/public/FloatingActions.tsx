@@ -51,7 +51,7 @@ export const FloatingActions = () => {
 
     return (
         <>
-            <div className={cn("fixed top-[75%] md:top-1/2 -translate-y-1/2 end-4 md:start-6 z-[9999] flex flex-col gap-2 md:gap-3", isBooksPage && "hidden md:flex")}>
+            <div className={cn("fixed top-[60%] md:top-1/2 -translate-y-1/2 end-4 md:start-6 z-[9999] flex flex-col gap-2 md:gap-3", isBooksPage && "hidden md:flex")}>
                 <AnimatePresence>
                     {actions.map((action, index) => (
                         <motion.div
