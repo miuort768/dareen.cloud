@@ -367,7 +367,13 @@ export const Students = () => {
                 message="سيتم حذف كافة بيانات الطالب. هل أنت متأكد؟"
                 onConfirm={async () => {
                     if (deletingId) {
-                        deleteStudent(deletingId);
+                        try {
+                            await api.delete(`/students/${deletingId}`);
+                            queryClient.invalidateQueries({ queryKey: ['students'] });
+                            showNotification('تم حذف الطالب بنجاح', 'success');
+                        } catch {
+                            showNotification('فشل حذف الطالب', 'error');
+                        }
                         setDeletingId(null);
                     }
                 }}

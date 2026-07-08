@@ -42,6 +42,7 @@ export interface Session {
 }
 
 export interface Enrollment {
+    id?: string;
     teacher: string;
     teacherId?: string;
     sessionsTotal?: number;
@@ -53,6 +54,8 @@ export interface Enrollment {
     total?: number;
     used?: number;
     price?: number;
+    isFrozen?: boolean;
+    frozenReason?: string;
     schedule?: { day: string; hour: string; period: string }[];
 }
 

@@ -126,14 +126,14 @@ async function createEnrollment(data, user) {
     }
   }
 
-  const duplicate = await prisma.enrollment.findFirst({
-    where: { studentId, subject, teacherId: teacherId || null, deletedAt: null },
-  });
-  if (duplicate) {
-    throw Object.assign(new Error('الطالب مسجل بالفعل في هذه المادة مع هذا المعلم'), { statusCode: 400 });
-  }
-
   const enrollment = await prisma.$transaction(async (tx) => {
+    const duplicate = await tx.enrollment.findFirst({
+      where: { studentId, subject, teacherId: teacherId || null, deletedAt: null },
+    });
+    if (duplicate) {
+      throw Object.assign(new Error('الطالب مسجل بالفعل في هذه المادة مع هذا المعلم'), { statusCode: 400 });
+    }
+
     const created = await tx.enrollment.create({
       data: {
         studentId, teacherId: teacherId || null,

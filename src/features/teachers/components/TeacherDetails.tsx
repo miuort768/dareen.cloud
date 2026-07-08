@@ -36,12 +36,14 @@ export const TeacherDetails = ({
 
     // Filter students enrolled with this teacher
     const enrolledStudents = students.filter(s =>
-        s.enrollments?.some((e: Enrollment) => e.teacher === teacher.name)
+        s.enrollments?.some((e: Enrollment) =>
+            (e.teacherId && e.teacherId === teacher.id) || e.teacher === teacher.name
+        )
     );
 
     // Filter sessions for this teacher
     const teacherSessions = sessions
-        .filter(s => s.teacherName === teacher.name)
+        .filter(s => (s.teacherId && s.teacherId === teacher.id) || s.teacherName === teacher.name)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     // Performance Calculations
@@ -133,7 +135,9 @@ export const TeacherDetails = ({
                     </div>
                     <div className="space-y-2">
                         {enrolledStudents.map(student => {
-                            const enrollment = student.enrollments.find((e: Enrollment) => e.teacher === teacher.name)!;
+                            const enrollment = student.enrollments.find((e: Enrollment) =>
+                                (e.teacherId && e.teacherId === teacher.id) || e.teacher === teacher.name
+                            )!;
                             const actualUsed = enrollment.sessionsUsed || 0;
                             const remaining = (enrollment.sessionsTotal || 0) - actualUsed;
                             const isLow = remaining <= 2;
@@ -142,7 +146,7 @@ export const TeacherDetails = ({
                             return (
                                 <div key={student.id} className={cn(
                                     "p-3 bg-card border border-border rounded-xl shadow-sm relative transition-all group",
-                                    (enrollment as { isFrozen?: boolean }).isFrozen && "opacity-50 grayscale",
+                                    (enrollment as Enrollment).isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-error" : "hover:border-primary/30"
                                 )}>
                                     <div className="flex justify-between items-start mb-3">

@@ -111,15 +111,29 @@ router.post('/:id/convert', checkRole(['admin']), async (req, res) => {
         });
 
         if (trial.teacherId) {
-            await prisma.enrollment.create({
-                data: {
-                    studentId,
-                    teacherId: trial.teacherId,
-                    teacherFallback: trial.teacherName || '',
-                    subject: trial.subject || '',
-                    sessionsTotal: 1,
-                    sessionsUsed: 1,
-                }
+            await prisma.$transaction(async (tx) => {
+                await tx.enrollment.create({
+                    data: {
+                        studentId,
+                        teacherId: trial.teacherId,
+                        teacherFallback: trial.teacherName || '',
+                        subject: trial.subject || '',
+                        sessionsTotal: 1,
+                        sessionsUsed: 1,
+                    }
+                });
+                await tx.session.create({
+                    data: {
+                        studentId,
+                        studentName: trial.studentName,
+                        teacherId: trial.teacherId,
+                        teacherName: trial.teacherName || '',
+                        subject: trial.subject || '',
+                        date: trial.date || new Date().toISOString().split('T')[0],
+                        time: trial.time || '',
+                        status: 'completed',
+                    }
+                });
             });
         }
 

@@ -2,6 +2,7 @@
 // Used across the application for type safety
 
 export interface Enrollment {
+    id?: string;
     teacher: string;
     teacherId?: string;
     subject: string;
@@ -10,6 +11,8 @@ export interface Enrollment {
     sessionsUsed: number;
     schedule: ScheduleSlot[];
     price?: number;
+    isFrozen?: boolean;
+    frozenReason?: string;
     nextSessionNotes?: string;
 }
 

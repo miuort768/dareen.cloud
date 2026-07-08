@@ -204,7 +204,7 @@ async function updateStudent(id, data, user) {
 
 async function deleteStudent(id, user) {
   await prisma.$transaction(async (tx) => {
-    await tx.enrollment.deleteMany({ where: { studentId: id } });
+    await tx.enrollment.updateMany({ where: { studentId: id }, data: { deletedAt: new Date() } });
     await tx.student.update({ where: { id }, data: { deletedAt: new Date() } });
   });
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_DELETED, { id }, 'student', id);
@@ -223,7 +223,7 @@ async function freezeEnrollment(studentId, enrollmentId, data, user) {
   const { isFrozen, frozenReason } = data;
   const updated = await prisma.enrollment.update({
     where: { id: parseInt(enrollmentId), studentId },
-    data: { nextSessionNotes: isFrozen ? `[مجمدة] ${frozenReason || ''}` : null },
+    data: { isFrozen: isFrozen ? 1 : 0, frozenReason: frozenReason || null },
   });
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_UPDATED, { studentId, freeze: true }, 'enrollment', enrollmentId);
   return updated;

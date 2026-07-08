@@ -140,7 +140,7 @@ export const StudentDetails = ({
                             const actualUsed = en.sessionsUsed;
                             const remaining = en.sessionsTotal - actualUsed;
                             const isLow = remaining <= 2;
-                            const progressPercent = Math.round((actualUsed / en.sessionsTotal) * 100);
+                            const progressPercent = en.sessionsTotal ? Math.round((actualUsed / en.sessionsTotal) * 100) : 0;
 
                             return (
                                 <div key={i} className={cn(

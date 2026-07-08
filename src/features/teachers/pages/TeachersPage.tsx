@@ -157,6 +157,7 @@ export const Teachers = () => {
             await api.post('/sessions', {
                 studentId: student.id,
                 studentName: student.name,
+                teacherId: selectedTeacher.id,
                 teacherName: selectedTeacher.name,
                 subject: enrollment.subject,
                 date: logDate,
@@ -261,12 +262,15 @@ export const Teachers = () => {
     };
 
     const unenrollMutation = useMutation({
-        mutationFn: async ({ student, teacherName }: { student: Student, teacherName: string }) => {
-            const updatedEnrollments = student.enrollments.filter((en: Enrollment) => en.teacher !== teacherName);
+        mutationFn: async ({ student, teacherName, teacherId }: { student: Student, teacherName: string, teacherId?: string }) => {
+            const updatedEnrollments = student.enrollments.filter((en: Enrollment) =>
+                (en.teacherId && en.teacherId === teacherId) || en.teacher !== teacherName
+            );
             await api.put(`/students/${student.id}`, { ...student, enrollments: updatedEnrollments });
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['students'] });
+            queryClient.invalidateQueries({ queryKey: ['sessions'] });
             showNotification('تم إزالة الطالب بنجاح', 'success');
         }
     });
@@ -378,7 +382,7 @@ export const Teachers = () => {
                                     students={students}
                                     sessions={sessions}
                                     onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                    onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
+                                    onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t, teacherId: selectedTeacher?.id })}
                                     onDeleteSession={async (id) => {
                                         await api.delete(`/sessions/${id}`);
                                         queryClient.invalidateQueries({ queryKey: ['sessions'] });

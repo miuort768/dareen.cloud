@@ -140,7 +140,7 @@ export const Appointments = () => {
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>
         (student.enrollments || [])
-            .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch)
+            .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
             .flatMap(enrollment =>
                 (enrollment.schedule || []).map(slot => {
                     const normalizedPeriod = (slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص') ? 'ص' : 'م';

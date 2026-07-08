@@ -17,10 +17,11 @@ async function updateSessionCount(tx, { studentId, subject, teacherName, teacher
         (teacherId && e.teacherId === teacherId) ||
         (teacherName && e.teacherFallback && e.teacherFallback.trim().toLowerCase() === teacherName.trim().toLowerCase())
     ) || enrollments[0];
-    if (!match) return 0;
+    if (!match) {
+        throw new Error(`لم يتم العثور على اشتراك للطالب ${studentId} في مادة ${subject}`);
+    }
     const newVal = delta > 0 ? match.sessionsUsed + 1 : Math.max(0, match.sessionsUsed - 1);
     await tx.enrollment.update({ where: { id: match.id }, data: { sessionsUsed: newVal } });
-    return 1;
 }
 
 async function awardPointsInline(tx, { studentId, amount, action }) {

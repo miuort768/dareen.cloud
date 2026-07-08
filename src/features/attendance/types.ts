@@ -27,6 +27,7 @@ export interface Session {
 }
 
 export interface Enrollment {
+    id?: string;
     teacher: string;
     teacherId?: string;
     subject: string;
@@ -34,7 +35,9 @@ export interface Enrollment {
     sessionsUsed: number;
     schedule: ScheduleSlot[];
     price?: number;
-    discount?: number; // Optional discount amount or percentage
+    discount?: number;
+    isFrozen?: boolean;
+    frozenReason?: string;
     nextSessionNotes?: string;
 }
 

@@ -53,7 +53,7 @@ export const Agenda = () => {
         students.forEach(student => {
             student.enrollments?.forEach((enrollment: Enrollment) => {
                 // If teacher view, only show their students
-                if (isTeacher && enrollment.teacher !== teacherName) return;
+                if (isTeacher && enrollment.teacher !== teacherName && enrollment.teacherId !== currentUser?.id) return;
 
                 enrollment.schedule?.forEach(slot => {
                     if (slot.day === activeDay) {
@@ -61,7 +61,7 @@ export const Agenda = () => {
                         const today = new Date().toLocaleDateString('en-CA');
                         const isDone = sessions.some(s =>
                             s.studentId === student.id &&
-                            s.teacherName === enrollment.teacher &&
+                            ((s.teacherId && enrollment.teacherId && s.teacherId === enrollment.teacherId) || s.teacherName === enrollment.teacher) &&
                             s.subject === enrollment.subject &&
                             s.date === today &&
                             s.status === 'completed'

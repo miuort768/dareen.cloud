@@ -109,6 +109,14 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                             onChange={e => setSlotInput({ ...slotInput, hour: e.target.value.replace(/^0+/, '') })}
                             className="w-20 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
                         />
+                        <select
+                            value={slotInput.period}
+                            onChange={e => setSlotInput({ ...slotInput, period: e.target.value })}
+                            className="w-16 px-1 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
+                        >
+                            <option value="am">صباحاً</option>
+                            <option value="pm">مساءً</option>
+                        </select>
                         <button type="button" onClick={handleAddSlot} className="bg-primary text-on-primary px-2"><Plus size={14} /></button>
                     </div>
                     <div className="flex flex-wrap gap-1">

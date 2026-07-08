@@ -122,7 +122,7 @@ export const useDashboardData = (currentUser: User | null) => {
         let todayScheduledCount = 0;
         filteredStudents.forEach((s: Student) => {
             s.enrollments?.forEach((en: Enrollment) => {
-                if (isTeacher && en.teacher !== teacherName) return;
+                if (isTeacher && en.teacher !== teacherName && en.teacherId !== currentUser.id) return;
                 en.schedule?.forEach((slot: ScheduleSlot) => {
                     if (slot.day === currentDayName) todayScheduledCount++;
                 });
@@ -203,7 +203,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
         filteredStudents.forEach((s: Student) => {
             s.enrollments?.forEach((en: Enrollment) => {
-                if (isTeacher && en.teacher !== teacherName) return;
+                if (isTeacher && en.teacher !== teacherName && en.teacherId !== currentUser.id) return;
                 const total = Number(en.sessionsTotal) || 0;
                 const actualUsed = sessions.filter((ss: Session) =>
                     ss.studentId === s.id &&
@@ -255,7 +255,7 @@ export const useDashboardData = (currentUser: User | null) => {
             studentsCount: filteredStudents.length,
             teachersCount: teachers.length,
             parentsCount: parents.length,
-            totalEnrollments: filteredStudents.reduce((sum: number, s: Student) => sum + (isTeacher ? (s.enrollments?.filter((en: Enrollment) => en.teacher === teacherName).length || 0) : (s.enrollments?.length || 0)), 0),
+            totalEnrollments: filteredStudents.reduce((sum: number, s: Student) => sum + (isTeacher ? (s.enrollments?.filter((en: Enrollment) => en.teacher === teacherName || (en.teacherId && en.teacherId === currentUser.id)).length || 0) : (s.enrollments?.length || 0)), 0),
             totalRevenue: totalRevenueValue,
             totalExpenses: totalExpensesValue,
             totalNetProfit: totalNetProfitValue,
