@@ -91,24 +91,22 @@ export const AdminJobs = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl" style={{ '--color-primary': '51 27 136' } as React.CSSProperties}>
-            <div className="bg-primary px-4 md:px-6 py-5 mb-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/15">
-                            <Briefcase size={24} className="text-on-primary" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-black text-on-primary">طلبات التوظيف</h1>
-                            <p className="text-micro font-bold text-white/70">{apps.length} طلب</p>
-                        </div>
+            <div className="mx-4 md:mx-6 mb-6 bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-6 md:p-8">
+                <div className="flex flex-col items-center gap-5">
+                    <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center shadow-lg">
+                        <Briefcase size={26} className="text-primary" />
                     </div>
-                    <div className="flex gap-2 w-full md:w-auto">
-                        <div className="relative flex-1 md:w-44">
-                            <BookMarked className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                    <div className="text-center">
+                        <h1 className="text-xl font-black text-main">طلبات التوظيف</h1>
+                        <p className="text-sm font-bold text-muted mt-1">{apps.length} طلب</p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-lg">
+                        <div className="relative flex-1">
+                            <BookMarked className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
                             <select
                                 value={subjectFilter}
                                 onChange={e => setSubjectFilter(e.target.value)}
-                                className="w-full bg-white/15 text-on-primary py-3 ps-10 pe-3 text-xs font-bold focus:outline-none border border-white/20 appearance-none cursor-pointer"
+                                className="w-full bg-white/60 backdrop-blur border border-white/30 rounded-xl py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 appearance-none cursor-pointer"
                             >
                                 <option value="" className="text-main">كل المواد</option>
                                 {allSubjects.map(s => (
@@ -116,14 +114,14 @@ export const AdminJobs = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="relative flex-1 md:w-48">
-                            <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-white/50" size={16} />
+                        <div className="relative flex-1">
+                            <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
                             <input
                                 type="text"
-                                placeholder="بحث..."
+                                placeholder="ابحث بالاسم أو الهاتف..."
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-white/15 text-on-primary placeholder:text-white/50 py-3 ps-12 pe-4 text-xs font-bold focus:outline-none border border-white/20"
+                                className="w-full bg-white/60 backdrop-blur border border-white/30 rounded-xl py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-muted"
                             />
                         </div>
                     </div>
