@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 
 export const FAQSection = () => {
@@ -45,7 +44,7 @@ export const FAQSection = () => {
                     </h2>
                     <div className="h-1 w-16 bg-warning mx-auto rounded-full"></div>
                 </div>
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.06 } } }} className="max-w-2xl mx-auto space-y-3">
+                <div className="max-w-2xl mx-auto space-y-3">
                     {[
                         {
                             q: "كيف يتم الدراسة في المعهد ؟",
@@ -105,7 +104,7 @@ export const FAQSection = () => {
                                 </div>
                             );
                         })}
-                    </motion.div>
+                    </div>
             </div>
         </section>
     );
