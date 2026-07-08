@@ -154,22 +154,22 @@ export const AdminJobs = () => {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <Award size={14} className={app.contacted ? 'text-dim' : 'text-primary'} />
-                                        <span className="font-medium text-micro uppercase tracking-[0.2em] text-muted">أكاديمية دارين</span>
+                                        <span className="font-black text-sm uppercase tracking-[0.2em] text-muted">أكاديمية دارين السابعة</span>
                                     </div>
                                     <div className="flex gap-1">
                                         <button
                                             onClick={() => handleContacted(app.id)}
-                                            className={`p-1.5 transition-all ${
+                                            className={`p-2 border-2 rounded-sm transition-all ${
                                                 app.contacted
-                                                    ? 'text-success bg-success-light'
-                                                    : 'text-dim hover:text-success hover:bg-success-light:bg-success/10'
+                                                    ? 'text-success border-success bg-success-light'
+                                                    : 'text-dim border-transparent hover:text-success hover:border-success hover:bg-success/10'
                                             }`}
                                             title="تم التواصل"
                                         >
-                                            <CheckCircle2 size={14} />
+                                            <CheckCircle2 size={20} />
                                         </button>
-                                        <button onClick={() => setDeleteTarget(app.id)} className="p-1.5 text-dim hover:text-error hover:bg-error-light:bg-error/10 transition-all" aria-label="حذف الطلب">
-                                            <Trash2 size={14} />
+                                        <button onClick={() => setDeleteTarget(app.id)} className="p-2 border-2 border-transparent rounded-sm text-dim hover:text-error hover:border-error hover:bg-error/10 transition-all" aria-label="حذف الطلب">
+                                            <Trash2 size={20} />
                                         </button>
                                     </div>
                                 </div>
