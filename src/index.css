@@ -1108,4 +1108,28 @@ html, body {
     margin-top: 1rem !important;
   }
 }
+
+/* ─── Sidebar Active Item — Inset Cutout Effect ─── */
+[data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::before,
+[data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+[data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::before {
+  top: -20px;
+  inset-inline-end: -4px;
+  border-radius: 0 0 20px 0;
+  box-shadow: 10px 10px 0 0 var(--bg-card);
+}
+[data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::after {
+  bottom: -20px;
+  inset-inline-end: -4px;
+  border-radius: 0 20px 0 0;
+  box-shadow: 10px -10px 0 0 var(--bg-card);
+}
 }

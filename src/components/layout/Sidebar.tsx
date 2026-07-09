@@ -170,7 +170,7 @@ export const Sidebar = () => {
                     </div>
                 </div>
 
-                <nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
+                <nav data-sidebar-nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
