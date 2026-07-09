@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
-import { Home, ArrowLeft, Search } from 'lucide-react';
+import { Home, ArrowLeft } from 'lucide-react';
 
 export const NotFound = () => {
     return (
@@ -19,10 +19,6 @@ export const NotFound = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">
-                    <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-6 bg-gradient-to-br from-[var(--bg-primary)]/15 to-[var(--bg-accent)]/10 dark:from-[var(--bg-primary)]/20 dark:to-[var(--bg-accent)]/10 border border-[var(--bg-primary)]/20 dark:border-[var(--bg-primary)]/30 flex items-center justify-center shadow-xl shadow-[var(--bg-primary)]/10">
-                        <Search size={40} className="text-primary" />
-                    </div>
-
                     <h1 className="text-7xl md:text-9xl font-heading font-black leading-none mb-4 bg-gradient-to-br from-primary via-primary-hover to-primary bg-clip-text text-transparent">
                         404
                     </h1>
