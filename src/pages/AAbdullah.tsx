@@ -43,33 +43,30 @@ export const AAbdullah = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col md:flex-row items-center md:items-start gap-4"
+                    className="flex flex-col gap-3"
                 >
-                    <div
-                        className="hidden md:flex w-16 h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-[#052C63] dark:bg-primary"
-                        style={{ boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
-                    >
-                        <VCodeBracket size={28} color="#FFFFFF" />
+                    <div className="flex flex-row items-center gap-2.5 md:gap-3">
+                        <div
+                            className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-[#052C63] dark:bg-primary"
+                            style={{ boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
+                        >
+                            <VCodeBracket size={22} color="#FFFFFF" />
+                        </div>
+                        <div className="text-start">
+                            <h1 className="text-xl md:text-3xl font-black leading-tight text-[#052C63] dark:text-[#60A5FA]">
+                                مستر احمد عبدالله
+                            </h1>
+                            <p className="text-[11px] md:text-base font-bold leading-tight text-[#0A6356] dark:text-[#34D399]" style={{ marginTop: '1px' }}>
+                                مؤسس منصة دارين السابعة
+                            </p>
+                        </div>
                     </div>
-                    <div className="text-center md:text-start">
-                        <h1 className="text-2xl md:text-3xl font-black inline-flex items-center gap-2 text-[#052C63] dark:text-[#60A5FA]">
-                            <span
-                                className="md:hidden w-8 h-8 rounded-lg inline-flex items-center justify-center bg-[#052C63] dark:bg-primary"
-                            >
-                                <VCodeBracket size={16} color="#FFFFFF" />
-                            </span>
-                            مستر احمد عبدالله
-                        </h1>
-                        <p className="text-xs md:text-base font-bold mt-1 text-[#0A6356] dark:text-[#34D399]">
-                            مؤسس منصة دارين السابعة
-                        </p>
-                    </div>
-                    <div className="flex gap-3 w-full md:w-auto md:ms-auto justify-center md:justify-end">
+                    <div className="flex gap-3 w-full justify-center md:hidden">
                         <a
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            className="flex items-center gap-2 text-white px-5 py-2.5 text-sm font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#0A6356' }}
                         >
                             <VChatBubble size={16} />
@@ -79,7 +76,29 @@ export const AAbdullah = () => {
                             href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            className="flex items-center gap-2 text-white px-5 py-2.5 text-sm font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            style={{ backgroundColor: '#052C63' }}
+                        >
+                            <VTelegram size={16} />
+                            تيليجرام
+                        </a>
+                    </div>
+                    <div className="hidden md:flex gap-3 md:ms-auto justify-end">
+                        <a
+                            href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 text-white px-8 py-3.5 text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            style={{ backgroundColor: '#0A6356' }}
+                        >
+                            <VChatBubble size={16} />
+                            واتساب
+                        </a>
+                        <a
+                            href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 text-white px-8 py-3.5 text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#052C63' }}
                         >
                             <VTelegram size={16} />
