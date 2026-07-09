@@ -43,9 +43,9 @@ export const AAbdullah = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col gap-3"
+                    className="flex flex-col md:flex-row md:items-center gap-3"
                 >
-                    <div className="flex flex-row items-center gap-2.5 md:gap-3">
+                    <div className="flex flex-row items-center justify-center md:justify-start gap-2.5 md:gap-3">
                         <div
                             className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-[#052C63] dark:bg-primary"
                             style={{ boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
@@ -61,12 +61,12 @@ export const AAbdullah = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex gap-3 w-full justify-center md:hidden">
+                    <div className="flex gap-3 justify-center md:justify-end md:ms-auto">
                         <a
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-white px-5 py-2.5 text-sm font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#0A6356' }}
                         >
                             <VChatBubble size={16} />
@@ -76,29 +76,7 @@ export const AAbdullah = () => {
                             href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-white px-5 py-2.5 text-sm font-bold shadow-lg active:scale-95 transition-all rounded-full"
-                            style={{ backgroundColor: '#052C63' }}
-                        >
-                            <VTelegram size={16} />
-                            تيليجرام
-                        </a>
-                    </div>
-                    <div className="hidden md:flex gap-3 md:ms-auto justify-end">
-                        <a
-                            href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 text-white px-8 py-3.5 text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
-                            style={{ backgroundColor: '#0A6356' }}
-                        >
-                            <VChatBubble size={16} />
-                            واتساب
-                        </a>
-                        <a
-                            href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 text-white px-8 py-3.5 text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
+                            className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#052C63' }}
                         >
                             <VTelegram size={16} />
