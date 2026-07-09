@@ -19,7 +19,7 @@ export const NotFound = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">
-                    <img src="/404.png" alt="404" className="w-48 h-48 md:w-56 md:h-56 mx-auto mb-4 md:mb-12 md:mt-8 object-contain" />
+                    <img src="/404.png" alt="404" className="w-64 h-64 md:w-80 md:h-80 mx-auto mb-4 md:mb-6 object-contain" />
 
                     <h2 className="text-xl md:text-2xl font-heading font-black text-main dark:text-dim mb-3">
                         الصفحة غير موجودة
