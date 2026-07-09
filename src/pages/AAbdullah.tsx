@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles } from 'lucide-react';
+import { GraduationCap, Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles, Rocket, Zap } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
 
-export const DeveloperProfile = () => {
+export const AAbdullah = () => {
     const { adminPhone, telegramHandle } = useSettingsStore();
 
     useEffect(() => {
@@ -25,14 +25,13 @@ export const DeveloperProfile = () => {
         { icon: Sparkles, title: 'المتعة', desc: 'التعليم مو ممل' },
         { icon: Star, title: 'الفائدة', desc: 'كل دقيقة تفرق' },
         { icon: Code, title: 'الابتكار', desc: 'إبداعنا ما له حدود' },
-        { icon: Heart, title: 'خدمة الطالب وولي الأمر', desc: 'هم أساس كل شي' },
+        { icon: Heart, title: 'خدمة عملائنا', desc: 'هم أساس كل شي' },
         { icon: Target, title: 'التميز', desc: 'نسعى للأفضل دايماً' },
     ];
 
     return (
         <div className="min-h-screen bg-primary-light dark:bg-background font-sans overflow-x-hidden select-none" dir="rtl">
             <style>{`@media print { body { display: none !important; } }`}</style>
-            {/* Mobile Header (same as Home) */}
             <MobileHeader />
 
             <div className="max-w-4xl mx-auto px-4 pt-4 md:pt-36 pb-4 space-y-6">
@@ -43,14 +42,17 @@ export const DeveloperProfile = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="flex flex-col md:flex-row items-center md:items-start gap-4"
                 >
-                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center shadow-xl shadow-primary dark:shadow-primary">
+                    <div className="hidden md:flex w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] items-center justify-center shadow-xl shadow-primary dark:shadow-primary">
                         <Code size={28} className="text-on-primary" />
                     </div>
                     <div className="text-center md:text-start">
-                        <h1 className="text-2xl md:text-3xl font-black text-main dark:text-on-primary">
+                        <h1 className="text-2xl md:text-3xl font-black text-main dark:text-on-primary inline-flex items-center gap-2">
+                            <span className="md:hidden w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] inline-flex items-center justify-center">
+                                <Code size={16} className="text-on-primary" />
+                            </span>
                             مستر احمد عبدالله
                         </h1>
-                        <p className="text-sm md:text-base font-bold text-primary dark:text-primary">
+                        <p className="text-sm md:text-base font-bold text-primary dark:text-primary mt-1">
                             مؤسس منصة دارين السابعة
                         </p>
                     </div>
@@ -59,7 +61,7 @@ export const DeveloperProfile = () => {
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-success text-on-primary px-5 py-2.5 rounded-full text-sm font-bold shadow-lg hover:bg-success active:scale-95 transition-all"
+                            className="flex items-center gap-2 md:gap-3 bg-success text-on-primary px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg hover:bg-success active:scale-95 transition-all rounded-full"
                         >
                             <MessageSquare size={16} />
                             واتساب
@@ -68,7 +70,7 @@ export const DeveloperProfile = () => {
                             href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 bg-info text-on-primary px-5 py-2.5 rounded-full text-sm font-bold shadow-lg hover:bg-info active:scale-95 transition-all"
+                            className="flex items-center gap-2 md:gap-3 bg-info text-on-primary px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg hover:bg-info active:scale-95 transition-all rounded-full"
                         >
                             <Send size={16} />
                             تيليجرام
@@ -76,7 +78,7 @@ export const DeveloperProfile = () => {
                     </div>
                 </motion.div>
 
-                {/* ═══════════════ النشأة ═══════════════ */}
+                {/* ═══════════════ نبدة تعريفية ═══════════════ */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -84,10 +86,11 @@ export const DeveloperProfile = () => {
                     className="bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4"
                 >
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center">
-                            <GraduationCap size={20} className="text-on-primary" />
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-primary)] flex items-center justify-center gap-1">
+                            <Rocket size={16} className="text-on-primary" />
+                            <Zap size={14} className="text-on-primary" />
                         </div>
-                        <h2 className="text-lg font-black text-main dark:text-main">النشأة</h2>
+                        <h2 className="text-lg font-black text-main dark:text-main">نبدة تعريفية</h2>
                     </div>
                     <p className="text-sm text-muted dark:text-muted leading-relaxed">
                         خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
@@ -155,7 +158,7 @@ export const DeveloperProfile = () => {
                     </div>
                 </motion.div>
 
-                {/* ═══════════════ رسالة ═══════════════ */}
+                {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -184,46 +187,48 @@ export const DeveloperProfile = () => {
                     </div>
                 </motion.div>
 
-                {/* ═══════════════ التواصل ═══════════════ */}
+                {/* ═══════════════ رسالتي لكم ═══════════════ */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-3xl p-6 md:p-8 shadow-xl shadow-primary dark:shadow-primary text-on-primary relative overflow-hidden"
+                    className="bg-gradient-to-br from-rose-500 to-pink-600 rounded-3xl p-6 md:p-8 shadow-xl shadow-rose-500/30 text-white relative overflow-hidden"
                 >
-                    <div className="absolute top-0 end-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
-                    <div className="relative z-10 text-center space-y-4">
-                        <h3 className="text-xl font-black">تواصل معي</h3>
-                        <p className="text-sm text-on-primary/80">يسعدني التواصل معاك</p>
-                        <div className="flex justify-center gap-3 pt-2">
-                            <a
-                                href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-2 bg-white text-primary px-5 py-3 rounded-full text-sm font-bold shadow-lg hover:bg-primary-light active:scale-95 transition-all"
-                            >
-                                <MessageSquare size={16} />
-                                واتساب
-                            </a>
-                            <a
-                                href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-2 bg-white/20 backdrop-blur-sm text-on-primary px-5 py-3 rounded-full text-sm font-bold border border-white/30 hover:bg-white/30 active:scale-95 transition-all"
-                            >
-                                <Send size={16} />
-                                تيليجرام
-                            </a>
+                    <div className="absolute top-[-30px] right-[-30px] w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute bottom-[-20px] left-[20%] w-28 h-28 bg-white/10 rounded-full blur-2xl" />
+                    <div className="relative z-10 space-y-5">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
+                                <Heart size={22} className="fill-white text-white" />
+                                <Heart size={22} className="fill-white text-white -ms-2" />
+                            </div>
+                            <h2 className="text-xl font-black">رسالتي لكم</h2>
+                        </div>
+                        <div className="space-y-4 text-sm leading-relaxed text-white/90">
+                            <p>
+                                كن إيجابيًا، واجعل الاجتهاد طريقك إلى النجاح.
+                            </p>
+                            <p>
+                                الحياة لا تمنح الفرص لمن ينتظر، بل لمن يسعى ويجتهد. قد تواجه صعوبات وعقبات، لكن تذكّر أن كل تحدٍ هو خطوة نحو القوة والخبرة. حافظ على تفكيرك الإيجابي، فالإيجابية تمنحك الأمل، والأمل يمنحك الدافع للاستمرار.
+                            </p>
+                            <p>
+                                اجتهد في عملك، وأخلص فيما تقوم به، ولا تقارن بدايتك بنهاية الآخرين. فالنجاح الحقيقي هو أن تصبح اليوم أفضل مما كنت عليه بالأمس. ثق بقدراتك، وواصل التعلم، ولا تجعل الفشل يوقفك، بل اجعله درسًا يقودك إلى النجاح.
+                            </p>
+                            <p>
+                                ابدأ يومك بابتسامة، واعمل بإصرار، وتحلَّ بالصبر، فكل جهد تبذله اليوم سيكون ثمرةً تفتخر بها غدًا.
+                            </p>
+                            <p className="font-bold text-white">
+                                تذكّر دائمًا: الإيجابية تصنع العقلية، والاجتهاد يصنع الإنجاز، والاستمرار يصنع النجاح.
+                            </p>
                         </div>
                     </div>
                 </motion.div>
 
             </div>
 
-            {/* Footer */}
             <PublicFooter />
         </div>
     );
 };
 
-export default DeveloperProfile;
+export default AAbdullah;

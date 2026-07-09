@@ -54,7 +54,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
-const DeveloperProfile = lazy(() => import('./pages/DeveloperProfile').then(m => ({ default: m.DeveloperProfile })));
+const AAbdullah = lazy(() => import('./pages/AAbdullah').then(m => ({ default: m.AAbdullah })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
 const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
 
@@ -196,7 +196,7 @@ function App() {
       {/* Public Facing Actions - Only show on specific public pages */}
 
 
-      {['/', '/courses', '/about', '/contact'].includes(location.pathname) ? (
+      {['/', '/courses', '/about', '/contact', '/a.abdullah'].includes(location.pathname) ? (
         <FloatingActions />
       ) : null}
       <Suspense fallback={null}>
@@ -220,7 +220,7 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/terms-of-work" element={<TermsOfWork />} />
           <Route path="/jobs" element={<Jobs />} />
-          <Route path="/developer" element={<DeveloperProfile />} />
+          <Route path="/a.abdullah" element={<AAbdullah />} />
 
           {/* Design System Playground — Dev Only */}
           {import.meta.env.DEV && (
