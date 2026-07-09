@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PublicNavbar } from '../../components/public/PublicNavbar';
+import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { Home, ArrowLeft, Search } from 'lucide-react';
@@ -9,7 +9,7 @@ export const NotFound = () => {
         <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
             <SEO title="الصفحة غير موجودة | دارين السابعة" description="عذراً، الصفحة التي تبحث عنها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية أو تصفح دوراتنا التعليمية." url="https://dareen.cloud/404" noindex />
 
-            <PublicNavbar />
+            <MobileHeader />
 
             <main className="flex-grow pt-20 md:pt-28 pb-4 relative flex items-center justify-center">
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -35,7 +35,7 @@ export const NotFound = () => {
                         عذراً، الصفحة التي تبحث عنها قد تكون انتقلت أو تم حذفها. يمكنك العودة إلى الرئيسية أو تصفح دوراتنا.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <div className="flex flex-row items-center justify-center gap-2">
                         <Link
                             to="/"
                             className="flex items-center gap-2 px-6 py-3 bg-primary-active dark:bg-surface text-on-primary dark:text-main text-sm font-black transition-all hover:bg-primary-active dark:hover:bg-surface active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
