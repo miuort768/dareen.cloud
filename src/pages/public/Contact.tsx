@@ -103,30 +103,6 @@ export const Contact = () => {
                     </div>
                     </AnimateOnScroll>
 
-                    {/* ── Contact Info Cards ── */}
-                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                        {contactCards.map((card) => (
-                            <AnimateOnScroll key={card.title} animation="fadeUp" delay={0.05} duration={0.4}>
-                                <a
-                                    href={card.href}
-                                    target={card.href !== '#' ? '_blank' : undefined}
-                                    rel="noopener noreferrer"
-                                    className="group bg-white dark:bg-card/80 dark:backdrop-blur-xl p-5 rounded-none border border-border dark:border-border shadow-sm block"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className={cn("w-12 h-12 rounded-none bg-gradient-to-br text-on-primary flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
-                                            <card.icon size={20} />
-                                        </div>
-                                        <div className="flex-grow min-w-0">
-                                            <p className="text-micro font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
-                                            <p className="text-sm font-bold text-main dark:text-on-primary truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </AnimateOnScroll>
-                        ))}
-                    </div>
-
                     {/* ── Image Banner ── */}
                     <div className="mb-6">
                         <img
@@ -256,6 +232,30 @@ export const Contact = () => {
                         )}
                     </div>
                     </AnimateOnScroll>
+
+                    {/* ── Contact Info Cards ── */}
+                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 mb-4">
+                        {contactCards.map((card) => (
+                            <AnimateOnScroll key={card.title} animation="fadeUp" delay={0.05} duration={0.4}>
+                                <a
+                                    href={card.href}
+                                    target={card.href !== '#' ? '_blank' : undefined}
+                                    rel="noopener noreferrer"
+                                    className="group bg-white dark:bg-card/80 dark:backdrop-blur-xl p-5 rounded-none border border-border dark:border-border shadow-sm block"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={cn("w-12 h-12 rounded-none bg-gradient-to-br text-on-primary flex items-center justify-center shadow-lg shrink-0", card.gradient)}>
+                                            <card.icon size={20} />
+                                        </div>
+                                        <div className="flex-grow min-w-0">
+                                            <p className="text-micro font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
+                                            <p className="text-sm font-bold text-main dark:text-on-primary truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </AnimateOnScroll>
+                        ))}
+                    </div>
 
                 </div>
             </main>
