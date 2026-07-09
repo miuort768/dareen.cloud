@@ -11,7 +11,7 @@ export const NotFound = () => {
 
             <MobileHeader />
 
-            <main className="flex-grow pt-20 md:pt-28 pb-4 relative flex items-center justify-center">
+            <main className="flex-grow pt-14 md:pt-28 pb-4 relative flex items-center justify-center">
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                     <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
                     <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
@@ -38,14 +38,14 @@ export const NotFound = () => {
                     <div className="flex flex-row items-center justify-center gap-2">
                         <Link
                             to="/"
-                            className="flex items-center gap-2 px-6 py-3 bg-primary-active dark:bg-surface text-on-primary dark:text-main text-sm font-black transition-all hover:bg-primary-active dark:hover:bg-surface active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary text-sm font-black transition-all hover:bg-primary-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
                         >
                             <Home size={16} />
                             العودة للرئيسية
                         </Link>
                         <Link
                             to="/courses"
-                            className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-on-primary text-sm font-black transition-all hover:border-border/30 dark:hover:border-border/30 active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-6 py-3 bg-accent text-on-accent text-sm font-black transition-all hover:bg-accent-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
                         >
                             <ArrowLeft size={16} />
                             تصفح الدورات
