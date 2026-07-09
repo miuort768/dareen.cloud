@@ -127,7 +127,7 @@ export const SelectionGrid = ({
                 </div>
 
                 <div className="mb-6">
-                    <img src="/dareen8.png" alt="دارين السابعة" className="w-full max-w-[400px] md:max-w-[500px] mx-auto h-auto block" />
+                    <img src="/dareen8.png" alt="دارين السابعة" className="w-full max-w-[400px] md:max-w-full mx-auto h-auto block" />
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
