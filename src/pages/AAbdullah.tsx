@@ -29,11 +29,11 @@ export const AAbdullah = () => {
         { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', color: '#052C63' },
     ];
 
-    const cardClass = 'bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200/60 space-y-4';
+    const cardClass = 'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200/60 dark:border-border/60 space-y-4';
     const sectionDelay = (i: number) => ({ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: i * 0.1 } });
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: '#F5F7FA' }} dir="rtl">
+        <div className="min-h-screen bg-[#F5F7FA] dark:bg-background" dir="rtl">
             <style>{`@media print { body { display: none !important; } }`}</style>
             <MobileHeader />
 
@@ -46,22 +46,21 @@ export const AAbdullah = () => {
                     className="flex flex-col md:flex-row items-center md:items-start gap-4"
                 >
                     <div
-                        className="hidden md:flex w-16 h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl"
-                        style={{ backgroundColor: '#052C63', boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
+                        className="hidden md:flex w-16 h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-[#052C63] dark:bg-primary"
+                        style={{ boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
                     >
                         <VCodeBracket size={28} color="#FFFFFF" />
                     </div>
                     <div className="text-center md:text-start">
-                        <h1 className="text-2xl md:text-3xl font-black inline-flex items-center gap-2" style={{ color: '#052C63' }}>
+                        <h1 className="text-2xl md:text-3xl font-black inline-flex items-center gap-2 text-[#052C63] dark:text-[#60A5FA]">
                             <span
-                                className="md:hidden w-8 h-8 rounded-lg inline-flex items-center justify-center"
-                                style={{ backgroundColor: '#052C63' }}
+                                className="md:hidden w-8 h-8 rounded-lg inline-flex items-center justify-center bg-[#052C63] dark:bg-primary"
                             >
                                 <VCodeBracket size={16} color="#FFFFFF" />
                             </span>
                             مستر احمد عبدالله
                         </h1>
-                        <p className="text-xs md:text-base font-bold mt-1" style={{ color: '#0A6356' }}>
+                        <p className="text-xs md:text-base font-bold mt-1 text-[#0A6356] dark:text-[#34D399]">
                             مؤسس منصة دارين السابعة
                         </p>
                     </div>
@@ -92,13 +91,13 @@ export const AAbdullah = () => {
                 {/* ═══════════════ نبدة تعريفية ═══════════════ */}
                 <motion.div {...sectionDelay(1)} className={cardClass}>
                     <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-black" style={{ color: '#052C63' }}>
+                        <h2 className="text-lg font-black text-[#052C63] dark:text-[#60A5FA]">
                             نبدة تعريفية
                         </h2>
                         <VRocket size={18} color="#0A6356" className="inline" />
                         <VBolt size={16} color="#AD8C2D" className="inline" />
                     </div>
-                    <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
+                    <p className="text-sm leading-relaxed text-[#6B7280] dark:text-muted">
                         خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
                         ومؤمن إن التكنولوجيا هي المفتاح لتطوير التعليم العربي
                         وتخليه أكثر متعة وفايدة.
@@ -136,15 +135,15 @@ export const AAbdullah = () => {
 
                 {/* ═══════════════ القيم ═══════════════ */}
                 <motion.div {...sectionDelay(3)} className="space-y-4">
-                    <h2 className="text-xl font-black" style={{ color: '#052C63' }}>القيم</h2>
+                    <h2 className="text-xl font-black text-[#052C63] dark:text-[#60A5FA]">القيم</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {values.map((v, i) => {
                             const Icon = v.icon;
                             return (
                                 <div
                                     key={i}
-                                    className="bg-white rounded-2xl p-4 shadow-sm text-center space-y-2"
-                                    style={{ borderColor: 'rgba(0,0,0,0.06)', borderWidth: 1 }}
+                                    className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-center space-y-2"
+                                    style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                                 >
                                     <div
                                         className="w-10 h-10 mx-auto rounded-xl flex items-center justify-center"
@@ -152,8 +151,8 @@ export const AAbdullah = () => {
                                     >
                                         <Icon size={18} color="#FFFFFF" />
                                     </div>
-                                    <h3 className="text-sm font-bold" style={{ color: '#06153A' }}>{v.title}</h3>
-                                    <p className="text-xs" style={{ color: '#6B7280' }}>{v.desc}</p>
+                                    <h3 className="text-sm font-bold text-[#06153A] dark:text-on-primary">{v.title}</h3>
+                                    <p className="text-xs text-[#6B7280] dark:text-muted">{v.desc}</p>
                                 </div>
                             );
                         })}
@@ -163,28 +162,27 @@ export const AAbdullah = () => {
                 {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
                 <motion.div
                     {...sectionDelay(4)}
-                    className="bg-white rounded-none p-6 md:p-8 shadow-sm space-y-4"
+                    className="bg-white dark:bg-card rounded-none p-6 md:p-8 shadow-sm space-y-4"
                     style={{ borderRight: '4px solid #AD8C2D' }}
                 >
                     <div className="flex items-center gap-3">
                         <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{ backgroundColor: 'rgba(173,140,45,0.15)' }}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center bg-[rgba(173,140,45,0.15)] dark:bg-[rgba(173,140,45,0.25)]"
                         >
                             <VHeart size={20} color="#AD8C2D" />
                         </div>
-                        <h2 className="text-lg font-black" style={{ color: '#052C63' }}>رسالة إلى أولياء الأمور والمعلمين</h2>
+                        <h2 className="text-lg font-black text-[#052C63] dark:text-[#60A5FA]">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
                     <div className="space-y-3" style={{ paddingInlineStart: '1rem' }}>
-                        <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
+                        <p className="text-sm leading-relaxed text-[#6B7280] dark:text-muted">
                             "الإتقان أساس النجاح والتطوير.
                         </p>
-                        <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
+                        <p className="text-sm leading-relaxed text-[#6B7280] dark:text-muted">
                             الإنسان لازم يبدي بأفضل ما عنده،
                             {' '}مع التوكل على الله أول وأخير،
                             {' '}ويلتزم بالأخلاق في كل خطوة.
                         </p>
-                        <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
+                        <p className="text-sm leading-relaxed text-[#6B7280] dark:text-muted">
                             لأن النجاح الحقيقي مو بس في النتيجة،
                             {' '}لكن في الطريق والأخلاق اللي نمشي فيها."
                         </p>
