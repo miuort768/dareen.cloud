@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { VCodeBracket, VTargetArrow, VHeart, VChatBubble, VPaperAirplane, VAward, VStar, VSparkles, VRocket, VBolt } from '../components/vectors';
+import { VCodeBracket, VTargetArrow, VHeart, VChatBubble, VTelegram, VAward, VStar, VSparkles, VRocket, VBolt } from '../components/vectors';
 import { useSettingsStore } from '../store/settingsStore';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
@@ -82,7 +82,7 @@ export const AAbdullah = () => {
                             className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#052C63' }}
                         >
-                            <VPaperAirplane size={16} />
+                            <VTelegram size={16} />
                             تيليجرام
                         </a>
                     </div>
