@@ -132,7 +132,7 @@ export const Contact = () => {
                         <img
                             src="/dareen8.png"
                             alt="دارين السابعة"
-                            className="w-full max-w-[400px] md:max-w-[500px] mx-auto h-auto block"
+                            className="w-full max-w-[400px] md:max-w-full mx-auto h-auto block"
                         />
                     </div>
 
