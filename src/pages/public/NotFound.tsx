@@ -11,7 +11,7 @@ export const NotFound = () => {
 
             <MobileHeader />
 
-            <main className="flex-grow pt-14 md:pt-28 pb-4 relative flex items-center justify-center">
+            <main className="flex-grow pt-6 md:pt-10 pb-4 relative flex items-center justify-center">
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                     <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
                     <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
@@ -19,7 +19,7 @@ export const NotFound = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">
-                    <img src="/404.png" alt="404" className="w-64 h-64 md:w-80 md:h-80 mx-auto mb-4 md:mb-6 object-contain" />
+                    <img src="/404.png" alt="404" className="w-80 h-80 md:w-96 md:h-96 mx-auto mb-2 md:mb-4 object-contain" />
 
                     <h2 className="text-xl md:text-2xl font-heading font-black text-main dark:text-dim mb-3">
                         الصفحة غير موجودة
