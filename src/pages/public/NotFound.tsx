@@ -19,7 +19,7 @@ export const NotFound = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">
-                    <h1 className="text-7xl md:text-9xl font-heading font-black leading-none mb-4 flex items-center justify-center gap-0">
+                    <h1 className="text-7xl md:text-9xl font-heading font-black leading-none mb-4 md:mb-12 md:mt-8 flex items-center justify-center gap-0">
                         <span className="bg-gradient-to-br from-primary via-primary-hover to-primary bg-clip-text text-transparent">4</span>
                         <svg className="h-[1em] w-[0.88em] md:h-[1em] md:w-[0.88em] inline-block" viewBox="0 0 100 100" style={{ overflow: 'visible' }} aria-hidden="true">
                             <defs>
