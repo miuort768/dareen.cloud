@@ -1,0 +1,166 @@
+import { useState, useEffect, useRef } from 'react';
+import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User } from 'lucide-react';
+import { api } from '../lib/api';
+import { confirm } from '../lib/confirmDialog';
+
+interface ContactMsg {
+    id: string;
+    name: string;
+    phone: string;
+    subject: string;
+    message: string;
+    createdAt: string;
+}
+
+export const AdminContacts = () => {
+    const [messages, setMessages] = useState<ContactMsg[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
+    const mountedRef = useRef(true);
+
+    useEffect(() => {
+        mountedRef.current = true;
+        const fetch = async () => {
+            if (!mountedRef.current) return;
+            try {
+                setLoading(true);
+                const data = await api.get<ContactMsg[]>('/contact');
+                if (!mountedRef.current) return;
+                setMessages(data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                if (mountedRef.current) setLoading(false);
+            }
+        };
+        fetch();
+        return () => { mountedRef.current = false; };
+    }, []);
+
+    const handleDelete = async (id: string) => {
+        const confirmed = await confirm('هل أنت متأكد من حذف هذه الرسالة؟ لا يمكن التراجع عن هذا الإجراء.', {
+            title: 'حذف الرسالة',
+            confirmText: 'حذف',
+            cancelText: 'تراجع',
+            isDestructive: true,
+            icon: <Trash2 size={28} />
+        });
+        if (!confirmed) return;
+        try {
+            await api.delete(`/contact/${id}`);
+            setMessages(messages.filter(m => m.id !== id));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const filtered = messages.filter(m => {
+        const q = search.trim().toLowerCase();
+        if (!q) return true;
+        return (
+            (m.name || '').toLowerCase().includes(q) ||
+            m.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+            (m.subject || '').toLowerCase().includes(q) ||
+            (m.message || '').toLowerCase().includes(q)
+        );
+    });
+
+    const formatDate = (dateStr: string) => {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('ar-EG', {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+    };
+
+    return (
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="mx-4 md:mx-6 mb-6 bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-6 md:p-8">
+                <div className="flex flex-col items-center gap-5">
+                    <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center shadow-lg">
+                        <Mail size={26} className="text-primary" />
+                    </div>
+                    <div className="text-center">
+                        <h1 className="text-xl font-black text-main">رسائل الاتصال</h1>
+                        <p className="text-sm font-bold text-muted mt-1">{messages.length} رسالة</p>
+                    </div>
+                    <div className="relative w-full max-w-lg">
+                        <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
+                        <input
+                            type="text"
+                            placeholder="ابحث بالاسم أو الهاتف أو الموضوع..."
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            className="w-full bg-white/60 backdrop-blur border border-white/30 rounded-xl py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-muted"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="max-w-5xl mx-auto px-4 space-y-4">
+                {loading ? (
+                    <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
+                ) : filtered.length === 0 ? (
+                    <div className="bg-white border border-dashed border-border p-16 text-center">
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary/5">
+                            <Mail size={28} className="text-primary/40" />
+                        </div>
+                        <p className="text-sm font-bold text-muted">لا توجد رسائل</p>
+                    </div>
+                ) : (
+                    filtered.map(msg => (
+                        <div key={msg.id} className="bg-white border border-border/50 shadow-sm relative overflow-hidden group transition-all">
+                            <div className="h-1.5 w-full bg-primary"></div>
+                            <div className="p-6 relative z-10">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-primary flex items-center justify-center">
+                                            <User size={18} className="text-on-primary" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-bold text-main">{msg.name || 'بدون اسم'}</h3>
+                                            <p className="text-micro font-bold text-muted">{msg.subject || 'بدون موضوع'}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <a href={`tel:${msg.phone}`}
+                                            className="p-2 border-2 border-success rounded-sm text-success bg-success/10 hover:bg-success-light transition-all"
+                                            title="اتصال">
+                                            <Phone size={16} />
+                                        </a>
+                                        <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
+                                            target="_blank" rel="noopener noreferrer"
+                                            className="p-2 border-2 border-success rounded-sm text-success bg-success/10 hover:bg-success-light transition-all"
+                                            title="واتساب">
+                                            <MessageCircle size={16} />
+                                        </a>
+                                        <button onClick={() => handleDelete(msg.id)}
+                                            className="p-2 border-2 border-error rounded-sm text-error bg-error/10 hover:bg-error-light transition-all"
+                                            title="حذف">
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-background/50 p-4 rounded-sm mb-3">
+                                    <p className="text-sm font-medium text-main leading-relaxed whitespace-pre-wrap">{msg.message || 'لا توجد رسالة'}</p>
+                                </div>
+
+                                <div className="flex items-center gap-4 text-micro font-bold text-muted">
+                                    <span className="flex items-center gap-1.5">
+                                        <Phone size={12} />
+                                        {msg.phone}
+                                    </span>
+                                    <span className="flex items-center gap-1.5">
+                                        <Clock size={12} />
+                                        {formatDate(msg.createdAt)}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+        </div>
+    );
+};

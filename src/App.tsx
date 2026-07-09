@@ -56,6 +56,7 @@ import { FloatingActions } from './components/public/FloatingActions';
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const AAbdullah = lazy(() => import('./pages/AAbdullah').then(m => ({ default: m.AAbdullah })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
+const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
 
 
@@ -267,6 +268,7 @@ function App() {
 
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
             <Route path="admin-jobs" element={<ProtectedRoute permission="admin"><AdminJobs /></ProtectedRoute>} />
+            <Route path="admin-contacts" element={<ProtectedRoute permission="admin"><AdminContacts /></ProtectedRoute>} />
             <Route path="roles" element={<ProtectedRoute permission="admin"><RolesPage /></ProtectedRoute>} />
             <Route path="monitoring" element={<ProtectedRoute permission="admin"><MonitoringPage /></ProtectedRoute>} />
             

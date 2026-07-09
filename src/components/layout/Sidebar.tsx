@@ -25,7 +25,8 @@ import {
     MessageSquare,
     BookOpen,
     Clock,
-    Briefcase
+    Briefcase,
+    Mail
 } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
@@ -89,6 +90,7 @@ export const Sidebar = () => {
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
+        { name: 'رسائل الاتصال', href: '/admin-contacts', id: 'admin_contacts', icon: Mail },
         { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
     ];
 
