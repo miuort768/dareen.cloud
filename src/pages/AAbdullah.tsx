@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Code, Target, Heart, MessageSquare, Send, Award, Star, Sparkles, Rocket, Zap, GraduationCap } from 'lucide-react';
+import { VCodeBracket, VTargetArrow, VHeart, VChatBubble, VPaperAirplane, VAward, VStar, VSparkles, VRocket, VBolt } from '../components/vectors';
 import { useSettingsStore } from '../store/settingsStore';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
@@ -21,12 +21,12 @@ export const AAbdullah = () => {
     const tgHandle = typeof telegramHandle === 'string' ? telegramHandle : '';
 
     const values = [
-        { icon: Award, title: 'الجودة', desc: 'نقدم الأفضل دايماً', color: '#052C63' },
-        { icon: Sparkles, title: 'المتعة', desc: 'التعليم مو ممل', color: '#0A6356' },
-        { icon: Star, title: 'الفائدة', desc: 'كل دقيقة تفرق', color: '#AD8C2D' },
-        { icon: Code, title: 'الابتكار', desc: 'إبداعنا ما له حدود', color: '#61969D' },
-        { icon: Heart, title: 'خدمة عملائنا', desc: 'هم أساس كل شي', color: '#0A6356' },
-        { icon: Target, title: 'التميز', desc: 'نسعى للأفضل دايماً', color: '#052C63' },
+        { icon: VAward, title: 'الجودة', desc: 'نقدم الأفضل دايماً', color: '#052C63' },
+        { icon: VSparkles, title: 'المتعة', desc: 'التعليم مو ممل', color: '#0A6356' },
+        { icon: VStar, title: 'الفائدة', desc: 'كل دقيقة تفرق', color: '#AD8C2D' },
+        { icon: VCodeBracket, title: 'الابتكار', desc: 'إبداعنا ما له حدود', color: '#61969D' },
+        { icon: VHeart, title: 'خدمة عملائنا', desc: 'هم أساس كل شي', color: '#0A6356' },
+        { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', color: '#052C63' },
     ];
 
     const cardClass = 'bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200/60 space-y-4';
@@ -49,7 +49,7 @@ export const AAbdullah = () => {
                         className="hidden md:flex w-16 h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl"
                         style={{ backgroundColor: '#052C63', boxShadow: '0 10px 30px -5px rgba(5,44,99,0.3)' }}
                     >
-                        <Code size={28} color="#FFFFFF" />
+                        <VCodeBracket size={28} color="#FFFFFF" />
                     </div>
                     <div className="text-center md:text-start">
                         <h1 className="text-2xl md:text-3xl font-black inline-flex items-center gap-2" style={{ color: '#052C63' }}>
@@ -57,7 +57,7 @@ export const AAbdullah = () => {
                                 className="md:hidden w-8 h-8 rounded-lg inline-flex items-center justify-center"
                                 style={{ backgroundColor: '#052C63' }}
                             >
-                                <Code size={16} color="#FFFFFF" />
+                                <VCodeBracket size={16} color="#FFFFFF" />
                             </span>
                             مستر احمد عبدالله
                         </h1>
@@ -73,7 +73,7 @@ export const AAbdullah = () => {
                             className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#0A6356' }}
                         >
-                            <MessageSquare size={16} />
+                            <VChatBubble size={16} />
                             واتساب
                         </a>
                         <a
@@ -83,7 +83,7 @@ export const AAbdullah = () => {
                             className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
                             style={{ backgroundColor: '#61969D' }}
                         >
-                            <Send size={16} />
+                            <VPaperAirplane size={16} />
                             تيليجرام
                         </a>
                     </div>
@@ -95,8 +95,8 @@ export const AAbdullah = () => {
                         <h2 className="text-lg font-black" style={{ color: '#052C63' }}>
                             نبدة تعريفية
                         </h2>
-                        <Rocket size={18} color="#0A6356" className="inline" />
-                        <Zap size={16} color="#AD8C2D" className="inline" />
+                        <VRocket size={18} color="#0A6356" className="inline" />
+                        <VBolt size={16} color="#AD8C2D" className="inline" />
                     </div>
                     <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
                         خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
@@ -122,7 +122,7 @@ export const AAbdullah = () => {
                                 className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm"
                                 style={{ backgroundColor: 'rgba(173,140,45,0.2)' }}
                             >
-                                <Target size={20} color="#AD8C2D" />
+                                <VTargetArrow size={20} color="#AD8C2D" />
                             </div>
                             <h2 className="text-lg font-black" style={{ color: '#AD8C2D' }}>الرؤية</h2>
                         </div>
@@ -171,7 +171,7 @@ export const AAbdullah = () => {
                             className="w-10 h-10 rounded-xl flex items-center justify-center"
                             style={{ backgroundColor: 'rgba(173,140,45,0.15)' }}
                         >
-                            <Heart size={20} color="#AD8C2D" />
+                            <VHeart size={20} color="#AD8C2D" />
                         </div>
                         <h2 className="text-lg font-black" style={{ color: '#052C63' }}>رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
@@ -217,9 +217,9 @@ export const AAbdullah = () => {
                             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide"
                             style={{ backgroundColor: 'rgba(173,140,45,0.15)', color: '#AD8C2D', border: '1px solid rgba(173,140,45,0.3)' }}
                         >
-                            <Heart size={14} color="#AD8C2D" className="fill-current" />
+                            <VHeart size={14} color="#AD8C2D" className="fill-current" />
                             <span>رسالتي لكم</span>
-                            <Heart size={14} color="#AD8C2D" className="fill-current" />
+                            <VHeart size={14} color="#AD8C2D" className="fill-current" />
                         </div>
                         <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.92)' }}>
                             <p>
