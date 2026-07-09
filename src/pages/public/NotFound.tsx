@@ -19,27 +19,27 @@ export const NotFound = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center max-w-lg">
-                    <img src="/404.png" alt="404" className="w-80 md:w-96 mx-auto mb-0 md:mb-4 object-contain" />
+                    <img src="/404.png" alt="404" className="w-80 md:w-[480px] mx-auto mb-0 md:mb-4 object-contain" />
 
-                    <h2 className="text-xl md:text-2xl font-heading font-black text-main dark:text-dim mb-3">
+                    <h2 className="text-xl md:text-3xl font-heading font-black text-main dark:text-dim mb-3 md:mb-4">
                         الصفحة غير موجودة
                     </h2>
 
-                    <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 max-w-sm mx-auto">
+                    <p className="text-sm md:text-base text-muted dark:text-muted leading-relaxed md:leading-relaxed mb-6 md:mb-8 max-w-sm mx-auto">
                         عذراً، الصفحة التي تبحث عنها قد تكون انتقلت أو تم حذفها. يمكنك العودة إلى الرئيسية أو تصفح دوراتنا.
                     </p>
 
-                    <div className="flex flex-row items-center justify-center gap-2">
+                    <div className="flex flex-row items-center justify-center gap-2 md:gap-4">
                         <Link
                             to="/"
-                            className="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary text-sm font-black transition-all hover:bg-primary-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-primary text-on-primary text-sm md:text-base font-black transition-all hover:bg-primary-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
                         >
                             <Home size={16} />
                             العودة للرئيسية
                         </Link>
                         <Link
                             to="/courses"
-                            className="flex items-center gap-2 px-6 py-3 bg-accent text-on-accent text-sm font-black transition-all hover:bg-accent-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 bg-accent text-on-accent text-sm md:text-base font-black transition-all hover:bg-accent-hover active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg"
                         >
                             <ArrowLeft size={16} />
                             تصفح الدورات
