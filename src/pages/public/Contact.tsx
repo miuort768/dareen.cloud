@@ -89,7 +89,7 @@ export const Contact = () => {
                     <div className="text-center mb-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-1 md:mb-5">
                             <Sparkles size={13} className="text-primary dark:text-primary" />
-                            <span className="text-micro font-black text-primary dark:text-primary">نحن في خدمتك</span>
+                            <span className="text-micro font-black text-primary dark:text-primary mt-[3px] md:mt-0">نحن في خدمتك</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-on-primary mb-1 md:mb-3">
                             تواصل مع{' '}
@@ -125,6 +125,15 @@ export const Contact = () => {
                                 </a>
                             </AnimateOnScroll>
                         ))}
+                    </div>
+
+                    {/* ── Image Banner ── */}
+                    <div className="mb-6">
+                        <img
+                            src="/dareen8.png"
+                            alt="دارين السابعة"
+                            className="w-full max-w-[400px] md:max-w-[500px] mx-auto h-auto block"
+                        />
                     </div>
 
                     {/* ── Contact Form Card ── */}
