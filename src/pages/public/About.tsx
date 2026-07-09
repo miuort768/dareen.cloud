@@ -228,8 +228,21 @@ export const About = () => {
                 </div>
             </section>
 
-            {/* Final Call to Action - Redesigned with Creative Touches */}
+            {/* ── Image Banner ── */}
             <section className="py-4 md:py-6 bg-white dark:bg-background relative overflow-hidden">
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="max-w-6xl mx-auto">
+                        <img
+                            src="/dareen8.png"
+                            alt="دارين السابعة"
+                            className="w-full max-w-[400px] md:max-w-full mx-auto h-auto block"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Final Call to Action - Redesigned with Creative Touches */}
+            <section className="py-2 md:py-4 bg-white dark:bg-background relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
                 <div className="absolute top-0 end-0 w-full h-full pointer-events-none">
                     <div className="absolute top-1/2 end-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>
