@@ -58,6 +58,9 @@ export const SelectionGrid = ({
                     </p>
                 </div>
 
+                <div className="mb-3">
+                    <img src="/dareen8.png" alt="دارين السابعة" className="w-full max-w-[260px] mx-auto h-auto block" />
+                </div>
                 <div className="grid grid-cols-2 gap-2.5">
                     {view === 'classrooms' && currentClassrooms.map((cls, i) => (
                         <button key={cls} onClick={() => onSelectGrade(cls)}
@@ -123,6 +126,9 @@ export const SelectionGrid = ({
                     </p>
                 </div>
 
+                <div className="mb-6">
+                    <img src="/dareen8.png" alt="دارين السابعة" className="w-full max-w-[400px] md:max-w-[500px] mx-auto h-auto block" />
+                </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
                         {view === 'classrooms' && currentClassrooms.map((cls, i) => (
