@@ -81,7 +81,7 @@ export const AAbdullah = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 md:gap-3 text-white px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full"
-                            style={{ backgroundColor: '#61969D' }}
+                            style={{ backgroundColor: '#052C63' }}
                         >
                             <VPaperAirplane size={16} />
                             تيليجرام
@@ -163,7 +163,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
                 <motion.div
                     {...sectionDelay(4)}
-                    className="bg-white rounded-3xl p-6 md:p-8 shadow-sm space-y-4"
+                    className="bg-white rounded-none p-6 md:p-8 shadow-sm space-y-4"
                     style={{ borderRight: '4px solid #AD8C2D' }}
                 >
                     <div className="flex items-center gap-3">
