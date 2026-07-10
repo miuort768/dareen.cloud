@@ -62,7 +62,8 @@ export const AdminContacts = () => {
             (m.name || '').toLowerCase().includes(q) ||
             m.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
             (m.subject || '').toLowerCase().includes(q) ||
-            (m.message || '').toLowerCase().includes(q)
+            (m.message || '').toLowerCase().includes(q) ||
+            (m.curriculum || '').toLowerCase().includes(q)
         );
     });
 

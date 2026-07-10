@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
                 phone,
                 subject: subject || '',
                 message: message || '',
+                curriculum: curriculum || '',
             }
         });
         res.status(201).json({ message: 'تم إرسال الرسالة بنجاح' });
