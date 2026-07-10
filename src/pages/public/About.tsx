@@ -317,7 +317,7 @@ export const About = () => {
                                                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'rgba(139,92,246,0.15)' }}>
                                                             <Target size={22} className="text-violet-400" />
                                                         </div>
-                                                        <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">100%</span>
+                                                        <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">97.3%</span>
                                                         <span className="text-micro text-violet-400/70 font-black">نسبة نجاح</span>
                                                     </div>
                                                 </div>
