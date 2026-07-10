@@ -135,13 +135,13 @@ export const Courses = () => {
                 <button
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`cursor-pointer flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
                       ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-lg shadow-card/20 dark:shadow-lg'
                       : 'bg-white dark:bg-card/50 text-muted dark:text-muted border border-border dark:border-border/50 hover:border-border/20 dark:hover:border-border/20 hover:text-main dark:hover:text-dim'
                   }`}
                 >
-                  <span className="pointer-events-none flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-main' : cat.color} />
                     <span>{cat.label}</span>
                   </span>
