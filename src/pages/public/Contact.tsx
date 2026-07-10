@@ -11,6 +11,7 @@ export const Contact = () => {
     const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [errorDetail, setErrorDetail] = useState('');
     const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -22,11 +23,15 @@ export const Contact = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
-            if (!res.ok) throw new Error('Failed');
+            if (!res.ok) {
+                const errBody = await res.json().catch(() => ({}));
+                throw new Error(errBody.details || errBody.message || `HTTP ${res.status}`);
+            }
             setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
             setFormState('success');
-        } catch {
+        } catch (err) {
             setFormState('error');
+            setErrorDetail(err instanceof Error ? err.message : String(err));
         }
     };
 
@@ -144,6 +149,9 @@ export const Contact = () => {
                                     {formState === 'error' && (
                                         <div className="bg-error-light dark:bg-error/10 border border-error dark:border-error/20 p-4 text-center">
                                             <p className="text-micro font-black text-error">عذراً، حدث خطأ في الإرسال. الرجاء المحاولة مرة أخرى أو التواصل عبر واتساب.</p>
+                                            {errorDetail && (
+                                                <p className="text-micro text-error mt-2 opacity-70">{errorDetail}</p>
+                                            )}
                                         </div>
                                     )}
                                     {/* Row: Name + Phone */}
