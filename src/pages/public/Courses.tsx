@@ -134,6 +134,7 @@ export const Courses = () => {
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}
+                  type="button"
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
