@@ -169,10 +169,9 @@ export const About = () => {
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
                         {/* Value 1 - Honesty */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-primary)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-primary)]/20 p-6 md:p-8 rounded-card border border-primary/50 dark:border-primary/30 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-primary/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)]/0 via-[var(--bg-primary)]/0 to-[var(--bg-primary)]/5 dark:to-[var(--bg-primary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-primary)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-primary)]/20 p-6 md:p-8 rounded-card border border-primary/50 dark:border-primary/30 relative overflow-hidden shadow-sm">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
                                     <Shield className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">الأمانة</h3>
@@ -183,10 +182,9 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 2 - Innovation */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-warning)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 hover:border-warning/50 dark:hover:border-warning/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-warning/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-warning)]/0 via-[var(--bg-warning)]/0 to-[var(--bg-warning)]/5 dark:to-[var(--bg-warning)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-warning)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 relative overflow-hidden shadow-sm">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 group-hover:shadow-warning/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 shrink-0">
                                     <Lightbulb className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">الابتكار</h3>
@@ -197,10 +195,9 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 3 - Excellence */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-success)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 hover:border-success/50 dark:hover:border-success/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-success/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-success)]/0 via-[var(--bg-success)]/0 to-[var(--bg-success)]/5 dark:to-[var(--bg-success)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-success)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 relative overflow-hidden shadow-sm">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary flex items-center justify-center shadow-lg shadow-success/20 group-hover:shadow-success/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary flex items-center justify-center shadow-lg shadow-success/20 shrink-0">
                                     <Award className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">التميز</h3>
@@ -211,10 +208,9 @@ export const About = () => {
                         </motion.div>
 
                         {/* Value 4 - Building Generations */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="group bg-gradient-to-br from-white to-[var(--bg-error)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 hover:border-error/50 dark:hover:border-error/50 transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-lg hover:shadow-error/10">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-error)]/0 via-[var(--bg-error)]/0 to-[var(--bg-error)]/5 dark:to-[var(--bg-error)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-error)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 relative overflow-hidden shadow-sm">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 group-hover:shadow-error/30 group-hover:scale-110 transition-all duration-500 shrink-0">
+                                <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 shrink-0">
                                     <Compass className="w-6 h-6" />
                                 </div>
                                 <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">بناء الجيل</h3>
