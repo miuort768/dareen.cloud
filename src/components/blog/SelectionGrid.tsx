@@ -59,7 +59,11 @@ export const SelectionGrid = ({
                 </div>
 
                 <div className="mb-3">
-                    <img src="/dareen8.png" alt="دارين السابعة" className="w-full max-w-[260px] mx-auto h-auto block" />
+                    <picture>
+                        <source srcSet="/dareen8.webp" type="image/webp" />
+                        <source srcSet="/dareen8.avif" type="image/avif" />
+                        <img src="/dareen8.png" alt="دارين السابعة" width="1983" height="793" loading="lazy" className="w-full max-w-[260px] mx-auto h-auto block" />
+                    </picture>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5">
                     {view === 'classrooms' && currentClassrooms.map((cls, i) => (
@@ -127,7 +131,11 @@ export const SelectionGrid = ({
                 </div>
 
                 <div className="mb-6">
-                    <img src="/dareen8.png" alt="دارين السابعة" className="w-auto mx-auto h-auto block max-w-full" />
+                    <picture>
+                        <source srcSet="/dareen8.webp" type="image/webp" />
+                        <source srcSet="/dareen8.avif" type="image/avif" />
+                        <img src="/dareen8.png" alt="دارين السابعة" width="1983" height="793" loading="lazy" className="w-auto mx-auto h-auto block max-w-full" />
+                    </picture>
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
