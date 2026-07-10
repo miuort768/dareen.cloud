@@ -173,7 +173,8 @@ apiRouter.get('/system/public-settings', async (req, res) => {
         const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
             'notifications_enabled', 'auto_backup', 'chatbot_enabled',
             'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-            'reminder_minutes_before', 'library_whatsapp', 'library_telegram'];
+            'reminder_minutes_before', 'library_whatsapp', 'library_telegram',
+            'whatsapp_numbers'];
         const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
             const settings = await prisma.systemSetting.findMany({
                 where: { key: { in: keys } }
