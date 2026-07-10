@@ -220,7 +220,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-success hover:bg-success-dark text-on-primary text-xs font-black py-3 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-primary-dark text-on-primary text-xs font-black py-3 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
