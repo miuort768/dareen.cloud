@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User } from 'lucide-react';
+import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen } from 'lucide-react';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 
@@ -8,6 +8,7 @@ interface ContactMsg {
     name: string;
     phone: string;
     subject: string;
+    curriculum: string;
     message: string;
     createdAt: string;
 }
@@ -150,6 +151,10 @@ export const AdminContacts = () => {
                                     <span className="flex items-center gap-1.5">
                                         <Phone size={12} />
                                         {msg.phone}
+                                    </span>
+                                    <span className="flex items-center gap-1.5">
+                                        <BookOpen size={12} />
+                                        {msg.curriculum || '-'}
                                     </span>
                                     <span className="flex items-center gap-1.5">
                                         <Clock size={12} />

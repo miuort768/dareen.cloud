@@ -11,7 +11,7 @@ export const Contact = () => {
     const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
-    const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });
+    const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ export const Contact = () => {
                 body: JSON.stringify(formData),
             });
             if (!res.ok) throw new Error('Failed');
-            setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });
+            setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
             setFormState('success');
         } catch {
             setFormState('idle');
@@ -183,6 +183,24 @@ export const Contact = () => {
                                             <option>مشكلة تقنية في المنصة</option>
                                             <option>اقتراحات وتطوير</option>
                                             <option>أخرى</option>
+                                        </select>
+                                    </div>
+
+                                    {/* Curriculum */}
+                                    <div className="space-y-1.5">
+                                        <label className="text-micro font-black text-muted block">المنهج</label>
+                                        <select
+                                            value={formData.curriculum}
+                                            onChange={e => setFormData(p => ({ ...p, curriculum: e.target.value }))}
+                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
+                                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundPosition: 'right 14px center' }}
+                                        >
+                                            <option>المنهج الكويتي</option>
+                                            <option>المنهج القطري</option>
+                                            <option>المنهج السعودي</option>
+                                            <option>المنهج الإماراتي</option>
+                                            <option>سلطنة عمان</option>
+                                            <option>منهج آخر</option>
                                         </select>
                                     </div>
 

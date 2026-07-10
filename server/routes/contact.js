@@ -11,7 +11,7 @@ router.use(sanitizeInput);
 
 router.post('/', async (req, res) => {
     try {
-        const { name, phone, subject, message } = req.body;
+        const { name, phone, subject, curriculum, message } = req.body;
         if (!phone) {
             return res.status(400).json({ error: 'رقم الهاتف مطلوب' });
         }
@@ -21,6 +21,7 @@ router.post('/', async (req, res) => {
                 name: name || '',
                 phone,
                 subject: subject || '',
+                curriculum: curriculum || '',
                 message: message || '',
             }
         });

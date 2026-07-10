@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 // ========== Phase 1: Core Domain ==========
@@ -14,7 +14,7 @@ model User {
   username     String   @unique
   password     String
   role         String   @default("admin")
-  permissions  String?  @db.Text
+  permissions  String?
   tokenVersion Int      @default(1) @map("token_version")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
@@ -65,7 +65,7 @@ model Student {
   parentId     String?
   parent       Parent?      @relation(fields: [parentId], references: [id], onDelete: SetNull)
   totalPoints  Int          @default(0) @map("total_points")
-  badges       String?      @db.Text
+  badges       String?
   username     String?      @unique
   password     String?
   deletedAt    DateTime?    @map("deleted_at")
@@ -112,7 +112,7 @@ model Enrollment {
   curr             String?
   sessionsTotal    Int      @default(0) @map("sessions_total")
   sessionsUsed     Int      @default(0) @map("sessions_used")
-  schedule         String?  @db.Text
+  schedule         String?
   nextSessionNotes String?  @map("next_session_notes")
   isFrozen         Int?     @default(0) @map("isFrozen")
   frozenReason     String?  @map("frozenReason")
@@ -156,7 +156,7 @@ model Session {
   teacherCurrency  String?
   exchangeRateFrom String?
   exchangeRateTo   String?
-  exchangeRateValue Decimal? @db.Decimal(18, 8)
+  exchangeRateValue Decimal?
   status           String   @default("scheduled")
   topics           String?
   homework         String?
@@ -276,8 +276,8 @@ model ExchangeRate {
   id            Int      @id @default(autoincrement())
   fromCurrency  String
   toCurrency    String
-  buyRate       Decimal  @db.Decimal(18, 8)
-  sellRate      Decimal  @db.Decimal(18, 8)
+  buyRate       Decimal
+  sellRate      Decimal
   effectiveDate DateTime
   notes         String?
   createdAt     DateTime @default(now())
@@ -307,9 +307,8 @@ model StudentInvoice {
   status        String   @default("unpaid")
   paymentMethod String?
   notes         String?
-  items         String?  @db.Text
-  paidAt        String?
-  deletedAt     DateTime?
+  items         String?
+  isArchived    Int?     @default(0) @map("is_archived")
 
   @@index([studentId])
   @@index([status])
@@ -330,8 +329,6 @@ model TeacherInvoice {
   personalExpenses Int?     @default(0) @map("personalExpenses")
   date             String
   isArchived       Int?     @default(0) @map("is_archived")
-  paidAt           String?
-  deletedAt        DateTime?
 
   @@index([teacherId])
   @@index([status])
@@ -522,8 +519,8 @@ model ForumPost {
   authorRole String
   content    String
   status     String   @default("pending")
-  upvotes    String?  @default("[]") @db.Text
-  downvotes  String?  @default("[]") @db.Text
+  upvotes    String?  @default("[]")
+  downvotes  String?  @default("[]")
   createdAt  DateTime @default(now()) @map("created_at")
 
   comments ForumComment[]
@@ -613,32 +610,18 @@ model CompletedSession {
 
 model AuditLog {
   id         Int      @id @default(autoincrement())
-  eventId    String   @unique @default(uuid())
   userId     String?
   username   String?
   action     String
-  details    String?  @db.Text
+  details    String?
   entityType String?
   entityId   String?
   timestamp  DateTime @default(now())
-
-  accountId  String?
-  ipAddress  String?
-  userAgent  String?
-  status     String   @default("SUCCESS")
-  requestId  String?
-  metadata   Json?
 
   @@index([userId])
   @@index([action])
   @@index([entityType])
   @@index([timestamp])
-  @@index([accountId])
-  @@index([requestId])
-  @@index([status])
-  @@index([action, timestamp])
-  @@index([entityType, entityId])
-  @@index([eventId])
   @@map("audit_logs")
 }
 
@@ -685,7 +668,7 @@ model Role {
   id          Int              @id @default(autoincrement())
   name        String           @unique
   label       String
-  description String?          @db.Text
+  description String?
   isSystem    Int?             @default(0)
   createdAt   DateTime         @default(now())
 
@@ -700,7 +683,7 @@ model Permission {
   key         String           @unique
   label       String
   group       String
-  description String?          @db.Text
+  description String?
 
   roles RolePermission[]
 
@@ -740,7 +723,7 @@ model PermissionAudit {
   action       String
   targetUserId String?
   targetRoleId Int?
-  details      String?  @db.Text
+  details      String?
   timestamp    DateTime @default(now())
 
   @@index([userId])
