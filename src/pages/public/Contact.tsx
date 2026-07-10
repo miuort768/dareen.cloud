@@ -10,7 +10,7 @@ import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 export const Contact = () => {
     const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
-    const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+    const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -26,7 +26,7 @@ export const Contact = () => {
             setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
             setFormState('success');
         } catch {
-            setFormState('idle');
+            setFormState('error');
         }
     };
 
@@ -141,6 +141,11 @@ export const Contact = () => {
                                 </div>
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
+                                    {formState === 'error' && (
+                                        <div className="bg-error-light dark:bg-error/10 border border-error dark:border-error/20 p-4 text-center">
+                                            <p className="text-micro font-black text-error">عذراً، حدث خطأ في الإرسال. الرجاء المحاولة مرة أخرى أو التواصل عبر واتساب.</p>
+                                        </div>
+                                    )}
                                     {/* Row: Name + Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
