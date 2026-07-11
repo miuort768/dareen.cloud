@@ -51,7 +51,12 @@ export const RefundPolicy = () => {
                         سياسة <span className="md:text-transparent md:bg-clip-text md:bg-gradient-to-r md:from-[var(--bg-info)] md:to-[var(--bg-primary)] dark:md:from-[var(--bg-info)] dark:md:to-[var(--bg-primary)] text-warning inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
-                    <p className="text-micro md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-micro md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium md:hidden">
+                        نحن نقدر ثقتكم بنا <span className="inline-block">❤️</span>
+                        <br />
+                        ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
+                    </p>
+                    <p className="text-micro md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium hidden md:block">
                         نحن نقدر ثقتكم بنا، ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>
                 </div>
