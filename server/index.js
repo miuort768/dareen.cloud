@@ -112,10 +112,9 @@ app.use(helmet({
         directives: {
             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
             "img-src": ["'self'", "data:", "https:", "http:"],
-            "script-src": ["'self'", "'sha256-nrjAejnEI2oaJ6TC7hytEISXuS0bAi7ELxqae7lQBk0='", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
+            "script-src": ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
             "style-src": ["'self'", "'unsafe-inline'"],
-            "connect-src": ["'self'", "https:", "http:", "ws:", "wss:"],
-            "require-trusted-types-for": ["'script'"]
+            "connect-src": ["'self'", "https:", "http:", "ws:", "wss:"]
         }
     },
     crossOriginEmbedderPolicy: false,
