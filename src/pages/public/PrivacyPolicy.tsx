@@ -213,7 +213,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-primary border border-primary/20 mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-primary dark:bg-background border border-primary/20 dark:border-border mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
                         <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 rounded-full -ms-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
