@@ -120,7 +120,7 @@ export const AdminContacts = () => {
                             <div className="p-6 relative z-10">
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-card bg-primary-soft flex items-center justify-center">
+                                        <div className="w-10 h-10 rounded-lg bg-primary-soft flex items-center justify-center">
                                             <User size={18} className="text-primary" />
                                         </div>
                                         <div>
@@ -130,18 +130,18 @@ export const AdminContacts = () => {
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <a href={`tel:${msg.phone}`}
-                                            className="p-2.5 rounded-xl text-success bg-success/10 hover:bg-success/20 transition-colors"
+                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-success bg-success/10 hover:bg-success/20 transition-colors"
                                             title="اتصال" aria-label={`اتصال بـ ${msg.phone}`}>
                                             <Phone size={16} />
                                         </a>
                                         <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                             target="_blank" rel="noopener noreferrer"
-                                            className="p-2.5 rounded-xl text-success bg-success/10 hover:bg-success/20 transition-colors"
+                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-success bg-success/10 hover:bg-success/20 transition-colors"
                                             title="واتساب" aria-label="مراسلة عبر واتساب">
                                             <MessageCircle size={16} />
                                         </a>
                                         <button type="button" onClick={() => handleDelete(msg.id)}
-                                            className="p-2.5 rounded-xl text-error bg-error/10 hover:bg-error/20 transition-colors"
+                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-error bg-error/10 hover:bg-error/20 transition-colors"
                                             title="حذف" aria-label="حذف الرسالة">
                                             <Trash2 size={16} />
                                         </button>
