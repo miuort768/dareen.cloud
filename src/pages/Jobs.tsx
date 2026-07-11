@@ -237,7 +237,7 @@ export const Jobs = () => {
                         {/* Progress Steps */}
                         <div className="p-4 md:p-10 border-b border-border bg-white/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm md:text-lg font-black text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary" /></h2>
+                                <h2 className="text-sm md:text-lg font-black text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary" />تقديم طلب التوظيف</h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card'}`} />
