@@ -115,7 +115,7 @@ export const AdminContacts = () => {
                     </div>
                 ) : (
                     filtered.map(msg => (
-                        <div key={msg.id} className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden hover:-translate-y-0.5 transition-all">
+                        <div key={msg.id} className="bg-card border border-border/50 shadow-soft overflow-hidden hover:-translate-y-0.5 transition-all rounded-card rounded-t-[0px]">
                             <div className="h-1 w-full bg-primary"></div>
                             <div className="p-6 relative z-10">
                                 <div className="flex justify-between items-start mb-4">
