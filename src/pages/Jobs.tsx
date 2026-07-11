@@ -235,7 +235,7 @@ export const Jobs = () => {
                         className="bg-white shadow-xl shadow-sm/50 border border-border"
                     >
                         {/* Progress Steps */}
-                        <div className="p-4 md:p-10 border-b border-border bg-background/50">
+                        <div className="p-4 md:p-10 border-b border-border bg-white/50">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-sm md:text-lg font-black text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary" /></h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
@@ -376,7 +376,7 @@ export const Jobs = () => {
                             </div>
 
                             {/* Actions */}
-                            <div className="p-4 md:p-10 border-t border-border bg-background/50">
+                            <div className="p-4 md:p-10 border-t border-border bg-white/50">
                                 <div className="flex items-center justify-between gap-3">
                                     <button
                                         type="button"
