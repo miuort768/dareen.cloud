@@ -76,14 +76,6 @@ export const Jobs = () => {
         });
     };
 
-    const isStepComplete = (stepId: number) => {
-        const fields = stepFields[stepId] || [];
-        return fields.every(f => {
-            if (optionalFields.has(f)) return true;
-            return form[f]?.trim().length > 0;
-        });
-    };
-
     const nextStep = useCallback(() => {
         if (step < totalSteps && canProceed()) {
             setStep(s => s + 1);
@@ -118,8 +110,8 @@ export const Jobs = () => {
         try {
             await api.post('/jobs', form);
             setSubmitted(true);
-        } catch (err: any) {
-            setErrorMsg(err?.message || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
+        } catch (err: unknown) {
+            setErrorMsg(err instanceof Error ? err.message : 'حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
         } finally {
             setLoading(false);
         }
@@ -134,7 +126,7 @@ export const Jobs = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        className="max-w-lg w-full bg-card border border-success/30 shadow-soft rounded-card p-10 md:p-14 text-center"
+                        className="max-w-lg w-full bg-card border border-success/30 shadow-soft rounded-card p-8 md:p-10 text-center"
                     >
                         <div className="space-y-6">
                             <motion.div
@@ -145,7 +137,7 @@ export const Jobs = () => {
                             >
                                 <CheckCircle2 size={32} className="text-success" />
                             </motion.div>
-                            <h2 className="text-3xl md:text-4xl font-bold font-heading text-main mb-3">تم استلام طلبك!</h2>
+                            <h2 className="text-2xl md:text-3xl font-bold font-heading text-main mb-3">تم استلام طلبك!</h2>
                             <p className="text-base md:text-lg text-muted">سنقوم بمراجعة طلبك والتواصل معك في أقرب فرصة. بارك الله فيك.</p>
                         </div>
                     </motion.div>
@@ -181,7 +173,7 @@ export const Jobs = () => {
                                 className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-white/15 rounded-card mb-3 md:mb-4"
                             >
                                 <Sparkles size={12} className="text-warning" />
-                                 <span className="text-xs md:text-sm font-bold text-on-primary/90">خطوة لتكون من العائلة</span>
+                                 <span className="text-xs md:text-sm font-bold text-on-primary">خطوة لتكون من العائلة</span>
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -196,7 +188,7 @@ export const Jobs = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-on-primary/80 text-xs md:text-lg max-w-lg leading-relaxed mb-4 md:mb-0"
+                                className="text-on-primary/70 text-xs md:text-lg max-w-lg leading-relaxed mb-4 md:mb-0"
                             >
                                 نبحث عن <span className="inline-block px-3 py-1 bg-warning text-on-warning rounded-card">معلمات متميزات</span> للتدريس أون لاين.<br /> انضمي إلى بيئة تعليمية مبتكرة تقدر الإبداع والتميز.
                             </motion.p>
@@ -210,7 +202,7 @@ export const Jobs = () => {
                             <div className="w-40 h-40 md:w-52 md:h-52 bg-white/15 rounded-card flex items-center justify-center">
                                 <div className="text-center">
                                     <Building2 size={56} className="text-warning mx-auto mb-2" />
-                                    <span className="text-on-primary/80 text-xs font-bold block">نحن ننتظرك</span>
+                                    <span className="text-on-primary/70 text-xs font-bold block">نحن ننتظرك</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -236,19 +228,19 @@ export const Jobs = () => {
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card border border-border/50'}`} />
                                                     ))}
                                                 </div>
-                                                <span className="text-xs font-bold text-muted bg-card border border-border/50 px-3 py-1.5 rounded-card hidden md:inline-block">
+                                                <span className="text-xs font-bold text-muted bg-card border border-border/50 px-3 py-1 rounded-card hidden md:inline-block">
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
-                            <p className="text-xs font-bold text-primary mb-0 md:hidden">{steps.find(s => s.id === step)?.title}</p>
+                            <p className="text-xs font-bold text-primary md:hidden">{steps.find(s => s.id === step)?.title}</p>
                             <div className="hidden md:grid grid-cols-4 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-card border border-border/50 text-muted'}`}>
+                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary' : step > s.id ? 'bg-success text-on-primary' : 'bg-card border border-border/50 text-muted'}`}>
                                                 {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                                             </div>
-                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-border/50'}`} />}
+                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-border'}`} />}
                                         </div>
                                         <span className={`text-xs font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
                                     </div>
@@ -311,10 +303,10 @@ export const Jobs = () => {
                                                         <label
                                                             key={s}
                                                             onClick={() => setForm(prev => ({ ...prev, subject: s }))}
-                                                    className={`flex items-center gap-3 p-4 md:p-5 rounded-card border-2 cursor-pointer transition-all min-h-[60px] md:min-h-[68px] ${
+                                                    className={`flex items-center gap-3 p-4 md:p-5 rounded-card border cursor-pointer transition-all min-h-[60px] md:min-h-[68px] ${
                                                              form.subject === s
-                                                                 ? 'border-primary bg-primary-soft'
-                                                                 : 'border-border/50 bg-card hover:border-border'
+                                                                  ? 'border-2 border-primary bg-primary-soft'
+                                                                  : 'border-border/50 bg-card hover:border-border'
                                                     }`}
                                                         >
                                                             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
@@ -375,6 +367,7 @@ export const Jobs = () => {
                                         type="button"
                                         onClick={prevStep}
                                         disabled={step === 1}
+                                        aria-label="الخطوة السابقة"
                                         className="px-5 md:px-6 py-3 md:py-4 bg-card border border-border/50 text-muted font-bold text-xs transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-surface rounded-card"
                                     >
                                         <ChevronRight size={14} />
@@ -386,6 +379,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={nextStep}
                                             disabled={!canProceed()}
+                                            aria-label="الخطوة التالية"
                                             className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-primary hover:bg-primary-hover text-on-primary font-bold text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 rounded-card shadow-soft"
                                         >
                                             التالي
@@ -396,10 +390,11 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={handleSubmit}
                                             disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
+                                            aria-label="تقديم الطلب"
                                             className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-success hover:bg-success-hover text-on-primary font-bold text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 rounded-card shadow-soft"
                                         >
                                             {loading ? (
-                                                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
                                             ) : (
                                                 <Send size={14} />
                                             )}
@@ -432,12 +427,13 @@ export const Jobs = () => {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="bg-card border border-error/50 shadow-soft rounded-card p-8 max-w-sm w-full text-center"
+                            className="bg-card border border-error/50 shadow-soft rounded-card p-6 max-w-sm w-full text-center"
                             onClick={e => e.stopPropagation()}
                         >
                             <button
                                 type="button"
                                 onClick={() => setErrorMsg('')}
+                                aria-label="إغلاق"
                                 className="absolute top-3 end-3 w-8 h-8 flex items-center justify-center text-muted hover:text-error transition-colors rounded-card"
                             >
                                 <X size={16} />
@@ -450,6 +446,7 @@ export const Jobs = () => {
                             <button
                                 type="button"
                                 onClick={() => setErrorMsg('')}
+                                aria-label="إغلاق"
                                 className="mt-6 w-full py-3 bg-error hover:bg-error-hover text-on-primary font-bold text-xs rounded-card transition-all"
                             >
                                 حسناً
