@@ -166,7 +166,7 @@ export const RefundPolicy = () => {
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>
-                            <p className="text-[10px] md:text-base text-on-primary/80 mb-8 max-w-md mx-auto whitespace-nowrap md:whitespace-normal">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
+                            <p className="text-[10px] md:text-base text-on-primary mb-8 max-w-md mx-auto whitespace-nowrap md:whitespace-normal">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
 
                             <a
                                 href={`https://wa.me/${whatsappNumber}`}
