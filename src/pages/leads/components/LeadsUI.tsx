@@ -29,19 +29,19 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
     </button>
 );
 
-const statConfig: { title: string; icon: React.ComponentType<{ size?: number }>; bg: string; iconBg: string }[] = [
-    { title: 'إجمالي المهتمين', icon: Users, bg: 'bg-primary', iconBg: 'bg-primary-soft' },
-    { title: 'عملاء جدد', icon: Clock, bg: 'bg-info', iconBg: 'bg-info-soft' },
-    { title: 'تم التحويل', icon: CheckCircle2, bg: 'bg-success', iconBg: 'bg-success-soft' },
-    { title: 'معدل التحويل', icon: TrendingUp, bg: 'bg-warning', iconBg: 'bg-warning-soft' },
+const statConfig: { title: string; icon: React.ComponentType<{ size?: number }>; iconBg: string; iconColor: string }[] = [
+    { title: 'إجمالي المهتمين', icon: Users, iconBg: 'bg-primary-soft', iconColor: 'text-primary' },
+    { title: 'عملاء جدد', icon: Clock, iconBg: 'bg-info-soft', iconColor: 'text-info' },
+    { title: 'تم التحويل', icon: CheckCircle2, iconBg: 'bg-success-soft', iconColor: 'text-success' },
+    { title: 'معدل التحويل', icon: TrendingUp, iconBg: 'bg-warning-soft', iconColor: 'text-warning' },
 ];
 
 export const StatItem = ({ title, value, icon: Icon }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
     const cfg = statConfig.find(s => s.title === title);
     return (
-        <div className={cn('flex items-center gap-3 p-4 rounded-card shadow-soft bg-card border border-border/50')}>
+        <div className="flex items-center gap-3 p-4 rounded-card shadow-soft bg-card border border-border/50">
             <div className={cn('w-11 h-11 rounded-card flex items-center justify-center shrink-0', cfg?.iconBg || 'bg-primary-soft')}>
-                <Icon size={20} className={cn('text-primary', cfg?.title === 'عملاء جدد' && 'text-info', cfg?.title === 'تم التحويل' && 'text-success', cfg?.title === 'معدل التحويل' && 'text-warning')} />
+                <Icon size={20} className={cfg?.iconColor || 'text-primary'} />
             </div>
             <div className="min-w-0">
                 <p className="text-xs text-muted leading-none">{title}</p>

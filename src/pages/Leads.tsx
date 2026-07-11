@@ -36,7 +36,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                 </p>
             </div>
             <div className="flex gap-2 p-5 pt-0">
-                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
+                <button type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
                 <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-primary bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
             </div>
         </motion.div>
@@ -168,12 +168,12 @@ export const Leads: React.FC = () => {
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="relative flex-1">
                             <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." className="w-full bg-card border border-border/60 rounded-xl px-9 py-2.5 outline-none text-xs text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." aria-label="بحث عن عميل" className="w-full bg-card border border-border/60 rounded-xl px-9 py-2.5 outline-none text-xs text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="flex items-center gap-2 w-full md:w-auto">
                             <Filter size={14} className="text-muted hidden md:block shrink-0" />
                             <div className="relative w-full md:w-auto">
-                                <select className="w-full md:w-auto appearance-none bg-card border border-border/60 rounded-xl px-3 py-2.5 text-xs outline-none cursor-pointer focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-main" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                <select aria-label="تصفية حسب الحالة" className="w-full md:w-auto appearance-none bg-card border border-border/60 rounded-xl px-3 py-2.5 text-xs outline-none cursor-pointer focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-main" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
                                     <option value="all" className="text-main">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
