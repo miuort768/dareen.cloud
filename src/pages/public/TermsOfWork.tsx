@@ -48,7 +48,7 @@ export const TermsOfWork = () => {
                         قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
-                    <p className="text-xs md:text-lg text-warning dark:text-warning max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-[10px] md:text-lg text-warning dark:text-warning max-w-2xl mx-auto leading-relaxed font-medium whitespace-nowrap md:whitespace-normal">
                         لائحة العمل | السياسات والإجراءات المنظمة لعمل الكادر التعليمي .
                     </p>
                 </div>
