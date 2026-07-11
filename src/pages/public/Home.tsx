@@ -231,7 +231,7 @@ export const Home = () => {
                     </div>
                     <div className="min-w-0">
                       <span className="text-micro font-black text-main block leading-tight mb-0">{f.label}</span>
-                      <span className="text-[9px] text-muted font-medium block leading-tight">{f.desc}</span>
+                      <span className="text-[9px] text-main font-medium block leading-tight">{f.desc}</span>
                     </div>
                   </motion.div>
                 );
