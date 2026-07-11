@@ -67,29 +67,29 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
     };
 
     return (
-        <div className="bg-card border border-border shadow-sm rounded-2xl overflow-hidden" dir="rtl">
-            <div className="bg-primary p-5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10 flex items-center justify-center shadow-sm">
-                        {editId ? <Edit3 size={18} className="text-on-primary" /> : <Plus size={18} className="text-on-primary" />}
+        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden" dir="rtl">
+            <div className="bg-primary px-5 md:px-7 py-5 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-card flex items-center justify-center bg-primary-soft">
+                        {editId ? <Edit3 size={18} className="text-primary" /> : <Plus size={18} className="text-primary" />}
                     </div>
                     <div>
-                        <h3 className="text-base font-bold text-on-primary uppercase tracking-tighter">{editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
-                        <p className="text-micro font-medium text-on-primary opacity-70 uppercase tracking-widest mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
+                        <h3 className="text-card-title font-bold font-heading text-on-primary">{editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
+                        <p className="text-xs text-on-primary/70 mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
                     </div>
                 </div>
-                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-xl transition-all">
+                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-card transition-all">
                     <X size={18} />
                 </button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Basic Info Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border">
-                        <div className="w-6 h-6 flex items-center justify-center rounded-lg bg-info-soft">
+                    <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                        <div className="w-6 h-6 flex items-center justify-center rounded-card bg-info-soft">
                             <Info size={12} className="text-info" />
                         </div>
-                        <h4 className="text-micro font-medium text-main uppercase tracking-widest">بيانات التعريف الأساسية</h4>
+                        <h4 className="text-xs text-muted">بيانات التعريف الأساسية</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -103,21 +103,21 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
 
                 {/* Currency Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border">
-                        <div className="w-6 h-6 flex items-center justify-center rounded-lg bg-success-soft">
+                    <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                        <div className="w-6 h-6 flex items-center justify-center rounded-card bg-success-soft">
                             <DollarSign size={12} className="text-success" />
                         </div>
-                        <h4 className="text-micro font-medium text-main uppercase tracking-widest">عملة السعر</h4>
+                        <h4 className="text-xs text-muted">عملة السعر</h4>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">العملة</label>
-                            <div className="relative group">
-                                <DollarSign className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-success transition-colors" size={12} />
+                            <label className="text-xs text-muted ms-1">العملة</label>
+                            <div className="relative">
+                                <DollarSign className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                 <select
                                     value={formData.currency}
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
-                                    className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main text-xs font-medium transition-all ps-10 appearance-none"
+                                    className="w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
                                 >
                                     <option value="KWD">د.ك (KWD)</option>
                                     <option value="SAR">﷼ (SAR)</option>
@@ -134,49 +134,49 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-5 bg-surface border border-border rounded-xl">
+                <div className="p-5 bg-card border border-border/50 rounded-card">
                     <label 
                         onClick={() => setEnableLogin(!enableLogin)}
-                        className="flex items-center gap-3 cursor-pointer group mb-6"
+                        className="flex items-center gap-3 cursor-pointer mb-6"
                     >
                         <div className={cn(
                             "w-4 h-4 rounded border flex items-center justify-center transition-all",
-                            enableLogin ? "bg-primary border-primary" : "bg-card border-border"
+                            enableLogin ? "bg-primary border-primary" : "bg-card border-border/50"
                         )}>
                             {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-sm" />}
                         </div>
-                        <span className="text-micro font-medium text-muted uppercase tracking-widest">تفعيل حساب المعلمة على المنصة</span>
+                        <span className="text-xs text-muted">تفعيل حساب المعلمة على المنصة</span>
                     </label>
 
                     {enableLogin && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-micro font-medium text-dim uppercase tracking-widest">اسم المستخدم</label>
-                                    <button type="button" onClick={generateUsername} className="text-micro text-primary font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <label className="text-xs text-muted">اسم المستخدم</label>
+                                    <button type="button" onClick={generateUsername} className="text-xs text-primary hover:underline">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <User className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
+                                    <User className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono text-main transition-all"
                                         placeholder="اسم المستخدم"
                                     />
                                 </div>
                             </div>
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-micro font-medium text-dim uppercase tracking-widest">كلمة المرور</label>
-                                    <button type="button" onClick={generatePassword} className="text-micro text-primary font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <label className="text-xs text-muted">كلمة المرور</label>
+                                    <button type="button" onClick={generatePassword} className="text-xs text-primary hover:underline">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={12} />
+                                    <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                     <input
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium font-mono tracking-widest text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono tracking-widest text-main transition-all"
                                         placeholder="كلمة المرور"
                                     />
                                 </div>
@@ -185,10 +185,10 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     )}
                 </div>
 
-                <div className="flex items-center justify-end pt-4 border-t border-border">
+                <div className="flex items-center justify-end pt-4 border-t border-border/50">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold uppercase tracking-[0.2em] hover:shadow-lg hover:shadow-primary/25 rounded-xl flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold hover:shadow-lg hover:shadow-primary/25 rounded-card flex items-center gap-2 shadow-soft active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
@@ -201,9 +201,9 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-1.5">
-        <label className="text-micro font-medium text-dim uppercase tracking-widest ms-1">{label}</label>
-        <div className="relative group">
-            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={12} />}
+        <label className="text-xs text-muted ms-1">{label}</label>
+        <div className="relative">
+            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />}
             <input
                 required={required}
                 type={type}
@@ -211,7 +211,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-main text-xs font-medium transition-all",
+                    "w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all",
                     Icon && "ps-10",
                     dir === 'ltr' && "font-mono"
                 )}
