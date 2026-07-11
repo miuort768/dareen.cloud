@@ -27,17 +27,32 @@ dist-ssr
 .env
 .env.production
 server/.env
+
+# SQLite databases
 *.sqlite*
 database.sqlite*
 server/*.sqlite*
 server/database.sqlite*
 server/dev.db*
+dev.db
+/dev.db
 
 # Generated WebP/AVIF images (built by scripts/convert-webp.mjs)
 public/**/*.webp
 public/**/*.avif
-.env
-database.sqlite
 
-dev.db
-/dev.db
+# Server generated files
+server/coverage/
+server/scripts/migration-report-*.json
+server/server_err.txt
+server/server_out.txt
+
+# Project plans
+.opencode/plans/*.md
+
+# Test artifacts
+*.log
+stderr2.log
+stdout2.log
+server_test.log
+server_test_error.log
