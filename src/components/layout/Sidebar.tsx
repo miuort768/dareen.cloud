@@ -129,7 +129,7 @@ export const Sidebar = () => {
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                             <div className={cn("shrink-0", collapsed ? "w-10 h-10" : "w-8 h-8")}>
-                                <Image src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
+                                <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                             </div>
                             <span className={cn(
                                 "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
@@ -161,7 +161,7 @@ export const Sidebar = () => {
                 )}>
                     <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                         <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-6 h-6")}>
-                            <Image src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
+                            <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                         </div>
                         <span className={cn(
                             "font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter",
@@ -312,7 +312,7 @@ export const Sidebar = () => {
 
                     <div className="flex items-center justify-between mb-4 pb-2 border-b border-border">
                         <div className="flex items-center gap-3">
-                            <Image src="/dareen_logo_new.jpg" alt="الشعار" className="w-8 h-8" imgClassName="object-contain" />
+                            <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-8 h-8" imgClassName="object-contain" />
                             <div>
                                 <h2 className="text-base font-medium text-main leading-tight">{academyName}</h2>
                                 <p className="text-micro text-muted font-normal uppercase tracking-widest">قائمة الوصول السريع</p>

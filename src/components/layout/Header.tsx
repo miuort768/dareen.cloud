@@ -122,7 +122,7 @@ export const Header = () => {
             <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
                 <Link to="/" className="shrink-0">
                     <div className="w-8 h-8 overflow-hidden rounded-lg shadow-[0_0_14px_rgba(var(--color-primary),0.45)] hover:shadow-[0_0_22px_rgba(var(--color-primary),0.7)] transition-shadow duration-300">
-                        <Image src="/dareen_logo_new.jpg" alt="الشعار" className="w-full h-full" />
+                        <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" />
                     </div>
                 </Link>
 

@@ -20,7 +20,7 @@ export const PageLoader = () => {
 
                     <div className="relative w-36 h-36 md:w-44 md:h-44 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(79,70,229,0.15)] p-3 border border-border dark:border-white/10 overflow-hidden">
                         <img
-                            src="/dareen_logo_new.jpg"
+                            src="/dareen_logo_new.webp"
                             alt="شعار دارين للتعليم والتدريب"
                             className="w-full h-full object-contain scale-[1.35] drop-shadow-sm"
                         />
