@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { UpcomingSession } from '../../services/executiveService';
+import type { UpcomingSession } from '../../services/executiveService';
 import { Clock, GraduationCap, User, Calendar } from 'lucide-react';
 
 const URGENCY_COLORS: Record<string, string> = {

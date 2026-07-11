@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ExecutiveStats } from '../../services/executiveService';
+import type { ExecutiveStats } from '../../services/executiveService';
 import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react';
 
 type InsightType = 'positive' | 'negative' | 'neutral';

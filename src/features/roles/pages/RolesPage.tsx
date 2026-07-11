@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { rolesService, Role, Permission } from '../services/rolesService';
+import { rolesService } from '../services/rolesService';
+import type { Role, Permission } from '../services/rolesService';
 
 export const RolesPage = () => {
     const [roles, setRoles] = useState<Role[]>([]);

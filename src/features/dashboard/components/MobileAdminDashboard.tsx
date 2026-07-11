@@ -409,8 +409,6 @@ const colorVarMap: Record<string, string> = {
     'var(--bg-success)': 'var(--bg-success)',
     'var(--bg-primary)': 'var(--chart-4)',
     'var(--bg-warning)': 'var(--bg-warning)',
-    'var(--bg-info)': 'var(--bg-info)',
-    'var(--bg-warning)': 'var(--bg-warning)',
 };
 
 const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; color: string; onClick?: () => void }) => (

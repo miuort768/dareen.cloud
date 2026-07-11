@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { SystemHealth } from '../../services/executiveService';
+import type { SystemHealth } from '../../services/executiveService';
 import { HardDrive, Database, Server, Cpu, CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
 
 const STATUS_ICONS: Record<string, typeof CheckCircle> = {

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Coins, Plus, Trash2, RefreshCw } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, SecondaryBtn, DangerBtn } from './SettingsUI';
-import { settingsService, Currency, ExchangeRate } from '../services/settingsService';
+import { settingsService } from '../services/settingsService';
+import type { Currency, ExchangeRate } from '../services/settingsService';
 
 export const CurrenciesSection = ({
     localCurrency, setLocalCurrency,

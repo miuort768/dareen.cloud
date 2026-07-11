@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { ExecutiveAlerts as AlertsType } from '../../services/executiveService';
+import type { ExecutiveAlerts as AlertsType } from '../../services/executiveService';
 import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react';
 
 const SEVERITY_CONFIG = {

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { PresenceUser } from '../../services/executiveService';
+import type { PresenceUser } from '../../services/executiveService';
 import { Users } from 'lucide-react';
 
 const STATUS_COLORS: Record<string, string> = {

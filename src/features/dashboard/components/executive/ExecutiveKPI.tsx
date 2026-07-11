@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ExecutiveStats } from '../../services/executiveService';
+import type { ExecutiveStats } from '../../services/executiveService';
 import { TrendingUp, TrendingDown, DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle } from 'lucide-react';
 
 const ICON_MAP: Record<string, typeof DollarSign> = {

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Activity, TrendingUp, AlertTriangle } from 'lucide-react';
-import { ExecutivePulse } from '../../services/executiveService';
+import type { ExecutivePulse } from '../../services/executiveService';
 
 const PULSE_COLORS: Record<string, string> = {
     excellent: 'var(--bg-success)',

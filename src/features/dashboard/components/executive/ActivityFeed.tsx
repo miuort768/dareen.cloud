@@ -1,5 +1,5 @@
 import { memo, useRef, useEffect } from 'react';
-import { ActivityItem as ServiceItem } from '../../services/executiveService';
+import type { ActivityItem as ServiceItem } from '../../services/executiveService';
 import { History, TrendingUp, UserPlus, CreditCard, Edit3, Trash2, GraduationCap, Lock } from 'lucide-react';
 import { ActivityFeed as SharedFeed } from '../../../../shared/components/ui';
 import type { ActivityItem } from '../../../../shared/components/ui';
