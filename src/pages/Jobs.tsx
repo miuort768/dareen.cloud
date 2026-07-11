@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                            className="w-full bg-background dark:bg-white border border-border dark:border-white/30 p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
+                                                            className="w-full bg-background dark:bg-white border border-border dark:border-white/30 p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted/70 resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-background dark:bg-white border border-border dark:border-white/30 py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
+            className="w-full bg-background dark:bg-white border border-border dark:border-white/30 py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted/70"
         />
     </div>
 ));
