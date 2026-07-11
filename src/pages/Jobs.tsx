@@ -121,7 +121,7 @@ export const Jobs = () => {
     if (submitted) {
         return (
             <div className="min-h-screen bg-background font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
-                <MobileHeader />
+                <MobileHeader hideThemeToggle />
                 <main className="flex-grow flex items-start md:items-center justify-center px-4 md:pt-0 pt-8 pb-20">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -163,7 +163,7 @@ export const Jobs = () => {
                     breadcrumb: { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'الرئيسية', item: 'https://dareen.cloud/' }, { '@type': 'ListItem', position: 2, name: 'التوظيف', item: 'https://dareen.cloud/jobs' }] }
                 })}
             </script>
-            <MobileHeader />
+            <MobileHeader hideThemeToggle />
 
             {/* Hero Banner */}
             <section className="relative pt-2 md:pt-28 pb-4 md:pb-12 overflow-hidden bg-gradient-to-br from-primary via-primary to-primary">

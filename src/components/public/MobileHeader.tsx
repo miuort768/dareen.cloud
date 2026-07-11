@@ -4,7 +4,7 @@ import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Ph
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 
-export const MobileHeader = () => {
+export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useDarkMode();
 
@@ -36,7 +36,7 @@ export const MobileHeader = () => {
         </Link>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0">
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className={`w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
             {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Bed className="w-4 h-4 text-primary" />}
           </button>
           <div className="relative">
