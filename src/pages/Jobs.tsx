@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                            className="w-full bg-background dark:bg-card/50 border border-border dark:border-on-primary/20 p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-on-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-on-primary/50 resize-none"
+                                                            className="w-full bg-background border border-border p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -386,7 +386,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={nextStep}
                                             disabled={!canProceed()}
-                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-primary hover:bg-primary-hover text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-primary hover:bg-primary-hover text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-primary/20 dark:shadow-primary/40"
                                         >
                                             التالي
                                             <ChevronLeft size={14} />
@@ -396,7 +396,7 @@ export const Jobs = () => {
                                             type="button"
                                             onClick={handleSubmit}
                                             disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
-                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20"
+                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-success)] hover:from-[var(--bg-success)] hover:to-[var(--bg-success)] text-on-primary font-black text-xs md:text-sm transition-all disabled:opacity-30 flex items-center justify-center gap-2 shadow-lg shadow-success/20 dark:shadow-success/40"
                                         >
                                             {loading ? (
                                                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-background dark:bg-card/50 border border-border dark:border-on-primary/20 py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-on-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-on-primary/50"
+            className="w-full bg-background border border-border py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted"
         />
     </div>
 ));
