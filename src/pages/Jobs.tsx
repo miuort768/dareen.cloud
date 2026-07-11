@@ -127,7 +127,7 @@ export const Jobs = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        className="max-w-lg w-full bg-white border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
+                        className="max-w-lg w-full bg-white dark:bg-card border-2 border-success/30 p-10 md:p-14 text-center shadow-xl relative overflow-hidden"
                     >
                         <div className="absolute top-0 start-0 w-32 h-32 bg-success/5 rounded-full -ms-16 -mt-16 blur-3xl" />
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl" />
@@ -140,7 +140,7 @@ export const Jobs = () => {
                             >
                                 <CheckCircle2 size={48} className="text-success" />
                             </motion.div>
-                            <h2 className="text-3xl md:text-4xl font-black text-main mb-3">تم استلام طلبك!</h2>
+                            <h2 className="text-3xl md:text-4xl font-black text-main dark:text-main mb-3">تم استلام طلبك!</h2>
                             <p className="text-base md:text-lg text-muted font-medium">سنقوم بمراجعة طلبك والتواصل معك في أقرب فرصة. بارك الله فيك.</p>
                         </div>
                     </motion.div>
@@ -151,7 +151,7 @@ export const Jobs = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background dark:bg-primary-active font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
+        <div className="min-h-screen bg-background font-sans flex flex-col" dir="rtl" style={{ '--color-primary': '42 22 112' } as React.CSSProperties}>
             <SEO title="التوظيف | دارين السابعة - خطوة لتكون من العائلة" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن." url="https://dareen.cloud/jobs" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'التوظيف', item: '/jobs' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({
@@ -225,18 +225,18 @@ export const Jobs = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="bg-white dark:bg-primary-active shadow-xl shadow-sm/50 dark:shadow-card/50 border border-border dark:border-border"
+                        className="bg-white dark:bg-card shadow-xl shadow-sm/50 dark:shadow-card/50 border border-border dark:border-border"
                     >
                         {/* Progress Steps */}
-                        <div className="p-4 md:p-10 border-b border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
+                        <div className="p-4 md:p-10 border-b border-border dark:border-border bg-background/50 dark:bg-card/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" /></h2>
+                                <h2 className="text-sm md:text-lg font-black text-main dark:text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" /></h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
-                                                        <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card'}`} />
+                                                        <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card dark:bg-card'}`} />
                                                     ))}
                                                 </div>
-                                                <span className="text-xs font-bold text-muted dark:text-dim bg-surface dark:bg-primary-active px-3 py-1.5 rounded-full hidden md:inline-block">
+                                                <span className="text-xs font-bold text-muted dark:text-dim bg-surface dark:bg-card px-3 py-1.5 rounded-full hidden md:inline-block">
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
@@ -245,10 +245,10 @@ export const Jobs = () => {
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-primary-active text-muted'}`}>
+                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary shadow-lg shadow-primary/30 scale-110' : step > s.id ? 'bg-success text-on-primary' : 'bg-surface dark:bg-card text-muted dark:text-dim'}`}>
                                                 {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                                             </div>
-                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-surface dark:bg-primary-active'}`} />}
+                                            {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-surface dark:bg-card'}`} />}
                                         </div>
                                         <span className={`text-xs font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
                                     </div>
@@ -270,7 +270,7 @@ export const Jobs = () => {
                                         {step === 1 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
                                                         <User size={16} className="text-primary" />
                                                         المعلومات الشخصية
                                                     </h3>
@@ -285,7 +285,7 @@ export const Jobs = () => {
                                         {step === 2 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
                                                         <GraduationCap size={16} className="text-primary" />
                                                         المؤهلات والوظيفة
                                                     </h3>
@@ -300,7 +300,7 @@ export const Jobs = () => {
                                         {step === 3 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
                                                         <BookMarked size={16} className="text-primary" />
                                                         المادة التي تدرسها
                                                     </h3>
@@ -312,9 +312,9 @@ export const Jobs = () => {
                                                             key={s}
                                                             onClick={() => setForm(prev => ({ ...prev, subject: s }))}
                                                             className={`flex items-center gap-3 p-4 md:p-5 border-2 cursor-pointer transition-all min-h-[60px] md:min-h-[68px] ${
-                                                                 form.subject === s
-                                                                     ? 'border-primary bg-primary-soft dark:bg-primary/30'
-                                                                     : 'border-border dark:border-border bg-background dark:bg-primary-active/50 hover:border-border dark:hover:border-border'
+                                                                     form.subject === s
+                                                                         ? 'border-primary bg-primary-soft dark:bg-primary/30'
+                                                                         : 'border-border dark:border-border bg-background dark:bg-card hover:border-border dark:hover:border-border'
                                                             }`}
                                                         >
                                                             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
@@ -326,7 +326,7 @@ export const Jobs = () => {
                                                             </div>
                                                             <span className={`text-sm font-bold leading-tight ${
                                                                  form.subject === s
-                                                                     ? 'text-primary dark:text-primary'
+                                                                     ? 'text-primary dark:text-on-primary'
                                                                      : 'text-muted dark:text-dim'
                                                             }`}>{s}</span>
                                                         </label>
@@ -338,7 +338,7 @@ export const Jobs = () => {
                                         {step === 4 && (
                                             <>
                                                 <div className="mb-4">
-                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2">
+                                                    <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
                                                         <Award size={16} className="text-primary" />
                                                         الخبرات
                                                     </h3>
@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
+                                                            className="w-full bg-background dark:bg-card/50 border border-border dark:border-border p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -369,13 +369,13 @@ export const Jobs = () => {
                             </div>
 
                             {/* Actions */}
-                            <div className="p-4 md:p-10 border-t border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
+                            <div className="p-4 md:p-10 border-t border-border dark:border-border bg-background/50 dark:bg-card/50">
                                 <div className="flex items-center justify-between gap-3">
                                     <button
                                         type="button"
                                         onClick={prevStep}
                                         disabled={step === 1}
-                                        className="px-5 md:px-6 py-3 md:py-4 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-dim font-black text-xs md:text-sm transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-surface dark:hover:bg-primary-active"
+                                        className="px-5 md:px-6 py-3 md:py-4 bg-white dark:bg-card border border-border dark:border-border text-muted dark:text-dim font-black text-xs md:text-sm transition-all disabled:opacity-20 flex items-center gap-2 hover:bg-surface dark:hover:bg-card"
                                     >
                                         <ChevronRight size={14} />
                                         السابق
@@ -432,7 +432,7 @@ export const Jobs = () => {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="bg-white dark:bg-primary-active border-2 border-error dark:border-error p-8 max-w-sm w-full text-center shadow-2xl relative"
+                            className="bg-white dark:bg-card border-2 border-error dark:border-error p-8 max-w-sm w-full text-center shadow-2xl relative"
                             onClick={e => e.stopPropagation()}
                         >
                             <button
@@ -445,7 +445,7 @@ export const Jobs = () => {
                             <div className="w-16 h-16 bg-error-light dark:bg-error/30 flex items-center justify-center mx-auto mb-5 border-2 border-error dark:border-error">
                                 <AlertTriangle size={32} className="text-error" />
                             </div>
-                            <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">عذراً</h3>
+                            <h3 className="text-lg font-black text-main dark:text-main mb-2">عذراً</h3>
                             <p className="text-sm text-muted dark:text-muted font-medium leading-relaxed">{errorMsg}</p>
                             <button
                                 type="button"
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-background dark:bg-primary-active/50 border border-border dark:border-border py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-dim focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
+            className="w-full bg-background dark:bg-card/50 border border-border dark:border-border py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
         />
     </div>
 ));
