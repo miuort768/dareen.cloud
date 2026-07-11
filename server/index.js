@@ -112,7 +112,7 @@ app.use(helmet({
         directives: {
             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
             "img-src": ["'self'", "data:", "https:", "http:"],
-            "script-src": ["'self'", "'unsafe-inline'"],
+            "script-src": ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
             "connect-src": ["'self'", "https:", "http:", "ws:", "wss:"]
         }
     },
