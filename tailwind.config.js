@@ -125,6 +125,7 @@ module.exports = {
         },
         warning: {
           DEFAULT: 'var(--bg-warning)',
+          dark: 'var(--text-warning-dark)',
           soft: 'var(--bg-warning-soft)',
           light: 'var(--bg-warning-light)',
         },
@@ -132,11 +133,13 @@ module.exports = {
           DEFAULT: 'var(--bg-error)',
           hover: 'var(--bg-error-hover)',
           active: 'var(--bg-error-active)',
+          dark: 'var(--text-error-dark)',
           soft: 'var(--bg-error-soft)',
           light: 'var(--bg-error-light)',
         },
         info: {
           DEFAULT: 'var(--bg-info)',
+          dark: 'var(--text-info-dark)',
           soft: 'var(--bg-info-soft)',
           light: 'var(--bg-info-light)',
         },

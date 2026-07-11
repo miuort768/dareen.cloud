@@ -28,8 +28,8 @@ type FeatureVariant = 'primary' | 'info' | 'success' | 'warning';
 
 const featureStyles: Record<FeatureVariant, { bg: string; text: string }> = {
   primary: { bg: 'bg-primary-soft', text: 'text-primary' },
-  info: { bg: 'bg-info-soft', text: 'text-info' },
-  success: { bg: 'bg-success-soft', text: 'text-success' },
+  info: { bg: 'bg-info-soft', text: 'text-info-dark' },
+  success: { bg: 'bg-success-soft', text: 'text-success-dark' },
   warning: { bg: 'bg-warning-soft', text: 'text-warning-dark' },
 };
 
