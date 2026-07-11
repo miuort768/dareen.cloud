@@ -30,8 +30,8 @@ export const MobileHeader = () => {
           </div>
           <div>
             <p className="text-base font-black text-main dark:text-on-primary leading-tight">دارين السابعة</p>
-            <p className="text-micro font-bold leading-tight text-primary dark:text-primary">أفضل مدرسة افتراضية</p>
-            <p className="text-micro text-primary dark:text-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
+            <p className="text-micro font-bold leading-tight text-main dark:text-on-primary">أفضل مدرسة افتراضية</p>
+            <p className="text-micro text-main dark:text-on-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
         </Link>
         </div>
