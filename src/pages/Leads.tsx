@@ -19,25 +19,25 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
         className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
         dir="rtl"
     >
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-primary-active w-full max-w-sm shadow-xl rounded-2xl overflow-hidden border border-border dark:border-border">
-            <div className="bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] px-5 py-4 flex items-center justify-between">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card w-full max-w-sm shadow-soft rounded-card overflow-hidden border border-border/50">
+            <div className="bg-error px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
-                        <AlertTriangle size={18} className="text-on-primary" />
+                    <div className="w-8 h-8 flex items-center justify-center rounded-card bg-error-soft">
+                        <AlertTriangle size={18} className="text-error" />
                     </div>
                     <h3 className="text-sm font-bold text-on-primary">تأكيد الحذف</h3>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-primary/70 rounded-xl transition-all" aria-label="إغلاق"><X size={16} /></button>
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-primary/70 rounded-card transition-all" aria-label="إغلاق"><X size={16} /></button>
             </div>
             <div className="p-5">
-                <p className="text-sm font-bold text-main dark:text-dim mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
-                <p className="text-xs font-bold text-muted leading-relaxed">
+                <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
+                <p className="text-xs text-muted leading-relaxed">
                     سيتم نقل العميل <span className="text-error font-bold">المفقود</span> إلى قائمة العملاء المفقودين ولن يظهر مرة أخرى.
                 </p>
             </div>
             <div className="flex gap-2 p-5 pt-0">
-                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface dark:bg-primary-active hover:bg-surface dark:hover:bg-primary-active rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-primary bg-gradient-to-l from-[var(--bg-error)] to-[var(--bg-error)] hover:from-[var(--bg-error)] hover:to-[var(--bg-error)] rounded-xl transition-all active:scale-[0.98] shadow-sm shadow-error/20">تأكيد الحذف</button>
+                <button onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-primary bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
             </div>
         </motion.div>
     </motion.div>
@@ -123,27 +123,27 @@ export const Leads: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-primary-light dark:bg-background min-h-screen pb-24"
+            className="bg-surface dark:bg-background min-h-screen pb-24"
             dir="rtl"
         >
             <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
                 {/* Header */}
-                <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-2xl px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-lg shadow-primary/20 mt-6 md:mt-10">
+                <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 mt-6 md:mt-10">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-                            <Users size={22} className="text-on-primary" />
+                        <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
+                            <Users size={22} className="text-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-on-primary leading-tight">إدارة العملاء المتوقعين</h1>
-                            <p className="text-micro font-bold text-on-primary/70 mt-0.5">تتبع وإدارة العملاء المتوقعين</p>
+                            <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">إدارة العملاء المتوقعين</h1>
+                            <p className="text-xs text-on-primary/70 mt-0.5">تتبع وإدارة العملاء المتوقعين</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                         <button onClick={() => setShowLost(!showLost)} className={cn(
-                            "h-9 px-3 flex items-center justify-center gap-1.5 text-micro font-bold transition-all border rounded-xl",
+                            "h-9 px-3 flex items-center justify-center gap-1.5 text-xs font-bold transition-all rounded-xl",
                             showLost
-                                ? "bg-white text-error border-border dark:bg-primary-active dark:text-on-primary dark:border-border"
-                                : "bg-white/15 backdrop-blur-sm text-on-primary border-white/20 hover:bg-white/25"
+                                ? "bg-card text-error border border-border/50 shadow-soft"
+                                : "bg-white/15 text-on-primary border border-white/20 hover:bg-white/25 shadow-soft"
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                             <span>{showLost ? 'عرض' : 'المفقودين'}</span>
@@ -164,16 +164,16 @@ export const Leads: React.FC = () => {
                 </div>
 
                 {/* Search & Filter */}
-                <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl rounded-2xl shadow-sm border border-border dark:border-border mb-6 p-4">
+                <div className="bg-card border border-border/50 shadow-soft rounded-card mb-6 p-4">
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="relative flex-1">
                             <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." className="w-full bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-9 py-2 outline-none text-xs font-bold text-main dark:text-on-primary placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." className="w-full bg-card border border-border/60 rounded-xl px-9 py-2.5 outline-none text-xs text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="flex items-center gap-2 w-full md:w-auto">
                             <Filter size={14} className="text-muted hidden md:block shrink-0" />
                             <div className="relative w-full md:w-auto">
-                                <select className="w-full md:w-auto appearance-none bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl px-3 py-2 text-xs font-bold outline-none cursor-pointer focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all text-main dark:text-on-primary" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
+                                <select className="w-full md:w-auto appearance-none bg-card border border-border/60 rounded-xl px-3 py-2.5 text-xs outline-none cursor-pointer focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-main" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
                                     <option value="all" className="text-main">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>
