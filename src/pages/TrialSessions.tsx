@@ -109,22 +109,22 @@ export const TrialSessions = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-main min-h-screen pb-24"
+      className="bg-surface dark:bg-background min-h-screen pb-24"
       dir="rtl"
     >
       <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+        <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-              <BookOpen size={22} className="text-on-primary" />
+            <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
+              <BookOpen size={22} className="text-primary" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-on-primary leading-tight">الحصص التجريبية</h1>
-              <p className="text-micro font-bold text-on-primary opacity-70 mt-0.5">إدارة الحصص التجريبية للطلاب الجدد</p>
+              <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">الحصص التجريبية</h1>
+              <p className="text-xs text-on-primary/70 mt-0.5">إدارة الحصص التجريبية للطلاب الجدد</p>
             </div>
           </div>
-          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm border border-white/20 text-on-primary text-xs font-bold rounded-xl hover:bg-white/25 transition-all shadow-sm active:scale-95">
+          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 text-on-primary border border-white/20 text-xs font-bold rounded-xl hover:bg-white/25 transition-all active:scale-95">
             <Plus size={14} /> إضافة حصة
           </button>
         </div>
@@ -132,31 +132,31 @@ export const TrialSessions = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { title: 'الإجمالي', value: stats?.total || 0, icon: BookOpen, bg: 'bg-primary' },
-            { title: 'تم', value: stats?.completed || 0, icon: CheckCircle2, bg: 'bg-success' },
-            { title: 'قيد الانتظار', value: stats?.pending || 0, icon: Clock, bg: 'bg-warning' },
-            { title: 'ملغي', value: stats?.cancelled || 0, icon: X, bg: 'bg-error' },
+            { title: 'الإجمالي', value: stats?.total || 0, icon: BookOpen, iconBg: 'bg-primary-soft', iconColor: 'text-primary' },
+            { title: 'تم', value: stats?.completed || 0, icon: CheckCircle2, iconBg: 'bg-success-soft', iconColor: 'text-success' },
+            { title: 'قيد الانتظار', value: stats?.pending || 0, icon: Clock, iconBg: 'bg-warning-soft', iconColor: 'text-warning' },
+            { title: 'ملغي', value: stats?.cancelled || 0, icon: X, iconBg: 'bg-error-soft', iconColor: 'text-error' },
           ].map(s => (
-            <div key={s.title} className={cn('flex items-center gap-3 p-4 rounded-2xl shadow-sm', s.bg)}>
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-sm bg-white/15 backdrop-blur-sm border border-white/10">
-                <s.icon size={20} className="text-on-primary" />
+            <div key={s.title} className="flex items-center gap-3 p-4 rounded-card shadow-soft bg-card border border-border/50">
+              <div className={cn('w-11 h-11 rounded-card flex items-center justify-center shrink-0', s.iconBg)}>
+                <s.icon size={20} className={s.iconColor} />
               </div>
               <div className="min-w-0">
-                <p className="text-micro font-bold text-on-primary opacity-70 leading-none">{s.title}</p>
-                <p className="text-xl font-black text-on-primary tabular-nums mt-1">{s.value}</p>
+                <p className="text-xs text-muted leading-none">{s.title}</p>
+                <p className="text-card-title font-bold text-main tabular-nums mt-1">{s.value}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* Search & Filters */}
-        <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl rounded-2xl shadow-sm border border-border p-4">
+        <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." className="w-full ps-9 pe-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim dark:placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." aria-label="بحث عن حصة" className="w-full ps-9 pe-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" />
             </div>
-            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all">
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} aria-label="تصفية حسب الحالة" className="px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all">
               <option value="">كل الحالات</option>
               <option value="pending">قيد الانتظار</option>
               <option value="completed">تم</option>
@@ -168,9 +168,12 @@ export const TrialSessions = () => {
 
         {/* List */}
         {filtered.length === 0 ? (
-          <div className="text-center py-16 bg-card border border-dashed border-border rounded-2xl">
-            <BookOpen size={32} className="mx-auto mb-3 text-dim" />
-            <p className="text-xs font-bold text-dim">لا توجد حصص تجريبية</p>
+          <div className="text-center py-16 bg-card border border-border/50 shadow-soft rounded-card">
+            <div className="w-16 h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-4">
+              <BookOpen size={28} className="text-primary" />
+            </div>
+            <p className="text-sm font-bold text-muted">لا توجد حصص تجريبية</p>
+            <p className="text-xs text-dim mt-1.5">ستظهر هنا الحصص التجريبية المسجلة</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -179,59 +182,59 @@ export const TrialSessions = () => {
                 key={t.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-card border border-border shadow-sm rounded-2xl overflow-hidden"
+                className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden"
               >
-                <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary">
+                    <div className="w-8 h-8 rounded-card flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary">
                       {t.studentName?.charAt(0) || 'ط'}
                     </div>
                     <div>
                       <h3 className="text-xs font-bold text-main leading-tight">{t.studentName}</h3>
-                      <span className={cn("text-micro font-bold", statusTextColor[t.status] || statusTextColor.pending)}>{statusLabels[t.status]}</span>
+                      <span className={cn("text-xs", statusTextColor[t.status] || statusTextColor.pending)}>{statusLabels[t.status]}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
                     {t.status === 'pending' && (
-                      <button onClick={() => convertMutation.mutate(t.id)} disabled={convertMutation.isPending} className="w-7 h-7 flex items-center justify-center bg-info-soft text-info hover:brightness-90 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل إلى طالب"><ArrowLeftRight size={13} /></button>
+                      <button onClick={() => convertMutation.mutate(t.id)} disabled={convertMutation.isPending} className="w-7 h-7 flex items-center justify-center bg-info/10 text-info hover:bg-info/20 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل إلى طالب"><ArrowLeftRight size={13} /></button>
                     )}
-                    <button onClick={() => openEdit(t)} className="w-7 h-7 flex items-center justify-center bg-hover text-dim hover:brightness-90 transition-all rounded-xl" aria-label="تعديل"><X size={13} className="rotate-45" /></button>
-                    <button onClick={() => setConfirmId(t.id)} className="w-7 h-7 flex items-center justify-center bg-error-soft text-error hover:brightness-90 transition-all rounded-xl" aria-label="حذف"><Trash size={13} /></button>
+                    <button onClick={() => openEdit(t)} className="w-7 h-7 flex items-center justify-center bg-hover text-dim hover:bg-hover transition-all rounded-xl" aria-label="تعديل"><X size={13} className="rotate-45" /></button>
+                    <button onClick={() => setConfirmId(t.id)} className="w-7 h-7 flex items-center justify-center bg-error/10 text-error hover:bg-error/20 transition-all rounded-xl" aria-label="حذف"><Trash size={13} /></button>
                   </div>
                 </div>
                 <div className="px-4 py-3">
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
+                    <div className="flex items-center gap-1.5 text-xs text-muted">
                       <Phone size={11} className="text-primary shrink-0" />
                       <span className="truncate">{t.parentPhone}</span>
                     </div>
                     {t.subject && (
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs text-muted">
                         <BookOpen size={11} className="text-primary shrink-0" />
                         <span className="truncate">{t.subject}</span>
                       </div>
                     )}
                     {t.teacherName && (
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs text-muted">
                         <GraduationCap size={11} className="text-warning shrink-0" />
                         <span className="truncate">{t.teacherName}</span>
                       </div>
                     )}
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
+                    <div className="flex items-center gap-1.5 text-xs text-muted">
                       <Calendar size={11} className="text-success shrink-0" />
                       <span>{t.date}</span>
                     </div>
                     {t.time && (
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-muted">
+                      <div className="flex items-center gap-1.5 text-xs text-muted">
                         <Clock size={11} className="text-info shrink-0" />
                         <span>{t.time}</span>
                       </div>
                     )}
                   </div>
                   {t.notes && (
-                    <div className="mt-3 bg-warning-soft border border-warning px-3 py-1.5 rounded-xl">
-                      <span className="text-micro font-bold text-warning-dark tracking-widest me-1.5">ملاحظات</span>
-                      <span className="text-xs font-medium text-main">{t.notes}</span>
+                    <div className="mt-3 bg-warning-soft border border-warning/20 px-3 py-2 rounded-xl">
+                      <span className="text-xs font-bold text-warning me-1.5">ملاحظات</span>
+                      <span className="text-xs text-muted">{t.notes}</span>
                     </div>
                   )}
                 </div>
@@ -243,32 +246,32 @@ export const TrialSessions = () => {
         {/* Add/Edit Modal */}
         {showModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-xl w-full max-w-lg border border-border rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-              <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] px-5 py-4 flex items-center justify-between">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-soft w-full max-w-lg border border-border/50 rounded-card overflow-hidden max-h-[90vh] overflow-y-auto">
+              <div className="bg-primary px-5 py-4 flex items-center justify-between">
                 <h3 className="text-sm font-bold text-on-primary">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h3>
                 <button onClick={() => { setShowModal(false); setEditingId(null); resetForm(); }} className="w-7 h-7 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-xl transition-all" aria-label="إغلاق"><X size={16} /></button>
               </div>
               <form onSubmit={e => { e.preventDefault(); addMutation.mutate(form); }} className="p-5 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">المعلمة</label>
+                  <div><label className="text-xs text-muted mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => setForm({ ...form, studentName: e.target.value })} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
+                  <div><label className="text-xs text-muted mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => setForm({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
+                  <div><label className="text-xs text-muted mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
+                  <div><label className="text-xs text-muted mb-1 block">المعلمة</label>
                     <select value={form.teacherName} onChange={e => {
                       const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
                       setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
-                    }} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all appearance-none">
+                    }} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all appearance-none">
                       <option value="">اختر معلمة</option>
                       {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
                         <option key={t.id} value={t.name}>{t.name}</option>
                       ))}
                     </select>
                   </div>
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                  <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
+                  <div><label className="text-xs text-muted mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
+                  <div><label className="text-xs text-muted mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
                 </div>
-                <div><label className="text-micro font-bold text-muted uppercase tracking-widest mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold text-main placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-focus transition-all" /></div>
-                <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xs font-bold rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}</button>
+                <div><label className="text-xs text-muted mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
+                <button type="submit" disabled={addMutation.isPending} className="w-full py-3 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{addMutation.isPending ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}</button>
               </form>
             </motion.div>
           </motion.div>
@@ -277,10 +280,10 @@ export const TrialSessions = () => {
         {/* Confirm Delete */}
         {confirmId && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-xl w-full max-w-sm border border-border rounded-2xl overflow-hidden">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-soft w-full max-w-sm border border-border/50 rounded-card overflow-hidden">
               <div className="bg-error px-5 py-4 flex items-center gap-3">
-                <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
-                  <AlertTriangle size={20} className="text-on-error" />
+                <div className="w-9 h-9 rounded-card flex items-center justify-center bg-error-soft">
+                  <AlertTriangle size={20} className="text-error" />
                 </div>
                 <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
               </div>
@@ -288,8 +291,8 @@ export const TrialSessions = () => {
                 <p className="text-sm font-bold text-main">هل أنت متأكد من الحذف؟</p>
               </div>
               <div className="flex gap-2 px-5 pb-5">
-                <button onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-hover hover:brightness-90 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                <button onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error rounded-xl transition-all shadow-sm active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
+                <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
               </div>
             </motion.div>
           </motion.div>
