@@ -138,15 +138,15 @@ export const RefundPolicy = () => {
 
                     {/* Technical Issues */}
                     <div className="mb-4 md:mb-6">
-                        <div className="bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] p-6 md:p-8 border border-border/50 relative overflow-hidden">
-                            <AlertCircle className="absolute -bottom-6 -end-6 text-white/5 w-48 h-48" />
-                            <div className="flex items-center gap-3 mb-4 relative z-10 border-b border-border/50 pb-3">
+                        <div className="bg-primary-soft dark:bg-primary/20 p-6 md:p-8 border border-border/50 dark:border-primary/30 relative overflow-hidden">
+                            <AlertCircle className="absolute -bottom-6 -end-6 text-primary/10 dark:text-primary/20 w-48 h-48" />
+                            <div className="flex items-center gap-3 mb-4 relative z-10 border-b border-border/50 dark:border-primary/30 pb-3">
                                 <div className="w-8 h-8 bg-warning/20 flex items-center justify-center">
                                     <AlertCircle className="w-4 h-4 text-warning" />
                                 </div>
-                                <h2 className="text-lg md:text-xl font-black text-on-primary">المشاكل التقنية</h2>
+                                <h2 className="text-lg md:text-xl font-black text-main dark:text-on-primary">المشاكل التقنية</h2>
                             </div>
-                            <p className="text-on-primary/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
+                            <p className="text-muted dark:text-on-primary/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
                                 في حال عدم إمكانية تقديم الحصة بسبب مشاكل تقنية من طرف المعهد، يتم تعويض الطالب بحصة بديلة. أما إذا كان الخلل من طرف الطالب (انقطاع الإنترنت أو تعطل الجهاز)، فالمعهد غير مسؤول عن تعويض الحصة، ومع ذلك نحاول دائماً المساعدة في حال كان هناك وقت متاح.
                             </p>
                         </div>
@@ -160,7 +160,7 @@ export const RefundPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-primary border border-primary mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-primary dark:bg-background border border-primary dark:border-border mb-4 relative overflow-hidden group rounded-card shadow-xl shadow-primary/20">
                         <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 rounded-full -ms-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
