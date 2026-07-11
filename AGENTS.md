@@ -145,3 +145,8 @@ Every component MUST pass all checks before being marked complete:
 | Jul 6 | Button RTL: `ml-/mr-` → `gap-2`; QuickSearch RTL: `ml-4` → `ms-auto me-0` | Direction-agnostic spacing |
 | Jul 6 | Codemod: 1,353 `text-[*]` → semantic typography tokens (145 files) | Removed 16 arbitrary pixel size variants; only `text-[6px]` (2) and `text-[var(...)]` (3) remain |
 | Jul 6 | Image component: added `imgClassName` prop, exported from barrel, migrated 25/32 native `<img>` → `<Image>` | 7 `<img>` remain inside `<picture>` elements (webp/avif) or raw HTML strings
+| Jul 11 | AdminContacts Purity UI reskin — unified card rhythm, semantic tokens, accessibility | First Purity UI migration (commit `9a26f55`) |
+| Jul 11 | Leads Purity UI reskin + 4 sub-components (LeadsUI, AddLeadModal, LeadCards, LeadTable) | Unified card rhythm, semantic tokens, accessibility (commit `4e2b979` + QA `cbcdbf0`) |
+| Jul 11 | TrialSessions Purity UI reskin — unified card rhythm, semantic tokens, accessibility | Removed glass/gradients (commit `2d7442b` + QA `af22a65`) |
+| Jul 11 | Teachers Purity UI reskin — 7 files (TeachersPage, Stats, Toolbar, Table, Form, Details, Card) | Unified card rhythm, semantic tokens, accessibility (commit `2f37466` + QA `c254a08`) |
+| Jul 11 | Jobs Purity UI reskin — hero gradients/glass removed, semantic tokens, unified inputs, error modal, success view | Purity UI skeleton (commit `500dc00` + QA `30eb8bc`) |
