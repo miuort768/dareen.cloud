@@ -123,7 +123,7 @@ export const PublicFooter = () => {
 
                     <div className="text-center">
                         <div onClick={() => navigate('/a.abdullah')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-hover dark:from-primary-hover dark:to-primary-light border border-primary-active overflow-hidden group cursor-pointer">
-                            <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-on-primary/10 to-transparent animate-shine-slow z-0"></div>
+                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-on-primary/10 to-transparent animate-shine-slow z-0 pointer-events-none"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 bg-accent animate-pulse"></span>
                             <span className="relative z-10 text-micro font-bold text-white/80 tracking-wide font-heading">تصميم وتطوير</span>
