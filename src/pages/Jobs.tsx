@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, forwardRef, type ComponentType } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle, ChevronLeft, ChevronRight, Building2, BookMarked, AlertTriangle, X } from 'lucide-react';
+import { Briefcase, Send, GraduationCap, Calendar, Award, Globe, BookOpen, User, CheckCircle2, Sparkles, Phone, MessageCircle, ChevronLeft, ChevronRight, Building2, BookMarked, AlertTriangle, X, FileText } from 'lucide-react';
 import { api } from '../lib/api';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
@@ -230,7 +230,7 @@ export const Jobs = () => {
                         {/* Progress Steps */}
                         <div className="p-4 md:p-10 border-b border-border dark:border-border bg-background/50 dark:bg-primary-active/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm md:text-lg font-black text-main dark:text-on-primary">تقديم طلب التوظيف</h2>
+                                <h2 className="text-sm md:text-lg font-black text-main dark:text-on-primary flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" /><Send className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" />تقديم طلب التوظيف</h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card'}`} />
