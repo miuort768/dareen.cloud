@@ -55,6 +55,13 @@ export const Jobs = () => {
     const inputRefs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | null>>({});
     const totalSteps = steps.length;
 
+    useEffect(() => {
+        const html = document.documentElement;
+        const wasDark = html.classList.contains('dark');
+        if (wasDark) html.classList.remove('dark');
+        return () => { if (wasDark) html.classList.add('dark'); };
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if ((name === 'phone' || name === 'whatsapp' || name === 'graduationYear' || name === 'onlineYears') && value !== '' && !/^[\d+]+$/.test(value)) return;
