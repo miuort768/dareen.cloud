@@ -34,8 +34,8 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     className={cn(
                         "h-9 px-5 flex items-center gap-2 text-xs font-bold rounded-xl transition-all shadow-soft active:scale-95",
                         showAddForm 
-                        ? "bg-error text-on-primary hover:bg-error-hover" 
-                        : "bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/25"
+                        ? "bg-error text-on-error hover:bg-error-hover" 
+                        : "bg-primary text-on-primary"
                     )}
                 >
                     {showAddForm ? <X size={14} /> : <Plus size={14} />}

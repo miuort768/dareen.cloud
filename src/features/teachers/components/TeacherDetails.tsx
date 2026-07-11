@@ -183,7 +183,7 @@ export const TeacherDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded transition-all",
+                                                        "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded-card transition-all",
                                                         idx < actualUsed 
                                                             ? "bg-success border-success text-on-primary shadow-soft" 
                                                             : idx === actualUsed 
@@ -222,14 +222,14 @@ export const TeacherDetails = ({
                 <div className="pt-4">
                     <button
                         onClick={() => setShowActivityModal(true)}
-                        className="w-full py-4 bg-primary-soft border-2 border-primary rounded-card flex items-center justify-between px-6 hover:bg-primary hover:text-on-primary transition-all"
+                        className="w-full py-4 bg-primary-soft border-2 border-primary rounded-card flex items-center justify-between px-6 hover:border-primary-hover transition-all group"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-card bg-primary flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-card bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
                                 <Clock size={18} className="text-on-primary" />
                             </div>
                             <div className="text-start">
-                                <p className="text-sm text-main">سجل النشاطات المفصل</p>
+                                <p className="text-sm text-main group-hover:text-primary transition-all">سجل النشاطات المفصل</p>
                                 <p className="text-xs text-primary mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
@@ -271,7 +271,7 @@ export const TeacherDetails = ({
                                         
                                         <div className="flex justify-between items-start mb-3">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 bg-card border border-border/50 rounded-card flex items-center justify-center text-muted">
+                                                <div className="w-7 h-7 rounded-card flex items-center justify-center bg-primary-soft text-primary">
                                                     <Calendar size={12} />
                                                 </div>
                                                 <div className="min-w-0">

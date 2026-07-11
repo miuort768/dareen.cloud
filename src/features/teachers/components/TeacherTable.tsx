@@ -19,8 +19,8 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
     if (teachers.length === 0) {
         return (
             <div className="py-24 text-center opacity-40">
-                <GraduationCap size={48} className="mx-auto mb-4 text-dim" />
-                <p className="text-micro font-normal text-dim uppercase tracking-[4px]">لا توجد بيانات معلمات حالياً</p>
+                <GraduationCap size={48} className="mx-auto mb-4 text-muted" />
+                <p className="text-xs text-muted tracking-[4px]">لا توجد بيانات معلمات حالياً</p>
             </div>
         );
     }
@@ -64,7 +64,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-xs px-2 py-0.5 rounded-xl bg-primary-soft text-primary">
+                                            <span className="text-xs px-2 py-0.5 rounded-card bg-primary-soft text-primary">
                                                 {teacher.subject}
                                             </span>
                                         </td>
@@ -117,7 +117,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-bold font-heading text-main leading-tight mb-1">{teacher.name}</h4>
-                                        <span className="text-xs px-1.5 py-0.5 rounded-xl bg-primary-soft text-primary">{teacher.subject}</span>
+                                        <span className="text-xs px-1.5 py-0.5 rounded-card bg-primary-soft text-primary">{teacher.subject}</span>
                                     </div>
                                 </div>
                                 <div className="text-end">
@@ -138,7 +138,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                             </div>
 
                             <div className="flex items-center gap-2 pt-1">
-                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 rounded-xl bg-primary text-on-primary text-xs shadow-soft active:scale-95 transition-all hover:shadow-lg hover:shadow-primary/25">مراسلة</button>
+                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 rounded-xl bg-primary text-on-primary text-xs shadow-soft active:scale-95 transition-all hover:bg-primary-hover">مراسلة</button>
                                 <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-warning/10 text-warning hover:bg-warning hover:text-on-warning"><Bell size={14} /></button>
                                 <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:text-success rounded-card shadow-soft transition-all"><Edit size={14} /></button>
                                 <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-error/10 text-error hover:bg-error hover:text-on-error"><Trash2 size={14} /></button>

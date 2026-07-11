@@ -188,7 +188,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 <div className="flex items-center justify-end pt-4 border-t border-border/50">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold hover:shadow-lg hover:shadow-primary/25 rounded-card flex items-center gap-2 shadow-soft active:scale-95 transition-all"
+                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold hover:bg-primary-hover rounded-card flex items-center gap-2 shadow-soft active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
