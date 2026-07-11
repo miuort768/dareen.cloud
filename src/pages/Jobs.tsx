@@ -230,7 +230,7 @@ export const Jobs = () => {
                         {/* Progress Steps */}
                         <div className="p-4 md:p-10 border-b border-border dark:border-border bg-background/50 dark:bg-card/50">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-sm md:text-lg font-black text-main dark:text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-primary" /></h2>
+                                <h2 className="text-sm md:text-lg font-black text-main dark:text-main flex items-center gap-2"><FileText className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-on-primary" />تقديم طلب التوظيف<Send className="w-4 h-4 md:w-5 md:h-5 text-primary dark:text-on-primary" /></h2>
                                                 <div className="flex items-center gap-1.5 md:hidden">
                                                     {steps.map(s => (
                                                         <div key={s.id} className={`w-2 h-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'bg-card dark:bg-card'}`} />
@@ -240,7 +240,7 @@ export const Jobs = () => {
                                                     الخطوة {step} من {totalSteps}
                                                 </span>
                             </div>
-                            <p className="text-xs font-bold text-primary mb-0 md:hidden">{steps.find(s => s.id === step)?.title}</p>
+                            <p className="text-xs font-bold text-primary dark:text-on-primary mb-0 md:hidden">{steps.find(s => s.id === step)?.title}</p>
                             <div className="hidden md:grid grid-cols-4 gap-2 md:gap-4">
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
@@ -250,7 +250,7 @@ export const Jobs = () => {
                                             </div>
                                             {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-surface dark:bg-card'}`} />}
                                         </div>
-                                        <span className={`text-xs font-bold transition-colors text-center ${step === s.id ? 'text-primary' : 'text-muted'}`}>{s.title}</span>
+                                        <span className={`text-xs font-bold transition-colors text-center ${step === s.id ? 'text-primary dark:text-on-primary' : 'text-muted dark:text-dim'}`}>{s.title}</span>
                                     </div>
                                 ))}
                             </div>
@@ -271,7 +271,7 @@ export const Jobs = () => {
                                             <>
                                                 <div className="mb-4">
                                                     <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
-                                                        <User size={16} className="text-primary" />
+                                                        <User size={16} className="text-primary dark:text-on-primary" />
                                                         المعلومات الشخصية
                                                     </h3>
                                                     <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">البيانات الأساسية للتواصل معك</p>
@@ -286,7 +286,7 @@ export const Jobs = () => {
                                             <>
                                                 <div className="mb-4">
                                                     <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
-                                                        <GraduationCap size={16} className="text-primary" />
+                                                        <GraduationCap size={16} className="text-primary dark:text-on-primary" />
                                                         المؤهلات والوظيفة
                                                     </h3>
                                                     <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">مؤهلاتك العلمية والوظيفة المطلوبة</p>
@@ -301,7 +301,7 @@ export const Jobs = () => {
                                             <>
                                                 <div className="mb-4">
                                                     <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
-                                                        <BookMarked size={16} className="text-primary" />
+                                                        <BookMarked size={16} className="text-primary dark:text-on-primary" />
                                                         المادة التي تدرسها
                                                     </h3>
                                                     <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">اختياري المادة أو المواد التي تقومين بتدريسها</p>
@@ -339,7 +339,7 @@ export const Jobs = () => {
                                             <>
                                                 <div className="mb-4">
                                                     <h3 className="text-base md:text-lg font-black text-main dark:text-main flex items-center gap-2">
-                                                        <Award size={16} className="text-primary" />
+                                                        <Award size={16} className="text-primary dark:text-on-primary" />
                                                         الخبرات
                                                     </h3>
                                                     <p className="text-micro md:text-xs text-muted dark:text-muted font-medium mt-0.5">خبراتك السابقة والمناهج التي درستيها</p>
@@ -348,7 +348,7 @@ export const Jobs = () => {
                                                 <InputField ref={el => inputRefs.current['onlineYears'] = el} icon={Globe} label="سنوات الخبرة في التدريس أون لاين" name="onlineYears" value={form.onlineYears} onChange={handleChange} placeholder="عدد السنوات" />
                                                 <div className="space-y-2">
                                                     <label className="flex items-center gap-2 text-micro md:text-xs font-black text-muted dark:text-muted">
-                                                        <BookOpen size={12} className="text-primary shrink-0" />
+                                                        <BookOpen size={12} className="text-primary dark:text-on-primary shrink-0" />
                                                         المناهج التي قمت بتدريسها
                                                     </label>
                                                     <textarea
@@ -358,7 +358,7 @@ export const Jobs = () => {
                                                         onChange={handleChange}
                                                         onKeyDown={handleKeyDown}
                                                         style={{ touchAction: 'manipulation' }}
-                                                            className="w-full bg-background dark:bg-card/50 border border-border dark:border-border p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted resize-none"
+                                                            className="w-full bg-background dark:bg-card/50 border border-border dark:border-on-primary/20 p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base font-normal text-main dark:text-on-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-on-primary/50 resize-none"
                                                         placeholder="منهج كويتي - سعودي - قطري - عماني ..."
                                                     />
                                                 </div>
@@ -478,7 +478,7 @@ interface InputFieldProps {
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, label, name, value, onChange, placeholder, required, type = 'text', inputMode, autoComplete }, ref) => (
     <div className="space-y-1.5">
         <label className="flex items-center gap-2 text-micro md:text-xs font-black text-muted dark:text-muted">
-            <Icon size={12} className="text-primary shrink-0" />
+            <Icon size={12} className="text-primary dark:text-on-primary shrink-0" />
             {label}
             {required && <span className="text-error">*</span>}
             {!required && <span className="text-micro md:text-xs text-muted font-normal">(اختياري)</span>}
@@ -494,7 +494,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ icon: Icon, 
             inputMode={inputMode}
             autoComplete={autoComplete}
             style={{ touchAction: 'manipulation' }}
-            className="w-full bg-background dark:bg-card/50 border border-border dark:border-border py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-muted"
+            className="w-full bg-background dark:bg-card/50 border border-border dark:border-on-primary/20 py-3 md:py-4 px-4 md:px-5 text-sm md:text-base font-normal text-main dark:text-on-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted dark:placeholder:text-on-primary/50"
         />
     </div>
 ));
