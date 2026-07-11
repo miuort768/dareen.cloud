@@ -39,7 +39,7 @@ export const TermsOfWork = () => {
                 <div className="absolute bottom-0 end-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-primary-active/80 dark:md:bg-primary-active text-primary md:text-main dark:md:text-on-primary border border-primary/50 dark:border-primary/50 md:border-border dark:md:border-border rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-white/80 md:bg-white dark:bg-primary-active dark:md:bg-primary-active text-primary md:text-main dark:text-on-primary border border-primary/50 dark:border-primary/50 md:border-border dark:md:border-border rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
                         <Briefcase size={12} className="text-primary" />
                         <span className="text-xs md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
                     </div>
@@ -55,13 +55,13 @@ export const TermsOfWork = () => {
             </section>
 
             {/* Content Section */}
-            <section className="py-4 md:pb-8 bg-white">
+            <section className="py-4 md:pb-8 bg-white dark:bg-card">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary/20 rounded-none flex items-center justify-center shrink-0">
                                 <FileCheck className="w-6 h-6 text-primary" />
                             </div>
                             <div>
@@ -76,7 +76,7 @@ export const TermsOfWork = () => {
                     {/* Teacher Qualifications */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-success-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-success-light dark:bg-success/20 rounded-none flex items-center justify-center shrink-0">
                                 <Award className="w-6 h-6 text-success" />
                             </div>
                             <div>
@@ -97,7 +97,7 @@ export const TermsOfWork = () => {
                     {/* Code of Conduct */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary/20 rounded-none flex items-center justify-center shrink-0">
                                 <Shield className="w-6 h-6 text-primary" />
                             </div>
                             <div>
@@ -121,7 +121,7 @@ export const TermsOfWork = () => {
                     {/* Attendance & Punctuality */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-warning-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-warning-light dark:bg-warning/20 rounded-none flex items-center justify-center shrink-0">
                                 <Clock className="w-6 h-6 text-warning" />
                             </div>
                             <div>
@@ -143,7 +143,7 @@ export const TermsOfWork = () => {
                     {/* Payment Terms */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-info-light dark:bg-info/20 rounded-none flex items-center justify-center shrink-0">
                                 <Award className="w-6 h-6 text-info" />
                             </div>
                             <div>
@@ -174,7 +174,7 @@ export const TermsOfWork = () => {
                     {/* Termination */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-error-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-error-light dark:bg-error/20 rounded-none flex items-center justify-center shrink-0">
                                 <AlertCircle className="w-6 h-6 text-error" />
                             </div>
                             <div>
@@ -197,7 +197,7 @@ export const TermsOfWork = () => {
                     {/* Professional Development */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-info-light dark:bg-info/20 rounded-none flex items-center justify-center shrink-0">
                                 <UserCheck className="w-6 h-6 text-info" />
                             </div>
                             <div>
@@ -237,7 +237,7 @@ export const TermsOfWork = () => {
                     </p>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white border border-border mb-3 relative overflow-hidden group rounded-card mt-8">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white dark:to-[var(--bg-card)] border border-border mb-3 relative overflow-hidden group rounded-card mt-8">
                         <div className="absolute top-0 start-0 w-32 h-32 bg-primary/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
