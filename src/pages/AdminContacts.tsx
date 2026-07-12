@@ -79,8 +79,8 @@ export const AdminContacts = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-5xl mx-auto px-4 mb-6">
                 <div className="bg-card border border-border/50 shadow-soft rounded-card p-6 md:p-8">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div className="hidden md:flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                        <div className="flex items-center gap-4">
                             <div className="w-14 h-14 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
                                 <Mail size={26} className="text-primary" />
                             </div>
