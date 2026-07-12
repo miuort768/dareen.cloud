@@ -132,22 +132,22 @@ export const AdminContacts = () => {
                                     </div>
                                     <div className="flex items-center gap-2 flex-wrap">
                                         <a href={`tel:${msg.phone}`}
-                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
                                             aria-label={`اتصال بـ ${msg.phone}`}>
-                                            اتصال
+                                            <span className="hidden md:inline">اتصال</span>
                                             <Phone size={14} />
                                         </a>
                                         <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                             target="_blank" rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
                                             aria-label="مراسلة عبر واتساب">
-                                            واتساب
+                                            <span className="hidden md:inline">واتساب</span>
                                             <MessageCircle size={14} />
                                         </a>
                                         <button type="button" onClick={() => handleDelete(msg.id)}
-                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold"
                                             aria-label="حذف الرسالة">
-                                            حذف
+                                            <span className="hidden md:inline">حذف</span>
                                             <Trash2 size={14} />
                                         </button>
                                     </div>
