@@ -134,21 +134,21 @@ export const AdminContacts = () => {
                                         <a href={`tel:${msg.phone}`}
                                             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
                                             aria-label={`اتصال بـ ${msg.phone}`}>
-                                            <Phone size={14} />
                                             اتصال
+                                            <Phone size={14} />
                                         </a>
                                         <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                             target="_blank" rel="noopener noreferrer"
                                             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
                                             aria-label="مراسلة عبر واتساب">
-                                            <MessageCircle size={14} />
                                             واتساب
+                                            <MessageCircle size={14} />
                                         </a>
                                         <button type="button" onClick={() => handleDelete(msg.id)}
                                             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold"
                                             aria-label="حذف الرسالة">
-                                            <Trash2 size={14} />
                                             حذف
+                                            <Trash2 size={14} />
                                         </button>
                                     </div>
                                 </div>
