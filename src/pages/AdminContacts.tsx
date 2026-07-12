@@ -77,98 +77,103 @@ export const AdminContacts = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-5xl mx-auto px-4 mb-6">
-                <div className="bg-primary-soft border border-border/50 shadow-soft rounded-card p-6 md:p-8">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
-                                <Mail size={26} className="text-primary" />
+            <div className="max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
+                <div className="bg-primary-soft border border-border/50 shadow-soft rounded-card p-4 sm:p-5 md:p-6 lg:p-8">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 md:gap-5">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                <Mail size={20} className="sm:hidden text-primary" />
+                                <Mail size={24} className="hidden sm:inline md:hidden text-primary" />
+                                <Mail size={26} className="hidden md:inline text-primary" />
                             </div>
                             <div>
-                                <h1 className="text-card-title font-bold font-heading text-main">رسائل الاتصال</h1>
-                                <p className="text-sm text-muted mt-0.5">{messages.length} رسالة</p>
+                                <h1 className="text-base sm:text-lg md:text-xl lg:text-card-title font-bold font-heading text-main leading-tight">رسائل الاتصال</h1>
+                                <p className="text-xs sm:text-sm text-muted mt-0.5 md:mt-1">{messages.length} رسالة</p>
                             </div>
                         </div>
-                        <div className="relative w-full md:w-auto md:min-w-[320px]">
-                            <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
+                        <div className="relative w-full md:w-auto md:min-w-[280px] lg:min-w-[320px]">
+                            <Search className="absolute start-3 sm:start-4 top-1/2 -translate-y-1/2 text-muted" size={15} />
                             <input
                                 type="text"
                                 placeholder="ابحث بالاسم أو الهاتف أو الموضوع..."
                                 aria-label="ابحث في الرسائل"
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-card border border-border/60 rounded-xl py-4 ps-12 pe-4 text-sm text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-muted"
+                                className="w-full bg-card border border-border/60 rounded-xl py-3 sm:py-3.5 md:py-4 ps-9 sm:ps-10 pe-3 sm:pe-4 text-xs sm:text-sm text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-muted min-h-[44px]"
                             />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-5xl mx-auto px-4 space-y-4">
+            <div className="max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-card h-32 animate-pulse border border-border/50 shadow-soft rounded-card" />)}</div>
+                    <div className="space-y-3 sm:space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-card h-24 sm:h-28 md:h-32 animate-pulse border border-border/50 shadow-soft rounded-card" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-card border border-border/50 shadow-soft rounded-card p-16 text-center">
-                        <div className="w-16 h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-5">
-                            <Mail size={28} className="text-primary" />
+                    <div className="bg-card border border-border/50 shadow-soft rounded-card p-8 sm:p-10 md:p-12 lg:p-16 text-center">
+                        <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                            <Mail size={24} className="sm:hidden text-primary" />
+                            <Mail size={28} className="hidden sm:inline text-primary" />
                         </div>
-                        <p className="text-sm font-bold text-muted">لا توجد رسائل</p>
-                        <p className="text-xs text-dim mt-2">ستظهر هنا رسائل الزوار</p>
+                        <p className="text-xs sm:text-sm font-bold text-muted">لا توجد رسائل</p>
+                        <p className="text-[11px] sm:text-xs text-dim mt-1.5 sm:mt-2">ستظهر هنا رسائل الزوار</p>
                     </div>
                 ) : (
                     filtered.map(msg => (
                         <div key={msg.id} className="bg-card border border-border/50 shadow-soft overflow-hidden hover:-translate-y-0.5 transition-all rounded-card rounded-t-[0px]">
                             <div className="h-1 w-full bg-primary"></div>
-                            <div className="p-6 relative z-10">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-primary-soft flex items-center justify-center">
-                                            <User size={18} className="text-primary" />
+                            <div className="p-4 sm:p-5 md:p-6 lg:p-8 relative z-10">
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-0 mb-3 sm:mb-4">
+                                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                                        <div className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                            <User size={14} className="sm:hidden text-primary" />
+                                            <User size={16} className="hidden sm:inline md:hidden text-primary" />
+                                            <User size={18} className="hidden md:inline text-primary" />
                                         </div>
-                                        <div>
-                                            <h3 className="text-sm font-bold text-main">{msg.name || 'بدون اسم'}</h3>
-                                            <p className="text-xs text-muted mt-0.5">{msg.subject || 'بدون موضوع'}</p>
+                                        <div className="min-w-0">
+                                            <h3 className="text-xs sm:text-sm font-bold text-main truncate">{msg.name || 'بدون اسم'}</h3>
+                                            <p className="text-[11px] sm:text-xs text-muted mt-0.5 truncate">{msg.subject || 'بدون موضوع'}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2 flex-wrap">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
                                         <a href={`tel:${msg.phone}`}
-                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0"
                                             aria-label={`اتصال بـ ${msg.phone}`}>
                                             <span className="hidden md:inline">اتصال</span>
-                                            <Phone size={14} />
+                                            <Phone size={16} className="md:size-[14px]" />
                                         </a>
                                         <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                             target="_blank" rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0"
                                             aria-label="مراسلة عبر واتساب">
                                             <span className="hidden md:inline">واتساب</span>
-                                            <MessageCircle size={14} />
+                                            <MessageCircle size={16} className="md:size-[14px]" />
                                         </a>
                                         <button type="button" onClick={() => handleDelete(msg.id)}
-                                            className="inline-flex items-center gap-1.5 px-1.5 md:px-3 py-1.5 md:py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold"
+                                            className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0"
                                             aria-label="حذف الرسالة">
                                             <span className="hidden md:inline">حذف</span>
-                                            <Trash2 size={14} />
+                                            <Trash2 size={16} className="md:size-[14px]" />
                                         </button>
                                     </div>
                                 </div>
 
-                                <div className="bg-background/50 p-5 rounded-xl mb-3">
-                                    <p className="text-sm font-medium text-main leading-relaxed whitespace-pre-wrap">{msg.message || 'لا توجد رسالة'}</p>
+                                <div className="bg-background/50 p-3 sm:p-4 md:p-5 rounded-xl mb-3">
+                                    <p className="text-xs sm:text-sm font-medium text-main leading-relaxed whitespace-pre-wrap">{msg.message || 'لا توجد رسالة'}</p>
                                 </div>
 
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-success/10 text-success border border-success/20 text-xs">
-                                        {msg.phone}
-                                        <Phone size={12} />
+                                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                                    <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-success/10 text-success border border-success/20 text-[11px] sm:text-xs">
+                                        <span className="truncate max-w-[120px] sm:max-w-none">{msg.phone}</span>
+                                        <Phone size={11} className="sm:size-[12px]" />
                                     </span>
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs">
-                                        {msg.curriculum || '-'}
-                                        <BookOpen size={12} />
+                                    <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-[11px] sm:text-xs">
+                                        <span className="truncate max-w-[100px] sm:max-w-none">{msg.curriculum || '-'}</span>
+                                        <BookOpen size={11} className="sm:size-[12px]" />
                                     </span>
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-info/10 text-info border border-info/20 text-xs">
-                                        {formatDate(msg.createdAt)}
-                                        <Clock size={12} />
+                                    <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-info/10 text-info border border-info/20 text-[11px] sm:text-xs">
+                                        <span className="truncate max-w-[120px] sm:max-w-none">{formatDate(msg.createdAt)}</span>
+                                        <Clock size={11} className="sm:size-[12px]" />
                                     </span>
                                 </div>
                             </div>
