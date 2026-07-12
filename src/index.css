@@ -122,16 +122,21 @@ html, body {
 
   body {
     position: relative;
-    background-color: rgb(var(--bg-surface));
+    background: linear-gradient(135deg, #f0f4ff 0%, #fdf2f8 50%, #f0f9ff 100%);
     color: rgb(var(--text-main));
     width: 100vw;
     max-width: 100%;
     margin: 0;
     padding: 0;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: background 0.5s ease, color 0.5s ease;
     overflow-x: hidden !important;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .dark body {
+    background: radial-gradient(ellipse at 20% 50%, #1a1040 0%, #0f172a 50%, #020617 100%) !important;
+    background-attachment: fixed !important;
   }
 
   /* Custom Premium Scrollbar */
@@ -182,11 +187,7 @@ html, body {
   body, p { line-height: 1.65; }
   li, td { line-height: 1.5; }
 
-  /* --- Global Dark Mode Overrides for Premium Navigation --- */
-  .dark body {
-    background: radial-gradient(circle at top left, rgb(15, 23, 42) 0%, rgb(2, 6, 23) 100%);
-    background-attachment: fixed;
-  }
+  /* Dark mode gradient handled above */
 
   .dark .bg-white {
     background-color: rgb(var(--bg-card)) !important;
