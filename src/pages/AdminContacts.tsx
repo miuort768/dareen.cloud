@@ -154,18 +154,18 @@ export const AdminContacts = () => {
                                     <p className="text-sm font-medium text-main leading-relaxed whitespace-pre-wrap">{msg.message || 'لا توجد رسالة'}</p>
                                 </div>
 
-                                <div className="flex items-center gap-5 text-xs text-muted">
-                                    <span className="flex items-center gap-1.5">
-                                        <Phone size={12} />
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-success/10 text-success border border-success/20 text-xs">
                                         {msg.phone}
+                                        <Phone size={12} />
                                     </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <BookOpen size={12} />
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs">
                                         {msg.curriculum || '-'}
+                                        <BookOpen size={12} />
                                     </span>
-                                    <span className="flex items-center gap-1.5">
-                                        <Clock size={12} />
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-info/10 text-info border border-info/20 text-xs">
                                         {formatDate(msg.createdAt)}
+                                        <Clock size={12} />
                                     </span>
                                 </div>
                             </div>
