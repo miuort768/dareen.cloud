@@ -130,22 +130,25 @@ export const AdminContacts = () => {
                                             <p className="text-xs text-muted mt-0.5">{msg.subject || 'بدون موضوع'}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2 flex-wrap">
                                         <a href={`tel:${msg.phone}`}
-                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-success bg-success/10 hover:bg-success/20 transition-colors"
-                                            title="اتصال" aria-label={`اتصال بـ ${msg.phone}`}>
-                                            <Phone size={16} />
+                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            aria-label={`اتصال بـ ${msg.phone}`}>
+                                            <Phone size={14} />
+                                            اتصال
                                         </a>
                                         <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                             target="_blank" rel="noopener noreferrer"
-                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-success bg-success/10 hover:bg-success/20 transition-colors"
-                                            title="واتساب" aria-label="مراسلة عبر واتساب">
-                                            <MessageCircle size={16} />
+                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-success bg-success/10 hover:bg-success/20 transition-colors text-xs font-bold"
+                                            aria-label="مراسلة عبر واتساب">
+                                            <MessageCircle size={14} />
+                                            واتساب
                                         </a>
                                         <button type="button" onClick={() => handleDelete(msg.id)}
-                                            className="w-9 h-9 rounded-lg flex items-center justify-center text-error bg-error/10 hover:bg-error/20 transition-colors"
-                                            title="حذف" aria-label="حذف الرسالة">
-                                            <Trash2 size={16} />
+                                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-error bg-error/10 hover:bg-error/20 transition-colors text-xs font-bold"
+                                            aria-label="حذف الرسالة">
+                                            <Trash2 size={14} />
+                                            حذف
                                         </button>
                                     </div>
                                 </div>
