@@ -15,6 +15,15 @@
 | Sprint 4A | Full Project P1 → 0 (5004 Named colors via Codemod) | ✅ Done — P1=0 |
 | Sprint 4A | Full Project P3 → 0 (108 rgba — 8 CSS-var остаются) | ✅ Done — P3~0 |
 | Sprint 4A | P2 Audit: 656→63 (593 replaced with text-on-primary/inverse) | ✅ Done — all remaining justified |
+| **Sprint 5** | **Design System v1.1 — Production Ready** | **✅ Done (tag: `design-system-v1.1`)** |
+| Sprint 5.1 | DataTable Headless API + StudentTable migration | ✅ Done |
+| Sprint 5.2 | Form System (FormField compound + Input/Select/Textarea/Login) | ✅ Done |
+| Sprint 5.3 | Dark Mode Primary Family (WCAG AA contrast) | ✅ Done |
+| Sprint 5.4 | Skeleton System + Dashboard skeleton loader | ✅ Done |
+| Sprint 5.5 | Custom Checkbox/Radio/Switch (RTL + size variants) | ✅ Done |
+| Sprint 5.6 | Token split (per-domain CSS files under `src/styles/tokens/`) | ✅ Done |
+| Sprint 5.7 | Design System Playground (Skeleton section added) | ✅ Done |
+| Sprint 5.8 | ADRs (4 decisions documented under `docs/adr/`) | ✅ Done |
 
 ## 2. Design System Rules (Non-Negotiable)
 
