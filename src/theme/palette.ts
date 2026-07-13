@@ -14,6 +14,8 @@ export const palette = {
   primaryActive: indigo[800],
   primarySoft: indigo[50],
   primaryLight: indigo[100],
+  primary200: indigo[200],
+  primary400: indigo[400],
   primaryDark: indigo[900],
 
   // Accent (Gold — استخدام محدود)
@@ -74,6 +76,11 @@ export const palette = {
   // Hover backgrounds
   hover: slate[100],
   hoverDark: slate[700],
+  surfaceActive: slate[200],
+
+  // Aliases
+  textSecondary: slate[500],
+  borderHover: slate[300],
 } as const;
 
 export type PaletteToken = keyof typeof palette;
