@@ -65,3 +65,9 @@ export { Table }           from './Table';
 export type { Column, TableProps, SortDirection } from './Table';
 
 export { Container } from './Container';
+
+export { Dialog } from './Dialog';
+
+export { Avatar } from './Avatar';
+
+export { Dropdown } from './Dropdown';
