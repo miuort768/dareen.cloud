@@ -183,20 +183,20 @@ export const AdminContacts = () => {
                                                 <a href={`tel:${msg.phone}`}
                                                     className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label={`اتصال بـ ${msg.phone}`}>
-                                                    <span className="hidden md:inline">اتصال</span>
+                                                    <span className="inline">اتصال</span>
                                                     <Phone size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                                     target="_blank" rel="noopener noreferrer"
                                                     className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="مراسلة عبر واتساب">
-                                                    <span className="hidden md:inline">واتساب</span>
+                                                    <span className="inline">واتساب</span>
                                                     <MessageCircle size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <button type="button" onClick={() => handleDelete(msg.id)}
                                                     className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="حذف الرسالة">
-                                                    <span className="hidden md:inline">حذف</span>
+                                                    <span className="inline">حذف</span>
                                                     <Trash2 size={16} className="md:size-[14px]" />
                                                 </button>
                                             </div>
