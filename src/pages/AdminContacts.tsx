@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen, Inbox } from 'lucide-react';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
@@ -19,29 +19,28 @@ export const AdminContacts = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState('');
-    const mountedRef = useRef(true);
+    const [retry, setRetry] = useState(0);
 
     useEffect(() => {
-        mountedRef.current = true;
-        const fetch = async () => {
-            if (!mountedRef.current) return;
+        const abort = new AbortController();
+        (async () => {
             try {
                 setLoading(true);
                 setError(null);
                 const data = await api.get<ContactMsg[]>('/contact');
-                if (!mountedRef.current) return;
+                if (abort.signal.aborted) return;
                 setMessages(data);
             } catch (err) {
+                if (abort.signal.aborted) return;
                 const msg = err instanceof Error ? err.message : 'حدث خطأ في تحميل الرسائل';
                 setError(msg);
                 console.error(err);
             } finally {
-                if (mountedRef.current) setLoading(false);
+                if (!abort.signal.aborted) setLoading(false);
             }
-        };
-        fetch();
-        return () => { mountedRef.current = false; };
-    }, []);
+        })();
+        return () => abort.abort();
+    }, [retry]);
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف هذه الرسالة؟ لا يمكن التراجع عن هذا الإجراء.', {
