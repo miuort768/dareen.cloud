@@ -22,8 +22,15 @@
 | Sprint 5.4 | Skeleton System + Dashboard skeleton loader | ✅ Done |
 | Sprint 5.5 | Custom Checkbox/Radio/Switch (RTL + size variants) | ✅ Done |
 | Sprint 5.6 | Token split (per-domain CSS files under `src/styles/tokens/`) | ✅ Done |
-| Sprint 5.7 | Design System Playground (Skeleton section added) | ✅ Done |
+| Sprint 5.7 | Design System Playground (Skeleton + Dialog + Avatar + Dropdown sections) | ✅ Done |
 | Sprint 5.8 | ADRs (4 decisions documented under `docs/adr/`) | ✅ Done |
+| **v1.2** | **Design System Polish — Consistency & Components** | **✅ Done (tag: `design-system-v1.2`)** |
+| v1.2.1 | Container component + 15 pages migrated from `max-w-[1600px]` → `max-w-page` | ✅ Done |
+| v1.2.2 | `focus` → `focus-visible` (keyboard a11y) in Button, Tabs, Modal, Table | ✅ Done |
+| v1.2.3 | Motion tokens (`--duration-fast/normal/slow`) + `transition-all` cleanup | ✅ Done |
+| v1.2.4 | Elevation System (5 levels: elevation-0 through elevation-4) | ✅ Done |
+| v1.2.5 | Color tokens expansion (primary-200/400, text-secondary, border-hover, surface-active) | ✅ Done |
+| v1.2.6 | Dialog (Confirm/Cancel), Avatar (first-letter + status), Dropdown | ✅ Done |
 
 ## 2. Design System Rules (Non-Negotiable)
 

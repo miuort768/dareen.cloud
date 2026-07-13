@@ -18,6 +18,9 @@ import { AccessibilitySection } from './sections/AccessibilitySection';
 import { RegressionChecklist } from './sections/RegressionChecklist';
 import { DesignTokenSection } from './sections/DesignTokenSection';
 import { SkeletonSection } from './sections/SkeletonSection';
+import { DialogSection } from './sections/DialogSection';
+import { AvatarSection } from './sections/AvatarSection';
+import { DropdownSection } from './sections/DropdownSection';
 
 const SIDEBAR_ITEMS = [
   { id: 'colors', label: 'Colors', component: ColorSection },
@@ -37,6 +40,9 @@ const SIDEBAR_ITEMS = [
   { id: 'dark-mode', label: 'Dark Mode', component: DarkModeSection },
   { id: 'inspector', label: 'Token Inspector', component: TokenInspector },
   { id: 'accessibility', label: 'Accessibility', component: AccessibilitySection },
+  { id: 'dialog', label: 'Dialog', component: DialogSection },
+  { id: 'avatar', label: 'Avatar', component: AvatarSection },
+  { id: 'dropdown', label: 'Dropdown', component: DropdownSection },
   { id: 'skeleton', label: 'Skeleton', component: SkeletonSection },
   { id: 'checklist', label: 'Checklist', component: RegressionChecklist },
 ] as const;
