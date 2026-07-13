@@ -83,16 +83,6 @@ export const AdminContacts = () => {
         });
     };
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.06 } },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-    };
-
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             {/* Decorative background blobs */}
@@ -177,19 +167,16 @@ export const AdminContacts = () => {
                         <p className="text-xs sm:text-sm text-muted mt-1.5 sm:mt-2">ستظهر هنا رسائل الزوار</p>
                     </motion.div>
                 ) : (
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="space-y-3 sm:space-y-4"
-                    >
+                    <div className="space-y-3 sm:space-y-4">
                         <AnimatePresence>
-                            {filtered.map(msg => (
+                            {filtered.map((msg, index) => (
                                 <motion.div
                                     key={msg.id}
                                     layout
-                                    variants={itemVariants}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+                                    transition={{ duration: 0.3, delay: index * 0.05 }}
                                     className="group bg-white dark:bg-card border border-border/30 shadow-soft hover:shadow-md hover:border-primary/20 transition-all duration-300 overflow-hidden rounded-none"
                                 >
                                     <div className="h-1.5 w-full bg-gradient-to-l from-primary via-indigo-500 to-purple-500" />
