@@ -215,7 +215,7 @@ export const AdminContacts = () => {
                                                 <span className="truncate max-w-[100px] sm:max-w-none">{msg.curriculum || '-'}</span>
                                                 <BookOpen size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="hidden sm:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{formatDate(msg.createdAt)}</span>
                                                 <Clock size={11} className="sm:size-[12px]" />
                                             </span>
