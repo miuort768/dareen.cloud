@@ -13,6 +13,15 @@ export type { SelectProps } from './Select';
 
 export { FormField } from './FormField';
 
+export { Checkbox } from './Checkbox';
+export type { CheckboxProps } from './Checkbox';
+
+export { Radio } from './Checkbox';
+export type { RadioProps } from './Checkbox';
+
+export { Switch } from './Switch';
+export type { SwitchProps } from './Switch';
+
 export { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, SkeletonChart, SkeletonTable } from './Skeleton';
 
 export { Card }            from './Card';
