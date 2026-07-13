@@ -3,6 +3,7 @@ import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen, Inbo
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsLoading } from '../context/AppContext';
 
 interface ContactMsg {
     id: string;
@@ -20,8 +21,11 @@ export const AdminContacts = () => {
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState('');
     const [retry, setRetry] = useState(0);
+    const authLoading = useIsLoading();
 
     useEffect(() => {
+        if (authLoading) return;
+
         const abort = new AbortController();
         (async () => {
             try {
@@ -40,7 +44,7 @@ export const AdminContacts = () => {
             }
         })();
         return () => abort.abort();
-    }, [retry]);
+    }, [retry, authLoading]);
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف هذه الرسالة؟ لا يمكن التراجع عن هذا الإجراء.', {
