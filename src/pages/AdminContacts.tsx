@@ -133,21 +133,21 @@ export const AdminContacts = () => {
                 {loading ? (
                     <div className="space-y-3 sm:space-y-4">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white/70 dark:bg-card/70 backdrop-blur-sm h-24 sm:h-28 md:h-32 animate-pulse border border-border/30 shadow-soft rounded-none" />
+                            <div key={i} className="bg-white dark:bg-card h-24 sm:h-28 md:h-32 animate-pulse border border-border/30 shadow-soft rounded-none" />
                         ))}
                     </div>
                 ) : filtered.length === 0 ? (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-white/70 dark:bg-card/70 backdrop-blur-sm border border-border/30 shadow-soft rounded-none p-8 sm:p-10 md:p-12 lg:p-16 text-center"
+                        className="bg-white dark:bg-card border border-border/30 shadow-soft rounded-none p-8 sm:p-10 md:p-12 lg:p-16 text-center"
                     >
                         <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-none bg-gradient-to-br from-primary-soft to-primary/10 flex items-center justify-center mx-auto mb-4 sm:mb-5">
                             <Inbox size={24} className="sm:hidden text-primary" />
                             <Inbox size={28} className="hidden sm:inline text-primary" />
                         </div>
-                        <p className="text-base sm:text-lg font-bold text-main/80">لا توجد رسائل</p>
-                        <p className="text-xs sm:text-sm text-muted/70 mt-1.5 sm:mt-2">ستظهر هنا رسائل الزوار</p>
+                        <p className="text-base sm:text-lg font-bold text-main">لا توجد رسائل</p>
+                        <p className="text-xs sm:text-sm text-muted mt-1.5 sm:mt-2">ستظهر هنا رسائل الزوار</p>
                     </motion.div>
                 ) : (
                     <motion.div
@@ -163,38 +163,38 @@ export const AdminContacts = () => {
                                     layout
                                     variants={itemVariants}
                                     exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                                    className="group bg-white/70 dark:bg-card/70 backdrop-blur-sm border border-border/30 shadow-soft hover:shadow-md hover:border-primary/20 transition-all duration-300 overflow-hidden rounded-none"
+                                    className="group bg-white dark:bg-card border border-border/30 shadow-soft hover:shadow-md hover:border-primary/20 transition-all duration-300 overflow-hidden rounded-none"
                                 >
                                     <div className="h-1.5 w-full bg-gradient-to-l from-primary via-indigo-500 to-purple-500" />
                                     <div className="p-4 sm:p-5 md:p-6 lg:p-8 relative z-10">
                                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-0 mb-3 sm:mb-4">
                                             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                                                <div className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 rounded-none bg-gradient-to-br from-primary-soft to-primary/5 flex items-center justify-center shrink-0">
+                                                <div className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 rounded-none bg-gradient-to-br from-primary-soft to-primary/5 dark:from-primary-soft/20 dark:to-primary/10 flex items-center justify-center shrink-0">
                                                     <User size={14} className="sm:hidden text-primary" />
                                                     <User size={16} className="hidden sm:inline md:hidden text-primary" />
                                                     <User size={18} className="hidden md:inline text-primary" />
                                                 </div>
                                                 <div className="min-w-0">
                                                     <h3 className="text-xs sm:text-sm font-bold text-main truncate">{msg.name || 'بدون اسم'}</h3>
-                                                    <p className="text-[11px] sm:text-xs text-muted/80 mt-0.5 truncate">{msg.subject || 'بدون موضوع'}</p>
+                                                    <p className="text-[11px] sm:text-xs text-muted mt-0.5 truncate">{msg.subject || 'بدون موضوع'}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
                                                 <a href={`tel:${msg.phone}`}
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 bg-emerald-50/80 dark:bg-emerald-900/20 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm hover:shadow-md hover:shadow-emerald-200/30 active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label={`اتصال بـ ${msg.phone}`}>
                                                     <span className="hidden md:inline">اتصال</span>
                                                     <Phone size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                                     target="_blank" rel="noopener noreferrer"
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 bg-emerald-50/80 dark:bg-emerald-900/20 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm hover:shadow-md hover:shadow-emerald-200/30 active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="مراسلة عبر واتساب">
                                                     <span className="hidden md:inline">واتساب</span>
                                                     <MessageCircle size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <button type="button" onClick={() => handleDelete(msg.id)}
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-rose-600 bg-rose-50/80 dark:bg-rose-900/20 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm hover:shadow-md hover:shadow-rose-200/30 active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="حذف الرسالة">
                                                     <span className="hidden md:inline">حذف</span>
                                                     <Trash2 size={16} className="md:size-[14px]" />
@@ -202,20 +202,20 @@ export const AdminContacts = () => {
                                             </div>
                                         </div>
 
-                                        <div className="bg-white/40 dark:bg-black/20 backdrop-blur-sm p-3 sm:p-4 md:p-5 rounded-none mb-3 border border-border/20">
+                                        <div className="bg-background/40 dark:bg-black/30 p-3 sm:p-4 md:p-5 rounded-none mb-3 border border-border/20">
                                             <p className="text-xs sm:text-sm font-medium text-main leading-relaxed whitespace-pre-wrap">{msg.message || 'لا توجد رسالة'}</p>
                                         </div>
 
                                         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-emerald-50/80 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{msg.phone}</span>
                                                 <Phone size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-indigo-50/80 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[100px] sm:max-w-none">{msg.curriculum || '-'}</span>
                                                 <BookOpen size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-sky-50/80 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{formatDate(msg.createdAt)}</span>
                                                 <Clock size={11} className="sm:size-[12px]" />
                                             </span>
