@@ -12,7 +12,7 @@ const variants = {
   warning: 'bg-warning-soft text-warning-dark border-warning/50',
   error: 'bg-error-soft text-error-dark border-error/50',
   info: 'bg-info-soft text-info-dark border-info/50',
-  premium: 'bg-gradient-to-l from-amber-400 to-yellow-500 text-white border-amber-300/50 shadow-sm shadow-amber-200/30',
+  premium: 'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent shadow-sm',
   glow: 'bg-primary/10 text-primary border-primary/20 shadow-sm shadow-primary/10',
 };
 

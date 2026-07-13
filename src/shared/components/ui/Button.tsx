@@ -18,7 +18,7 @@ const variants = {
   ghost: 'text-muted hover:bg-hover/80 active:text-dim hover:text-main',
   destructive: 'bg-error text-on-error hover:bg-error-hover active:bg-error-active shadow-sm shadow-glow-error/20 hover:shadow-md',
   glass: 'bg-white/70 dark:bg-primary-active/60 backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-sm hover:shadow-md',
-  premium: 'bg-gradient-to-l from-indigo-600 via-violet-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 active:scale-[0.98] hover:from-indigo-500 hover:via-violet-500 hover:to-purple-500',
+  premium: 'bg-gradient-to-l from-primary via-primary-hover to-primary-active text-on-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] hover:from-primary-hover hover:via-primary-active hover:to-primary-active',
 };
 
 const sizes = {

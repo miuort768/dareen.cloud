@@ -260,8 +260,8 @@ export const About = () => {
                                         {/* Content Side */}
                                         <div className="w-full lg:w-[58%] text-center lg:text-start flex flex-col justify-center">
                                             <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 lg:mb-8 mx-auto lg:mx-0" style={{ background: 'rgba(245,158,11,0.12)', border: '1px solid rgba(245,158,11,0.25)' }}>
-                                                <Sparkles size={14} className="text-amber-400" />
-                                                <span className="text-xs font-black text-amber-400 tracking-wider">انضم إلى عائلتنا</span>
+                                                <Sparkles size={14} className="text-accent" />
+                                                <span className="text-xs font-black text-accent tracking-wider">انضم إلى عائلتنا</span>
                                             </div>
 
                                             <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-white">
@@ -303,10 +303,10 @@ export const About = () => {
                                                     
                                                     <div className="relative z-10">
                                                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'rgba(245,158,11,0.15)' }}>
-                                                            <Users size={22} className="text-amber-400" />
+                                                            <Users size={22} className="text-accent" />
                                                         </div>
                                                         <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">5k+</span>
-                                                        <span className="text-micro text-amber-400/70 font-black">طالب فعال</span>
+                                                        <span className="text-micro text-accent opacity-70 font-black">طالب فعال</span>
                                                     </div>
                                                 </div>
 
@@ -315,10 +315,10 @@ export const About = () => {
                                                     
                                                     <div className="relative z-10">
                                                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'rgba(139,92,246,0.15)' }}>
-                                                            <Target size={22} className="text-violet-400" />
+                                                            <Target size={22} className="text-primary" />
                                                         </div>
                                                         <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">97.3%</span>
-                                                        <span className="text-micro text-violet-400/70 font-black">نسبة نجاح</span>
+                                                        <span className="text-micro text-primary opacity-70 font-black">نسبة نجاح</span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -29,7 +29,7 @@ export const AAbdullah = () => {
         { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', color: '#052C63' },
     ];
 
-    const cardClass = 'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200/60 dark:border-border/60 space-y-4';
+    const cardClass = 'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4';
     const sectionDelay = (i: number) => ({ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: i * 0.1 } });
 
     return (

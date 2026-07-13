@@ -87,13 +87,13 @@ export const AdminContacts = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             {/* Decorative background blobs */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-                <div className="absolute -top-40 -end-40 w-80 h-80 bg-gradient-to-br from-primary/5 via-purple-200/10 to-transparent rounded-full blur-3xl" />
-                <div className="absolute -bottom-40 -start-40 w-96 h-96 bg-gradient-to-tr from-sky-200/10 via-primary/5 to-transparent rounded-full blur-3xl" />
+                <div className="absolute -top-40 -end-40 w-80 h-80 bg-gradient-to-br from-primary/5 via-primary-200/10 to-transparent rounded-full blur-3xl" />
+                <div className="absolute -bottom-40 -start-40 w-96 h-96 bg-gradient-to-tr from-primary-200/10 via-primary/5 to-transparent rounded-full blur-3xl" />
             </div>
 
             <div className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
                 {/* Premium Header Card */}
-                <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-indigo-600 to-purple-700 shadow-xl shadow-primary/25">
+                <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-600 to-primary-700 shadow-xl shadow-primary/25">
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
                     <div className="absolute top-0 end-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
                     <div className="absolute bottom-0 start-0 w-48 h-48 bg-white/5 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3" />
@@ -137,21 +137,21 @@ export const AdminContacts = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-white dark:bg-card border border-rose-200/50 dark:border-rose-800/30 shadow-soft rounded-none p-8 sm:p-10 md:p-12 lg:p-16 text-center"
+                        className="bg-white dark:bg-card border border-error/30 dark:border-error/30 shadow-soft rounded-none p-8 sm:p-10 md:p-12 lg:p-16 text-center"
                     >
-                        <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-none bg-gradient-to-br from-rose-100 to-rose-50 dark:from-rose-900/30 dark:to-rose-900/10 flex items-center justify-center mx-auto mb-4 sm:mb-5">
-                            <Trash2 size={24} className="sm:hidden text-rose-500" />
-                            <Trash2 size={28} className="hidden sm:inline text-rose-500" />
+                        <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-none bg-gradient-to-br from-error-light to-error-soft flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                            <Trash2 size={24} className="sm:hidden text-error" />
+                            <Trash2 size={28} className="hidden sm:inline text-error" />
                         </div>
-                        <p className="text-base sm:text-lg font-bold text-rose-600 dark:text-rose-400">حدث خطأ</p>
+                        <p className="text-base sm:text-lg font-bold text-error">حدث خطأ</p>
                         <p className="text-xs sm:text-sm text-muted mt-1.5 sm:mt-2">{error}</p>
-                        <button
-                            type="button"
-                            onClick={() => window.location.reload()}
-                            className="mt-4 sm:mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-none bg-primary text-white text-xs sm:text-sm font-bold hover:bg-primary-hover transition-colors min-h-[44px]"
-                        >
-                            إعادة تحميل
-                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => window.location.reload()}
+                                            className="mt-4 sm:mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-none bg-primary text-on-primary text-xs sm:text-sm font-bold hover:bg-primary-hover transition-colors min-h-[44px]"
+                                        >
+                                            إعادة تحميل
+                                        </button>
                     </motion.div>
                 ) : filtered.length === 0 ? (
                     <motion.div
@@ -179,7 +179,7 @@ export const AdminContacts = () => {
                                     transition={{ duration: 0.3, delay: index * 0.05 }}
                                     className="group bg-white dark:bg-card border border-border/30 shadow-soft hover:shadow-md hover:border-primary/20 transition-all duration-300 overflow-hidden rounded-none"
                                 >
-                                    <div className="h-1.5 w-full bg-gradient-to-l from-primary via-indigo-500 to-purple-500" />
+                                    <div className="h-1.5 w-full bg-gradient-to-l from-primary via-primary-500 to-primary-500" />
                                     <div className="p-4 sm:p-5 md:p-6 lg:p-8 relative z-10">
                                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-0 mb-3 sm:mb-4">
                                             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -195,20 +195,20 @@ export const AdminContacts = () => {
                                             </div>
                                             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
                                                 <a href={`tel:${msg.phone}`}
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-success bg-success-soft dark:bg-success-dark/20 hover:bg-success-light dark:hover:bg-success-dark/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label={`اتصال بـ ${msg.phone}`}>
                                                     <span className="inline">اتصال</span>
                                                     <Phone size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <a href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
                                                     target="_blank" rel="noopener noreferrer"
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-success bg-success-soft dark:bg-success-dark/20 hover:bg-success-light dark:hover:bg-success-dark/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="مراسلة عبر واتساب">
                                                     <span className="inline">واتساب</span>
                                                     <MessageCircle size={16} className="md:size-[14px]" />
                                                 </a>
                                                 <button type="button" onClick={() => handleDelete(msg.id)}
-                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-800/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
+                                                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-1.5 md:px-3 py-2 sm:py-1.5 md:py-2 rounded-none text-error bg-error-soft dark:bg-error-dark/20 hover:bg-error-light dark:hover:bg-error-dark/40 transition-all duration-200 text-xs font-bold min-w-[44px] min-h-[44px] md:min-h-0 shadow-sm active:scale-95"
                                                     aria-label="حذف الرسالة">
                                                     <span className="inline">حذف</span>
                                                     <Trash2 size={16} className="md:size-[14px]" />
@@ -221,15 +221,15 @@ export const AdminContacts = () => {
                                         </div>
 
                                         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-success-soft dark:bg-success-dark/20 text-success dark:text-success-dark border border-success/20 dark:border-success-dark/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{msg.phone}</span>
                                                 <Phone size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-primary-soft dark:bg-primary-dark/20 text-primary dark:text-primary-dark border border-primary/20 dark:border-primary-dark/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[100px] sm:max-w-none">{msg.curriculum || '-'}</span>
                                                 <BookOpen size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="hidden sm:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-200/50 dark:border-sky-800/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="hidden sm:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-info-soft dark:bg-info-dark/20 text-info dark:text-info-dark border border-info/20 dark:border-info-dark/30 text-[11px] sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{formatDate(msg.createdAt)}</span>
                                                 <Clock size={11} className="sm:size-[12px]" />
                                             </span>

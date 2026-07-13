@@ -11,7 +11,7 @@ const variants = {
   error: 'bg-error-soft border-error/50 text-error-dark shadow-sm shadow-error/5',
   info: 'bg-info-soft border-info/50 text-info-dark shadow-sm shadow-info/5',
   neutral: 'bg-surface border-border/50 text-muted',
-  premium: 'bg-gradient-to-br from-primary-soft to-indigo-50 dark:from-primary-soft/20 dark:to-indigo-950/20 border-primary/20 text-primary-dark shadow-sm shadow-primary/10',
+  premium: 'bg-gradient-to-br from-primary-soft to-primary-soft dark:from-primary-soft/20 dark:to-primary-dark/20 border-primary/20 text-primary-dark shadow-sm shadow-primary/10',
 };
 
 export const Alert: React.FC<AlertProps> = ({ className, variant = 'info', children, ...props }) => {
