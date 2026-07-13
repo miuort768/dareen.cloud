@@ -213,29 +213,28 @@ export const Login = () => {
                                     required
                                 />
 
-                                <div className="relative">
-                                    <Input
-                                        label="كلمة المرور"
-                                        type={showPassword ? 'text' : 'password'}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        onFocus={() => setIsPasswordFocused(true)}
-                                        onBlur={() => setIsPasswordFocused(false)}
-                                        placeholder="أدخل كلمة المرور..."
-                                        leftIcon={<Lock size={20} className="text-dim" />}
-                                        required
-                                        className="pe-10"
-                                        style={{ fontFamily: showPassword ? 'inherit' : 'caption' } as React.CSSProperties}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute end-3 top-[38px] text-dim hover:text-main transition-colors"
-                                        tabIndex={-1}
-                                    >
-                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                                    </button>
-                                </div>
+                                <Input
+                                    label="كلمة المرور"
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    onFocus={() => setIsPasswordFocused(true)}
+                                    onBlur={() => setIsPasswordFocused(false)}
+                                    placeholder="أدخل كلمة المرور..."
+                                    leftIcon={<Lock size={20} className="text-dim" />}
+                                    rightIcon={
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="text-dim hover:text-main transition-colors"
+                                            tabIndex={-1}
+                                        >
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
+                                    }
+                                    required
+                                    style={{ fontFamily: showPassword ? 'inherit' : 'caption' } as React.CSSProperties}
+                                />
 
                                 <Button
                                     type="submit"
