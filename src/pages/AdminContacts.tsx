@@ -238,7 +238,7 @@ export const AdminContacts = () => {
                                 </motion.div>
                             ))}
                         </AnimatePresence>
-                    </motion.div>
+                    </div>
                 )}
             </div>
         </div>
