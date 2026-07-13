@@ -41,3 +41,6 @@ export { PageHeader }        from './PageHeader';
 export type { PageHeaderProps } from './PageHeader';
 
 export { Image }               from './Image';
+
+export { Table }           from './Table';
+export type { Column, TableProps, SortDirection } from './Table';
