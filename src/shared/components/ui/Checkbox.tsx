@@ -31,7 +31,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                     />
                     <div className={cn(
                         s.box,
-                        'rounded-md border-2 flex items-center justify-center transition-all duration-150',
+                        'rounded-md border-2 flex items-center justify-center transition-colors duration-fast',
                         'bg-card border-border group-hover:border-primary/50',
                         'peer-checked:bg-primary peer-checked:border-primary peer-checked:text-on-primary',
                         'peer-focus-visible:ring-2 peer-focus-visible:ring-focus peer-focus-visible:ring-offset-1 peer-focus-visible:ring-offset-card',
@@ -89,7 +89,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
                     />
                     <div className={cn(
                         s.outer,
-                        'rounded-full border-2 flex items-center justify-center transition-all duration-150',
+                        'rounded-full border-2 flex items-center justify-center transition-colors duration-fast',
                         'bg-card border-border group-hover:border-primary/50',
                         'peer-checked:border-primary',
                         'peer-focus-visible:ring-2 peer-focus-visible:ring-focus peer-focus-visible:ring-offset-1 peer-focus-visible:ring-offset-card',
@@ -97,7 +97,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
                     )}>
                         <div className={cn(
                             s.inner,
-                            'rounded-full bg-primary transition-all duration-150 scale-0 peer-checked:scale-100'
+                            'rounded-full bg-primary transition-colors duration-fast scale-0 peer-checked:scale-100'
                         )} />
                     </div>
                 </div>

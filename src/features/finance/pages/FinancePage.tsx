@@ -26,7 +26,7 @@ export const Finance = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+            <div className="relative z-10 max-w-page mx-auto px-2">
 
                 {/* ── Header ── */}
                 <div className="bg-primary shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl mt-4">

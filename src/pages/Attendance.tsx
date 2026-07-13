@@ -241,7 +241,7 @@ export const Attendance = () => {
 
     return (
         <div className="min-h-full pb-24 relative font-sans" dir="rtl">
-            <div className="hidden md:block max-w-[1600px] mx-auto px-2 space-y-4">
+            <div className="hidden md:block max-w-page mx-auto px-2 space-y-4">
             
             <AttendanceHeader
                 date={date}

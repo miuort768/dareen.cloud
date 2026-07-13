@@ -44,7 +44,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         whileTap={{ scale: 0.97 }}
         onClick={handleClick}
         className={cn(
-          'inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2',
+          'inline-flex items-center justify-center gap-2 font-bold transition-all duration-normal rounded-xl focus:outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
           'active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none select-none',
           variants[variant], sizes[size], className
         )}

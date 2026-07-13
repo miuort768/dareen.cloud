@@ -209,7 +209,7 @@ export const ParentDashboard = () => {
             <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-background via-card to-warning-soft dark:from-bg-surface dark:via-bg-surface dark:to-warning-soft/20 font-sans" dir="rtl">
                 <div className="absolute top-0 start-1/4 w-96 h-96 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 max-w-[1600px] mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
+                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 
                 <div className="relative bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
                     <div className="flex items-center gap-4">

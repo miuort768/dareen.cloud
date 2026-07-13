@@ -147,6 +147,9 @@ module.exports = {
       borderRadius: {
         card: 'var(--radius-card)',
       },
+      maxWidth: {
+        page: 'var(--container-width)',
+      },
       boxShadow: {
         sm: 'var(--shadow-sm)',
         DEFAULT: 'var(--shadow)',
@@ -171,6 +174,11 @@ module.exports = {
       },
       animation: {
         'shine-slow': 'shine 3s ease-in-out infinite',
+      },
+      transitionDuration: {
+        fast: 'var(--duration-fast)',
+        normal: 'var(--duration-normal)',
+        slow: 'var(--duration-slow)',
       }
     },
   },

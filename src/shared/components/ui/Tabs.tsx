@@ -20,8 +20,8 @@ const variantStyles = {
   underline: {
     container: 'flex gap-0 border-b border-border',
     tab: (isActive: boolean) => cn(
-      'px-4 py-2.5 text-sm font-semibold border-b-2 transition-all duration-200 -mb-px',
-      'focus:outline-none focus:ring-2 focus:ring-focus focus:ring-inset',
+      'px-4 py-2.5 text-sm font-semibold border-b-2 transition-colors duration-normal -mb-px',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-inset',
       isActive
         ? 'text-primary border-primary'
         : 'text-muted border-transparent hover:text-main hover:border-strong'
@@ -30,8 +30,8 @@ const variantStyles = {
   pills: {
     container: 'flex gap-1.5 p-1',
     tab: (isActive: boolean) => cn(
-      'px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200',
-      'focus:outline-none focus:ring-2 focus:ring-focus',
+      'px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-normal',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus',
       isActive
         ? 'bg-primary text-on-primary shadow-sm'
         : 'text-muted hover:text-main hover:bg-hover'
@@ -40,8 +40,8 @@ const variantStyles = {
   buttons: {
     container: 'flex gap-2',
     tab: (isActive: boolean) => cn(
-      'px-4 py-2 text-sm font-semibold rounded-card border transition-all duration-200',
-      'focus:outline-none focus:ring-2 focus:ring-focus',
+      'px-4 py-2 text-sm font-semibold rounded-card border transition-colors duration-normal',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus',
       isActive
         ? 'bg-card text-main border-primary shadow-sm'
         : 'bg-surface text-muted border-border hover:text-main hover:border-strong'

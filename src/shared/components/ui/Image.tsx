@@ -48,7 +48,7 @@ export const Image = ({
           'w-full h-full object-cover',
           imgClassName,
           withSkeleton && !loaded && 'opacity-0',
-          loaded && 'opacity-100 transition-opacity duration-300',
+          loaded && 'opacity-100 transition-opacity duration-slow',
           error && 'opacity-80'
         )}
       />

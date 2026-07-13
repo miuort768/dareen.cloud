@@ -124,7 +124,7 @@ export const Agenda = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
-    <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+    <div className="relative z-10 max-w-page mx-auto px-2">
             <PageHeader
                 title="����� ����� �������"
                 subtitle="������ ������ ����� �������� �����"

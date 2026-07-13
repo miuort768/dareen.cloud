@@ -128,7 +128,7 @@ export const Tasks = () => {
 
     return (
         <div className="min-h-full pb-6 relative bg-gradient-to-br from-primary-soft via-primary-soft to-warning-soft dark:from-bg-background dark:via-bg-background dark:to-bg-background" dir="rtl">
-            <div className="relative z-10 max-w-[1600px] mx-auto px-3 space-y-4">
+            <div className="relative z-10 max-w-page mx-auto px-3 space-y-4">
 
                 {/* Hero */}
                 <div className="relative bg-gradient-to-br from-primary-soft via-primary-soft to-card dark:from-bg-background dark:via-bg-background dark:to-bg-background rounded-2xl overflow-hidden mb-2 shadow-sm border border-primary-soft dark:border-border">

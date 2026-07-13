@@ -103,7 +103,7 @@ export const Modal: React.FC<ModalProps> = ({
               )}
               <button
                 onClick={handleClose}
-                className="text-muted hover:text-main transition-colors p-1.5 rounded-card hover:bg-hover ms-auto focus:outline-none focus:ring-2 focus:ring-focus"
+                className="text-muted hover:text-main transition-colors p-1.5 rounded-card hover:bg-hover ms-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="إغلاق"
               >
                 <X size={18} />

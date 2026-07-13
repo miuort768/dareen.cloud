@@ -318,7 +318,7 @@ export const TeacherInvoices = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-2 space-y-4">
+            <div className="max-w-page mx-auto px-2 space-y-4">
 
             <div className="bg-primary rounded-2xl px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">

@@ -115,7 +115,7 @@ export const Evaluations = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-primary-light dark:bg-background" dir="rtl">
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+            <div className="relative z-10 max-w-page mx-auto px-2">
                 <EvaluationsHeader
                     totalXP={totalXP}
                     showAddButton={currentUser?.role !== 'parent'}

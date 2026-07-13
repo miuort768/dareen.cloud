@@ -25,7 +25,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <motion.div
         ref={ref}
         {...motionProps}
-        className={cn('p-6 rounded-2xl transition-all duration-300 border overflow-hidden relative', variants[variant], className)}
+        className={cn('p-6 rounded-2xl transition-all duration-slow border overflow-hidden relative', variants[variant], className)}
         {...props}
       >
         {children}

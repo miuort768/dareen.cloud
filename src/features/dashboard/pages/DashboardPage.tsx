@@ -56,7 +56,7 @@ export const Dashboard = () => {
     if (loading) {
         return (
             <div className="min-h-full bg-background pb-24" dir="rtl">
-                <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
+                <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
                     <div className="flex items-center justify-between py-6">
                         <Skeleton className="h-8 w-48" />
                         <Skeleton className="h-8 w-32 rounded-full" />
@@ -91,7 +91,7 @@ export const Dashboard = () => {
             "dark:bg-background"
         )} dir="rtl">
 
-            <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
+            <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
                 <Section><DashboardHeader isTeacher={false} currentUser={currentUser} /></Section>
 
                 {currentUser.permissions?.includes('*') && (

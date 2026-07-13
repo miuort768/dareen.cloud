@@ -63,3 +63,5 @@ export { Image }               from './Image';
 
 export { Table }           from './Table';
 export type { Column, TableProps, SortDirection } from './Table';
+
+export { Container } from './Container';

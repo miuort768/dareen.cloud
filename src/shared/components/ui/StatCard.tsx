@@ -81,7 +81,7 @@ export const StatCard = ({
 
   return (
     <div className={cn(
-      'relative p-4 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5',
+      'relative p-4 rounded-2xl shadow-sm transition-colors duration-slow hover:shadow-md hover:-translate-y-0.5',
       s.card,
       className
     )}>

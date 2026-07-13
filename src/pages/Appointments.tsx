@@ -208,7 +208,7 @@ export const Appointments = () => {
 
     return (
         <div className="min-h-full pb-24 relative" dir="rtl">
-    <div className="hidden md:block max-w-[1600px] mx-auto px-2">
+    <div className="hidden md:block max-w-page mx-auto px-2">
 
             {/* Header */}
             <div className="bg-card rounded-2xl shadow-sm border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">

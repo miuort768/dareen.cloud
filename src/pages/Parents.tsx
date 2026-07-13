@@ -38,7 +38,7 @@ export const Parents = () => {
             className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-background dark:bg-background"
             dir="rtl"
         >
-            <div className="relative z-10 max-w-[1600px] mx-auto px-2">
+            <div className="relative z-10 max-w-page mx-auto px-2">
 
                 <ParentsHeader
                     totalParents={state.totalParents}

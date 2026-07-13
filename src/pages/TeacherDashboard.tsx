@@ -63,7 +63,7 @@ export const TeacherDashboard = () => {
             <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-surface via-card to-success-soft font-sans" dir="rtl">
                 <div className="absolute top-0 start-1/4 w-96 h-96 bg-success opacity-10 dark:opacity-5 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-primary-light opacity-40 dark:opacity-20 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 max-w-[1600px] mx-auto px-4 space-y-6">
+                <div className="relative z-10 max-w-page mx-auto px-4 space-y-6">
                     <DashboardHeader isTeacher={true} currentUser={currentUser} />
 
                     {nextSession && (
