@@ -23,37 +23,7 @@ const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
 const cache = require('./services/cacheService');
 
-const { authRouter } = require('./routes/auth');
-const { studentRouter } = require('./routes/students');
-const { teacherRouter } = require('./routes/teachers');
-const { parentRouter } = require('./routes/parents');
-const { evaluationsRouter } = require('./routes/evaluations');
-const { studentPortalRouter } = require('./routes/studentPortal');
-const { sessionRouter } = require('./routes/sessions');
-const { invoiceRouter } = require('./routes/invoices');
-const { notificationRouter } = require('./routes/notifications');
-const { systemRouter } = require('./routes/system');
-const financeRouter = require('./routes/finance');
-const tasksRouter = require('./routes/tasks');
-const activeSessionsRouter = require('./routes/active_sessions');
-const chatRouter = require('./routes/chat');
-const publicChatRouter = require('./routes/publicChat');
-const { announcementsRouter } = require('./routes/announcements');
-const forumRouter = require('./routes/forum');
-const appointmentsRouter = require('./routes/appointments');
-const { pushRouter, sendPushToUser } = require('./routes/push');
-const leadsRouter = require('./routes/leads');
-const blogRouter = require('./routes/blog');
-const uploadRouter = require('./routes/upload');
-const liveRouter = require('./routes/live');
-const trialSessionsRouter = require('./routes/trial_sessions');
-const teacherAvailabilityRouter = require('./routes/teacher_availability');
-const { searchRouter } = require('./routes/search');
-const { exportRouter } = require('./routes/export');
-const auditRouter = require('./routes/audit');
 const { healthRouter } = require('./routes/health');
-const { monitoringRouter } = require('./routes/monitoring');
-const enrollmentRouter = require('./routes/enrollment');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -143,119 +113,11 @@ const limiter = createRateLimiter({
     message: 'Too many requests, please try again later.',
     skipFailedRequests: false,
 });
-const strictLimiter = createRateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 20,
-    message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
-});
-const moderateLimiter = createRateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
-});
 app.use('/api/', (req, res, next) => {
     if (req.path === '/health' || req.path === '/') return next();
     limiter(req, res, next);
 });
-const apiRouter = express.Router();
-const { authMiddleware, checkRole, requirePermission } = require('./middleware/auth');
-const { isAdmin } = require('./middleware/permissions');
-
-apiRouter.use('/auth/login', strictLimiter);
-apiRouter.use('/auth/register', strictLimiter);
-apiRouter.use('/auth/forgot-password', strictLimiter);
-apiRouter.use('/auth/reset-password', strictLimiter);
-apiRouter.use('/auth/verify', moderateLimiter);
-apiRouter.use('/public-chat', moderateLimiter);
-
-apiRouter.use('/auth', authRouter);
-apiRouter.use('/blog', blogRouter);
-apiRouter.use('/upload', uploadRouter);
-apiRouter.get('/docs', (req, res) => {
-    res.json(require('./utils/apiDocs'));
-});
-
-apiRouter.get('/system/public-settings', async (req, res) => {
-    try {
-        const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
-            'notifications_enabled', 'auto_backup', 'chatbot_enabled',
-            'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-            'reminder_minutes_before', 'library_whatsapp', 'library_telegram',
-            'whatsapp_numbers'];
-        const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
-            const settings = await prisma.systemSetting.findMany({
-                where: { key: { in: keys } }
-            });
-            const map = {};
-            settings.forEach(s => map[s.key] = s.value);
-            return map;
-        });
-        res.json(settingsMap);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-apiRouter.use('/public-chat', publicChatRouter);
-
-const jobsRouter = require('./routes/jobs');
-apiRouter.use('/jobs', jobsRouter);
-
-const contactRouter = require('./routes/contact');
-apiRouter.use('/contact', contactRouter);
-
-apiRouter.use(authMiddleware);
-apiRouter.use(sanitizeInput);
-apiRouter.use(activityAuditor);
-
-apiRouter.use('/live', liveRouter);
-apiRouter.use('/students', studentRouter);
-apiRouter.use('/teachers', teacherRouter);
-apiRouter.use('/parents', parentRouter);
-apiRouter.use('/evaluations', evaluationsRouter);
-apiRouter.use('/student-portal', studentPortalRouter);
-apiRouter.use('/sessions', sessionRouter);
-apiRouter.use('/notifications', notificationRouter);
-apiRouter.use('/system', isAdmin, systemRouter);
-apiRouter.use('/finance', isAdmin, financeRouter);
-apiRouter.use('/currencies', isAdmin, require('./routes/currencies').currenciesRouter);
-apiRouter.use('/tasks', tasksRouter);
-apiRouter.use('/active-sessions', activeSessionsRouter);
-apiRouter.use('/chat', chatRouter);
-apiRouter.use('/announcements', announcementsRouter);
-apiRouter.use('/forum', forumRouter);
-apiRouter.use('/appointments', appointmentsRouter);
-apiRouter.use('/push', pushRouter);
-apiRouter.use('/leads', leadsRouter);
-apiRouter.use('/trial-sessions', trialSessionsRouter);
-apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
-apiRouter.use('/search', searchRouter);
-apiRouter.use('/export', isAdmin, exportRouter);
-apiRouter.use('/roles', isAdmin, require('./routes/roles'));
-apiRouter.use('/audit', isAdmin, auditRouter);
-apiRouter.use('/monitoring', isAdmin, monitoringRouter);
-apiRouter.use('/enrollments', enrollmentRouter);
-apiRouter.use('/v1/executive', require('./routes/executive'));
-
-apiRouter.use('/studentInvoices', isAdmin, (req, res, next) => {
-    req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;
-    invoiceRouter(req, res, next);
-});
-
-apiRouter.use('/invoices', isAdmin, (req, res, next) => {
-    if (req.url === '' || req.url === '/') req.url = '/teacher';
-    else if (!req.url.startsWith('/teacher') && !req.url.startsWith('/student')) req.url = '/teacher' + req.url;
-    invoiceRouter(req, res, next);
-});
-
-apiRouter.use('/users', isAdmin, (req, res, next) => {
-    req.url = '/users' + req.url;
-    systemRouter(req, res, next);
-});
-
-apiRouter.use((req, res) => {
-    res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
-});
+const apiRouter = require('./routes');
 
 // Health & flags — no auth (liveness/readiness)
 app.use('/health', healthRouter);
