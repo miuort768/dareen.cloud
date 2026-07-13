@@ -1,0 +1,171 @@
+:root {
+  --bg-surface: #f8fafc;
+  --bg-background: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  --bg-primary: #6366f1;
+  --bg-primary-hover: #4f46e5;
+  --bg-primary-active: #4338ca;
+  --bg-primary-soft: #eef2ff;
+  --bg-primary-light: #e0e7ff;
+  --text-primary: #6366f1;
+  --text-on-primary: #ffffff;
+  --border-primary: #6366f1;
+  --ring-primary: #6366f1;
+
+  --text-accent: #D4AF37;
+  --bg-accent: #D4AF37;
+  --bg-accent-hover: #b8960e;
+  --bg-accent-soft: #fdf8e8;
+  --bg-accent-light: #faf1d1;
+  --border-accent: #D4AF37;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --text-inverse: #ffffff;
+
+  --chart-1: #6366f1;
+  --chart-2: #10b981;
+  --chart-3: #f43f5e;
+  --chart-4: #8b5cf6;
+  --chart-5: #f59e0b;
+  --chart-6: #06b6d4;
+
+  --text-on-success: #ffffff;
+  --text-on-warning: #ffffff;
+  --text-on-info: #ffffff;
+  --text-on-accent: #0f172a;
+
+  --ring-focus: #6366f1;
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --divider: #e2e8f0;
+
+  --bg-success: #10b981;
+  --bg-success-dark: #059669;
+  --bg-success-soft: #ecfdf5;
+  --bg-success-light: #d1fae5;
+  --text-success: #059669;
+  --text-success-dark: #047857;
+  --border-success: #10b981;
+
+  --bg-warning: #f59e0b;
+  --bg-warning-soft: #fffbeb;
+  --bg-warning-light: #fef3c7;
+  --text-warning: #d97706;
+  --text-warning-dark: #b45309;
+  --border-warning: #f59e0b;
+
+  --bg-error: #e11d48;
+  --bg-error-hover: #be123c;
+  --bg-error-active: #9f1239;
+  --bg-error-soft: #fff1f2;
+  --bg-error-light: #ffe4e6;
+  --text-error: #e11d48;
+  --text-error-dark: #be123c;
+  --text-on-error: #ffffff;
+  --border-error: #f43f5e;
+
+  --bg-info: #0ea5e9;
+  --bg-info-soft: #f0f9ff;
+  --bg-info-light: #e0f2fe;
+  --text-info: #0284c7;
+  --text-info-dark: #0369a1;
+  --border-info: #0ea5e9;
+}
+
+.dark {
+  --bg-surface: #020617;
+  --bg-background: #0f172a;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+
+  --bg-primary: #a5b4fc;
+  --bg-primary-hover: #818cf8;
+  --bg-primary-active: #c7d2fe;
+  --bg-primary-soft: #1e1b4b;
+  --bg-primary-light: #312e81;
+  --text-primary: #c7d2fe;
+  --text-on-primary: #0f172a;
+  --border-primary: #a5b4fc;
+
+  --text-accent: #e8c447;
+  --bg-accent: #D4AF37;
+  --bg-accent-hover: #e8c447;
+  --bg-accent-soft: #342a04;
+  --bg-accent-light: #604e08;
+  --border-accent: #D4AF37;
+
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-inverse: #0f172a;
+
+  --ring-focus: #a5b4fc;
+
+  --border: #334155;
+  --border-strong: #475569;
+  --divider: #334155;
+
+  --bg-success: #059669;
+  --bg-success-dark: #065f46;
+  --bg-success-soft: #064e3b;
+  --bg-success-light: #065f46;
+  --text-success: #34d399;
+  --text-success-dark: #6ee7b7;
+  --border-success: #059669;
+
+  --bg-warning: #d97706;
+  --bg-warning-soft: #78350f;
+  --bg-warning-light: #92400e;
+  --text-warning: #fbbf24;
+  --text-warning-dark: #fcd34d;
+  --border-warning: #d97706;
+
+  --bg-error: #e11d48;
+  --bg-error-hover: #f43f5e;
+  --bg-error-active: #fb7185;
+  --bg-error-soft: #881337;
+  --bg-error-light: #9f1239;
+  --text-error: #fb7185;
+  --text-error-dark: #fda4af;
+  --text-on-error: #ffffff;
+  --text-on-accent: #0f172a;
+  --border-error: #e11d48;
+
+  --text-on-success: #ffffff;
+  --text-on-warning: #ffffff;
+  --text-on-info: #ffffff;
+  --chart-1: #818cf8;
+  --chart-2: #34d399;
+  --chart-3: #fb7185;
+  --chart-4: #a78bfa;
+  --chart-5: #fbbf24;
+  --chart-6: #22d3ee;
+  --bg-info: #0284c7;
+  --bg-info-soft: #0c4a6e;
+  --bg-info-light: #075985;
+  --text-info: #38bdf8;
+  --text-info-dark: #7dd3fc;
+  --border-info: #0284c7;
+}
+
+@media (min-width: 768px) {
+  .dark .desktop-light {
+    --bg-card: #ffffff;
+    --bg-primary-soft: #eef2ff;
+    --border: #e2e8f0;
+    --border-primary: #4f46e5;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --text-primary: #6366f1;
+    --bg-primary: #6366f1;
+    --bg-primary-hover: #4f46e5;
+    --bg-primary-active: #3730a3;
+    --bg-primary-light: #e0e7ff;
+  }
+}

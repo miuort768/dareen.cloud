@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { QueryClient } from '@tanstack/react-query'
 import './index.css'
+import './styles/tokens/index.css'
+/* legacy imports — kept for backward compat */
 import './styles/semantic-tokens.css'
 import './styles/design-tokens.css'
 import App from './App.tsx'
