@@ -17,6 +17,7 @@ interface ContactMsg {
 export const AdminContacts = () => {
     const [messages, setMessages] = useState<ContactMsg[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState('');
     const mountedRef = useRef(true);
 
@@ -26,10 +27,13 @@ export const AdminContacts = () => {
             if (!mountedRef.current) return;
             try {
                 setLoading(true);
+                setError(null);
                 const data = await api.get<ContactMsg[]>('/contact');
                 if (!mountedRef.current) return;
                 setMessages(data);
             } catch (err) {
+                const msg = err instanceof Error ? err.message : 'حدث خطأ في تحميل الرسائل';
+                setError(msg);
                 console.error(err);
             } finally {
                 if (mountedRef.current) setLoading(false);
@@ -136,6 +140,26 @@ export const AdminContacts = () => {
                             <div key={i} className="bg-white dark:bg-card h-24 sm:h-28 md:h-32 animate-pulse border border-border/30 shadow-soft rounded-none" />
                         ))}
                     </div>
+                ) : error ? (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-white dark:bg-card border border-rose-200/50 dark:border-rose-800/30 shadow-soft rounded-none p-8 sm:p-10 md:p-12 lg:p-16 text-center"
+                    >
+                        <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-none bg-gradient-to-br from-rose-100 to-rose-50 dark:from-rose-900/30 dark:to-rose-900/10 flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                            <Trash2 size={24} className="sm:hidden text-rose-500" />
+                            <Trash2 size={28} className="hidden sm:inline text-rose-500" />
+                        </div>
+                        <p className="text-base sm:text-lg font-bold text-rose-600 dark:text-rose-400">حدث خطأ</p>
+                        <p className="text-xs sm:text-sm text-muted mt-1.5 sm:mt-2">{error}</p>
+                        <button
+                            type="button"
+                            onClick={() => window.location.reload()}
+                            className="mt-4 sm:mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-none bg-primary text-white text-xs sm:text-sm font-bold hover:bg-primary-hover transition-colors min-h-[44px]"
+                        >
+                            إعادة تحميل
+                        </button>
+                    </motion.div>
                 ) : filtered.length === 0 ? (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}

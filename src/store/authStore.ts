@@ -113,9 +113,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
                     });
                 });
             } else {
-                // Token expired/invalid — don't force logout.
-                // Keep localStorage state; the 401 interceptor in api.ts
-                // will handle this when the next API call is made.
+                logout();
             }
         } catch (error) {
             console.error("Token verification failed:", error);

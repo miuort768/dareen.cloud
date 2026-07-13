@@ -347,10 +347,9 @@ app.get('/rss.xml', async (req, res) => {
     }
 });
 
-const knownRoutes = new Set(['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/trial-sessions']);
 app.get(/(.*)/, (req, res) => {
-    const isKnown = knownRoutes.has(req.path) || req.path.startsWith('/books/');
-    res.status(isKnown ? 200 : 404).sendFile(path.join(__dirname, '../dist/index.html'));
+    if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) return res.status(404).send('Not found');
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Export for testing (supertest needs the app without starting the server)
