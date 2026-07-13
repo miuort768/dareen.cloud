@@ -2,9 +2,9 @@ import React from 'react';
 import { cn } from '../../../lib/utils';
 
 const trackSizeMap = {
-    sm: { track: 'w-8 h-4', thumb: 'w-3 h-3', translate: 'translate-x-4' },
-    md: { track: 'w-10 h-5', thumb: 'w-4 h-4', translate: 'translate-x-5' },
-    lg: { track: 'w-12 h-6', thumb: 'w-5 h-5', translate: 'translate-x-6' },
+    sm: { track: 'w-8 h-4', thumb: 'w-3 h-3' },
+    md: { track: 'w-10 h-5', thumb: 'w-4 h-4' },
+    lg: { track: 'w-12 h-6', thumb: 'w-5 h-5' },
 };
 
 export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -36,8 +36,8 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
                     <div className={cn(
                         s.thumb,
                         'absolute top-0.5 start-0.5 rounded-full bg-white dark:bg-surface shadow-sm transition-transform',
-                        'peer-checked:[transform:translateX(100%)]',
-                        'rtl:peer-checked:[transform:translateX(-100%)]'
+                        'peer-checked:translate-x-full',
+                        'rtl:peer-checked:-translate-x-full'
                     )} />
                 </div>
                 {label && <span className={cn('text-main', size === 'sm' ? 'text-xs' : size === 'lg' ? 'text-base' : 'text-sm')}>{label}</span>}
