@@ -13,6 +13,8 @@ export type { SelectProps } from './Select';
 
 export { FormField } from './FormField';
 
+export { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, SkeletonChart, SkeletonTable } from './Skeleton';
+
 export { Card }            from './Card';
 export type { CardProps }  from './Card';
 

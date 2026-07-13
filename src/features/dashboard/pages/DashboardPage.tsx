@@ -12,7 +12,7 @@ import { HonorRoll } from '../components/HonorRoll';
 import { ModernAnnouncements } from '../components/ModernAnnouncements';
 import { QuickActionsHub } from '../components/QuickActionsHub';
 import { RecentActivityFeed } from '../components/RecentActivityFeed';
-import { PageLoader } from '../../../components/ui/PageLoader';
+import { Skeleton, SkeletonCard } from '../../../shared/components/ui/Skeleton';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
@@ -54,7 +54,34 @@ export const Dashboard = () => {
     }
 
     if (loading) {
-        return <PageLoader />;
+        return (
+            <div className="min-h-full bg-background pb-24" dir="rtl">
+                <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
+                    <div className="flex items-center justify-between py-6">
+                        <Skeleton className="h-8 w-48" />
+                        <Skeleton className="h-8 w-32 rounded-full" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <SkeletonCard key={i} />
+                        ))}
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <Skeleton className="h-80 rounded-card" />
+                        <div className="space-y-4">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                                <Skeleton key={i} className="h-16 rounded-card" />
+                            ))}
+                        </div>
+                    </div>
+                    <Skeleton className="h-72 rounded-card" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <Skeleton className="h-96 rounded-card" />
+                        <Skeleton className="h-96 rounded-card" />
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (
