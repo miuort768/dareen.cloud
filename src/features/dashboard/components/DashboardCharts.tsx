@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Cell } from 'recharts';
 import { BarChart2, DollarSign, TrendingUp } from 'lucide-react';
 import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
+import type { TooltipEntry } from '../../../shared/components/ui';
 import type { DashboardMonthData as MonthData } from '../types';
 
 interface DashboardChartsProps {
@@ -57,7 +58,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                     <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: '700', fill: 'var(--text-muted)' }} tickFormatter={(val) => val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val} />
                     <Tooltip cursor={{ fill: 'var(--bg-hover)' }}
                         content={({ active, payload, label }) => (
-                            <ChartTooltip active={active} payload={payload as any} label={label} />
+                            <ChartTooltip active={active} payload={payload as TooltipEntry[]} label={label} />
                         )}
                     />
                     <Bar dataKey="revenue" name="الإيرادات" fill="url(#chartRevGrad)" radius={[6, 6, 0, 0]} barSize={14} filter="url(#chartBarShadow)" animationDuration={800} animationEasing="ease-out" />

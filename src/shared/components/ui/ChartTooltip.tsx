@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../../../lib/utils';
 
-interface TooltipEntry {
+export interface TooltipEntry {
   name?: string;
   value: number;
   fill?: string;

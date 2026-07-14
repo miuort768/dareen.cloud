@@ -51,6 +51,7 @@ export type { StatCardProps } from './StatCard';
 
 export { ChartContainer }    from './ChartContainer';
 export { ChartTooltip }      from './ChartTooltip';
+export type { TooltipEntry } from './ChartTooltip';
 
 export { ActivityFeed }      from './ActivityFeed';
 export type { ActivityItem, ActivityFeedProps } from './ActivityFeed';
