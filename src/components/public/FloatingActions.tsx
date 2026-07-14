@@ -13,8 +13,8 @@ export const FloatingActions = () => {
 
     const getNumber = (label: string): string => {
       try {
-        const entries = JSON.parse(whatsappNumbers);
-        const found = entries.find((e: any) => e.label === label);
+        const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers);
+        const found = entries.find((e) => e.label === label);
         return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
       } catch { return adminPhone.replace(/\D/g, ''); }
     };

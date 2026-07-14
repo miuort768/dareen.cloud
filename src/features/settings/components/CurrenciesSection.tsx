@@ -20,20 +20,21 @@ export const CurrenciesSection = ({
     const [newRate, setNewRate] = useState({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' });
     const [activeTab, setActiveTab] = useState<'currencies' | 'rates'>('currencies');
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const [cur, rts] = await Promise.all([
-                settingsService.getCurrencies(),
-                settingsService.getExchangeRates(),
-            ]);
-            setCurrencies(cur);
-            setRates(rts);
-        } catch (e) { console.error(e); }
-        finally { setLoading(false); }
-    };
-
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const [cur, rts] = await Promise.all([
+                    settingsService.getCurrencies(),
+                    settingsService.getExchangeRates(),
+                ]);
+                setCurrencies(cur);
+                setRates(rts);
+            } catch (e) { console.error(e); }
+            finally { setLoading(false); }
+        };
+        fetchData();
+    }, []);
 
     const addCurrency = async () => {
         if (!newCode || !newName) return;
@@ -42,7 +43,7 @@ export const CurrenciesSection = ({
             setNewCode(''); setNewName(''); setNewSymbol('');
             showNotify('تم إضافة العملة');
             fetchData();
-        } catch (e: any) { alert(e?.message || 'خطأ'); }
+        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const removeCurrency = async (code: string) => {
@@ -50,7 +51,7 @@ export const CurrenciesSection = ({
             await settingsService.deleteCurrency(code);
             showNotify('تم حذف العملة');
             fetchData();
-        } catch (e: any) { alert(e?.message || 'خطأ'); }
+        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const addRate = async () => {
@@ -66,7 +67,7 @@ export const CurrenciesSection = ({
             setNewRate({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' });
             showNotify('تم إضافة سعر الصرف');
             fetchData();
-        } catch (e: any) { alert(e?.message || 'خطأ'); }
+        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const removeRate = async (id: number) => {
@@ -74,7 +75,7 @@ export const CurrenciesSection = ({
             await settingsService.deleteExchangeRate(id);
             showNotify('تم حذف سعر الصرف');
             fetchData();
-        } catch (e: any) { alert(e?.message || 'خطأ'); }
+        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const setAsDefault = (code: string) => {

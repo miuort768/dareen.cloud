@@ -1,5 +1,6 @@
 import { AlertCircle, Clock, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import type { ComponentType } from 'react';
 
 interface LowBalanceStudent {
     id: string;
@@ -23,7 +24,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     const expired = lowBalanceStudents.filter(s => s.remainingSessions === 0);
     const low = lowBalanceStudents.filter(s => s.remainingSessions > 0 && s.remainingSessions <= 2);
 
-    const alerts: { icon: any; border: string; bg: string; text: string; iconColor: string; title: string; desc: string }[] = [];
+    const alerts: { icon: ComponentType<{ className?: string; size?: number }>; border: string; bg: string; text: string; iconColor: string; title: string; desc: string }[] = [];
 
     if (expired.length > 0) {
         alerts.push({

@@ -55,7 +55,7 @@ InputInner.displayName = 'InputInner';
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, required, ...props }, ref) => {
-    const isUsingFormField = !!(props as any)['data-form-field'];
+    const isUsingFormField = !!(props as Record<string, unknown>)['data-form-field'];
     if (isUsingFormField) {
       return <InputInner ref={ref} {...props} />;
     }

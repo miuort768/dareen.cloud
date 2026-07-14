@@ -11,13 +11,14 @@ export const RolesPage = () => {
     const [newName, setNewName] = useState('');
     const [newDesc, setNewDesc] = useState('');
 
-    const load = async () => {
-        const [r, p] = await Promise.all([rolesService.getAll(), rolesService.getPermissions()]);
-        setRoles(r);
-        setPermissions(p);
-    };
-
-    useEffect(() => { load(); }, []);
+    useEffect(() => {
+        const load = async () => {
+            const [r, p] = await Promise.all([rolesService.getAll(), rolesService.getPermissions()]);
+            setRoles(r);
+            setPermissions(p);
+        };
+        load();
+    }, []);
 
     const startEdit = (role: Role) => {
         setEditingRole(role);

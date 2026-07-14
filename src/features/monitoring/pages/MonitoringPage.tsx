@@ -30,7 +30,20 @@ export const MonitoringPage = () => {
         }
     };
 
-    useEffect(() => { load(); const t = setInterval(load, 15000); return () => clearInterval(t); }, []);
+    useEffect(() => {
+        const load = async () => {
+            setLoading(true);
+            try {
+                const d = await settingsService.getMonitoring();
+                setData(d);
+            } finally {
+                setLoading(false);
+            }
+        };
+        load();
+        const t = setInterval(load, 15000);
+        return () => clearInterval(t);
+    }, []);
 
     if (loading && !data) return <div className="p-5"><Spinner /></div>;
 

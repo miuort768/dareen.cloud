@@ -144,7 +144,7 @@ export const Settings = () => {
             a.href = url; a.download = `darin_backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a); a.click(); a.remove();
             showNotify('تم تحميل النسخة الاحتياطية بنجاح');
-        } catch (e: any) { alert('فشل تصدير البيانات: ' + e.message); }
+        } catch (e: unknown) { alert('فشل تصدير البيانات: ' + (e instanceof Error ? e.message : 'خطأ غير متوقع')); }
         finally { setIsSaving(false); }
     };
 
@@ -161,7 +161,7 @@ export const Settings = () => {
                 await settingsService.restoreBackup(JSON.parse(event.target?.result as string));
                 showNotify('تم استيراد البيانات بنجاح');
                 setTimeout(() => window.location.reload(), 2000);
-            } catch (e: any) { alert(`⚠️ ${e.message}`); }
+            } catch (e: unknown) { alert(`⚠️ ${e instanceof Error ? e.message : 'خطأ غير متوقع'}`); }
             finally { setIsSaving(false); e.target && (e.target.value = ''); }
         };
         reader.readAsText(file);
@@ -175,7 +175,7 @@ export const Settings = () => {
             actionFn: async () => {
                 setIsSaving(true);
                 try { await settingsService.systemReset(); showNotify('تم تصفير النظام بنجاح'); window.location.reload(); }
-                catch (e: any) { alert(e.message); }
+                catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
                 finally { setIsSaving(false); }
             }
         });
@@ -189,7 +189,7 @@ export const Settings = () => {
             actionFn: async () => {
                 setIsSaving(true);
                 try { await settingsService.archiveMonth(); showNotify('تمت الأرشفة بنجاح'); }
-                catch (e: any) { alert(e.message); }
+                catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
                 finally { setIsSaving(false); }
             }
         });

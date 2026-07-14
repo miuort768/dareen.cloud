@@ -79,8 +79,8 @@ function TableInner<T>({
   const sortedData = useMemo(() => {
     if (!activeSortKey) return data;
     return [...data].sort((a, b) => {
-      const aVal = (a as any)[activeSortKey];
-      const bVal = (b as any)[activeSortKey];
+      const aVal = (a as Record<string, unknown>)[activeSortKey];
+      const bVal = (b as Record<string, unknown>)[activeSortKey];
       if (aVal == null) return 1;
       if (bVal == null) return -1;
       const cmp = typeof aVal === 'number' ? aVal - bVal : String(aVal).localeCompare(String(bVal), 'ar');
@@ -182,7 +182,7 @@ function TableInner<T>({
                     col.className
                   )}
                 >
-                  {col.render ? col.render(item) : (item as any)[col.key]}
+                  {col.render ? col.render(item) : (item as Record<string, unknown>)[col.key] as React.ReactNode}
                 </td>
               ))}
             </tr>

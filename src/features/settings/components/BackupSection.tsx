@@ -12,22 +12,23 @@ export const BackupSection = ({
     const [backupHistory, setBackupHistory] = useState<{ id: number; type: string; status: string; size: number; createdAt: string }[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchHistory = async () => {
-        setLoading(true);
-        try {
-            const res = await settingsService.getBackupHistory();
-            setBackupHistory(res.data as any[]);
-        } catch (e) { console.error(e); }
-        finally { setLoading(false); }
-    };
-
-    useEffect(() => { fetchHistory(); }, []);
+    useEffect(() => {
+        const fetchHistory = async () => {
+            setLoading(true);
+            try {
+                const res = await settingsService.getBackupHistory();
+                setBackupHistory(res.data as { id: number; type: string; status: string; size: number; createdAt: string }[]);
+            } catch (e) { console.error(e); }
+            finally { setLoading(false); }
+        };
+        fetchHistory();
+    }, []);
 
     const createBackup = async () => {
         try {
             await settingsService.createBackup();
             fetchHistory();
-        } catch (e: any) { alert(e.message); }
+        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
     };
 
     const formatSize = (bytes: number) => {

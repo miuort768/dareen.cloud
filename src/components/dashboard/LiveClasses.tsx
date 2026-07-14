@@ -71,8 +71,8 @@ export const LiveClasses = () => {
       setSubject('');
       setMeetingProvider('google_meet');
       await fetchSessions();
-    } catch (err: any) {
-      setDialogError(err?.message || err?.error || 'فشل بدء الحصة');
+    } catch (err: unknown) {
+      setDialogError(err instanceof Error ? err.message : 'فشل بدء الحصة');
     } finally {
       setStarting(false);
     }
