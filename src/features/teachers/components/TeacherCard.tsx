@@ -30,7 +30,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 </div>
 
                 {/* THE CARD CONTENT */}
-                <div className="p-8 relative print:p-0">
+                <div className="p-4 md:p-8 relative print:p-0">
                     {/* Background Pattern */}
                     <div className="absolute top-0 start-0 w-32 h-32 bg-primary-soft opacity-50 -ms-8 -mt-8 rotate-45 pointer-events-none border border-primary-light"></div>
                     

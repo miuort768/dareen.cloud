@@ -190,7 +190,7 @@ export const TermsOfService = () => {
 
                     {/* Intellectual Property */}
                     <div className="mb-4">
-                        <div className="bg-background border border-border p-8 rounded-none">
+                        <div className="bg-background border border-border p-4 sm:p-8 rounded-none">
                             <h2 className="text-2xl font-black text-main mb-4">الملكية الفكرية</h2>
                             <div className="space-y-2 text-muted">
                                 <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.</p>

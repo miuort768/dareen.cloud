@@ -52,7 +52,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
 
             <div className="p-6 md:p-8">
                 <form onSubmit={onSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-6 md:gap-y-8">
                         <InputField label="الاسم الكامل" icon={User} required type="text" value={formData.name}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, name: e.target.value })} />
                         <InputField label="رقم الجوال" icon={User} required type="tel" value={formData.phone}

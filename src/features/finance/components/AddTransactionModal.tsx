@@ -56,8 +56,8 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/10 transition-colors rounded-xl"><X size={18} /></button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                    <div className="grid grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                         <div className="space-y-2">
                             <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <Tag size={11} className="text-primary" /> نوع المعاملة
@@ -87,7 +87,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-6">
+                    <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="text-micro font-bold text-muted uppercase tracking-widest flex items-center gap-1.5">
                                 <Info size={11} className="text-primary" /> التصنيف الحسابي

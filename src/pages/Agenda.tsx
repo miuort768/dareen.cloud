@@ -119,7 +119,7 @@ export const Agenda = () => {
     const DAYS = ['�����', '�����', '�������', '��������', '��������', '������', '������'];
 
     if (loadingStudents || loadingSessions) {
-        return <div className="p-12 text-center">���� ����� �������...</div>;
+        return <div className="p-6 lg:p-12 text-center">جاري تحميل البيانات...</div>;
     }
 
     return (

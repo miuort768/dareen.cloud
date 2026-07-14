@@ -302,7 +302,7 @@ export const StudentDashboard = () => {
 
             {/* ══════════════════ QUICK ACCESS ══════════════════ */}
             <div className="px-4 py-3">
-                <div className="grid grid-cols-6 gap-1.5">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
                     {quickAccessItems.map((item) => {
                         const Icon = item.icon;
                         return (

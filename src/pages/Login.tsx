@@ -144,7 +144,7 @@ export const Login = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8 flex flex-wrap gap-8">
+                        <div className="mt-8 flex flex-wrap gap-4 md:gap-8">
                             <div className="flex items-center gap-3">
                                 <ShieldCheck size={20} className="text-accent" />
                                 <span className="text-xs font-black tracking-widest uppercase text-accent">بيئة آمنة</span>

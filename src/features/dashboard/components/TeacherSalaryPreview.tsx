@@ -27,7 +27,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                 <div className="mb-8">
                     <p className="text-micro font-medium text-on-primary/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
                     <div className="flex items-baseline gap-2">
-                        <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-in slide-in-from-bottom duration-500">
+                        <h2 className="text-3xl md:text-5xl font-medium tracking-tighter leading-none italic animate-in slide-in-from-bottom duration-500">
                             {stats.totalEarnings}
                         </h2>
                         <span className="text-xl font-normal opacity-30">ريال</span>

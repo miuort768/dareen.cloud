@@ -282,7 +282,7 @@ export const Forum = () => {
                         ))}
                     </div>
                 ) : posts.length === 0 ? (
-                    <div className="bg-white dark:bg-primary-active rounded-3xl shadow-xl p-16 text-center border-2 border-dashed border-primary dark:border-primary/30">
+                    <div className="bg-white dark:bg-primary-active rounded-3xl shadow-xl p-6 md:p-16 text-center border-2 border-dashed border-primary dark:border-primary/30">
                         <div className="w-16 h-16 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-primary-light)] dark:from-[var(--bg-primary-active)]/20 dark:to-[var(--bg-primary-active)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                             <MessageSquare size={24} className="text-primary" />
                         </div>

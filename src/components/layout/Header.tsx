@@ -132,7 +132,7 @@ export const Header = () => {
                         <h1 className="text-sm md:text-lg font-bold text-on-primary truncate tracking-tight leading-none">
                             {title}
                         </h1>
-                        <p className="hidden md:block text-micro font-normal text-on-primary opacity-70 uppercase tracking-widest leading-none mt-0.5">
+                        <p className="text-micro font-normal text-on-primary opacity-70 uppercase tracking-widest leading-none mt-0.5">
                             {subtitle || 'دارين للتعليم والتدريب'}
                         </p>
                     </div>

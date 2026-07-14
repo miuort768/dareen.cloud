@@ -45,7 +45,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
 
                         <div>
                             <label className="block text-micro md:text-xs font-medium text-muted mb-2 uppercase tracking-widest">مستوى التميز</label>
-                            <div className="grid grid-cols-4 gap-1.5 md:gap-3">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-3">
                                 {RATING_OPTIONS.map((opt) => {
                                     const isSelected = formData.rating === opt.value;
                                     const OptIcon = opt.icon;

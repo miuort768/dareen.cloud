@@ -55,7 +55,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     return (
         <div className="bg-card border border-border shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
-            <div className="bg-primary px-6 py-8 flex items-center justify-between gap-6">
+            <div className="bg-primary px-4 md:px-6 py-6 md:py-8 flex items-center justify-between gap-4 md:gap-6">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary text-on-primary flex items-center justify-center shadow-sm">
                         {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
@@ -78,7 +78,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 )}
             </div>
 
-            <form onSubmit={handleSubmit} className="p-8 space-y-10">
+            <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-6 md:space-y-10">
                 {/* Basic Info Section */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3 pb-3 border-b border-border">
@@ -88,7 +88,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                         <h4 className="text-xs font-bold text-main uppercase tracking-tight">بيانات التعريف الأساسية</h4>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <FormInput label="الاسم الكامل" icon={UserIcon} value={formData.name} onChange={(val: string) => setFormData({ ...formData, name: val })} required placeholder="مثال: محمد أحمد" />
                         <SelectField label="المرحلة الدراسية" icon={GraduationCap} value={formData.grade} onChange={(val: string) => setFormData({ ...formData, grade: val })} required options={GRADE_OPTIONS} placeholder="اختر المرحلة" />
                         <SelectField label="المنهج الدراسي" icon={Tag} value={formData.curriculum} onChange={(val: string) => setFormData({ ...formData, curriculum: val })} options={CURRICULUM_OPTIONS} placeholder="اختر المنهج" />

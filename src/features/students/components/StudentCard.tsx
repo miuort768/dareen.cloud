@@ -30,7 +30,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                 </div>
 
                 {/* THE CARD CONTENT */}
-                <div className="p-8 relative print:p-0">
+                <div className="p-4 md:p-8 relative print:p-0">
                     {/* Background Pattern */}
                     <div className="absolute top-0 start-0 w-48 h-48 bg-surface border-s-8 border-t-8 border-border -ms-16 -mt-16 rotate-45 pointer-events-none"></div>
                     
@@ -49,7 +49,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     </div>
 
                     {/* Main Info Section */}
-                    <div className="flex flex-col md:flex-row gap-8 relative z-10">
+                    <div className="flex flex-col md:flex-row gap-4 md:gap-8 relative z-10">
                         {/* Student Photo Placeholder / Icon */}
                         <div className="w-32 h-40 bg-hover border-4 border-border flex items-center justify-center relative shadow-inner">
                             <User size={64} className="text-dim" />

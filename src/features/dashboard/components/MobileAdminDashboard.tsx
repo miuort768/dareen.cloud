@@ -309,7 +309,7 @@ export const MobileAdminDashboard = ({
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-white dark:bg-card rounded-2xl p-8 text-center shadow-sm border border-border dark:border-border">
+                            <div className="bg-white dark:bg-card rounded-2xl p-5 text-center shadow-sm border border-border dark:border-border">
                                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/30 dark:to-[var(--bg-success)]/20 flex items-center justify-center mx-auto mb-3">
                                     <Bell size={24} strokeWidth={1.5} className="text-success" />
                                 </div>

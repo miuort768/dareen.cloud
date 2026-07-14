@@ -9,7 +9,7 @@ interface SessionAnalysisProps {
 
 export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) => {
     return (
-        <div className="bg-card backdrop-blur-xl rounded-[2.5rem] border border-border p-8 shadow-2xl shadow-primary/5 transition-all duration-500 hover:shadow-primary/10 h-full flex flex-col">
+        <div className="bg-card backdrop-blur-xl rounded-[2.5rem] border border-border p-4 md:p-8 shadow-2xl shadow-primary/5 transition-all duration-500 hover:shadow-primary/10 h-full flex flex-col">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary-soft text-primary rounded-2xl flex items-center justify-center border border-primary-light">
@@ -23,7 +23,7 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
             </div>
 
             <div className="flex-1 flex flex-col justify-between pt-2">
-                <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="grid grid-cols-2 gap-4 mb-8">
                     <div className="p-6 bg-surface rounded-[2rem] border border-border transition-all hover:border-primary-light">
                         <p className="text-xs font-normal text-muted uppercase mb-2 tracking-widest">إجمالي الحصص</p>
                         <p className="text-3xl font-medium text-main tracking-tighter tabular-nums">{stats.totalSessions}</p>

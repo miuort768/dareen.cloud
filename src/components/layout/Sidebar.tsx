@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
     GraduationCap,
     LayoutDashboard,
@@ -46,6 +46,8 @@ export const Sidebar = () => {
     const activeConversationId = useUnreadStore(s => s.activeConversationId);
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
+    const location = useLocation();
+    const hasOwnNav = location.pathname.includes('/student-dashboard') || location.pathname.includes('/parent-dashboard');
 
     useEffect(() => {
         localStorage.setItem('sidebar_collapsed', String(collapsed));
@@ -249,7 +251,7 @@ export const Sidebar = () => {
 
             <div className={cn(
                 "lg:hidden fixed bottom-0 end-0 start-0 h-[70px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-2 z-[100] overflow-hidden max-w-full transition-transform duration-300",
-                activeConversationId ? "translate-y-[100%]" : "translate-y-0"
+                (activeConversationId || hasOwnNav) ? "translate-y-[100%]" : "translate-y-0"
             )}>
                 {[
                     ...filteredNavigation.slice(0, 4)

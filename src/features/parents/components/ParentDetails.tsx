@@ -26,7 +26,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
         <div className="bg-white dark:bg-primary-active border border-border dark:border-border flex flex-col overflow-hidden shadow-sm rounded-2xl">
             
             {/* Header Section */}
-            <div className="relative p-8 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] border-b border-white/5">
+            <div className="relative p-4 sm:p-8 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] border-b border-white/5">
                 <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
                 
                 <button
@@ -77,7 +77,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                     <StatCard title="الإنجاز" value={`${details.completionRate}%`} icon={TrendingUp} variant="warning" />
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
                     {/* Children List */}
                     <div className="space-y-6">
                         <div className="flex items-center justify-between border-b border-border dark:border-border pb-3">

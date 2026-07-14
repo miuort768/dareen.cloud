@@ -65,7 +65,7 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
 
     return (
         <div className={cn(
-            "group relative flex items-center gap-4 p-4 min-w-[320px] max-w-[420px] rounded-none shadow-[4px_4px_0px_0px_black] border-2  transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+            "group relative flex items-center gap-4 p-4 w-full sm:min-w-[320px] sm:max-w-[420px] rounded-none shadow-[4px_4px_0px_0px_black] border-2  transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
             "bg-white dark:bg-primary-active",
             border,
             isExiting ? "opacity-0 scale-95 translate-x-10" : "animate-in slide-in-from-start-12 fade-in",

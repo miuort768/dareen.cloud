@@ -12,26 +12,26 @@ interface StrategicSummaryProps {
 
 export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout, reportCurrency = 'KWD' }) => {
     return (
-        <SectionCard className="p-12 bg-background text-on-primary relative overflow-hidden shadow-2xl">
+        <SectionCard className="p-4 sm:p-6 lg:p-12 bg-background text-on-primary relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-info/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 end-0 w-[300px] h-[300px] bg-info/5 -rotate-12 translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
             <div className="absolute top-20 end-10 w-40 h-1 bg-gradient-to-r from-transparent via-[var(--bg-info)]/20 to-transparent rotate-45 pointer-events-none"></div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
                 <div className="lg:col-span-7 space-y-12">
                     <div>
-                        <h2 className="text-4xl font-black tracking-tighter mb-4 uppercase">الملخص المالي الاستراتيجي</h2>
+                        <h2 className="text-2xl md:text-4xl font-black tracking-tighter mb-4 uppercase">الملخص المالي الاستراتيجي</h2>
                         <div className="w-20 h-1.5 bg-primary"></div>
                         <p className="text-xs text-muted mt-6 max-w-lg leading-relaxed font-bold uppercase tracking-widest opacity-80">
                             تقرير تحليلي شامل يوضح التوازن الجوهري بين التدفقات النقدية المحصلة والالتزامات التعليمية المنفذة خلال الدورة المالية الحالية.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                         <div className="group transition-all">
                             <p className="text-micro font-black text-success uppercase tracking-[0.2em] mb-3">صافي الربح المتوقع</p>
                             <div className="flex items-baseline gap-2">
-                                <p className="text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
+                                <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {netProjectedProfit.toLocaleString()}
                                 </p>
                                 <span className="text-xs font-black text-muted uppercase tracking-widest">{reportCurrency}</span>
@@ -44,7 +44,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         <div className="group transition-all">
                             <p className="text-micro font-black text-primary uppercase tracking-[0.2em] mb-3">إجمالي عوائد المنظومة</p>
                             <div className="flex items-baseline gap-2">
-                                <p className="text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
+                                <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {totalProjectedIncome.toLocaleString()}
                                 </p>
                                 <span className="text-xs font-black text-muted uppercase tracking-widest">{reportCurrency}</span>
@@ -53,7 +53,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         </div>
                     </div>
 
-                    <div className="pt-8 border-t border-white/5 flex flex-wrap gap-8">
+                    <div className="pt-8 border-t border-white/5 flex flex-wrap gap-4 md:gap-8">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-primary-active flex items-center justify-center border border-white/10">
                                 <TrendingUp size={16} className="text-success" />

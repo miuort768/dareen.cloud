@@ -263,7 +263,7 @@ export const ParentDashboard = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
                     <StatCard title="الأبناء" value={stats.childCount} icon={Users} variant="warning" />
                     <StatCard title="قادمة" value={stats.upcomingSessions} icon={CalendarDays} variant="info" />
                     <StatCard title="الانضباط" value={`${stats.attendanceRate}%`} icon={Star} variant="error" />
@@ -604,7 +604,7 @@ export const ParentDashboard = () => {
                                     <div className="w-1 h-4 bg-primary rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">التنقل السريع</h2>
                                 </div>
-                                <div className="grid grid-cols-3 gap-2">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                                     <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
                                         <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-sm">
                                             <Users size={18} />

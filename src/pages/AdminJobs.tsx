@@ -132,7 +132,7 @@ export const AdminJobs = () => {
                 {loading ? (
                     <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-white border border-dashed border-border p-16 text-center">
+                    <div className="bg-white border border-dashed border-border p-6 md:p-16 text-center">
                         <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
                             <Briefcase size={28} style={{ color: 'rgb(var(--color-primary))' }} />
                         </div>

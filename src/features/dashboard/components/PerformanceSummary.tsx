@@ -8,7 +8,7 @@ interface PerformanceSummaryProps {
 
 export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps) => {
     return (
-        <div className="bg-white/70 dark:bg-primary-active/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-border p-8 shadow-2xl shadow-primary/5 transition-all duration-500 hover:shadow-primary/10 h-full">
+        <div className="bg-white/70 dark:bg-primary-active/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-border p-4 md:p-8 shadow-2xl shadow-primary/5 transition-all duration-500 hover:shadow-primary/10 h-full">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-success/10 text-success rounded-2xl flex items-center justify-center border border-success/20">
@@ -57,7 +57,7 @@ export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 gap-6">
+                    <div className="grid grid-cols-2 gap-4">
                         <div className="p-6 bg-primary/5 border border-primary/10 rounded-[2rem] relative overflow-hidden group">
                             <div className="absolute top-0 start-0 w-24 h-24 bg-primary opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
                             <p className="text-xs font-normal text-primary dark:text-primary uppercase mb-2">فواتير مدفوعة</p>

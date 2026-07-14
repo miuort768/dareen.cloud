@@ -51,7 +51,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             key={session.id}
                             onClick={() => onStudentClick?.({ id: session.studentName, name: session.studentName })}
                             className={cn(
-                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[160px] p-4 rounded-none border transition-all relative group/card shadow-sm cursor-pointer",
+                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[150px] md:min-w-0 p-4 rounded-none border transition-all relative group/card shadow-sm cursor-pointer",
                                 isCompleted
                                     ? "bg-success-light dark:bg-success/20 border-success/30"
                                     : isCancelled

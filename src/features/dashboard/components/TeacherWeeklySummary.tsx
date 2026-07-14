@@ -25,7 +25,7 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                 <div className="mb-8">
                     <p className="text-micro font-medium text-on-primary/60 mb-2 uppercase tracking-widest leading-none">نقاط مهنية جديدة (آخر ٧ أيام)</p>
                     <div className="flex items-baseline gap-2">
-                        <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-pulse">
+                        <h2 className="text-3xl md:text-5xl font-medium tracking-tighter leading-none italic animate-pulse">
                             +{stats.weekTotalSessions * 5}
                         </h2>
                         <span className="text-xl font-normal opacity-30">PT</span>
