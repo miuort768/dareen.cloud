@@ -1,15 +1,13 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    BookOpen, MessageSquare, Star, Award, Clock, Trophy, Sparkles,
-    Search, Bell, ChevronLeft, Play, Users, Video, Target, GraduationCap,
+    BookOpen, MessageSquare, Star, Clock,
+    Bell, ChevronLeft, Play, Video, GraduationCap,
     Headphones, Home, Library, User, MoreHorizontal, CheckCircle, TrendingUp,
     Sun, Moon, Megaphone
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone } from '../context/AppContext';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
@@ -106,7 +104,6 @@ export const StudentDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [heroIndex, setHeroIndex] = useState(0);
     const [activeNav, setActiveNav] = useState('home');
-    const [showSearch, setShowSearch] = useState(false);
     const [theme, setTheme] = useDarkMode();
     const [currentTime, setCurrentTime] = useState(new Date());
     const [scrollY, setScrollY] = useState(0);
@@ -204,6 +201,7 @@ export const StudentDashboard = () => {
                             {/* Dark mode toggle */}
                             <button
                                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
                                 className="w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-card transition-colors"
                             >
                                 {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
@@ -211,6 +209,7 @@ export const StudentDashboard = () => {
                             {/* Bell */}
                             <button
                                 onClick={() => navigate('/parent-announcements')}
+                                aria-label="الإعلانات"
                                 className="relative w-8 h-8 flex items-center justify-center text-muted hover:bg-hover rounded-card transition-colors"
                             >
                                 <Bell size={16} strokeWidth={1.5} />
@@ -228,7 +227,7 @@ export const StudentDashboard = () => {
 
             {/* ══════════════════ HERO CAROUSEL ══════════════════ */}
             <div className="px-4 pt-4 pb-3">
-                <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 200 }}>
+                <div className="relative rounded-3xl overflow-hidden min-h-[200px]">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={heroIndex}
@@ -293,6 +292,8 @@ export const StudentDashboard = () => {
                             <button
                                 key={i}
                                 onClick={() => setHeroIndex(i)}
+                                aria-label={`الشريحة ${i + 1} من ${heroSlides.length}`}
+                                aria-current={i === heroIndex ? 'true' : undefined}
                                                 className={`rounded-full transition-all duration-300 ${i === heroIndex ? 'w-5 h-2 bg-primary' : 'w-2 h-2 bg-border'}`}
                             />
                         ))}

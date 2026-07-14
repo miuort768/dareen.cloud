@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     Users,
     Calendar,
@@ -13,8 +13,6 @@ import {
     BookOpen,
     LayoutDashboard,
     Clock,
-    Sparkles,
-    Bell,
     TrendingUp,
     CheckCircle,
     Play,
@@ -24,7 +22,6 @@ import {
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
-import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui/StatCard';
 import { confirm } from '../lib/confirmDialog';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
@@ -86,7 +83,7 @@ export const ParentDashboard = () => {
                 setSessions(allSessionsResults.flat());
                 
                 const flattenedLogs = allLogsResults.map((logs, idx) => 
-                    (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string }) => ({ ...l, studentName: students[idx].name }))
+                    (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
                 ).flat();
                 
                 setAllPointLogs(flattenedLogs.sort((a, b) => {
@@ -144,7 +141,8 @@ export const ParentDashboard = () => {
         };
     }, []);
 
-    const formatTime = (startedAt: string) => {
+    const formatTime = (startedAt: string | null | undefined) => {
+        if (!startedAt) return '--:--';
         const secs = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
         const m = Math.floor(secs / 60).toString().padStart(2, '0');
         const s = (secs % 60).toString().padStart(2, '0');
@@ -249,7 +247,7 @@ export const ParentDashboard = () => {
                                 onClick={() => navigate('/chat')}
                                 className="flex items-center gap-2 bg-primary text-on-primary text-sm font-bold px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-transform"
                             >
-                                <Play size={14} fill="white" />
+                                <Play size={14} fill="currentColor" />
                                 ابدأ الآن
                             </button>
                             <button
@@ -584,7 +582,7 @@ export const ParentDashboard = () => {
                                             onClick={() => navigate('/chat')}
                                             className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
                                         >
-                                            <Play size={12} fill="white" />
+                                            <Play size={12} fill="currentColor" />
                                             ابدأ الآن
                                         </button>
                                         <button

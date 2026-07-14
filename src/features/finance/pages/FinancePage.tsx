@@ -56,7 +56,7 @@ export const Finance = () => {
                             <Plus size={13} />
                             تسجيل معاملة
                         </button>
-                        <button onClick={() => {
+                        <button aria-label="تصدير التقرير إلى CSV" onClick={() => {
                             const csv = [['التاريخ','الوصف','النوع','المبلغ','الرصيد'].join(','), ...state.filteredTransactions.map(t => [t.date, t.description, t.type, t.amount, t.balance].join(','))].join('\n');
                             const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
                             const url = URL.createObjectURL(blob);

@@ -18,10 +18,7 @@ import { QuickActions } from '../features/dashboard/components/QuickActions';
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
 import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot';
 import { AttendanceChart } from '../features/dashboard/components/AttendanceChart';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, BookOpen, ClipboardList, CheckSquare } from 'lucide-react';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
-import { cn } from '../lib/utils';
+import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare } from 'lucide-react';
 
 export const TeacherDashboard = () => {
     const currentUser = useCurrentUser();
@@ -189,7 +186,10 @@ export const TeacherDashboard = () => {
                     <div className="relative z-10 px-4 pb-0.5">
                         <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-card p-1">
                             {tabs.map(tab => (
-                                <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                                <button key={tab.id} id={`tab-${tab.id}`} onClick={() => setActiveTab(tab.id)}
+                                    role="tab"
+                                    aria-selected={activeTab === tab.id}
+                                    aria-controls={`tabpanel-${tab.id}`}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-card text-micro font-bold transition-all ${
                                         activeTab === tab.id
                                             ? 'bg-card text-primary shadow-sm'
@@ -206,7 +206,7 @@ export const TeacherDashboard = () => {
                 {/* Tab Content */}
                 <div className="px-3 pt-3 space-y-3.5">
                     {activeTab === 'home' && (
-                        <>
+                        <div role="tabpanel" id="tabpanel-home" aria-labelledby="tab-home">
                             {nextSession && (
                                 <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
                             )}
@@ -232,11 +232,11 @@ export const TeacherDashboard = () => {
                                     <div className="p-3.5"><ModernAnnouncements /></div>
                                 </div>
                             </section>
-                        </>
+                        </div>
                     )}
 
                     {activeTab === 'schedule' && (
-                        <>
+                        <div role="tabpanel" id="tabpanel-schedule" aria-labelledby="tab-schedule">
                             {timeline.length > 0 ? (
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
@@ -256,11 +256,11 @@ export const TeacherDashboard = () => {
                                     <p className="text-dim text-micro mt-1">استمتع بيومك!</p>
                                 </div>
                             )}
-                        </>
+                        </div>
                     )}
 
                     {activeTab === 'reports' && (
-                        <>
+                        <div role="tabpanel" id="tabpanel-reports" aria-labelledby="tab-reports">
                             <div className="grid grid-cols-2 gap-3">
                                 <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
                                 <AttendanceChart rate={stats.attendanceRate} />
@@ -298,7 +298,7 @@ export const TeacherDashboard = () => {
                                     </div>
                                 </div>
                             </section>
-                        </>
+                        </div>
                     )}
 
                     <div className="h-4" />
