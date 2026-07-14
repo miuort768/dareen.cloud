@@ -77,7 +77,7 @@ export const Contact = () => {
                     '@type': 'ContactPage',
                     name: 'اتصل بنا - دارين السابعة',
                     description: 'تواصل مع فريق دارين السابعة للاستفسار عن خدمات التعليم عن بعد',
-                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud', telephone: '+965XXXXXXXX', email: 'miuort768@gmail.com', contactPoint: { '@type': 'ContactPoint', telephone: '+965XXXXXXXX', contactType: 'customer service', availableLanguage: ['Arabic', 'English'] } }
+                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud', telephone: `+${adminPhone}`, email: 'miuort768@gmail.com', contactPoint: { '@type': 'ContactPoint', telephone: `+${adminPhone}`, contactType: 'customer service', availableLanguage: ['Arabic', 'English'] } }
                 })}
             </script>
             <MobileHeader />

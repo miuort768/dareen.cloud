@@ -97,6 +97,7 @@ export const Home = () => {
     let i = 0;
     let isDeleting = false;
     let typingSpeed = 150;
+    let timer: ReturnType<typeof setTimeout>;
 
     const type = () => {
       const currentText = isDeleting
@@ -114,10 +115,10 @@ export const Home = () => {
         i += isDeleting ? -1 : 1;
         typingSpeed = isDeleting ? 75 : 150;
       }
-      setTimeout(type, typingSpeed);
+      timer = setTimeout(type, typingSpeed);
     };
 
-    const timer = setTimeout(type, typingSpeed);
+    timer = setTimeout(type, typingSpeed);
     return () => clearTimeout(timer);
   }, []);
 

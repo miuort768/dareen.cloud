@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSettingsStore } from '../store/settingsStore';
 
 const BASE = 'https://dareen.cloud';
 
@@ -26,6 +27,8 @@ export const SEO: React.FC<SEOProps> = ({
     breadcrumbs,
     noindex = false
 }) => {
+    const { adminPhone } = useSettingsStore();
+    const phone = adminPhone || '965XXXXXXXX';
     const absUrl = url.startsWith('http') ? url : `${BASE}${url}`;
     const absImage = toAbs(image);
     const siteTitle = 'دارين السابعة للتعليم والتدريب';
@@ -121,7 +124,7 @@ export const SEO: React.FC<SEOProps> = ({
                             "url": "https://dareen.cloud/",
                             "logo": "https://dareen.cloud/logo.png",
                             "description": siteDescription,
-                            "telephone": "+965XXXXXXXX",
+                            "telephone": "+${phone}",
                             "email": "info@dareen.cloud",
                             "areaServed": ["Saudi Arabia", "Kuwait", "United Arab Emirates", "Qatar", "Oman", "Bahrain"],
                             "address": {
@@ -134,7 +137,7 @@ export const SEO: React.FC<SEOProps> = ({
                                 { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "08:00", "closes": "16:00" }
                             ],
                             "sameAs": [
-                                "https://wa.me/965XXXXXXXX",
+                                `https://wa.me/${phone}`,
                                 "https://instagram.com/dareen.academy"
                             ],
                             "aggregateRating": {

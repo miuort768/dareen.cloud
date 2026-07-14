@@ -31,6 +31,7 @@ export const Login = () => {
     useEffect(() => {
         let i = 0;
         let isDeleting = false;
+        let timer: ReturnType<typeof setTimeout>;
         
         const type = () => {
             const current = fullText.substring(0, i);
@@ -38,18 +39,18 @@ export const Login = () => {
             
             if (!isDeleting && i < fullText.length) {
                 i++;
-                setTimeout(type, 150);
+                timer = setTimeout(type, 150);
             } else if (isDeleting && i > 0) {
                 i--;
-                setTimeout(type, 100);
+                timer = setTimeout(type, 100);
             } else {
                 isDeleting = !isDeleting;
-                setTimeout(type, isDeleting ? 2000 : 1000);
+                timer = setTimeout(type, isDeleting ? 2000 : 1000);
             }
         };
         
-        const timeoutId = setTimeout(type, 1000);
-        return () => clearTimeout(timeoutId);
+        timer = setTimeout(type, 1000);
+        return () => clearTimeout(timer);
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
