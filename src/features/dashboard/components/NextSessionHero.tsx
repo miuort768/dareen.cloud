@@ -88,7 +88,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                         "hover:bg-white/30 active:scale-[0.98]"
                     )}
                 >
-                    <Play size={14} fill="white" />
+                    <Play size={14} fill="currentColor" />
                     بدء الحصة
                 </button>
             </div>

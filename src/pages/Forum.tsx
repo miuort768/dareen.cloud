@@ -333,7 +333,7 @@ export const Forum = () => {
                                                 <button 
                                                     onClick={() => handleDeletePost(post.id)}
                                                     className="p-2 text-dim hover:text-error transition-colors rounded-xl hover:bg-error-light dark:hover:bg-error/20"
-                                                    title="حذف المنشور"
+                                                    aria-label="حذف المنشور"
                                                 >
                                                     <Trash2 size={15} />
                                                 </button>
@@ -473,6 +473,7 @@ export const Forum = () => {
                                                     <button
                                                         onClick={() => handleAddComment(post.id)}
                                                         disabled={!(commentTexts[post.id] || '').trim()}
+                                                        aria-label="إرسال التعليق"
                                                         className="absolute end-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
                                                     >
                                                         <Send size={11} />

@@ -192,12 +192,14 @@ export const Announcements = () => {
                                     <div className="flex items-center gap-1.5">
                                         <button 
                                             onClick={() => openEdit(ann)}
+                                            aria-label="تعديل الإعلان"
                                             className="w-7 h-7 bg-surface dark:bg-card text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all shadow-sm rounded-xl active:scale-90"
                                         >
                                             <Edit3 size={12} />
                                         </button>
                                         <button 
                                             onClick={() => handleDelete(ann.id)}
+                                            aria-label="حذف الإعلان"
                                             className="w-7 h-7 bg-surface dark:bg-card text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all shadow-sm rounded-xl active:scale-90"
                                         >
                                             <Trash2 size={12} />

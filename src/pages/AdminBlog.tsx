@@ -2,10 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { Image } from '../shared/components/ui';
 import { useShowNotification } from '../context/AppContext';
-import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star, Settings, MessageCircle, Send } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen, Download, Eye, Star, Settings } from 'lucide-react';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { useSettingsStore } from '../store/settingsStore';
+import { cn } from '../lib/utils';
 
 interface BlogPost {
     id: string;
@@ -688,7 +689,7 @@ export const AdminBlog = () => {
                                         <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl text-info" aria-label="تعديل"><Edit2 size={14} /></button>
                                         <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl text-error" aria-label="حذف"><Trash2 size={14} /></button>
                                     </div>
-                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" className="p-1.5 text-dim"><ExternalLink size={14} /></a>
+                                    <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" aria-label="عرض المقال" className="p-1.5 text-dim"><ExternalLink size={14} /></a>
                                 </div>
                             </div>
                         </div>
