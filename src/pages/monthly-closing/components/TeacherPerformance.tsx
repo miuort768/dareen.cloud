@@ -17,7 +17,7 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {teacherPerformance.map((perf, idx) => (
                 <SectionCard key={idx} className="p-5 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                         {perf.name.charAt(0)}
                     </div>
                     <div className="flex-1">

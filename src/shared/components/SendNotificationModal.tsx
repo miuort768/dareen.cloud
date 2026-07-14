@@ -36,7 +36,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
             <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 {/* Visual Header Accent */}
-                <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"></div>
+                <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgb(92_89_242_/_0.4)]"></div>
 
                 {/* Decorative Geometric Background */}
                 <div className="absolute top-0 start-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>

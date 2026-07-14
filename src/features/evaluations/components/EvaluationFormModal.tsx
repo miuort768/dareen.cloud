@@ -67,7 +67,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                                 <div className="flex gap-1.5">
                                     {[5, 10, 20, 50].map(p => (
                                         <button key={p} type="button" onClick={() => onChange({ ...formData, points: p })}
-                                            className="px-2 py-0.5 font-bold text-micro transition-colors rounded-xl" style={{ backgroundColor: 'rgba(245,158,11,0.07)', color: 'var(--bg-warning)', border: '1px solid rgba(245,158,11,0.19)' }}>+{p}</button>
+                                            className="px-2 py-0.5 font-bold text-micro transition-colors rounded-xl" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-warning) 7%, transparent)', color: 'var(--bg-warning)', border: '1px solid color-mix(in srgb, var(--bg-warning) 19%, transparent)' }}>+{p}</button>
                                     ))}
                                 </div>
                             </div>

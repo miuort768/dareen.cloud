@@ -126,7 +126,7 @@ export const InstallPWA = () => {
     if (showIOSGuide) {
         return (
             <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40  p-4">
-                <div className="bg-white dark:bg-card border-2 border-border shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
+                <div className="bg-white dark:bg-card border-2 border-border shadow-[6px_6px_0px_0px_black] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
                     <div className="bg-warning border-b-2 border-border px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Smartphone size={18} className="text-main" />

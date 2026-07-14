@@ -167,7 +167,7 @@ export const NotificationDropdown = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="relative w-10 h-10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/15 hover:scale-110 active:scale-95 transition-all duration-200"
             >
-                <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgba(0,0,0,0.30)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.40)]" : "")} />
+                <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgb(0_0_0_/_0.3)] dark:drop-shadow-[0_0_8px_rgb(255_255_255_/_0.4)]" : "")} />
                 {notificationsEnabled && unreadCount > 0 && (
                     <span className="absolute -top-0.5 -start-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-primary text-micro font-bold flex items-center justify-center border-2 border-white dark:border-border shadow-lg">
                         {unreadCount}
@@ -176,19 +176,19 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-primary-active/98  border-2 border-border dark:border-border rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.30)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-primary-active/98  border-2 border-border dark:border-border rounded-none shadow-[0_20px_50px_rgb(0_0_0_/_0.3)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="absolute -top-[10px] end-4 md:end-8 w-4 h-4 bg-white dark:bg-primary-active border-t-2 border-e-2 border-border dark:border-border rotate-45 hidden md:block" />
                     
                     {/* Header */}
 
                     <div className="p-4 border-b-2 border-border dark:border-border flex items-center justify-between bg-background/50 dark:bg-primary-active/50">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary rounded-none flex items-center justify-center text-on-primary shadow-[2px_2px_0_rgba(0,0,0,1)]">
+                            <div className="w-8 h-8 bg-primary rounded-none flex items-center justify-center text-on-primary shadow-[2px_2px_0_black]">
                                 <Bell size={16} />
                             </div>
                             <h3 className="font-medium text-xs uppercase tracking-widest text-main dark:text-on-primary">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-error text-on-primary text-micro font-medium px-2 py-0.5 shadow-[1px_1px_0_rgba(0,0,0,1)]">
+                                <span className="bg-error text-on-primary text-micro font-medium px-2 py-0.5 shadow-[1px_1px_0_black]">
                                     {unreadCount} مـهـم
                                 </span>
                             )}

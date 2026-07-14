@@ -467,6 +467,7 @@ export const AdminBlog = () => {
                                     <img
                                         src={currentPost.coverImage}
                                         alt="معاينة"
+                                        loading="lazy"
                                         className="w-full h-full object-cover"
                                         onError={(e) => {
                                             (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';

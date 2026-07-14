@@ -164,7 +164,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
@@ -245,7 +245,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         </h5>
                         <button
                             onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
-                                    className="text-micro font-bold px-2 py-0.5 rounded-lg transition-all" style={{ backgroundColor: isEditing ? 'rgba(244,63,94,0.07)' : 'rgba(108,75,255,0.07)', color: isEditing ? 'var(--bg-error)' : 'var(--bg-primary)' }}
+                                    className="text-micro font-bold px-2 py-0.5 rounded-lg transition-all" style={{ backgroundColor: isEditing ? 'color-mix(in srgb, var(--bg-error) 7%, transparent)' : 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: isEditing ? 'var(--bg-error)' : 'var(--bg-primary)' }}
                         >
                             {isEditing ? 'إلغاء' : 'تعديل'}
                         </button>
@@ -289,7 +289,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Notes */}
-                <div className="p-3 rounded-xl border relative" style={{ backgroundColor: 'rgba(245,158,11,0.03)', borderColor: 'rgba(245,158,11,0.13)' }}>
+                <div className="p-3 rounded-xl border relative" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-warning) 3%, transparent)', borderColor: 'color-mix(in srgb, var(--bg-warning) 13%, transparent)' }}>
                     <div className="flex items-center justify-between mb-2">
                         <h5 className="text-micro font-bold uppercase flex items-center gap-1.5" style={{ color: 'var(--bg-warning)' }}>
                             <MessageSquare size={12} /> ملاحظات

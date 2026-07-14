@@ -13,19 +13,19 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
     const progress = Math.min((stats.completedSessions / stats.sessionsGoal) * 100, 100);
 
     return (
-        <div className="bg-success border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-on-primary relative overflow-hidden group">
+        <div className="bg-success border-4 border-border p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_black] text-on-primary relative overflow-hidden group">
             
             {/* Background pattern */}
             <div className="absolute -bottom-4 -start-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all pointer-events-none"></div>
             
             <div className="relative z-10">
-                <div className="flex items-center gap-2 mb-6 text-white/80">
+                <div className="flex items-center gap-2 mb-6 text-on-primary/80">
                     <CreditCard size={18} />
                     <h3 className="font-medium text-xs uppercase tracking-tighter italic">حصالة الأرباح التقديرية</h3>
                 </div>
 
                 <div className="mb-8">
-                    <p className="text-micro font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
+                    <p className="text-micro font-medium text-on-primary/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
                     <div className="flex items-baseline gap-2">
                         <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-in slide-in-from-bottom duration-500">
                             {stats.totalEarnings}
@@ -40,7 +40,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                             <span>هدف الحصص: {stats.completedSessions}/{stats.sessionsGoal}</span>
                             <span>{Math.round(progress)}%</span>
                         </div>
-                        <div className="h-4 bg-card border-2 border-border shadow-[2px_2px_0px_0px_rgba(255,255,255,0.20)]">
+                        <div className="h-4 bg-card border-2 border-border shadow-[2px_2px_0px_0px_rgb(255_255_255_/_0.2)]">
                             <div 
                                 className="h-full bg-warning transition-all duration-1000 ease-out" 
                                 style={{ width: `${progress}%` }}
@@ -55,7 +55,7 @@ export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/20 text-micro font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
+            <div className="mt-8 pt-4 border-t-2 border-white/20 text-micro font-medium uppercase tracking-widest text-on-primary/60 flex items-center gap-2 italic">
                 <TrendingUp size={12} />
                 <span>كلما أنجزتِ حصصاً أكثر، زادت نقاطك المهنية في اللورد كارد!</span>
             </div>

@@ -17,18 +17,12 @@ import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
 import { cn } from '../../../lib/utils';
-import { motion } from 'framer-motion';
 import { LayoutDashboard, TrendingUp } from 'lucide-react';
 
 const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-        className={cn("relative", className)}
-    >
+    <section className={cn("relative animate-fadeIn", className)}>
         {children}
-    </motion.section>
+    </section>
 );
 
 export const Dashboard = () => {
@@ -56,6 +50,7 @@ export const Dashboard = () => {
     if (loading) {
         return (
             <div className="min-h-full bg-background pb-24" dir="rtl">
+                {/* Desktop skeleton */}
                 <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
                     <div className="flex items-center justify-between py-6">
                         <Skeleton className="h-8 w-48" />
@@ -78,6 +73,27 @@ export const Dashboard = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <Skeleton className="h-96 rounded-card" />
                         <Skeleton className="h-96 rounded-card" />
+                    </div>
+                </div>
+                {/* Mobile skeleton */}
+                <div className="block md:hidden px-4 pt-4 space-y-4">
+                    <div className="flex items-center gap-3 mb-6">
+                        <Skeleton className="w-9 h-9 rounded-2xl" />
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-28" />
+                            <Skeleton className="h-3 w-36" />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <SkeletonCard key={i} />
+                        ))}
+                    </div>
+                    <Skeleton className="h-40 rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-3">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Skeleton key={i} className="h-20 rounded-2xl" />
+                        ))}
                     </div>
                 </div>
             </div>

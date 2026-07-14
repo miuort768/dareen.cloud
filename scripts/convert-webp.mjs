@@ -1,9 +1,10 @@
 import sharp from 'sharp';
-import { readdirSync, statSync, existsSync, mkdirSync } from 'fs';
+import { readdirSync, statSync, existsSync, mkdirSync, unlinkSync } from 'fs';
 import { join, parse, relative } from 'path';
 
 const PUBLIC_DIR = join(process.cwd(), 'public');
 const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg'];
+const DELETE_ORIGINALS = process.argv.includes('--delete');
 
 function getFilesRecursive(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
@@ -34,23 +35,34 @@ async function convertToWebP(inputPath) {
     if (metadata.width < 50 && metadata.height < 50) return;
 
     // Generate WebP
+    let webpCreated = false;
     const webpBuffer = await img
       .webp({ quality: 75, effort: 4 })
       .toBuffer();
 
     if (webpBuffer.length < statSync(inputPath).size) {
       await sharp(webpBuffer).toFile(webpPath);
+      webpCreated = true;
       console.log(`✓ WebP: ${inputPath} → ${(webpBuffer.length / 1024).toFixed(1)} KB`);
     }
 
     // Generate AVIF
+    let avifCreated = false;
     const avifBuffer = await img
       .avif({ quality: 60, effort: 4 })
       .toBuffer();
 
     if (avifBuffer.length < statSync(inputPath).size) {
       await sharp(avifBuffer).toFile(avifPath);
+      avifCreated = true;
       console.log(`✓ AVIF: ${inputPath} → ${(avifBuffer.length / 1024).toFixed(1)} KB`);
+    }
+
+    // Delete original if both WebP and AVIF were created successfully
+    if (DELETE_ORIGINALS && (webpCreated || avifCreated)) {
+      const originalSize = statSync(inputPath).size;
+      unlinkSync(inputPath);
+      console.log(`🗑️ Deleted original: ${inputPath} (${(originalSize / 1024).toFixed(1)} KB freed)`);
     }
   } catch (err) {
     console.error(`✗ Error processing ${inputPath}:`, err.message);

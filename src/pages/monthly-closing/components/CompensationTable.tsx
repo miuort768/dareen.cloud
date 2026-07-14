@@ -39,14 +39,14 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                                 <td className="px-4 py-4 text-xs font-bold text-muted dark:text-muted">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-micro text-error">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
-                                    <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: 'rgba(244,63,94,0.07)', color: 'var(--bg-error)' }}>تعويض معلق</div>
+                                    <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-error) 7%, transparent)', color: 'var(--bg-error)' }}>تعويض معلق</div>
                                 </td>
                             </tr>
                         ))}
                         {cancelledNeedingComp.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="px-6 py-20 text-center">
-                                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: 'rgba(16,185,129,0.13)' }} />
+                                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: 'color-mix(in srgb, var(--bg-success) 13%, transparent)' }} />
                                     <p className="text-xs font-bold text-muted uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                 </td>
                             </tr>

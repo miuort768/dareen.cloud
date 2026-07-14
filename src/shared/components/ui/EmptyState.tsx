@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 
 interface EmptyStateProps {
@@ -17,12 +16,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   action,
   className,
 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.4, ease: 'easeOut' }}
+  <div
     className={cn(
-      'flex flex-col items-center justify-center text-center py-16 px-6 rounded-2xl',
+      'flex flex-col items-center justify-center text-center py-16 px-6 rounded-2xl fade-in',
       'bg-white/60 dark:bg-primary-active/50 backdrop-blur-md',
       'border border-dashed border-border dark:border-border',
       className
@@ -31,13 +27,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   >
     {/* Floating icon bubble */}
     {icon && (
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_rgba(239,68,68,0.10)] dark:shadow-[0_8px_30px_rgba(20,184,166,0.10)]"
+      <div
+        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_rgb(239_68_68_/_0.1)] dark:shadow-[0_8px_30px_rgb(20_184_166_/_0.1)] animate-float"
       >
         {icon}
-      </motion.div>
+      </div>
     )}
 
     <h3 className="text-base font-bold text-main dark:text-dim mb-2">
@@ -49,5 +43,5 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       </p>
     )}
     {action && <div>{action}</div>}
-  </motion.div>
+  </div>
 );

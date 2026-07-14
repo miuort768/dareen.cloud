@@ -54,9 +54,9 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
 }
 
 const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; color: string; bg: string }> = {
-    positive: { icon: TrendingUp, color: 'var(--bg-success)', bg: 'rgba(34,197,94,0.08)' },
-    negative: { icon: TrendingDown, color: 'var(--bg-error)', bg: 'rgba(244,63,94,0.08)' },
-    neutral: { icon: Target, color: 'var(--bg-info)', bg: 'rgba(59,130,246,0.08)' },
+    positive: { icon: TrendingUp, color: 'var(--bg-success)', bg: 'color-mix(in srgb, var(--bg-success) 8%, transparent)' },
+    negative: { icon: TrendingDown, color: 'var(--bg-error)', bg: 'color-mix(in srgb, var(--bg-error) 8%, transparent)' },
+    neutral: { icon: Target, color: 'var(--bg-info)', bg: 'color-mix(in srgb, var(--bg-info) 8%, transparent)' },
 };
 
 export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {

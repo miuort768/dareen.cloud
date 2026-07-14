@@ -48,7 +48,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
             <div className="bg-white dark:bg-primary-active border border-border dark:border-border rounded-2xl shadow-sm p-4">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                             <SlidersHorizontal size={14} />
                         </div>
                         <div>
@@ -59,7 +59,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-micro rounded-xl transition-all" style={{ backgroundColor: 'rgba(244,63,94,0.07)', color: 'var(--bg-error)' }}
+                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-micro rounded-xl transition-all" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-error) 7%, transparent)', color: 'var(--bg-error)' }}
                         >
                             <X size={12} /> إعادة التعيين
                         </button>

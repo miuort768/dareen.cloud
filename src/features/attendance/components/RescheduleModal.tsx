@@ -32,7 +32,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
 
                 <div className="p-5 space-y-5">
                     <div className="flex items-center gap-3 p-3 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(245,158,11,0.07)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-warning) 7%, transparent)' }}>
                             <Clock size={18} style={{ color: 'var(--bg-warning)' }} />
                         </div>
                         <div>
@@ -71,7 +71,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                             />
                         </div>
 
-                        <div className="flex items-start gap-2 p-3 rounded-xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', border: '1px solid rgba(108,75,255,0.13)' }}>
+                        <div className="flex items-start gap-2 p-3 rounded-xl" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 3%, transparent)', border: '1px solid color-mix(in srgb, var(--bg-primary) 13%, transparent)' }}>
                             <AlertCircle size={14} style={{ color: 'var(--bg-primary)' }} className="flex-shrink-0 mt-0.5" />
                             <p className="text-micro font-bold leading-relaxed" style={{ color: 'var(--bg-primary)' }}>
                                 سيصل طلبك للإدارة فوراً للموافقة عليه، وسيتم إبلاغ ولي الأمر تلقائياً.

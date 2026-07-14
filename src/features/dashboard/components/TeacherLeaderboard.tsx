@@ -13,7 +13,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
     if (!students || students.length === 0) return null;
 
     return (
-        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group h-full flex flex-col">
+        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_black] relative overflow-hidden group h-full flex flex-col">
             <div className="flex items-center gap-2 mb-6 text-main dark:text-on-primary">
                 <Trophy size={20} className="text-warning fill-current" />
                 <h3 className="font-medium text-xs uppercase tracking-tighter">أبطال مجموعتك (أعلى النقاط)</h3>
@@ -30,7 +30,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                             className="flex items-center justify-between p-3 bg-background dark:bg-card border-2 border-border group/item hover:bg-warning-light dark:hover:bg-warning/10 transition-colors cursor-pointer"
                         >
                             <div className="flex items-center gap-3">
-                                <div className={cn("w-8 h-8 flex items-center justify-center font-medium text-xs border-2 border-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]",
+                                <div className={cn("w-8 h-8 flex items-center justify-center font-medium text-xs border-2 border-border shadow-[2px_2px_0px_0px_black]",
                                     index === 0 ? 'bg-warning' : index === 1 ? 'bg-card' : index === 2 ? 'bg-warning' : 'bg-white text-muted'
                                 )}>
                                     {index + 1}
@@ -41,7 +41,7 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                                             {student.name}
                                         </h4>
                                         {index < 3 && (
-                                            <div className="flex items-center gap-1 bg-warning text-main px-1.5 py-0.5 text-micro font-medium border border-border shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] animate-pulse">
+                                            <div className="flex items-center gap-1 bg-warning text-main px-1.5 py-0.5 text-micro font-medium border border-border shadow-[1px_1px_0px_0px_black] animate-pulse">
                                                 <Zap size={8} className="fill-current" />
                                                 <span>أداء مبهر</span>
                                             </div>

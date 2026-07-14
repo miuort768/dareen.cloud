@@ -19,10 +19,10 @@ const URGENCY_LABELS: Record<string, string> = {
 };
 
 const URGENCY_BG: Record<string, string> = {
-    now: 'rgba(244,63,94,0.08)',
-    very_soon: 'rgba(245,158,11,0.08)',
-    soon: 'rgba(59,130,246,0.08)',
-    within_hour: 'rgba(34,197,94,0.08)',
+    now: 'color-mix(in srgb, var(--bg-error) 8%, transparent)',
+    very_soon: 'color-mix(in srgb, var(--bg-warning) 8%, transparent)',
+    soon: 'color-mix(in srgb, var(--bg-info) 8%, transparent)',
+    within_hour: 'color-mix(in srgb, var(--bg-success) 8%, transparent)',
     later: 'var(--bg-surface)',
 };
 

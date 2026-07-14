@@ -92,13 +92,13 @@ export const About = () => {
                                         </div>
                                         <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Sparkles size={24} className="mb-4 text-on-primary/90" />
-                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.30)]">إبداع مستمر</p>
+                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]">إبداع مستمر</p>
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <div className="h-48 bg-primary-hover rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Target size={24} className="mb-4 text-on-primary/90" />
-                                            <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_rgba(0,0,0,0.30)]">أهداف محققة</h4>
+                                            <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                             <Image src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full" alt="تدريس فعال" />
@@ -239,37 +239,37 @@ export const About = () => {
             </section>
 
             {/* ── Join Our Family - Standalone Section ── */}
-            <section className="py-6 md:py-8 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0b0f1a 0%, #1a1035 40%, #2d1b4e 70%, #1a1035 100%)' }}>
+            <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary-active)] via-[var(--bg-primary)] to-[var(--bg-primary-active)]">
                 {/* Warm ambient glows */}
-                <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%)' }} />
-                <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%)' }} />
-                <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.04) 0%, transparent 70%)' }} />
+                <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 8%, transparent) 0%, transparent 70%)' }} />
+                <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 6%, transparent) 0%, transparent 70%)' }} />
+                <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-primary) 4%, transparent) 0%, transparent 70%)' }} />
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
                         <AnimateOnScroll animation="fadeUp">
-                            <div className="relative group overflow-hidden rounded-3xl" style={{ boxShadow: '0 40px 100px -15px rgba(0,0,0,0.50)' }}>
+                            <div className="relative group overflow-hidden rounded-3xl" style={{ boxShadow: '0 40px 100px -15px rgb(0_0_0 / 0.5)' }}>
                                 {/* Animated border glow */}
-                                <div className="absolute -inset-[2px] opacity-50 group-hover:opacity-80 transition-opacity duration-1000 rounded-3xl pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.4), rgba(245,158,11,0.1), rgba(139,92,246,0.3), rgba(245,158,11,0.4))' }} />
+                                <div className="absolute -inset-[2px] opacity-50 group-hover:opacity-80 transition-opacity duration-1000 rounded-3xl pointer-events-none" style={{ background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-warning) 40%, transparent), color-mix(in srgb, var(--bg-warning) 10%, transparent), color-mix(in srgb, var(--bg-primary) 30%, transparent), color-mix(in srgb, var(--bg-warning) 40%, transparent))' }} />
                                 
-                                <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f1320 0%, #1a1140 50%, #0f1320 100%)' }}>
+                                <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-hover)]">
                                     {/* Decorative pattern overlay */}
                                     <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30Z\' fill=\'none\' stroke=\'%23f59e0b\' stroke-width=\'0.5\'/%3E%3C/svg%3E")', backgroundSize: '60px 60px' }} />
 
                                     <div className="relative z-20 flex flex-col lg:flex-row items-stretch gap-10 lg:gap-16">
                                         {/* Content Side */}
                                         <div className="w-full lg:w-[58%] text-center lg:text-start flex flex-col justify-center">
-                                            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 lg:mb-8 mx-auto lg:mx-0" style={{ background: 'rgba(245,158,11,0.12)', border: '1px solid rgba(245,158,11,0.25)' }}>
+                                            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 lg:mb-8 mx-auto lg:mx-0" style={{ background: 'color-mix(in srgb, var(--bg-warning) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--bg-warning) 25%, transparent)' }}>
                                                 <Sparkles size={14} className="text-accent" />
                                                 <span className="text-xs font-black text-accent tracking-wider">انضم إلى عائلتنا</span>
                                             </div>
 
                                             <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-white">
                                                 هل أنت مستعد لتكون <br />
-                                                <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #fbbf24, #f59e0b, #d97706)' }}>جزءاً من حكايتنا؟</span>
+                                                <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--bg-warning), var(--text-warning), var(--text-warning-dark))' }}>جزءاً من حكايتنا؟</span>
                                             </h2>
 
-                                            <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                                            <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium text-white/70">
                                                 انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                             </p>
 
@@ -277,9 +277,7 @@ export const About = () => {
                                                 <Link
                                                     to="/courses"
                                                     onClick={() => window.scrollTo(0, 0)}
-                                                    className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3"
-                                                    style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0b0f1a', boxShadow: '0 8px 32px rgba(245,158,11,0.30)' }}
-                                                >
+                                                    className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] text-[var(--text-on-primary)] shadow-[0_8px_32px_rgb(245_158_11_/_0.3)]">
                                                     <span className="relative z-10">ابدأ رحلتك الآن</span>
                                                     <ArrowLeft size={18} className="relative z-10 group-hover:-translate-x-1.5 transition-transform" />
                                                 </Link>
@@ -287,8 +285,8 @@ export const About = () => {
                                                 <Link
                                                     to="/login"
                                                     onClick={() => window.scrollTo(0, 0)}
-                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border backdrop-blur-sm hover:-translate-y-1"
-                                                    style={{ background: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.85)' }}
+                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border backdrop-blur-sm hover:-translate-y-1 text-white/85"
+                                                    style={{ background: 'rgb(255_255_255 / 0.06)', borderColor: 'rgb(255_255_255 / 0.12)' }}
                                                 >
                                                     <span>تسجيل الدخول</span>
                                                 </Link>
@@ -298,11 +296,11 @@ export const About = () => {
                                         {/* Stats Side */}
                                         <div className="w-full lg:w-[42%] relative flex items-center">
                                             <div className="grid grid-cols-2 gap-3 w-full">
-                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                    <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(245,158,11,0.06), transparent 70%)' }} />
+                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm bg-white/5" style={{ border: '1px solid rgb(255_255_255 / 0.06)' }}>
+                                                    <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-warning) 6%, transparent), transparent 70%)' }} />
                                                     
                                                     <div className="relative z-10">
-                                                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'rgba(245,158,11,0.15)' }}>
+                                                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-warning) 15%, transparent)' }}>
                                                             <Users size={22} className="text-accent" />
                                                         </div>
                                                         <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">5k+</span>
@@ -310,11 +308,11 @@ export const About = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                    <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(139,92,246,0.06), transparent 70%)' }} />
+                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5" style={{ border: '1px solid rgb(255_255_255 / 0.06)' }}>
+                                                    <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-primary) 6%, transparent), transparent 70%)' }} />
                                                     
                                                     <div className="relative z-10">
-                                                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'rgba(139,92,246,0.15)' }}>
+                                                        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-primary) 15%, transparent)' }}>
                                                             <Target size={22} className="text-primary" />
                                                         </div>
                                                         <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">97.3%</span>

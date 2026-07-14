@@ -67,7 +67,7 @@ export const FinancialReport = ({
 
             <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(139,92,246,0.07)' }}>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)' }}>
                         <FileText size={16} style={{ color: 'var(--bg-primary)' }} />
                     </div>
                     <div>

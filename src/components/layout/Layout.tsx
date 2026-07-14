@@ -1,7 +1,6 @@
 import React, { useRef, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { PageTransition } from '../../shared/components/ui/PageTransition';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useCurrentUser, useSidebarCollapsed } from '../../context/AppContext';
@@ -63,13 +62,13 @@ export const Layout = () => {
                         ? "p-0"
                         : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 z-10"
                 )}>
-                    <PageTransition>
-                        <ErrorBoundary>
-                            <Suspense fallback={<PageLoader />}>
+                    <ErrorBoundary>
+                        <Suspense fallback={<PageLoader />}>
+                            <div key={location.pathname} className="animate-page-enter w-full h-full">
                                 <Outlet />
-                            </Suspense>
-                        </ErrorBoundary>
-                    </PageTransition>
+                            </div>
+                        </Suspense>
+                    </ErrorBoundary>
                 </main>
             </div>
 

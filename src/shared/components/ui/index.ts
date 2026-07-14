@@ -29,7 +29,6 @@ export type { CardProps }  from './Card';
 
 export { EmptyState }      from './EmptyState';
 
-export { PageTransition }  from './PageTransition';
 
 export { Spinner }         from './Spinner';
 

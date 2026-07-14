@@ -61,7 +61,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 <div className={cn(
                     "h-1.5 w-full",
-                    isDestructive ? "bg-error shadow-[0_0_15px_rgba(225,29,72,0.40)]" : "bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgba(92,89,242,0.40)]"
+                    isDestructive ? "bg-error shadow-[0_0_15px_rgb(225_29_72_/_0.4)]" : "bg-[var(--primary-color,var(--bg-primary))] shadow-[0_0_15px_rgb(92_89_242_/_0.4)]"
                 )}></div>
 
                 <div className="absolute top-0 start-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>

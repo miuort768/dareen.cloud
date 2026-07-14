@@ -28,7 +28,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'rgba(108,75,255,0.07)', color: 'var(--bg-primary)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                             {studentGrade?.charAt(0) || session.studentName.charAt(0)}
                         </div>
                         <div>
@@ -44,7 +44,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                         </div>
                     </div>
                     {session.status !== 'scheduled' && (
-                        <div className="px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? 'rgba(16,185,129,0.07)' : 'rgba(244,63,94,0.07)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
+                        <div className="px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: session.status === 'completed' ? 'color-mix(in srgb, var(--bg-success) 7%, transparent)' : 'color-mix(in srgb, var(--bg-error) 7%, transparent)', color: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}>
                             {session.status === 'completed' ? 'منفذة' : 'ملغاة'}
                         </div>
                     )}

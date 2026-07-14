@@ -377,7 +377,7 @@ export const MobileSchedule = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(108,75,255,0.03)', borderRight: '3px solid var(--bg-primary)' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 3%, transparent)', borderRight: '3px solid var(--bg-primary)' }}>
                                         <div>
                                             <span className="text-micro font-bold text-muted">الطالب</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.studentName}</p>
@@ -386,7 +386,7 @@ export const MobileSchedule = () => {
                                         <User size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(16,185,129,0.03)', borderRight: '3px solid var(--bg-success)' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-success) 3%, transparent)', borderRight: '3px solid var(--bg-success)' }}>
                                         <div>
                                             <span className="text-micro font-bold text-muted">المعلمة</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.teacherName}</p>
@@ -394,7 +394,7 @@ export const MobileSchedule = () => {
                                         <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                                     </div>
 
-                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'rgba(245,158,11,0.03)', borderRight: '3px solid var(--bg-warning)' }}>
+                                    <div className="flex items-center justify-between p-3.5 rounded-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-warning) 3%, transparent)', borderRight: '3px solid var(--bg-warning)' }}>
                                         <div>
                                             <span className="text-micro font-bold text-muted">الوقت</span>
                                             <p className="text-sm font-bold text-main dark:text-on-primary">{selectedEvent.time}</p>

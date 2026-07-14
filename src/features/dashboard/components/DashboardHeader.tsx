@@ -12,7 +12,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        const timer = setInterval(() => setCurrentTime(new Date()), 30000);
         return () => clearInterval(timer);
     }, []);
 
@@ -47,13 +47,13 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
                     </h1>
                     <div className="flex items-center gap-3 mt-2">
-                        <span className="inline-flex items-center gap-1.5 text-xs text-white/70">
-                            <Calendar size={12} strokeWidth={1.5} className="text-white/50" />
+                        <span className="inline-flex items-center gap-1.5 text-xs text-on-primary/70">
+                            <Calendar size={12} strokeWidth={1.5} className="text-on-primary/50" />
                             {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
                         </span>
                         <span className="w-0.5 h-3 bg-white/20" />
-                        <span className="inline-flex items-center gap-1 text-micro text-white/60">
-                            <TrendingUp size={10} strokeWidth={1.5} className="text-white/50" />
+                        <span className="inline-flex items-center gap-1 text-micro text-on-primary/60">
+                            <TrendingUp size={10} strokeWidth={1.5} className="text-on-primary/50" />
                             النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%
                         </span>
                     </div>
@@ -63,7 +63,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             {/* Widgets & Support */}
             <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
                 <div className="flex items-center gap-2 px-4 h-10 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl shadow-sm">
-                    <Clock size={14} strokeWidth={1.5} className="text-white/60" />
+                    <Clock size={14} strokeWidth={1.5} className="text-on-primary/60" />
                     <span className="text-xs font-medium text-on-primary tabular-nums">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>

@@ -51,14 +51,14 @@ export const MouseGlow: React.FC = () => {
                 }}
                 animate={{
                     scale: isHovered ? 1.8 : 1,
-                    backgroundColor: isHovered ? 'rgba(79,70,229,0.10)' : 'rgba(79,70,229,0.00)',
+                    backgroundColor: isHovered ? 'color-mix(in srgb, var(--bg-primary) 10%, transparent)' : 'color-mix(in srgb, var(--bg-primary) 0%, transparent)',
                     borderWidth: isHovered ? '2px' : '1px',
                 }}
             />
 
             {/* 3. Inner Crisp Dot */}
             <motion.div 
-                className="fixed top-0 end-0 w-1.5 h-1.5 rounded-full bg-primary dark:bg-primary shadow-[0_0_15px_rgba(79,70,229,0.80)]"
+                className="fixed top-0 end-0 w-1.5 h-1.5 rounded-full bg-primary dark:bg-primary shadow-[0_0_15px_rgb(79_70_229_/_0.8)]"
                 style={{
                     x: mouseX,
                     y: mouseY,

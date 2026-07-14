@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, Sparkles, X, Check } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+
 
 interface Announcement {
     id: string;
@@ -98,23 +98,14 @@ export const ModernAnnouncements: React.FC = () => {
                         <span className="text-micro font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={current.id}
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -10 }}
-                            transition={{ duration: 0.3 }}
-                            className="ps-1 mt-4"
-                        >
-                            <h4 className="text-main dark:text-on-primary font-medium text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
-                                {current.title}
-                            </h4>
-                            <p className="text-muted dark:text-muted text-xs md:text-sm leading-relaxed font-normal line-clamp-2">
-                                {current.content}
-                            </p>
-                        </motion.div>
-                    </AnimatePresence>
+                    <div key={current.id} className="animate-fadeIn ps-1 mt-4">
+                        <h4 className="text-main dark:text-on-primary font-medium text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
+                            {current.title}
+                        </h4>
+                        <p className="text-muted dark:text-muted text-xs md:text-sm leading-relaxed font-normal line-clamp-2">
+                            {current.content}
+                        </p>
+                    </div>
 
                     {/* Navigation */}
                     {announcements.length > 1 && (
@@ -128,23 +119,15 @@ export const ModernAnnouncements: React.FC = () => {
 
             {/* Progress Bar */}
             <div className="absolute bottom-0 start-0 h-1 bg-surface dark:bg-primary-active w-full" />
-            <motion.div 
-                className="absolute bottom-0 start-0 h-1 bg-info"
-                initial={{ width: "0%" }}
-                animate={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
-                transition={{ duration: 0.5 }}
+            <div 
+                className="absolute bottom-0 start-0 h-1 bg-info transition-all duration-500"
+                style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
             />
 
             {/* Acknowledgment Modal */}
-            <AnimatePresence>
-                {showAcknowledge && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-background/40">
-                        <motion.div 
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-white dark:bg-primary-active border border-border dark:border-border p-6 md:p-10 max-w-lg w-full rounded-2xl"
-                        >
+            {showAcknowledge && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-background/40">
+                    <div className="bg-white dark:bg-primary-active border border-border dark:border-border p-6 md:p-10 max-w-lg w-full rounded-2xl animate-fadeIn">
                             <div className="flex items-center gap-5 mb-8">
                                 <div className={cn("w-16 h-16 border border-white/10 flex items-center justify-center shadow-sm rounded-2xl", type.bg)}>
                                     <type.icon size={28} className={type.color} />
@@ -177,10 +160,9 @@ export const ModernAnnouncements: React.FC = () => {
                                     إغلاق
                                 </button>
                             </div>
-                        </motion.div>
                     </div>
-                )}
-            </AnimatePresence>
+                </div>
+            )}
         </div>
     );
 

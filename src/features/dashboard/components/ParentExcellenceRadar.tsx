@@ -18,7 +18,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
     if (!achievements || achievements.length === 0) return null;
 
     return (
-        <div className="bg-card border-4 border-border p-6 flex flex-col justify-between shadow-[8px_8px_0px_0px_rgba(255,255,255,0.10)] text-on-primary relative overflow-hidden group mb-8">
+        <div className="bg-card border-4 border-border p-6 flex flex-col justify-between shadow-[8px_8px_0px_0px_rgb(255_255_255_/_0.1)] text-on-primary relative overflow-hidden group mb-8">
             
             {/* Glossy overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
@@ -37,7 +37,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
                                     <Star size={24} className="text-warning fill-current" />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-medium uppercase tracking-tighter text-white/90">{ach.studentName}</h4>
+                                    <h4 className="text-sm font-medium uppercase tracking-tighter text-on-primary/90">{ach.studentName}</h4>
                                     <p className="text-micro font-normal text-warning uppercase leading-none mt-1">{ach.achievement}</p>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-micro font-medium uppercase tracking-widest text-white/40">
+            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-micro font-medium uppercase tracking-widest text-on-primary/40">
                 <span>تم التحديث: اليوم</span>
                 <div onClick={() => navigate('/parent-students')} className="flex items-center gap-1 group-hover:text-warning transition-colors cursor-pointer">
                     عرض كافة الإنجازات <ChevronLeft size={12} />

@@ -168,7 +168,7 @@ export const NotificationsCenter = ({
                             "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-lg",
                             activeTab === 'smart' ? "shadow-sm" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
-                        style={activeTab === 'smart' ? { backgroundColor: color, color: '#fff' } : {}}
+                        style={activeTab === 'smart' ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
                     >
                         <Zap size={12} />
                         إخطارات ذكية
@@ -179,7 +179,7 @@ export const NotificationsCenter = ({
                             "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-lg",
                             activeTab === 'room' ? "shadow-sm" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
-                        style={activeTab === 'room' ? { backgroundColor: color, color: '#fff' } : {}}
+                        style={activeTab === 'room' ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
                     >
                         <Bell size={12} />
                         غرفة التنبيهات

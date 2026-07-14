@@ -89,16 +89,16 @@ export const RolesPage = () => {
             {editingRole && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'rgba(0,0,0,0.50)', display: 'flex',
+                    background: 'rgb(0_0_0 / 0.5)', display: 'flex',
                     justifyContent: 'center', alignItems: 'center', zIndex: 1000
                 }}>
-                    <div style={{ background: '#fff', padding: 24, borderRadius: 8, maxHeight: '80vh', overflow: 'auto', width: 600 }}>
+                    <div className="bg-card" style={{ padding: 24, borderRadius: 8, maxHeight: '80vh', overflow: 'auto', width: 600 }}>
                         <h3>تعديل: {editingRole.label}</h3>
                         <input value={newLabel} onChange={e => setNewLabel(e.target.value)} style={{ width: '100%', marginBottom: 8 }} />
                         <input value={newDesc} onChange={e => setNewDesc(e.target.value)} style={{ width: '100%', marginBottom: 16 }} />
                         {Object.entries(groups).map(([group, perms]) => (
                             <div key={group} style={{ marginBottom: 16 }}>
-                                <h4 style={{ margin: '8px 0', color: '#555' }}>{group}</h4>
+                                <h4 className="text-muted" style={{ margin: '8px 0' }}>{group}</h4>
                                 {perms.map(p => (
                                     <label key={p.id} style={{ display: 'block', margin: '4px 0', cursor: 'pointer' }}>
                                         <input type="checkbox" checked={selectedPerms.includes(p.id)} onChange={() => togglePerm(p.id)} />

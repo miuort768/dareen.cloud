@@ -187,7 +187,7 @@ const TabButton = ({ active, onClick, icon: Icon, label, color }: { active: bool
             "flex-1 px-6 py-2 font-bold text-micro transition-all flex items-center justify-center gap-2 rounded-lg",
             !active && "text-muted hover:text-main"
         )}
-        style={active ? { backgroundColor: color, color: '#fff' } : {}}
+        style={active ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
     >
         <Icon size={14} />
         {label}

@@ -21,7 +21,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
     ];
 
     return (
-        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
+        <div className="bg-white border-4 border-border p-6 dark:bg-card dark:border-border shadow-[8px_8px_0px_0px_black] relative overflow-hidden group">
             
             <div className="flex items-center gap-2 mb-6 text-main dark:text-on-primary">
                 <Target size={20} className="text-primary" />
@@ -37,7 +37,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                         <div key={idx} className="space-y-2">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className={cn("p-1.5 border-2 border-border shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]", 
+                                    <div className={cn("p-1.5 border-2 border-border shadow-[2px_2px_0px_0px_black]", 
                                         isAchieved ? "bg-success text-on-primary" : "bg-surface text-muted"
                                     )}>
                                         {goal.icon}
@@ -68,7 +68,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                 <div className="flex items-center gap-3">
                     <Award size={20} className="text-warning animate-bounce" />
                     <div>
-                        <p className="text-micro font-medium text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
+                        <p className="text-micro font-medium text-on-primary/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
                         <h4 className="text-xs font-medium uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
                     </div>
                 </div>

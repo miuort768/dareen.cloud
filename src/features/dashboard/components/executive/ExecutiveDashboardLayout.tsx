@@ -9,26 +9,8 @@ import { SystemStatus } from './SystemStatus';
 import { ActivityFeed } from './ActivityFeed';
 import { InsightsPanel } from './InsightsPanel';
 import { QuickActionsGrid } from './QuickActionsGrid';
-import { motion } from 'framer-motion';
-
-const stagger = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: { delay: i * 0.08, duration: 0.4, ease: 'easeOut' },
-    }),
-};
-
-const AnimatedSection = ({ children, index = 0 }: { children: React.ReactNode; index?: number }) => (
-    <motion.div
-        custom={index}
-        initial="hidden"
-        animate="visible"
-        variants={stagger}
-    >
-        {children}
-    </motion.div>
+const AnimatedSection = ({ children }: { children: React.ReactNode }) => (
+    <div className="animate-fadeIn">{children}</div>
 );
 
 interface ErrorFallbackProps { children: ReactNode }

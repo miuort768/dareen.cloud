@@ -426,12 +426,12 @@ export const MobileAttendance = () => {
                                             <div key={teacher} className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 overflow-hidden">
                                                 <div className="px-4 py-2.5 border-b border-border/50 dark:border-border/50 flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                                                             {teacher.charAt(0)}
                                                         </div>
                                                         <span className="text-xs font-bold text-main dark:text-on-primary">{teacher}</span>
                                                     </div>
-                                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                                                         {filtered.length} طالب
                                                     </span>
                                                 </div>
@@ -452,7 +452,7 @@ export const MobileAttendance = () => {
                                                             >
                                                                 <div className="flex items-center justify-between">
                                                                     <div className="flex items-center gap-2">
-                                                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                                                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                                                                             {getGradeDisplay(student.name, student.grade)}
                                                                         </div>
                                                                         <div>
@@ -681,7 +681,7 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
         >
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                         {student.name.charAt(0)}
                     </div>
                     <div>
@@ -699,7 +699,7 @@ const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: Stu
                 </div>
                 <div className="text-end">
                     {todaySlot ? (
-                        <span className="text-micro font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: 'rgba(139,92,246,0.07)', color: 'var(--bg-primary)' }}>
+                        <span className="text-micro font-bold px-2 py-1 rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
                             {todaySlot.hour}:00 {todaySlot.period === 'am' ? 'ص' : 'م'}
                         </span>
                     ) : (

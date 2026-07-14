@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { PlusCircle, UserPlus, FileText, Settings, Shield, BookOpen, Zap } from 'lucide-react';
 
 const QUICK_ACTIONS = [
-    { label: 'إضافة طالب', icon: UserPlus, color: 'var(--chart-1)', bg: 'rgba(99,102,241,0.08)', path: '/students/add' },
-    { label: 'تسجيل جلسة', icon: PlusCircle, color: 'var(--chart-2)', bg: 'rgba(34,197,94,0.08)', path: '/sessions/add' },
-    { label: 'رفع ملف', icon: BookOpen, color: 'var(--chart-4)', bg: 'rgba(168,85,247,0.08)', path: '/study-material/upload' },
-    { label: 'التقارير', icon: FileText, color: 'var(--chart-5)', bg: 'rgba(249,115,22,0.08)', path: '/reports' },
-    { label: 'نسخ احتياطي', icon: Shield, color: 'var(--chart-3)', bg: 'rgba(236,72,153,0.08)', path: '/settings' },
-    { label: 'الإعدادات', icon: Settings, color: 'var(--text-muted)', bg: 'rgba(100,116,139,0.08)', path: '/settings' },
+    { label: 'إضافة طالب', icon: UserPlus, color: 'var(--chart-1)', bg: 'color-mix(in srgb, var(--chart-1) 8%, transparent)', path: '/students/add' },
+    { label: 'تسجيل جلسة', icon: PlusCircle, color: 'var(--chart-2)', bg: 'color-mix(in srgb, var(--chart-2) 8%, transparent)', path: '/sessions/add' },
+    { label: 'رفع ملف', icon: BookOpen, color: 'var(--chart-4)', bg: 'color-mix(in srgb, var(--chart-4) 8%, transparent)', path: '/study-material/upload' },
+    { label: 'التقارير', icon: FileText, color: 'var(--chart-5)', bg: 'color-mix(in srgb, var(--chart-5) 8%, transparent)', path: '/reports' },
+    { label: 'نسخ احتياطي', icon: Shield, color: 'var(--chart-3)', bg: 'color-mix(in srgb, var(--chart-3) 8%, transparent)', path: '/settings' },
+    { label: 'الإعدادات', icon: Settings, color: 'var(--text-muted)', bg: 'color-mix(in srgb, var(--text-muted) 8%, transparent)', path: '/settings' },
 ];
 
 export const QuickActionsGrid = memo(function QuickActionsGrid() {

@@ -3,9 +3,9 @@ import type { ExecutiveAlerts as AlertsType } from '../../services/executiveServ
 import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react';
 
 const SEVERITY_CONFIG = {
-    critical: { icon: XCircle, color: 'var(--bg-error)', bg: 'rgba(244,63,94,0.08)', label: 'حرج' },
-    warning: { icon: AlertTriangle, color: 'var(--bg-warning)', bg: 'rgba(245,158,11,0.08)', label: 'تحذير' },
-    reminder: { icon: Clock, color: 'var(--bg-info)', bg: 'rgba(59,130,246,0.08)', label: 'تذكير' },
+    critical: { icon: XCircle, color: 'var(--bg-error)', bg: 'color-mix(in srgb, var(--bg-error) 8%, transparent)', label: 'حرج' },
+    warning: { icon: AlertTriangle, color: 'var(--bg-warning)', bg: 'color-mix(in srgb, var(--bg-warning) 8%, transparent)', label: 'تحذير' },
+    reminder: { icon: Clock, color: 'var(--bg-info)', bg: 'color-mix(in srgb, var(--bg-info) 8%, transparent)', label: 'تذكير' },
     info: { icon: Info, color: 'var(--text-muted)', bg: 'var(--bg-surface)', label: 'معلومة' },
 };
 
@@ -51,7 +51,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                 <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1 scrollbar-none">
                     {(['all', 'critical', 'warning', 'reminder', 'info'] as const).map((key) => {
                         const isActive = filter === key;
-                        const cfg = key === 'all' ? { color: 'var(--text-muted)', bg: 'rgba(100,116,139,0.08)', label: 'الكل' } : SEVERITY_CONFIG[key];
+                        const cfg = key === 'all' ? { color: 'var(--text-muted)', bg: 'color-mix(in srgb, var(--text-muted) 8%, transparent)', label: 'الكل' } : SEVERITY_CONFIG[key];
                         return (
                             <button
                                 key={key}

@@ -14,7 +14,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
 
     return (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60  animate-in fade-in duration-300">
-            <div className="bg-card w-full max-w-md border-4 border-border shadow-[20px_20px_0px_0px_rgba(0,0,0,0.30)] relative overflow-hidden group">
+            <div className="bg-card w-full max-w-md border-4 border-border shadow-[20px_20px_0px_0px_rgb(0_0_0_/_0.3)] relative overflow-hidden group">
                 
                 {/* Header Actions - Hidden on Print */}
                 <div className="p-4 flex justify-between items-center border-b-2 border-border print:hidden">
