@@ -116,15 +116,15 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
             </div>
         </div>
         <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-end-8 duration-700 delay-300">
-            <div className="relative w-full max-w-[300px] aspect-[3/4] flex items-center justify-center">
+            <div className="relative w-full max-w-[420px] aspect-[3/4] flex items-center justify-center">
                 <div className="absolute inset-[3%] border-[1.5px] border-dashed border-primary/40 rounded-full animate-spin-slow pointer-events-none"></div>
                 <div className="absolute inset-[7%] border-[1.5px] border-dashed border-accent/30 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)]/20 to-[var(--bg-primary)]/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-                <picture>
+                <picture className="w-full h-full flex items-center justify-center">
                     <source srcSet="/book3.webp" type="image/webp" />
                     <source srcSet="/book3.avif" type="image/avif" />
                     <img src="/book3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
-                        className="relative z-10 w-full h-full object-contain drop-shadow-lg p-4" />
+                        className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-lg" />
                 </picture>
             </div>
         </div>
