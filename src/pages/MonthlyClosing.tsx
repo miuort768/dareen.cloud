@@ -158,13 +158,13 @@ export const MonthlyClosing: React.FC = () => {
                         </div>
                         <div>
                             <h1 className="text-lg font-bold text-on-primary leading-tight">التقرير الشهري والإغلاق المالي</h1>
-                            <p className="text-micro font-bold text-white/70 mt-0.5">تحليل الأداء المالي والإداري للشهر الحالي</p>
+                            <p className="text-micro font-bold text-on-primary/70 mt-0.5">تحليل الأداء المالي والإداري للشهر الحالي</p>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 no-print">
                         <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15 backdrop-blur-sm">
-                            <Calendar size={13} className="text-white/70" />
+                            <Calendar size={13} className="text-on-primary/70" />
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
@@ -181,7 +181,7 @@ export const MonthlyClosing: React.FC = () => {
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
-                            <span className="text-micro text-white/50">إلى</span>
+                            <span className="text-micro text-on-primary/50">إلى</span>
                             <input
                                 type="date"
                                 className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none cursor-pointer w-24"

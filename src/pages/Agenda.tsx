@@ -147,7 +147,7 @@ export const Agenda = () => {
                                 "px-4 py-2 text-micro font-bold transition-all whitespace-nowrap rounded-none",
                                 activeDay === day
                                     ? "bg-white text-warning"
-                                    : "bg-white/15 text-white/70 hover:bg-white/30"
+                                    : "bg-white/15 text-on-primary/70 hover:bg-white/30"
                             )}
                         >
                             {day}
@@ -156,13 +156,13 @@ export const Agenda = () => {
                 </div>
 
                 <div className="relative w-full md:w-64 shrink-0">
-                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" size={14} />
+                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary/50" size={14} />
                     <input
                         type="text"
                         placeholder="بحث عن طالب..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 ps-10 py-2 text-xs font-bold outline-none rounded-none"
+                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-on-primary/50 ps-10 py-2 text-xs font-bold outline-none rounded-none"
                     />
                 </div>
             </div>

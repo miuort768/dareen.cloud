@@ -101,24 +101,24 @@ export const AdminContacts = () => {
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 md:gap-5">
                             <div className="flex items-center gap-3 sm:gap-4">
                                 <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-none bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0 shadow-inner">
-                                    <Mail size={20} className="sm:hidden text-white" />
-                                    <Mail size={24} className="hidden sm:inline md:hidden text-white" />
-                                    <Mail size={26} className="hidden md:inline text-white" />
+                                    <Mail size={20} className="sm:hidden text-on-primary" />
+                                    <Mail size={24} className="hidden sm:inline md:hidden text-on-primary" />
+                                    <Mail size={26} className="hidden md:inline text-on-primary" />
                                 </div>
-                                <div className="text-white">
-                                    <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold font-heading leading-tight text-white">رسائل الاتصال</h1>
-                                    <p className="text-xs sm:text-sm text-white/70 mt-0.5 md:mt-1">{messages.length} رسالة</p>
+                                <div className="text-on-primary">
+                                    <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold font-heading leading-tight text-on-primary">رسائل الاتصال</h1>
+                                    <p className="text-xs sm:text-sm text-on-primary/70 mt-0.5 md:mt-1">{messages.length} رسالة</p>
                                 </div>
                             </div>
                             <div className="relative w-full md:w-auto md:min-w-[280px] lg:min-w-[320px]">
-                                <Search className="absolute start-3 sm:start-4 top-1/2 -translate-y-1/2 text-white/50" size={15} />
+                                <Search className="absolute start-3 sm:start-4 top-1/2 -translate-y-1/2 text-on-primary/50" size={15} />
                                 <input
                                     type="text"
                                     placeholder="ابحث بالاسم أو الهاتف أو الموضوع..."
                                     aria-label="ابحث في الرسائل"
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
-                                    className="w-full bg-white/15 backdrop-blur-sm border border-white/20 rounded-none py-3 sm:py-3.5 md:py-4 ps-9 sm:ps-10 pe-3 sm:pe-4 text-xs sm:text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/15 min-h-[44px] transition-all duration-200"
+                                    className="w-full bg-white/15 backdrop-blur-sm border border-white/20 rounded-none py-3 sm:py-3.5 md:py-4 ps-9 sm:ps-10 pe-3 sm:pe-4 text-xs sm:text-sm text-on-primary placeholder:text-on-primary/40 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/15 min-h-[44px] transition-all duration-200"
                                 />
                             </div>
                         </div>

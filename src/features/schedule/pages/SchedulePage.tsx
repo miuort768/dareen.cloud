@@ -186,20 +186,20 @@ export const Schedule = () => {
                         </div>
                         <div>
                             <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">الجداول الدراسية</h1>
-                            <p className="text-xs font-bold text-white/70 mt-0.5">جدول الحصص الأسبوعي</p>
+                            <p className="text-xs font-bold text-on-primary/70 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2 no-print">
                         {/* Search */}
                         <div className="relative">
-                            <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50" />
+                            <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary/50" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-white/50 text-micro font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
+                                className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-on-primary/50 text-micro font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all"
                             />
                         </div>
 
@@ -210,7 +210,7 @@ export const Schedule = () => {
                                 "h-9 px-2.5 text-micro font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5 border",
                                 filterDay === todayDayName
                                     ? "bg-white/25 border-white/30 text-on-primary"
-                                    : "bg-white/15 border-white/20 text-white/70 hover:bg-white/25 hover:text-on-primary"
+                                    : "bg-white/15 border-white/20 text-on-primary/70 hover:bg-white/25 hover:text-on-primary"
                             )}
                         >
                             <Clock size={12} />
@@ -368,7 +368,7 @@ export const Schedule = () => {
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
                             </h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
                                 <X size={16} />
                             </button>
                         </div>

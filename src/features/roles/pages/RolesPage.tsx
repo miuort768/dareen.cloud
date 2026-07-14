@@ -74,10 +74,10 @@ export const RolesPage = () => {
             </div>
 
             {roles.map(role => (
-                <div key={role.id} style={{ marginBottom: 16, padding: 16, border: '1px solid #ddd', borderRadius: 8 }}>
+                <div key={role.id} style={{ marginBottom: 16, padding: 16, border: '1px solid var(--border-border)', borderRadius: 8 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <strong>{role.label}</strong>
-                        <span style={{ color: '#888' }}>المستخدمون: {role._count?.userRoles || 0}</span>
+                        <span style={{ color: 'var(--text-muted)' }}>المستخدمون: {role._count?.userRoles || 0}</span>
                     </div>
                     <div style={{ marginTop: 8 }}>
                         <button onClick={() => startEdit(role)} style={{ marginLeft: 8 }}>تعديل الصلاحيات</button>

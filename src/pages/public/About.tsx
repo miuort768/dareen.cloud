@@ -264,12 +264,12 @@ export const About = () => {
                                                 <span className="text-xs font-black text-accent tracking-wider">انضم إلى عائلتنا</span>
                                             </div>
 
-                                            <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-white">
+                                            <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-on-primary">
                                                 هل أنت مستعد لتكون <br />
                                                 <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, var(--bg-warning), var(--text-warning), var(--text-warning-dark))' }}>جزءاً من حكايتنا؟</span>
                                             </h2>
 
-                                            <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium text-white/70">
+                                            <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium text-on-primary/70">
                                                 انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                             </p>
 
@@ -285,7 +285,7 @@ export const About = () => {
                                                 <Link
                                                     to="/login"
                                                     onClick={() => window.scrollTo(0, 0)}
-                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border backdrop-blur-sm hover:-translate-y-1 text-white/85"
+                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border backdrop-blur-sm hover:-translate-y-1 text-on-primary/85"
                                                     style={{ background: 'rgb(255_255_255 / 0.06)', borderColor: 'rgb(255_255_255 / 0.12)' }}
                                                 >
                                                     <span>تسجيل الدخول</span>
@@ -303,7 +303,7 @@ export const About = () => {
                                                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-warning) 15%, transparent)' }}>
                                                             <Users size={22} className="text-accent" />
                                                         </div>
-                                                        <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">5k+</span>
+                                                        <span className="text-3xl md:text-4xl font-black text-on-primary mb-1 block tracking-tight">5k+</span>
                                                         <span className="text-micro text-accent opacity-70 font-black">طالب فعال</span>
                                                     </div>
                                                 </div>
@@ -315,7 +315,7 @@ export const About = () => {
                                                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-primary) 15%, transparent)' }}>
                                                             <Target size={22} className="text-primary" />
                                                         </div>
-                                                        <span className="text-3xl md:text-4xl font-black text-white mb-1 block tracking-tight">97.3%</span>
+                                                        <span className="text-3xl md:text-4xl font-black text-on-primary mb-1 block tracking-tight">97.3%</span>
                                                         <span className="text-micro text-primary opacity-70 font-black">نسبة نجاح</span>
                                                     </div>
                                                 </div>

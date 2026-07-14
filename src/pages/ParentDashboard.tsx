@@ -667,7 +667,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                                     </div>
                                                     <div>
                                                         <h3 className="font-bold text-xs">حصة جارية الآن!</h3>
-                                                        <p className="text-micro font-medium text-white/80">{child?.name || session.studentId} — {session.subject}</p>
+                                                        <p className="text-micro font-medium text-on-primary/80">{child?.name || session.studentId} — {session.subject}</p>
                                                     </div>
                                                 </div>
                                                 <div className="text-xl font-bold font-mono tracking-widest">{formatTime(session.startedAt)}</div>
@@ -732,7 +732,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                             <Award size={18} className="text-on-primary opacity-60" />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <div className="flex justify-between text-micro text-white/70">
+                                            <div className="flex justify-between text-micro text-on-primary/70">
                                                 <span>الهدف: 100</span>
                                                 <span>{stats.academicProgress}%</span>
                                             </div>
@@ -825,7 +825,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <div className="relative z-10 flex items-center justify-between">
                                         <div>
                                             <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
-                                            <p className="text-micro text-white/70 font-medium">فريق الدعم متاح 24 ساعة</p>
+                                            <p className="text-micro text-on-primary/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                         </div>
                                         <a href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`} target="_blank" rel="noopener noreferrer"
                                             className="bg-card text-primary px-3.5 py-2.5 rounded-card font-bold text-micro flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">

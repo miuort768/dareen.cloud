@@ -126,8 +126,8 @@ export const PublicFooter = () => {
                             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-on-primary/10 to-transparent animate-shine-slow z-0 pointer-events-none"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 bg-accent animate-pulse"></span>
-                            <span className="relative z-10 text-micro font-bold text-white/80 tracking-wide font-heading">تصميم وتطوير</span>
-                            <span className="relative z-10 text-micro font-black text-white font-heading">مستر احمد عبدالله</span>
+                            <span className="relative z-10 text-micro font-bold text-on-primary/80 tracking-wide font-heading">تصميم وتطوير</span>
+                            <span className="relative z-10 text-micro font-black text-on-primary font-heading">مستر احمد عبدالله</span>
                             <span className="relative z-10 w-1.5 h-1.5 bg-accent animate-pulse"></span>
                         </div>
                     </div>

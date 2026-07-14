@@ -57,7 +57,7 @@ export const SessionsModal = ({
                     <div className="relative z-10 flex items-center gap-2 ms-4">
                         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-xl border border-white/10">
                             <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
-                            <span className="text-micro text-white/60">→</span>
+                            <span className="text-micro text-on-primary/60">→</span>
                             <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
                         </div>
                     </div>

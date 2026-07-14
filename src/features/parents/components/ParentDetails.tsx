@@ -31,7 +31,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 
                 <button
                     onClick={onClose}
-                    className="absolute end-4 top-4 text-white/60 hover:text-on-primary p-2 hover:bg-white/10 transition-all z-20 rounded-xl"
+                    className="absolute end-4 top-4 text-on-primary/60 hover:text-on-primary p-2 hover:bg-white/10 transition-all z-20 rounded-xl"
                 >
                     <X size={18} />
                 </button>
@@ -42,22 +42,22 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                     </div>
                     <h3 className="font-bold text-xl text-on-primary uppercase tracking-tighter mb-1">{parent.name}</h3>
                     <div className="flex items-center gap-2">
-                         <span className="text-micro font-medium text-white/70 uppercase tracking-widest bg-white/15 backdrop-blur-sm px-3 py-0.5 rounded-lg">
+                         <span className="text-micro font-medium text-on-primary/70 uppercase tracking-widest bg-white/15 backdrop-blur-sm px-3 py-0.5 rounded-lg">
                             ID: {parent.id.substring(0, 8)}
                          </span>
                     </div>
                     
                     <div className="flex flex-col gap-2 mt-4 w-full max-w-[280px]">
                         <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-xs font-medium text-on-primary group hover:bg-white/15 transition-colors rounded-xl">
-                            <span className="text-white/50 uppercase tracking-widest">Phone</span>
+                            <span className="text-on-primary/50 uppercase tracking-widest">Phone</span>
                             <div className="flex items-center gap-2">
                                 <Phone size={11} className="text-success" />
                                 {parent.phone}
                             </div>
                         </div>
                         {parent.email && (
-                            <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-micro font-medium text-white/80 group hover:bg-white/15 transition-colors rounded-xl">
-                                <span className="text-white/50 uppercase tracking-widest">Email</span>
+                            <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-micro font-medium text-on-primary/80 group hover:bg-white/15 transition-colors rounded-xl">
+                                <span className="text-on-primary/50 uppercase tracking-widest">Email</span>
                                 <div className="flex items-center gap-2">
                                     <Mail size={11} className="text-info" />
                                     <span className="truncate max-w-[140px]">{parent.email}</span>

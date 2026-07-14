@@ -195,18 +195,18 @@ export const Students = () => {
                         </div>
                         <div>
                             <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">إدارة الطلاب</h1>
-                            <p className="text-micro md:text-micro font-bold text-white/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
+                            <p className="text-micro md:text-micro font-bold text-on-primary/70 mt-0.5">سجل الطلاب والمنتسبين — {allStudents.length} طالب نشط</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="relative">
-                            <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-white/50" />
+                            <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-on-primary/50" />
                             <input
                                 type="text"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full md:w-52 border text-on-primary placeholder:text-white/50 text-micro md:text-micro font-bold px-7 py-1 outline-none transition-all rounded-2xl bg-white/15 border-white/20"
+                                className="w-full md:w-52 border text-on-primary placeholder:text-on-primary/50 text-micro md:text-micro font-bold px-7 py-1 outline-none transition-all rounded-2xl bg-white/15 border-white/20"
                             />
                         </div>
                         <button onClick={() => { setEditId(null); setShowAddForm(true); }} className="flex items-center gap-1 bg-card hover:bg-surface text-primary text-micro md:text-micro font-bold px-2 md:px-3 py-1 md:py-1.5 transition-all active:scale-[0.97] shadow-sm rounded-2xl"><Plus size={11} /> إضافة</button>
