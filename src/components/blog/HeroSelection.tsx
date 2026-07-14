@@ -121,9 +121,9 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                 <div className="absolute inset-12 border border-dashed border-primary/8 rounded-full" />
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-3xl" />
                 <picture>
-                    <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
-                    <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
-                    <img src="/dareen_books_portal_v3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
+                    <source srcSet="/book3.webp" type="image/webp" />
+                    <source srcSet="/book3.avif" type="image/avif" />
+                    <img src="/book3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
                         className="relative z-10 w-full h-auto object-contain drop-shadow-lg" />
                 </picture>
             </div>
