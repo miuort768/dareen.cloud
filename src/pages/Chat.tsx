@@ -159,7 +159,7 @@ export const Chat: React.FC = () => {
             <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shadow-[0_0_15px_rgb(52_211_153_/_0.3)] shrink-0 bg-white/5 ">
-                        <Image src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full" />
+                        <Image src="/chat-avatar.webp" alt="الشعار" className="w-full h-full" onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }} />
                     </div>
                     <div>
                         <div className="flex flex-col">

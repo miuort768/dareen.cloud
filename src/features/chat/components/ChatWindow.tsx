@@ -124,7 +124,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
                         onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
                     >
-                        <Image src="/chat-avatar.jpg" alt="avatar" className="w-full h-full" />
+                        <Image src="/chat-avatar.webp" alt="avatar" className="w-full h-full" onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }} />
                     </div>
 
                     <div className="flex flex-col text-start">

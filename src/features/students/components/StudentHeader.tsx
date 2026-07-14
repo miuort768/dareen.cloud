@@ -16,7 +16,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
 
             <div className="relative z-10 flex items-center gap-4">
                 <div className="w-12 h-12 overflow-hidden border-2 border-success shadow-lg shrink-0 bg-white/5 ">
-                        <Image src="/chat-avatar.jpg" alt="الشعار" className="w-full h-full" />
+                        <Image src="/chat-avatar.webp" alt="الشعار" className="w-full h-full" onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }} />
                     </div>
                 <div>
                     <h1 className="text-sm md:text-xl font-medium text-on-primary uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>

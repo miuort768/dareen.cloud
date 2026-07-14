@@ -52,9 +52,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-success/30 dark:border-success/30 shadow-sm shrink-0">
                         <Image 
-                            src="/chat-avatar.jpg" 
+                            src="/chat-avatar.webp" 
                             alt="avatar" 
-                            className="w-full h-full" 
+                            className="w-full h-full"
+                            onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }}
                         />
                     </div>
                     <div className="flex flex-col text-start">
@@ -132,9 +133,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 <div className="shrink-0 relative">
                                     <div className="w-12 h-12 rounded-full overflow-hidden bg-surface dark:bg-card border border-border dark:border-white/10 shadow-sm">
                                         <Image 
-                                            src="/chat-avatar.jpg" 
+                                            src="/chat-avatar.webp" 
                                             alt="chat" 
                                             className="w-full h-full"
+                                            onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }}
                                         />
                                     </div>
                                 </div>
