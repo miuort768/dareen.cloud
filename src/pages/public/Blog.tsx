@@ -199,7 +199,7 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <main className="md:hidden pb-0 px-3 relative flex-1 bg-surface dark:bg-background">
+      <main className="md:hidden pb-0 px-3 relative bg-surface dark:bg-background">
         {isHeroView ? (
           <div className="pb-6">
             <div className="flex items-center justify-between mb-5 mt-2">
@@ -275,7 +275,7 @@ export const Blog = () => {
       </main>
 
       {/* Desktop */}
-      <main className="hidden md:block flex-grow pt-24 md:pt-32 pb-6 relative overflow-hidden">
+      <main className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
