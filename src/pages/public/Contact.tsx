@@ -157,8 +157,9 @@ export const Contact = () => {
                                     {/* Row: Name + Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
-                                            <label className="text-micro font-black text-muted  block">الاسم الكامل</label>
+                                            <label htmlFor="contact-name" className="text-micro font-black text-muted  block">الاسم الكامل</label>
                                             <input
+                                                id="contact-name"
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
@@ -167,8 +168,9 @@ export const Contact = () => {
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="text-micro font-black text-muted  block">رقم الهاتف</label>
+                                            <label htmlFor="contact-phone" className="text-micro font-black text-muted  block">رقم الهاتف</label>
                                             <input
+                                                id="contact-phone"
                                                 required
                                                 type="tel"
                                                 inputMode="numeric"
@@ -184,8 +186,9 @@ export const Contact = () => {
 
                                     {/* Subject */}
                                     <div className="space-y-1.5">
-                                        <label className="text-micro font-black text-muted  block">الموضوع</label>
+                                        <label htmlFor="contact-subject" className="text-micro font-black text-muted  block">الموضوع</label>
                                         <select
+                                            id="contact-subject"
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
                                             className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
@@ -201,8 +204,9 @@ export const Contact = () => {
 
                                     {/* Curriculum */}
                                     <div className="space-y-1.5">
-                                        <label className="text-micro font-black text-muted block">المنهج</label>
+                                        <label htmlFor="contact-curriculum" className="text-micro font-black text-muted block">المنهج</label>
                                         <select
+                                            id="contact-curriculum"
                                             value={formData.curriculum}
                                             onChange={e => setFormData(p => ({ ...p, curriculum: e.target.value }))}
                                             className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
@@ -219,8 +223,9 @@ export const Contact = () => {
 
                                     {/* Message */}
                                     <div className="space-y-1.5">
-                                        <label className="text-micro font-black text-muted  block">رسالتك</label>
+                                        <label htmlFor="contact-message" className="text-micro font-black text-muted  block">رسالتك</label>
                                         <textarea
+                                            id="contact-message"
                                             rows={4}
                                             value={formData.message}
                                             onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}

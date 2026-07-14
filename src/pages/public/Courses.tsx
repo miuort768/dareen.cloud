@@ -122,6 +122,7 @@ export const Courses = () => {
             <div className="relative group">
               <input
                 type="text"
+                aria-label="ابحث عن دورتك المفضلة"
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

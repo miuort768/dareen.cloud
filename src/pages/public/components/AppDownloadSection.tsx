@@ -10,11 +10,12 @@ export const AppDownloadSection = () => {
             e.preventDefault();
             deferredPrompt.current = e;
         };
+        const onInstalled = () => setPwaInstalled(true);
         window.addEventListener('beforeinstallprompt', handler);
-        window.addEventListener('appinstalled', () => setPwaInstalled(true));
+        window.addEventListener('appinstalled', onInstalled);
         return () => {
             window.removeEventListener('beforeinstallprompt', handler);
-            window.removeEventListener('appinstalled', () => setPwaInstalled(true));
+            window.removeEventListener('appinstalled', onInstalled);
         };
     }, []);
 
@@ -60,11 +61,9 @@ export const AppDownloadSection = () => {
                                         <div className="text-sm font-black leading-tight -mt-0.5">Google Play</div>
                                     </div>
                                 </a>
-                                <a
-                                    href="https://apps.apple.com/app/dareen-app/id123456789"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="px-8 py-3.5 bg-card text-muted border border-border font-bold text-sm hover:border-primary hover:text-primary hover:bg-primary-soft transition-all flex items-center justify-center rounded-xl"
+                                <button
+                                    onClick={(e) => { e.preventDefault(); alert('قريباً في متجر آبل'); }}
+                                    className="px-8 py-3.5 bg-card text-muted border border-border font-bold text-sm hover:border-primary hover:text-primary hover:bg-primary-soft transition-all flex items-center justify-center rounded-xl cursor-pointer"
                                 >
                                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                                         <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
@@ -73,7 +72,7 @@ export const AppDownloadSection = () => {
                                         <div className="text-micro text-muted font-medium leading-tight">حمله من</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
                                     </div>
-                                </a>
+                                </button>
                                 {!pwaInstalled && (
                                 <button
                                     onClick={handlePwaInstall}
@@ -142,11 +141,9 @@ export const AppDownloadSection = () => {
                                 <div className="text-sm font-black leading-tight -mt-0.5">Google Play</div>
                             </div>
                         </a>
-                        <a
-                            href="https://apps.apple.com/app/dareen-app/id123456789"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full max-w-[320px] py-3.5 bg-card text-primary border border-border font-bold text-sm hover:border-primary hover:bg-primary-soft transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
+                        <button
+                            onClick={(e) => { e.preventDefault(); alert('قريباً في متجر آبل'); }}
+                            className="w-full max-w-[320px] py-3.5 bg-card text-primary border border-border font-bold text-sm hover:border-primary hover:bg-primary-soft transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm cursor-pointer"
                         >
                             <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                                 <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
@@ -155,7 +152,7 @@ export const AppDownloadSection = () => {
                                 <div className="text-micro text-muted font-medium leading-tight">حمله من</div>
                                 <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
                             </div>
-                        </a>
+                        </button>
                     </div>
                     <div className="flex items-center justify-center gap-6 mt-5">
                         <div className="flex items-center gap-1.5 text-muted">
