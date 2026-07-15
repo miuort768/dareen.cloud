@@ -1,85 +1,94 @@
-const CACHE_NAME = 'darin-academy-v5';
+const CACHE = 'dareen-v6';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon-48x48.png',
-  '/icons/icon-72x72.png',
-  '/icons/icon-96x96.png',
-  '/icons/icon-128x128.png',
-  '/icons/icon-144x144.png',
-  '/icons/icon-152x152.png',
-  '/icons/icon-167x167.png',
-  '/icons/icon-180x180.png',
   '/icons/icon-192x192.png',
-  '/icons/icon-256x256.png',
-  '/icons/icon-384x384.png',
   '/icons/icon-512x512.png',
-  '/icons/maskable-icon-192x192.png',
   '/icons/maskable-icon-512x512.png',
-  '/logo.png',
-  '/hero-child.png',
-  '/chat-avatar.jpg',
 ];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE).then((cache) => cache.addAll(STATIC_ASSETS))
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((names) =>
-      Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  const { url } = event.request;
-  const origin = self.location.origin;
+  const { request } = event;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
-  if (!url.startsWith(origin)) return;
-  if (url.includes('/api/')) return;
-
-  if (url.match(/\.(png|jpg|jpeg|webp|avif|svg|ico)$/)) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request).then((res) => {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return res;
-      }))
-    );
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  event.respondWith(
-    fetch(event.request).then((res) => {
-      if (res.status === 200) {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-      }
-      return res;
-    }).catch(() => caches.match(event.request).then((cached) => cached || caches.match('/')))
-  );
+  if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font' || request.destination === 'image') {
+    event.respondWith(cacheFirst(request));
+    return;
+  }
+
+  event.respondWith(networkFirst(request));
 });
 
 self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : { title: 'تنبيه جديد', body: 'لديك إشعار جديد من منصة دارين' };
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'تنبيه جديد', {
-      body: data.body || 'لديك إشعار جديد',
-      icon: '/icons/icon-192x192.png',
-      badge: '/icons/icon-96x96.png',
-      vibrate: [100, 50, 100],
-      data: { url: data.url || '/' },
-    })
-  );
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || 'تنبيه جديد';
+  const options = {
+    body: data.body || 'لديك إشعار جديد من منصة دارين',
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/icon-96x96.png',
+    vibrate: [100, 50, 100],
+    data: { url: data.url || '/' },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   event.waitUntil(clients.openWindow(event.notification.data.url));
 });
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    return new Response('', { status: 503 });
+  }
+}
+
+async function networkFirst(request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    if (request.mode === 'navigate') {
+      const fallback = await caches.match('/');
+      if (fallback) return fallback;
+    }
+    return new Response('Offline', { status: 503 });
+  }
+}
