@@ -21,8 +21,8 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
 
     return (
         <div className="fixed inset-0 bg-primary-active/50 flex items-center justify-center p-4 z-[10001]">
-            <div className="bg-white dark:bg-primary-active shadow-xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-border/50 dark:border-border/50 mt-20 md:mt-0 rounded-2xl">
-                <div className="p-5 border-b border-white/10 flex justify-between items-center bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary">
+            <div className="bg-card shadow-xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-border/50 mt-20 md:mt-0 rounded-card">
+                <div className="p-5 border-b border-white/10 flex justify-between items-center bg-primary text-on-primary">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
                             <User size={18} className="text-on-primary" />
@@ -39,7 +39,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                     {studentEvals.map((ev) => {
                         const r = RATING_OPTIONS.find(ro => ro.value === ev.rating) || RATING_OPTIONS[0];
                         return (
-                            <div key={ev.id} className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 shadow-sm hover:border-primary/20 transition-all group rounded-2xl">
+                            <div key={ev.id} className="bg-card border border-border/50 p-4 shadow-soft hover:border-primary/20 transition-all group rounded-card">
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
                                         <span className={cn("flex items-center gap-1.5 text-micro font-medium px-2 py-1", r.pill)}>
@@ -57,10 +57,10 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                                         )}
                                     </div>
                                 </div>
-                                <p className="text-micro font-normal text-muted dark:text-muted italic leading-relaxed border-s-2 border-primary/30 ps-3">
+                                <p className="text-micro font-normal text-muted italic leading-relaxed border-s-2 border-primary/30 ps-3">
                                     &ldquo;{ev.notes || 'لا يوجد ملاحظات'}&rdquo;
                                 </p>
-                                <div className="mt-2 pt-2 border-t border-border dark:border-border flex items-center gap-1.5">
+                                <div className="mt-2 pt-2 border-t border-border flex items-center gap-1.5">
                                     <User size={8} className="text-dim" />
                                     <span className="text-micro font-normal text-muted">بواسطة: {ev.teacherName || 'نظام آلي'}</span>
                                 </div>
@@ -68,15 +68,15 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                         );
                     })}
                     {studentEvals.length === 0 && (
-                        <div className="py-12 text-center bg-white dark:bg-primary-active rounded-2xl border-2 border-dashed border-primary/30">
+                        <div className="py-12 text-center bg-card rounded-card border-2 border-dashed border-primary/30">
                             <History size={28} className="text-primary/30 mb-3 mx-auto" />
                             <p className="text-micro font-bold text-muted">لا يوجد سجل تقييمات حالياً</p>
                         </div>
                     )}
                 </div>
 
-                <div className="p-4 border-t border-border/50 dark:border-border/50 flex justify-center bg-white dark:bg-primary-active">
-                    <button onClick={onClose} className="px-8 py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary font-bold text-xs transition-all shadow-sm rounded-xl">إغلاق</button>
+                <div className="p-4 border-t border-border/50 flex justify-center bg-card">
+                    <button onClick={onClose} className="px-8 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-xs transition-all shadow-soft rounded-xl">إغلاق</button>
                 </div>
             </div>
         </div>

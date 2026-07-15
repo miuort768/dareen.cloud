@@ -10,14 +10,14 @@ interface FinancialReportProps {
 }
 
 const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor, currency }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; subColor?: string; currency?: string }) => (
-    <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 rounded-2xl shadow-sm">
+    <div className="bg-card border border-border/50 p-4 rounded-card shadow-soft">
         <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: `${color}12` }}>
                 <Icon size={14} style={{ color }} />
             </div>
-            <h3 className="text-xs font-bold text-muted dark:text-muted">{title}</h3>
+            <h3 className="text-xs font-bold text-muted">{title}</h3>
         </div>
-        <p className="text-lg font-black text-main dark:text-on-primary tabular-nums">{value.toLocaleString()} {currency}</p>
+        <p className="text-lg font-black text-main tabular-nums">{value.toLocaleString()} {currency}</p>
         <p className="text-micro font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
     </div>
 );
@@ -65,17 +65,17 @@ export const FinancialReport = ({
                 />
             </div>
 
-            <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 p-4 rounded-2xl shadow-sm">
+            <div className="bg-card border border-border/50 p-4 rounded-card shadow-soft">
                 <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)' }}>
-                        <FileText size={16} style={{ color: 'var(--bg-primary)' }} />
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft">
+                        <FileText size={16} className="text-primary" />
                     </div>
                     <div>
-                        <h3 className="text-xs font-bold text-main dark:text-on-primary mb-1">ملخص التقرير المالي</h3>
-                        <p className="text-xs font-bold text-muted dark:text-muted leading-relaxed">
-                            تم تسجيل <span className="font-bold text-main dark:text-dim">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold" style={{ color: 'var(--bg-success)' }}>{totalRevenue.toLocaleString()} {reportCurrency}</span>.
-                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold" style={{ color: 'var(--bg-error)' }}>{totalExpenses.toLocaleString()} {reportCurrency}</span>،
-                            مما حقق صافي ربح قدره <span className="font-bold" style={{ color: 'var(--bg-primary)' }}>{netProfit.toLocaleString()} {reportCurrency}</span>.
+                        <h3 className="text-xs font-bold text-main mb-1">ملخص التقرير المالي</h3>
+                        <p className="text-xs font-bold text-muted leading-relaxed">
+                            تم تسجيل <span className="font-bold text-main">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold text-success">{totalRevenue.toLocaleString()} {reportCurrency}</span>.
+                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold text-error">{totalExpenses.toLocaleString()} {reportCurrency}</span>،
+                            مما حقق صافي ربح قدره <span className="font-bold text-primary">{netProfit.toLocaleString()} {reportCurrency}</span>.
                         </p>
                     </div>
                 </div>

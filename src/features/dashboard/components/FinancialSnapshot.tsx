@@ -9,14 +9,14 @@ interface FinancialSnapshotProps {
 
 export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollection }: FinancialSnapshotProps) => {
     const items = [
-        { label: 'أرباح هذا الشهر', value: monthNetProfit, icon: TrendingUp, color: 'text-success dark:text-success', bg: 'bg-success-light dark:bg-success/10', border: 'border-success/50 dark:border-success/20', valueColor: 'text-success dark:text-success' },
-        { label: 'المستحق لك', value: expectedCollection, icon: DollarSign, color: 'text-primary dark:text-primary', bg: 'bg-primary-soft dark:bg-primary/10', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary dark:text-primary' },
-        { label: 'الإيرادات', value: monthRevenue, icon: Wallet, color: 'text-primary dark:text-primary', bg: 'bg-primary-soft dark:bg-primary/10', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary dark:text-primary' },
+        { label: 'أرباح هذا الشهر', value: monthNetProfit, icon: TrendingUp, color: 'text-success', bg: 'bg-success-soft', border: 'border-success/50 dark:border-success/20', valueColor: 'text-success' },
+        { label: 'المستحق لك', value: expectedCollection, icon: DollarSign, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary' },
+        { label: 'الإيرادات', value: monthRevenue, icon: Wallet, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary' },
     ];
 
     return (
-        <div className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border">
-            <h3 className="text-xs font-bold text-muted dark:text-muted mb-3 flex items-center gap-2">
+        <div className="bg-card rounded-card p-5 shadow-soft border border-border">
+            <h3 className="text-xs font-bold text-muted mb-3 flex items-center gap-2">
                 <Wallet size={12} className="text-success" />
                 الملخص المالي
             </h3>
@@ -27,7 +27,7 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                             <item.icon size={15} className={item.color} />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-micro font-bold text-muted dark:text-muted">{item.label}</p>
+                            <p className="text-micro font-bold text-muted">{item.label}</p>
                         </div>
                         <span className={cn("text-sm font-black tabular-nums", item.valueColor)}>
                             {item.value.toLocaleString('ar-EG')} <span className="text-micro font-bold">د.ك</span>

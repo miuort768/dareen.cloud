@@ -54,7 +54,7 @@ export const Reports = () => {
             <ReportsHeader onExport={() => window.print()} />
 
             {/* ── Tab Selection ── */}
-            <div className="no-print bg-card rounded-2xl border border-border p-1 flex overflow-x-auto no-scrollbar gap-1">
+            <div className="no-print bg-card rounded-card border border-border p-1 flex overflow-x-auto no-scrollbar gap-1">
                 {tabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = state.activeReport === tab.id;
@@ -62,7 +62,7 @@ export const Reports = () => {
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-micro font-normal transition-all whitespace-nowrap ${isActive ? 'bg-primary-soft text-primary shadow-sm' : 'text-muted hover:text-main'}`}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-micro font-normal transition-all whitespace-nowrap ${isActive ? 'bg-primary-soft text-primary shadow-soft' : 'text-muted hover:text-main'}`}
                         >
                             <Icon size={14} />
                             {tab.label}
@@ -78,7 +78,7 @@ export const Reports = () => {
                 {state.activeReport === 'overview' && (
                     <div className="space-y-6">
                         {/* Hero Card */}
-                        <div className="bg-card rounded-2xl shadow-sm border border-border p-5 md:p-6">
+                        <div className="bg-card rounded-card shadow-soft border border-border p-5 md:p-6">
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
@@ -114,7 +114,7 @@ export const Reports = () => {
                                         <button
                                             key={tab.id}
                                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                            className={`border-0 p-5 transition-all group rounded-2xl shadow-sm hover:shadow-md active:scale-95 ${v.bg}`}
+                                            className={`border-0 p-5 transition-all group rounded-card shadow-soft hover:shadow-md active:scale-95 ${v.bg}`}
                                         >
                                         <div className="flex flex-col items-center text-center">
                                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform ${v.iconBg}`}>
@@ -140,7 +140,7 @@ export const Reports = () => {
                                 { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: 'var(--chart-3)' },
                                 { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: 'var(--text-muted)' }
                             ].map((stat, i) => (
-                                <div key={i} className="bg-card border border-border shadow-sm rounded-2xl p-3 flex flex-col justify-between aspect-square">
+                                <div key={i} className="bg-card border border-border shadow-soft rounded-card p-3 flex flex-col justify-between aspect-square">
                                     <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${stat.color} 12%, transparent)` }}>
                                         <stat.icon size={14} style={{ color: stat.color }} />
                                     </div>
@@ -153,7 +153,7 @@ export const Reports = () => {
                         </div>
 
                         {/* Subject Distribution Cards */}
-                        <div className="bg-card border border-border rounded-2xl shadow-sm p-5">
+                        <div className="bg-card border border-border rounded-card shadow-soft p-5">
                              <div className="flex items-center justify-between mb-5">
                                  <div className="flex items-center gap-2">
                                       <div className="w-7 h-7 rounded-xl flex items-center justify-center bg-primary-soft">
@@ -169,7 +169,7 @@ export const Reports = () => {
                                     const color = chartColors[i];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-2xl border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
+                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
                                             <div className="flex items-center justify-between">
                                                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
                                                 <p className="text-micro font-black font-mono" style={{ color }}>{pct}%</p>

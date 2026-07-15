@@ -14,9 +14,9 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <div className="bg-white dark:bg-primary-active rounded-2xl p-5 shadow-sm border border-border dark:border-border">
+        <div className="bg-card rounded-card p-5 shadow-soft border border-border">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xs font-bold text-muted dark:text-muted flex items-center gap-2">
+                <h3 className="text-xs font-bold text-muted flex items-center gap-2">
                     <Star size={12} className="text-warning" />
                     {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
                 </h3>
@@ -25,7 +25,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                 )}
             </div>
 
-            <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl p-4 mb-3 text-on-primary">
+            <div className="bg-primary rounded-card p-4 mb-3 text-on-primary">
                 <div className="flex items-center gap-1.5 mb-2">
                     <Award size={12} className="text-primary" />
                     <span className="text-micro font-bold text-primary">
@@ -47,21 +47,21 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
             </div>
 
             <div className="grid grid-cols-2 gap-2.5">
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-error-light dark:bg-error/10 border border-error dark:border-error/20">
-                    <div className="w-8 h-8 rounded-lg bg-error-light dark:bg-error/20 flex items-center justify-center">
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-error-soft border border-error">
+                    <div className="w-8 h-8 rounded-lg bg-error-soft flex items-center justify-center">
                         <AlertCircle size={13} className="text-error" />
                     </div>
                     <div>
-                        <span className="text-lg font-black text-error dark:text-error tabular-nums">{expiredCount}</span>
+                        <span className="text-lg font-black text-error tabular-nums">{expiredCount}</span>
                         <p className="text-micro font-bold text-error">منتهي</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-warning-light dark:bg-warning/10 border border-warning dark:border-warning/20">
-                    <div className="w-8 h-8 rounded-lg bg-warning-light dark:bg-warning/20 flex items-center justify-center">
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-warning-soft border border-warning">
+                    <div className="w-8 h-8 rounded-lg bg-warning-soft flex items-center justify-center">
                         <Clock size={13} className="text-warning" />
                     </div>
                     <div>
-                        <span className="text-lg font-black text-warning dark:text-warning tabular-nums">{lowCount}</span>
+                        <span className="text-lg font-black text-warning tabular-nums">{lowCount}</span>
                         <p className="text-micro font-bold text-warning">مستحق</p>
                     </div>
                 </div>

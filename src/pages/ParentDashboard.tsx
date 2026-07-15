@@ -209,7 +209,7 @@ export const ParentDashboard = () => {
                 <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 max-w-page mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 
-                <div className="relative bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
+                <div className="relative bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-lg">
                             <User size={22} />
@@ -223,7 +223,7 @@ export const ParentDashboard = () => {
                     </div>
                     <button 
                         onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                        className="w-10 h-10 bg-white/70 dark:bg-primary-active/70 text-dim hover:text-error flex items-center justify-center rounded-card border border-border dark:border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
+                        className="w-10 h-10 bg-card/70 text-dim hover:text-error flex items-center justify-center rounded-card border border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
                     >
                         <LogOut size={18} />
                     </button>
@@ -277,7 +277,7 @@ export const ParentDashboard = () => {
                         return (
                             <div
                                 key={idx}
-                                className="flex-1 bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
+                                className="flex-1 bg-card rounded-card p-3 shadow-soft border border-border flex flex-col items-center text-center gap-1"
                             >
                                 <div
                                     className="w-9 h-9 rounded-card flex items-center justify-center"
@@ -328,7 +328,7 @@ export const ParentDashboard = () => {
                 </div>
 
                 {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
-                    <div className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg">
+                    <div className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-3">
                             <MessageSquare className="text-warning" size={16} />
                             <h3 className="text-sm md:text-lg font-medium text-main dark:text-inverse">الواجبات والملاحظات</h3>
@@ -338,7 +338,7 @@ export const ParentDashboard = () => {
                                 <div key={child.id} className="space-y-1">
                                         <div className="flex items-center gap-2 px-1">
                                             <div className="w-1.5 h-1.5 rounded-full bg-warning" />
-                                            <span className="text-xs font-medium text-muted dark:text-muted uppercase tracking-widest">{child.name}</span>
+                                            <span className="text-xs font-medium text-muted uppercase tracking-widest">{child.name}</span>
                                     </div>
                                     <div className="space-y-2">
                                         {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
@@ -392,9 +392,9 @@ export const ParentDashboard = () => {
 
                     <div className="space-y-2">
                         {todayTasks.map((task, idx) => (
-                            <div key={idx} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-center justify-between">
+                            <div key={idx} className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-center justify-between">
                                  <div className="flex items-center gap-2">
-                                    <div className="w-9 h-9 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-sm">
+                                    <div className="w-9 h-9 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-soft">
                                         <BookOpen size={16} />
                                     </div>
                                     <div>
@@ -408,7 +408,7 @@ export const ParentDashboard = () => {
                             </div>
                         ))}
                         {todayTasks.length === 0 && (
-                            <div className="py-6 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                            <div className="py-6 text-center bg-card/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
                                 <p className="text-muted font-medium text-micro">لا توجد مهام اليوم</p>
                             </div>
                         )}
@@ -423,8 +423,8 @@ export const ParentDashboard = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {allPointLogs.slice(0, 4).map((log, i) => (
-                            <div key={i} className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-start gap-3">
-                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-sm shrink-0">
+                            <div key={i} className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-start gap-3">
+                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                     <Star size={14} fill="currentColor" />
                                 </div>
                                 <div className="min-w-0 flex-1">
@@ -432,7 +432,7 @@ export const ParentDashboard = () => {
                                     <h4 className="text-micro font-medium text-main dark:text-main leading-snug">
                                         تلقى {log.amount} نقطة: {log.action}
                                     </h4>
-                                    <p className="text-micro font-medium text-muted dark:text-muted mt-1 flex items-center gap-1">
+                                    <p className="text-micro font-medium text-muted mt-1 flex items-center gap-1">
                                         <Clock size={8} />
                                         {log.timestamp ? (() => {
                                             try {
@@ -447,7 +447,7 @@ export const ParentDashboard = () => {
                             </div>
                         ))}
                         {allPointLogs.length === 0 && (
-                            <div className="col-span-full py-8 text-center bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                            <div className="col-span-full py-8 text-center bg-card/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
                                 <p className="text-muted font-medium text-micro">لا توجد نشاطات حديثة للأبناء</p>
                             </div>
                         )}
@@ -484,10 +484,10 @@ export const ParentDashboard = () => {
                             <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
                                 <LayoutDashboard size={12} className="text-on-primary" />
                             </div>
-                            <h2 className="text-dim dark:text-muted text-xs font-bold tracking-wide">لوحة التحكم</h2>
+                            <h2 className="text-dim text-xs font-bold tracking-wide">لوحة التحكم</h2>
                         </div>
                         {/* Profile row */}
-                        <div className="bg-white dark:bg-primary-active/90 rounded-3xl p-3.5 shadow-[0_2px_16px_var(--bg-shadow)] dark:shadow-[0_2px_16px_var(--bg-shadow)] flex items-center justify-between">
+                        <div className="bg-card/90 rounded-3xl p-3.5 shadow-[0_2px_16px_var(--bg-shadow)] flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg">
                                     <User size={18} className="text-on-primary" />
@@ -496,10 +496,10 @@ export const ParentDashboard = () => {
                                     <h1 className="text-main dark:text-inverse font-black text-base leading-tight">
                                         أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                     </h1>
-                                    <p className="text-micro font-medium text-muted dark:text-muted mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                                    <p className="text-micro font-medium text-muted mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                                     <div className="flex items-center gap-1.5 mt-0.5">
                                         <div className="w-1.5 h-1.5 rounded-full bg-success" />
-                                        <p className="text-muted dark:text-muted text-xs font-bold">
+                                        <p className="text-muted text-xs font-bold">
                                             {children.length > 0
                                                 ? [...children].sort((a, b) => a.id.localeCompare(b.id))[0]?.name || 'طالب'
                                                 : 'طالب'}
@@ -507,50 +507,50 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover dark:bg-primary-active/60 rounded-card flex items-center justify-center text-muted dark:text-muted active:scale-90 transition-transform hover:bg-hover dark:hover:bg-primary-active" aria-label="تسجيل الخروج">
+                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover dark:bg-primary-active/60 rounded-card flex items-center justify-center text-muted active:scale-90 transition-transform hover:bg-hover dark:hover:bg-primary-active" aria-label="تسجيل الخروج">
                                 <LogOut size={16} />
                             </button>
                         </div>
                         {/* Stats pills — premium card style */}
                         <div className="flex items-center gap-2 mt-2">
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-card rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-success-soft flex items-center justify-center">
                                     <TrendingUp size={13} className="text-success-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{stats.academicProgress}%</span>
-                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">الالتزام</span>
+                                    <span className="text-muted text-micro font-bold tracking-wide">الالتزام</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-card rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-info-soft flex items-center justify-center">
                                     <BookOpen size={13} className="text-info-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
-                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">المادة</span>
+                                    <span className="text-muted text-micro font-bold tracking-wide">المادة</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white dark:bg-primary-active/90 rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
+                            <div className="flex-1 bg-card rounded-card py-2.5 px-3 flex items-center gap-2.5 shadow-md border border-border">
                                 <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center">
                                     <Users size={13} className="text-primary" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-main dark:text-inverse font-black text-base">{stats.childCount}</span>
-                                    <span className="text-muted dark:text-muted text-micro font-bold tracking-wide">الأبناء</span>
+                                    <span className="text-muted text-micro font-bold tracking-wide">الأبناء</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Tab bar */}
                     <div className="px-4 pb-4">
-                        <div className="flex gap-1 bg-white dark:bg-primary-active/90 rounded-card p-1 shadow-md border border-border">
+                        <div className="flex gap-1 bg-card rounded-card p-1 shadow-md border border-border">
                             {tabs.map(tab => (
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-card text-xs font-bold transition-all duration-200 ${
                                         activeTab === tab.id
                                             ? 'bg-gradient-to-br from-primary to-primary-light text-on-primary shadow-md'
-                                            : 'text-dim dark:text-muted hover:bg-hover dark:hover:bg-primary-active/50'
+                                            : 'text-dim hover:bg-hover dark:hover:bg-primary-active/50'
                                     }`}>
                                     <tab.icon size={14} />
                                     {tab.label}
@@ -603,20 +603,20 @@ export const ParentDashboard = () => {
                                     <h2 className="text-main dark:text-inverse text-sm font-black">التنقل السريع</h2>
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                    <button onClick={() => navigate('/parent-students')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-sm">
+                                    <button onClick={() => navigate('/parent-students')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-soft">
                                             <Users size={18} />
                                         </div>
                                         <span className="text-main dark:text-inverse text-micro font-bold">ملفات الأبناء</span>
                                     </button>
-                                    <button onClick={() => navigate('/forum')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-card flex items-center justify-center text-on-info shadow-sm">
+                                    <button onClick={() => navigate('/forum')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-card flex items-center justify-center text-on-info shadow-soft">
                                             <LayoutDashboard size={18} />
                                         </div>
                                         <span className="text-main dark:text-inverse text-micro font-bold">المنتدى</span>
                                     </button>
-                                    <button onClick={() => navigate('/chat')} className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-card flex items-center justify-center text-on-success shadow-sm">
+                                    <button onClick={() => navigate('/chat')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-card flex items-center justify-center text-on-success shadow-soft">
                                             <MessageSquare size={18} />
                                         </div>
                                         <span className="text-main dark:text-inverse text-micro font-bold">الدردشة</span>
@@ -636,7 +636,7 @@ export const ParentDashboard = () => {
                                         return (
                                             <div
                                                 key={idx}
-className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1"
+className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border border-border flex flex-col items-center text-center gap-1"
                                             >
                                                 <div
                                                     className="w-9 h-9 rounded-card flex items-center justify-center"
@@ -679,7 +679,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <div className="w-1 h-4 bg-primary rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">البث المباشر</h2>
                                 </div>
-                                <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md overflow-hidden">
+                                <div className="bg-card rounded-card shadow-md overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
                                 </div>
                             </section>
@@ -694,19 +694,19 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                         <div className="w-1 h-4 bg-warning rounded-full" />
                                         <h2 className="text-main dark:text-inverse text-sm font-black">الواجبات والملاحظات</h2>
                                     </div>
-                                    <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5 space-y-3">
+                                    <div className="bg-card rounded-card shadow-md p-3.5 space-y-3">
                                         {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
                                             <div key={child.id}>
                                                 <div className="flex items-center gap-2 mb-1.5">
                                                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                                    <span className="text-xs font-bold text-muted dark:text-muted">{child.name}</span>
+                                                    <span className="text-xs font-bold text-muted">{child.name}</span>
                                                 </div>
                                                 <div className="space-y-2 ms-4">
                                                     {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
                                                         <div key={idx} className="bg-primary-soft dark:bg-primary-soft p-3 rounded-card border border-primary dark:border-primary">
                                                             <div className="flex justify-between items-center mb-1">
                                                                 <span className="text-xs font-bold text-primary dark:text-primary">{en.subject}</span>
-                                                                <span className="text-micro text-muted dark:text-muted">{en.teacher}</span>
+                                                                <span className="text-micro text-muted">{en.teacher}</span>
                                                             </div>
                                                             <p className="text-micro text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
                                                         </div>
@@ -750,17 +750,17 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                 <div className="w-1 h-4 bg-primary rounded-full" />
                                 <h2 className="text-main dark:text-inverse text-sm font-black">جدول حصص اليوم</h2>
                             </div>
-                            <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5">
+                            <div className="bg-card rounded-card shadow-md p-3.5">
                                 <div className="space-y-2">
                                     {todayTasks.map((task, idx) => (
                                         <div key={idx} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-sm">
+                                                <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-soft">
                                                     <BookOpen size={16} />
                                                 </div>
                                                 <div>
                                                     <h4 className="text-xs font-bold text-main dark:text-inverse">{task.subject}</h4>
-                                                    <p className="text-micro text-muted dark:text-muted">{task.studentName}</p>
+                                                    <p className="text-micro text-muted">{task.studentName}</p>
                                                 </div>
                                             </div>
                                             <div className="text-end font-bold text-micro text-dim dark:text-dim">{task.time}</div>
@@ -768,8 +768,8 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     ))}
                                     {todayTasks.length === 0 && (
                                         <div className="py-8 text-center">
-                                            <Calendar size={36} className="mx-auto text-muted dark:text-muted mb-3" />
-                                            <p className="text-muted dark:text-muted font-bold text-sm">لا توجد حصص اليوم</p>
+                                            <Calendar size={36} className="mx-auto text-muted mb-3" />
+                                            <p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p>
                                             <p className="text-dim dark:text-dim text-micro mt-1">يوم هادئ بلا حصص!</p>
                                         </div>
                                     )}
@@ -785,17 +785,17 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <div className="w-1 h-4 bg-warning rounded-full" />
                                     <h2 className="text-main dark:text-inverse text-sm font-black">آخر النشاطات</h2>
                                 </div>
-                                <div className="bg-white dark:bg-primary-active/80 rounded-card shadow-md p-3.5">
+                                <div className="bg-card rounded-card shadow-md p-3.5">
                                     <div className="space-y-2">
                                         {allPointLogs.slice(0, 4).map((log, i) => (
                                             <div key={i} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
-                                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-sm shrink-0">
+                                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                                     <Star size={13} fill="currentColor" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
                                                     <p className="text-micro font-bold text-warning-dark dark:text-warning mb-0.5 truncate">{log.studentName}</p>
                                                     <p className="text-micro text-main dark:text-main leading-snug">تلقى {log.amount} نقطة: {log.action}</p>
-                                                    <p className="text-micro text-muted dark:text-muted mt-1 flex items-center gap-1">
+                                                    <p className="text-micro text-muted mt-1 flex items-center gap-1">
                                                         <Clock size={7} />
                                                         {log.timestamp ? (() => {
                                                             try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
@@ -807,7 +807,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                         ))}
                                         {allPointLogs.length === 0 && (
                                             <div className="py-5 text-center bg-background dark:bg-primary-active/50 border-2 border-dashed border-border rounded-card">
-                                                <p className="text-muted dark:text-muted font-medium text-micro">لا توجد نشاطات حديثة</p>
+                                                <p className="text-muted font-medium text-micro">لا توجد نشاطات حديثة</p>
                                             </div>
                                         )}
                                     </div>
@@ -841,7 +841,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
             </div>
 
             {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
-            <div className="block md:hidden fixed bottom-0 end-0 start-0 z-50 bg-white dark:bg-primary-active border-t border-border dark:border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
+            <div className="block md:hidden fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
                 <div className="flex items-center justify-around h-[68px] px-2">
                     {[
                         { id: 'profile', label: 'حسابي', icon: User },
@@ -873,10 +873,10 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
                                     <>
                                         <Icon
                                             size={22}
-                                            className={`transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted dark:text-muted'}`}
+                                            className={`transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted'}`}
                                             strokeWidth={isActive ? 2.5 : 1.5}
                                         />
-                                        <span className={`text-micro font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted dark:text-muted'}`}>
+                                        <span className={`text-micro font-semibold transition-all duration-200 ${isActive ? 'text-primary' : 'text-muted'}`}>
                                             {item.label}
                                         </span>
                                     </>
@@ -893,11 +893,11 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-sm border border-
 const NavButton = ({ label, icon: Icon, onClick }: { label: string; icon: React.ComponentType<{ size?: number }>; onClick?: () => void }) => (
     <button 
         onClick={onClick}
-        className="bg-white/80 dark:bg-primary-active/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-white dark:hover:bg-primary-active shadow-lg group"
+        className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-card shadow-lg group"
     >
-        <div className="w-10 h-10 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-sm group-hover:scale-110 transition-transform">
+        <div className="w-10 h-10 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-soft group-hover:scale-110 transition-transform">
             <Icon size={18} />
         </div>
-        <span className="text-micro font-bold text-dim dark:text-muted">{label}</span>
+        <span className="text-micro font-bold text-dim">{label}</span>
     </button>
 );

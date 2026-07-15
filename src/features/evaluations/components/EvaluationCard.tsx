@@ -21,17 +21,17 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
     const totalStudentXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0);
 
     return (
-        <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group rounded-2xl">
+        <div className="bg-card border border-border/50 shadow-soft hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group rounded-card">
             <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-surface')} style={{ background: lastRating ? undefined : 'var(--border)' }}>
                 <div className={cn("h-full w-full", lastRating?.bg ?? 'bg-surface')} />
             </div>
 
-            <div className="p-4 flex items-center gap-3 border-b border-border dark:border-border">
+            <div className="p-4 flex items-center gap-3 border-b border-border">
                 <div className="w-11 h-11 flex items-center justify-center shrink-0 bg-primary/10 rounded-xl">
                     <User size={18} className="text-primary" />
                 </div>
                 <div className="min-w-0 flex-1">
-                    <h4 className="font-medium text-sm text-main dark:text-on-primary truncate">{student.name}</h4>
+                    <h4 className="font-medium text-sm text-main truncate">{student.name}</h4>
                     <p className="text-micro font-normal text-muted uppercase tracking-widest truncate flex items-center gap-1">
                         <BookOpen size={8} className="shrink-0" />{student.grade}</p>
                 </div>
@@ -52,8 +52,8 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                                 </span>
                             )}
                         </div>
-                        <div className="bg-background dark:bg-primary-active/50 p-3 border border-border/50 dark:border-border/50 rounded-xl">
-                            <p className="text-micro font-normal text-muted dark:text-on-primary italic line-clamp-2 leading-relaxed">
+                        <div className="bg-background p-3 border border-border/50 rounded-xl">
+                            <p className="text-micro font-normal text-muted italic line-clamp-2 leading-relaxed">
                                 &ldquo;{(lastEval.notes) || 'بدون ملاحظات'}&rdquo;
                             </p>
                             <p className="text-micro text-muted mt-1.5">{format(new Date(lastEval.created_at || lastEval.date), 'dd/MM/yyyy')}</p>
@@ -65,7 +65,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                     </div>
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
-                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-2xl bg-primary/5 border border-dashed border-primary/30">
+                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-card bg-primary/5 border border-dashed border-primary/30">
                             <Award size={20} className="text-primary/40" />
                         </div>
                         <p className="text-micro font-medium text-muted uppercase tracking-widest">لم يتم التقييم بعد</p>
@@ -75,17 +75,17 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
 
             {!isParent && (
                 <div className="px-4 pb-4 grid grid-cols-2 gap-2">
-                    <button onClick={() => onAddEvaluation(student.id)} className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 rounded-xl">
+                    <button onClick={() => onAddEvaluation(student.id)} className="bg-primary hover:bg-primary-hover text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 shadow-soft active:scale-95 rounded-xl">
                         <Plus size={12} /> أضف تقييم
                     </button>
-                    <button onClick={() => onViewHistory(student)} className="bg-surface dark:bg-primary-active hover:bg-surface dark:hover:bg-primary-active text-main dark:text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="bg-surface hover:bg-surface text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
                         <History size={12} /> السجل ({studentEvals.length})
                     </button>
                 </div>
             )}
             {isParent && (
                 <div className="px-4 pb-4">
-                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface dark:bg-primary-active hover:bg-surface text-main dark:text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface hover:bg-surface text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
                         <History size={12} /> عرض السجل الكامل ({studentEvals.length})
                     </button>
                 </div>

@@ -15,15 +15,15 @@ interface AttendanceReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-card border border-border/50 rounded-2xl shadow-sm', className)}>
+    <div className={cn('bg-card border border-border/50 rounded-card shadow-soft', className)}>
         {children}
     </div>
 );
 
 const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 px-5 py-4 border-b border-border/50">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--chart-3) 10%, transparent)' }}>
-            <Icon size={15} style={{ color: 'var(--chart-3)' }} />
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-chart-3/10">
+            <Icon size={15} className="text-chart-3" />
         </div>
         <div>
             <p className="text-xs font-bold text-main">{label}</p>
@@ -69,16 +69,16 @@ export const AttendanceReport = ({
             {/* Summary Stat Bar */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                    { label: 'إجمالي الحصص', value: totalSessions, icon: Calendar, color: 'var(--chart-6)', bg: 'color-mix(in srgb, var(--chart-6) 10%, transparent)', sub: 'كل الأشهر' },
-                    { label: 'حصص مكتملة', value: totalCompleted, icon: CheckCircle2, color: 'var(--chart-3)', bg: 'color-mix(in srgb, var(--chart-3) 10%, transparent)', sub: 'حضور فعلي' },
-                    { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, color: 'var(--chart-5)', bg: 'color-mix(in srgb, var(--chart-5) 10%, transparent)', sub: 'غياب/إلغاء' },
-                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, color: 'var(--chart-4)', bg: 'color-mix(in srgb, var(--chart-4) 10%, transparent)', sub: 'نسبة النجاح الكلية' },
+                    { label: 'إجمالي الحصص', value: totalSessions, icon: Calendar, bgClass: 'bg-chart-6/10', textClass: 'text-chart-6', sub: 'كل الأشهر' },
+                    { label: 'حصص مكتملة', value: totalCompleted, icon: CheckCircle2, bgClass: 'bg-chart-3/10', textClass: 'text-chart-3', sub: 'حضور فعلي' },
+                    { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, bgClass: 'bg-chart-5/10', textClass: 'text-chart-5', sub: 'غياب/إلغاء' },
+                    { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, bgClass: 'bg-chart-4/10', textClass: 'text-chart-4', sub: 'نسبة النجاح الكلية' },
                 ].map((item, i) => (
-                    <div key={i} className="bg-card border border-border/50 rounded-2xl shadow-sm p-4">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: item.bg }}>
-                            <item.icon size={16} style={{ color: item.color }} />
+                    <div key={i} className="bg-card border border-border/50 rounded-card shadow-soft p-4">
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-3 ${item.bgClass}`}>
+                            <item.icon size={16} className={item.textClass} />
                         </div>
-                        <p className="text-xl font-black font-mono" style={{ color: item.color }}>{item.value}</p>
+                        <p className={`text-xl font-black font-mono ${item.textClass}`}>{item.value}</p>
                         <p className="text-micro font-bold text-dim mt-1">{item.label}</p>
                         <p className="text-micro font-bold text-dim mt-0.5">{item.sub}</p>
                     </div>
@@ -146,7 +146,7 @@ export const AttendanceReport = ({
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-start">
                         <thead>
-                            <tr className="text-on-primary" style={{ background: 'linear-gradient(to left, var(--chart-4), color-mix(in srgb, var(--chart-4) 70%, white))' }}>
+                            <tr className="text-on-primary bg-chart-4">
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-start">اسم المعلمة</th>
                                 <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70 text-center">المتوقعة</th>
@@ -172,7 +172,7 @@ export const AttendanceReport = ({
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0" style={{ backgroundColor: 'color-mix(in srgb, var(--chart-3) 10%, transparent)', color: 'var(--chart-3)' }}>
+                                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 bg-chart-3/10 text-chart-3">
                                                         {teacher.teacher.charAt(0)}
                                                     </div>
                                                     <span className="text-xs font-bold text-main">{teacher.teacher}</span>
@@ -210,7 +210,7 @@ export const AttendanceReport = ({
                             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black shrink-0" style={{ backgroundColor: 'color-mix(in srgb, var(--chart-3) 10%, transparent)', color: 'var(--chart-3)' }}>
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black shrink-0 bg-chart-3/10 text-chart-3">
                                         {medal || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">

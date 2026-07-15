@@ -49,8 +49,8 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]',
-            'text-on-primary text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95 hover:brightness-90',
+            'flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover',
+            'text-on-primary text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -401,7 +401,7 @@ export const Attendance = () => {
 
                             return (
                                 <SectionCard key={teacher} className="p-0 overflow-hidden">
-                                    <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] px-5 py-3 flex items-center justify-between border-b border-border">
+                                    <div className="bg-primary px-5 py-3 flex items-center justify-between border-b border-border">
                                         <div className="flex items-center gap-3">
                                             <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shadow-sm bg-white/15 text-on-primary">
                                                 {teacher.charAt(0)}
@@ -496,7 +496,7 @@ export const Attendance = () => {
                                                         </div>
                                                         <button
                                                             onClick={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                                            className="w-full py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] hover:brightness-90 text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                                                            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
                                                         >
                                                             <History size={14} /> سجل الطالب
                                                         </button>

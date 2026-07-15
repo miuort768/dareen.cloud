@@ -232,7 +232,7 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
 
                 <div className="px-0 mb-4">
-                    <div className="bg-white dark:bg-primary-active rounded-2xl border border-border/50 dark:border-border/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm">
+                    <div className="bg-card rounded-card border border-border/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-soft">
                         {[
                             { id: 'payroll', label: 'الرواتب', icon: Receipt },
                             { id: 'collections', label: 'التحصيلات', icon: Wallet },

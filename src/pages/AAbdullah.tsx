@@ -103,13 +103,12 @@ export const AAbdullah = () => {
                     {...sectionDelay(2)}
                     className="rounded-3xl p-6 md:p-8 shadow-xl text-on-primary relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
                 >
-                    <div className="absolute top-[-30px] left-[-30px] w-32 h-32 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 12%, transparent)' }} />
-                    <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 8%, transparent)' }} />
+                    <div className="absolute top-[-30px] left-[-30px] w-32 h-32 rounded-full bg-accent-soft/50" />
+                    <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 rounded-full bg-accent-soft/40" />
                     <div className="relative z-10 space-y-4">
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm"
-                                style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 20%, transparent)' }}
+                                className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm bg-accent-soft/80"
                             >
                                 <VTargetArrow size={20} className="text-[var(--text-accent)]" />
                             </div>
@@ -153,7 +152,7 @@ export const AAbdullah = () => {
                 >
                     <div className="flex items-center gap-3">
                         <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 15%, transparent)' }}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center bg-accent-soft/70"
                         >
                             <VHeart size={20} className="text-[var(--text-accent)]" />
                         </div>
@@ -181,16 +180,13 @@ export const AAbdullah = () => {
                     className="rounded-3xl p-6 md:p-8 shadow-xl text-on-primary relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
                 >
                     <div
-                        className="absolute top-[-40px] right-[-40px] w-48 h-48 rounded-full"
-                        style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 8%, transparent)' }}
+                        className="absolute top-[-40px] right-[-40px] w-48 h-48 rounded-full bg-accent-soft/40"
                     />
                     <div
-                        className="absolute bottom-[-30px] left-[20%] w-36 h-36 rounded-full"
-                        style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 5%, transparent)' }}
+                        className="absolute bottom-[-30px] left-[20%] w-36 h-36 rounded-full bg-accent-soft/20"
                     />
                     <div
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full"
-                        style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 3%, transparent)' }}
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-accent-soft/10"
                     />
                     <div className="relative z-10 space-y-5">
                         <div
@@ -217,7 +213,7 @@ export const AAbdullah = () => {
                                 تذكّر دائمًا: الإيجابية تصنع العقلية، والاجتهاد يصنع الإنجاز، والاستمرار يصنع النجاح.
                             </p>
                         </div>
-                        <div className="w-16 h-0.5 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-accent) 40%, transparent)' }} />
+                        <div className="w-16 h-0.5 rounded-full bg-accent-soft" />
                     </div>
                 </motion.div>
 

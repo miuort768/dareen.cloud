@@ -22,7 +22,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50" dir="rtl">
-            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-2xl rounded-none shadow-[16px_16px_0px_0px_black] flex flex-col max-h-[95vh] overflow-hidden relative">
+            <div className="bg-card border-2 border-border w-full max-w-2xl rounded-none shadow-[16px_16px_0px_0px_black] flex flex-col max-h-[95vh] overflow-hidden relative">
                 
                 <div className="flex-1 overflow-y-auto p-10 pb-6 custom-scrollbar relative z-10">
                     {/* Brand / Logo */}
@@ -31,19 +31,19 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                             <Award size={32} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-medium text-main dark:text-on-primary uppercase tracking-tight italic">تقرير التميز الأكاديمي</h3>
+                            <h3 className="text-xl font-medium text-main uppercase tracking-tight italic">تقرير التميز الأكاديمي</h3>
                             <p className="text-micro font-medium text-muted uppercase mt-1">منصة دارين التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                         </div>
                     </div>
 
                     <div className="space-y-8">
                         {/* Student Signature Header */}
-                        <div className="flex items-center justify-between p-6 bg-background dark:bg-primary-active border-2 border-border rounded-none">
+                        <div className="flex items-center justify-between p-6 bg-background border-2 border-border rounded-none">
                             <div className="space-y-1 text-start">
                                 <p className="text-micro font-medium text-primary uppercase">نجمة أكاديمية</p>
-                                <h4 className="text-2xl font-medium text-main dark:text-on-primary uppercase tracking-tight">{student.name}</h4>
+                                <h4 className="text-2xl font-medium text-main uppercase tracking-tight">{student.name}</h4>
                             </div>
-                            <div className="text-end bg-white dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-sm">
+                            <div className="text-end bg-card dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-soft">
                                 <p className="text-micro font-medium text-muted uppercase mb-0.5">المستوى / المادة</p>
                                 <p className="text-xs font-medium text-primary uppercase">{student.grade} - {student.subject}</p>
                             </div>
@@ -56,18 +56,18 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                                 { label: 'إجمالي النقاط', value: student.points, icon: Star, color: 'bg-warning' },
                                 { label: 'الجلسات', value: student.sessionsCompleted, icon: Calendar, color: 'bg-primary' }
                             ].map((item, idx) => (
-                                <div key={idx} className="bg-white dark:bg-primary-active p-5 border-2 border-border rounded-none text-center shadow-md transition-transform hover:translate-y-[-2px]">
+                                <div key={idx} className="bg-card p-5 border-2 border-border rounded-none text-center shadow-md transition-transform hover:translate-y-[-2px]">
                                     <div className={cn("w-10 h-10 rounded-none border-2 border-border flex items-center justify-center mx-auto mb-3 text-on-primary", item.color)}>
                                         <item.icon size={20} />
                                     </div>
-                                    <p className="text-xl font-medium text-main dark:text-on-primary tabular-nums">{item.value}</p>
+                                    <p className="text-xl font-medium text-main tabular-nums">{item.value}</p>
                                     <p className="text-micro font-medium text-muted uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
                         </div>
 
                         {/* Qualitative Feedback */}
-                        <div className="space-y-4 bg-background dark:bg-primary-active/20 p-6 border-2 border-border rounded-none">
+                        <div className="space-y-4 bg-background p-6 border-2 border-border rounded-none">
                             <p className="text-micro font-medium text-muted uppercase flex items-center gap-2">
                                 <CheckCircle2 size={14} className="text-primary" />
                                 التوصيات الأكاديمية ومسارات التطوير
@@ -76,7 +76,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                                 {student.lastNotes.map((note, idx) => (
                                     <div key={idx} className="flex gap-3 items-start">
                                         <div className="w-2 h-2 bg-primary rounded-none border border-border mt-1 shrink-0"></div>
-                                        <p className="text-sm font-normal text-main dark:text-dim leading-tight italic">"{note}"</p>
+                                        <p className="text-sm font-normal text-main leading-tight italic">"{note}"</p>
                                     </div>
                                 ))}
                             </div>
@@ -90,7 +90,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-10 bg-background dark:bg-background border-t-2 border-border flex gap-4 pt-6">
+                <div className="p-10 bg-background border-t-2 border-border flex gap-4 pt-6">
                     <button 
                         onClick={() => onShare('whatsapp')}
                         className="flex-1 h-14 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
@@ -100,7 +100,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                     </button>
                     <button 
                         onClick={() => window.print()}
-                        className="flex-1 h-14 bg-white text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-14 bg-card text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                     >
                         <FileDown size={18} />
                         تحميل PDF

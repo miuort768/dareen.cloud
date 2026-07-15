@@ -90,8 +90,8 @@ export const CurrenciesSection = ({
             <SectionTitle icon={Coins} label="العملات وأسعار الصرف" sub="إدارة العملات المدعومة وأسعار الصرف" />
 
             <div className="flex gap-1 mb-5 bg-surface p-1 rounded-xl w-fit">
-                <button onClick={() => setActiveTab('currencies')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'currencies' ? 'bg-card shadow-sm text-main' : 'text-muted hover:text-main'}`}>العملات</button>
-                <button onClick={() => setActiveTab('rates')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'rates' ? 'bg-card shadow-sm text-main' : 'text-muted hover:text-main'}`}>أسعار الصرف</button>
+                <button onClick={() => setActiveTab('currencies')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'currencies' ? 'bg-card shadow-soft text-main' : 'text-muted hover:text-main'}`}>العملات</button>
+                <button onClick={() => setActiveTab('rates')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'rates' ? 'bg-card shadow-soft text-main' : 'text-muted hover:text-main'}`}>أسعار الصرف</button>
             </div>
 
             {activeTab === 'currencies' && (

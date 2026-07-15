@@ -27,8 +27,8 @@ export const ParentStudentCard = ({
     const hasAchievements = viewingAchievements?.id === student.id;
 
     return (
-        <div className="bg-white dark:bg-primary-active border border-border dark:border-border shadow-sm rounded-2xl overflow-hidden group hover:border-primary/30 hover:shadow-md transition-all duration-300 flex flex-col">
-            <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] p-4 md:p-6 relative overflow-hidden">
+        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden group hover:border-primary/30 hover:shadow-md transition-all duration-300 flex flex-col">
+            <div className="bg-primary p-4 md:p-6 relative overflow-hidden">
                 <div className="absolute top-0 start-0 w-24 h-24 bg-white/10 -translate-y-12 translate-x-12 rotate-45 group-hover:scale-110 transition-transform rounded-full blur-xl"></div>
                 <div className="absolute bottom-0 end-0 w-16 h-16 bg-white/5 translate-y-8 -translate-x-8 rounded-full blur-lg"></div>
                 <div className="relative z-10 flex items-center justify-between gap-3">
@@ -50,16 +50,16 @@ export const ParentStudentCard = ({
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 border-b border-border dark:border-border">
-                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-e border-border dark:border-border">
+            <div className="grid grid-cols-2 border-b border-border/50">
+                <div className="p-3 md:p-4 flex flex-col items-center justify-center border-e border-border/50">
                     <div className="w-8 h-8 bg-primary-soft dark:bg-primary/10 rounded-xl flex items-center justify-center mb-1">
                         <BookOpen size={14} className="text-primary md:size-[16px]" />
                     </div>
                     <span className="text-micro md:text-micro font-medium text-muted uppercase">المواد</span>
-                    <span className="text-base md:text-lg font-medium text-main dark:text-on-primary">{enrollments.length}</span>
+                    <span className="text-base md:text-lg font-medium text-main">{enrollments.length}</span>
                 </div>
                 <div className="p-3 md:p-4 flex flex-col items-center justify-center">
-                    <div className="w-8 h-8 bg-success-light dark:bg-success/10 rounded-xl flex items-center justify-center mb-1">
+                    <div className="w-8 h-8 bg-success-soft rounded-xl flex items-center justify-center mb-1">
                         <TrendingUp size={14} className="text-success md:size-[16px]" />
                     </div>
                     <span className="text-micro md:text-micro font-medium text-muted uppercase">الالتزام</span>
@@ -75,23 +75,23 @@ export const ParentStudentCard = ({
             </div>
 
             <div className="p-4 md:p-5 space-y-3 flex-1">
-                <p className="text-micro font-medium text-muted uppercase tracking-widest border-b border-border dark:border-border pb-2 flex items-center justify-between">
+                <p className="text-micro font-medium text-muted uppercase tracking-widest border-b border-border/50 pb-2 flex items-center justify-between">
                     تفاصيل المواد الدراسية
                     <CheckCircle2 size={12} className="text-dim" />
                 </p>
                 <div className="space-y-3">
                     {enrollments.map((en, idx: number) => (
-                        <div key={idx} className="bg-background dark:bg-primary-active/50 p-3 rounded-xl relative overflow-hidden group/item border border-transparent hover:border-primary/20 transition-all">
+                        <div key={idx} className="bg-background p-3 rounded-xl relative overflow-hidden group/item border border-transparent hover:border-primary/20 transition-all">
                             <div className="flex justify-between items-start mb-2">
                                 <div>
-                                    <h4 className="text-sm font-medium text-main dark:text-on-primary">{en.subject}</h4>
-                                    <p className="text-micro text-muted dark:text-muted font-normal italic">المعلم: {en.teacher}</p>
+                                    <h4 className="text-sm font-medium text-main">{en.subject}</h4>
+                                    <p className="text-micro text-muted font-normal italic">المعلم: {en.teacher}</p>
                                 </div>
                                 <div className="text-end">
                                     <span className="text-micro font-medium text-primary dark:text-primary">حضر {en.sessionsUsed} من {en.sessionsTotal}</span>
                                 </div>
                             </div>
-                            <div className="w-full h-1.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
+                            <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden">
                                 <div
                                     className={cn(
                                         "h-full transition-all duration-1000 rounded-full",
@@ -112,16 +112,16 @@ export const ParentStudentCard = ({
 
             <div className="p-4 md:p-5 pt-0 mt-auto space-y-2">
                 <div className="grid grid-cols-2 gap-2">
-                    <button onClick={() => onViewDates(student)} className="py-2.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
+                    <button onClick={() => onViewDates(student)} className="py-2.5 bg-primary text-on-primary text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-soft active:scale-[0.98]">
                         <Calendar size={13} className="md:size-[14px]" />
                         حصص الطالب
                     </button>
-                    <button onClick={() => onViewAttendance(student)} className="py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-main dark:text-on-primary text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:bg-surface dark:hover:bg-primary-active hover:border-primary/30 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm active:scale-[0.98]">
+                    <button onClick={() => onViewAttendance(student)} className="py-2.5 bg-card border border-border/50 text-main text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl hover:bg-surface hover:border-primary/30 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-soft active:scale-[0.98]">
                         <TrendingUp size={13} className="md:size-[14px]" />
                         نسبة الحضور
                     </button>
                 </div>
-                <button onClick={() => onViewAchievements(student)} className={cn("w-full py-2.5 text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]", hasAchievements ? "bg-surface dark:bg-primary-active text-primary border border-primary/30" : "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary hover:shadow-lg hover:shadow-primary/25")}>
+                <button onClick={() => onViewAchievements(student)} className={cn("w-full py-2.5 text-micro md:text-micro font-medium uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-soft active:scale-[0.98]", hasAchievements ? "bg-surface text-primary border border-primary/30" : "bg-primary text-on-primary hover:shadow-lg hover:shadow-primary/25")}>
                     <Trophy size={14} />
                     {hasAchievements ? 'إغلاق سجل الإنجازات' : 'عرض حصاد الإنجازات والأوسمة'}
                 </button>
@@ -129,14 +129,14 @@ export const ParentStudentCard = ({
 
             <AnimatePresence>
                 {hasAchievements && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-background/50 dark:bg-primary-active/50 border-t border-border dark:border-border">
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-background/50 border-t border-border/50">
                         <div className="p-4 md:p-6 space-y-4">
                             <div className="flex items-center gap-2 mb-2">
                                 <Trophy size={16} className="text-warning" />
-                                <h4 className="text-micro font-medium text-main dark:text-on-primary uppercase tracking-widest">حصاد إنجازات الطالب</h4>
+                                <h4 className="text-micro font-medium text-main uppercase tracking-widest">حصاد إنجازات الطالب</h4>
                             </div>
                             <GamificationCard totalPoints={totalPoints} badges={student.badges} pointLogs={pointLogs} />
-                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error text-on-primary text-micro font-medium uppercase tracking-widest rounded-xl shadow-sm shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
+                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error text-on-primary text-micro font-medium uppercase tracking-widest rounded-xl shadow-soft shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
                         </div>
                     </motion.div>
                 )}

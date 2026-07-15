@@ -17,13 +17,13 @@ export const Parents = () => {
     if (state.loading) {
         return (
             <div className="space-y-4 p-4 md:p-8 animate-pulse bg-background dark:bg-background min-h-full">
-                <div className="h-24 bg-white dark:bg-primary-active rounded-2xl shadow-sm" />
+                <div className="h-24 bg-card rounded-card shadow-soft" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
-                        <div key={i} className="h-28 bg-white dark:bg-primary-active rounded-2xl shadow-sm" />
+                        <div key={i} className="h-28 bg-card rounded-card shadow-soft" />
                     ))}
                 </div>
-                <div className="h-96 bg-white dark:bg-primary-active rounded-2xl shadow-sm" />
+                <div className="h-96 bg-card rounded-card shadow-soft" />
             </div>
         );
     }
@@ -151,7 +151,7 @@ export const Parents = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.2 }}
-                                className="bg-white dark:bg-primary-active border border-border dark:border-border shadow-xl w-full max-w-sm overflow-hidden rounded-2xl"
+                                className="bg-card border border-border/50 shadow-xl w-full max-w-sm overflow-hidden rounded-card"
                             >
                                 <div className="bg-gradient-to-r from-error to-error-hover h-1.5 w-full" />
                                 <div className="p-8">

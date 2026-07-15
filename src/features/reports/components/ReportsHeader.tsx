@@ -9,7 +9,7 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
     const dateStr = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
-        <div className="bg-card rounded-2xl shadow-sm border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+        <div className="bg-card rounded-card shadow-soft border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-primary-soft">
                     <BarChart3 size={22} className="text-primary" />
@@ -27,7 +27,7 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
                 </div>
                 <button
                     onClick={onExport}
-                    className="flex items-center justify-center gap-2 bg-primary text-on-primary text-micro font-bold px-4 py-2.5 rounded-xl shadow-sm active:scale-95 transition-all"
+                    className="flex items-center justify-center gap-2 bg-primary text-on-primary text-micro font-bold px-4 py-2.5 rounded-xl shadow-soft active:scale-95 transition-all"
                 >
                     <Download size={14} />
                     <span className="hidden sm:inline">تصدير</span>

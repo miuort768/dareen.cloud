@@ -32,17 +32,17 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/40" dir="rtl">
-            <div className="bg-white dark:bg-primary-active border-2 border-border w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_black] flex flex-col max-h-[90vh] overflow-hidden">
+            <div className="bg-card border-2 border-border w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_black] flex flex-col max-h-[90vh] overflow-hidden">
                 
                 {/* Header Section */}
-                <div className="p-6 border-b-2 border-border bg-background dark:bg-primary-active">
+                <div className="p-6 border-b-2 border-border bg-background">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-5">
                             <div className="w-16 h-16 bg-background text-on-primary rounded-none flex items-center justify-center border-2 border-border shadow-md shrink-0">
                                 <User size={32} />
                             </div>
                             <div>
-                                <h3 className="text-xl font-medium text-main dark:text-on-primary uppercase tracking-tight">{student.name}</h3>
+                                <h3 className="text-xl font-medium text-main uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
                                     <span className="px-2 py-0.5 bg-background text-on-primary text-micro font-medium uppercase">{student.grade}</span>
                                     <span className="px-2 py-0.5 bg-warning text-warning border-2 border-border text-micro font-medium uppercase flex items-center gap-1">
@@ -54,7 +54,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                         </div>
                         <button 
                             onClick={onClose} 
-                            className="w-8 h-8 rounded-none bg-white dark:bg-primary-active text-main border-2 border-border hover:bg-error hover:text-on-primary transition-all flex items-center justify-center"
+                            className="w-8 h-8 rounded-none bg-card text-main border-2 border-border hover:bg-error hover:text-on-primary transition-all flex items-center justify-center"
                         >
                             <X size={18} />
                         </button>
@@ -65,7 +65,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     
                     {/* Reminder Row */}
                     {enrollment?.nextSessionNotes && (
-                        <div className="bg-warning-light dark:bg-warning/10 p-5 border-2 border-warning rounded-none relative">
+                        <div className="bg-warning-soft p-5 border-2 border-warning rounded-none relative">
                              <div className="absolute top-2 end-2">
                                 <Sparkles size={16} className="text-warning/30" />
                              </div>
@@ -80,7 +80,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                             <MessageSquare size={14} className="text-primary" />
                             <h4 className="text-micro font-medium uppercase">سياق ولي الأمر</h4>
                         </div>
-                        <div className="text-sm font-normal text-main dark:text-on-primary leading-relaxed bg-background dark:bg-primary-active/40 p-5 border-2 border-border rounded-none">
+                        <div className="text-sm font-normal text-main leading-relaxed bg-background dark:bg-primary-active/40 p-5 border-2 border-border rounded-none">
                             {student.notes || 'لا توجد ملاحظات من ولي الأمر لهذا الطالب.'}
                         </div>
                     </div>
@@ -94,10 +94,10 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
 
                         <div className="space-y-2">
                             {recentSessions.length > 0 ? recentSessions.map((sess, idx) => (
-                                <div key={idx} className="p-4 bg-white dark:bg-primary-active border-2 border-border/10 hover:border-border transition-all rounded-none flex items-center justify-between group">
+                                <div key={idx} className="p-4 bg-card border-2 border-border/10 hover:border-border transition-all rounded-none flex items-center justify-between group">
                                     <div className="min-w-0">
                                         <p className="text-micro font-medium text-muted uppercase mb-1">{sess.date}</p>
-                                        <p className="text-sm font-medium text-main dark:text-on-primary truncate uppercase tracking-tight">{sess.topics}</p>
+                                        <p className="text-sm font-medium text-main truncate uppercase tracking-tight">{sess.topics}</p>
                                         <div className="flex items-center gap-2 mt-1.5">
                                             <div className="w-1.5 h-1.5 rounded-none bg-success border border-border/20"></div>
                                             <p className="text-micro font-medium text-success uppercase">

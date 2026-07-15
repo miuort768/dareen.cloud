@@ -75,7 +75,7 @@ export const ParentAnnouncements = () => {
     return (
         <div className="min-h-full pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
 
-            <div className="bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 px-4 md:px-6 py-6 md:py-8">
+            <div className="bg-card rounded-card shadow-soft border border-border/50 px-4 md:px-6 py-6 md:py-8">
                 <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary-soft">
                         <Bell size={20} className="text-primary" />
@@ -98,7 +98,7 @@ export const ParentAnnouncements = () => {
                         placeholder="���� �� �������..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full ps-12 pe-6 py-3.5 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-xl shadow-sm text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted dark:placeholder:text-on-primary dark:text-on-primary"
+                        className="w-full ps-12 pe-6 py-3.5 bg-card border border-border/50 rounded-xl shadow-soft text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted text-main"
                     />
                 </div>
 
@@ -147,14 +147,14 @@ export const ParentAnnouncements = () => {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                                 key={ann.id}
-                                className="bg-white dark:bg-primary-active rounded-2xl p-5 md:p-6 shadow-sm border border-border/50 dark:border-border/50 relative overflow-hidden flex flex-col"
+                                className="bg-card rounded-card p-5 md:p-6 shadow-soft border border-border/50 relative overflow-hidden flex flex-col"
                             >
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-2 text-muted text-micro font-bold">
                                         <Clock size={12} />
                                         {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                                     </div>
-                                    <span className="px-3 py-1 rounded-lg text-micro font-bold flex items-center gap-1.5 shadow-sm" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
+                                    <span className="px-3 py-1 rounded-lg text-micro font-bold flex items-center gap-1.5 shadow-soft" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
                                         {ann.type === 'urgent' && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
                                         {config.label}
                                     </span>
@@ -192,7 +192,7 @@ export const ParentAnnouncements = () => {
                 </AnimatePresence>
 
                 {filteredAnnouncements.length === 0 && (
-                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-white dark:bg-primary-active rounded-2xl border border-dashed border-border dark:border-border p-8">
+                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-card rounded-card border border-dashed border-border/50 p-8">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 bg-primary-soft">
                             <Bell size={22} className="text-primary" />
                         </div>
@@ -210,10 +210,10 @@ const FilterButton = ({ label, active, onClick, icon: Icon, activeColor }: { lab
     <button
         onClick={onClick}
         className={cn(
-            "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border shadow-sm active:scale-95",
+            "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border shadow-soft active:scale-95",
             active 
                 ? "text-on-primary border-transparent" 
-                : "bg-white dark:bg-primary-active text-muted dark:text-muted border-border/50 dark:border-border/50 hover:bg-surface dark:hover:bg-primary-active"
+                : "bg-card text-muted border-border/50 hover:bg-surface"
         )}
         style={active ? { backgroundColor: activeColor, borderColor: activeColor } : {}}
     >

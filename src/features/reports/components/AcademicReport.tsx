@@ -20,7 +20,7 @@ interface AcademicReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-card border border-border rounded-2xl shadow-sm overflow-hidden', className)}>
+    <div className={cn('bg-card border border-border rounded-card shadow-soft overflow-hidden', className)}>
         {children}
     </div>
 );
@@ -140,7 +140,7 @@ export const AcademicReport = ({
                     { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, color: 'var(--chart-2)' },
                     { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, color: 'var(--chart-4)' },
                 ].map((item, i) => (
-                    <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-4">
+                    <div key={i} className="bg-card border border-border rounded-card shadow-soft p-4">
                         <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-2" style={{ backgroundColor: `${item.color}10` }}>
                             <item.icon size={16} style={{ color: item.color }} />
                         </div>
@@ -285,7 +285,7 @@ export const AcademicReport = ({
                             <button
                                 onClick={() => setPage(p => Math.max(1, p - 1))}
                                 disabled={page === 1}
-                                className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-sm active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted"
+                                className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-soft active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted"
                             >
                                 <ChevronRight size={14} />
                             </button>
@@ -294,7 +294,7 @@ export const AcademicReport = ({
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={cn(
-                                        'w-8 h-8 text-xs font-bold rounded-xl border shadow-sm active:scale-95 transition-all',
+                                        'w-8 h-8 text-xs font-bold rounded-xl border shadow-soft active:scale-95 transition-all',
                                         page === i + 1 ? 'border-chart-4 bg-chart-4 text-on-primary' : 'border-border bg-card text-muted'
                                     )}
                                 >
@@ -305,7 +305,7 @@ export const AcademicReport = ({
                             <button
                                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                 disabled={page === totalPages}
-                                className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-sm active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted"
+                                className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-soft active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted"
                             >
                                 <ChevronLeft size={14} />
                             </button>

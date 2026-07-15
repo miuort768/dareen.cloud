@@ -22,7 +22,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
     onExportPDF
 }) => {
     return (
-        <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] shadow-lg px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print rounded-2xl mt-4">
+        <div className="bg-primary shadow-lg px-4 md:px-7 py-4 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print rounded-card mt-4">
             <div className="flex items-center gap-3 md:gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
                     <Users size={18} className="text-on-primary" />
@@ -47,7 +47,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl",
+                        "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-micro font-bold transition-all shadow-soft active:scale-95 rounded-xl",
                         showAddForm 
                             ? "bg-error text-on-primary hover:bg-error" 
                             : "bg-white/20 backdrop-blur-sm text-on-primary hover:bg-white/30"

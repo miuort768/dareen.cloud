@@ -109,7 +109,7 @@ export const Evaluations = () => {
 
     if (isLoading) return (
         <div className="space-y-4 p-6 bg-primary-light dark:bg-background min-h-full">
-            {[...Array(6)].map((_, i) => <div key={i} className="h-40 bg-white dark:bg-primary-active animate-pulse rounded-2xl" />)}
+            {[...Array(6)].map((_, i) => <div key={i} className="h-40 bg-card animate-pulse rounded-card" />)}
         </div>
     );
 
@@ -136,11 +136,11 @@ export const Evaluations = () => {
                             />
                         ))}
                         {sortedStudents.length === 0 && (
-                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 shadow-sm rounded-2xl">
-                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-2xl bg-primary/5 border-2 border-dashed border-primary/30">
+                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-card border border-border/50 shadow-soft rounded-card">
+                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-card bg-primary/5 border-2 border-dashed border-primary/30">
                                     <User size={36} className="text-primary" />
                                 </div>
-                                <h3 className="text-lg font-bold text-main dark:text-on-primary mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون حالياً'}</h3>
+                                <h3 className="text-lg font-bold text-main mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون حالياً'}</h3>
                                 <p className="text-sm font-medium text-muted max-w-xs">{searchTerm ? 'حاول استخدام كلمات بحث مختلفة.' : 'سيظهر الطلاب هنا بمجرد تسجيلهم في النظام.'}</p>
                             </div>
                         )}

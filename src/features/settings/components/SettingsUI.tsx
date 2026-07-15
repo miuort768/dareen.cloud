@@ -54,7 +54,7 @@ export const THEME_COLORS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-card border border-border rounded-2xl shadow-sm p-5',
+        'bg-card border border-border rounded-card shadow-soft p-5',
         className
     )}>
         {children}
@@ -126,8 +126,8 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-gradient-to-l from-primary to-primary-light',
-            'text-on-primary text-xs font-bold px-4 py-2.5 shadow-sm active:scale-95 transition-all',
+            'flex items-center justify-center gap-2 bg-primary',
+            'text-on-primary text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
             className
         )}
     >
@@ -143,7 +143,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 bg-card border border-border',
             'hover:bg-surface text-muted',
-            'text-xs font-bold px-4 py-2.5 shadow-sm active:scale-95 transition-all',
+            'text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
             className
         )}
     >
@@ -159,7 +159,7 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 border border-error',
             'hover:bg-error hover:border-error hover:text-on-primary text-error bg-error-soft',
-            'text-xs font-bold px-4 py-2.5 shadow-sm active:scale-95 transition-all',
+            'text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
             className
         )}
     >

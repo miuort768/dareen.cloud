@@ -56,7 +56,7 @@ export const PoliciesSettings = ({
                                 className={cn(
                                     'p-3 border text-start transition-all',
                                     teacherCommissionType === opt.id
-                                        ? 'bg-primary text-on-primary border-primary shadow-sm'
+                                        ? 'bg-primary text-on-primary border-primary shadow-soft'
                                         : 'bg-card text-muted border-border hover:border-primary'
                                 )}
                             >

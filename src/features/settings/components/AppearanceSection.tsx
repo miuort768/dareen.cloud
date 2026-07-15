@@ -16,7 +16,7 @@ export const AppearanceSection = ({
     setThemeColor
 }: AppearanceSectionProps) => {
     return (
-        <section className="bg-card border border-border shadow-sm p-6">
+        <section className="bg-card border border-border shadow-soft p-6">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
                 <div className="w-9 h-9 flex items-center justify-center bg-primary-soft">
                     <Palette size={18} className="text-primary" />
@@ -41,7 +41,7 @@ export const AppearanceSection = ({
                             }`}
                     >
                         <span
-                            className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform transform duration-300 ${theme === 'dark' ? 'translate-x-[2px]' : '-translate-x-[26px]'
+                            className={`absolute top-1 w-5 h-5 bg-card rounded-full transition-transform transform duration-300 ${theme === 'dark' ? 'translate-x-[2px]' : '-translate-x-[26px]'
                                 }`}
                             style={{ right: theme === 'dark' ? 'auto' : '2px', left: theme === 'dark' ? '2px' : 'auto' }}
                         ></span>
@@ -64,7 +64,7 @@ export const AppearanceSection = ({
                                 <div className={cn(
                                     "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
                                     themeColor === preset.id
-                                        ? "ring-2 ring-primary ring-offset-2 scale-110 shadow-sm"
+                                        ? "ring-2 ring-primary ring-offset-2 scale-110 shadow-soft"
                                         : "ring-1 ring-border hover:ring-border-strong scale-100"
                                 )}>
                                     <div

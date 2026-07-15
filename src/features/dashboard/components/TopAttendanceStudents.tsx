@@ -40,13 +40,13 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     }, [sessions]);
 
     return (
-        <div className="bg-white dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border">
+        <div className="bg-card rounded-card p-3.5 shadow-soft border border-border">
             <div className="flex items-center justify-between mb-2.5">
-                <h3 className="text-xs font-bold text-muted dark:text-muted flex items-center gap-1.5">
+                <h3 className="text-xs font-bold text-muted flex items-center gap-1.5">
                     <Medal size={11} className="text-warning" />
                     الأكثر حضوراً
                 </h3>
-                <div className="w-6 h-6 rounded-lg bg-warning-light dark:bg-warning/10 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-lg bg-warning-soft flex items-center justify-center">
                     <TrendingUp size={11} className="text-warning" />
                 </div>
             </div>
@@ -57,39 +57,39 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div
                             key={i}
                             onClick={() => onStudentClick?.({ id: stu.name, name: stu.name })}
-                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-primary-active/50 border border-border dark:border-border hover:border-warning dark:hover:border-warning/30 transition-all cursor-pointer"
+                            className="flex items-center justify-between p-2 rounded-xl bg-background border border-border hover:border-warning transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(
                                     "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-black",
-                                    i === 0 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
-                                    i === 1 ? "bg-surface text-main dark:bg-card dark:text-muted" :
-                                    i === 2 ? "bg-warning-light text-warning dark:bg-warning/20 dark:text-warning" :
-                                    "bg-surface dark:bg-primary-active text-muted dark:text-muted"
+                                    i === 0 ? "bg-warning-soft text-warning" :
+                                    i === 1 ? "bg-surface text-main" :
+                                    i === 2 ? "bg-warning-soft text-warning" :
+                                    "bg-surface text-muted"
                                 )}>
                                     {i + 1}
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-micro font-bold text-main dark:text-on-primary truncate">{stu.name}</p>
+                                    <p className="text-micro font-bold text-main truncate">{stu.name}</p>
                                 </div>
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-base font-black text-main dark:text-on-primary tabular-nums">{stu.count}</span>
+                                <span className="text-base font-black text-main tabular-nums">{stu.count}</span>
                                 <span className="text-micro font-bold text-warning">حصة</span>
                             </div>
                         </div>
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-6 opacity-50">
-                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-primary-active flex items-center justify-center mb-1.5">
-                            <User size={14} className="text-dim dark:text-muted" />
+                        <div className="w-8 h-8 rounded-xl bg-surface flex items-center justify-center mb-1.5">
+                            <User size={14} className="text-dim" />
                         </div>
                         <p className="text-micro font-bold text-muted">لا توجد سجلات حالياً</p>
                     </div>
                 )}
             </div>
 
-            <div className="mt-2.5 bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] rounded-xl p-2.5 text-on-primary flex items-center justify-between">
+            <div className="mt-2.5 bg-warning rounded-card p-2.5 text-on-primary flex items-center justify-between">
                 <div>
                     <p className="text-micro font-bold text-warning">إجمالي حصص الشهر</p>
                     <p className="text-base font-black tabular-nums">{totalMonthSessions}</p>

@@ -150,7 +150,7 @@ export const Chat: React.FC = () => {
         <div 
             dir="rtl"
             className={cn(
-                "flex flex-col overflow-hidden bg-white dark:bg-primary-active",
+                "flex flex-col overflow-hidden bg-card",
                 "fixed inset-x-0 top-0 lg:relative lg:inset-auto lg:bottom-auto lg:w-full lg:h-screen z-10 transition-all duration-300",
                 selectedConv ? "bottom-0" : "bottom-[70px]"
             )}

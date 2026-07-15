@@ -183,7 +183,7 @@ export const Forum = () => {
                             <button
                                 onClick={handleCreatePost}
                                 disabled={!newPostContent.trim()}
-                                className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-primary/40 active:scale-95"
+                                className="bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-primary/40 active:scale-95"
                             >
                                 <Send size={13} /> نشر
                             </button>
@@ -391,7 +391,7 @@ export const Forum = () => {
                                                         onClick={() => handleAddComment(post.id)}
                                                         disabled={!(commentTexts[post.id] || '').trim()}
                                                         aria-label="إرسال التعليق"
-                                                        className="absolute end-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
+                                                        className="absolute end-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-primary hover:bg-primary-hover text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
                                                     >
                                                         <Send size={11} />
                                                     </button>
@@ -422,7 +422,7 @@ export const Forum = () => {
 
             {/* ════════ HELP / GUIDELINES ════════ */}
             <div className="max-w-[700px] mx-auto px-4 mt-10 mb-8">
-                <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden shadow-xl shadow-primary/30">
+                <div className="bg-primary rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden shadow-xl shadow-primary/30">
                     <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 -translate-y-12 translate-x-12 rotate-45 rounded-3xl pointer-events-none" />
                     <div className="absolute bottom-0 end-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
                     <div className="relative z-10 text-center md:text-start">

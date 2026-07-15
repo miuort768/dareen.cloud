@@ -19,7 +19,7 @@ export const SecureActionModal = ({ secureAction, secureInput, setSecureInput, s
 
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-black/50 animate-in fade-in">
-            <div className="bg-card p-6 max-w-md w-full shadow-sm border border-error">
+            <div className="bg-card p-6 max-w-md w-full shadow-soft border border-error">
                 <div className="flex flex-col items-center text-center space-y-3">
                     <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error mb-1">
                         <AlertCircle size={24} />

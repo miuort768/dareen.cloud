@@ -19,7 +19,7 @@ const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: Reac
             <input
                 {...props}
                 className={cn(
-                    "w-full pe-4 ps-12 py-3 bg-white dark:bg-primary-active border border-border dark:border-border outline-none text-xs font-normal transition-all focus:border-primary dark:text-on-primary rounded-xl",
+                    "w-full pe-4 ps-12 py-3 bg-card border border-border/50 outline-none text-xs font-normal transition-all focus:border-primary rounded-xl",
                     props.className
                 )}
             />
@@ -34,9 +34,9 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     onSubmit
 }) => {
     return (
-        <div className="bg-white dark:bg-primary-active border border-border dark:border-border shadow-sm relative overflow-hidden rounded-2xl">
+        <div className="bg-card border border-border/50 shadow-soft relative overflow-hidden rounded-card">
             {/* Header */}
-            <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] p-6 md:p-8">
+            <div className="bg-primary p-6 md:p-8">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 flex items-center justify-center bg-white/15 backdrop-blur-sm text-on-primary rounded-xl">
                         <ShieldCheck size={18} />
@@ -65,10 +65,10 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />}
                     </div>
 
-                    <div className="pt-6 border-t border-border dark:border-border flex justify-end">
+                    <div className="pt-6 border-t border-border/50 flex justify-end">
                         <button
                             type="submit"
-                            className="group flex items-center gap-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)] text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95 rounded-xl"
+                            className="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-[0.2em] transition-all shadow-soft active:scale-95 rounded-xl"
                         >
                             <Save size={14} className="group-hover:rotate-12 transition-transform" />
                             {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

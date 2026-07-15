@@ -66,7 +66,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                 <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
-                        "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
+                        "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
                         <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-on-primary transition-colors" aria-label="إغلاق">
@@ -136,10 +136,10 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
-                        "relative bg-white dark:bg-primary-active w-full max-w-sm rounded-2xl shadow-2xl transition-all duration-200",
+                        "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                            <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-on-primary transition-colors" aria-label="إغلاق">
+<button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted transition-colors" aria-label="إغلاق">
                                     <X size={15} />
                                 </button>
 

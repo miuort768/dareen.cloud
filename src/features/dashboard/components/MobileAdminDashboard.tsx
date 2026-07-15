@@ -122,24 +122,24 @@ export const MobileAdminDashboard = ({
             <div className={cn(
                 "sticky top-0 z-[100] transition-all duration-500",
                 headerScrolled
-                    ? "bg-white/80 dark:bg-background/80 backdrop-blur-xl shadow-sm border-b border-border/50 dark:border-border/50"
+                    ? "bg-white/80 dark:bg-background/80 backdrop-blur-xl shadow-soft border-b border-border/50"
                     : "bg-white dark:bg-background border-b border-transparent"
             )}>
                 <div className="px-4 pt-3 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] flex items-center justify-center text-on-primary shadow-sm shadow-info/40">
+                            <div className="w-9 h-9 rounded-card bg-primary flex items-center justify-center text-on-primary shadow-soft shadow-info/40">
                                 <ShieldCheck {...iconProps} />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-main dark:text-on-primary leading-tight">مركز القيادة</h1>
-                                <p className="text-micro font-medium text-muted dark:text-muted">
+                                <h1 className="text-sm font-bold text-main leading-tight">مركز القيادة</h1>
+                                <p className="text-micro font-medium text-muted">
                                     {format(new Date(), 'eeee, d MMMM', { locale: ar })}
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="px-2.5 py-1.5 rounded-xl bg-surface/70 dark:bg-primary-active/70 backdrop-blur-sm text-primary dark:text-info font-medium text-micro tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-card bg-surface/70 backdrop-blur-sm text-primary font-medium text-micro tabular-nums">
                                 <Clock {...miniIconProps} className="inline me-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -149,7 +149,7 @@ export const MobileAdminDashboard = ({
 
                 {/* Tabs */}
                 <div className="px-4 pb-3">
-                    <div className="flex bg-gradient-to-b from-surface to-surface dark:from-[var(--bg-primary-active)]/60 dark:to-[var(--bg-primary-active)]/60 rounded-2xl p-1 gap-1 shadow-sm">
+                    <div className="flex bg-gradient-to-b from-surface to-surface dark:from-[var(--bg-primary-active)]/60 dark:to-[var(--bg-primary-active)]/60 rounded-card p-1 gap-1 shadow-soft">
                         {[
                             { id: 'home' as const, label: 'الرئيسية', icon: Home },
                             { id: 'quick' as const, label: 'إجراءات', icon: FilePlus },
@@ -162,15 +162,15 @@ export const MobileAdminDashboard = ({
                                 className={cn(
                                     "flex-1 py-2 px-2 flex items-center justify-center gap-1.5 transition-all duration-300 relative rounded-xl active:scale-96",
                                     activeTab === tab.id
-                                        ? "bg-white dark:bg-card shadow-sm text-primary dark:text-primary font-bold"
-                                        : "text-dim dark:text-muted font-medium hover:text-main dark:hover:text-dim"
+                                        ? "bg-card shadow-soft text-primary font-bold"
+                                        : "text-dim font-medium hover:text-main dark:hover:text-dim"
                                 )}
                                 aria-label={tab.label}
                             >
                                 <tab.icon {...smallIconProps} />
                                 <span className="text-micro">{tab.label}</span>
                                 {tab.badge !== undefined && tab.badge > 0 && (
-                                    <span className="absolute -top-1 -end-1 min-w-[16px] h-[16px] bg-success text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white dark:border-border rounded-full shadow-sm">
+                                    <span className="absolute -top-1 -end-1 min-w-[16px] h-[16px] bg-success text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white border-border rounded-full shadow-soft">
                                         {tab.badge}
                                     </span>
                                 )}
@@ -198,15 +198,15 @@ export const MobileAdminDashboard = ({
                         </div>
 
                         {/* Today's Progress */}
-                        <div className="bg-white dark:bg-card rounded-2xl p-5 shadow-sm border border-border dark:border-border">
+                        <div className="bg-card rounded-card p-5 shadow-soft border border-border">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/30 dark:to-[var(--bg-success)]/20 flex items-center justify-center">
+                                    <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center">
                                         <Award {...smallIconProps} className="text-success" />
                                     </div>
                                     <div>
-                                        <span className="text-micro font-bold text-success dark:text-success">اليوم</span>
-                                        <h3 className="text-xs font-bold text-main dark:text-on-primary">معدل تنفيذ الحصص</h3>
+                                        <span className="text-micro font-bold text-success">اليوم</span>
+                                        <h3 className="text-xs font-bold text-main">معدل تنفيذ الحصص</h3>
                                     </div>
                                 </div>
                                 <span className="text-lg font-bold text-success tabular-nums">{completionRate}%</span>
@@ -248,30 +248,30 @@ export const MobileAdminDashboard = ({
                     <div className="space-y-4">
                         <p className="text-micro font-bold text-muted px-1">المؤشرات المالية</p>
 
-                        <div className="bg-white dark:bg-card rounded-2xl p-5 shadow-sm border border-border dark:border-border space-y-4">
-                            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/20 dark:to-[var(--bg-success)]/20 border border-success dark:border-success/30">
+                        <div className="bg-card rounded-card p-5 shadow-soft border border-border space-y-4">
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-success-soft border border-success">
                                 <div>
-                                    <span className="text-micro font-bold text-success dark:text-success">الإيرادات</span>
-                                    <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
+                                    <span className="text-micro font-bold text-success">الإيرادات</span>
+                                    <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
                                 </div>
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] flex items-center justify-center text-on-primary shadow-sm shadow-success/40">
+                                <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-primary shadow-soft shadow-success/40">
                                     <TrendingUp size={20} strokeWidth={1.5} />
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-[var(--bg-error-soft)] to-[var(--bg-error-light)] dark:from-[var(--bg-error)]/20 dark:to-[var(--bg-error)]/20 border border-error dark:border-error/30">
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-error-soft border border-error">
                                 <div>
-                                    <span className="text-micro font-bold text-error dark:text-error">المصروفات</span>
-                                    <p className="text-lg font-bold text-main dark:text-on-primary mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
+                                    <span className="text-micro font-bold text-error">المصروفات</span>
+                                    <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
                                 </div>
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] flex items-center justify-center text-on-primary shadow-sm shadow-error/40">
+                                <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40">
                                     <TrendingDown size={20} strokeWidth={1.5} />
                                 </div>
                             </div>
 
                             <button
                                 onClick={() => { triggerHaptic('light'); navigate('/finance'); }}
-                                className="w-full h-11 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-sm shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-all active:scale-[0.98]"
+                                className="w-full h-11 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-all active:scale-[0.98]"
                                 aria-label="لوحة المالية كاملة"
                             >
                                 <Wallet {...smallIconProps} />
@@ -287,19 +287,19 @@ export const MobileAdminDashboard = ({
                         <p className="text-micro font-bold text-muted px-1">التنبيهات</p>
 
                         {lowBalanceCount > 0 ? (
-                            <div className="bg-white dark:bg-card rounded-2xl p-5 shadow-sm border border-error dark:border-error/30">
+                            <div className="bg-card rounded-card p-5 shadow-soft border border-error dark:border-error/30">
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] flex items-center justify-center text-on-primary shadow-sm shadow-error/40 shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40 shrink-0">
                                         <Bell size={18} strokeWidth={1.5} />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-xs text-main dark:text-on-primary">إشعار مالي</h3>
-                                        <p className="text-micro font-medium text-muted dark:text-muted mt-1">
+                                        <h3 className="font-bold text-xs text-main">إشعار مالي</h3>
+                                        <p className="text-micro font-medium text-muted mt-1">
                                             يوجد {lowBalanceCount} طلاب بحاجة إلى تجديد الاشتراك
                                         </p>
                                         <button
                                             onClick={() => { triggerHaptic('medium'); navigate('/students'); }}
-                                            className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-sm shadow-info/30 active:scale-95"
+                                            className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-soft shadow-info/30 active:scale-95"
                                             aria-label="عرض الطلاب"
                                         >
                                             <UserPlus {...miniIconProps} />
@@ -309,18 +309,18 @@ export const MobileAdminDashboard = ({
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-white dark:bg-card rounded-2xl p-5 text-center shadow-sm border border-border dark:border-border">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--bg-success-soft)] to-[var(--bg-success-light)] dark:from-[var(--bg-success)]/30 dark:to-[var(--bg-success)]/20 flex items-center justify-center mx-auto mb-3">
+                            <div className="bg-card rounded-card p-5 text-center shadow-soft border border-border">
+                                <div className="w-12 h-12 rounded-xl bg-success-soft flex items-center justify-center mx-auto mb-3">
                                     <Bell size={24} strokeWidth={1.5} className="text-success" />
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-on-primary">لا توجد تنبيهات</p>
+                                <p className="text-xs font-bold text-main">لا توجد تنبيهات</p>
                                 <p className="text-micro font-medium text-muted mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         )}
 
                         {/* Support Card */
                         }
-                        <div className="relative rounded-2xl p-5 shadow-sm overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">
+                        <div className="relative rounded-card p-5 shadow-soft overflow-hidden bg-primary">
                             <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                             <div className="absolute -top-10 -start-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
                             <div className="absolute -bottom-8 -end-8 w-24 h-24 bg-info-light/10 rounded-full blur-xl" />
@@ -336,7 +336,7 @@ export const MobileAdminDashboard = ({
                                 </div>
                                 <button
                                     onClick={() => { triggerHaptic('heavy'); window.open('https://wa.me/message/DAREEN', '_blank'); }}
-                                    className="w-full h-11 rounded-xl bg-white/15 backdrop-blur-md text-on-primary text-micro font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-sm border border-white/10 hover:bg-white/25"
+                                    className="w-full h-11 rounded-xl bg-white/15 backdrop-blur-md text-on-primary text-micro font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-soft border border-white/10 hover:bg-white/25"
                                     aria-label="تواصل مع الدعم الفني"
                                 >
                                     <Headphones {...smallIconProps} />
@@ -358,11 +358,11 @@ export const MobileAdminDashboard = ({
 const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; color: string; onClick?: () => void }) => (
     <button
         onClick={onClick}
-        className="rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all w-full"
+        className="rounded-card p-4 flex flex-col items-center justify-center gap-1.5 shadow-soft active:scale-95 transition-all w-full"
         style={{ backgroundColor: color }}
         aria-label={label}
     >
-        <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-sm text-on-primary">
+        <div className="w-10 h-10 rounded-card bg-white/15 flex items-center justify-center shadow-soft text-on-primary">
             <Icon {...iconProps} />
         </div>
         <span className="text-micro font-bold text-on-primary leading-none mt-1">{label}</span>
@@ -373,12 +373,12 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
 const QuickLink = ({ icon: Icon, label, color, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; color: string; onClick?: () => void }) => (
     <button
         onClick={onClick}
-        className="bg-white dark:bg-card rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-border dark:border-border active:scale-95 transition-all hover:shadow-md"
+        className="bg-card rounded-card p-4 flex items-center gap-3 shadow-soft border border-border active:scale-95 transition-all hover:shadow-md"
         aria-label={label}
     >
         <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${color} 7%, transparent)`, color: color }}>
             <Icon size={16} strokeWidth={1.5} />
         </div>
-        <span className="text-xs font-bold text-main dark:text-on-primary">{label}</span>
+        <span className="text-xs font-bold text-main">{label}</span>
     </button>
 );

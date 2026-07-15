@@ -25,15 +25,15 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
             {/* Header */}
             <div className="flex items-center justify-between mb-4 px-1">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-background dark:bg-white text-on-primary dark:text-main rounded-none flex items-center justify-center border border-border dark:border-border shadow-sm">
+                    <div className="w-10 h-10 bg-background text-on-primary rounded-none flex items-center justify-center border border-border shadow-soft">
                         <Clock size={20} />
                     </div>
                     <div>
-                        <h3 className="font-medium text-sm text-main dark:text-on-primary uppercase tracking-tight">الجدول الزمني</h3>
-                        <p className="text-micro text-muted dark:text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
+                        <h3 className="font-medium text-sm text-main uppercase tracking-tight">الجدول الزمني</h3>
+                        <p className="text-micro text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-primary border border-success rounded-none shadow-sm">
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-primary border border-success rounded-none shadow-soft">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     <span className="text-micro font-medium uppercase">LIVE NOW</span>
                 </div>
@@ -51,12 +51,12 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             key={session.id}
                             onClick={() => onStudentClick?.({ id: session.studentName, name: session.studentName })}
                             className={cn(
-                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[150px] md:min-w-0 p-4 rounded-none border transition-all relative group/card shadow-sm cursor-pointer",
+                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[150px] md:min-w-0 p-4 rounded-none border transition-all relative group/card shadow-soft cursor-pointer",
                                 isCompleted
-                                    ? "bg-success-light dark:bg-success/20 border-success/30"
+                                    ? "bg-success-soft border-success/30"
                                     : isCancelled
-                                    ? "bg-error-light dark:bg-error/20 border-error/30"
-                                    : "bg-white dark:bg-primary-active border-border dark:border-border hover:border-primary/50 hover:-translate-y-1"
+                                    ? "bg-error-soft border-error/30"
+                                    : "bg-card border-border hover:border-primary/50 hover:-translate-y-1"
                             )}
                         >
                             {/* Time + status icon */}
@@ -67,46 +67,46 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                         ? "bg-success text-on-primary border-success" 
                                         : isCancelled 
                                         ? "bg-error text-on-primary border-error" 
-                                        : "bg-surface dark:bg-primary-active text-main dark:text-on-primary border-border dark:border-border"
+                                        : "bg-surface text-main border-border"
                                 )}>
                                     {session.time}
                                 </div>
-                                {isCompleted && <CheckCircle2 size={16} className="text-success dark:text-success" />}
-                                {isCancelled && <AlertCircle size={16} className="text-error dark:text-error" />}
-                                {isOngoing && <div className="w-2.5 h-2.5 bg-primary dark:bg-primary rounded-none border border-white/20 animate-pulse" />}
+                                {isCompleted && <CheckCircle2 size={16} className="text-success" />}
+                                {isCancelled && <AlertCircle size={16} className="text-error" />}
+                                {isOngoing && <div className="w-2.5 h-2.5 bg-primary rounded-none border border-white/20 animate-pulse" />}
                             </div>
 
                             {/* Student name */}
-                            <h4 className="text-xs font-medium text-main dark:text-on-primary truncate mb-1 uppercase tracking-tight">
+                            <h4 className="text-xs font-medium text-main truncate mb-1 uppercase tracking-tight">
                                 {session.studentName}
                             </h4>
 
                             {/* Subject */}
                             <div className="flex items-center gap-2">
                                 <div className={cn(
-                                    "w-1.5 h-1.5 rounded-none border border-border dark:border-border",
+                                    "w-1.5 h-1.5 rounded-none border border-border",
                                     isCompleted ? "bg-success" : isCancelled ? "bg-error" : "bg-primary"
                                 )} />
-                                <p className="text-micro font-normal text-muted dark:text-muted truncate uppercase">
+                                <p className="text-micro font-normal text-muted truncate uppercase">
                                     {session.subject}
                                 </p>
                             </div>
 
                             {/* Status label */}
-                            <div className="mt-4 pt-3 border-t border-border dark:border-border flex justify-between items-center">
+                            <div className="mt-4 pt-3 border-t border-border flex justify-between items-center">
                                 <span className={cn(
                                     "text-micro font-medium uppercase",
                                     isCompleted ? "text-success" : isCancelled ? "text-error" : "text-primary"
                                 )}>
                                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
                                 </span>
-                                {isOngoing && <Play size={10} className="text-primary dark:text-primary fill-current" />}
+                                {isOngoing && <Play size={10} className="text-primary fill-current" />}
                             </div>
 
                             {/* Hover play overlay */}
                             {isOngoing && (
                                 <button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary-hover/95 text-on-primary rounded-none border border-primary dark:border-primary flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
-                                    <div className="w-9 h-9 bg-white text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
+                                    <div className="w-9 h-9 bg-white text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-soft">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-medium text-micro uppercase">بدء الحصة</span>
