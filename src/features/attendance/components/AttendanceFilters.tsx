@@ -45,21 +45,21 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
     return (
         <div className="px-0 mb-4">
-            <div className="bg-white dark:bg-primary-active border border-border dark:border-border rounded-2xl shadow-sm p-4">
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-border dark:border-border">
+            <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/50">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
+                        <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
                             <SlidersHorizontal size={14} />
                         </div>
                         <div>
-                            <h3 className="text-xs font-bold text-main dark:text-on-primary">فلترة السجلات</h3>
+                            <h3 className="text-xs font-bold text-main">فلترة السجلات</h3>
                             <p className="text-micro font-bold text-muted">تخصيص عرض الجلسات</p>
                         </div>
                     </div>
                     {hasActiveFilters && (
                         <button
                             onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                                                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-micro rounded-xl transition-all" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-error) 7%, transparent)', color: 'var(--bg-error)' }}
+                            className="flex items-center gap-1.5 px-3 py-1.5 font-bold text-micro rounded-xl transition-all bg-error-soft text-error"
                         >
                             <X size={12} /> إعادة التعيين
                         </button>
@@ -67,14 +67,13 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                 </div>
 
                 {periodFilter && onPeriodChange && (
-                    <div className="mb-4 pb-4 border-b border-border dark:border-border">
+                    <div className="mb-4 pb-4 border-b border-border/50">
                         <div className="flex flex-wrap items-center gap-2">
                             {(Object.keys(periodLabels) as PeriodFilter[]).map(key => (
                                 <button
                                     key={key}
                                     onClick={() => onPeriodChange(key)}
-                                                    className={`px-3 py-1.5 text-micro font-bold rounded-xl transition-all ${periodFilter === key ? 'text-on-primary' : 'text-muted dark:text-on-primary bg-surface dark:bg-primary-active hover:bg-surface'}`}
-                                                    style={periodFilter === key ? { backgroundColor: 'var(--bg-primary)' } : {}}
+                                    className={`px-3 py-1.5 text-micro font-bold rounded-xl transition-all ${periodFilter === key ? 'bg-primary text-on-primary' : 'text-muted bg-card hover:bg-surface'}`}
                                 >
                                     {periodLabels[key]}
                                 </button>
@@ -85,12 +84,12 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                                 <div className="flex items-center gap-2">
                                     <span className="text-micro font-bold text-muted">من</span>
                                     <input type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
+                                        className="px-2 py-1.5 bg-card border border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-micro font-bold text-muted">إلى</span>
                                     <input type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
-                                        className="px-2 py-1.5 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
+                                        className="px-2 py-1.5 bg-card border border-border rounded-xl text-micro font-bold outline-none focus:border-primary transition-all" />
                                 </div>
                             </div>
                         )}
@@ -105,7 +104,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                             placeholder="اسم الطالب، المادة..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full ps-9 pe-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all"
+                            className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all"
                         />
                     </div>
 
@@ -114,7 +113,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full ps-9 pe-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
+                            className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">جميع الحالات</option>
                             <option value="scheduled">مجدولة</option>
@@ -128,7 +127,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full ps-9 pe-3 py-2 bg-background dark:bg-primary-active border border-border dark:border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
+                            className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">كافة المعلمات</option>
                             {uniqueTeachers.map(teacher => (

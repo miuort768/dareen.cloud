@@ -154,24 +154,24 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm">
+        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden flex flex-col group transition-all hover:shadow-soft">
             {/* Header Accent */}
             <div className={cn(
-                "h-1.5 w-full bg-surface dark:bg-primary-active transition-all",
+                "h-1.5 w-full bg-surface transition-all",
                 timerRunning && "bg-error animate-pulse"
             )}></div>
 
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black bg-primary-soft text-primary">
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
-                            <h4 className="font-normal text-main dark:text-on-primary text-sm leading-tight">{student.name}</h4>
+                            <h4 className="font-normal text-main text-sm leading-tight">{student.name}</h4>
                             <div className="flex items-center gap-2 mt-0.5">
                                 <span className="text-micro font-normal text-muted uppercase">{student.grade}</span>
-                                <span className="w-1 h-1 bg-surface dark:bg-primary-active rounded-full"></span>
+                                <span className="w-1 h-1 bg-surface rounded-full"></span>
                                 <div className="flex items-center gap-1">
                                     <BookOpen size={10} className="text-primary" />
                                     <span className="text-micro font-normal text-muted">{en.subject}</span>
@@ -183,7 +183,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         <span className="text-micro font-normal text-muted block mb-0.5">التقدم</span>
                         <div className="flex items-center justify-end gap-1">
                              <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-error" : "text-primary")} />
-                             <span className="text-sm font-medium text-main dark:text-on-primary leading-none">{Math.round(attendancePercent)}%</span>
+                             <span className="text-sm font-medium text-main leading-none">{Math.round(attendancePercent)}%</span>
                         </div>
                     </div>
                 </div>
@@ -193,10 +193,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     <button 
                         onClick={toggleTimer}
                         className={cn(
-                            "flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all shadow-sm active:scale-95",
+                            "flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all shadow-soft active:scale-95",
                             timerRunning 
                                 ? "bg-error border-error text-on-primary" 
-                                : "bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] border-primary text-on-primary hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
+                                : "bg-primary border-primary text-on-primary hover:bg-primary-hover"
                         )}
                     >
                         <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-on-primary hover:bg-surface rounded-xl font-bold text-micro uppercase transition-all shadow-sm active:scale-95"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-card border border-border text-muted hover:bg-surface rounded-xl font-bold text-micro uppercase transition-all shadow-soft active:scale-95"
                     >
                         <Calendar size={14} /> إعادة جدولة
                     </button>
@@ -226,7 +226,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <span className="opacity-50">/ {en.sessionsTotal}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-surface dark:bg-primary-active rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-surface rounded-full overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out",
@@ -238,14 +238,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Schedule */}
-                <div className="space-y-2 pt-2 border-t border-border dark:border-border">
+                <div className="space-y-2 pt-2 border-t border-border/50">
                     <div className="flex items-center justify-between">
                         <h5 className="text-micro font-normal text-muted uppercase flex items-center gap-1.5">
                             <Clock size={10} className="text-primary" /> الجدول الإسبوعي
                         </h5>
-                        <button
-                            onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
-                                    className="text-micro font-bold px-2 py-0.5 rounded-lg transition-all" style={{ backgroundColor: isEditing ? 'color-mix(in srgb, var(--bg-error) 7%, transparent)' : 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: isEditing ? 'var(--bg-error)' : 'var(--bg-primary)' }}
+                            <button
+                                onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
+                                className={`text-micro font-bold px-2 py-0.5 rounded-lg transition-all ${isEditing ? 'bg-error-soft text-error' : 'bg-primary-soft text-primary'}`}
                         >
                             {isEditing ? 'إلغاء' : 'تعديل'}
                         </button>
@@ -253,10 +253,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                     <div className="flex flex-wrap gap-1.5">
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 text-micro font-bold text-muted dark:text-muted rounded-xl">
+                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border/50 text-micro font-bold text-muted rounded-xl">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
-                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border dark:border-border">
+                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border/50">
                                         <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-primary"><Edit size={10} /></button>
                                         <button onClick={() => onDeleteSlot(student, en, i)} aria-label="حذف الموعد" className="text-error"><Trash2 size={10} /></button>
                                     </div>
@@ -268,7 +268,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     </div>
 
                     {isEditing && (
-                        <div className="p-3 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl text-on-primary space-y-3 mt-2">
+                        <div className="p-3 bg-primary rounded-xl text-on-primary space-y-3 mt-2">
                             <div className="grid grid-cols-2 gap-2">
                                 <div>
                                     <p className="text-micro font-bold text-on-primary/60 mb-1 uppercase">اليوم</p>
@@ -289,18 +289,18 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Notes */}
-                <div className="p-3 rounded-xl border relative" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-warning) 3%, transparent)', borderColor: 'color-mix(in srgb, var(--bg-warning) 13%, transparent)' }}>
+                <div className="p-3 rounded-xl border border-warning/10 bg-warning-soft/40">
                     <div className="flex items-center justify-between mb-2">
-                        <h5 className="text-micro font-bold uppercase flex items-center gap-1.5" style={{ color: 'var(--bg-warning)' }}>
+                        <h5 className="text-micro font-bold uppercase flex items-center gap-1.5 text-warning">
                             <MessageSquare size={12} /> ملاحظات
                         </h5>
-                        {isSavingNotes && <span className="text-micro font-bold animate-pulse" style={{ color: 'var(--bg-warning)' }}>جاري الحفظ...</span>}
+                        {isSavingNotes && <span className="text-micro font-bold animate-pulse text-warning">جاري الحفظ...</span>}
                     </div>
                     <textarea 
                         value={notes}
                         onChange={(e) => { setNotes(e.target.value); triggerSave(e.target.value); }}
                         placeholder="وثقي ملاحظات الحصة القادمة..."
-                        className="w-full bg-transparent border-none focus:ring-0 text-micro font-bold text-main dark:text-dim placeholder:text-warning resize-none min-h-[60px] p-0"
+                        className="w-full bg-transparent border-none focus:ring-0 text-micro font-bold text-main placeholder:text-warning resize-none min-h-[60px] p-0"
                     />
                 </div>
 
@@ -315,7 +315,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </button>
 
                 {/* Attendance Footer */}
-                <div className="pt-4 border-t border-border dark:border-border space-y-3 mt-auto">
+                <div className="pt-4 border-t border-border/50 space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
                         <h5 className="text-micro font-normal text-muted uppercase flex items-center gap-1.5">
                             <Activity size={12} className="text-success" /> التحضير والمتابعة
@@ -327,7 +327,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             type="date" 
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="w-full px-2 py-2 bg-background dark:bg-primary-active border border-border dark:border-border text-micro font-bold rounded-xl outline-none focus:border-primary transition-all" 
+                            className="w-full px-2 py-2 bg-card border border-border text-micro font-bold rounded-xl outline-none focus:border-primary transition-all" 
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
