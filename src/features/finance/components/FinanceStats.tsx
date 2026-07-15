@@ -1,5 +1,5 @@
 import { DollarSign, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
-import { StatCard } from '../../../shared/components/ui/StatCard';
+import { StatCard } from '../../../shared/components/ui';
 
 interface FinanceStatsProps {
     totalIncome: number;

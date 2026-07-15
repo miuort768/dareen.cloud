@@ -1,6 +1,6 @@
 import { ArrowLeft, Library } from 'lucide-react';
-import { Breadcrumb } from '../../shared/components/ui/Breadcrumb';
-import type { BreadcrumbItem } from '../../shared/components/ui/Breadcrumb';
+import { Breadcrumb } from '../../shared/components/ui';
+import type { BreadcrumbItem } from '../../shared/components/ui';
 
 interface BlogBreadcrumbProps {
     items: BreadcrumbItem[];

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Breadcrumb } from '../../../shared/components/ui/Breadcrumb';
-import { Tabs } from '../../../shared/components/ui/Tabs';
+import { Breadcrumb, Tabs } from '../../../shared/components/ui';
 import { Home, Settings, Shield } from 'lucide-react';
 
 export function NavigationSection() {

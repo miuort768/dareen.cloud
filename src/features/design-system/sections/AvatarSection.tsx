@@ -1,4 +1,4 @@
-import { Avatar } from '../../../shared/components/ui/Avatar';
+import { Avatar } from '../../../shared/components/ui';
 import { Users } from 'lucide-react';
 
 export function AvatarSection() {

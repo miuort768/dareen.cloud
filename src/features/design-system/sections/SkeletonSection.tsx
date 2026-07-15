@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, SkeletonChart, SkeletonTable } from '../../../shared/components/ui/Skeleton';
+import { Skeleton, SkeletonText, SkeletonAvatar, SkeletonCard, SkeletonChart, SkeletonTable } from '../../../shared/components/ui';
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="space-y-4">

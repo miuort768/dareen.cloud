@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
-import { StatCard } from '../shared/components/ui/StatCard';
+import { StatCard } from '../shared/components/ui';
 import { confirm } from '../lib/confirmDialog';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';

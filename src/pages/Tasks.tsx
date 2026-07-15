@@ -16,7 +16,7 @@ import {
     X
 } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { StatCard } from '../shared/components/ui/StatCard';
+import { StatCard } from '../shared/components/ui';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { PageLoader } from '../components/ui/PageLoader';

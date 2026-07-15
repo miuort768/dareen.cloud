@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 import { Edit, Trash, Bell, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { Table } from '../../../shared/components/ui/Table';
-import type { Column } from '../../../shared/components/ui/Table';
+import { Table } from '../../../shared/components/ui';
+import type { Column } from '../../../shared/components/ui';
 import type { Student } from '../types';
 
 interface StudentTableProps {

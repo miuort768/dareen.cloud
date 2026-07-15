@@ -12,7 +12,7 @@ import { HonorRoll } from '../components/HonorRoll';
 import { ModernAnnouncements } from '../components/ModernAnnouncements';
 import { QuickActionsHub } from '../components/QuickActionsHub';
 import { RecentActivityFeed } from '../components/RecentActivityFeed';
-import { Skeleton, SkeletonCard } from '../../../shared/components/ui/Skeleton';
+import { Skeleton, SkeletonCard } from '../../../shared/components/ui';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';

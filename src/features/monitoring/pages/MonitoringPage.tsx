@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { settingsService } from '../../settings/services/settingsService';
 import { RefreshCw } from 'lucide-react';
-import { Spinner } from '../../../shared/components/ui/Spinner';
+import { Spinner } from '../../../shared/components/ui';
 
 interface MonitoringData {
     total: number;

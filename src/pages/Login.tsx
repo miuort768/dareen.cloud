@@ -9,10 +9,7 @@ import { useLogin } from '../context/AppContext';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
-import { Card } from '../shared/components/ui/Card';
-import { Input } from '../shared/components/ui/Input';
-import { Button } from '../shared/components/ui/Button';
-import { Alert } from '../shared/components/ui/Alert';
+import { Card, Input, Button, Alert } from '../shared/components/ui';
 
 export const Login = () => {
     const [username, setUsername] = useState('');

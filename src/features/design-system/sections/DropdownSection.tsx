@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dropdown } from '../../../shared/components/ui/Dropdown';
+import { Dropdown } from '../../../shared/components/ui';
 import { Edit, Trash, Share, Download } from 'lucide-react';
 
 export function DropdownSection() {

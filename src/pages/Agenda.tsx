@@ -4,7 +4,7 @@ import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { cn } from '../lib/utils';
-import { PageHeader } from '../shared/components/ui/PageHeader';
+import { PageHeader } from '../shared/components/ui';
 import type { Student, Session, Enrollment } from '../types';
 
 export const Agenda = () => {

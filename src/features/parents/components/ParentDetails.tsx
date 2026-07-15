@@ -1,6 +1,6 @@
 import React from 'react';
 import { User, X, Phone, Mail, Users, GraduationCap, Calendar, TrendingUp, BookOpen, Clock } from 'lucide-react';
-import { StatCard } from '../../../shared/components/ui/StatCard';
+import { StatCard } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
 

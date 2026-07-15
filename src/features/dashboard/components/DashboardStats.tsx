@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { StatCard } from '../../../shared/components/ui/StatCard';
+import { StatCard } from '../../../shared/components/ui';
 import type { DashboardStats as Stats } from '../types';
 
 interface DashboardStatsProps {

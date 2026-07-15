@@ -1,7 +1,7 @@
 import { Users, GraduationCap, BookOpen, Award, Globe } from 'lucide-react';
 import { useAnimatedNumber } from '../../../shared/hooks/useAnimatedNumber';
-import { StatCard } from '../../../shared/components/ui/StatCard';
-import type { StatCardProps } from '../../../shared/components/ui/StatCard';
+import { StatCard } from '../../../shared/components/ui';
+import type { StatCardProps } from '../../../shared/components/ui';
 
 interface StatData {
     icon: StatCardProps['icon'];

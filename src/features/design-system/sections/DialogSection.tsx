@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Dialog } from '../../../shared/components/ui/Dialog';
-import { Button } from '../../../shared/components/ui/Button';
+import { Dialog, Button } from '../../../shared/components/ui';
 import { AlertTriangle, CheckCircle, Info, XCircle } from 'lucide-react';
 
 export function DialogSection() {
