@@ -101,7 +101,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ الرؤية ═══════════════ */}
                 <motion.div
                     {...sectionDelay(2)}
-                    className="rounded-3xl p-6 md:p-8 shadow-xl text-on-primary relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
+                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
                 >
                     <div className="absolute top-[-30px] left-[-30px] w-32 h-32 rounded-full bg-accent-soft/50" />
                     <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 rounded-full bg-accent-soft/40" />
@@ -114,7 +114,7 @@ export const AAbdullah = () => {
                             </div>
                             <h2 className="text-lg font-black text-[var(--text-accent)]">الرؤية</h2>
                         </div>
-                        <p className="text-sm leading-relaxed text-on-primary/90">
+                        <p className="text-sm leading-relaxed text-main dark:text-white/90">
                             "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
                             {' '}هدفنا إنا نصير أكبر منصة تعليمية عربية نقدم محتوى مفيد وممتع،
                             {' '}وتساعد في بناء جيل واعي ومتعلم."
@@ -137,7 +137,7 @@ export const AAbdullah = () => {
                                     >
                                         <Icon size={18} className="text-on-primary" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-main dark:text-on-primary">{v.title}</h3>
+                                    <h3 className="text-sm font-bold text-main">{v.title}</h3>
                                     <p className="text-xs text-muted dark:text-muted">{v.desc}</p>
                                 </div>
                             );
@@ -177,7 +177,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ رسالتي لكم ═══════════════ */}
                 <motion.div
                     {...sectionDelay(5)}
-                    className="rounded-3xl p-6 md:p-8 shadow-xl text-on-primary relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
+                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
                 >
                     <div
                         className="absolute top-[-40px] right-[-40px] w-48 h-48 rounded-full bg-accent-soft/40"
@@ -196,7 +196,7 @@ export const AAbdullah = () => {
                             <span>رسالتي لكم</span>
                             <VHeart size={14} className="fill-current text-accent" />
                         </div>
-                        <div className="space-y-4 text-sm leading-relaxed text-on-primary/90">
+                        <div className="space-y-4 text-sm leading-relaxed text-main dark:text-white/90">
                             <p>
                                 كن إيجابيًا، واجعل الاجتهاد طريقك إلى النجاح.
                             </p>

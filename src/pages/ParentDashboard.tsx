@@ -215,7 +215,7 @@ export const ParentDashboard = () => {
                             <User size={22} />
                         </div>
                         <div>
-                            <h1 className="text-base md:text-lg font-black text-main dark:text-inverse">
+                            <h1 className="text-base md:text-lg font-black text-main">
                                 مرحباً... {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                             </h1>
                             <p className="text-xs md:text-xs font-medium text-dim">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
@@ -331,7 +331,7 @@ export const ParentDashboard = () => {
                     <div className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-3">
                             <MessageSquare className="text-warning" size={16} />
-                            <h3 className="text-sm md:text-lg font-medium text-main dark:text-inverse">الواجبات والملاحظات</h3>
+                            <h3 className="text-sm md:text-lg font-medium text-main">الواجبات والملاحظات</h3>
                         </div>
                         <div className="space-y-3">
                             {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
@@ -387,7 +387,7 @@ export const ParentDashboard = () => {
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 px-1">
                         <Calendar className="text-warning-dark dark:text-warning" size={16} />
-                        <h3 className="text-xs font-medium text-main dark:text-inverse uppercase tracking-widest italic">جدول حصص اليوم</h3>
+                        <h3 className="text-xs font-medium text-main uppercase tracking-widest italic">جدول حصص اليوم</h3>
                     </div>
 
                     <div className="space-y-2">
@@ -398,7 +398,7 @@ export const ParentDashboard = () => {
                                         <BookOpen size={16} />
                                     </div>
                                     <div>
-                                        <h4 className="text-xs font-bold text-main dark:text-inverse">{task.subject}</h4>
+                                        <h4 className="text-xs font-bold text-main">{task.subject}</h4>
                                         <p className="text-micro font-medium text-muted">{task.studentName}</p>
                                     </div>
                                 </div>
@@ -418,7 +418,7 @@ export const ParentDashboard = () => {
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 px-1">
                         <Star className="text-warning" size={16} />
-                        <h3 className="text-xs font-medium text-main dark:text-inverse uppercase tracking-widest italic">آخر النشاطات</h3>
+                        <h3 className="text-xs font-medium text-main uppercase tracking-widest italic">آخر النشاطات</h3>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -493,7 +493,7 @@ export const ParentDashboard = () => {
                                     <User size={18} className="text-on-primary" />
                                 </div>
                                 <div>
-                                    <h1 className="text-main dark:text-inverse font-black text-base leading-tight">
+                                    <h1 className="text-main font-black text-base leading-tight">
                                         أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                     </h1>
                                     <p className="text-micro font-medium text-muted mt-0.5">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
@@ -518,7 +518,7 @@ export const ParentDashboard = () => {
                                     <TrendingUp size={13} className="text-success-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-main dark:text-inverse font-black text-base">{stats.academicProgress}%</span>
+                                    <span className="text-main font-black text-base">{stats.academicProgress}%</span>
                                     <span className="text-muted text-micro font-bold tracking-wide">الالتزام</span>
                                 </div>
                             </div>
@@ -527,7 +527,7 @@ export const ParentDashboard = () => {
                                     <BookOpen size={13} className="text-info-dark" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-main dark:text-inverse font-black text-base">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
+                                    <span className="text-main font-black text-base">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
                                     <span className="text-muted text-micro font-bold tracking-wide">المادة</span>
                                 </div>
                             </div>
@@ -536,7 +536,7 @@ export const ParentDashboard = () => {
                                     <Users size={13} className="text-primary" />
                                 </div>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-main dark:text-inverse font-black text-base">{stats.childCount}</span>
+                                    <span className="text-main font-black text-base">{stats.childCount}</span>
                                     <span className="text-muted text-micro font-bold tracking-wide">الأبناء</span>
                                 </div>
                             </div>
@@ -600,26 +600,26 @@ export const ParentDashboard = () => {
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-primary rounded-full" />
-                                    <h2 className="text-main dark:text-inverse text-sm font-black">التنقل السريع</h2>
+                                    <h2 className="text-main text-sm font-black">التنقل السريع</h2>
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                                     <button onClick={() => navigate('/parent-students')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
                                         <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-soft">
                                             <Users size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-micro font-bold">ملفات الأبناء</span>
+                                        <span className="text-main text-micro font-bold">ملفات الأبناء</span>
                                     </button>
                                     <button onClick={() => navigate('/forum')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
                                         <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-card flex items-center justify-center text-on-info shadow-soft">
                                             <LayoutDashboard size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-micro font-bold">المنتدى</span>
+                                        <span className="text-main text-micro font-bold">المنتدى</span>
                                     </button>
                                     <button onClick={() => navigate('/chat')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
                                         <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-card flex items-center justify-center text-on-success shadow-soft">
                                             <MessageSquare size={18} />
                                         </div>
-                                        <span className="text-main dark:text-inverse text-micro font-bold">الدردشة</span>
+                                        <span className="text-main text-micro font-bold">الدردشة</span>
                                     </button>
                                 </div>
                             </section>
@@ -677,7 +677,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-primary rounded-full" />
-                                    <h2 className="text-main dark:text-inverse text-sm font-black">البث المباشر</h2>
+                                    <h2 className="text-main text-sm font-black">البث المباشر</h2>
                                 </div>
                                 <div className="bg-card rounded-card shadow-md overflow-hidden">
                                     <div className="p-3.5"><LiveClasses /></div>
@@ -692,7 +692,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                 <section>
                                     <div className="flex items-center gap-2 mb-2 px-1">
                                         <div className="w-1 h-4 bg-warning rounded-full" />
-                                        <h2 className="text-main dark:text-inverse text-sm font-black">الواجبات والملاحظات</h2>
+                                        <h2 className="text-main text-sm font-black">الواجبات والملاحظات</h2>
                                     </div>
                                     <div className="bg-card rounded-card shadow-md p-3.5 space-y-3">
                                         {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
@@ -720,7 +720,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-success rounded-full" />
-                                    <h2 className="text-main dark:text-inverse text-sm font-black">التقدم الأكاديمي</h2>
+                                    <h2 className="text-main text-sm font-black">التقدم الأكاديمي</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
                                     <div className="absolute top-0 end-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
@@ -748,7 +748,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                         <section>
                             <div className="flex items-center gap-2 mb-2 px-1">
                                 <div className="w-1 h-4 bg-primary rounded-full" />
-                                <h2 className="text-main dark:text-inverse text-sm font-black">جدول حصص اليوم</h2>
+                                <h2 className="text-main text-sm font-black">جدول حصص اليوم</h2>
                             </div>
                             <div className="bg-card rounded-card shadow-md p-3.5">
                                 <div className="space-y-2">
@@ -759,7 +759,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                                     <BookOpen size={16} />
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-xs font-bold text-main dark:text-inverse">{task.subject}</h4>
+                                                    <h4 className="text-xs font-bold text-main">{task.subject}</h4>
                                                     <p className="text-micro text-muted">{task.studentName}</p>
                                                 </div>
                                             </div>
@@ -783,7 +783,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-warning rounded-full" />
-                                    <h2 className="text-main dark:text-inverse text-sm font-black">آخر النشاطات</h2>
+                                    <h2 className="text-main text-sm font-black">آخر النشاطات</h2>
                                 </div>
                                 <div className="bg-card rounded-card shadow-md p-3.5">
                                     <div className="space-y-2">
@@ -816,7 +816,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                             <section>
                                 <div className="flex items-center gap-2 mb-2 px-1">
                                     <div className="w-1 h-4 bg-error rounded-full" />
-                                    <h2 className="text-main dark:text-inverse text-sm font-black">الدعم الفني</h2>
+                                    <h2 className="text-main text-sm font-black">الدعم الفني</h2>
                                 </div>
                                 <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
                                     <div className="absolute top-0 end-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />

@@ -85,7 +85,7 @@ export const ParentAnnouncements = () => {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <h1 className="text-xl md:text-2xl font-black text-main dark:text-inverse leading-tight">���� ������� ������</h1>
+                    <h1 className="text-xl md:text-2xl font-black text-main leading-tight">���� ������� ������</h1>
                     <p className="text-xs font-bold text-muted">��� ��� ����� ����� ��������� ���������� ���� �������</p>
                 </div>
             </div>
@@ -109,6 +109,7 @@ export const ParentAnnouncements = () => {
                         onClick={() => setFilterType('all')}
                         icon={Grid}
                         activeColor="var(--bg-primary)"
+                        activeTextColor="text-on-primary"
                     />
                     <FilterButton
                         label="����"
@@ -116,6 +117,7 @@ export const ParentAnnouncements = () => {
                         onClick={() => setFilterType('urgent')}
                         icon={Zap}
                         activeColor="var(--bg-error)"
+                        activeTextColor="text-on-error"
                     />
                     <FilterButton
                         label="�����"
@@ -123,6 +125,7 @@ export const ParentAnnouncements = () => {
                         onClick={() => setFilterType('holiday')}
                         icon={Umbrella}
                         activeColor="var(--bg-warning)"
+                        activeTextColor="text-on-warning"
                     />
                     <FilterButton
                         label="����"
@@ -130,6 +133,7 @@ export const ParentAnnouncements = () => {
                         onClick={() => setFilterType('general')}
                         icon={Calendar}
                         activeColor="var(--bg-primary)"
+                        activeTextColor="text-on-primary"
                     />
                 </div>
             </div>
@@ -161,7 +165,7 @@ export const ParentAnnouncements = () => {
                                 </div>
 
                                 <div className="space-y-2.5 mb-5 flex-1">
-                                    <h3 className="text-sm md:text-lg font-bold text-main dark:text-inverse leading-tight">
+                                    <h3 className="text-sm md:text-lg font-bold text-main leading-tight">
                                         {ann.title}
                                     </h3>
                                     <p className="text-xs md:text-xs text-dim dark:text-muted font-bold leading-relaxed line-clamp-4">
@@ -206,13 +210,13 @@ export const ParentAnnouncements = () => {
     );
 };
 
-const FilterButton = ({ label, active, onClick, icon: Icon, activeColor }: { label: string; active: boolean; onClick: () => void; icon: React.ComponentType<{ size?: number }>; activeColor: string }) => (
+const FilterButton = ({ label, active, onClick, icon: Icon, activeColor, activeTextColor = "text-on-primary" }: { label: string; active: boolean; onClick: () => void; icon: React.ComponentType<{ size?: number }>; activeColor: string; activeTextColor?: string }) => (
     <button
         onClick={onClick}
         className={cn(
             "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border shadow-soft active:scale-95",
             active 
-                ? "text-on-primary border-transparent" 
+                ? `${activeTextColor} border-transparent` 
                 : "bg-card text-muted border-border/50 hover:bg-surface"
         )}
         style={active ? { backgroundColor: activeColor, borderColor: activeColor } : {}}

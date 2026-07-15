@@ -69,7 +69,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-muted dark:hover:text-on-primary transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-main dark:hover:text-on-primary transition-colors" aria-label="إغلاق">
                                     <X size={15} />
                                 </button>
 
@@ -78,7 +78,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                                 <Info size={28} />
                             </div>
 
-                            <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">
+                            <h3 className="text-lg font-black text-main mb-2">
                                 {title}
                             </h3>
 
@@ -153,7 +153,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 {options.icon || (isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />)}
                             </div>
 
-                            <h3 className="text-lg font-black text-main dark:text-on-primary mb-2">
+                            <h3 className="text-lg font-black text-main mb-2">
                                 {title}
                             </h3>
 
@@ -165,10 +165,10 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 <button
                                     onClick={handleConfirm}
                                     className={cn(
-                                        "w-full h-12 rounded-xl text-on-primary font-bold text-sm transition-all active:scale-[0.98]",
+                                        "w-full h-12 rounded-xl font-bold text-sm transition-all active:scale-[0.98]",
                                         isDestructive
-                                            ? "bg-error hover:bg-error shadow-lg shadow-error/20"
-                                            : "bg-primary hover:bg-primary shadow-lg shadow-primary/20"
+                                            ? "bg-error hover:bg-error text-on-error shadow-lg shadow-error/20"
+                                            : "bg-primary hover:bg-primary text-on-primary shadow-lg shadow-primary/20"
                                     )}
                                 >
                                     {options.confirmText || 'تأكيد'}

@@ -214,7 +214,7 @@ export const Chat: React.FC = () => {
                             <div className="w-20 h-20 bg-white/5 dark:bg-white/5  border border-border dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
                                 <Image src="/logo.png" alt="دارين" className="w-12 h-12" imgClassName="object-contain" />
                             </div>
-                            <h2 className="text-3xl font-medium text-main dark:text-on-primary mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
+                            <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
                                 <p className="text-micro text-primary font-medium uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>

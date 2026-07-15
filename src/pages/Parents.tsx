@@ -79,7 +79,7 @@ export const Parents = () => {
                     <div>
                         {!state.showDetails ? (
                             <div className="space-y-6">
-                                <div className="p-3 bg-white/80 backdrop-blur-xl shadow-sm border border-white/20 flex flex-col md:flex-row items-stretch md:items-center gap-4 rounded-2xl">
+                                <div className="p-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl shadow-sm border border-white/20 dark:border-border/30 flex flex-col md:flex-row items-stretch md:items-center gap-4 rounded-2xl">
                                     <div className="flex-1 relative group">
                                         <div className="absolute start-0 top-0 bottom-0 w-12 flex items-center justify-center text-primary opacity-50 z-10">
                                             <Search size={15} />
@@ -89,7 +89,7 @@ export const Parents = () => {
                                             placeholder="ابحث باسم ولي الأمر..."
                                             value={state.searchTerm}
                                             onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                            className="w-full ps-14 pe-4 py-3 bg-primary-soft text-main dark:text-on-primary placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
+                                            className="w-full ps-14 pe-4 py-3 bg-primary-soft dark:bg-card text-main placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
                                         />
                                     </div>
                                     <div className="hidden lg:flex items-center gap-3 px-5 border-s border-border">
@@ -158,7 +158,7 @@ export const Parents = () => {
                                     <div className="w-16 h-16 bg-error-soft text-error border border-error flex items-center justify-center mb-6 mx-auto rounded-2xl">
                                         <AlertCircle size={32} />
                                     </div>
-                                    <h3 className="font-medium text-lg text-main dark:text-inverse mb-3 text-center uppercase tracking-tighter">تأكيد عملية الحذف</h3>
+                                    <h3 className="font-medium text-lg text-main mb-3 text-center uppercase tracking-tighter">تأكيد عملية الحذف</h3>
                                     <p className="text-xs font-normal text-dim leading-relaxed mb-8 text-center uppercase tracking-widest">{state.confirmModal.message}</p>
 
                                     <div className="flex gap-2">

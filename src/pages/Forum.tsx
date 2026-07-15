@@ -172,7 +172,7 @@ export const Forum = () => {
                         <textarea
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
-                            className="w-full bg-primary-soft/50 dark:bg-primary-active/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted resize-none border-0"
+                            className="w-full bg-primary-soft/50 dark:bg-primary-active/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-main dark:text-main focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted resize-none border-0"
                             placeholder="شارك فكرة أو سؤال…"
                             style={{ lineHeight: 1.8 }}
                         />
@@ -228,7 +228,7 @@ export const Forum = () => {
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-0.5">
-                                                    <h4 className="font-bold text-main dark:text-on-primary text-sm">{post.authorName}</h4>
+                                                    <h4 className="font-bold text-main dark:text-main text-sm">{post.authorName}</h4>
                                                     {post.authorRole === 'admin' && (
                                                         <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error/30">إدارة</span>
                                                     )}
@@ -323,7 +323,7 @@ export const Forum = () => {
                                                             <div className="flex-1">
                                                                 <div className="bg-card dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border/50">
                                                                     <div className="flex justify-between items-center mb-1">
-                                                                        <h5 className="text-xs font-bold text-main dark:text-on-primary">{node.comment.authorName}</h5>
+                                                                        <h5 className="text-xs font-bold text-main dark:text-main">{node.comment.authorName}</h5>
                                                                         <span className="text-micro text-muted font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                     </div>
                                                                     <p className="text-xs text-muted dark:text-dim leading-relaxed">{node.comment.content}</p>
@@ -356,7 +356,7 @@ export const Forum = () => {
                                                                         </div>
                                                                         <div className="flex-1 bg-card dark:bg-primary-active rounded-xl p-2.5 shadow-sm border border-border dark:border-border/50">
                                                                             <div className="flex justify-between items-center mb-0.5">
-                                                                                <h5 className="text-micro font-bold text-main dark:text-on-primary">{replyNode.comment.authorName}</h5>
+                                                                                <h5 className="text-micro font-bold text-main dark:text-main">{replyNode.comment.authorName}</h5>
                                                                                 <span className="text-micro text-muted">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                             </div>
                                                                             <p className="text-micro text-muted dark:text-dim leading-relaxed">{replyNode.comment.content}</p>
@@ -384,7 +384,7 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب رداً على هذا المنشور..."
-                                                        className="w-full bg-card dark:bg-primary-active rounded-full pe-10 ps-4 py-2.5 text-xs font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
+                                                        className="w-full bg-card dark:bg-primary-active rounded-full pe-10 ps-4 py-2.5 text-xs font-medium text-main dark:text-main focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button
@@ -427,7 +427,7 @@ export const Forum = () => {
                     <div className="absolute bottom-0 end-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
                     <div className="relative z-10 text-center md:text-start">
                         <h4 className="text-on-primary font-black text-base mb-1">إرشادات المنتدى</h4>
-                        <p className="text-primary text-xs font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
+                        <p className="text-on-primary/80 text-xs font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
                     <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="relative z-10 bg-white text-primary px-6 py-2.5 text-xs font-bold rounded-full hover:bg-primary-soft transition-all shadow-lg active:scale-95">
                         عرض الإرشادات
