@@ -100,6 +100,11 @@ Primitives (src/theme/primitives.ts)
 ### Audit after Sprint 3E
 All Parent pages clean: P0=0, P1=0
 
+### Completed
+- Jul 15 | Dead code cleanup (10 unused files removed): PageTransition, StaggeredList, semantic-tokens.css (migrated to tokens/), App.css (empty), usePageLoader hook, ForumHeader, QuickSearch, MouseGlow, PageContainer, ParentAttendance page (+ 14 empty feature dirs)
+- Jul 15 | Second dead code pass (22 more files): AgendaTable, ChatManagement, ImportantNotifications, ParentChildVisualProgress, ParentExcellenceRadar, PerformanceSummary, RenewalAlerts/List, SessionAnalysis, SmartAlerts, TeacherLeaderboard/RewardsKPIs/SalaryPreview/WeeklySummary, dashboardService, ReportsStatsGrid, StudentToolbar, useSharedData (x2), Profile, testUtils, design-tokens.css. tsc + vite build pass.
+- Jul 15 | Third cleanup pass: useSettings hook dead (never imported), StudentHeader dead, executive/index barrel dead, VAcademicCap vector dead, json-server dep removed, useToasts/useRequestDesktopNotifications removed, design-tokens.css confirmed dead. tsc + vite build pass.
+
 ## 5. Final Audit (Sprint 4A Complete)
 
 | Priority | Baseline (June 2026) | Final (July 2 2026) | Action |
@@ -166,3 +171,6 @@ Every component MUST pass all checks before being marked complete:
 | Jul 11 | TrialSessions Purity UI reskin — unified card rhythm, semantic tokens, accessibility | Removed glass/gradients (commit `2d7442b` + QA `af22a65`) |
 | Jul 11 | Teachers Purity UI reskin — 7 files (TeachersPage, Stats, Toolbar, Table, Form, Details, Card) | Unified card rhythm, semantic tokens, accessibility (commit `2f37466` + QA `c254a08`) |
 | Jul 11 | Jobs Purity UI reskin — hero gradients/glass removed, semantic tokens, unified inputs, error modal, success view | Purity UI skeleton (commit `500dc00` + QA `30eb8bc`) |
+| Jul 15 | Dead code removal: semantic-tokens.css (4.5 kB), App.css (empty), PageTransition, StaggeredList, usePageLoader, ForumHeader, QuickSearch, MouseGlow, PageContainer, ParentAttendance page | 10 files deleted, tsc --noEmit passes; cleaned up empty feature directories |
+| Jul 15 | Second cleanup pass: 22 unused files deleted; design-tokens.css removed (content lives in tokens/); public/sw.js restored (dynamically registered) | Cleanup round 2, tsc --noEmit + vite build pass |
+| Jul 15 | Third cleanup: 3 dead files deleted, VAcademicCap removed, json-server purged, 2 unused hook exports removed | Cleanup round 3, all verified |

@@ -14,9 +14,7 @@ export const useUser = () => useAuthStore(s => s.currentUser || ({ id: 'guest', 
 
 export const useSidebarCollapsed = () => useUIStore(s => s.sidebarCollapsed);
 export const useSetSidebarCollapsed = () => useUIStore(s => s.setSidebarCollapsed);
-export const useToasts = () => useUIStore(s => s.toasts);
 export const useShowNotification = () => useUIStore(s => s.showNotification);
-export const useRequestDesktopNotifications = () => useUIStore(s => s.requestDesktopNotifications);
 
 export const useAcademyName = () => useSettingsStore(s => s.academyName);
 export const useAcademyLogo = () => useSettingsStore(s => s.academyLogo);
