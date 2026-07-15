@@ -5,7 +5,7 @@ import {
     KeyRound, Clock, UserCheck, FileText, Award, HardDrive
 } from 'lucide-react';
 import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useSetAcademyAddress, useWhatsappNumbers, useSetWhatsappNumbers } from '../../../context/AppContext';
-import { Skeleton } from '../../../components/ui/Skeleton';
+import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
 import { settingsService } from '../services/settingsService';

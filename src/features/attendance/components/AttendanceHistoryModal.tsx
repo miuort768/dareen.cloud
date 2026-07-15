@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, Save, XSquare } from 'lucide-react';
 import { api } from '../../../lib/api';
-import { Skeleton } from '../../../components/ui/Skeleton';
+import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
 
