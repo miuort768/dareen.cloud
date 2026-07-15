@@ -7,82 +7,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
 import { confirm, alert } from '../lib/confirmDialog';
-
-interface Comment {
-    id: string;
-    postId: string;
-    authorId: string;
-    authorName: string;
-    authorRole: string;
-    content: string;
-    created_at: string;
-}
-
-interface Post {
-    id: string;
-    authorId: string;
-    authorName: string;
-    authorRole: string;
-    content: string;
-    status: 'pending' | 'approved' | 'rejected';
-    upvotes: string[];
-    downvotes: string[];
-    commentCount?: number;
-    created_at: string;
-    comments?: Comment[];
-}
-
-interface CommentNode {
-    comment: Comment;
-    replies: CommentNode[];
-}
-
-const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
-    if (!comments) return [];
-    
-    const nodes: CommentNode[] = [];
-    const handledIds = new Set<string>();
-
-    // First pass: find main comments
-    comments.forEach(c => {
-        if (!c.content.trim().startsWith('@')) {
-            nodes.push({ comment: c, replies: [] });
-            handledIds.add(c.id);
-        }
-    });
-
-    // Second pass: place replies under correct parent
-    comments.forEach(c => {
-        if (!handledIds.has(c.id)) {
-            let foundParent = false;
-            for (const node of nodes) {
-                if (c.content.trim().startsWith(`@${node.comment.authorName}`)) {
-                    node.replies.push({ comment: c, replies: [] });
-                    handledIds.add(c.id);
-                    foundParent = true;
-                    break;
-                }
-            }
-            if (!foundParent) {
-                 for (const node of nodes) {
-                     const isReplyToReply = node.replies.some(r => c.content.trim().startsWith(`@${r.comment.authorName}`));
-                     if (isReplyToReply) {
-                         node.replies.push({ comment: c, replies: [] });
-                         handledIds.add(c.id);
-                         foundParent = true;
-                         break;
-                     }
-                 }
-            }
-            if (!foundParent) {
-                nodes.push({ comment: c, replies: [] });
-                handledIds.add(c.id);
-            }
-        }
-    });
-
-    return nodes;
-};
+import type { Comment, Post } from '../features/forum/types';
+import { buildThreadedComments } from '../features/forum/types';
 
 export const Forum = () => {
     const currentUser = useCurrentUser();
@@ -103,8 +29,7 @@ export const Forum = () => {
             setLoading(true);
             const data = await api.get<Post[]>('/forum');
             setPosts(data);
-        } catch (error) {
-            console.error('Error fetching forum posts:', error);
+        } catch {
             showNotification('فشل تحميل المنشورات', 'error');
         } finally {
             setLoading(false);
@@ -131,8 +56,7 @@ export const Forum = () => {
             showNotification(data.message || 'تم إنشاء المنشور', 'success');
             setNewPostContent('');
             fetchPosts();
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل النشر', 'error');
         }
     };
@@ -141,8 +65,7 @@ export const Forum = () => {
         try {
             const data = await api.post<{ upvotes: number; downvotes: number }>(`/forum/${postId}/vote`, { type });
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل التصويت على هذا المنشور', 'error');
         }
     };
@@ -152,8 +75,7 @@ export const Forum = () => {
             await api.patch(`/forum/${postId}/status`, { status });
             showNotification('تم تحديث حالة المنشور', 'success');
             fetchPosts();
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل تحديث الحالة', 'error');
         }
     };
@@ -164,8 +86,7 @@ export const Forum = () => {
             await api.delete(`/forum/${postId}`);
             showNotification('تم حذف المنشور', 'success');
             fetchPosts();
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل الحذف', 'error');
         }
     };
@@ -175,8 +96,7 @@ export const Forum = () => {
             try {
                 const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
                 setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-            } catch (error) {
-                console.error(error);
+            } catch {
             showNotification('فشل تحميل المنشورات', 'error');
             }
         }
@@ -193,8 +113,7 @@ export const Forum = () => {
             showNotification('تم إضافة التعليق', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل إضافة التعليق', 'error');
         }
     };
@@ -206,8 +125,7 @@ export const Forum = () => {
             showNotification('تم حذف التعليق', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-        } catch (err) {
-            console.error(err);
+        } catch {
             showNotification('فشل الحذف', 'error');
         }
     };
@@ -216,8 +134,7 @@ export const Forum = () => {
         try {
             await api.post(`/forum/${postId}/report`);
             showNotification('تم إرسال البلاغ للمراجعة', 'info');
-        } catch (error) {
-            console.error(error);
+        } catch {
             showNotification('فشل الإبلاغ', 'error');
         }
     };
@@ -250,7 +167,7 @@ export const Forum = () => {
             <div className="max-w-[700px] mx-auto px-4 space-y-6">
                 
                 {/* ════════ CREATE POST CARD ════════ */}
-                <div className="bg-white dark:bg-primary-active rounded-3xl shadow-xl p-5">
+                <div className="bg-card dark:bg-primary-active rounded-3xl shadow-xl p-5">
                     <div className="space-y-3">
                         <textarea
                             value={newPostContent}
@@ -278,11 +195,11 @@ export const Forum = () => {
                 {loading ? (
                     <div className="space-y-6">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white dark:bg-primary-active h-48 animate-pulse rounded-3xl shadow-xl"></div>
+                            <div key={i} className="bg-card dark:bg-primary-active h-48 animate-pulse rounded-3xl shadow-xl"></div>
                         ))}
                     </div>
                 ) : posts.length === 0 ? (
-                    <div className="bg-white dark:bg-primary-active rounded-3xl shadow-xl p-6 md:p-16 text-center border-2 border-dashed border-primary dark:border-primary/30">
+                    <div className="bg-card dark:bg-primary-active rounded-3xl shadow-xl p-6 md:p-16 text-center border-2 border-dashed border-primary dark:border-primary/30">
                         <div className="w-16 h-16 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-primary-light)] dark:from-[var(--bg-primary-active)]/20 dark:to-[var(--bg-primary-active)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                             <MessageSquare size={24} className="text-primary" />
                         </div>
@@ -299,7 +216,7 @@ export const Forum = () => {
                                     key={post.id} 
                                     id={`post-${post.id}`}
                                     className={cn(
-                                        "bg-white dark:bg-primary-active rounded-3xl shadow-xl transition-all duration-500",
+                                        "bg-card dark:bg-primary-active rounded-3xl shadow-xl transition-all duration-500",
                                         isHighlighted && "ring-2 ring-primary shadow-lg shadow-primary/30"
                                     )}
                                 >
@@ -347,7 +264,7 @@ export const Forum = () => {
                                                     <MoreHorizontal size={17} />
                                                 </button>
                                                 {showMenuPostId === post.id && (
-                                                    <div className="absolute end-0 top-full mt-1 w-36 bg-white dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
+                                                    <div className="absolute end-0 top-full mt-1 w-36 bg-card dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
                                                         <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-micro font-bold text-start text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
                                                             <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
                                                         </button>
@@ -404,7 +321,7 @@ export const Forum = () => {
                                                                 {(node.comment.authorName?.[0] || '').toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
-                                                                <div className="bg-white dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border/50">
+                                                                <div className="bg-card dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border/50">
                                                                     <div className="flex justify-between items-center mb-1">
                                                                         <h5 className="text-xs font-bold text-main dark:text-on-primary">{node.comment.authorName}</h5>
                                                                         <span className="text-micro text-muted font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
@@ -437,7 +354,7 @@ export const Forum = () => {
                                                                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border border-primary/50 dark:border-primary/30">
                                                                             {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
                                                                         </div>
-                                                                        <div className="flex-1 bg-white dark:bg-primary-active rounded-xl p-2.5 shadow-sm border border-border dark:border-border/50">
+                                                                        <div className="flex-1 bg-card dark:bg-primary-active rounded-xl p-2.5 shadow-sm border border-border dark:border-border/50">
                                                                             <div className="flex justify-between items-center mb-0.5">
                                                                                 <h5 className="text-micro font-bold text-main dark:text-on-primary">{replyNode.comment.authorName}</h5>
                                                                                 <span className="text-micro text-muted">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
@@ -467,7 +384,7 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب رداً على هذا المنشور..."
-                                                        className="w-full bg-white dark:bg-primary-active rounded-full pe-10 ps-4 py-2.5 text-xs font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
+                                                        className="w-full bg-card dark:bg-primary-active rounded-full pe-10 ps-4 py-2.5 text-xs font-medium text-main dark:text-on-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button

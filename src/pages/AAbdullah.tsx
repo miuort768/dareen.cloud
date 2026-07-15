@@ -47,8 +47,7 @@ export const AAbdullah = () => {
                 >
                     <div className="flex flex-row items-center justify-center md:justify-start gap-2.5 md:gap-3">
                         <div
-                            className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-primary dark:bg-primary"
-                            style={{ boxShadow: '0 10px 30px -5px rgb(5_44_99 / 0.3)' }}
+                            className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-primary dark:bg-primary shadow-primary/40"
                         >
                             <VCodeBracket size={22} className="text-on-primary" />
                         </div>
@@ -133,9 +132,7 @@ export const AAbdullah = () => {
                             return (
                                 <div
                                     key={i}
-                                    className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-center space-y-2"
-                                    style={{ border: '1px solid rgb(0_0_0 / 0.06)' }}
-                                >
+                                    className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-center space-y-2 border border-border/10">
                                     <div
                                         className={`w-10 h-10 mx-auto rounded-xl flex items-center justify-center ${v.bgClass}`}
                                     >

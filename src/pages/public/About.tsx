@@ -92,13 +92,13 @@ export const About = () => {
                                         </div>
                                         <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Sparkles size={24} className="mb-4 text-on-primary/90" />
-                                            <p className="font-black text-xl drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]">إبداع مستمر</p>
+                                             <p className="font-black text-xl">إبداع مستمر</p>
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <div className="h-48 bg-primary-hover rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
                                             <Target size={24} className="mb-4 text-on-primary/90" />
-                                            <h4 className="font-black text-xl text-on-primary drop-shadow-[0_1px_2px_rgb(0_0_0_/_0.3)]">أهداف محققة</h4>
+                                            <h4 className="font-black text-xl text-on-primary">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                             <Image src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full" alt="تدريس فعال" />
@@ -248,7 +248,7 @@ export const About = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
                         <AnimateOnScroll animation="fadeUp">
-                            <div className="relative group overflow-hidden rounded-3xl" style={{ boxShadow: '0 40px 100px -15px rgb(0_0_0 / 0.5)' }}>
+                            <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
                                 {/* Animated border glow */}
                                 <div className="absolute -inset-[2px] opacity-50 group-hover:opacity-80 transition-opacity duration-1000 rounded-3xl pointer-events-none" style={{ background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-warning) 40%, transparent), color-mix(in srgb, var(--bg-warning) 10%, transparent), color-mix(in srgb, var(--bg-primary) 30%, transparent), color-mix(in srgb, var(--bg-warning) 40%, transparent))' }} />
                                 
@@ -277,7 +277,7 @@ export const About = () => {
                                                 <Link
                                                     to="/courses"
                                                     onClick={() => window.scrollTo(0, 0)}
-                                                    className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] text-[var(--text-on-primary)] shadow-[0_8px_32px_rgb(245_158_11_/_0.3)]">
+                                                    className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] text-[var(--text-on-primary)] shadow-xl">
                                                     <span className="relative z-10">ابدأ رحلتك الآن</span>
                                                     <ArrowLeft size={18} className="relative z-10 group-hover:-translate-x-1.5 transition-transform" />
                                                 </Link>
@@ -285,9 +285,7 @@ export const About = () => {
                                                 <Link
                                                     to="/login"
                                                     onClick={() => window.scrollTo(0, 0)}
-                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border backdrop-blur-sm hover:-translate-y-1 text-on-primary/85"
-                                                    style={{ background: 'rgb(255_255_255 / 0.06)', borderColor: 'rgb(255_255_255 / 0.12)' }}
-                                                >
+                                                    className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border border-white/10 backdrop-blur-sm hover:-translate-y-1 text-on-primary/85 bg-white/5">
                                                     <span>تسجيل الدخول</span>
                                                 </Link>
                                             </div>
@@ -296,7 +294,7 @@ export const About = () => {
                                         {/* Stats Side */}
                                         <div className="w-full lg:w-[42%] relative flex items-center">
                                             <div className="grid grid-cols-2 gap-3 w-full">
-                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm bg-white/5" style={{ border: '1px solid rgb(255_255_255 / 0.06)' }}>
+                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm bg-white/5 border border-white/10">
                                                     <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-warning) 6%, transparent), transparent 70%)' }} />
                                                     
                                                     <div className="relative z-10">
@@ -308,7 +306,7 @@ export const About = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5" style={{ border: '1px solid rgb(255_255_255 / 0.06)' }}>
+                                                <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5 border border-white/10">
                                                     <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-primary) 6%, transparent), transparent 70%)' }} />
                                                     
                                                     <div className="relative z-10">

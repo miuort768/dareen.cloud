@@ -66,7 +66,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                 'relative overflow-hidden bg-white/70 dark:bg-primary-active/75 backdrop-blur-lg',
                 'border border-success/30 dark:border-success/20 rounded-2xl p-4.5',
                 'pointer-events-auto transition-all duration-300 ease-out',
-                'shadow-[0_10px_30px_rgb(16_185_129_/_0.08)] dark:shadow-[0_10px_30px_rgb(0_0_0_/_0.4)]',
+                'shadow-lg',
                 isExiting ? 'opacity-0 translate-y-6 scale-90 blur-sm' : 'animate-in slide-in-from-bottom-6 fade-in duration-300'
             )}>
                 
@@ -78,7 +78,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     
                     {/* ── Glowing Success Icon ── */}
                     <div className="flex-shrink-0 relative">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-info)] flex items-center justify-center text-on-primary shadow-[0_4px_12px_rgb(16_185_129_/_0.3)] animate-pulse">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-info)] flex items-center justify-center text-on-primary animate-pulse">
                             <CheckCircle2 size={20} className="stroke-[2.5]" />
                         </div>
                         <div className="absolute -top-1.5 -start-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">

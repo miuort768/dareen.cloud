@@ -1,4 +1,4 @@
-import { memo, Component, type ReactNode, type ErrorInfo } from 'react';
+import { memo } from 'react';
 import { useExecutiveDashboard } from '../../hooks/useExecutiveDashboard';
 import { BusinessPulse } from './BusinessPulse';
 import { ExecutiveKPI } from './ExecutiveKPI';
@@ -9,35 +9,11 @@ import { SystemStatus } from './SystemStatus';
 import { ActivityFeed } from './ActivityFeed';
 import { InsightsPanel } from './InsightsPanel';
 import { QuickActionsGrid } from './QuickActionsGrid';
+import { SectionErrorBoundary } from '../../../../shared/components/ui';
+
 const AnimatedSection = ({ children }: { children: React.ReactNode }) => (
     <div className="animate-fadeIn">{children}</div>
 );
-
-interface ErrorFallbackProps { children: ReactNode }
-interface ErrorFallbackState { hasError: boolean }
-
-class ErrorFallback extends Component<ErrorFallbackProps, ErrorFallbackState> {
-    state: ErrorFallbackState = { hasError: false };
-
-    static getDerivedStateFromError(): ErrorFallbackState {
-        return { hasError: true };
-    }
-
-    componentDidCatch(error: Error, info: ErrorInfo) {
-        console.error('ExecutiveDashboard section error:', error, info);
-    }
-
-    render() {
-        if (this.state.hasError) {
-            return (
-                <div className="flex items-center justify-center min-h-[200px] rounded-3xl bg-white/50 dark:bg-card/50 border border-error/20">
-                    <p className="text-sm text-muted">عذراً، حدث خطأ في هذا القسم</p>
-                </div>
-            );
-        }
-        return this.props.children;
-    }
-}
 
 export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
     const { data, isLoading, error } = useExecutiveDashboard();
@@ -61,31 +37,47 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
     const { stats, alerts = { critical: [], warning: [], reminder: [], info: [] }, pulse, health = {}, presence = [], upcoming = [], activity = [] } = data;
 
     return (
-        <ErrorFallback>
-            <div className="space-y-5">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-                    <div className="lg:col-span-1">
-                        <AnimatedSection index={0}><BusinessPulse pulse={pulse} /></AnimatedSection>
-                    </div>
-                    <div className="lg:col-span-3">
-                        <AnimatedSection index={1}><ExecutiveKPI stats={stats} /></AnimatedSection>
-                    </div>
+        <div className="space-y-5">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+                <div className="lg:col-span-1">
+                    <SectionErrorBoundary name="BusinessPulse" compact>
+                        <AnimatedSection><BusinessPulse pulse={pulse} /></AnimatedSection>
+                    </SectionErrorBoundary>
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <AnimatedSection index={2}><ExecutiveAlerts alerts={alerts} /></AnimatedSection>
-                    <AnimatedSection index={3}><UpcomingTimeline sessions={upcoming} /></AnimatedSection>
-                    <AnimatedSection index={4}><PresenceGrid users={presence} total={(stats?.teachersCount || 0) + (stats?.studentsCount || 0)} /></AnimatedSection>
+                <div className="lg:col-span-3">
+                    <SectionErrorBoundary name="ExecutiveKPI" compact>
+                        <AnimatedSection><ExecutiveKPI stats={stats} /></AnimatedSection>
+                    </SectionErrorBoundary>
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <AnimatedSection index={5}><SystemStatus health={health} /></AnimatedSection>
-                    <AnimatedSection index={6}><ActivityFeed items={activity} /></AnimatedSection>
-                    <AnimatedSection index={7}><InsightsPanel stats={stats} /></AnimatedSection>
-                </div>
-
-                <AnimatedSection index={8}><QuickActionsGrid /></AnimatedSection>
             </div>
-        </ErrorFallback>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <SectionErrorBoundary name="ExecutiveAlerts" compact>
+                    <AnimatedSection><ExecutiveAlerts alerts={alerts} /></AnimatedSection>
+                </SectionErrorBoundary>
+                <SectionErrorBoundary name="UpcomingTimeline" compact>
+                    <AnimatedSection><UpcomingTimeline sessions={upcoming} /></AnimatedSection>
+                </SectionErrorBoundary>
+                <SectionErrorBoundary name="PresenceGrid" compact>
+                    <AnimatedSection><PresenceGrid users={presence} total={(stats?.teachersCount || 0) + (stats?.studentsCount || 0)} /></AnimatedSection>
+                </SectionErrorBoundary>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <SectionErrorBoundary name="SystemStatus" compact>
+                    <AnimatedSection><SystemStatus health={health} /></AnimatedSection>
+                </SectionErrorBoundary>
+                <SectionErrorBoundary name="ActivityFeed" compact>
+                    <AnimatedSection><ActivityFeed items={activity} /></AnimatedSection>
+                </SectionErrorBoundary>
+                <SectionErrorBoundary name="InsightsPanel" compact>
+                    <AnimatedSection><InsightsPanel stats={stats} /></AnimatedSection>
+                </SectionErrorBoundary>
+            </div>
+
+            <SectionErrorBoundary name="QuickActionsGrid" compact>
+                <AnimatedSection><QuickActionsGrid /></AnimatedSection>
+            </SectionErrorBoundary>
+        </div>
     );
 });

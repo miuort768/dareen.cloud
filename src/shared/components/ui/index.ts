@@ -71,3 +71,5 @@ export { Dialog } from './Dialog';
 export { Avatar } from './Avatar';
 
 export { Dropdown } from './Dropdown';
+
+export { SectionErrorBoundary } from './SectionErrorBoundary';

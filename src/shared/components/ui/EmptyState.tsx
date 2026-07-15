@@ -28,7 +28,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     {/* Floating icon bubble */}
     {icon && (
       <div
-        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info shadow-[0_8px_30px_rgb(239_68_68_/_0.1)] dark:shadow-[0_8px_30px_rgb(20_184_166_/_0.1)] animate-float"
+        className="mb-5 p-5 rounded-2xl bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] dark:from-[var(--bg-primary-active)] dark:to-[var(--bg-primary-active)] text-error dark:text-info animate-float"
       >
         {icon}
       </div>

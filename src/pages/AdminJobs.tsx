@@ -133,8 +133,8 @@ export const AdminJobs = () => {
                     <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
                     <div className="bg-white border border-dashed border-border p-6 md:p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
-                            <Briefcase size={28} style={{ color: 'rgb(var(--color-primary))' }} />
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary/10">
+                            <Briefcase size={28} className="text-primary" />
                         </div>
                         <p className="text-sm font-bold text-muted">لا توجد طلبات</p>
                     </div>
@@ -208,10 +208,10 @@ export const AdminJobs = () => {
                                     <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
                                     <div className="col-span-2 md:col-span-4 flex items-start gap-2 pt-3 border-t border-border mt-1">
-                                        <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 ${
+                                        <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 ${
                                             app.contacted ? 'opacity-30' : ''
-                                        }`} style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
-                                            <BookOpen size={10} style={{ color: app.contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
+                                        }`}>
+                                            <BookOpen size={10} className={app.contacted ? 'text-dim' : 'text-primary'} />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-micro font-bold text-muted uppercase tracking-widest mb-0.5">المناهج</p>
@@ -233,8 +233,8 @@ export const AdminJobs = () => {
 
 const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string; contacted?: boolean }) => (
     <div className={`flex items-center gap-2 ${contacted ? 'opacity-40' : ''}`}>
-        <div className="w-5 h-5 flex items-center justify-center shrink-0" style={{ backgroundColor: 'rgb(var(--color-primary) / 0.07)' }}>
-            <Icon size={10} style={{ color: contacted ? 'var(--text-dim)' : 'rgb(var(--color-primary))' }} />
+        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary/10">
+            <Icon size={10} className={contacted ? 'text-dim' : 'text-primary'} />
         </div>
         <div className="min-w-0">
             <p className="text-micro font-bold text-muted uppercase tracking-widest">{label}</p>
