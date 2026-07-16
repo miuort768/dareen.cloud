@@ -59,11 +59,11 @@ export const StudentInvoices = () => {
     const [formData, setFormData] = useState({
         studentId: '',
         amount: '',
-        description: 'ÑÓæã ÔåÑíÉ',
+        description: 'Ø±Ø³ÙˆÙ… Ø¯Ø±Ø§Ø³ÙŠØ©',
         date: new Date().toLocaleDateString('en-CA'),
         dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
         status: 'pending' as 'paid' | 'pending' | 'overdue',
-        paymentMethod: 'äÞÏí',
+        paymentMethod: 'Ù†Ù‚Ø¯ÙŠ',
         notes: '',
         currency: 'KWD',
         items: [] as { description: string; date?: string; amount: number }[]
@@ -137,11 +137,11 @@ export const StudentInvoices = () => {
         setFormData({
             studentId: '',
             amount: '',
-            description: 'ÑÓæã ÔåÑíÉ',
+            description: 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½',
             date: new Date().toLocaleDateString('en-CA'),
             dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
             status: 'pending',
-            paymentMethod: 'äÞÏí',
+            paymentMethod: 'ï¿½ï¿½ï¿½ï¿½',
             notes: '',
             currency: 'KWD',
             items: []
@@ -165,7 +165,7 @@ export const StudentInvoices = () => {
             );
 
             const items = studentSessions.map((sess: { id: string; date: string; studentName?: string; teacherName?: string; price?: number; subject?: string; status?: string }) => ({
-                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'ÍÖæÑ' : 'ÛíÇÈ'})`,
+                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½ï¿½'})`,
                 amount: sess.price || student.sessionPrice || 0,
                 date: sess.date
             }));
@@ -173,7 +173,7 @@ export const StudentInvoices = () => {
             setFormData({
                 ...formData,
                 studentId,
-                description: subjects ? `ÑÓæã: ${subjects}` : 'ÑÓæã ÔåÑíÉ',
+                description: subjects ? `ï¿½ï¿½ï¿½ï¿½: ${subjects}` : 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½',
                 amount: (items.length > 0 ? items.reduce((s, i) => s + i.amount, 0) : totalAmount).toString(),
                 items: items
             });
@@ -187,7 +187,7 @@ export const StudentInvoices = () => {
         setIsSaving(true);
         const student = students.find(s => s.id === formData.studentId);
         if (!student) {
-            showNotification('ÎØÃ: íÑÌì ÇÎÊíÇÑ ØÇáÈ ÕÍíÍ', 'error');
+            showNotification('ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½', 'error');
             setIsSaving(false);
             return;
         }
@@ -214,10 +214,10 @@ export const StudentInvoices = () => {
             }
             fetchData();
             handleCancel();
-            showNotification(editingId ? 'Êã ÊÍÏíË ÇáÝÇÊæÑÉ ÈäÌÇÍ' : 'Êã ÅÕÏÇÑ ÇáÝÇÊæÑÉ ÈäÌÇÍ', 'success');
+            showNotification(editingId ? 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
         } catch (error) {
             console.error('Error saving invoice:', error);
-            const errorMessage = error.response?.data?.error || error.message || 'ÍÏË ÎØÃ ÃËäÇÁ ÍÝÙ ÇáÈíÇäÇÊ';
+            const errorMessage = error.response?.data?.error || error.message || 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
             showNotification(errorMessage, 'error');
         } finally {
             setIsSaving(false);
@@ -229,10 +229,10 @@ export const StudentInvoices = () => {
         try {
             await api.patch(`/studentInvoices/${invoice.id}`, { status: newStatus });
             fetchData();
-            showNotification('Êã ÊÍÏíË ÍÇáÉ ÇáÝÇÊæÑÉ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
         } catch (error) {
             console.error(error);
-            showNotification('ÝÔá ÊÍÏíË ÇáÍÇáÉ', 'error');
+            showNotification('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         }
     };
 
@@ -241,10 +241,10 @@ export const StudentInvoices = () => {
         try {
             await api.delete(`/studentInvoices/${deletingId}`);
             fetchData();
-            showNotification('Êã ÍÐÝ ÇáÝÇÊæÑÉ ÈäÌÇÍ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
         } catch (error) {
             console.error('Error deleting invoice:', error);
-            showNotification(error.message || 'ÝÔá Ýí ÍÐÝ ÇáÝÇÊæÑÉ', 'error');
+            showNotification(error.message || 'ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'error');
         } finally {
             setDeletingId(null);
         }
@@ -259,10 +259,10 @@ export const StudentInvoices = () => {
             );
             await Promise.all(deletePromises);
             fetchData();
-            showNotification('Êã ÍÐÝ ÌãíÚ ÝæÇÊíÑ ÇáØáÇÈ ÈäÌÇÍ', 'success');
+            showNotification('ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', 'success');
         } catch (error) {
             console.error('Error deleting all invoices:', error);
-            showNotification('ÍÏË ÎØÃ ÃËäÇÁ ãÍÇæáÉ ÍÐÝ Çáßá', 'error');
+            showNotification('ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½', 'error');
         } finally {
             setLoading(false);
             setDeleteAllModalOpen(false);
@@ -294,13 +294,13 @@ export const StudentInvoices = () => {
                             <FileText size={22} className="text-on-primary" />
                         </div>
                         <div>
-                            <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">ÝæÇÊíÑ æÊÍÕíá ÇáØáÇÈ</h1>
-                            <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">ÅÏÇÑÉ ÇáÊÏÝÞÇÊ ÇáäÞÏíÉ æÇáãÓÊÍÞÇÊ ÇáÏÑÇÓíÉ</p>
+                            <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</h1>
+                            <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2 text-xs font-bold px-3 py-2 whitespace-nowrap rounded-xl bg-success text-on-success">
                         <Sparkles size={13} />
-                        {totalRevenue.toLocaleString()} Ì.ã ÅÌãÇáí ÇáãÍÕá
+                        {totalRevenue.toLocaleString()} ï¿½.ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     </div>
                 </div>
 
@@ -319,7 +319,7 @@ export const StudentInvoices = () => {
                             <div className="relative flex-1 max-w-md">
                                 <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
                                 <input
-                                    placeholder="ÈÍË ÈÇÓã ÇáØÇáÈ Ãæ ÇáÈíÇä..."
+                                    placeholder="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
                                     className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary placeholder:opacity-50 bg-white/15"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -330,25 +330,25 @@ export const StudentInvoices = () => {
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
                             >
-                                <option value="all">ÌãíÚ ÇáÍÇáÇÊ</option>
-                                <option value="paid">ãÏÝæÚÉ</option>
-                                <option value="pending">ãÚáÞÉ</option>
-                                <option value="overdue">ãÊÃÎÑÉ</option>
+                                <option value="all">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                <option value="paid">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                <option value="pending">ï¿½ï¿½ï¿½ï¿½ï¿½</option>
+                                <option value="overdue">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</option>
                             </select>
                         </div>
 
                         <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto no-scrollbar pb-1 lg:pb-0">
                             <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
                                 {showForm ? <X size={14} /> : <Plus size={14} />}
-                                {showForm ? 'ÅáÛÇÁ' : 'ÅÕÏÇÑ ÝÇÊæÑÉ'}
+                                {showForm ? 'ï¿½ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'}
                             </PrimaryBtn>
-                            <SecondaryBtn onClick={handleImportStudents} title="ÇÓÊíÑÇÏ ãä ÓÌá ÇáÍÕÕ">
-                                <UserPlus size={14} /> ÇÓÊíÑÇÏ
+                            <SecondaryBtn onClick={handleImportStudents} title="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½">
+                                <UserPlus size={14} /> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             </SecondaryBtn>
-                            <SecondaryBtn onClick={() => window.print()} title="ØÈÇÚÉ ÇáÓÌá">
+                            <SecondaryBtn onClick={() => window.print()} title="ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½">
                                 <Printer size={14} />
                             </SecondaryBtn>
-                            <DangerBtn onClick={() => setDeleteAllModalOpen(true)} title="ÍÐÝ Çáßá">
+                            <DangerBtn onClick={() => setDeleteAllModalOpen(true)} title="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½">
                                 <Trash2 size={14} />
                             </DangerBtn>
                         </div>
@@ -379,8 +379,8 @@ export const StudentInvoices = () => {
                     isOpen={!!deletingId}
                     onClose={() => setDeletingId(null)}
                     onConfirm={confirmDelete}
-                    title="ÍÐÝ ÇáÝÇÊæÑÉ"
-                    message="åá ÃäÊ ãÊÃßÏ ãä ÍÐÝ åÐå ÇáÝÇÊæÑÉ äåÇÆíÇð¿"
+                    title="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
+                    message="ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                     isDestructive={true}
                 />
 
@@ -388,8 +388,8 @@ export const StudentInvoices = () => {
                     isOpen={deleteAllModalOpen}
                     onClose={() => setDeleteAllModalOpen(false)}
                     onConfirm={handleDeleteAll}
-                    title="ÍÐÝ Çáßá"
-                    message="ÓíÊã ÍÐÝ ÌãíÚ ÝæÇÊíÑ ÇáØáÇÈ ÊãÇãÇð. áÇ íãßä ÇáÊÑÇÌÚ."
+                    title="ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"
+                    message="ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½."
                     isDestructive={true}
                 />
 

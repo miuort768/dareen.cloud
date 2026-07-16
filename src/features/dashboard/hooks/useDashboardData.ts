@@ -232,7 +232,9 @@ export const useDashboardData = (currentUser: User | null) => {
         const focusStudentsList: { id: string; name: string; reason: string; type: 'attendance' | 'performance' | 'engagement' }[] = [];
         filteredStudents.forEach((s: Student) => {
             const stuSessions = filteredSessions.filter((ss: Session) => ss.studentId === s.id);
-            const stuCompleted = stuSessions.filter((ss: Session) => ss.status === 'completed');
+            const stuCompleted = stuSessions.filter((ss: Session) =>
+                ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase())
+            );
             const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
 
             const stuEvals = isTeacher

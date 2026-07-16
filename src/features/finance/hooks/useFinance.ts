@@ -118,7 +118,9 @@ export const useFinance = () => {
             }
         };
         if (serverStats && filterMonth === 'all') {
-            return serverStats;
+            const fixedExpensesTotal = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+            const laborCost = sessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+            return { ...serverStats, totalFixedExpenses: fixedExpensesTotal, automatedLaborCost: laborCost };
         }
 
         const completedSessions = sessions.filter(s => s.status === 'completed');

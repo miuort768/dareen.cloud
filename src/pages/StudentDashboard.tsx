@@ -4,7 +4,7 @@ import {
     BookOpen, MessageSquare, Star, Clock,
     Bell, ChevronLeft, Play, Video, GraduationCap,
     Headphones, Home, Library, User, MoreHorizontal, CheckCircle, TrendingUp,
-    Sun, Moon, Megaphone
+    Sun, Moon, Megaphone, Trophy
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone } from '../context/AppContext';

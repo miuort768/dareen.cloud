@@ -43,11 +43,15 @@ router.get('/docs', (req, res) => {
 
 router.get('/system/public-settings', async (req, res) => {
     try {
-        const keys = ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color',
+        const keys = ['maintenance_mode', 'academy_name', 'academy_logo', 'academy_tagline', 'academy_address',
+            'admin_phone', 'theme_color',
             'notifications_enabled', 'auto_backup', 'chatbot_enabled',
             'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
             'reminder_minutes_before', 'library_whatsapp', 'library_telegram',
-            'whatsapp_numbers'];
+            'whatsapp_numbers', 'whatsapp_auto_notify', 'default_session_price', 'default_teacher_price',
+            'currency_symbol', 'semester_name', 'semesters', 'whatsapp_template',
+            'balance_warning_threshold', 'backdate_lock_enabled', 'teacher_commission_type',
+            'auto_freeze_threshold', 'telegram_handle'];
         const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
             const settings = await prisma.systemSetting.findMany({
                 where: { key: { in: keys } }
