@@ -68,7 +68,7 @@ const heroSlides = [
         subtitle: 'للتعليم والتدريب عن بعد',
         desc: 'منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.',
         emoji: '🎓',
-        gradient: 'from-primary-light via-primary-soft to-primary-light',
+        gradient: 'bg-primary-soft',
         textColor: 'text-primary',
     },
     {
@@ -77,7 +77,7 @@ const heroSlides = [
         subtitle: 'من أي مكان في العالم',
         desc: 'حصص تفاعلية مباشرة مع أفضل المعلمين، متابعة دورية، وتقارير مفصلة لأولياء الأمور.',
         emoji: '🌍',
-        gradient: 'from-info-light via-info-soft to-info-light',
+        gradient: 'bg-info-soft',
         textColor: 'text-info-dark',
     },
     {
@@ -86,7 +86,7 @@ const heroSlides = [
         subtitle: 'واكسب النقاط والشارات',
         desc: 'نظام مكافآت متميز يشجع الطلاب على التفوق والمثابرة مع شارات وألقاب حصرية.',
         emoji: '🏆',
-        gradient: 'from-warning-light via-warning-soft to-warning-light',
+        gradient: 'bg-warning-soft',
         textColor: 'text-warning-dark',
     },
 ];
@@ -183,13 +183,13 @@ export const StudentDashboard = () => {
             <div className={cn(
                 "sticky top-0 z-[100] transition-all duration-500",
                 headerScrolled
-                    ? "bg-white/80 dark:bg-background/80 backdrop-blur-xl shadow-sm border-b border-border"
+                    ? "bg-card shadow-sm border-b border-border"
                     : "bg-card border-b border-transparent"
             )}>
                 <div className="px-4 pt-3 pb-2">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-on-primary shadow-sm shadow-black/10">
+                            <div className="w-9 h-9 rounded-card bg-primary flex items-center justify-center text-on-primary shadow-sm">
                                 <GraduationCap size={18} strokeWidth={1.5} />
                             </div>
                             <div>
@@ -216,7 +216,7 @@ export const StudentDashboard = () => {
                                 <span className="absolute top-1 start-1 w-2 h-2 bg-error rounded-full border-2 border-card" />
                             </button>
                             {/* Live clock */}
-                            <div className="px-2.5 py-1.5 rounded-card bg-hover backdrop-blur-sm text-primary font-medium text-micro tabular-nums">
+                            <div className="px-2.5 py-1.5 rounded-card bg-hover text-primary font-medium text-micro tabular-nums">
                                 <Clock size={12} strokeWidth={1.5} className="inline me-1" />
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </div>
@@ -235,14 +235,10 @@ export const StudentDashboard = () => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -60 }}
                             transition={{ duration: 0.4, ease: 'easeInOut' }}
-                            className={`bg-gradient-to-br ${heroSlides[heroIndex].gradient} p-5 rounded-3xl flex items-center justify-between gap-4 relative overflow-hidden min-h-[200px]`}
+                            className={`${heroSlides[heroIndex].gradient} p-5 rounded-card flex items-center justify-between gap-4 min-h-[200px]`}
                         >
-                            {/* Decorative circles */}
-                            <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
-                            <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
-
                             {/* Text Content */}
-                            <div className="flex-1 z-10 space-y-2">
+                            <div className="flex-1 space-y-2">
                                 <h2 className={`text-2xl font-black leading-tight ${heroSlides[heroIndex].textColor}`}>
                                     {heroSlides[heroIndex].title}{' '}
                                     <span className="inline-block border-s-4 border-current ps-0.5 animate-pulse">|</span>
@@ -256,14 +252,14 @@ export const StudentDashboard = () => {
                                 <div className="flex gap-2 pt-2 flex-wrap">
                                     <button
                                         onClick={() => navigate('/chat')}
-                                        className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
+                                        className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-card shadow-sm active:scale-95 transition-transform"
                                     >
                                         <Play size={12} fill="currentColor" />
                                         ابدأ الآن
                                     </button>
                                     <button
                                         onClick={() => navigate('/schedule')}
-                                        className="flex items-center gap-1.5 bg-white/80 dark:bg-white/10 text-primary dark:text-inverse text-xs font-bold px-4 py-2 rounded-full border border-border active:scale-95 transition-transform"
+                                        className="flex items-center gap-1.5 bg-card text-primary text-xs font-bold px-4 py-2 rounded-card border border-border active:scale-95 transition-transform"
                                     >
                                         استكشف الدورات
                                         <ChevronLeft size={12} />
@@ -274,11 +270,11 @@ export const StudentDashboard = () => {
                             {/* Hero Illustration */}
                             <div className="shrink-0 relative z-10">
                                     <div className="w-[110px] h-[120px] relative">
-                                    <div className="w-full h-full rounded-card overflow-hidden bg-white/30 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-6xl shadow-xl">
+                                    <div className="w-full h-full rounded-card overflow-hidden bg-card flex items-center justify-center text-6xl shadow-soft">
                                         {heroSlides[heroIndex].emoji}
                                     </div>
                                     {/* Floating badge */}
-                                    <div className="absolute -bottom-2 -start-2 bg-card rounded-full px-2 py-1 shadow-lg flex items-center gap-1">
+                                    <div className="absolute -bottom-2 -start-2 bg-card rounded-card px-2 py-1 shadow-soft flex items-center gap-1">
                                         <span className="text-micro font-bold text-main">🇰🇼</span>
                                     </div>
                                 </div>
@@ -359,13 +355,13 @@ export const StudentDashboard = () => {
                                     className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3"
                                 >
                                     {/* Course Icon */}
-                                    <div className="w-14 h-14 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
+                                    <div className="w-14 h-14 rounded-card bg-primary flex items-center justify-center shrink-0 shadow-sm">
                                         <BookOpen size={22} className="text-on-primary" />
                                     </div>
                                     {/* Info */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
+                                            <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-card">
                                                 متابعة
                                             </span>
                                             <h3 className="text-sm font-black text-main truncate max-w-[140px]">
@@ -382,7 +378,7 @@ export const StudentDashboard = () => {
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${progress}%` }}
                                                     transition={{ duration: 0.8, delay: 0.3 + idx * 0.1 }}
-                                                    className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
+                                                    className="h-full bg-primary rounded-full"
                                                 />
                                             </div>
                                             <div className="flex justify-between mt-1">
@@ -397,12 +393,12 @@ export const StudentDashboard = () => {
                 ) : (
                     /* Demo Card */
                     <div className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3">
-                        <div className="w-14 h-14 rounded-card bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shrink-0 shadow-md">
+                        <div className="w-14 h-14 rounded-card bg-primary flex items-center justify-center shrink-0 shadow-sm">
                             <span className="text-2xl">💻</span>
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                                <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-full">
+                                <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-card">
                                     متابعة
                                 </span>
                                 <h3 className="text-sm font-black text-main">أساسيات البرمجة</h3>
@@ -414,7 +410,7 @@ export const StudentDashboard = () => {
                                         initial={{ width: 0 }}
                                         animate={{ width: '60%' }}
                                         transition={{ duration: 0.8, delay: 0.3 }}
-                                        className="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full"
+                                        className="h-full bg-primary rounded-full"
                                     />
                                 </div>
                                 <span className="text-micro font-bold text-primary mt-1 block text-end">60%</span>
@@ -463,7 +459,7 @@ export const StudentDashboard = () => {
                                 key={i}
                                 className="bg-card rounded-card px-4 py-3 shadow-sm border border-border flex items-center justify-between"
                             >
-                                <span className="text-xs font-bold text-success bg-success-soft px-2 py-1 rounded-full">
+                                <span className="text-xs font-bold text-success bg-success-soft px-2 py-1 rounded-card">
                                     +{log.amount} نقطة
                                 </span>
                                 <span className="text-xs text-muted font-medium">{log.action}</span>
@@ -475,22 +471,18 @@ export const StudentDashboard = () => {
 
             {/* ══════════════════ SUPPORT BANNER ══════════════════ */}
             <div className="px-4 py-3 pb-6">
-                <div className="bg-gradient-to-br from-primary to-primary-hover rounded-3xl p-5 relative overflow-hidden shadow-xl shadow-black/10">
-                    <div className="absolute top-[-20px] left-[-20px] w-28 h-28 bg-white/10 rounded-full blur-2xl" />
-                    <div className="absolute bottom-[-15px] right-[20%] w-20 h-20 bg-white/10 rounded-full blur-xl" />
-                    <div className="relative z-10">
-                        <h3 className="text-on-primary font-black text-lg mb-1 text-start">تحتاج مساعدة؟</h3>
-                        <p className="text-on-primary opacity-80 text-xs mb-4 text-start">فريقنا جاهز لمساعدتك في أي وقت</p>
-                        <a
-                            href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-card font-black text-sm shadow-lg active:scale-95 transition-transform"
-                        >
-                            <MessageSquare size={16} />
-                            تواصل الآن
-                        </a>
-                    </div>
+                <div className="bg-primary rounded-card p-5 shadow-soft">
+                    <h3 className="text-on-primary font-black text-lg mb-1 text-start">تحتاج مساعدة؟</h3>
+                    <p className="text-on-primary opacity-80 text-xs mb-4 text-start">فريقنا جاهز لمساعدتك في أي وقت</p>
+                    <a
+                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '965') || '96500000000'}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-card font-black text-sm shadow-soft active:scale-95 transition-transform"
+                    >
+                        <MessageSquare size={16} />
+                        تواصل الآن
+                    </a>
                 </div>
             </div>
 
@@ -525,7 +517,7 @@ const MobileBottomNav = ({
     ];
 
     return (
-        <nav className="fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-black/10">
+        <nav className="fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-soft">
             <div className="flex items-center justify-around h-[68px] px-2">
                 {navItems.map((item) => {
                     const Icon = item.icon;
@@ -542,7 +534,7 @@ const MobileBottomNav = ({
                             className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
                         >
                             {isCenter ? (
-                                <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary-hover rounded-full flex items-center justify-center shadow-xl shadow-black/10">
+                                <div className="w-14 h-14 bg-primary rounded-card flex items-center justify-center shadow-soft">
                                     <Icon size={26} className="text-on-primary" />
                                 </div>
                             ) : (
@@ -561,7 +553,7 @@ const MobileBottomNav = ({
                                         {item.label}
                                     </span>
                                     {isActive && (
-                                        <div className="absolute top-0 end-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-full" />
+                                        <div className="absolute top-0 end-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary rounded-card" />
                                     )}
                                 </>
                             )}

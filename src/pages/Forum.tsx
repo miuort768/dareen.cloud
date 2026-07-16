@@ -140,21 +140,13 @@ export const Forum = () => {
     };
 
     return (
-        <div className="min-h-full overflow-x-hidden relative bg-gradient-to-br from-[var(--bg-background)] via-white to-[var(--bg-primary-soft)]/30 dark:from-[var(--bg-background)] dark:via-[var(--bg-background)] dark:to-[var(--bg-primary)]/20 pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, var(--bg-info) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="min-h-full overflow-x-hidden relative bg-surface pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="relative z-10">
 
             {/* ════════ HEADER ════════ */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary-active)] rounded-3xl shadow-xl shadow-primary/30 border border-white/10 px-6 py-8 mx-4 mt-4 mb-6">
-                {/* Decorative blobs */}
-                <div className="absolute -top-16 -start-16 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
-                <div className="absolute -bottom-20 -end-20 w-72 h-72 bg-info-light/15 rounded-full blur-[100px] pointer-events-none" />
-                <div className="absolute top-1/3 end-1/4 w-2 h-2 bg-white/30 rounded-full" />
-                <div className="absolute top-1/2 start-1/3 w-1.5 h-1.5 bg-primary/40 rounded-full" />
-                <div className="absolute bottom-1/4 end-1/3 w-1 h-1 bg-white/20 rounded-full" />
-                <div className="absolute top-1/4 start-1/4 w-3 h-3 border border-white/10 rounded-full" />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                    <div className="w-14 h-14 bg-white/15 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 border border-white/20 shadow-lg shadow-primary/20">
+            <div className="bg-primary rounded-card shadow-soft px-6 py-8 mx-4 mt-4 mb-6">
+                <div className="flex flex-col items-center text-center">
+                    <div className="w-14 h-14 bg-primary-soft rounded-card flex items-center justify-center mb-4">
                         <Sparkles size={26} className="text-on-primary" />
                     </div>
                     <h1 className="text-3xl font-black text-on-primary leading-tight mb-2">منتدى دارين</h1>
@@ -167,12 +159,12 @@ export const Forum = () => {
             <div className="max-w-[700px] mx-auto px-4 space-y-6">
                 
                 {/* ════════ CREATE POST CARD ════════ */}
-                <div className="bg-card dark:bg-primary-active rounded-3xl shadow-xl p-5">
+                <div className="bg-card rounded-card shadow-soft p-5">
                     <div className="space-y-3">
                         <textarea
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
-                            className="w-full bg-primary-soft/50 dark:bg-primary-active/50 rounded-2xl p-4 min-h-[100px] text-sm font-medium text-main dark:text-main focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted resize-none border-0"
+                            className="w-full bg-background rounded-card p-4 min-h-[100px] text-sm font-medium text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all placeholder:text-muted resize-none border border-border"
                             placeholder="شارك فكرة أو سؤال…"
                             style={{ lineHeight: 1.8 }}
                         />
@@ -183,7 +175,7 @@ export const Forum = () => {
                             <button
                                 onClick={handleCreatePost}
                                 disabled={!newPostContent.trim()}
-                                className="bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 text-xs font-bold rounded-full disabled:opacity-30 transition-all flex items-center gap-2 shadow-lg shadow-primary/40 active:scale-95"
+                                className="bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 text-xs font-bold rounded-card disabled:opacity-30 transition-all flex items-center gap-2 shadow-sm active:scale-95"
                             >
                                 <Send size={13} /> نشر
                             </button>
@@ -195,12 +187,12 @@ export const Forum = () => {
                 {loading ? (
                     <div className="space-y-6">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-card dark:bg-primary-active h-48 animate-pulse rounded-3xl shadow-xl"></div>
+                            <div key={i} className="bg-card h-48 animate-pulse rounded-card shadow-soft"></div>
                         ))}
                     </div>
                 ) : posts.length === 0 ? (
-                    <div className="bg-card dark:bg-primary-active rounded-3xl shadow-xl p-6 md:p-16 text-center border-2 border-dashed border-primary dark:border-primary/30">
-                        <div className="w-16 h-16 bg-gradient-to-br from-[var(--bg-primary-soft)] to-[var(--bg-primary-light)] dark:from-[var(--bg-primary-active)]/20 dark:to-[var(--bg-primary-active)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="bg-card rounded-card shadow-soft p-6 md:p-16 text-center border-2 border-dashed border-border">
+                        <div className="w-16 h-16 bg-primary-soft rounded-card flex items-center justify-center mx-auto mb-4">
                             <MessageSquare size={24} className="text-primary" />
                         </div>
                         <p className="text-sm font-bold text-muted">لا توجد منشورات هنا</p>
@@ -216,27 +208,27 @@ export const Forum = () => {
                                     key={post.id} 
                                     id={`post-${post.id}`}
                                     className={cn(
-                                        "bg-card dark:bg-primary-active rounded-3xl shadow-xl transition-all duration-500",
-                                        isHighlighted && "ring-2 ring-primary shadow-lg shadow-primary/30"
+                                        "bg-card rounded-card shadow-soft transition-all duration-500",
+                                        isHighlighted && "ring-2 ring-primary shadow-sm"
                                     )}
                                 >
                                     {/* Post Header */}
                                     <div className="p-4 md:p-5 flex justify-between items-start">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary dark:text-primary text-sm border-2 border-primary/50 dark:border-primary/30">
+                                            <div className="w-11 h-11 rounded-card bg-primary-soft flex items-center justify-center font-bold text-primary text-sm">
                                                 {(post.authorName?.[0] || '').toUpperCase()}
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-0.5">
                                                     <h4 className="font-bold text-main dark:text-main text-sm">{post.authorName}</h4>
                                                     {post.authorRole === 'admin' && (
-                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-error-light text-error border border-error dark:bg-error/20 dark:text-error dark:border-error/30">إدارة</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-card bg-error-light text-error border border-error">إدارة</span>
                                                     )}
                                                     {post.authorRole === 'teacher' && (
-                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-success-light text-success border border-success dark:bg-success/20 dark:text-success dark:border-success/30">معلم</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-card bg-success-light text-success border border-success">معلم</span>
                                                     )}
                                                     {post.authorRole === 'student' && (
-                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-full bg-info-light text-info border border-info dark:bg-info/20 dark:text-info dark:border-info/30">طالب</span>
+                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-card bg-info-light text-info border border-info">طالب</span>
                                                     )}
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-micro text-muted font-medium">
@@ -264,7 +256,7 @@ export const Forum = () => {
                                                     <MoreHorizontal size={17} />
                                                 </button>
                                                 {showMenuPostId === post.id && (
-                                                    <div className="absolute end-0 top-full mt-1 w-36 bg-card dark:bg-primary-active rounded-xl shadow-xl border border-border dark:border-border z-50 py-1">
+                                                    <div className="absolute end-0 top-full mt-1 w-36 bg-card rounded-card shadow-soft border border-border z-50 py-1">
                                                         <button onClick={() => { handleReport(post.id); setShowMenuPostId(null); }} className="w-full px-4 py-2 text-micro font-bold text-start text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active flex items-center gap-2">
                                                             <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
                                                         </button>
@@ -311,17 +303,17 @@ export const Forum = () => {
 
                                     {/* Comments Section */}
                                     {viewingComments[post.id] && (
-                                        <div className="bg-primary-soft/30 dark:bg-primary-active/30 rounded-b-3xl border-t border-border dark:border-border p-4 md:p-5 space-y-4">
+                                        <div className="bg-background rounded-card border-t border-border p-4 md:p-5 space-y-4">
                                             <div className="space-y-3">
                                                 {buildThreadedComments(post.comments || []).map((node) => (
                                                     <div key={node.comment.id} className="space-y-3">
                                                         {/* Main Comment */}
                                                         <div className="flex gap-3">
-                                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border-2 border-primary/50 dark:border-primary/30">
+                                                            <div className="w-8 h-8 rounded-card bg-primary-soft flex items-center justify-center font-bold text-primary text-micro shrink-0">
                                                                 {(node.comment.authorName?.[0] || '').toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
-                                                                <div className="bg-card dark:bg-primary-active rounded-2xl p-3.5 shadow-sm border border-border dark:border-border/50">
+                                                                <div className="bg-card rounded-card p-3.5 shadow-sm border border-border">
                                                                     <div className="flex justify-between items-center mb-1">
                                                                         <h5 className="text-xs font-bold text-main dark:text-main">{node.comment.authorName}</h5>
                                                                         <span className="text-micro text-muted font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
@@ -351,10 +343,10 @@ export const Forum = () => {
                                                             <div className="ps-7 space-y-2 border-s-2 border-primary dark:border-primary/30 ms-3">
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-2">
-                                                                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center font-bold text-primary text-micro shrink-0 border border-primary/50 dark:border-primary/30">
+                                                                        <div className="w-6 h-6 rounded-card bg-primary-soft flex items-center justify-center font-bold text-primary text-micro shrink-0">
                                                                             {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
                                                                         </div>
-                                                                        <div className="flex-1 bg-card dark:bg-primary-active rounded-xl p-2.5 shadow-sm border border-border dark:border-border/50">
+                                                                        <div className="flex-1 bg-card rounded-card p-2.5 shadow-sm border border-border">
                                                                             <div className="flex justify-between items-center mb-0.5">
                                                                                 <h5 className="text-micro font-bold text-main dark:text-main">{replyNode.comment.authorName}</h5>
                                                                                 <span className="text-micro text-muted">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
@@ -373,9 +365,9 @@ export const Forum = () => {
                                             </div>
 
                                             {/* Add Comment Input */}
-                                            <div className="flex gap-3 items-center pt-3 border-t border-border dark:border-border/50">
-                                                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--bg-primary-light)] to-[var(--bg-primary-soft)] dark:from-[var(--bg-primary-active)]/30 dark:to-[var(--bg-primary-active)]/20 flex items-center justify-center shrink-0 border-2 border-primary/50 dark:border-primary/30">
-                                                    <User size={14} className="text-primary dark:text-primary" />
+                                            <div className="flex gap-3 items-center pt-3 border-t border-border">
+                                                <div className="w-9 h-9 rounded-card bg-primary-soft flex items-center justify-center shrink-0">
+                                                    <User size={14} className="text-primary" />
                                                 </div>
                                                 <div className="flex-1 relative">
                                                     <input 
@@ -384,14 +376,14 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب رداً على هذا المنشور..."
-                                                        className="w-full bg-card dark:bg-primary-active rounded-full pe-10 ps-4 py-2.5 text-xs font-medium text-main dark:text-main focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-border dark:border-border placeholder:text-muted"
+                                                        className="w-full bg-card rounded-card pe-10 ps-4 py-2.5 text-xs font-medium text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all border border-border placeholder:text-muted"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button
                                                         onClick={() => handleAddComment(post.id)}
                                                         disabled={!(commentTexts[post.id] || '').trim()}
                                                         aria-label="إرسال التعليق"
-                                                        className="absolute end-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-primary hover:bg-primary-hover text-on-primary flex items-center justify-center rounded-full transition-all disabled:opacity-30 active:scale-90"
+                                                        className="absolute end-1 top-1/2 -translate-y-1/2 w-7 h-7 bg-primary hover:bg-primary-hover text-on-primary flex items-center justify-center rounded-card transition-all disabled:opacity-30 active:scale-90"
                                                     >
                                                         <Send size={11} />
                                                     </button>
@@ -402,14 +394,14 @@ export const Forum = () => {
 
                                     {/* Admin Quick Review Bar */}
                                     {isAdmin && post.status === 'pending' && (
-                                        <div className="p-3.5 bg-warning-light dark:bg-warning/10 rounded-b-3xl border-t border-warning dark:border-warning/20 flex justify-between items-center">
+                                        <div className="p-3.5 bg-warning-light rounded-card border-t border-warning flex justify-between items-center">
                                             <div className="flex items-center gap-2 text-warning dark:text-warning">
                                                 <AlertTriangle size={13} />
                                                 <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-full transition-all active:scale-95">موافقة</button>
-                                                <button onClick={() => handleDeletePost(post.id)} className="bg-error hover:bg-error text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-full transition-all active:scale-95">حذف</button>
+                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">موافقة</button>
+                                                <button onClick={() => handleDeletePost(post.id)} className="bg-error hover:bg-error text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">حذف</button>
                                             </div>
                                         </div>
                                     )}
@@ -422,14 +414,12 @@ export const Forum = () => {
 
             {/* ════════ HELP / GUIDELINES ════════ */}
             <div className="max-w-[700px] mx-auto px-4 mt-10 mb-8">
-                <div className="bg-primary rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden shadow-xl shadow-primary/30">
-                    <div className="absolute top-0 start-0 w-32 h-32 bg-white/10 -translate-y-12 translate-x-12 rotate-45 rounded-3xl pointer-events-none" />
-                    <div className="absolute bottom-0 end-0 w-24 h-24 bg-white/5 rounded-full blur-[40px] pointer-events-none" />
-                    <div className="relative z-10 text-center md:text-start">
+                <div className="bg-primary rounded-card p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-soft">
+                    <div className="text-center md:text-start">
                         <h4 className="text-on-primary font-black text-base mb-1">إرشادات المنتدى</h4>
                         <p className="text-on-primary/80 text-xs font-medium">يرجى الالتزام بسياسات النشر واحترام آراء الآخرين</p>
                     </div>
-                    <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="relative z-10 bg-white text-primary px-6 py-2.5 text-xs font-bold rounded-full hover:bg-primary-soft transition-all shadow-lg active:scale-95">
+                    <button onClick={() => alert('يرجى الالتزام بسياسات النشر واحترام آراء الآخرين.\n\nالممنوع:\n• الإساءة والمحتوى المسيء\n• الترويج\n• نشر معلومات شخصية')} className="bg-card text-primary px-6 py-2.5 text-xs font-bold rounded-card hover:bg-primary-soft transition-all shadow-sm active:scale-95">
                         عرض الإرشادات
                     </button>
                 </div>

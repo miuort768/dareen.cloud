@@ -91,9 +91,9 @@ export const AdminJobs = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl" style={{ '--color-primary': '51 27 136' } as React.CSSProperties}>
-            <div className="mx-4 md:mx-6 mb-6 bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-6 md:p-8">
+            <div className="mx-4 md:mx-6 mb-6 bg-card border border-border shadow-soft rounded-card p-6 md:p-8">
                 <div className="flex flex-col items-center gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center shadow-lg">
+                    <div className="w-14 h-14 rounded-card bg-primary-soft flex items-center justify-center">
                         <Briefcase size={26} className="text-primary" />
                     </div>
                     <div className="text-center">
@@ -106,7 +106,7 @@ export const AdminJobs = () => {
                             <select
                                 value={subjectFilter}
                                 onChange={e => setSubjectFilter(e.target.value)}
-                                className="w-full bg-white/60 backdrop-blur border border-white/30 rounded-xl py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 appearance-none cursor-pointer"
+                                className="w-full bg-background border border-border rounded-card py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus appearance-none cursor-pointer"
                             >
                                 <option value="" className="text-main">كل المواد</option>
                                 {allSubjects.map(s => (
@@ -121,7 +121,7 @@ export const AdminJobs = () => {
                                 placeholder="ابحث بالاسم أو الهاتف..."
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-white/60 backdrop-blur border border-white/30 rounded-xl py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-muted"
+                                className="w-full bg-background border border-border rounded-card py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus placeholder:text-muted"
                             />
                         </div>
                     </div>
@@ -132,15 +132,15 @@ export const AdminJobs = () => {
                 {loading ? (
                     <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-white border border-dashed border-border p-6 md:p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary/10">
+                    <div className="bg-card border-2 border-dashed border-border rounded-card p-6 md:p-16 text-center">
+                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary-soft rounded-card">
                             <Briefcase size={28} className="text-primary" />
                         </div>
                         <p className="text-sm font-bold text-muted">لا توجد طلبات</p>
                     </div>
                 ) : (
                     filtered.map(app => (
-                        <div key={app.id} className={`bg-white border border-border/50 shadow-sm relative overflow-hidden group transition-all duration-300 ${
+                        <div key={app.id} className={`bg-card rounded-card border border-border shadow-soft relative overflow-hidden group transition-all duration-300 ${
                             app.contacted ? 'opacity-40 grayscale saturate-0' : ''
                         }`}>
                             {/* Top accent bar */}
@@ -184,9 +184,8 @@ export const AdminJobs = () => {
                                         ? 'bg-surface'
                                         : 'bg-primary'
                                 }`}>
-                                    <div className="w-12 h-14 bg-white/20 border-2 border-white/30 flex items-center justify-center relative overflow-hidden shrink-0">
-                                        <span className="text-base font-bold text-on-primary">{app.name[0]}</span>
-                                        <div className="absolute bottom-0 end-0 w-full h-0.5 bg-white/50"></div>
+                                    <div className="w-12 h-14 bg-primary-soft rounded-card flex items-center justify-center shrink-0">
+                                        <span className="text-base font-bold text-primary">{app.name[0]}</span>
                                     </div>
                                     <div className="text-start">
                                         <h3 className={`text-sm font-bold ${
@@ -208,7 +207,7 @@ export const AdminJobs = () => {
                                     <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                     <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
                                     <div className="col-span-2 md:col-span-4 flex items-start gap-2 pt-3 border-t border-border mt-1">
-                                        <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 ${
+                                        <div className={`w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary-soft rounded-card ${
                                             app.contacted ? 'opacity-30' : ''
                                         }`}>
                                             <BookOpen size={10} className={app.contacted ? 'text-dim' : 'text-primary'} />
@@ -233,7 +232,7 @@ export const AdminJobs = () => {
 
 const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string; contacted?: boolean }) => (
     <div className={`flex items-center gap-2 ${contacted ? 'opacity-40' : ''}`}>
-        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary/10">
+        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary-soft rounded-card">
             <Icon size={10} className={contacted ? 'text-dim' : 'text-primary'} />
         </div>
         <div className="min-w-0">

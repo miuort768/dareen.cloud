@@ -127,14 +127,14 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-6 relative bg-gradient-to-br from-primary-soft via-primary-soft to-warning-soft dark:from-bg-background dark:via-bg-background dark:to-bg-background" dir="rtl">
-            <div className="relative z-10 max-w-page mx-auto px-3 space-y-4">
+        <div className="min-h-full pb-6 relative bg-surface" dir="rtl">
+            <div className="max-w-page mx-auto px-3 space-y-4">
 
                 {/* Hero */}
-                <div className="relative bg-gradient-to-br from-primary-soft via-primary-soft to-card dark:from-bg-background dark:via-bg-background dark:to-bg-background rounded-2xl overflow-hidden mb-2 shadow-sm border border-primary-soft dark:border-border">
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
+                <div className="bg-card rounded-card shadow-sm border border-border">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
                         <div className="flex flex-col items-start">
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-soft dark:bg-primary-soft border border-primary-light dark:border-primary-light rounded-full mb-3">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-soft dark:bg-primary-soft border border-primary-light dark:border-primary-light rounded-card mb-3">
                                 <Sparkles size={10} className="text-primary dark:text-primary" />
                                 <span className="text-micro font-bold text-primary dark:text-inverse">مركز القيادة</span>
                             </div>
@@ -147,7 +147,7 @@ export const Tasks = () => {
                         </div>
                         <button
                             onClick={() => setShowAddForm(true)}
-                            className="group relative inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 font-bold text-micro uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-2xl shadow-sm"
+                            className="group relative inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 font-bold text-micro uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-card shadow-sm"
                         >
                             <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
                             إضافة مهمة جديدة
@@ -172,7 +172,7 @@ export const Tasks = () => {
                             placeholder="ابحث عن مهمة..."
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-white dark:bg-card border border-border rounded-2xl py-3 px-4 ps-10 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:border-primary dark:focus:border-primary transition-all placeholder:text-muted dark:placeholder:text-muted shadow-sm"
+                            className="w-full bg-card border border-border rounded-card py-3 px-4 ps-10 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all placeholder:text-muted shadow-sm"
                         />
                     </div>
                     <div className="grid grid-cols-4 gap-2 w-full md:flex md:w-auto">
@@ -181,10 +181,10 @@ export const Tasks = () => {
                                 key={p}
                                 onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                                 className={cn(
-                                    "px-4 py-2.5 font-bold text-micro uppercase tracking-wider transition-all whitespace-nowrap rounded-2xl border shadow-sm",
+                                    "px-4 py-2.5 font-bold text-micro uppercase tracking-wider transition-all whitespace-nowrap rounded-card border shadow-sm",
                                     filterPriority === p
-                                        ? "bg-primary border-primary text-on-primary shadow-lg"
-                                        : "bg-white dark:bg-card border-border dark:border-border text-dim dark:text-muted hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary"
+                                        ? "bg-primary border-primary text-on-primary shadow-sm"
+                                        : "bg-card border-border text-dim hover:border-primary hover:text-primary"
                                 )}
                             >
                                 {p === 'all' ? 'الكل' : p === 'high' ? 'عالية' : p === 'medium' ? 'متوسطة' : 'منخفضة'}
@@ -209,14 +209,14 @@ export const Tasks = () => {
                                 <div
                                     key={task.id}
                                     className={cn(
-                                        "bg-white dark:bg-card rounded-none p-5 shadow-sm transition-all hover:shadow-md relative overflow-hidden",
+                                        "bg-card rounded-card p-5 shadow-sm transition-all hover:shadow-md relative",
                                         isCompleted && "opacity-60",
                                         task.priority === 'high' ? "border-s-4 border-s-error" : task.priority === 'medium' ? "border-s-4 border-s-warning" : "border-s-4 border-s-primary"
                                     )}
                                 >
                                     {!isCompleted && (
                                         <div className={cn(
-                                            "absolute top-0 end-0 w-24 h-24 -translate-x-12 -translate-y-12 rounded-full opacity-5",
+                                            "absolute top-0 end-0 w-24 h-24 -translate-x-12 -translate-y-12 opacity-5",
                                             task.priority === 'high' ? "bg-error" : task.priority === 'medium' ? "bg-warning" : "bg-primary"
                                         )} />
                                     )}
@@ -237,7 +237,7 @@ export const Tasks = () => {
                                             </div>
                                         </div>
                                         <div className={cn(
-                                            "px-2.5 py-1 text-micro font-bold uppercase tracking-wider rounded-full border shrink-0",
+                                            "px-2.5 py-1 text-micro font-bold uppercase tracking-wider rounded-card border shrink-0",
                                             priorityBadge.colors
                                         )}>
                                             {priorityBadge.text}
@@ -254,7 +254,7 @@ export const Tasks = () => {
                                                 <button
                                                     onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
                                                     className={cn(
-                                                        "inline-flex items-center gap-1.5 px-3 py-1.5 text-micro font-bold uppercase tracking-wider rounded-2xl border transition-all shadow-sm",
+                                                        "inline-flex items-center gap-1.5 px-3 py-1.5 text-micro font-bold uppercase tracking-wider rounded-card border transition-all shadow-sm",
                                                         task.status === 'pending'
                                                             ? "text-primary border-primary bg-primary-soft hover:bg-primary-soft"
                                                             : "text-success-dark dark:text-success border-success bg-success-soft hover:bg-success-soft"
@@ -284,11 +284,11 @@ export const Tasks = () => {
                             )
                         })
                     ) : (
-                        <div className="col-span-full py-14 text-center bg-gradient-to-br from-primary-soft via-primary-soft to-transparent dark:from-card dark:via-card dark:to-card border border-primary-soft rounded-2xl shadow-sm">
-                            <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <div className="col-span-full py-14 text-center bg-card border border-border rounded-card shadow-sm">
+                            <div className="w-16 h-16 bg-primary rounded-card flex items-center justify-center mx-auto mb-4 shadow-soft">
                                 <ClipboardList size={24} className="text-on-primary" />
                             </div>
-                            <h2 className="text-base font-black text-main dark:text-inverse mb-1">قائمة المهام</h2>
+                            <h2 className="text-base font-black text-main mb-1">قائمة المهام</h2>
                             <p className="text-micro font-bold text-primary uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
                         </div>
                     )}
@@ -296,11 +296,11 @@ export const Tasks = () => {
 
                 {/* Add Modal */}
                 {showAddForm && (
-                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-xl bg-black/40 animate-in fade-in duration-300">
-                        <div className="bg-white dark:bg-card rounded-2xl w-full max-w-lg shadow-xl overflow-hidden border border-border">
+                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40 animate-in fade-in duration-300">
+                        <div className="bg-card rounded-card w-full max-w-lg shadow-soft overflow-hidden border border-border">
                             <div className="p-5 border-b border-border flex justify-between items-center">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-9 h-9 bg-primary rounded-2xl flex items-center justify-center shadow-sm">
+                                    <div className="w-9 h-9 bg-primary rounded-card flex items-center justify-center shadow-sm">
                                         <Plus size={16} className="text-on-primary" />
                                     </div>
                                     <div>
@@ -308,7 +308,7 @@ export const Tasks = () => {
                                         <p className="text-micro font-bold text-muted uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
                                     </div>
                                 </div>
-                                <button onClick={() => setShowAddForm(false)} className="p-3 bg-error rounded-xl text-on-error hover:bg-error-hover transition-colors">
+                                <button onClick={() => setShowAddForm(false)}                                     className="p-3 bg-error rounded-card text-on-error hover:bg-error-hover transition-colors">
                                     <X size={22} />
                                 </button>
                             </div>
@@ -334,7 +334,7 @@ export const Tasks = () => {
                                             <div className="relative">
                                                 <ChevronDown size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                                 <select
-                                                    className="appearance-none w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 ps-8 pe-4 text-xs font-bold text-main dark:text-inverse cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
+                                                    className="appearance-none w-full bg-background border border-border rounded-card py-2.5 ps-8 pe-4 text-xs font-bold text-main cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
                                                     value={newTask.priority}
                                                     onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                                 >
@@ -348,7 +348,7 @@ export const Tasks = () => {
                                             <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">تاريخ التسليم</label>
                                             <input
                                                 type="date"
-                                                className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:ring-2 focus:ring-focus"
+                                                className="w-full bg-background border border-border rounded-card py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus"
                                                 value={newTask.dueDate}
                                                 onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
                                             />
@@ -360,14 +360,14 @@ export const Tasks = () => {
                                             <ShieldCheck size={10} className="text-primary" /> وصف المهمة
                                         </label>
                                         <textarea
-                                            className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main dark:text-inverse h-24 resize-none focus:outline-none focus:ring-2 focus:ring-focus"
+                                            className="w-full bg-background border border-border rounded-card py-2.5 px-4 text-xs font-bold text-main h-24 resize-none focus:outline-none focus:ring-2 focus:ring-focus"
                                             value={newTask.description}
                                             onChange={e => setNewTask({...newTask, description: e.target.value})}
                                         ></textarea>
                                     </div>
                                 </div>
 
-                                <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-on-primary py-3 font-bold text-xs uppercase tracking-wider transition-all rounded-2xl shadow-lg active:scale-[0.98]">
+                                <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-on-primary py-3 font-bold text-xs uppercase tracking-wider transition-all rounded-card shadow-sm active:scale-[0.98]">
                                     إنشاء مهمة جديدة
                                 </button>
                             </form>

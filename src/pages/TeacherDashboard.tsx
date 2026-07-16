@@ -44,7 +44,7 @@ export const TeacherDashboard = () => {
     ];
 
     if (!currentUser || currentUser.role !== 'teacher') {
-        return <div className="min-h-full bg-gradient-to-br from-surface via-card to-success-soft font-sans" />;
+        return <div className="min-h-full bg-surface font-sans" />;
     }
 
     if (loading) {
@@ -57,10 +57,8 @@ export const TeacherDashboard = () => {
     return (
         <>
             {/* ─── Desktop version ─── */}
-            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-surface via-card to-success-soft font-sans" dir="rtl">
-                <div className="absolute top-0 start-1/4 w-96 h-96 bg-success opacity-10 dark:opacity-5 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-primary-light opacity-40 dark:opacity-20 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 max-w-page mx-auto px-4 space-y-6">
+            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-surface font-sans" dir="rtl">
+                <div className="max-w-page mx-auto px-4 space-y-6">
                     <DashboardHeader isTeacher={true} currentUser={currentUser} />
 
                     {nextSession && (
@@ -135,12 +133,11 @@ export const TeacherDashboard = () => {
             {/* ─── Mobile version (app-style with tabs) ─── */}
             <div className="block md:hidden min-h-full pb-28 relative bg-surface font-sans" dir="rtl">
                 {/* Sticky app bar */}
-                <div className="sticky top-0 z-30 bg-gradient-to-br from-primary via-primary-hover to-primary-active shadow-lg">
-                    <div className="absolute inset-0 bg-primary-light opacity-30 rounded-full blur-[60px] pointer-events-none" />
-                    <div className="relative z-10 px-4 pt-12 pb-2">
+                <div className="sticky top-0 z-30 bg-primary shadow-sm">
+                    <div className="px-4 pt-12 pb-2">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2.5">
-                                <div className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-card flex items-center justify-center">
+                                <div className="w-9 h-9 bg-primary-soft rounded-card flex items-center justify-center">
                                     <User size={18} className="text-on-primary" />
                                 </div>
                                 <div>
@@ -151,7 +148,7 @@ export const TeacherDashboard = () => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-card flex items-center justify-center relative">
+                                <div className="w-8 h-8 bg-primary-soft rounded-card flex items-center justify-center relative">
                                     <Bell size={15} className="text-on-primary opacity-80" />
                                     <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border border-primary" />
                                 </div>
@@ -159,21 +156,21 @@ export const TeacherDashboard = () => {
                         </div>
                         {/* Stats pills */}
                         <div className="flex items-center gap-2 mt-2.5">
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-card py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                            <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
                                 <Clock size={11} className="text-on-primary opacity-60 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-on-primary font-black text-sm">{stats.todaySessions || 0}</span>
                                     <span className="text-on-primary opacity-50 text-micro font-medium">حصص</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-card py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                            <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
                                 <Users size={11} className="text-on-primary opacity-60 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-on-primary font-black text-sm">{stats.studentsCount || 0}</span>
                                     <span className="text-on-primary opacity-50 text-micro font-medium">طلاب</span>
                                 </div>
                             </div>
-                            <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-card py-1.5 px-2.5 flex items-center gap-2 border border-white/10">
+                            <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
                                 <Award size={11} className="text-on-primary opacity-60 shrink-0" />
                                 <div className="flex items-baseline gap-1">
                                     <span className="text-on-primary font-black text-sm">{(stats.attendanceRate || 0)}%</span>
@@ -183,8 +180,8 @@ export const TeacherDashboard = () => {
                         </div>
                     </div>
                     {/* Tab bar */}
-                    <div className="relative z-10 px-4 pb-0.5">
-                        <div className="flex gap-1 bg-white/10 backdrop-blur-sm rounded-card p-1">
+                    <div className="px-4 pb-0.5">
+                        <div className="flex gap-1 bg-primary-soft rounded-card p-1">
                             {tabs.map(tab => (
                                 <button key={tab.id} id={`tab-${tab.id}`} onClick={() => setActiveTab(tab.id)}
                                     role="tab"

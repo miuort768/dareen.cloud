@@ -204,14 +204,12 @@ export const ParentDashboard = () => {
     return (
         <>
             {/* ─── Desktop version ─── */}
-            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-background via-card to-warning-soft dark:from-bg-surface dark:via-bg-surface dark:to-warning-soft/20 font-sans" dir="rtl">
-                <div className="absolute top-0 start-1/4 w-96 h-96 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 end-1/4 w-80 h-80 bg-warning-soft opacity-60 dark:opacity-10 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
+            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-surface font-sans" dir="rtl">
+                <div className="max-w-page mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 
-                <div className="relative bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg flex items-center justify-between">
+                <div className="bg-card border border-border rounded-card p-4 md:p-5 shadow-soft flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-lg">
+                        <div className="w-12 h-12 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft">
                             <User size={22} />
                         </div>
                         <div>
@@ -223,17 +221,15 @@ export const ParentDashboard = () => {
                     </div>
                     <button 
                         onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                        className="w-10 h-10 bg-card/70 text-dim hover:text-error flex items-center justify-center rounded-card border border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
+                        className="w-10 h-10 bg-card text-dim hover:text-error flex items-center justify-center rounded-card border border-border transition-all hover:bg-error-soft dark:hover:bg-error-soft"
                     >
                         <LogOut size={18} />
                     </button>
                 </div>
 
                 {/* ══════════ HERO SECTION (desktop) ══════════ */}
-                <div className="bg-gradient-to-br from-info-light to-info rounded-3xl p-6 md:p-8 relative overflow-hidden">
-                    <div className="absolute top-[-40px] left-[-40px] w-40 h-40 bg-white/20 rounded-full blur-3xl" />
-                    <div className="absolute bottom-[-30px] right-[30%] w-32 h-32 bg-white/15 rounded-full blur-2xl" />
-                    <div className="z-10 space-y-3">
+                <div className="bg-info-light rounded-card p-6 md:p-8">
+                    <div className="space-y-3">
                         <h2 className="text-3xl md:text-4xl font-black leading-tight text-info-dark">
                             تعلّم بلا حدود{' '}
                             <span className="inline-block border-s-4 border-current ps-1 animate-pulse">|</span>
@@ -245,14 +241,14 @@ export const ParentDashboard = () => {
                         <div className="flex gap-3 pt-3">
                             <button
                                 onClick={() => navigate('/chat')}
-                                className="flex items-center gap-2 bg-primary text-on-primary text-sm font-bold px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-transform"
+                                className="flex items-center gap-2 bg-primary text-on-primary text-sm font-bold px-5 py-2.5 rounded-card shadow-sm active:scale-95 transition-transform"
                             >
                                 <Play size={14} fill="currentColor" />
                                 ابدأ الآن
                             </button>
                             <button
                                 onClick={() => navigate('/courses')}
-                                className="flex items-center gap-2 bg-card text-primary text-sm font-bold px-5 py-2.5 rounded-full border border-primary active:scale-95 transition-transform"
+                                className="flex items-center gap-2 bg-card text-primary text-sm font-bold px-5 py-2.5 rounded-card border border-primary active:scale-95 transition-transform"
                             >
                                 استكشف الدورات
                                 <ChevronLeft size={14} />
@@ -302,9 +298,9 @@ export const ParentDashboard = () => {
                         {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string; studentId?: string; startedAt?: string }) => {
                             const child = children.find(c => c.id === session.studentId);
                             return (
-                                <div key={session.id} className="bg-gradient-to-r from-warning to-warning text-on-warning p-4 rounded-card shadow-lg flex items-center justify-between">
+                                <div key={session.id} className="bg-warning text-on-warning p-4 rounded-card shadow-soft flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-white/20 rounded-card flex items-center justify-center animate-pulse">
+                                        <div className="w-10 h-10 bg-warning-soft rounded-card flex items-center justify-center animate-pulse">
                                             <Clock size={20} />
                                         </div>
                                         <div>
@@ -328,7 +324,7 @@ export const ParentDashboard = () => {
                 </div>
 
                 {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
-                    <div className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 md:p-5 shadow-lg">
+                    <div className="bg-card border border-border rounded-card p-4 md:p-5 shadow-soft">
                         <div className="flex items-center gap-2 mb-3">
                             <MessageSquare className="text-warning" size={16} />
                             <h3 className="text-sm md:text-lg font-medium text-main">الواجبات والملاحظات</h3>
@@ -357,29 +353,27 @@ export const ParentDashboard = () => {
                     </div>
                 )}
 
-                <div className="bg-gradient-to-br from-warning to-warning rounded-card p-5 md:p-6 text-on-warning shadow-lg relative overflow-hidden">
-                    <div className="relative z-10">
-                        <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 className="text-sm md:text-xl font-medium mb-1">التقدم الأكاديمي العام</h3>
-                            </div>
-                            <div className="w-10 h-10 bg-white/20 flex items-center justify-center shrink-0 border border-white/10">
-                                <Award size={20} />
-                            </div>
+                <div className="bg-warning rounded-card p-5 md:p-6 text-on-warning shadow-soft">
+                    <div className="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 className="text-sm md:text-xl font-medium mb-1">التقدم الأكاديمي العام</h3>
                         </div>
-                        
-                        <div className="space-y-1">
-                            <div className="flex justify-between items-center text-micro font-medium opacity-90">
-                                <span>الهدف: 100</span>
-                                <span>{stats.academicProgress}%</span>
-                            </div>
-                            <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                                <motion.div 
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }}
-                                    className="h-full bg-white rounded-full shadow-[0_0_10px_var(--bg-shadow)]"
-                                />
-                            </div>
+                        <div className="w-10 h-10 bg-warning-soft rounded-card flex items-center justify-center shrink-0">
+                            <Award size={20} />
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                        <div className="flex justify-between items-center text-micro font-medium opacity-90">
+                            <span>الهدف: 100</span>
+                            <span>{stats.academicProgress}%</span>
+                        </div>
+                        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }}
+                                className="h-full bg-white rounded-full shadow-[0_0_10px_var(--bg-shadow)]"
+                            />
                         </div>
                     </div>
                 </div>
@@ -392,9 +386,9 @@ export const ParentDashboard = () => {
 
                     <div className="space-y-2">
                         {todayTasks.map((task, idx) => (
-                            <div key={idx} className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-center justify-between">
+                            <div key={idx} className="bg-card border border-border rounded-card p-3 shadow-soft flex items-center justify-between">
                                  <div className="flex items-center gap-2">
-                                    <div className="w-9 h-9 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-soft">
+                                    <div className="w-9 h-9 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft">
                                         <BookOpen size={16} />
                                     </div>
                                     <div>
@@ -408,7 +402,7 @@ export const ParentDashboard = () => {
                             </div>
                         ))}
                         {todayTasks.length === 0 && (
-                            <div className="py-6 text-center bg-card/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                            <div className="py-6 text-center bg-card border-2 border-dashed border-border rounded-card">
                                 <p className="text-muted font-medium text-micro">لا توجد مهام اليوم</p>
                             </div>
                         )}
@@ -423,8 +417,8 @@ export const ParentDashboard = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {allPointLogs.slice(0, 4).map((log, i) => (
-                            <div key={i} className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-3 shadow-lg flex items-start gap-3">
-                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-lg flex items-center justify-center text-on-warning shadow-soft shrink-0">
+                            <div key={i} className="bg-card border border-border rounded-card p-3 shadow-soft flex items-start gap-3">
+                                <div className="w-8 h-8 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                     <Star size={14} fill="currentColor" />
                                 </div>
                                 <div className="min-w-0 flex-1">
@@ -447,25 +441,24 @@ export const ParentDashboard = () => {
                             </div>
                         ))}
                         {allPointLogs.length === 0 && (
-                            <div className="col-span-full py-8 text-center bg-card/80 backdrop-blur-sm border-2 border-dashed border-border rounded-card">
+                            <div className="col-span-full py-8 text-center bg-card border-2 border-dashed border-border rounded-card">
                                 <p className="text-muted font-medium text-micro">لا توجد نشاطات حديثة للأبناء</p>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-warning to-warning rounded-card p-5 text-on-warning flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 end-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
-                    <div className="text-center md:text-start relative z-10">
+                <div className="bg-warning rounded-card p-5 text-on-warning flex flex-col md:flex-row items-center justify-between gap-6 shadow-soft">
+                    <div className="text-center md:text-start">
                         <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
                         <p className="text-xs font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
                     </div>
                     <a 
                         href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="bg-card text-warning-dark px-5 py-3 rounded-card font-bold text-micro flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center"
+                        className="bg-card text-warning-dark px-5 py-3 rounded-card font-bold text-micro flex items-center gap-2.5 transition-all active:scale-95 shadow-soft w-full md:w-auto justify-center"
                     >
-                        <div className="w-6 h-6 bg-gradient-to-br from-warning to-warning text-on-warning rounded-lg flex items-center justify-center">
+                        <div className="w-6 h-6 bg-warning-soft text-on-warning rounded-card flex items-center justify-center">
                             <MessageSquare size={12} />
                         </div>
                         تواصل معنا
@@ -481,15 +474,15 @@ export const ParentDashboard = () => {
                     <div className="px-4 pt-2 pb-1">
                         {/* Page title */}
                         <div className="flex items-center gap-2 mb-2 px-0.5">
-                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-card bg-primary flex items-center justify-center">
                                 <LayoutDashboard size={12} className="text-on-primary" />
                             </div>
                             <h2 className="text-dim text-xs font-bold tracking-wide">لوحة التحكم</h2>
                         </div>
                         {/* Profile row */}
-                        <div className="bg-card/90 rounded-3xl p-3.5 shadow-[0_2px_16px_var(--bg-shadow)] flex items-center justify-between">
+                        <div className="bg-card rounded-card p-3.5 shadow-soft border border-border flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg">
+                                <div className="w-12 h-12 rounded-card bg-primary flex items-center justify-center shadow-soft">
                                     <User size={18} className="text-on-primary" />
                                 </div>
                                 <div>
@@ -507,7 +500,7 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover dark:bg-primary-active/60 rounded-card flex items-center justify-center text-muted active:scale-90 transition-transform hover:bg-hover dark:hover:bg-primary-active" aria-label="تسجيل الخروج">
+                            <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }} className="w-10 h-10 bg-hover rounded-card flex items-center justify-center text-muted active:scale-90 transition-transform hover:bg-hover" aria-label="تسجيل الخروج">
                                 <LogOut size={16} />
                             </button>
                         </div>
@@ -549,7 +542,7 @@ export const ParentDashboard = () => {
                                 <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-card text-xs font-bold transition-all duration-200 ${
                                         activeTab === tab.id
-                                            ? 'bg-gradient-to-br from-primary to-primary-light text-on-primary shadow-md'
+                                            ? 'bg-primary text-on-primary shadow-sm'
                                             : 'text-dim hover:bg-hover dark:hover:bg-primary-active/50'
                                     }`}>
                                     <tab.icon size={14} />
@@ -565,10 +558,8 @@ export const ParentDashboard = () => {
                     {activeTab === 'home' && (
                         <>
                             {/* ══════════ HERO SECTION ══════════ */}
-                            <div className="bg-gradient-to-br from-info-light to-info rounded-3xl p-5 relative overflow-hidden">
-                                <div className="absolute top-[-30px] left-[-30px] w-32 h-32 bg-white/20 rounded-full blur-2xl" />
-                                <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 bg-white/15 rounded-full blur-xl" />
-                                <div className="z-10 space-y-2">
+                            <div className="bg-info-light rounded-card p-5">
+                                <div className="space-y-2">
                                     <h2 className="text-2xl font-black leading-tight text-info-dark">
                                         تعلّم بلا حدود{' '}
                                         <span className="inline-block border-s-4 border-current ps-0.5 animate-pulse">|</span>
@@ -580,14 +571,14 @@ export const ParentDashboard = () => {
                                     <div className="flex flex-row gap-2 pt-2">
                                         <button
                                             onClick={() => navigate('/chat')}
-                                            className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
+                                            className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-card shadow-sm active:scale-95 transition-transform"
                                         >
                                             <Play size={12} fill="currentColor" />
                                             ابدأ الآن
                                         </button>
                                         <button
                                             onClick={() => navigate('/courses')}
-                                            className="flex items-center gap-1.5 bg-card text-primary text-xs font-bold px-4 py-2 rounded-full border border-primary active:scale-95 transition-transform"
+                                            className="flex items-center gap-1.5 bg-card text-primary text-xs font-bold px-4 py-2 rounded-card border border-primary active:scale-95 transition-transform"
                                         >
                                             استكشف الدورات
                                             <ChevronLeft size={12} />
@@ -604,19 +595,19 @@ export const ParentDashboard = () => {
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                                     <button onClick={() => navigate('/parent-students')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-soft">
+                                        <div className="w-10 h-10 bg-primary rounded-card flex items-center justify-center text-on-primary shadow-soft">
                                             <Users size={18} />
                                         </div>
                                         <span className="text-main text-micro font-bold">ملفات الأبناء</span>
                                     </button>
                                     <button onClick={() => navigate('/forum')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-info to-info-light rounded-card flex items-center justify-center text-on-info shadow-soft">
+                                        <div className="w-10 h-10 bg-info rounded-card flex items-center justify-center text-on-info shadow-soft">
                                             <LayoutDashboard size={18} />
                                         </div>
                                         <span className="text-main text-micro font-bold">المنتدى</span>
                                     </button>
                                     <button onClick={() => navigate('/chat')} className="bg-card rounded-card shadow-md p-3 flex flex-col items-center gap-1.5 active:scale-[0.97] transition-transform">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-success to-success-light rounded-card flex items-center justify-center text-on-success shadow-soft">
+                                        <div className="w-10 h-10 bg-success rounded-card flex items-center justify-center text-on-success shadow-soft">
                                             <MessageSquare size={18} />
                                         </div>
                                         <span className="text-main text-micro font-bold">الدردشة</span>
@@ -658,9 +649,9 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                     {activeTimers.map((session: { id: string; studentName: string; teacherName: string; subject: string; studentId?: string; startedAt?: string }) => {
                                         const child = children.find(c => c.id === session.studentId);
                                         return (
-                                            <div key={session.id} className="bg-gradient-to-l from-primary to-primary-light text-on-primary p-3.5 rounded-card shadow-lg flex items-center justify-between active:scale-[0.99] transition-transform">
+                                            <div key={session.id} className="bg-primary text-on-primary p-3.5 rounded-card shadow-soft flex items-center justify-between active:scale-[0.99] transition-transform">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-9 h-9 bg-white/20 rounded-card flex items-center justify-center animate-pulse">
+                                                    <div className="w-9 h-9 bg-primary-soft rounded-card flex items-center justify-center animate-pulse">
                                                         <Clock size={18} />
                                                     </div>
                                                     <div>
@@ -722,21 +713,18 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                     <div className="w-1 h-4 bg-success rounded-full" />
                                     <h2 className="text-main text-sm font-black">التقدم الأكاديمي</h2>
                                 </div>
-                                <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
-                                    <div className="absolute top-0 end-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
-                                    <div className="relative z-10">
-                                        <div className="flex justify-between items-center mb-3">
-                                            <h3 className="text-xs font-black">التقدم الأكاديمي العام</h3>
-                                            <Award size={18} className="text-on-primary opacity-60" />
+                                <div className="bg-primary rounded-card p-4 text-on-primary shadow-soft">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <h3 className="text-xs font-black">التقدم الأكاديمي العام</h3>
+                                        <Award size={18} className="text-on-primary opacity-60" />
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <div className="flex justify-between text-micro text-on-primary/70">
+                                            <span>الهدف: 100</span>
+                                            <span>{stats.academicProgress}%</span>
                                         </div>
-                                        <div className="space-y-1.5">
-                                            <div className="flex justify-between text-micro text-on-primary/70">
-                                                <span>الهدف: 100</span>
-                                                <span>{stats.academicProgress}%</span>
-                                            </div>
-                                            <div className="w-full h-2 bg-white/15 rounded-full overflow-hidden">
-                                                <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_var(--bg-shadow)]" />
-                                            </div>
+                                        <div className="w-full h-2 bg-white/15 rounded-full overflow-hidden">
+                                            <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }} className="h-full bg-white rounded-full shadow-[0_0_8px_var(--bg-shadow)]" />
                                         </div>
                                     </div>
                                 </div>
@@ -755,7 +743,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                     {todayTasks.map((task, idx) => (
                                         <div key={idx} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-center justify-between active:scale-[0.99] transition-transform">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-light rounded-card flex items-center justify-center text-on-primary shadow-soft">
+                                                <div className="w-9 h-9 bg-primary rounded-card flex items-center justify-center text-on-primary shadow-soft">
                                                     <BookOpen size={16} />
                                                 </div>
                                                 <div>
@@ -789,7 +777,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                     <div className="space-y-2">
                                         {allPointLogs.slice(0, 4).map((log, i) => (
                                             <div key={i} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
-                                                <div className="w-8 h-8 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
+                                                <div className="w-8 h-8 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                                     <Star size={13} fill="currentColor" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
@@ -818,15 +806,14 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                     <div className="w-1 h-4 bg-error rounded-full" />
                                     <h2 className="text-main text-sm font-black">الدعم الفني</h2>
                                 </div>
-                                <div className="bg-gradient-to-br from-primary to-primary rounded-card p-4 text-on-primary shadow-lg relative overflow-hidden">
-                                    <div className="absolute top-0 end-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
-                                    <div className="relative z-10 flex items-center justify-between">
+                                <div className="bg-primary rounded-card p-4 text-on-primary shadow-soft">
+                                    <div className="flex items-center justify-between">
                                         <div>
                                             <h4 className="text-sm font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
                                             <p className="text-micro text-on-primary/70 font-medium">فريق الدعم متاح 24 ساعة</p>
                                         </div>
                                         <a href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`} target="_blank" rel="noopener noreferrer"
-                                            className="bg-card text-primary px-3.5 py-2.5 rounded-card font-bold text-micro flex items-center gap-2 active:scale-95 transition-transform shadow-lg shrink-0">
+                                            className="bg-card text-primary px-3.5 py-2.5 rounded-card font-bold text-micro flex items-center gap-2 active:scale-95 transition-transform shadow-soft shrink-0">
                                             <MessageSquare size={13} />
                                             تواصل
                                         </a>
@@ -841,7 +828,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
             </div>
 
             {/* ══════════════════ BOTTOM NAVIGATION ══════════════════ */}
-            <div className="block md:hidden fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
+            <div className="block md:hidden fixed bottom-0 end-0 start-0 z-50 bg-card border-t border-border pb-[env(safe-area-inset-bottom)] shadow-soft">
                 <div className="flex items-center justify-around h-[68px] px-2">
                     {[
                         { id: 'profile', label: 'حسابي', icon: User },
@@ -866,7 +853,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                 className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
                             >
                                 {isCenter ? (
-                                    <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary-light rounded-full flex items-center justify-center shadow-xl">
+                                    <div className="w-14 h-14 bg-primary rounded-card flex items-center justify-center shadow-soft">
                                         <Icon size={26} className="text-on-primary" />
                                     </div>
                                 ) : (
@@ -893,9 +880,9 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
 const NavButton = ({ label, icon: Icon, onClick }: { label: string; icon: React.ComponentType<{ size?: number }>; onClick?: () => void }) => (
     <button 
         onClick={onClick}
-        className="bg-card/80 backdrop-blur-sm border border-white/20 dark:border-border/30 rounded-card p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-card shadow-lg group"
+        className="bg-card border border-border rounded-card p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-card shadow-soft group"
     >
-        <div className="w-10 h-10 bg-gradient-to-br from-warning to-warning rounded-card flex items-center justify-center text-on-warning shadow-soft group-hover:scale-110 transition-transform">
+        <div className="w-10 h-10 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft group-hover:scale-110 transition-transform">
             <Icon size={18} />
         </div>
         <span className="text-micro font-bold text-dim">{label}</span>
