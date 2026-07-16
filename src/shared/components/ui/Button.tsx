@@ -28,7 +28,7 @@ const sizes = {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant = 'primary', size = 'md', isLoading, leftIcon, rightIcon, children, onClick, ...props },
+    { className, variant = 'primary', size = 'md', type = 'button', isLoading, leftIcon, rightIcon, children, onClick, ...props },
     ref
   ) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +41,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         onClick={handleClick}
         className={cn(
-          'inline-flex items-center justify-center gap-2 font-bold transition-all duration-normal rounded-xl focus:outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+          'inline-flex items-center justify-center gap-2 font-bold transition-all duration-normal rounded-xl focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
           'active:scale-[0.97] hover:scale-[1.02] hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none select-none',
           variants[variant], sizes[size], className
         )}
