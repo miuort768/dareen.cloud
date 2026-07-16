@@ -35,7 +35,7 @@ export const generateWhatsAppLink = ({
 };
 
 import type { Student, Enrollment } from '../../features/students/types';
-import type { LowBalanceStudent } from '../../types/dashboard';
+import type { LowBalanceStudent } from '../../features/dashboard/types';
 
 export const sendWhatsAppReminder = (arg1: Student | LowBalanceStudent, arg2?: Enrollment, adminPhoneOverride?: string) => {
     if (arg2) {

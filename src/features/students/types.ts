@@ -1,3 +1,5 @@
+import type { ScheduleSlot } from '../../types';
+
 export interface Student {
     id: string;
     name: string;
@@ -28,12 +30,6 @@ export interface Enrollment {
     isFrozen?: boolean;
     frozenReason?: string;
     nextSessionNotes?: string;
-}
-
-export interface ScheduleSlot {
-    day: string;
-    hour: string;
-    period: string;
 }
 
 export interface StudentInvoice {

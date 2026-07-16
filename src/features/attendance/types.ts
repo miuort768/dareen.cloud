@@ -1,11 +1,6 @@
+import type { ScheduleSlot } from '../../types';
 import type { Student as GlobalStudent } from '../../types/dashboard';
 export type { User as GlobalUser } from '../../types/auth';
-
-export interface ScheduleSlot {
-    day: string;
-    hour: string;
-    period: string;
-}
 
 export interface Session {
     id: string;

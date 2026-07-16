@@ -1,12 +1,7 @@
 import { AlertCircle, Clock, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { ComponentType } from 'react';
-
-interface LowBalanceStudent {
-    id: string;
-    studentName: string;
-    remainingSessions: number;
-}
+import type { LowBalanceStudent } from '../types';
 
 interface FocusStudent {
     id: string;
