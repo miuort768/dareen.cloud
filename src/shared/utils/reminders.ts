@@ -1,13 +1,3 @@
-export interface ReminderParams {
-    studentName: string;
-    subject: string;
-    teacherName: string;
-    remainingSessions: number;
-    parentPhone: string;
-    isAdmin: boolean;
-    adminPhone: string;
-}
-
 export const generateWhatsAppLink = ({
     studentName,
     subject,
@@ -16,7 +6,15 @@ export const generateWhatsAppLink = ({
     parentPhone,
     isAdmin,
     adminPhone
-}: ReminderParams) => {
+}: {
+    studentName: string;
+    subject: string;
+    teacherName: string;
+    remainingSessions: number;
+    parentPhone: string;
+    isAdmin: boolean;
+    adminPhone: string;
+}) => {
     let message = '';
     let targetPhone = '';
 

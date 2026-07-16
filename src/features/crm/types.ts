@@ -1,7 +1,6 @@
 
+export type LeadPriority = 'low' | 'medium' | 'high';
 export type LeadStatus = 'new' | 'contacted' | 'interested' | 'trial' | 'converted' | 'lost';
-export type LeadPriority = 'high' | 'medium' | 'low';
-
 export interface Lead {
     id: string;
     studentName: string;

@@ -75,8 +75,6 @@ export interface Session {
     status: 'scheduled' | 'completed' | 'cancelled';
 }
 
-export type Invoice = TeacherInvoice;
-
 export interface TeacherInvoice {
     id: string;
     teacher: string;
@@ -99,16 +97,6 @@ export interface StudentInvoice {
     status: string;
     paymentMethod: string;
     notes: string;
-}
-
-export type { User } from './auth';
-
-export interface PaginatedResponse<T> {
-    data: T[];
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
 }
 
 export interface Transaction {

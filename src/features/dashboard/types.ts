@@ -56,11 +56,4 @@ export interface DashboardTask {
     dueDate: string;
 }
 
-export interface DashboardData {
-    stats: DashboardStats;
-    monthlyData: DashboardMonthData[];
-    lowBalanceStudents: LowBalanceStudent[];
-    tasks: DashboardTask[];
-    topStudents: Record<string, unknown>[];
-    focusStudents?: Record<string, unknown>[];
-}
+

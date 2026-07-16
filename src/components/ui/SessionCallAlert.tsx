@@ -25,7 +25,7 @@ export const SessionCallAlert = () => {
 
     useEffect(() => {
         if (!notificationAudioRef.current) {
-            notificationAudioRef.current = new Audio('/notification.mp3');
+            notificationAudioRef.current = new Audio('/notification.ogg');
         }
         const audio = notificationAudioRef.current;
 

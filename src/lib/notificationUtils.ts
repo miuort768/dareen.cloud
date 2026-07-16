@@ -55,18 +55,4 @@ export const sendNativeNotification = async (title: string, options?: Notificati
     }
 };
 
-export const playNotificationSound = () => {
-    try {
-        const audio = new Audio('/pikachu.mp3');
-        audio.volume = 1.0;
 
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.warn('Audio autoplay prevented by browser:', error);
-            });
-        }
-    } catch (e) {
-        console.error('Error playing sound:', e);
-    }
-};

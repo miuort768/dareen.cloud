@@ -6,13 +6,6 @@ export interface Rank {
     badgeColor: string;
 }
 
-export interface RankInfo {
-    name: string;
-    minPoints: number;
-    badgeColor: string;
-    icon: string;
-}
-
 export const STUDENT_RANKS: Rank[] = [
     { name: 'شاطر ومجتهد', minPoints: 0, color: 'var(--bg-success)', icon: '⭐', badgeColor: 'bg-success' },
     { name: 'العبقري / العبقرية', minPoints: 1000, color: 'var(--bg-info)', icon: '💡', badgeColor: 'bg-info' },

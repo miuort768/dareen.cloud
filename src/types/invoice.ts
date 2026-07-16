@@ -1,13 +1,13 @@
 // Invoice Types and Constants
 
+export type InvoiceStatus = 'مدفوعة' | 'قيد المعالجة' | 'متأخرة' | 'غير مدفوعة';
+
 export const INVOICE_STATUS = {
     PAID: 'مدفوعة',
     PROCESSING: 'قيد المعالجة',
     OVERDUE: 'متأخرة',
     UNPAID: 'غير مدفوعة'
 } as const;
-
-export type InvoiceStatus = typeof INVOICE_STATUS[keyof typeof INVOICE_STATUS];
 
 export interface Teacher {
     id: string;
@@ -45,11 +45,4 @@ export interface TeacherInvoiceFormData {
     currency: string;
 }
 
-export interface InvoiceStats {
-    totalTeachers: number;
-    totalAmount: number;
-    paidAmount: number;
-    unpaidAmount: number;
-    personalExpenses: number;
-    unpaidPercentage: number;
-}
+

@@ -27,5 +27,4 @@ export interface ChatUser {
     avatar?: string;
 }
 
-export type ChatView = 'chat' | 'management';
 export type DeleteType = 'conversation' | 'profile' | 'all_conversations';

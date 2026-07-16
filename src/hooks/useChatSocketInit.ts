@@ -47,7 +47,7 @@ export const useChatSocketInit = () => {
 
         let audio: HTMLAudioElement | null = null;
         try {
-            audio = new Audio('/notification.mp3');
+            audio = new Audio('/notification.ogg');
         } catch (e) {
             console.error('Audio initialization failed', e);
         }

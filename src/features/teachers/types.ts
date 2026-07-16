@@ -11,26 +11,6 @@ export interface Teacher {
     password?: string;
 }
 
-export interface Enrollment {
-    id?: string;
-    teacher: string;
-    teacherId?: string;
-    subject: string;
-    curr: string;
-    sessionsTotal: number;
-    sessionsUsed: number;
-    schedule: ScheduleSlot[];
-    isFrozen?: boolean;
-    frozenReason?: string;
-    nextSessionNotes?: string;
-}
-
-export interface ScheduleSlot {
-    day: string;
-    hour: string;
-    period: string;
-}
-
 export interface Session {
     id: string;
     studentId: string;

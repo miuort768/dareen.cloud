@@ -22,10 +22,7 @@ export interface Post {
     comments?: Comment[];
 }
 
-export interface CommentNode {
-    comment: Comment;
-    replies: CommentNode[];
-}
+type CommentNode = { comment: Comment; replies: CommentNode[] };
 
 export const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
     if (!comments) return [];

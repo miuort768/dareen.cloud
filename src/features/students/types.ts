@@ -46,14 +46,4 @@ export interface StudentInvoice {
     status: 'pending' | 'paid' | 'cancelled';
 }
 
-export interface Session {
-    id: string;
-    studentId: string;
-    studentName: string;
-    teacherName: string;
-    subject: string;
-    date: string;
-    time: string;
-    status: 'completed' | 'cancelled' | 'scheduled' | 'pending';
-    price: number;
-}
+
