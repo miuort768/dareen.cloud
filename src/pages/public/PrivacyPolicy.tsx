@@ -12,7 +12,7 @@ export const PrivacyPolicy = () => {
         const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers);
         const found = entries.find((e) => e.label === label);
         return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
-      } catch { return adminPhone.replace(/\D/g, ''); }
+      } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
     };
     return (
         <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main">

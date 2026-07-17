@@ -16,7 +16,7 @@ export const FloatingActions = () => {
         const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers);
         const found = entries.find((e) => e.label === label);
         return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
-      } catch { return adminPhone.replace(/\D/g, ''); }
+      } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
     };
 
     const whatsappNumber = getNumber('تواصل معانا');

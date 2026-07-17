@@ -79,7 +79,8 @@ export const AdminBlog = () => {
                 watchButtonText: post.watchButtonText || post.watch_button_text,
             })));
             setLoading(false);
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('حدث خطأ في تحميل المقالات', 'error');
             setLoading(false);
         }
@@ -142,7 +143,8 @@ export const AdminBlog = () => {
             await api.delete(`/blog/${id}`);
             showNotification('تم حذف المقال بنجاح', 'success');
             setPosts(posts.filter(p => p.id !== id));
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('حدث خطأ في الحذف', 'error');
         }
     };
@@ -244,7 +246,7 @@ export const AdminBlog = () => {
                                 await saveTelegram(libraryTelegram);
                                 showNotification('تم حفظ إعدادات المكتبة', 'success');
                                 setShowSettings(false);
-                            } catch { showNotification('حدث خطأ في الحفظ', 'error'); }
+                            } catch (e) { console.error(e); showNotification('حدث خطأ في الحفظ', 'error'); }
                             finally { setSavingSettings(false); }
                         }}
                             disabled={savingSettings}

@@ -65,7 +65,7 @@ export const BlogPost = () => {
                 try {
                     const related = await api.get<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>(`/blog/${slug}/related`);
                     setRelatedPosts(related);
-                } catch { /* ignore related errors */ }
+                } catch (e) { console.warn(e); }
             } catch (err) {
                 console.error('Failed to fetch blog post:', err);
                 const staticPost = staticPosts.find(p => p.slug === slug);

@@ -113,7 +113,8 @@ export const useFinance = () => {
             try {
                 const d = new Date(dateStr);
                 return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-            } catch {
+            } catch (e) {
+                console.warn(e);
                 return dateStr.startsWith(currentMonthStr);
             }
         };

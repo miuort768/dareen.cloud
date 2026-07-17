@@ -173,7 +173,8 @@ export const Students = () => {
                 read: false
             });
             showNotification('تم إرسال التنبيه للطالب بنجاح', 'success');
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل إرسال التنبيه', 'error');
         } finally {
             setNotifyingStudent(null);
@@ -311,7 +312,8 @@ export const Students = () => {
                                         }
                                         queryClient.invalidateQueries({ queryKey: ['students'] });
                                         showNotification('تم استيراد الطلاب بنجاح', 'success');
-                                    } catch {
+                                    } catch (e) {
+                                        console.error(e);
                                         showNotification('فشل استيراد الملف', 'error');
                                     }
                                     e.target.value = '';
@@ -371,7 +373,8 @@ export const Students = () => {
                             await api.delete(`/students/${deletingId}`);
                             queryClient.invalidateQueries({ queryKey: ['students'] });
                             showNotification('تم حذف الطالب بنجاح', 'success');
-                        } catch {
+                        } catch (e) {
+                            console.error(e);
                             showNotification('فشل حذف الطالب', 'error');
                         }
                         setDeletingId(null);

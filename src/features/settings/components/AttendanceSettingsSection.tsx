@@ -22,7 +22,7 @@ export const AttendanceSettingsSection = ({
             setLateThreshold(data.system.late_threshold_minutes || '15');
             setAbsenceAlertThreshold(data.system.absence_alert_threshold || '3');
             setAutoRemind(data.system.auto_remind !== 'false');
-        }).catch(() => {});
+        }).catch((e) => console.warn(e));
     }, []);
 
     const handleSave = async () => {
@@ -36,7 +36,7 @@ export const AttendanceSettingsSection = ({
                 { key: 'backdate_lock_enabled', value: String(localBackdateLock) },
             ]);
             showNotify('تم حفظ إعدادات الحضور');
-        } catch { alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

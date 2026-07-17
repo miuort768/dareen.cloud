@@ -18,7 +18,8 @@ const getSavedUser = (): User | null => {
     try {
         const saved = localStorage.getItem('app_current_user');
         return saved ? JSON.parse(saved) : null;
-    } catch {
+    } catch (e) {
+        console.warn(e);
         localStorage.removeItem('app_current_user');
         return null;
     }
@@ -27,7 +28,8 @@ const getSavedUser = (): User | null => {
 const getSavedIsAuthenticated = (): boolean => {
     try {
         return localStorage.getItem('app_isAuthenticated') === 'true';
-    } catch {
+    } catch (e) {
+        console.warn(e);
         return false;
     }
 };
@@ -36,7 +38,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     currentUser: getSavedUser(),
     isAuthenticated: getSavedIsAuthenticated(),
     isLoading: true,
-    token: (() => { try { return localStorage.getItem('auth_token'); } catch { return null; } })(),
+    token: (() => { try { return localStorage.getItem('auth_token'); } catch (e) { console.warn(e); return null; } })(),
 
     login: async (username: string, password?: string) => {
         try {

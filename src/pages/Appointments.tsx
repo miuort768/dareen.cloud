@@ -101,7 +101,8 @@ export const Appointments = () => {
             try {
                 const sessions = await api.get<string[]>('/appointments/completed-sessions');
                 if (mountedRef.current) setCompletedSessionIds(sessions || []);
-            } catch {
+            } catch (e) {
+                console.warn(e);
                 // silent — will retry next cycle
             }
         }, 15000);

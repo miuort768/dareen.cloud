@@ -12,7 +12,7 @@ export const triggerHaptic = (intensity: 'light' | 'medium' | 'heavy' = 'light')
             const duration = intensity === 'light' ? 10 : intensity === 'medium' ? 30 : 50;
             window.navigator.vibrate(duration);
         }
-    } catch {
-        // silently ignore
+    } catch (e) {
+        console.error('Silent catch:', e);
     }
 };

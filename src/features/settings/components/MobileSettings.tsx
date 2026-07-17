@@ -15,7 +15,7 @@ interface MobileSettingsProps {
 
 export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify }: MobileSettingsProps) => {
     const [entries, setEntries] = useState<WhatsAppEntry[]>(() => {
-        try { return JSON.parse(whatsappNumbers); } catch { return []; }
+        try { return JSON.parse(whatsappNumbers); } catch (e) { console.warn(e); return []; }
     });
     const [saving, setSaving] = useState(false);
 
@@ -43,7 +43,8 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
         try {
             await setWhatsappNumbers(JSON.stringify(valid));
             showNotify('تم حفظ أرقام واتساب');
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotify('فشل الحفظ');
         } finally {
             setSaving(false);

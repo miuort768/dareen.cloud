@@ -9,7 +9,8 @@ export const MasarSection = () => {
             const entries = JSON.parse(whatsappNumbers);
             const found = entries.find((e: { label: string; phone: string }) => e.label === 'تواصل معانا');
             return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
-        } catch {
+        } catch (e) {
+            console.warn(e);
             return adminPhone.replace(/\D/g, '');
         }
     })();

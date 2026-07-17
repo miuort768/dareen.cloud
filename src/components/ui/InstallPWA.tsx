@@ -88,7 +88,8 @@ export const InstallPWA = () => {
                     localStorage.setItem('pwa_dismissed_permanent', 'true');
                     (window as unknown as { deferredPrompt: null }).deferredPrompt = null;
                 }
-            } catch {
+            } catch (e) {
+                console.warn(e);
                 setShowIOSGuide(true);
             } finally {
                 deferredPromptRef.current = null;

@@ -34,7 +34,8 @@ export const LiveClasses = () => {
       const data = await api.get<LiveSession[]>('/live/active');
       if (Array.isArray(data)) setSessions(data);
       setError(null);
-    } catch {
+    } catch (e) {
+      console.error(e);
       setError('تعذر تحميل بيانات البث المباشر');
     } finally {
       setLoading(false);
@@ -82,7 +83,8 @@ export const LiveClasses = () => {
     try {
       await api.post(`/live/end/${sessionId}`, {});
       await fetchSessions();
-    } catch {
+    } catch (e) {
+      console.error(e);
       setError('فشل إنهاء الحصة');
     }
   };

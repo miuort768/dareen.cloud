@@ -417,7 +417,7 @@ export const MobileSchedule = () => {
                                                     targetStudentId: selectedEvent.studentId,
                                                 });
                                                 if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
-                                            } catch { setShowDetails(false); }
+                                            } catch (e) { console.error(e); setShowDetails(false); }
                                         }}
                                         className="flex-1 py-3 rounded-card bg-primary text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-primary/30"
                                     >

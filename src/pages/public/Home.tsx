@@ -60,7 +60,8 @@ export const Home = () => {
       const entries = JSON.parse(whatsappNumbers);
       const found = entries.find((e: { label: string; phone: string }) => e.label === label);
       return found ? found.phone.replace(/\D/g, '') : defaultNumber;
-    } catch {
+    } catch (e) {
+      console.warn(e);
       return defaultNumber;
     }
   };
@@ -80,7 +81,7 @@ export const Home = () => {
     if (heroBanners) {
       bannersArray = JSON.parse(heroBanners);
     }
-  } catch { /* ignore */ }
+  } catch (e) { console.warn(e); }
 
   const reviews = [
     { name: "أم راشد", role: "ولية أمر", content: "مشكورين وايد على جهودكم، عيالي وايد تحسن مستواهم من عقب ما سجلوا معاكم. صراحة فرق كبير بالأداء المدرسي.", avatar: "/images/avatars/mom1.webp" },

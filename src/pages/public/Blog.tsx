@@ -132,7 +132,7 @@ export const Blog = () => {
         setPosts(res.posts.length > 0 ? res.posts : staticPosts);
         setTotalPages(res.totalPages || 1);
         setPage(1);
-      } catch { setPosts(staticPosts); }
+      } catch (e) { console.warn(e); setPosts(staticPosts); }
       finally { setLoading(false); }
     };
     fetchPosts();
@@ -147,16 +147,16 @@ export const Blog = () => {
       setPosts(prev => [...prev, ...res.posts]);
       setPage(nextPage);
       setTotalPages(res.totalPages);
-    } catch {} finally { setLoadingMore(false); }
+    } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 
   const [libraryTheme, setLibraryTheme] = useState(() => {
-    try { return localStorage.getItem('library-theme') || 'light'; } catch { return 'light'; }
+    try { return localStorage.getItem('library-theme') || 'light'; } catch (e) { console.warn(e); return 'light'; }
   });
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(libraryTheme);
-    try { localStorage.setItem('library-theme', libraryTheme); } catch {}
+    try { localStorage.setItem('library-theme', libraryTheme); } catch (e) { console.warn(e); }
   }, [libraryTheme]);
 
   const breadcrumbItems = [

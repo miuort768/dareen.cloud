@@ -103,7 +103,7 @@ export const Settings = () => {
     const [academyEmail, setAcademyEmail] = useState('');
 
     const [localHeroBanners, setLocalHeroBanners] = useState<string[]>(() => {
-        try { return JSON.parse(heroBanners); } catch { return ["", "", "", ""]; }
+        try { return JSON.parse(heroBanners); } catch (e) { console.warn(e); return ["", "", "", ""]; }
     });
 
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);

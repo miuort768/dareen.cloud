@@ -29,7 +29,8 @@ export const Forum = () => {
             setLoading(true);
             const data = await api.get<Post[]>('/forum');
             setPosts(data);
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل تحميل المنشورات', 'error');
         } finally {
             setLoading(false);
@@ -56,7 +57,8 @@ export const Forum = () => {
             showNotification(data.message || 'تم إنشاء المنشور', 'success');
             setNewPostContent('');
             fetchPosts();
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل النشر', 'error');
         }
     };
@@ -65,7 +67,8 @@ export const Forum = () => {
         try {
             const data = await api.post<{ upvotes: number; downvotes: number }>(`/forum/${postId}/vote`, { type });
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل التصويت على هذا المنشور', 'error');
         }
     };
@@ -75,7 +78,8 @@ export const Forum = () => {
             await api.patch(`/forum/${postId}/status`, { status });
             showNotification('تم تحديث حالة المنشور', 'success');
             fetchPosts();
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل تحديث الحالة', 'error');
         }
     };
@@ -86,7 +90,8 @@ export const Forum = () => {
             await api.delete(`/forum/${postId}`);
             showNotification('تم حذف المنشور', 'success');
             fetchPosts();
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل الحذف', 'error');
         }
     };
@@ -96,7 +101,8 @@ export const Forum = () => {
             try {
                 const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
                 setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-            } catch {
+            } catch (e) {
+            console.error(e);
             showNotification('فشل تحميل المنشورات', 'error');
             }
         }
@@ -113,7 +119,8 @@ export const Forum = () => {
             showNotification('تم إضافة التعليق', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل إضافة التعليق', 'error');
         }
     };
@@ -125,7 +132,8 @@ export const Forum = () => {
             showNotification('تم حذف التعليق', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل الحذف', 'error');
         }
     };
@@ -134,7 +142,8 @@ export const Forum = () => {
         try {
             await api.post(`/forum/${postId}/report`);
             showNotification('تم إرسال البلاغ للمراجعة', 'info');
-        } catch {
+        } catch (e) {
+            console.error(e);
             showNotification('فشل الإبلاغ', 'error');
         }
     };

@@ -131,7 +131,7 @@ export const ParentDashboard = () => {
                     clearInterval(timerTickRef.current);
                     timerTickRef.current = null;
                 }
-            } catch { console.warn('فشل التحقق من الجلسات النشطة'); }
+            } catch (e) { console.warn('فشل التحقق من الجلسات النشطة', e); }
         };
         poll();
         const interval = setInterval(poll, 5000);
@@ -432,7 +432,8 @@ export const ParentDashboard = () => {
                                             try {
                                                 const d = new Date(log.timestamp);
                                                 return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar });
-                                            } catch {
+                                            } catch (e) {
+                                                console.warn(e);
                                                 return '';
                                             }
                                         })() : ''}
@@ -787,7 +788,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                                         <Clock size={7} />
                                                         {log.timestamp ? (() => {
                                                             try { const d = new Date(log.timestamp); return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar }); }
-                                                            catch { return ''; }
+                                                            catch (e) { console.warn(e); return ''; }
                                                         })() : ''}
                                                     </p>
                                                 </div>

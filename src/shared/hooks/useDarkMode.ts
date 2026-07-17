@@ -4,7 +4,8 @@ export function useDarkMode() {
     const [theme, setTheme] = useState(() => {
         try {
             return localStorage.getItem('theme') || 'light';
-        } catch {
+        } catch (e) {
+            console.warn(e);
             return 'light';
         }
     });
@@ -15,7 +16,7 @@ export function useDarkMode() {
         root.classList.add(theme);
         try {
             localStorage.setItem('theme', theme);
-        } catch { /* ignore */ }
+        } catch (e) { console.warn(e); }
     }, [theme]);
 
     return [theme, setTheme] as const;

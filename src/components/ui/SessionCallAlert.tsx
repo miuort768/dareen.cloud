@@ -36,7 +36,7 @@ export const SessionCallAlert = () => {
             setCallData(data);
             setShow(true);
             audio.currentTime = 0;
-            audio.play().catch(() => {});
+            audio.play().catch((e) => console.warn(e));
         };
 
         const handleEnded = () => {

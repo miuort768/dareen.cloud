@@ -18,7 +18,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             setShowLogo(data.system.report_show_logo !== 'false');
             setDefaultFormat((data.system.report_default_format as 'pdf' | 'excel') || 'pdf');
             setPageSize(data.system.report_page_size || 'A4');
-        }).catch(() => {});
+        }).catch((e) => console.warn(e));
     }, []);
 
     const handleSave = async () => {
@@ -32,7 +32,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 { key: 'report_page_size', value: pageSize },
             ]);
             showNotify('تم حفظ إعدادات التقارير');
-        } catch { alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

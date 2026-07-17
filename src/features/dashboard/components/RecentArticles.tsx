@@ -21,7 +21,7 @@ export const RecentArticles = () => {
     useEffect(() => {
         api.get<Article[]>('/blog?all=true')
             .then(data => setArticles(data.slice(0, 5)))
-            .catch(() => {})
+            .catch((e) => console.warn(e))
             .finally(() => setLoading(false));
     }, []);
 

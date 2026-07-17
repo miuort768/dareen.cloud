@@ -402,7 +402,7 @@ export const Schedule = () => {
                                             targetStudentId: selectedEvent.studentId,
                                         });
                                         if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
-                                    } catch { setShowDetails(false); }
+                                    } catch (e) { console.error(e); setShowDetails(false); }
                                 }}
                                 className="flex-1 h-10 text-on-primary text-micro font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
                             >

@@ -24,7 +24,7 @@ export const AcademicYearSection = ({
             setCurrentAcademicYear(data.system.academic_year || '2024-2025');
             setSemesterStart(data.system.semester_start_date || '');
             setSemesterEnd(data.system.semester_end_date || '');
-        }).catch(() => {});
+        }).catch((e) => console.warn(e));
     }, []);
 
     const semesterList = localSemesters.split(',').filter(Boolean).map((s, i) => ({ id: i, name: s.trim() }));
@@ -58,7 +58,7 @@ export const AcademicYearSection = ({
                 ]),
             ]);
             showNotify('تم حفظ السنة الدراسية');
-        } catch { alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

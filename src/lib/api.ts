@@ -32,7 +32,8 @@ class ApiClient {
                 return true;
             }
             return false;
-        } catch {
+        } catch (e) {
+            console.error(e);
             return false;
         }
     }
@@ -76,7 +77,7 @@ class ApiClient {
                             parsed.token = newToken;
                             retryBody = JSON.stringify(parsed);
                         }
-                    } catch { }
+                    } catch (e) { console.warn(e); }
                 }
                 const retryRes = await this.fetchWithProgress(url, { ...init, headers: retryHeaders, body: retryBody });
                 if (retryRes.ok) {
@@ -103,10 +104,12 @@ class ApiClient {
                 try {
                     const error = JSON.parse(text);
                     errorMessage = error.error || error.message || errorMessage;
-                } catch {
+                } catch (e) {
+                    console.warn(e);
                     errorMessage = text || response.statusText || errorMessage;
                 }
-            } catch {
+            } catch (e) {
+                console.warn(e);
                 errorMessage = response.statusText || errorMessage;
             }
             throw new Error(errorMessage);

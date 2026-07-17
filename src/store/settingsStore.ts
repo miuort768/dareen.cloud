@@ -222,7 +222,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 if (settings.library_whatsapp !== undefined && settings.library_whatsapp !== null) updates.libraryWhatsapp = String(settings.library_whatsapp);
                 if (settings.library_telegram !== undefined && settings.library_telegram !== null) updates.libraryTelegram = String(settings.library_telegram);
                 if (settings.whatsapp_numbers !== undefined && settings.whatsapp_numbers !== null) {
-                    try { JSON.parse(String(settings.whatsapp_numbers)); updates.whatsappNumbers = String(settings.whatsapp_numbers); } catch { /* keep default */ }
+                    try { JSON.parse(String(settings.whatsapp_numbers)); updates.whatsappNumbers = String(settings.whatsapp_numbers); } catch (e) { console.warn('Invalid whatsapp_numbers JSON:', e); }
                 }
 
                 set({ ...updates, isSettingsLoading: false });

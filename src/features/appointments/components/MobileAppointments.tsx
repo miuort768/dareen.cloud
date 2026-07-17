@@ -106,7 +106,7 @@ export const MobileAppointments = () => {
             try {
                 const sessions = await api.get<string[]>('/appointments/completed-sessions');
                 if (mountedRef.current) setCompletedSessionIds(sessions || []);
-            } catch { /* silent */ }
+            } catch (e) { console.warn(e); }
         }, 15000);
         return () => clearInterval(interval);
     }, []);
