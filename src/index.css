@@ -193,10 +193,6 @@ html, body {
     background-color: rgb(var(--bg-hover)) !important;
   }
 
-  .dark .bg-gray-200, .dark .bg-slate-200 {
-    background-color: rgb(var(--bg-hover)) !important;
-  }
-
   /* Handle all dark text scales for extreme visibility in dark mode */
   .dark .text-gray-950, .dark .text-slate-950, .dark .text-gray-900, .dark .text-slate-900, 
   .dark .text-gray-800, .dark .text-slate-800, .dark .text-gray-700, .dark .text-slate-700,
@@ -559,11 +555,6 @@ html, body {
     -webkit-backdrop-filter: blur(24px);
     backdrop-filter: blur(24px);
   }
-
-  /* Disable transitions for sharp design if requested */
-  /* * {
-    transition: none !important;
-  } */
 
   /* Page Transitions – CSS-only replacement for framer-motion PageTransition */
   @keyframes pageEnter {
