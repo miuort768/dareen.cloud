@@ -1,38 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-    Settings as SettingsIcon, Palette, Users, Smartphone, Lock,
-    Shield, Activity, MessageSquare, Building2, Calendar, Coins,
-    KeyRound, Clock, UserCheck, FileText, Award, HardDrive
+    Settings as SettingsIcon, MessageSquare, Calendar, Coins,
+    Palette, Users, KeyRound, Lock, Clock, UserCheck, FileText, Award, HardDrive,
+    Shield, Activity
 } from 'lucide-react';
 import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useSetAcademyAddress, useWhatsappNumbers, useSetWhatsappNumbers } from '../../../context/AppContext';
 import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
 import { settingsService } from '../services/settingsService';
-import { GeneralSettings } from '../components/GeneralSettings';
-import { AcademyInfoSection } from '../components/AcademyInfoSection';
-import { AcademicYearSection } from '../components/AcademicYearSection';
-import { CurrenciesSection } from '../components/CurrenciesSection';
-import { PermissionsSection } from '../components/PermissionsSection';
-import { CommunicationsSection } from '../components/CommunicationsSection';
-import { WorkingHoursSection } from '../components/WorkingHoursSection';
-import { AttendanceSettingsSection } from '../components/AttendanceSettingsSection';
-import { ReportsSettingsSection } from '../components/ReportsSettingsSection';
-import { RewardsSettingsSection } from '../components/RewardsSettingsSection';
-import { BackupSection } from '../components/BackupSection';
-import { MobileSettings } from '../components/MobileSettings';
-import { AppearanceSection as AppearanceSettings } from '../components/AppearanceSection';
-import { UsersSettings } from '../components/UsersSettings';
-import { PoliciesSettings } from '../components/PoliciesSettings';
-import { AdvancedSettings } from '../components/AdvancedSettings';
-import { AuditLogSection } from '../components/AuditLog';
 import { SecureActionModal } from '../components/SecureActionModal';
 import { DeleteUserModal } from '../components/DeleteUserModal';
 import { MaintenanceModal } from '../components/MaintenanceModal';
 import { SuccessToast } from '../components/SuccessToast';
-
-
-type TabId = 'general' | 'academy' | 'academic-year' | 'currencies' | 'appearance' | 'users' | 'permissions' | 'communications' | 'mobile' | 'policies' | 'working-hours' | 'attendance' | 'reports' | 'rewards' | 'backup' | 'advanced' | 'audit';
+import { TABS, SettingsTabContent } from './settings-page';
+import type { TabId } from './settings-page';
 
 export const Settings = () => {
     const academyName = useAcademyName();
@@ -85,13 +67,14 @@ export const Settings = () => {
     const addUser = useAddUser();
     const editUser = useEditUser();
     const deleteUser = useDeleteUser();
+    const whatsappNumbers = useWhatsappNumbers();
+    const setWhatsappNumbers = useSetWhatsappNumbers();
 
     const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [auditLogs, setAuditLogs] = useState<{ timestamp: string; username: string; action: string }[]>([]);
-
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAcademyLogo, setLocalAcademyLogo] = useState(academyLogo);
     const [localAcademyTagline, setLocalAcademyTagline] = useState(academyTagline);
@@ -101,18 +84,15 @@ export const Settings = () => {
     const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
     const [localTelegramHandle, setLocalTelegramHandle] = useState(telegramHandle);
     const [academyEmail, setAcademyEmail] = useState('');
-
     const [localHeroBanners, setLocalHeroBanners] = useState<string[]>(() => {
         try { return JSON.parse(heroBanners); } catch (e) { console.warn(e); return ["", "", "", ""]; }
     });
-
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
     const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
     const [localBackdateLock, setLocalBackdateLock] = useState(backdateLockEnabled);
     const [localAutoFreeze, setLocalAutoFreeze] = useState(autoFreezeThreshold);
-
     const [newUser, setNewUser] = useState({ username: '', password: '', permissions: [] as string[] });
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean | { id: string; username: string }>(false);
@@ -124,14 +104,8 @@ export const Settings = () => {
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const whatsappNumbers = useWhatsappNumbers();
-    const setWhatsappNumbers = useSetWhatsappNumbers();
-
     const fetchLogs = useCallback(async () => {
-        try {
-            const logs = await settingsService.getAuditLogs();
-            setAuditLogs(logs || []);
-        } catch (e) { console.error(e); }
+        try { const logs = await settingsService.getAuditLogs(); setAuditLogs(logs || []); } catch (e) { console.error(e); }
     }, []);
 
     const handleExportBackup = async () => {
@@ -151,9 +125,7 @@ export const Settings = () => {
     const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        if (!await confirm({ message: 'استيراد البيانات سيؤدي إلى استبدال كافة البيانات الحالية. هل أنت متأكد؟', isDestructive: true })) {
-            e.target.value = ''; return;
-        }
+        if (!await confirm({ message: 'استيراد البيانات سيؤدي إلى استبدال كافة البيانات الحالية. هل أنت متأكد؟', isDestructive: true })) { e.target.value = ''; return; }
         const reader = new FileReader();
         reader.onload = async (event) => {
             setIsSaving(true);
@@ -241,26 +213,6 @@ export const Settings = () => {
         setNewUser({ username: '', password: '', permissions: [] });
     };
 
-    const TABS: { id: TabId; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
-        { id: 'general', label: 'عام', icon: SettingsIcon },
-        { id: 'academy', label: 'المعهد', icon: Building2 },
-        { id: 'academic-year', label: 'السنة الدراسية', icon: Calendar },
-        { id: 'currencies', label: 'المالية', icon: Coins },
-        { id: 'appearance', label: 'الهوية', icon: Palette },
-        { id: 'users', label: 'المستخدمون', icon: Users },
-        { id: 'permissions', label: 'الصلاحيات', icon: KeyRound },
-        { id: 'communications', label: 'الاتصالات', icon: MessageSquare },
-        { id: 'mobile', label: 'واتساب', icon: MessageSquare },
-        { id: 'policies', label: 'السياسات', icon: Lock },
-        { id: 'working-hours', label: 'أوقات العمل', icon: Clock },
-        { id: 'attendance', label: 'الحضور', icon: UserCheck },
-        { id: 'reports', label: 'التقارير', icon: FileText },
-        { id: 'rewards', label: 'المكافآت', icon: Award },
-        { id: 'backup', label: 'النسخ الاحتياطي', icon: HardDrive },
-        { id: 'advanced', label: 'الأرشيف', icon: Shield },
-        { id: 'audit', label: 'السجلات', icon: Activity },
-    ];
-
     if (loading) return (
         <div className="p-4 space-y-3">
             <Skeleton className="h-14" />
@@ -270,116 +222,6 @@ export const Settings = () => {
             <Skeleton className="h-64" />
         </div>
     );
-
-    const renderTab = () => {
-        switch (activeTab) {
-            case 'general':
-                return <GeneralSettings
-                    localAcademyName={localAcademyName} setLocalAcademyName={setLocalAcademyName}
-                    localAcademyLogo={localAcademyLogo} setLocalAcademyLogo={setLocalAcademyLogo}
-                    localAcademyTagline={localAcademyTagline} setLocalAcademyTagline={setLocalAcademyTagline}
-                    localAdminPhone={localAdminPhone} setLocalAdminPhone={setLocalAdminPhone}
-                    localTelegramHandle={localTelegramHandle} setLocalTelegramHandle={setLocalTelegramHandle}
-                    localSemesterName={localSemesterName} setLocalSemesterName={setLocalSemesterName}
-                    localPrice={localPrice} localTeacherPrice={localTeacherPrice}
-                    localCurrency={localCurrency} localThreshold={localThreshold}
-                    localAutoFreeze={localAutoFreeze} localBackdateLock={localBackdateLock}
-                    setLocalPrice={setLocalPrice} setLocalTeacherPrice={setLocalTeacherPrice}
-                    setLocalCurrency={setLocalCurrency} setLocalThreshold={setLocalThreshold}
-                    setLocalAutoFreeze={setLocalAutoFreeze} setLocalBackdateLock={setLocalBackdateLock}
-                    maintenanceMode={maintenanceMode} setShowMaintenanceModal={setShowMaintenanceModal}
-                    setMaintenanceMode={setMaintenanceMode} showNotify={showNotify}
-                    isSaving={isSaving} handleSaveGeneral={handleSaveGeneral}
-                />;
-            case 'academy':
-                return <AcademyInfoSection
-                    localAcademyName={localAcademyName} setLocalAcademyName={setLocalAcademyName}
-                    localAcademyLogo={localAcademyLogo} setLocalAcademyLogo={setLocalAcademyLogo}
-                    localAcademyTagline={localAcademyTagline} setLocalAcademyTagline={setLocalAcademyTagline}
-                    localAdminPhone={localAdminPhone} setLocalAdminPhone={setLocalAdminPhone}
-                    localTelegramHandle={localTelegramHandle} setLocalTelegramHandle={setLocalTelegramHandle}
-                    academyAddress={academyAddress} setAcademyAddress={setAcademyAddress}
-                    academyEmail={academyEmail} setAcademyEmail={setAcademyEmail}
-                    handleSaveGeneral={handleSaveGeneral} isSaving={isSaving}
-                />;
-            case 'academic-year':
-                return <AcademicYearSection
-                    localSemesterName={localSemesterName} setLocalSemesterName={setLocalSemesterName}
-                    localSemesters={localSemesters} setLocalSemesters={setLocalSemesters}
-                    setSemesterName={setSemesterName} setSemesters={setSemesters}
-                    showNotify={showNotify}
-                />;
-            case 'currencies':
-                return <CurrenciesSection localCurrency={localCurrency} setLocalCurrency={setLocalCurrency} showNotify={showNotify} />;
-            case 'appearance':
-                return <AppearanceSettings
-                    academyLogo={academyLogo} academyName={academyName}
-                    academyTagline={academyTagline} themeColor={themeColor}
-                    setThemeColor={setThemeColor} notificationsEnabled={notificationsEnabled}
-                    setNotificationsEnabled={setNotificationsEnabled}
-                    localHeroBanners={localHeroBanners} setLocalHeroBanners={setLocalHeroBanners}
-                    isSaving={isSaving} setHeroBanners={setHeroBanners} showNotify={showNotify}
-                    handleExportBackup={handleExportBackup} handleImportBackup={handleImportBackup}
-                    triggerReset={triggerReset} triggerArchive={triggerArchive}
-                />;
-            case 'users':
-                return <UsersSettings
-                    users={users} user={user} newUser={newUser}
-                    setNewUser={setNewUser} editingUserId={editingUserId}
-                    setEditingUserId={setEditingUserId} setShowDeleteModal={setShowDeleteModal}
-                    handleUserAction={handleUserAction}
-                />;
-            case 'permissions':
-                return <PermissionsSection showNotify={showNotify} />;
-            case 'communications':
-                return <CommunicationsSection
-                    whatsappAutoNotify={whatsappAutoNotify} setWhatsappAutoNotify={setWhatsappAutoNotify}
-                    localWhatsappTemplate={localWhatsappTemplate} setLocalWhatsappTemplate={setLocalWhatsappTemplate}
-                    setWhatsappTemplate={setWhatsappTemplate} showNotify={showNotify}
-                    academyEmail={academyEmail} setAcademyEmail={setAcademyEmail}
-                />;
-            case 'mobile':
-                return <MobileSettings whatsappNumbers={whatsappNumbers} setWhatsappNumbers={setWhatsappNumbers} showNotify={showNotify} />;
-            case 'policies':
-                return <PoliciesSettings
-                    backdateLockEnabled={backdateLockEnabled} setBackdateLockEnabled={setBackdateLockEnabled}
-                    teacherCommissionType={teacherCommissionType} setTeacherCommissionType={setTeacherCommissionType}
-                    autoFreezeThreshold={autoFreezeThreshold} setAutoFreezeThreshold={setAutoFreezeThreshold}
-                    showNotify={showNotify} setSecureAction={setSecureAction} settingsService={settingsService}
-                />;
-            case 'working-hours':
-                return <WorkingHoursSection showNotify={showNotify} />;
-            case 'attendance':
-                return <AttendanceSettingsSection
-                    localBackdateLock={localBackdateLock} setLocalBackdateLock={setLocalBackdateLock}
-                    localAutoFreeze={localAutoFreeze} setLocalAutoFreeze={setLocalAutoFreeze}
-                    showNotify={showNotify}
-                />;
-            case 'reports':
-                return <ReportsSettingsSection showNotify={showNotify} />;
-            case 'rewards':
-                return <RewardsSettingsSection showNotify={showNotify} />;
-            case 'backup':
-                return <BackupSection
-                    handleExportBackup={handleExportBackup} handleImportBackup={handleImportBackup}
-                    triggerReset={triggerReset} isSaving={isSaving} triggerArchive={triggerArchive}
-                />;
-            case 'advanced':
-                return <AdvancedSettings
-                    whatsappAutoNotify={whatsappAutoNotify} setWhatsappAutoNotify={setWhatsappAutoNotify}
-                    localWhatsappTemplate={localWhatsappTemplate} setLocalWhatsappTemplate={setLocalWhatsappTemplate}
-                    setWhatsappTemplate={setWhatsappTemplate} showNotify={showNotify}
-                    reminderMinutesBefore={reminderMinutesBefore} setReminderMinutesBefore={setReminderMinutesBefore}
-                    localSemesterName={localSemesterName} setLocalSemesterName={setLocalSemesterName}
-                    localSemesters={localSemesters} setLocalSemesters={setLocalSemesters}
-                    setSemesterName={setSemesterName} setSemesters={setSemesters} setSecureAction={setSecureAction}
-                />;
-            case 'audit':
-                return <AuditLogSection auditLogs={auditLogs} fetchLogs={fetchLogs} />;
-            default:
-                return null;
-        }
-    };
 
     return (
         <div className="space-y-0 pb-24 min-h-full max-w-full w-full overflow-x-hidden" dir="rtl">
@@ -398,31 +240,63 @@ export const Settings = () => {
                     {TABS.find(t => t.id === activeTab)?.label}
                 </div>
             </div>
-
             <div className="bg-primary px-2 md:px-4 py-1">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={cn(
-                                'flex items-center gap-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-all tracking-tight',
-                                activeTab === tab.id
-                                    ? 'bg-card text-primary shadow-sm'
-                                    : 'text-on-primary opacity-70 hover:text-on-primary'
-                            )}
-                        >
+                        <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                            className={cn('flex items-center gap-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-all tracking-tight',
+                                activeTab === tab.id ? 'bg-card text-primary shadow-sm' : 'text-on-primary opacity-70 hover:text-on-primary')}>
                             <tab.icon size={15} />
                             {tab.label}
                         </button>
                     ))}
                 </div>
             </div>
-
             <div className="px-3 md:px-5 lg:px-8 pt-4 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
-                {renderTab()}
+                <SettingsTabContent
+                    activeTab={activeTab}
+                    localAcademyName={localAcademyName} setLocalAcademyName={setLocalAcademyName}
+                    localAcademyLogo={localAcademyLogo} setLocalAcademyLogo={setLocalAcademyLogo}
+                    localAcademyTagline={localAcademyTagline} setLocalAcademyTagline={setLocalAcademyTagline}
+                    localAdminPhone={localAdminPhone} setLocalAdminPhone={setLocalAdminPhone}
+                    localTelegramHandle={localTelegramHandle} setLocalTelegramHandle={setLocalTelegramHandle}
+                    localSemesterName={localSemesterName} setLocalSemesterName={setLocalSemesterName}
+                    localSemesters={localSemesters} setLocalSemesters={setLocalSemesters}
+                    localPrice={localPrice} localTeacherPrice={localTeacherPrice}
+                    localCurrency={localCurrency} localThreshold={localThreshold}
+                    localAutoFreeze={localAutoFreeze} localBackdateLock={localBackdateLock}
+                    setLocalPrice={setLocalPrice} setLocalTeacherPrice={setLocalTeacherPrice}
+                    setLocalCurrency={setLocalCurrency} setLocalThreshold={setLocalThreshold}
+                    setLocalAutoFreeze={setLocalAutoFreeze} setLocalBackdateLock={setLocalBackdateLock}
+                    academyAddress={academyAddress} setAcademyAddress={setAcademyAddress}
+                    academyEmail={academyEmail} setAcademyEmail={setAcademyEmail}
+                    localHeroBanners={localHeroBanners} setLocalHeroBanners={setLocalHeroBanners}
+                    themeColor={themeColor} setThemeColor={setThemeColor}
+                    notificationsEnabled={notificationsEnabled} setNotificationsEnabled={setNotificationsEnabled}
+                    newUser={newUser} setNewUser={setNewUser}
+                    editingUserId={editingUserId} setEditingUserId={setEditingUserId}
+                    setShowDeleteModal={setShowDeleteModal}
+                    handleUserAction={handleUserAction}
+                    handleSaveGeneral={handleSaveGeneral} isSaving={isSaving}
+                    showNotify={showNotify}
+                    maintenanceMode={maintenanceMode}
+                    setShowMaintenanceModal={setShowMaintenanceModal} setMaintenanceMode={setMaintenanceMode}
+                    handleExportBackup={handleExportBackup} handleImportBackup={handleImportBackup}
+                    triggerReset={triggerReset} triggerArchive={triggerArchive}
+                    setSecureAction={setSecureAction}
+                    setWhatsappTemplate={setWhatsappTemplate}
+                    whatsappAutoNotify={whatsappAutoNotify} setWhatsappAutoNotify={setWhatsappAutoNotify}
+                    localWhatsappTemplate={localWhatsappTemplate} setLocalWhatsappTemplate={setLocalWhatsappTemplate}
+                    academyName={academyName} academyLogo={academyLogo} academyTagline={academyTagline}
+                    user={user} users={users}
+                    whatsappNumbers={whatsappNumbers} setWhatsappNumbers={setWhatsappNumbers}
+                    backdateLockEnabled={backdateLockEnabled} setBackdateLockEnabled={setBackdateLockEnabled}
+                    teacherCommissionType={teacherCommissionType} setTeacherCommissionType={setTeacherCommissionType}
+                    autoFreezeThreshold={autoFreezeThreshold} setAutoFreezeThreshold={setAutoFreezeThreshold}
+                    reminderMinutesBefore={reminderMinutesBefore} setReminderMinutesBefore={setReminderMinutesBefore}
+                    setSemesterName={setSemesterName} setSemesters={setSemesters}
+                    auditLogs={auditLogs} fetchLogs={fetchLogs} />
             </div>
-
             <SecureActionModal secureAction={secureAction} secureInput={secureInput} setSecureInput={setSecureInput} setSecureAction={setSecureAction} />
             <DeleteUserModal showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} deleteUser={deleteUser} showNotify={showNotify} />
             <MaintenanceModal showMaintenanceModal={showMaintenanceModal} setShowMaintenanceModal={setShowMaintenanceModal} setMaintenanceMode={setMaintenanceMode} showNotify={showNotify} />

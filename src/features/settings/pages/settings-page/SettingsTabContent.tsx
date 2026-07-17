@@ -1,0 +1,172 @@
+import type { TabId } from './SettingsTabs';
+import { GeneralSettings } from '../../components/GeneralSettings';
+import { AcademyInfoSection } from '../../components/AcademyInfoSection';
+import { AcademicYearSection } from '../../components/AcademicYearSection';
+import { CurrenciesSection } from '../../components/CurrenciesSection';
+import { PermissionsSection } from '../../components/PermissionsSection';
+import { CommunicationsSection } from '../../components/CommunicationsSection';
+import { WorkingHoursSection } from '../../components/WorkingHoursSection';
+import { AttendanceSettingsSection } from '../../components/AttendanceSettingsSection';
+import { ReportsSettingsSection } from '../../components/ReportsSettingsSection';
+import { RewardsSettingsSection } from '../../components/RewardsSettingsSection';
+import { BackupSection } from '../../components/BackupSection';
+import { MobileSettings } from '../../components/MobileSettings';
+import { AppearanceSection as AppearanceSettings } from '../../components/AppearanceSection';
+import { UsersSettings } from '../../components/UsersSettings';
+import { PoliciesSettings } from '../../components/PoliciesSettings';
+import { AdvancedSettings } from '../../components/AdvancedSettings';
+import { AuditLogSection } from '../../components/AuditLog';
+
+interface SettingsTabContentProps {
+    activeTab: TabId;
+    localAcademyName: string; setLocalAcademyName: (v: string) => void;
+    localAcademyLogo: string; setLocalAcademyLogo: (v: string) => void;
+    localAcademyTagline: string; setLocalAcademyTagline: (v: string) => void;
+    localAdminPhone: string; setLocalAdminPhone: (v: string) => void;
+    localTelegramHandle: string; setLocalTelegramHandle: (v: string) => void;
+    localSemesterName: string; setLocalSemesterName: (v: string) => void;
+    localSemesters: number; setLocalSemesters: (v: number) => void;
+    localPrice: string; localTeacherPrice: string; localCurrency: string;
+    localThreshold: string; localAutoFreeze: string; localBackdateLock: boolean;
+    setLocalPrice: (v: string) => void; setLocalTeacherPrice: (v: string) => void;
+    setLocalCurrency: (v: string) => void; setLocalThreshold: (v: string) => void;
+    setLocalAutoFreeze: (v: string) => void; setLocalBackdateLock: (v: boolean) => void;
+    academyAddress: string; setAcademyAddress: (v: string) => void;
+    academyEmail: string; setAcademyEmail: (v: string) => void;
+    localHeroBanners: string[]; setLocalHeroBanners: (v: string[]) => void;
+    themeColor: string; setThemeColor: (color: string) => void;
+    notificationsEnabled: boolean; setNotificationsEnabled: (v: boolean) => void;
+    newUser: { username: string; password: string; permissions: string[] };
+    setNewUser: (v: { username: string; password: string; permissions: string[] }) => void;
+    editingUserId: string | null;
+    setEditingUserId: (v: string | null) => void;
+    setShowDeleteModal: (v: boolean | { id: string; username: string }) => void;
+    handleUserAction: () => void;
+    handleSaveGeneral: () => void;
+    isSaving: boolean;
+    showNotify: (msg: string) => void;
+    maintenanceMode: boolean;
+    setShowMaintenanceModal: (v: boolean) => void;
+    setMaintenanceMode: (v: boolean) => void;
+    handleExportBackup: () => void;
+    handleImportBackup: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    triggerReset: () => void;
+    triggerArchive: () => void;
+    setSecureAction: (v: { type: 'reset' | 'archive'; title: string; description: string; confirmWord: string; actionFn: () => void } | null) => void;
+    setWhatsappTemplate: (v: string) => void;
+    whatsappAutoNotify: boolean; setWhatsappAutoNotify: (v: boolean) => void;
+    localWhatsappTemplate: string; setLocalWhatsappTemplate: (v: string) => void;
+    academyName: string; academyLogo: string; academyTagline: string;
+    user: { id: string; name: string; username: string };
+    users: { id: string; username: string; permissions: string[] }[];
+    whatsappNumbers: string[]; setWhatsappNumbers: (v: string[]) => void;
+    backdateLockEnabled: boolean; setBackdateLockEnabled: (v: boolean) => void;
+    teacherCommissionType: string; setTeacherCommissionType: (v: string) => void;
+    autoFreezeThreshold: string; setAutoFreezeThreshold: (v: string) => void;
+    reminderMinutesBefore: string; setReminderMinutesBefore: (v: string) => void;
+    setSemesterName: (v: string) => void; setSemesters: (v: number) => void;
+    auditLogs: { timestamp: string; username: string; action: string }[];
+    fetchLogs: () => void;
+}
+
+export const SettingsTabContent = (props: SettingsTabContentProps) => {
+    const { activeTab } = props;
+    switch (activeTab) {
+        case 'general':
+            return <GeneralSettings
+                localAcademyName={props.localAcademyName} setLocalAcademyName={props.setLocalAcademyName}
+                localAcademyLogo={props.localAcademyLogo} setLocalAcademyLogo={props.setLocalAcademyLogo}
+                localAcademyTagline={props.localAcademyTagline} setLocalAcademyTagline={props.setLocalAcademyTagline}
+                localAdminPhone={props.localAdminPhone} setLocalAdminPhone={props.setLocalAdminPhone}
+                localTelegramHandle={props.localTelegramHandle} setLocalTelegramHandle={props.setLocalTelegramHandle}
+                localSemesterName={props.localSemesterName} setLocalSemesterName={props.setLocalSemesterName}
+                localPrice={props.localPrice} localTeacherPrice={props.localTeacherPrice}
+                localCurrency={props.localCurrency} localThreshold={props.localThreshold}
+                localAutoFreeze={props.localAutoFreeze} localBackdateLock={props.localBackdateLock}
+                setLocalPrice={props.setLocalPrice} setLocalTeacherPrice={props.setLocalTeacherPrice}
+                setLocalCurrency={props.setLocalCurrency} setLocalThreshold={props.setLocalThreshold}
+                setLocalAutoFreeze={props.setLocalAutoFreeze} setLocalBackdateLock={props.setLocalBackdateLock}
+                maintenanceMode={props.maintenanceMode} setShowMaintenanceModal={props.setShowMaintenanceModal}
+                setMaintenanceMode={props.setMaintenanceMode} showNotify={props.showNotify}
+                isSaving={props.isSaving} handleSaveGeneral={props.handleSaveGeneral} />;
+        case 'academy':
+            return <AcademyInfoSection
+                localAcademyName={props.localAcademyName} setLocalAcademyName={props.setLocalAcademyName}
+                localAcademyLogo={props.localAcademyLogo} setLocalAcademyLogo={props.setLocalAcademyLogo}
+                localAcademyTagline={props.localAcademyTagline} setLocalAcademyTagline={props.setLocalAcademyTagline}
+                localAdminPhone={props.localAdminPhone} setLocalAdminPhone={props.setLocalAdminPhone}
+                localTelegramHandle={props.localTelegramHandle} setLocalTelegramHandle={props.setLocalTelegramHandle}
+                academyAddress={props.academyAddress} setAcademyAddress={props.setAcademyAddress}
+                academyEmail={props.academyEmail} setAcademyEmail={props.setAcademyEmail}
+                handleSaveGeneral={props.handleSaveGeneral} isSaving={props.isSaving} />;
+        case 'academic-year':
+            return <AcademicYearSection
+                localSemesterName={props.localSemesterName} setLocalSemesterName={props.setLocalSemesterName}
+                localSemesters={props.localSemesters} setLocalSemesters={props.setLocalSemesters}
+                setSemesterName={props.setSemesterName} setSemesters={props.setSemesters}
+                showNotify={props.showNotify} />;
+        case 'currencies':
+            return <CurrenciesSection localCurrency={props.localCurrency} setLocalCurrency={props.setLocalCurrency} showNotify={props.showNotify} />;
+        case 'appearance':
+            return <AppearanceSettings
+                academyLogo={props.academyLogo} academyName={props.academyName}
+                academyTagline={props.academyTagline} themeColor={props.themeColor}
+                setThemeColor={props.setThemeColor} notificationsEnabled={props.notificationsEnabled}
+                setNotificationsEnabled={props.setNotificationsEnabled}
+                localHeroBanners={props.localHeroBanners} setLocalHeroBanners={props.setLocalHeroBanners}
+                isSaving={props.isSaving} setHeroBanners={props.setLocalHeroBanners as (v: string[]) => void}
+                showNotify={props.showNotify} handleExportBackup={props.handleExportBackup}
+                handleImportBackup={props.handleImportBackup} triggerReset={props.triggerReset}
+                triggerArchive={props.triggerArchive} />;
+        case 'users':
+            return <UsersSettings
+                users={props.users} user={props.user} newUser={props.newUser}
+                setNewUser={props.setNewUser} editingUserId={props.editingUserId}
+                setEditingUserId={props.setEditingUserId} setShowDeleteModal={props.setShowDeleteModal}
+                handleUserAction={props.handleUserAction} />;
+        case 'permissions':
+            return <PermissionsSection showNotify={props.showNotify} />;
+        case 'communications':
+            return <CommunicationsSection
+                whatsappAutoNotify={props.whatsappAutoNotify} setWhatsappAutoNotify={props.setWhatsappAutoNotify}
+                localWhatsappTemplate={props.localWhatsappTemplate} setLocalWhatsappTemplate={props.setLocalWhatsappTemplate}
+                setWhatsappTemplate={props.setWhatsappTemplate} showNotify={props.showNotify}
+                academyEmail={props.academyEmail} setAcademyEmail={props.setAcademyEmail} />;
+        case 'mobile':
+            return <MobileSettings whatsappNumbers={props.whatsappNumbers} setWhatsappNumbers={props.setWhatsappNumbers} showNotify={props.showNotify} />;
+        case 'policies':
+            return <PoliciesSettings
+                backdateLockEnabled={props.backdateLockEnabled} setBackdateLockEnabled={props.setBackdateLockEnabled}
+                teacherCommissionType={props.teacherCommissionType} setTeacherCommissionType={props.setTeacherCommissionType}
+                autoFreezeThreshold={props.autoFreezeThreshold} setAutoFreezeThreshold={props.setAutoFreezeThreshold}
+                showNotify={props.showNotify} setSecureAction={props.setSecureAction} />;
+        case 'working-hours':
+            return <WorkingHoursSection showNotify={props.showNotify} />;
+        case 'attendance':
+            return <AttendanceSettingsSection
+                localBackdateLock={props.localBackdateLock} setLocalBackdateLock={props.setLocalBackdateLock}
+                localAutoFreeze={props.localAutoFreeze} setLocalAutoFreeze={props.setLocalAutoFreeze}
+                showNotify={props.showNotify} />;
+        case 'reports':
+            return <ReportsSettingsSection showNotify={props.showNotify} />;
+        case 'rewards':
+            return <RewardsSettingsSection showNotify={props.showNotify} />;
+        case 'backup':
+            return <BackupSection
+                handleExportBackup={props.handleExportBackup} handleImportBackup={props.handleImportBackup}
+                triggerReset={props.triggerReset} isSaving={props.isSaving} triggerArchive={props.triggerArchive} />;
+        case 'advanced':
+            return <AdvancedSettings
+                whatsappAutoNotify={props.whatsappAutoNotify} setWhatsappAutoNotify={props.setWhatsappAutoNotify}
+                localWhatsappTemplate={props.localWhatsappTemplate} setLocalWhatsappTemplate={props.setLocalWhatsappTemplate}
+                setWhatsappTemplate={props.setWhatsappTemplate} showNotify={props.showNotify}
+                reminderMinutesBefore={props.reminderMinutesBefore} setReminderMinutesBefore={props.setReminderMinutesBefore}
+                localSemesterName={props.localSemesterName} setLocalSemesterName={props.setLocalSemesterName}
+                localSemesters={props.localSemesters} setLocalSemesters={props.setLocalSemesters}
+                setSemesterName={props.setSemesterName} setSemesters={props.setSemesters} setSecureAction={props.setSecureAction} />;
+        case 'audit':
+            return <AuditLogSection auditLogs={props.auditLogs} fetchLogs={props.fetchLogs} />;
+        default:
+            return null;
+    }
+};
