@@ -222,10 +222,10 @@ export const MobileAdminDashboard = ({
 
                         {/* Quick Links */}
                         <div className="grid grid-cols-2 gap-3">
-                            <QuickLink icon={UserPlus} label="طالب جديد" color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                            <QuickLink icon={FilePlus} label="فاتورة" color="var(--bg-success)" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                            <QuickLink icon={Calendar} label="الجدول" color="var(--bg-primary)" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                            <QuickLink icon={Megaphone} label="لوحة الإعلانات" color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
+                            <QuickLink icon={UserPlus} label="طالب جديد" variant="info" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
+                            <QuickLink icon={FilePlus} label="فاتورة" variant="success" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
+                            <QuickLink icon={Calendar} label="الجدول" variant="primary" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
+                            <QuickLink icon={Megaphone} label="لوحة الإعلانات" variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
                         </div>
                     </div>
                 )}
@@ -234,12 +234,12 @@ export const MobileAdminDashboard = ({
                     <div className="space-y-3">
                         <p className="text-micro font-bold text-muted px-1">الإجراءات السريعة</p>
                         <div className="grid grid-cols-2 gap-3">
-                            <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                            <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} color="var(--bg-success)" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                            <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} color="var(--bg-primary)" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                            <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
-                            <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} color="var(--bg-info)" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
-                            <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} color="var(--bg-warning)" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
+                            <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
+                            <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} variant="success" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
+                            <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} variant="primary" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
+                            <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
+                            <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
+                            <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
                         </div>
                     </div>
                 )}
@@ -355,11 +355,16 @@ export const MobileAdminDashboard = ({
 
 
 
-const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; color: string; onClick?: () => void }) => (
+const NavButton = ({ label, subtext, icon: Icon, variant, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
     <button
         onClick={onClick}
-        className="rounded-card p-4 flex flex-col items-center justify-center gap-1.5 shadow-soft active:scale-95 transition-all w-full"
-        style={{ backgroundColor: color }}
+        className={cn(
+            "rounded-card p-4 flex flex-col items-center justify-center gap-1.5 shadow-soft active:scale-95 transition-all w-full",
+            variant === 'info' && "bg-info",
+            variant === 'success' && "bg-success",
+            variant === 'primary' && "bg-primary",
+            variant === 'warning' && "bg-warning"
+        )}
         aria-label={label}
     >
         <div className="w-10 h-10 rounded-card bg-white/15 flex items-center justify-center shadow-soft text-on-primary">
@@ -370,13 +375,19 @@ const NavButton = ({ label, subtext, icon: Icon, color, onClick }: { label: stri
     </button>
 );
 
-const QuickLink = ({ icon: Icon, label, color, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; color: string; onClick?: () => void }) => (
+const QuickLink = ({ icon: Icon, label, variant, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
     <button
         onClick={onClick}
         className="bg-card rounded-card p-4 flex items-center gap-3 shadow-soft border border-border active:scale-95 transition-all hover:shadow-md"
         aria-label={label}
     >
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${color} 7%, transparent)`, color: color }}>
+        <div className={cn(
+            "w-9 h-9 rounded-xl flex items-center justify-center shrink-0",
+            variant === 'info' && "bg-info-soft text-info",
+            variant === 'success' && "bg-success-soft text-success",
+            variant === 'primary' && "bg-primary-soft text-primary",
+            variant === 'warning' && "bg-warning-soft text-warning"
+        )}>
             <Icon size={16} strokeWidth={1.5} />
         </div>
         <span className="text-xs font-bold text-main">{label}</span>

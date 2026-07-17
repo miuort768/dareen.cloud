@@ -47,13 +47,8 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
     return (
         <div className="group relative overflow-hidden rounded-2xl bg-background/50 dark:bg-card/30 border border-border/50 dark:border-border/30 p-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-0.5 hover:border-border/80">
             <div className="flex items-center justify-between mb-2">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm transition-colors duration-300"
-                    style={{
-                        backgroundColor: isUp ? 'var(--bg-success)' : 'var(--bg-error)',
-                        opacity: 0.15,
-                    }}
-                />
-                <Icon size={16} className="absolute top-3 right-3" style={{ color: isUp ? 'var(--bg-success)' : 'var(--bg-error)' }} />
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-sm transition-colors duration-300 ${isUp ? 'bg-success/15' : 'bg-error/15'}`} />
+                <Icon size={16} className={`absolute top-3 right-3 ${isUp ? 'text-success' : 'text-error'}`} />
                 <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-micro font-medium ${
                     isUp ? 'bg-success/10 text-success' : 'bg-error/10 text-error'
                 }`}>
@@ -64,12 +59,8 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
             <p className="text-micro text-muted dark:text-muted/70 truncate">{label}</p>
             <div className="mt-2 h-1 rounded-full bg-border/30 dark:bg-border/20 overflow-hidden">
                 <div
-                    className="h-full rounded-full transition-all duration-500"
-                    style={{
-                        width: `${Math.min(100, percent)}%`,
-                        backgroundColor: isUp ? 'var(--bg-success)' : 'var(--bg-error)',
-                        opacity: 0.6,
-                    }}
+                    className={`h-full rounded-full transition-all duration-500 ${isUp ? 'bg-success/60' : 'bg-error/60'}`}
+                    style={{ width: `${Math.min(100, percent)}%` }}
                 />
             </div>
         </div>

@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { PlusCircle, UserPlus, FileText, Settings, Shield, BookOpen, Zap } from 'lucide-react';
 
 const QUICK_ACTIONS = [
-    { label: 'إضافة طالب', icon: UserPlus, color: 'var(--chart-1)', bg: 'color-mix(in srgb, var(--chart-1) 8%, transparent)', path: '/students/add' },
-    { label: 'تسجيل جلسة', icon: PlusCircle, color: 'var(--chart-2)', bg: 'color-mix(in srgb, var(--chart-2) 8%, transparent)', path: '/sessions/add' },
-    { label: 'رفع ملف', icon: BookOpen, color: 'var(--chart-4)', bg: 'color-mix(in srgb, var(--chart-4) 8%, transparent)', path: '/study-material/upload' },
-    { label: 'التقارير', icon: FileText, color: 'var(--chart-5)', bg: 'color-mix(in srgb, var(--chart-5) 8%, transparent)', path: '/reports' },
-    { label: 'نسخ احتياطي', icon: Shield, color: 'var(--chart-3)', bg: 'color-mix(in srgb, var(--chart-3) 8%, transparent)', path: '/settings' },
-    { label: 'الإعدادات', icon: Settings, color: 'var(--text-muted)', bg: 'color-mix(in srgb, var(--text-muted) 8%, transparent)', path: '/settings' },
+    { label: 'إضافة طالب', icon: UserPlus, colorClass: 'text-chart-1', bgClass: 'bg-chart-1/8', iconBgClass: 'bg-chart-1/15', path: '/students/add' },
+    { label: 'تسجيل جلسة', icon: PlusCircle, colorClass: 'text-chart-2', bgClass: 'bg-chart-2/8', iconBgClass: 'bg-chart-2/15', path: '/sessions/add' },
+    { label: 'رفع ملف', icon: BookOpen, colorClass: 'text-chart-4', bgClass: 'bg-chart-4/8', iconBgClass: 'bg-chart-4/15', path: '/study-material/upload' },
+    { label: 'التقارير', icon: FileText, colorClass: 'text-chart-5', bgClass: 'bg-chart-5/8', iconBgClass: 'bg-chart-5/15', path: '/reports' },
+    { label: 'نسخ احتياطي', icon: Shield, colorClass: 'text-chart-3', bgClass: 'bg-chart-3/8', iconBgClass: 'bg-chart-3/15', path: '/settings' },
+    { label: 'الإعدادات', icon: Settings, colorClass: 'text-muted', bgClass: 'bg-muted/8', iconBgClass: 'bg-muted/15', path: '/settings' },
 ];
 
 export const QuickActionsGrid = memo(function QuickActionsGrid() {
@@ -29,15 +29,13 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                             <button
                                 key={action.label}
                                 onClick={() => navigate(action.path)}
-                                className="group relative flex flex-col items-center gap-2 py-4 px-2 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer border border-transparent hover:border-border/20"
-                                style={{ backgroundColor: action.bg }}
+                                className={`group relative flex flex-col items-center gap-2 py-4 px-2 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer border border-transparent hover:border-border/20 ${action.bgClass}`}
                                 title={action.label}
                             >
                                 <div
-                                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                                    style={{ backgroundColor: action.color + '15' }}
+                                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg ${action.iconBgClass}`}
                                 >
-                                    <Icon size={20} style={{ color: action.color }} />
+                                    <Icon size={20} className={action.colorClass} />
                                 </div>
                                 <span className="text-micro font-medium leading-tight text-muted/70 dark:text-muted/50 group-hover:text-main dark:group-hover:text-on-primary/80 transition-colors duration-200">{action.label}</span>
                             </button>

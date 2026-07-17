@@ -3,10 +3,10 @@ import type { ExecutiveAlerts as AlertsType } from '../../services/executiveServ
 import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react';
 
 const SEVERITY_CONFIG = {
-    critical: { icon: XCircle, color: 'var(--bg-error)', bg: 'color-mix(in srgb, var(--bg-error) 8%, transparent)', label: 'حرج' },
-    warning: { icon: AlertTriangle, color: 'var(--bg-warning)', bg: 'color-mix(in srgb, var(--bg-warning) 8%, transparent)', label: 'تحذير' },
-    reminder: { icon: Clock, color: 'var(--bg-info)', bg: 'color-mix(in srgb, var(--bg-info) 8%, transparent)', label: 'تذكير' },
-    info: { icon: Info, color: 'var(--text-muted)', bg: 'var(--bg-surface)', label: 'معلومة' },
+    critical: { icon: XCircle, activeBg: 'bg-error', rowBg: 'bg-error/5', text: 'text-error', dot: 'bg-error', label: 'حرج' },
+    warning: { icon: AlertTriangle, activeBg: 'bg-warning', rowBg: 'bg-warning/5', text: 'text-warning', dot: 'bg-warning', label: 'تحذير' },
+    reminder: { icon: Clock, activeBg: 'bg-info', rowBg: 'bg-info/5', text: 'text-info', dot: 'bg-info', label: 'تذكير' },
+    info: { icon: Info, activeBg: 'bg-muted', rowBg: 'bg-surface', text: 'text-muted', dot: 'bg-muted', label: 'معلومة' },
 };
 
 type SeverityKey = keyof typeof SEVERITY_CONFIG;
@@ -51,19 +51,16 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                 <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1 scrollbar-none">
                     {(['all', 'critical', 'warning', 'reminder', 'info'] as const).map((key) => {
                         const isActive = filter === key;
-                        const cfg = key === 'all' ? { color: 'var(--text-muted)', bg: 'color-mix(in srgb, var(--text-muted) 8%, transparent)', label: 'الكل' } : SEVERITY_CONFIG[key];
+                        const cfg = key === 'all' ? { activeBg: 'bg-muted', rowBg: 'bg-surface', text: 'text-muted', label: 'الكل' } : SEVERITY_CONFIG[key];
                         return (
                             <button
                                 key={key}
                                 onClick={() => setFilter(key)}
                                 className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 backdrop-blur-sm ${
                                     isActive
-                                        ? 'text-on-primary shadow-sm border-0'
+                                        ? `text-on-primary shadow-sm border-0 ${cfg.activeBg}`
                                         : 'text-muted/70 dark:text-muted/50 border border-border/30 hover:bg-surface/50 dark:hover:bg-card/30'
                                 }`}
-                                style={{
-                                    backgroundColor: isActive ? cfg.color : 'transparent',
-                                }}
                             >
                                 {cfg.label} ({counts[key]})
                             </button>
@@ -81,15 +78,11 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                         return (
                             <div
                                 key={`alert-${i}`}
-                                className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-surface/50 dark:hover:bg-card/30 border border-transparent hover:border-border/20 group"
-                                style={{ backgroundColor: cfg.bg }}
+                                className={`flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-surface/50 dark:hover:bg-card/30 border border-transparent hover:border-border/20 group ${cfg.rowBg}`}
                             >
                                 <div className="relative mt-0.5 flex-shrink-0">
-                                    <Icon size={18} style={{ color: cfg.color }} />
-                                    <span
-                                        className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full"
-                                        style={{ backgroundColor: cfg.color }}
-                                    />
+                                    <Icon size={18} className={cfg.text} />
+                                    <span className={`absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full ${cfg.dot}`} />
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <p className="text-sm font-medium text-main dark:text-on-primary/90 leading-relaxed">{alert.message}</p>

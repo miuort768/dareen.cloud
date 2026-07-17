@@ -10,6 +10,22 @@ const PULSE_COLORS: Record<string, string> = {
     unavailable: 'var(--text-muted)',
 };
 
+const PULSE_TEXT: Record<string, string> = {
+    excellent: 'text-success',
+    good: 'text-info',
+    fair: 'text-warning',
+    critical: 'text-error',
+    unavailable: 'text-muted',
+};
+
+const PULSE_BADGE: Record<string, string> = {
+    excellent: 'bg-success/20 text-success border-success/40',
+    good: 'bg-info/20 text-info border-info/40',
+    fair: 'bg-warning/20 text-warning border-warning/40',
+    critical: 'bg-error/20 text-error border-error/40',
+    unavailable: 'bg-muted/20 text-muted border-muted/40',
+};
+
 const PULSE_LABELS: Record<string, string> = {
     excellent: 'ممتاز',
     good: 'جيد',
@@ -71,8 +87,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <span
-                            className="text-4xl font-bold tabular-nums"
-                            style={{ color }}
+                            className={`text-4xl font-bold tabular-nums ${PULSE_TEXT[pulse.status] || 'text-muted'}`}
                         >
                             {pulse.score}
                         </span>
@@ -80,12 +95,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
                     </div>
                 </div>
                 <span
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mt-3 backdrop-blur-md border border-white/10"
-                    style={{
-                        backgroundColor: color + '20',
-                        color,
-                        borderColor: color + '40',
-                    }}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mt-3 backdrop-blur-md border border-white/10 ${PULSE_BADGE[pulse.status] || 'bg-muted/20 text-muted border-muted/40'}`}
                 >
                     <LabelIcon size={12} />
                     {PULSE_LABELS[pulse.status] || 'غير متاح'}

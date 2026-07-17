@@ -8,17 +8,13 @@ const STATUS_ICONS: Record<string, typeof CheckCircle> = {
     critical: XCircle,
 };
 
-const STATUS_BG: Record<string, string> = {
-    healthy: 'var(--bg-success)',
-    warning: 'var(--bg-warning)',
-    critical: 'var(--bg-error)',
+const STATUS_STYLES: Record<string, { text: string; bg: string; bgLight: string; bgBadge: string }> = {
+    healthy: { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', bgBadge: 'bg-success/15' },
+    warning: { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', bgBadge: 'bg-warning/15' },
+    critical: { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/10', bgBadge: 'bg-error/15' },
 };
 
-const STATUS_TEXT: Record<string, string> = {
-    healthy: 'var(--text-on-success)',
-    warning: 'var(--text-on-warning)',
-    critical: 'var(--text-on-error)',
-};
+const DEFAULT_STYLE = { text: 'text-muted', bg: 'bg-muted', bgLight: 'bg-muted/10', bgBadge: 'bg-muted/15' };
 
 interface StatusRowProps {
     icon: typeof Server;
@@ -31,14 +27,13 @@ interface StatusRowProps {
 
 const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, progress, progressLabel }: StatusRowProps) {
     const StatusIcon = STATUS_ICONS[status] || Activity;
-    const color = STATUS_BG[status] || 'var(--text-muted)';
-    const textColor = STATUS_TEXT[status] || 'var(--text-muted)';
+    const styles = STATUS_STYLES[status] || DEFAULT_STYLE;
 
     return (
         <div className="flex items-center justify-between py-2.5 px-3 rounded-xl transition-all hover:bg-surface/30 dark:hover:bg-card/30">
             <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: color + '15' }}>
-                    <Icon size={15} style={{ color }} />
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${styles.bgLight}`}>
+                    <Icon size={15} className={styles.text} />
                 </div>
                 <div className="min-w-0">
                     <p className="text-sm font-medium text-main dark:text-on-primary/90">{label}</p>
@@ -50,16 +45,15 @@ const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, p
                     <div className="flex items-center gap-2">
                         <div className="w-16 h-1.5 rounded-full bg-border/30 overflow-hidden">
                             <div
-                                className="h-full rounded-full transition-all duration-500"
-                                style={{ width: `${Math.min(100, progress)}%`, backgroundColor: color }}
+                                className={`h-full rounded-full transition-all duration-500 ${styles.bg}`}
+                                style={{ width: `${Math.min(100, progress)}%` }}
                             />
                         </div>
-                        {progressLabel && <span className="text-micro font-medium tabular-nums" style={{ color }}>{progressLabel}</span>}
+                        {progressLabel && <span className={`text-micro font-medium tabular-nums ${styles.text}`}>{progressLabel}</span>}
                     </div>
                 )}
                 <span
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-micro font-semibold backdrop-blur-sm"
-                    style={{ backgroundColor: color + '20', color }}
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-micro font-semibold backdrop-blur-sm ${styles.bgBadge} ${styles.text}`}
                 >
                     <StatusIcon size={10} />
                     {status === 'healthy' ? 'سليم' : status === 'warning' ? 'تحذير' : 'خطأ'}

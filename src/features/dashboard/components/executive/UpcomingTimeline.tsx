@@ -2,12 +2,12 @@ import { memo } from 'react';
 import type { UpcomingSession } from '../../services/executiveService';
 import { Clock, GraduationCap, User, Calendar } from 'lucide-react';
 
-const URGENCY_COLORS: Record<string, string> = {
-    now: 'var(--bg-error)',
-    very_soon: 'var(--bg-warning)',
-    soon: 'var(--bg-info)',
-    within_hour: 'var(--bg-success)',
-    later: 'var(--text-muted)',
+const URGENCY_DOT: Record<string, string> = {
+    now: 'bg-error',
+    very_soon: 'bg-warning',
+    soon: 'bg-info',
+    within_hour: 'bg-success',
+    later: 'bg-muted',
 };
 
 const URGENCY_LABELS: Record<string, string> = {
@@ -18,12 +18,20 @@ const URGENCY_LABELS: Record<string, string> = {
     later: 'لاحقاً',
 };
 
-const URGENCY_BG: Record<string, string> = {
-    now: 'color-mix(in srgb, var(--bg-error) 8%, transparent)',
-    very_soon: 'color-mix(in srgb, var(--bg-warning) 8%, transparent)',
-    soon: 'color-mix(in srgb, var(--bg-info) 8%, transparent)',
-    within_hour: 'color-mix(in srgb, var(--bg-success) 8%, transparent)',
-    later: 'var(--bg-surface)',
+const URGENCY_ROW: Record<string, string> = {
+    now: 'bg-error/5',
+    very_soon: 'bg-warning/5',
+    soon: 'bg-info/5',
+    within_hour: 'bg-success/5',
+    later: 'bg-surface',
+};
+
+const URGENCY_BADGE: Record<string, string> = {
+    now: 'bg-error/20 text-error',
+    very_soon: 'bg-warning/20 text-warning',
+    soon: 'bg-info/20 text-info',
+    within_hour: 'bg-success/20 text-success',
+    later: 'bg-muted/20 text-muted',
 };
 
 export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { sessions: UpcomingSession[] }) {
@@ -44,33 +52,25 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                         <p className="text-xs text-muted/50 dark:text-muted/30 text-center py-8">لا توجد جلسات قادمة</p>
                     )}
                     {sorted.map((session, idx) => {
-                        const urgencyColor = URGENCY_COLORS[session.urgency] || 'var(--text-muted)';
-                        const timeBg = URGENCY_BG[session.urgency] || 'var(--bg-surface)';
                         const isLast = idx === sorted.length - 1;
 
                         return (
                             <div key={session.id} className="flex gap-3">
                                 <div className="flex flex-col items-center">
                                     <div
-                                        className="w-3 h-3 rounded-full ring-2 ring-white/50 dark:ring-card/50 flex-shrink-0 mt-1.5"
-                                        style={{ backgroundColor: urgencyColor }}
+                                        className={`w-3 h-3 rounded-full ring-2 ring-white/50 dark:ring-card/50 flex-shrink-0 mt-1.5 ${URGENCY_DOT[session.urgency] || 'bg-muted'}`}
                                     />
                                     {!isLast && (
-                                        <div className="w-px flex-1 min-h-[8px]" style={{ backgroundColor: 'var(--border)', opacity: 0.3 }} />
+                                        <div className="w-px flex-1 min-h-[8px] bg-border/30" />
                                     )}
                                 </div>
                                 <div
-                                    className="flex-1 min-w-0 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group mb-2"
-                                    style={{ backgroundColor: timeBg }}
+                                    className={`flex-1 min-w-0 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group mb-2 ${URGENCY_ROW[session.urgency] || 'bg-surface'}`}
                                 >
                                     <div className="flex items-center justify-between gap-2 mb-1.5">
                                         <p className="text-sm font-semibold text-main dark:text-on-primary/90 truncate">{session.subject}</p>
                                         <span
-                                            className="shrink-0 px-2 py-0.5 rounded-md text-micro font-bold backdrop-blur-sm"
-                                            style={{
-                                                backgroundColor: urgencyColor + '20',
-                                                color: urgencyColor,
-                                            }}
+                                            className={`shrink-0 px-2 py-0.5 rounded-md text-micro font-bold backdrop-blur-sm ${URGENCY_BADGE[session.urgency] || 'bg-muted/20 text-muted'}`}
                                         >
                                             {session.minutesUntil < 60
                                                 ? `${session.minutesUntil}د`
@@ -81,7 +81,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                                     <div className="flex items-center gap-3 text-xs text-muted/70 dark:text-muted/50">
                                         <span className="flex items-center gap-1"><User size={12} />{session.studentName}</span>
                                         <span className="flex items-center gap-1"><GraduationCap size={12} />{session.teacherName}</span>
-                                        <span className="flex items-center gap-1 mr-auto"><Clock size={12} />{session.time}</span>
+                                        <span className="flex items-center gap-1 ms-auto"><Clock size={12} />{session.time}</span>
                                     </div>
                                 </div>
                             </div>

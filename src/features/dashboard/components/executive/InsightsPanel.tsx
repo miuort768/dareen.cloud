@@ -53,10 +53,10 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
     return insights;
 }
 
-const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; color: string; bg: string }> = {
-    positive: { icon: TrendingUp, color: 'var(--bg-success)', bg: 'color-mix(in srgb, var(--bg-success) 8%, transparent)' },
-    negative: { icon: TrendingDown, color: 'var(--bg-error)', bg: 'color-mix(in srgb, var(--bg-error) 8%, transparent)' },
-    neutral: { icon: Target, color: 'var(--bg-info)', bg: 'color-mix(in srgb, var(--bg-info) 8%, transparent)' },
+const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; textClass: string; bgClass: string; iconBgClass: string }> = {
+    positive: { icon: TrendingUp, textClass: 'text-success', bgClass: 'bg-success/8', iconBgClass: 'bg-success/[0.125]' },
+    negative: { icon: TrendingDown, textClass: 'text-error', bgClass: 'bg-error/8', iconBgClass: 'bg-error/[0.125]' },
+    neutral: { icon: Target, textClass: 'text-info', bgClass: 'bg-info/8', iconBgClass: 'bg-info/[0.125]' },
 };
 
 export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
@@ -82,14 +82,12 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                         return (
                             <div
                                 key={`insight-${i}`}
-                                className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group"
-                                style={{ backgroundColor: cfg.bg }}
+                                className={`flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group ${cfg.bgClass}`}
                             >
                                 <div
-                                    className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
-                                    style={{ backgroundColor: cfg.color + '20' }}
+                                    className={`w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 ${cfg.iconBgClass}`}
                                 >
-                                    <Icon size={14} style={{ color: cfg.color }} />
+                                    <Icon size={14} className={cfg.textClass} />
                                 </div>
                                 <p className="text-sm text-main dark:text-on-primary/80 leading-relaxed">{insight.text}</p>
                             </div>

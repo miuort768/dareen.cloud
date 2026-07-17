@@ -30,13 +30,13 @@ const TIME_SLOTS = [
 ];
 
 const ACCENT_COLORS = [
-    { color: 'var(--bg-primary)', label: 'بنفسجي' },
-    { color: 'var(--bg-success)', label: 'أخضر' },
-    { color: 'var(--bg-warning)', label: 'عنبر' },
-    { color: 'var(--bg-error)', label: 'وردي' },
-    { color: 'var(--bg-success)', label: 'زيتي' },
-    { color: 'var(--bg-primary)', label: 'بنفسجي فاتح' },
-    { color: 'var(--bg-warning)', label: 'برتقالي' },
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/5', label: 'أخضر' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/5', label: 'عنبر' },
+    { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/5', label: 'وردي' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/5', label: 'زيتي' },
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي فاتح' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/5', label: 'برتقالي' },
 ];
 
 interface ScheduleGridProps {
@@ -81,13 +81,12 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                         return (
                                             <div key={`${day}-${slot.hour}`}
                                                 onClick={() => onSelectEvent(event)}
-                                                className="p-1.5 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px]"
-                                                style={{ backgroundColor: `${color}08` }}>
-                                                <div className="absolute top-0 start-0 w-full h-0.5" style={{ backgroundColor: color }} />
+                                                className={`p-1.5 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px] ${accent.bgLight}`}>
+                                                <div className={`absolute top-0 start-0 w-full h-0.5 ${accent.bg}`} />
                                                 <div className="flex items-start gap-1.5 h-full">
-                                                    <div className="w-1 h-full shrink-0 mt-0.5" style={{ backgroundColor: color }} />
+                                                    <div className={`w-1 h-full shrink-0 mt-0.5 ${accent.bg}`} />
                                                     <div className="min-w-0 flex-1">
-                                                        <p className="text-micro font-bold leading-tight mb-0.5 truncate" style={{ color }}>{event.studentName}</p>
+                                                        <p className={`text-micro font-bold leading-tight mb-0.5 truncate ${accent.text}`}>{event.studentName}</p>
                                                         <p className="text-micro font-bold text-muted truncate">{event.subject}</p>
                                                         <p className="text-micro font-bold text-muted truncate">{event.teacherName}</p>
                                                     </div>
@@ -112,8 +111,8 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                 {uniqueTeachers.map((teacher, idx) => {
                     const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
                     return (
-                        <div key={idx} className="flex items-center gap-1.5">
-                            <div className="w-2 h-2" style={{ backgroundColor: accent.color }} />
+                            <div key={idx} className="flex items-center gap-1.5">
+                            <div className={`w-2 h-2 ${accent.bg}`} />
                             <span className="text-micro font-bold text-muted">{teacher}</span>
                         </div>
                     );

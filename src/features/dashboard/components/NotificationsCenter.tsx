@@ -145,14 +145,12 @@ export const NotificationsCenter = ({
     const filteredSmartAlerts = smartAlerts;
     const filteredRoomAlerts = roomAlerts;
 
-    const color = 'var(--bg-primary)';
-
     return (
         <div className="w-full space-y-6" dir="rtl">
             {/* Header / Tabs */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 bg-card rounded-card shadow-soft border border-border/50 transition-all duration-300">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-soft" style={{ backgroundColor: `${color}12`, color }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-soft bg-primary-soft text-primary">
                         <ShieldAlert size={20} />
                     </div>
                     <div>
@@ -161,14 +159,13 @@ export const NotificationsCenter = ({
                     </div>
                 </div>
 
-                <div className="flex p-1 rounded-xl" style={{ backgroundColor: `${color}15` }}>
+                <div className="flex p-1 rounded-xl bg-primary-soft">
                     <button 
                         onClick={() => setActiveTab('smart')}
                         className={cn(
                             "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-card",
-                            activeTab === 'smart' ? "shadow-soft" : "text-muted hover:text-main dark:hover:text-on-primary"
+                            activeTab === 'smart' ? "bg-primary text-on-primary shadow-soft" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
-                        style={activeTab === 'smart' ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
                     >
                         <Zap size={12} />
                         إخطارات ذكية
@@ -177,9 +174,8 @@ export const NotificationsCenter = ({
                         onClick={() => setActiveTab('room')}
                         className={cn(
                             "px-6 py-2 font-bold text-micro transition-all flex items-center gap-2 rounded-card",
-                            activeTab === 'room' ? "shadow-soft" : "text-muted hover:text-main dark:hover:text-on-primary"
+                            activeTab === 'room' ? "bg-primary text-on-primary shadow-soft" : "text-muted hover:text-main dark:hover:text-on-primary"
                         )}
-                        style={activeTab === 'room' ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
                     >
                         <Bell size={12} />
                         غرفة التنبيهات
@@ -192,7 +188,7 @@ export const NotificationsCenter = ({
                 <div className={cn("lg:col-span-7 p-6 bg-card rounded-card shadow-soft border border-border/50 transition-all relative overflow-hidden", activeTab !== 'smart' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-soft" style={{ backgroundColor: `${color}12`, color }}>
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-soft bg-primary-soft text-primary">
                                 <AlertTriangle size={18} />
                             </div>
                             <div>
@@ -200,7 +196,7 @@ export const NotificationsCenter = ({
                                 <p className="text-micro font-medium text-muted mt-0.5">مراقبة الأنظمة الذكية</p>
                             </div>
                         </div>
-                        <div className="px-3 py-1 rounded-lg shadow-soft text-on-primary text-micro font-bold" style={{ backgroundColor: color }}>
+                        <div className="px-3 py-1 rounded-lg shadow-soft bg-primary text-on-primary text-micro font-bold">
                             {filteredSmartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج
                         </div>
                     </div>
@@ -218,7 +214,7 @@ export const NotificationsCenter = ({
                                     </div>
                                 </div>
                                 {typeof alert.action === 'function' && (
-                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-soft rounded-lg text-on-primary" style={{ backgroundColor: color }}>
+                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-soft rounded-lg bg-primary text-on-primary">
                                         <ArrowLeft size={14} />
                                     </button>
                                 )}
@@ -236,7 +232,7 @@ export const NotificationsCenter = ({
                 <div className={cn("lg:col-span-5 p-6 bg-card rounded-card shadow-soft border border-border/50 transition-all relative overflow-hidden", activeTab !== 'room' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-soft" style={{ backgroundColor: `${color}12`, color }}>
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-soft bg-primary-soft text-primary">
                                 <Bell size={18} />
                             </div>
                             <div>
@@ -244,7 +240,7 @@ export const NotificationsCenter = ({
                                 <p className="text-micro font-medium text-muted mt-0.5">مركز العمليات المباشر</p>
                             </div>
                         </div>
-                        <div className="px-3 py-1 rounded-lg shadow-soft text-on-primary text-micro font-bold" style={{ backgroundColor: color }}>
+                        <div className="px-3 py-1 rounded-lg shadow-soft bg-primary text-on-primary text-micro font-bold">
                             {filteredRoomAlerts.length} تنبيهات
                         </div>
                     </div>
@@ -253,7 +249,7 @@ export const NotificationsCenter = ({
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert) => (
                             <div key={alert.id} className="flex items-center justify-between group p-3 bg-card rounded-card shadow-soft border border-border/50 transition-all">
                                 <div className="flex items-center gap-4 min-w-0">
-                                    <div className="w-10 h-10 flex items-center justify-center transition-all rounded-lg" style={{ backgroundColor: `${color}12`, color }}>
+                                    <div className="w-10 h-10 flex items-center justify-center transition-all rounded-lg bg-primary-soft text-primary">
                                         <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
@@ -264,12 +260,12 @@ export const NotificationsCenter = ({
                                 {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 text-on-primary text-micro font-bold transition-all active:scale-[0.98] shadow-soft rounded-lg" style={{ backgroundColor: 'var(--bg-success)' }}
+                                        className="h-8 px-4 bg-success text-on-primary text-micro font-bold transition-all active:scale-[0.98] shadow-soft rounded-lg"
                                     >
                                         واتساب
                                     </button>
                                 ) : (
-                                    <Link to={alert.link || '#'} className="h-8 px-4 text-on-primary text-micro font-bold transition-all active:scale-[0.98] flex items-center justify-center shadow-soft rounded-lg" style={{ backgroundColor: color }}>
+                                    <Link to={alert.link || '#'} className="h-8 px-4 bg-primary text-on-primary text-micro font-bold transition-all active:scale-[0.98] flex items-center justify-center shadow-soft rounded-lg">
                                         عرض
                                     </Link>
                                 )}

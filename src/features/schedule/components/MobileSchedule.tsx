@@ -29,9 +29,14 @@ const TIME_SLOTS = [
     { hour: 10, period: 'pm', label: '10:00 م' },
 ];
 
-const TEACHER_COLORS = [
-    'var(--bg-primary)', 'var(--bg-success)', 'var(--bg-warning)', 'var(--bg-error)',
-    'var(--bg-success)', 'var(--bg-primary)', 'var(--bg-warning)'
+const TEACHER_STYLES = [
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/10', border: 'border-e-primary' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', border: 'border-e-success' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', border: 'border-e-warning' },
+    { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/10', border: 'border-e-error' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', border: 'border-e-success' },
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/10', border: 'border-e-primary' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', border: 'border-e-warning' },
 ];
 
 const fadeUp = { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.35, ease: 'easeOut' } };
@@ -104,9 +109,9 @@ export const MobileSchedule = () => {
 
     const getDayEventsAtTime = (events: ScheduleEvent[], hour: number, period: string) =>
         events.filter(e => Number(e.hour) === hour && e.period === period);
-    const getTeacherColor = (teacherName: string) => {
+    const getTeacherStyle = (teacherName: string) => {
         const idx = uniqueTeachers.indexOf(teacherName);
-        return TEACHER_COLORS[Math.max(0, idx) % TEACHER_COLORS.length];
+        return TEACHER_STYLES[Math.max(0, idx) % TEACHER_STYLES.length];
     };
 
     const handleTouchStart = (e: React.TouchEvent) => { if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY); };
@@ -140,7 +145,7 @@ export const MobileSchedule = () => {
     return (
         <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
             dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background dark:bg-background">
-            <motion.div style={{ height: pullDistance }} animate={{ height: isRefreshing ? 50 : pullDistance }}
+            <motion.div initial={{ height: pullDistance }} animate={{ height: isRefreshing ? 50 : pullDistance }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full">
                 <div className="flex items-center gap-2.5 text-primary font-medium text-xs">
@@ -196,23 +201,22 @@ export const MobileSchedule = () => {
                                 </div>
                                 <div className="flex-1 space-y-1.5 pb-2">
                                     {slotEvents.map(event => {
-                                        const color = getTeacherColor(event.teacherName);
+                                        const ts = getTeacherStyle(event.teacherName);
                                         return (
                                             <motion.div key={event.id} whileTap={{ scale: 0.97 }}
                                                 onClick={() => { triggerHaptic('light'); setSelectedEvent(event); setShowDetails(true); }}
-                                                className="bg-card rounded-card p-3 shadow-soft border-e-[3px] cursor-pointer active:scale-[0.97] transition-all"
-                                                style={{ borderRightColor: color }}>
+                                                className={`bg-card rounded-card p-3 shadow-soft border-e-[3px] cursor-pointer active:scale-[0.97] transition-all ${ts.border}`}>
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black text-on-primary"
-                                                            style={{ backgroundColor: color }}>{event.studentName.charAt(0)}</div>
+                                                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black text-on-primary ${ts.bg}`}>
+                                                            {event.studentName.charAt(0)}
+                                                        </div>
                                                         <div>
                                                             <p className="text-xs font-bold text-main leading-tight">{event.studentName}</p>
                                                             <p className="text-micro font-bold text-muted">{event.subject}</p>
                                                         </div>
                                                     </div>
-                                                    <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg"
-                                                        style={{ backgroundColor: `${color}15`, color }}>{event.teacherName}</span>
+                                                    <span className={`text-micro font-bold px-1.5 py-0.5 rounded-lg ${ts.bgLight} ${ts.text}`}>{event.teacherName}</span>
                                                 </div>
                                             </motion.div>
                                         );
