@@ -54,7 +54,7 @@ export const Teachers = () => {
 
     const uniqueSubjects = useMemo(() => new Set(teachers.map(t => t.subject)).size, [teachers]);
     const averagePrice = useMemo(() => teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + Number(t.price), 0) / teachers.length) : 0, [teachers]);
-    const totalStudentsCount = useMemo(() => new Set(students.flatMap(s => (s.enrollments || []).map((e: Enrollment) => ({ student: s.id, teacher: e.teacher })).filter(e => teachers.some(t => t.name === e.teacher)).map(e => e.student)).size, [students, teachers]);
+    const totalStudentsCount = useMemo(() => new Set(students.flatMap(s => (s.enrollments || []).map((e: Enrollment) => ({ student: s.id, teacher: e.teacher }))).filter(e => teachers.some(t => t.name === e.teacher)).map(e => e.student)).size, [students, teachers]);
     const studentCounts = useMemo(() => teachers.reduce((acc, t) => { acc[t.name] = students.filter(s => s.enrollments?.some((e: Enrollment) => e.teacher === t.name)).length; return acc; }, {} as Record<string, number>), [teachers, students]);
     const filteredTeachers = useMemo(() => teachers.filter(t => (t.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || (t.subject || '').toLowerCase().includes(searchTerm.toLowerCase()) || (t.phone1 || '').includes(searchTerm)), [teachers, searchTerm]);
 
