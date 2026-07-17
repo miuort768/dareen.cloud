@@ -30,7 +30,7 @@ export const Evaluations = () => {
                 const myChildren = await api.get<Student[]>('/parents/my-children');
                 if (!mountedRef.current) return;
                 setStudents(myChildren);
-                const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`));
+                const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`).catch(e => { console.error(`Failed evals for ${c.id}:`, e); return [] as Evaluation[]; }));
                 const allEvalsResults = await Promise.all(evalsPromises);
                 if (!mountedRef.current) return;
                 setEvaluations(allEvalsResults.flat());

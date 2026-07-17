@@ -40,7 +40,7 @@ export interface TableProps<T> {
 const SkeletonRow = ({ cols }: { cols: number }) => (
   <tr>
     {Array.from({ length: cols }).map((_, i) => (
-      <td key={i} className="px-5 py-4">
+      <td key={`skel-td-${i}`} className="px-5 py-4">
         <div className="h-4 bg-hover rounded animate-pulse" style={{ width: `${60 + Math.random() * 30}%` }} />
       </td>
     ))}
@@ -135,7 +135,7 @@ function TableInner<T>({
       return (
         <tbody>
           {Array.from({ length: 5 }).map((_, i) => (
-            <SkeletonRow key={i} cols={columns.length} />
+            <SkeletonRow key={`skel-row-${i}`} cols={columns.length} />
           ))}
         </tbody>
       );

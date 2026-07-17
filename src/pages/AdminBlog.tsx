@@ -168,7 +168,7 @@ export const AdminBlog = () => {
             setIsModalOpen(false);
             fetchPosts();
         } catch (err) {
-            showNotification(err.message || 'حدث خطأ في الحفظ', 'error');
+            showNotification(err instanceof Error ? err.message : 'حدث خطأ في الحفظ', 'error');
         } finally {
             setSubmitting(false);
         }

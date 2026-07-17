@@ -211,7 +211,7 @@ export const Settings = () => {
     }, [academyName, academyLogo, academyTagline, adminPhone, semesterName, semesters, defaultSessionPrice, defaultTeacherPrice, currencySymbol, balanceWarningThreshold, telegramHandle, backdateLockEnabled, autoFreezeThreshold]);
 
     useEffect(() => {
-        try { setLocalHeroBanners(JSON.parse(heroBanners)); } catch { }
+        try { setLocalHeroBanners(JSON.parse(heroBanners)); } catch (e) { console.warn('Failed to parse heroBanners:', e); }
     }, [heroBanners]);
 
     const showNotify = (msg: string) => { setNotificationMessage(msg); setShowSuccess(true); setTimeout(() => setShowSuccess(false), 3000); };
@@ -228,7 +228,7 @@ export const Settings = () => {
                 setBackdateLockEnabled(localBackdateLock), setAutoFreezeThreshold(Number(localAutoFreeze)),
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
-        } catch { alert('خطأ في الحفظ'); }
+        } catch (e) { console.error('Save error:', e); alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

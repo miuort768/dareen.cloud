@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, Sparkles } from
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
+import { api } from '../../lib/api';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const Contact = () => {
@@ -18,15 +19,7 @@ export const Contact = () => {
         e.preventDefault();
         setFormState('submitting');
         try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
-            if (!res.ok) {
-                const errBody = await res.json().catch(() => ({}));
-                throw new Error(errBody.details || errBody.message || `HTTP ${res.status}`);
-            }
+            await api.post('/contact', formData);
             setFormData({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', curriculum: 'المنهج الكويتي', message: '' });
             setFormState('success');
         } catch (err) {

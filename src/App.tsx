@@ -135,7 +135,7 @@ function App() {
     } else if (saved === 'light') {
       document.documentElement.classList.remove('dark');
     }
-  }, [location.pathname]);
+    }, []);
 
   if (isLoading || isSettingsLoading) {
     if (loadTimeout) {
@@ -151,7 +151,7 @@ function App() {
               <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
                 إعادة التحميل
               </button>
-              <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-6 py-2.5 bg-error hover:bg-error text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
+              <button onClick={() => { if (window.confirm('هل أنت متأكد من مسح جميع البيانات المخزنة؟')) { ['auth_token', 'app_current_user', 'app_isAuthenticated', 'theme', 'public-theme'].forEach(k => { try { localStorage.removeItem(k); } catch {} }); window.location.reload(); } }} className="px-6 py-2.5 bg-error hover:bg-error text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
                 مسح التخزين وإعادة التحميل
               </button>
             </div>
