@@ -15,12 +15,12 @@ interface InvoiceStatsProps {
 }
 
 const items = [
-  { label: 'المعلمات', key: 'teachers', icon: Users, color: 'var(--bg-primary)' },
-  { label: 'الإجمالي', key: 'total', icon: DollarSign, color: 'var(--bg-success)' },
-  { label: 'المدفوع', key: 'paid', icon: CheckCircle2, color: 'var(--bg-info)' },
-  { label: 'المعلق', key: 'unpaid', icon: AlertCircle, color: 'var(--bg-error)' },
-  { label: 'مصاريف', key: 'expenses', icon: CreditCard, color: 'var(--bg-warning)' },
-  { label: 'النسبة', key: 'percent', icon: Percent, color: 'var(--bg-error)' },
+  { label: 'المعلمات', key: 'teachers', icon: Users, bgClass: 'bg-primary' },
+  { label: 'الإجمالي', key: 'total', icon: DollarSign, bgClass: 'bg-success' },
+  { label: 'المدفوع', key: 'paid', icon: CheckCircle2, bgClass: 'bg-info' },
+  { label: 'المعلق', key: 'unpaid', icon: AlertCircle, bgClass: 'bg-error' },
+  { label: 'مصاريف', key: 'expenses', icon: CreditCard, bgClass: 'bg-warning' },
+  { label: 'النسبة', key: 'percent', icon: Percent, bgClass: 'bg-error' },
 ] as const;
 
 const getValue = (s: TeacherStats, key: string) => {
@@ -41,9 +41,9 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
       <div
         key={`finance-${i}`}
         className={cn(
-          'rounded-2xl p-3 flex items-center gap-3 dark:brightness-[0.65]'
+          'rounded-2xl p-3 flex items-center gap-3 dark:brightness-[0.65]',
+          s.bgClass
         )}
-        style={{ backgroundColor: s.color }}
       >
         <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
           <s.icon size={16} className="text-on-primary" />

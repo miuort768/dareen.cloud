@@ -136,15 +136,15 @@ export const AcademicReport = ({
 
             <div className="grid grid-cols-3 gap-3">
                 {[
-                    { label: 'إجمالي الطلاب', value: totalStudents, icon: Users, color: 'var(--chart-1)' },
-                    { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, color: 'var(--chart-2)' },
-                    { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, color: 'var(--chart-4)' },
+                    { label: 'إجمالي الطلاب', value: totalStudents, icon: Users, textClass: 'text-chart-1', bgClass: 'bg-chart-1/10' },
+                    { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, textClass: 'text-chart-2', bgClass: 'bg-chart-2/10' },
+                    { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, textClass: 'text-chart-4', bgClass: 'bg-chart-4/10' },
                 ].map((item, i) => (
                     <div key={`report-${i}`} className="bg-card border border-border rounded-card shadow-soft p-4">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-2" style={{ backgroundColor: `${item.color}10` }}>
-                            <item.icon size={16} style={{ color: item.color }} />
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 ${item.bgClass}`}>
+                            <item.icon size={16} className={item.textClass} />
                         </div>
-                        <p className="text-xl font-black tabular-nums" style={{ color: item.color }}>{item.value}</p>
+                        <p className={`text-xl font-black tabular-nums ${item.textClass}`}>{item.value}</p>
                         <p className="text-micro font-bold mt-1 text-muted">{item.label}</p>
                     </div>
                 ))}

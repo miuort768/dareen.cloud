@@ -20,11 +20,11 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
     return (
         <SectionCard>
             <div className="p-4 border-b border-border/50 dark:border-border/50">
-                <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" color="var(--bg-warning)" />
+                <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-start">
-                    <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                    <thead className="bg-primary">
                         <tr>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary uppercase tracking-wider">الطالب</th>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary">المعلمة</th>
@@ -39,13 +39,14 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                                 <td className="px-4 py-4 text-xs font-bold text-muted dark:text-muted">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-micro text-error">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
-                                    <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-error) 7%, transparent)', color: 'var(--bg-error)' }}>تعويض معلق</div>
+                                    <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg bg-error-soft text-error">تعويض معلق</div>
                                 </td>
                             </tr>
                         ))}
                         {cancelledNeedingComp.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="px-6 py-20 text-center">
+                                    {/* decorative empty-state icon — 13% opacity has no semantic token */}
                                     <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: 'color-mix(in srgb, var(--bg-success) 13%, transparent)' }} />
                                     <p className="text-xs font-bold text-muted uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                 </td>

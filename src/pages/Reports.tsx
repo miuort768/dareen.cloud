@@ -131,21 +131,21 @@ export const Reports = () => {
                         {/* Mini Stats Squares */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
                             {[
-                                { label: 'الطلاب', value: state.totalStudents, icon: Users, color: 'var(--chart-1)' },
-                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, color: 'var(--chart-1)' },
-                                { label: 'المواد', value: uniqueSubjects, icon: Award, color: 'var(--chart-4)' },
-                                { label: 'الحصص', value: state.totalSessions, icon: Calendar, color: 'var(--chart-2)' },
-                                { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, color: 'var(--chart-6)' },
-                                { label: 'الإيرادات', value: Math.round(state.totalRevenue / 1000) + 'k', icon: DollarSign, color: 'var(--chart-5)' },
-                                { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: 'var(--chart-3)' },
-                                { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: 'var(--text-muted)' }
+                                { label: 'الطلاب', value: state.totalStudents, icon: Users, textClass: 'text-chart-1', bgClass: 'bg-chart-1/10' },
+                                { label: 'الاشتراكات', value: state.totalEnrollments, icon: Target, textClass: 'text-chart-1', bgClass: 'bg-chart-1/10' },
+                                { label: 'المواد', value: uniqueSubjects, icon: Award, textClass: 'text-chart-4', bgClass: 'bg-chart-4/10' },
+                                { label: 'الحصص', value: state.totalSessions, icon: Calendar, textClass: 'text-chart-2', bgClass: 'bg-chart-2/10' },
+                                { label: 'المكتملة', value: state.completedSessions, icon: CheckCircle2, textClass: 'text-chart-6', bgClass: 'bg-chart-6/10' },
+                                { label: 'الإيرادات', value: Math.round(state.totalRevenue / 1000) + 'k', icon: DollarSign, textClass: 'text-chart-5', bgClass: 'bg-chart-5/10' },
+                                { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, textClass: 'text-chart-3', bgClass: 'bg-chart-3/10' },
+                                { label: 'النشطة', value: state.totalEnrollments, icon: Target, textClass: 'text-muted', bgClass: 'bg-muted/10' }
                             ].map((stat, i) => (
                                 <div key={`stat-${i}`} className="bg-card border border-border shadow-soft rounded-card p-3 flex flex-col justify-between aspect-square">
-                                    <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${stat.color} 12%, transparent)` }}>
-                                        <stat.icon size={14} style={{ color: stat.color }} />
+                                    <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${stat.bgClass}`}>
+                                        <stat.icon size={14} className={stat.textClass} />
                                     </div>
                                     <div className="mt-auto">
-                                        <p className="text-sm font-black font-mono leading-none" style={{ color: stat.color }}>{stat.value}</p>
+                                        <p className={`text-sm font-black font-mono leading-none ${stat.textClass}`}>{stat.value}</p>
                                         <p className="text-micro font-bold mt-1 truncate text-muted">{stat.label}</p>
                                     </div>
                                 </div>
@@ -165,18 +165,25 @@ export const Reports = () => {
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                                 {state.subjectPieData.slice(0, 6).map((s, i) => {
-                                    const chartColors = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-4)', 'var(--chart-5)', 'var(--chart-3)', 'var(--chart-1)'];
-                                    const color = chartColors[i];
+                                    const chartColorClasses = [
+                                        { text: 'text-chart-1', bg: 'bg-chart-1', var: 'var(--chart-1)' },
+                                        { text: 'text-chart-2', bg: 'bg-chart-2', var: 'var(--chart-2)' },
+                                        { text: 'text-chart-4', bg: 'bg-chart-4', var: 'var(--chart-4)' },
+                                        { text: 'text-chart-5', bg: 'bg-chart-5', var: 'var(--chart-5)' },
+                                        { text: 'text-chart-3', bg: 'bg-chart-3', var: 'var(--chart-3)' },
+                                        { text: 'text-chart-1', bg: 'bg-chart-1', var: 'var(--chart-1)' },
+                                    ];
+                                    const cc = chartColorClasses[i];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
-                                        <div key={`report-${i}`} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
+                                        <div key={`report-${i}`} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${cc.var} 25%, transparent)` }}>
                                             <div className="flex items-center justify-between">
-                                                <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
-                                                <p className="text-micro font-black font-mono" style={{ color }}>{pct}%</p>
+                                                <div className={`w-2.5 h-2.5 rounded-sm ${cc.bg}`} />
+                                                <p className={`text-micro font-black font-mono ${cc.text}`}>{pct}%</p>
                                             </div>
                                             <p className="text-micro font-bold text-muted truncate">{s.name}</p>
                                             <div className="w-full h-1.5 rounded-xl overflow-hidden bg-surface">
-                                                <div className="h-full rounded-xl transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
+                                                <div className={`h-full rounded-xl transition-all ${cc.bg}`} style={{ width: `${pct}%` }} />
                                             </div>
                                         </div>
                                     );

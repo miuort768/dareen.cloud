@@ -9,16 +9,16 @@ interface FinancialReportProps {
     reportCurrency?: string;
 }
 
-const FinancialCard = ({ title, value, subValue, icon: Icon, color, subColor, currency }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; subColor?: string; currency?: string }) => (
+const FinancialCard = ({ title, value, subValue, icon: Icon, color, textClass, subTextClass, currency }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; textClass: string; subTextClass?: string; currency?: string }) => (
     <div className="bg-card border border-border/50 p-4 rounded-card shadow-soft">
         <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: `${color}12` }}>
-                <Icon size={14} style={{ color }} />
+                <Icon size={14} className={textClass} />
             </div>
             <h3 className="text-xs font-bold text-muted">{title}</h3>
         </div>
         <p className="text-lg font-black text-main tabular-nums">{value.toLocaleString()} {currency}</p>
-        <p className="text-micro font-bold mt-1" style={{ color: subColor || color }}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
+        <p className={`text-micro font-bold mt-1 ${subTextClass || textClass}`}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
     </div>
 );
 
@@ -42,7 +42,8 @@ export const FinancialReport = ({
                     subValue={monthRevenue}
                     icon={TrendingUp}
                     color="var(--bg-success)"
-                    subColor="var(--bg-success)"
+                    textClass="text-success"
+                    subTextClass="text-success"
                     currency={reportCurrency}
                 />
                 <FinancialCard
@@ -51,7 +52,8 @@ export const FinancialReport = ({
                     subValue={monthExpenses}
                     icon={TrendingDown}
                     color="var(--bg-error)"
-                    subColor="var(--bg-error)"
+                    textClass="text-error"
+                    subTextClass="text-error"
                     currency={reportCurrency}
                 />
                 <FinancialCard
@@ -60,7 +62,8 @@ export const FinancialReport = ({
                     subValue={monthNetProfit}
                     icon={DollarSign}
                     color="var(--bg-primary)"
-                    subColor="var(--bg-primary)"
+                    textClass="text-primary"
+                    subTextClass="text-primary"
                     currency={reportCurrency}
                 />
             </div>

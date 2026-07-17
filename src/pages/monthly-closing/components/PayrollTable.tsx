@@ -31,7 +31,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-start">
-                    <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                    <thead className="bg-primary">
                         <tr>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary uppercase tracking-wider">المعلمة</th>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">الحصص</th>
@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-micro" style={{ backgroundColor: 'color-mix(in srgb, var(--bg-primary) 7%, transparent)', color: 'var(--bg-primary)' }}>
+                                        <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-micro bg-primary-soft text-primary">
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>

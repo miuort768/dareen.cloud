@@ -122,12 +122,12 @@ export const AttendanceReport = ({
                 {/* Legend */}
                 <div className="flex items-center justify-center gap-6 pb-4">
                     {[
-                        { color: 'var(--chart-6)', label: 'إجمالي' },
-                        { color: 'var(--chart-3)', label: 'حضور' },
-                        { color: 'var(--chart-5)', label: 'غياب' },
+                        { bgClass: 'bg-chart-6', label: 'إجمالي' },
+                        { bgClass: 'bg-chart-3', label: 'حضور' },
+                        { bgClass: 'bg-chart-5', label: 'غياب' },
                     ].map((l, i) => (
                         <div key={`report-${i}`} className="flex items-center gap-1.5">
-                            <div className="w-5 h-0.5 rounded-full" style={{ backgroundColor: l.color }} />
+                            <div className={`w-5 h-0.5 rounded-full ${l.bgClass}`} />
                             <span className="text-micro font-bold text-muted">{l.label}</span>
                         </div>
                     ))}

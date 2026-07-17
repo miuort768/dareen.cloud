@@ -29,7 +29,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         disabled={disabled}
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]',
+            'flex items-center justify-center gap-2 bg-gradient-to-l from-primary to-primary-hover',
             'text-on-primary text-xs font-bold px-4 py-2 transition-all shadow-sm active:scale-[0.97] rounded-xl hover:brightness-90',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className

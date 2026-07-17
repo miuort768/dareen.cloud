@@ -11,9 +11,9 @@ interface StatsStripProps {
 
 export const ParentStatsStrip = ({ points, attendanceRate, rankName }: StatsStripProps) => {
     const items = [
-        { icon: TrendingUp, label: 'اللقب', value: rankName, color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)' },
-        { icon: CheckCircle, label: 'الحضور', value: `${attendanceRate}%`, color: 'var(--text-success)', bg: 'var(--bg-success-soft)' },
-        { icon: Star, label: 'النقاط', value: points, color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)' },
+        { icon: TrendingUp, label: 'اللقب', value: rankName, textClass: 'text-primary', bgClass: 'bg-primary-soft' },
+        { icon: CheckCircle, label: 'الحضور', value: `${attendanceRate}%`, textClass: 'text-success', bgClass: 'bg-success-soft' },
+        { icon: Star, label: 'النقاط', value: points, textClass: 'text-warning', bgClass: 'bg-warning-soft' },
     ];
     return (
         <div className="flex flex-row gap-2 md:gap-4">
@@ -22,8 +22,8 @@ export const ParentStatsStrip = ({ points, attendanceRate, rankName }: StatsStri
                 return (
                     <div key={item.label}
                         className="flex-1 bg-card rounded-card p-3 shadow-soft border border-border flex flex-col items-center text-center gap-1">
-                        <div className="w-9 h-9 rounded-card flex items-center justify-center" style={{ backgroundColor: item.bg }}>
-                            <Icon size={18} style={{ color: item.color }} />
+                        <div className={`w-9 h-9 rounded-card flex items-center justify-center ${item.bgClass}`}>
+                            <Icon size={18} className={item.textClass} />
                         </div>
                         <span className="text-sm font-black text-main">{item.value}</span>
                         <span className="text-micro text-muted font-medium">{item.label}</span>
