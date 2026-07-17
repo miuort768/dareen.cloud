@@ -1,5 +1,5 @@
 import { Gift, Trophy, Video, Star } from 'lucide-react';
-import { COURSES, CATEGORIES } from '../../data/courses';
+import { COURSES, CATEGORIES } from '../../../data/courses';
 import type { ReactNode } from 'react';
 
 export type FeatureVariant = 'primary' | 'info' | 'success' | 'warning';
