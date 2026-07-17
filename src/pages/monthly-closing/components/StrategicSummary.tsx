@@ -1,6 +1,7 @@
 import React from 'react';
 import { TrendingUp, Receipt, CheckCircle2 } from 'lucide-react';
 import { SectionCard } from './ClosingUI';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface StrategicSummaryProps {
     netProjectedProfit: number;
@@ -36,9 +37,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 </p>
                                 <span className="text-xs font-black text-muted uppercase tracking-widest">{reportCurrency}</span>
                             </div>
-                            <div className="mt-4 h-1 w-full bg-primary-active overflow-hidden">
-                                <div className="h-full bg-success" style={{ width: `${totalProjectedIncome > 0 ? (netProjectedProfit / totalProjectedIncome) * 100 : 0}%` }}></div>
-                            </div>
+                            <ProgressBar value={totalProjectedIncome > 0 ? (netProjectedProfit / totalProjectedIncome) * 100 : 0} variant="success" size="sm" trackClassName="bg-primary-active" />
                         </div>
 
                         <div className="group transition-all">

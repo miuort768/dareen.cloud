@@ -1,6 +1,6 @@
 import React from 'react';
 import { User, X, Phone, Mail, Users, GraduationCap, Calendar, TrendingUp, BookOpen, Clock } from 'lucide-react';
-import { StatCard } from '../../../shared/components/ui';
+import { StatCard, ProgressBar } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
 
@@ -114,12 +114,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-32 h-2 bg-surface overflow-hidden rounded-full">
-                                                            <div 
-                                                                className="h-full bg-primary rounded-full" 
-                                                                style={{ width: `${(en.sessionsUsed / en.sessionsTotal) * 100}%` }} 
-                                                            />
-                                                        </div>
+                                                        <ProgressBar value={(en.sessionsUsed / en.sessionsTotal) * 100} variant="primary" size="lg" className="w-32" />
                                                         <span className="font-bold font-mono text-micro min-w-[35px] text-start text-main">
                                                             {en.sessionsUsed}/{en.sessionsTotal}
                                                         </span>

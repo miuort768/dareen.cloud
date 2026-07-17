@@ -46,7 +46,7 @@ export const AppointmentDetailPanel = ({ appointment, showDetails, onClose }: Ap
                     </div>
                 </div>
                 <div className="p-4 space-y-3">
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-primary-soft" style={{ borderRight: '3px solid var(--border-primary)' }}>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-primary-soft border-e-[3px] border-e-primary">
                         <div>
                             <label className="block text-micro font-bold text-muted mb-0.5">الطالب</label>
                             <h4 className="text-sm font-bold text-main">{appointment.studentName}</h4>
@@ -54,14 +54,14 @@ export const AppointmentDetailPanel = ({ appointment, showDetails, onClose }: Ap
                         </div>
                         <User size={18} className="text-dim" />
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-success-soft" style={{ borderRight: '3px solid var(--border-success)' }}>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-success-soft border-e-[3px] border-e-success">
                         <div>
                             <label className="block text-micro font-bold text-muted mb-0.5">المعلمة</label>
                             <h4 className="text-sm font-bold text-main">{appointment.teacherName}</h4>
                         </div>
                         <ShieldCheck size={18} className="text-dim" />
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-warning-soft" style={{ borderRight: '3px solid var(--border-warning)' }}>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-warning-soft border-e-[3px] border-e-warning">
                         <div>
                             <label className="block text-micro font-bold text-muted mb-0.5">المادة</label>
                             <h4 className="text-sm font-bold text-main">{appointment.subject}</h4>

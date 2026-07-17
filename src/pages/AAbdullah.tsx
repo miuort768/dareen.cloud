@@ -55,7 +55,7 @@ export const AAbdullah = () => {
                             <h1 className="text-xl md:text-3xl font-black leading-tight text-[var(--text-primary)]">
                                 مستر احمد عبدالله
                             </h1>
-                            <p className="text-[11px] md:text-base font-bold leading-tight text-[var(--text-success)]" style={{ marginTop: '1px' }}>
+                            <p className="text-[11px] md:text-base font-bold leading-tight text-[var(--text-success)] mt-px">
                                 مؤسس منصة دارين السابعة
                             </p>
                         </div>
@@ -158,7 +158,7 @@ export const AAbdullah = () => {
                         </div>
                         <h2 className="text-lg font-black text-[var(--text-primary)]">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
-                    <div className="space-y-3" style={{ paddingInlineStart: '1rem' }}>
+                    <div className="space-y-3 ps-4">
                         <p className="text-sm leading-relaxed text-muted dark:text-muted">
                             "الإتقان أساس النجاح والتطوير.
                         </p>

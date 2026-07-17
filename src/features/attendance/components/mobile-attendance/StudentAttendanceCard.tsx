@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, History } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
+import { ProgressBar } from '../../../../shared/components/ui';
 import type { Student, Enrollment } from '../../types';
 
 interface StudentAttendanceCardProps {
@@ -51,11 +52,7 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
             </div>
 
             <div className="flex items-center gap-2">
-                <div className="flex-1 h-1.5 bg-surface rounded-full overflow-hidden">
-                    <div className={cn("h-full rounded-full transition-all duration-700",
-                        progressPct > 85 ? 'bg-error' : progressPct > 60 ? 'bg-warning' : 'bg-success'
-                    )} style={{ width: `${progressPct}%` }} />
-                </div>
+                <ProgressBar value={progressPct} variant="attendance" />
                 <span className="text-micro font-bold text-muted tabular-nums">{used}/{total}</span>
             </div>
 

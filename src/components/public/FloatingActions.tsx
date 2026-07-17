@@ -84,12 +84,9 @@ export const FloatingActions = () => {
                                     rel={action.isExternal ? "noopener noreferrer" : ""}
                                     aria-label={action.label}
                                     className={cn(
-                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden rounded-[0.9rem]",
                                         action.color
                                     )}
-                                    style={{ 
-                                        borderRadius: '0.9rem'
-                                    }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
                                     <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>
@@ -99,12 +96,9 @@ export const FloatingActions = () => {
                                     onClick={action.onClick}
                                     aria-label={action.label}
                                     className={cn(
-                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden rounded-[0.9rem]",
                                         action.color
                                     )}
-                                    style={{ 
-                                        borderRadius: '0.9rem'
-                                    }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
                                     <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>

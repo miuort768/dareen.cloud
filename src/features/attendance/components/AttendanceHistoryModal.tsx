@@ -141,12 +141,11 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                 <div
                                     key={session.id}
                                     className={cn(
-                                        "flex items-center justify-between transition-all group bg-card border shadow-soft",
+                                        "flex items-center justify-between transition-all group bg-card border shadow-soft border-e-[4px]",
                                         session.status === 'completed'
-                                            ? "border-success/20 bg-success-soft/30"
-                                            : "border-error/20 bg-error-soft/30"
+                                            ? "border-success/20 bg-success-soft/30 border-e-success"
+                                            : "border-error/20 bg-error-soft/30 border-e-error"
                                     )}
-                                    style={{ borderRightWidth: '4px', borderRightColor: session.status === 'completed' ? 'var(--bg-success)' : 'var(--bg-error)' }}
                                 >
                                     {editingSession?.id === session.id ? (
                                         <div className="flex-1 flex items-center gap-4 p-4">
@@ -201,13 +200,13 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                             {session.topics && (
                                                                 <div className="flex gap-2">
                                                                     <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg bg-success-soft text-success">المنجز</span>
-                                                                    <p className="text-xs font-bold text-main leading-relaxed" style={{ borderRight: '2px solid var(--bg-success-soft)', paddingRight: '8px' }}>{session.topics}</p>
+                                                                    <p className="text-xs font-bold text-main leading-relaxed border-e-[2px] border-e-success-soft pe-2">{session.topics}</p>
                                                                 </div>
                                                             )}
                                                             {session.homework && (
                                                                 <div className="flex gap-2">
                                                                     <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg bg-warning-soft text-warning">الواجب</span>
-                                                                    <p className="text-xs font-bold text-muted leading-relaxed" style={{ borderRight: '2px solid var(--bg-warning-soft)', paddingRight: '8px' }}>{session.homework}</p>
+                                                                    <p className="text-xs font-bold text-muted leading-relaxed border-e-[2px] border-e-warning-soft pe-2">{session.homework}</p>
                                                                 </div>
                                                             )}
                                                         </div>

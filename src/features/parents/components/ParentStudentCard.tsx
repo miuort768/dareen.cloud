@@ -2,6 +2,7 @@ import { User, BookOpen, TrendingUp, CheckCircle2, Star, Trophy, Calendar } from
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import { GamificationCard } from '../../students/components/GamificationCard';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface ParentStudentCardProps {
     student: Record<string, unknown>;
@@ -91,15 +92,7 @@ export const ParentStudentCard = ({
                                     <span className="text-micro font-medium text-primary dark:text-primary">حضر {en.sessionsUsed} من {en.sessionsTotal}</span>
                                 </div>
                             </div>
-                            <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden">
-                                <div
-                                    className={cn(
-                                        "h-full transition-all duration-1000 rounded-full",
-                                        (en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0) > 80 ? "bg-success" : (en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0) > 50 ? "bg-warning" : "bg-primary"
-                                    )}
-                                    style={{ width: `${Math.min(100, en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0)}%` }}
-                                ></div>
-                            </div>
+                            <ProgressBar value={Math.min(100, en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0)} variant="primary" />
                         </div>
                     ))}
                     {enrollments.length === 0 && (

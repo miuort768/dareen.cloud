@@ -1,5 +1,6 @@
 import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface AttendanceModalProps {
     viewingAttendanceStudent: Record<string, unknown> | null;
@@ -79,9 +80,7 @@ export const AttendanceModal = ({
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden">
-                                            <div className={cn("h-full transition-all duration-1000 ease-out rounded-full", percentage >= 75 ? "bg-success" : percentage >= 50 ? "bg-warning" : "bg-error")} style={{ width: `${percentage}%` }}></div>
-                                        </div>
+                                        <ProgressBar value={percentage} variant={percentage >= 75 ? 'success' : percentage >= 50 ? 'warning' : 'error'} />
                                         <p className="text-micro text-muted font-normal mt-2 text-start">إجمالي الجلسات المسجلة من المعلم: {totalRecorded}</p>
                                     </div>
                                 );

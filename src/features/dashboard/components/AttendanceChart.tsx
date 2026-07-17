@@ -1,3 +1,5 @@
+import { ProgressBar } from '../../../shared/components/ui';
+
 interface AttendanceChartProps {
     rate: number;
     label?: string;
@@ -42,10 +44,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                     <p className="text-xs font-bold text-main">
                         {rate >= 80 ? 'حضور ممتاز' : rate >= 50 ? 'حضور متوسط' : 'حضور منخفض'}
                     </p>
-                    <div className="w-full bg-surface rounded-full h-1.5">
-                        <div className="h-1.5 rounded-full transition-all duration-1000"
-                            style={{ width: `${rate}%`, backgroundColor: getStrokeColor(rate) }} />
-                    </div>
+                    <ProgressBar value={rate} variant="attendance" />
                     <p className="text-micro font-medium text-dim">
                         {rate >= 80 ? 'أداء متميز، استمر!' : rate >= 50 ? 'يمكن تحسينه بالمتابعة' : 'يحتاج إلى اهتمام'}
                     </p>

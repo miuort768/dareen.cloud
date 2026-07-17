@@ -52,7 +52,7 @@ export const Leads: React.FC = () => {
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
     const formRef = React.useRef<HTMLFormElement>(null);
 
-    const { data: leads = [], isLoading } = useQuery({ queryKey: ['leads'], queryFn: crmService.getAll });
+    const { data: leads = [], isLoading, isError: isLeadsError } = useQuery({ queryKey: ['leads'], queryFn: crmService.getAll });
     const { data: stats } = useQuery({ queryKey: ['lead-stats'], queryFn: crmService.getStats });
 
     useEffect(() => {
@@ -81,7 +81,8 @@ export const Leads: React.FC = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-        }
+        },
+        onError: (err: Error) => { alert('حدث خطأ أثناء التحديث: ' + err.message); }
     });
 
     const deleteMutation = useMutation({
@@ -89,7 +90,8 @@ export const Leads: React.FC = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-        }
+        },
+        onError: (err: Error) => { alert('حدث خطأ أثناء الحذف: ' + err.message); }
     });
 
     const filteredLeads = useMemo(() =>
@@ -117,6 +119,18 @@ export const Leads: React.FC = () => {
     };
 
     if (isLoading) return <PageLoader />;
+
+    if (isLeadsError) {
+        return (
+            <div className="bg-surface dark:bg-background min-h-screen pb-24" dir="rtl">
+                <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
+                    <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-card text-sm font-medium mt-6 md:mt-10">
+                        عذراً، حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <motion.div

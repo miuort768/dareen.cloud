@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Edit, Trash, Bell, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { Table } from '../../../shared/components/ui';
+import { Table, ProgressBar } from '../../../shared/components/ui';
 import type { Column } from '../../../shared/components/ui';
 import type { Student } from '../types';
 
@@ -87,15 +87,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                 const totalUsed = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsUsed || 0), 0);
                 const progress = totalExpected > 0 ? Math.round((totalUsed / totalExpected) * 100) : 0;
                 return (
-                    <div className="flex items-center gap-3 min-w-[140px]">
-                        <div className="flex-1 bg-surface h-1.5 overflow-hidden">
-                            <div
-                                className={cn('h-full transition-all duration-1000', progress < 30 ? 'bg-error' : progress < 70 ? 'bg-warning' : 'bg-success')}
-                                style={{ width: `${progress}%` }}
-                            />
-                        </div>
-                        <span className="text-micro font-normal text-dim font-mono">{progress}%</span>
-                    </div>
+                    <ProgressBar value={progress} showLabel className="min-w-[140px]" />
                 );
             },
             mobileLabel: 'التقدم',
@@ -158,12 +150,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                         <span>معدل الاستهلاك</span>
                         <span className="font-mono">{progress}%</span>
                     </div>
-                    <div className="w-full bg-surface h-1.5 overflow-hidden">
-                        <div
-                            className={cn('h-full transition-all', progress < 30 ? 'bg-error' : progress < 70 ? 'bg-warning' : 'bg-success')}
-                            style={{ width: `${progress}%` }}
-                        />
-                    </div>
+                    <ProgressBar value={progress} />
                 </div>
             </div>
         );

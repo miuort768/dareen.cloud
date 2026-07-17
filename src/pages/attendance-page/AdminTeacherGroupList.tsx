@@ -2,6 +2,7 @@ import { BookOpen, History } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { SectionCard } from './StyledComponents';
 import type { Student, Enrollment, Session } from '../../features/attendance/types';
+import { ProgressBar } from '../../shared/components/ui';
 
 interface AdminTeacherGroupListProps {
     uniqueTeachers: string[];
@@ -98,11 +99,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                                     <span>تغطية الحصص</span>
                                                     <span className="text-main tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                 </div>
-                                                <div className="h-1 bg-hover rounded-full overflow-hidden">
-                                                    <div className={cn("h-full transition-all duration-1000 rounded-full",
-                                                        (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-error' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-warning' : 'bg-success'
-                                                    )} style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }} />
-                                                </div>
+                                                <ProgressBar value={Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)} variant="attendance" />
                                             </div>
 
                                             <div className="flex items-center gap-2">
@@ -139,11 +136,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                                 <span>تغطية الحصص</span>
                                                 <span className="text-main tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                             </div>
-                                            <div className="h-1 bg-hover rounded-full overflow-hidden">
-                                                <div className={cn("h-full transition-all duration-1000 rounded-full",
-                                                    (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-error' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-warning' : 'bg-success'
-                                                )} style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }} />
-                                            </div>
+                                            <ProgressBar value={Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)} variant="attendance" />
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-2">

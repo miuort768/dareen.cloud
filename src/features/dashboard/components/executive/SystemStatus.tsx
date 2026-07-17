@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { SystemHealth } from '../../services/executiveService';
 import { HardDrive, Database, Server, Cpu, CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
+import { ProgressBar } from '../../../../shared/components/ui';
 
 const STATUS_ICONS: Record<string, typeof CheckCircle> = {
     healthy: CheckCircle,
@@ -41,14 +42,9 @@ const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, p
                 </div>
             </div>
             <div className="flex items-center gap-2.5">
-                {progress !== undefined && (
+                    {progress !== undefined && (
                     <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 rounded-full bg-border/30 overflow-hidden">
-                            <div
-                                className={`h-full rounded-full transition-all duration-500 ${styles.bg}`}
-                                style={{ width: `${Math.min(100, progress)}%` }}
-                            />
-                        </div>
+                        <ProgressBar value={Math.min(100, progress)} variant={progress > 80 ? 'error' : progress > 60 ? 'warning' : 'success'} className="w-16" />
                         {progressLabel && <span className={`text-micro font-medium tabular-nums ${styles.text}`}>{progressLabel}</span>}
                     </div>
                 )}

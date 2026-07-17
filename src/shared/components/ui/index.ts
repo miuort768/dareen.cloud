@@ -33,3 +33,5 @@ export { Dialog } from './Dialog';
 export { Avatar } from './Avatar';
 export { Dropdown } from './Dropdown';
 export { SectionErrorBoundary } from './SectionErrorBoundary';
+export { ProgressBar } from './ProgressBar';
+export type { ProgressBarProps } from './ProgressBar';

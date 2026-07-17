@@ -9,6 +9,7 @@ import { StudentHistoryModal } from './StudentHistoryModal';
 import { StudentCard } from './StudentCard';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface StudentDetailsProps {
     student: Student;
@@ -198,9 +199,7 @@ export const StudentDetails = ({
                                                     <span>الإنجاز</span>
                                                     <span>{progressPercent}%</span>
                                                 </div>
-                                                <div className="h-1 bg-surface overflow-hidden">
-                                                    <div className={cn("h-full", isLow ? "bg-error" : "bg-primary")} style={{ width: `${progressPercent}%` }} />
-                                                </div>
+                                                <ProgressBar value={progressPercent} size="sm" variant={isLow ? 'error' : 'primary'} />
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="text-center px-2 border-s border-border">

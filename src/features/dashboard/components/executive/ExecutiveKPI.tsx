@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { TrendingUp, TrendingDown, DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle } from 'lucide-react';
+import { ProgressBar } from '../../../../shared/components/ui';
 
 const ICON_MAP: Record<string, typeof DollarSign> = {
     revenue: DollarSign,
@@ -58,10 +59,7 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
             <p className="text-lg font-bold text-main dark:text-on-primary tabular-nums mb-0.5">{value}</p>
             <p className="text-micro text-muted dark:text-muted/70 truncate">{label}</p>
             <div className="mt-2 h-1 rounded-full bg-border/30 dark:bg-border/20 overflow-hidden">
-                <div
-                    className={`h-full rounded-full transition-all duration-500 ${isUp ? 'bg-success/60' : 'bg-error/60'}`}
-                    style={{ width: `${Math.min(100, percent)}%` }}
-                />
+                <ProgressBar value={Math.min(100, percent)} variant={isUp ? 'success' : 'error'} size="sm" trackClassName="bg-border/30 dark:bg-border/20" />
             </div>
         </div>
     );

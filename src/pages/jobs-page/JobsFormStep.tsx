@@ -79,8 +79,8 @@ export const JobsFormStep = ({ step, form, subjects, inputRefs, onChange, onSubj
                             <BookOpen size={12} className="text-primary shrink-0" /> المناهج التي قمت بتدريسها
                         </label>
                         <textarea ref={el => inputRefs.current['curriculums'] = el} name="curriculums" value={form.curriculums}
-                            onChange={onChange} onKeyDown={onKeyDown} style={{ touchAction: 'manipulation' }}
-                            className="w-full bg-card border border-border/60 rounded-xl p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted resize-none"
+                            onChange={onChange} onKeyDown={onKeyDown}
+                            className="w-full bg-card border border-border/60 rounded-xl p-4 min-h-[90px] md:min-h-[120px] text-sm md:text-base text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted resize-none touch-manipulation"
                             placeholder="منهج كويتي - سعودي - قطري - عماني ..." />
                     </div>
                 </>

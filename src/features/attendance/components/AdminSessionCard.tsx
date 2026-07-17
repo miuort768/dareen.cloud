@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle2, XCircle, BookOpen, Clock, Activity, History } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface AdminSessionCardProps {
     session: Session;
@@ -71,15 +72,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                             <span className="opacity-50">/ {total}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-surface rounded-full overflow-hidden">
-                        <div
-                            className={cn(
-                                "h-full transition-all duration-1000 ease-out",
-                                progress > 85 ? 'bg-error' : progress > 60 ? 'bg-warning' : 'bg-success'
-                            )}
-                            style={{ width: `${Math.min(100, progress)}%` }}
-                        />
-                    </div>
+                    <ProgressBar value={Math.min(100, progress)} variant="attendance" />
                 </div>
             </div>
 

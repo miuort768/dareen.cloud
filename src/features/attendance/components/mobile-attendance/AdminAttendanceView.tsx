@@ -3,6 +3,7 @@ import { BookOpen, CheckCircle2, History, Users } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { triggerHaptic } from '../../../../lib/haptics';
 import type { Student, Enrollment, Session } from '../../types';
+import { ProgressBar } from '../../../../shared/components/ui';
 
 interface AdminAttendanceViewProps {
     uniqueTeachers: string[];
@@ -95,11 +96,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                                                 <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-warning-soft text-warning">انتظار</span>
                                             )}
                                         </div>
-                                        <div className="h-1 bg-surface rounded-full overflow-hidden">
-                                            <div className={cn("h-full rounded-full transition-all duration-700",
-                                                progressPct > 85 ? 'bg-error' : progressPct > 60 ? 'bg-warning' : 'bg-success'
-                                            )} style={{ width: `${progressPct}%` }} />
-                                        </div>
+                                        <ProgressBar value={progressPct} variant="attendance" size="sm" />
                                         <div className="flex gap-1.5">
                                             <motion.button whileTap={{ scale: 0.93 }}
                                                 onClick={() => { triggerHaptic('light'); onLog(student, enrollment); }}

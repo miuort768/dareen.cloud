@@ -203,8 +203,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.max(1, (page || 1) - 1))}
             disabled={page === 1 || page === undefined}
-            className="p-1.5 text-muted hover:bg-hover disabled:opacity-30 disabled:pointer-events-none transition-colors"
-            style={{ borderRadius: 'var(--radius-card, 1rem)' }}
+            className="p-1.5 text-muted hover:bg-hover disabled:opacity-30 disabled:pointer-events-none transition-colors rounded-card"
             aria-label="الصفحة السابقة"
           >
             <ChevronRight size={16} />
@@ -217,10 +216,9 @@ function TableInner<T>({
                 key={p}
                 onClick={() => onPageChange(p)}
                 className={cn(
-                  'min-w-[32px] h-8 text-xs font-bold transition-colors',
-                  isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover'
+                    'min-w-[32px] h-8 text-xs font-bold transition-colors rounded-card',
+                    isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover'
                 )}
-                style={{ borderRadius: 'var(--radius-card, 1rem)' }}
               >
                 {p}
               </button>
@@ -230,8 +228,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.min(totalPages, (page || 1) + 1))}
             disabled={page === totalPages}
-            className="p-1.5 text-muted hover:bg-hover disabled:opacity-30 disabled:pointer-events-none transition-colors"
-            style={{ borderRadius: 'var(--radius-card, 1rem)' }}
+            className="p-1.5 text-muted hover:bg-hover disabled:opacity-30 disabled:pointer-events-none transition-colors rounded-card"
             aria-label="الصفحة التالية"
           >
             <ChevronLeft size={16} />

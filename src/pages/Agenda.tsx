@@ -4,7 +4,7 @@ import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { cn } from '../lib/utils';
-import { PageHeader } from '../shared/components/ui';
+import { PageHeader, ProgressBar } from '../shared/components/ui';
 import type { Student, Session, Enrollment } from '../types';
 
 export const Agenda = () => {
@@ -137,7 +137,7 @@ export const Agenda = () => {
             />
 
             {/* Quick Filters */}
-            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6" style={{ backgroundColor: 'var(--bg-warning)' }}>
+            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6 bg-warning">
                 <div className="flex gap-2 overflow-x-auto w-full md:w-auto custom-scrollbar">
                     {DAYS.map(day => (
                         <button
@@ -221,15 +221,7 @@ export const Agenda = () => {
                                         <span>���� ������</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
-                                    <div className="h-1.5 bg-surface dark:bg-card overflow-hidden">
-                                        <div
-                                            className={cn(
-                                                "h-full transition-all duration-1000",
-                                                app.isDone ? "bg-success" : "bg-warning"
-                                            )}
-                                            style={{ width: `${(app.enrollment.sessionsUsed / app.enrollment.sessionsTotal) * 100}%` }}
-                                        ></div>
-                                    </div>
+                                    <ProgressBar value={(app.enrollment.sessionsUsed / app.enrollment.sessionsTotal) * 100} variant={app.isDone ? 'success' : 'warning'} />
                                 </div>
 
                                 <div className="pt-2">

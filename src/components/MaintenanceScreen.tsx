@@ -33,7 +33,7 @@ export const MaintenanceScreen = () => {
                 {/* Progress Indicator - Cleaner */}
                 <div className="flex flex-col items-center gap-4 mb-16">
                     <div className="w-full max-w-[280px] h-2 bg-white/5 border border-white/10 rounded-full overflow-hidden p-0.5">
-                        <div className="h-full bg-primary rounded-full shadow-lg shadow-primary/30" style={{ width: '75%' }} />
+                        <div className="h-full w-3/4 bg-primary rounded-full shadow-lg shadow-primary/30" />
                     </div>
                     <span className="text-micro font-medium text-primary uppercase tracking-[0.5em] animate-pulse">
                         العمل جاري الآن

@@ -44,7 +44,7 @@ export const MobileScheduleDetailsModal = ({ showDetails, event, onClose, onStar
                             <h3 className="text-sm font-black text-main mt-0.5">{event.day}</h3>
                         </div>
                         <div className="space-y-3">
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-primary-soft" style={{ borderRight: '3px solid var(--bg-primary)' }}>
+                            <div className="flex items-center justify-between p-3.5 rounded-card bg-primary-soft border-e-[3px] border-e-primary">
                                 <div>
                                     <span className="text-micro font-bold text-muted">الطالب</span>
                                     <p className="text-sm font-bold text-main">{event.studentName}</p>
@@ -52,14 +52,14 @@ export const MobileScheduleDetailsModal = ({ showDetails, event, onClose, onStar
                                 </div>
                                 <User size={18} className="text-dim" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-success-soft" style={{ borderRight: '3px solid var(--bg-success)' }}>
+                            <div className="flex items-center justify-between p-3.5 rounded-card bg-success-soft border-e-[3px] border-e-success">
                                 <div>
                                     <span className="text-micro font-bold text-muted">المعلمة</span>
                                     <p className="text-sm font-bold text-main">{event.teacherName}</p>
                                 </div>
                                 <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-warning-soft" style={{ borderRight: '3px solid var(--bg-warning)' }}>
+                            <div className="flex items-center justify-between p-3.5 rounded-card bg-warning-soft border-e-[3px] border-e-warning">
                                 <div>
                                     <span className="text-micro font-bold text-muted">الوقت</span>
                                     <p className="text-sm font-bold text-main">{event.time}</p>

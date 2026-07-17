@@ -4,6 +4,7 @@ import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { startLiveSession } from '../../../services/liveSessionService';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface TeacherStudentCardProps {
     student: Student;
@@ -226,15 +227,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <span className="opacity-50">/ {en.sessionsTotal}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-surface rounded-full overflow-hidden">
-                        <div
-                            className={cn(
-                                "h-full transition-all duration-1000 ease-out",
-                                attendancePercent > 85 ? "bg-error" : attendancePercent > 60 ? "bg-warning" : "bg-success"
-                            )}
-                            style={{ width: `${Math.min(100, attendancePercent)}%` }}
-                        />
-                    </div>
+                    <ProgressBar value={Math.min(100, attendancePercent)} variant="attendance" />
                 </div>
 
                 {/* Schedule */}

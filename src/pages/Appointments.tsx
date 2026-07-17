@@ -52,6 +52,7 @@ export const Appointments = () => {
     const [showDetails, setShowDetails] = useState(false);
     const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const mountedRef = useRef(true);
 
     useEffect(() => {
@@ -105,6 +106,7 @@ export const Appointments = () => {
             setCompletedSessionIds(prev => [...prev, id]);
         } catch (error) {
             console.error("Error completing session:", error);
+            alert('عذراً، حدث خطأ في تسجيل إتمام الحصة. يرجى المحاولة مرة أخرى.');
         }
     };
 
@@ -119,6 +121,7 @@ export const Appointments = () => {
                 setStudents(Array.isArray(data) ? data : (data.data || []));
             } catch (error) {
                 console.error("Error fetching data", error);
+                if (mountedRef.current) setError('حدث خطأ في تحميل البيانات');
             } finally {
                 if (mountedRef.current) setLoading(false);
             }
@@ -206,6 +209,18 @@ export const Appointments = () => {
 
     if (loading) {
         return <PageLoader />;
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-full pb-24 relative" dir="rtl">
+                <div className="hidden md:block max-w-page mx-auto px-2">
+                    <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-card text-sm font-medium mt-6 md:mt-10">
+                        عذراً، حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (

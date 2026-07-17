@@ -1,5 +1,6 @@
 import React from 'react';
 import { SectionCard } from './ClosingUI';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface TeacherPerf {
     name: string;
@@ -28,11 +29,11 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <div className="flex justify-between text-micro font-bold text-muted uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-background dark:bg-primary-active overflow-hidden rounded-full"><div className="h-full bg-success" style={{ width: `${perf.attendanceRate}%` }} /></div>
+                                <ProgressBar value={perf.attendanceRate} variant="success" size="sm" trackClassName="bg-background dark:bg-primary-active" />
                             </div>
                             <div className="space-y-1">
                                 <div className="flex justify-between text-micro font-bold text-muted uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                <div className="h-1 bg-background dark:bg-primary-active overflow-hidden rounded-full"><div className="h-full bg-primary" style={{ width: `${perf.documentationRate}%` }} /></div>
+                                <ProgressBar value={perf.documentationRate} variant="primary" size="sm" trackClassName="bg-background dark:bg-primary-active" />
                             </div>
                         </div>
                     </div>

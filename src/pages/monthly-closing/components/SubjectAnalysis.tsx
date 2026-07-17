@@ -2,6 +2,7 @@ import React from 'react';
 import { BarChart3 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { SectionCard, SectionTitle } from './ClosingUI';
+import { ProgressBar } from '../../../shared/components/ui';
 
 interface SubjectData {
     name: string;
@@ -48,9 +49,7 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                                 <span className="text-muted font-bold">صافي الربح</span>
                                 <span className="font-black text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
-                            <div className="h-1 bg-surface overflow-hidden rounded-full">
-                                <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, (subj.profit / subj.income) * 100)}%` }} />
-                            </div>
+                            <ProgressBar value={Math.min(100, (subj.profit / subj.income) * 100)} variant="primary" size="sm" />
                             <div className="flex justify-between items-center text-micro text-muted mt-1">
                                 <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
                             </div>
