@@ -55,7 +55,7 @@ export const Jobs = () => {
 
     const nextStep = useCallback(() => {
         if (step < totalSteps && canProceed()) setStep(s => s + 1);
-    }, [step, totalSteps, canProceed]);
+    }, [step, totalSteps]);
 
     const prevStep = useCallback(() => {
         if (step > 1) setStep(s => s - 1);
@@ -73,7 +73,7 @@ export const Jobs = () => {
         if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (step < totalSteps) nextStep(); }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent | React.MouseEvent) => {
         e.preventDefault();
         if (!form.name || !form.phone || !form.position || !form.qualification) return;
         setLoading(true);

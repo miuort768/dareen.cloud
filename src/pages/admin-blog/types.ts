@@ -31,4 +31,14 @@ export interface BlogPost {
     robotsIndex: boolean;
     isFeatured: boolean;
     tags: string;
+    fileSize?: string;
+    source?: string;
+}
+
+export interface BlogPostRaw {
+    file_size?: string;
+    show_buttons?: boolean | number;
+    download_button_text?: string;
+    watch_button_text?: string;
+    [key: string]: unknown;
 }

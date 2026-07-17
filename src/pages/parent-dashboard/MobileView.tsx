@@ -9,24 +9,12 @@ import { confirm } from '../../lib/confirmDialog';
 import { ParentMobileHeroSection, ParentQuickNav, ParentMobileLiveClasses } from './HeroSections';
 import { ParentStatsStrip, ParentActiveTimers, ParentTodaySchedule, ParentRecentActivity, ParentSupportCard } from './DataWidgets';
 import { ParentMobileNotesSection, ParentMobileAcademicProgress } from './InfoWidgets';
-import type { Student } from '../../types';
+import type { ParentViewProps } from './types';
 
-interface MobileViewProps {
-    currentUser: any;
-    adminPhone: string | undefined;
-    children: Student[];
-    sessions: Student[];
-    allPointLogs: any[];
-    activeTimers: any[];
-    stats: { childCount: number; upcomingSessions: number; attendanceRate: number; academicProgress: number };
-    todayTasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[];
-    points: number;
-    rank: { name: string };
-    logout: () => void;
-    formatTime: (startedAt: string | null | undefined) => string;
+type MobileViewProps = ParentViewProps & {
     activeTab: string;
     setActiveTab: (tab: string) => void;
-}
+};
 
 const tabs = [
     { id: 'home', label: 'الرئيسية', icon: LayoutDashboard },

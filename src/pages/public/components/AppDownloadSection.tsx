@@ -2,7 +2,7 @@ import { Smartphone, Store, Monitor, Download, Shield, MonitorDown } from 'lucid
 import { useRef, useEffect, useState } from 'react';
 
 export const AppDownloadSection = () => {
-    const deferredPrompt = useRef<any>(null);
+    const deferredPrompt = useRef<(Event & { prompt(): Promise<void>; userChoice: Promise<{ outcome: string }> }) | null>(null);
     const [pwaInstalled, setPwaInstalled] = useState(false);
 
     useEffect(() => {

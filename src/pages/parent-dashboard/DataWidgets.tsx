@@ -1,6 +1,7 @@
 import { TrendingUp, CheckCircle, Star, Clock, Calendar, BookOpen, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import type { PointLogEntry } from './types';
 
 interface StatsStripProps {
     points: number;
@@ -121,7 +122,7 @@ export const ParentTodaySchedule = ({ todayTasks, variant = 'desktop' }: TodaySc
 );
 
 interface RecentActivityProps {
-    allPointLogs: any[];
+    allPointLogs: PointLogEntry[];
 }
 
 const formatDate = (timestamp: string) => {

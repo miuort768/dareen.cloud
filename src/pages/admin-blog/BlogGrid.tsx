@@ -1,10 +1,11 @@
 import { Edit2, Trash2, ExternalLink, Calendar, User, BookOpen } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
+import type { BlogPost } from './types';
 
 interface BlogGridProps {
     loading: boolean;
-    filteredPosts: any[];
-    handleOpenModal: (post?: any) => void;
+    filteredPosts: BlogPost[];
+    handleOpenModal: (post?: BlogPost) => void;
     handleDelete: (id: string) => void;
 }
 
@@ -30,7 +31,7 @@ export const BlogGrid = ({ loading, filteredPosts, handleOpenModal, handleDelete
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredPosts.map((post: any) => (
+            {filteredPosts.map((post) => (
                 <div key={post.id} className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
                     <div className="relative h-36 overflow-hidden">
                         <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" />

@@ -270,7 +270,7 @@ export const useFinance = () => {
 
         const expenseByCategory = allTransactions
             .filter(t => t.type === 'expense' && t.status === 'completed')
-            .reduce((acc: Record<string, number>, t: any) => {
+            .reduce((acc: Record<string, number>, t) => {
                 const cat = t.category || 'أخرى';
                 acc[cat] = (acc[cat] || 0) + t.amount;
                 return acc;

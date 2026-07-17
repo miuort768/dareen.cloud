@@ -7,7 +7,7 @@ import { BlogHeader } from './admin-blog/BlogHeader';
 import { BlogSearchBar } from './admin-blog/BlogSearchBar';
 import { BlogForm } from './admin-blog/BlogForm';
 import { BlogGrid } from './admin-blog/BlogGrid';
-import type { BlogPost } from './admin-blog/types';
+import type { BlogPost, BlogPostRaw } from './admin-blog/types';
 
 export const AdminBlog = () => {
     const showNotification = useShowNotification();
@@ -35,13 +35,16 @@ export const AdminBlog = () => {
         try {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog?all=true');
-            setPosts(data.map(post => ({
-                ...post,
-                fileSize: (post as any).fileSize || (post as any).file_size,
-                showButtons: post.showButtons ?? ((post as any).show_buttons === 1 || (post as any).show_buttons === true),
-                downloadButtonText: post.downloadButtonText || (post as any).download_button_text,
-                watchButtonText: post.watchButtonText || (post as any).watch_button_text,
-            })));
+            setPosts(data.map(post => {
+                const raw = post as BlogPostRaw;
+                return {
+                    ...post,
+                    fileSize: post.fileSize || raw.file_size,
+                    showButtons: post.showButtons ?? (raw.show_buttons === 1 || raw.show_buttons === true),
+                    downloadButtonText: post.downloadButtonText || raw.download_button_text,
+                    watchButtonText: post.watchButtonText || raw.watch_button_text,
+                };
+            }));
             setLoading(false);
         } catch (e) {
             console.error(e);

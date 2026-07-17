@@ -12,22 +12,9 @@ import { NavButton } from './NavButton';
 import { ParentHeroSection } from './HeroSections';
 import { ParentStatsStrip, ParentActiveTimers, ParentTodaySchedule, ParentRecentActivity, ParentSupportCard } from './DataWidgets';
 import { ParentNotesSection, ParentAcademicProgress } from './InfoWidgets';
-import type { Student } from '../../types';
+import type { ParentViewProps } from './types';
 
-interface DesktopViewProps {
-    currentUser: any;
-    adminPhone: string | undefined;
-    children: Student[];
-    sessions: Student[];
-    allPointLogs: any[];
-    activeTimers: any[];
-    stats: { childCount: number; upcomingSessions: number; attendanceRate: number; academicProgress: number };
-    todayTasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[];
-    points: number;
-    rank: { name: string };
-    logout: () => void;
-    formatTime: (startedAt: string | null | undefined) => string;
-}
+type DesktopViewProps = ParentViewProps;
 
 export const ParentDesktopView = ({
     currentUser, adminPhone, children, sessions, allPointLogs,

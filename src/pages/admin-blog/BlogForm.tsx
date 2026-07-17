@@ -5,7 +5,7 @@ interface BlogFormProps {
     isModalOpen: boolean;
     setIsModalOpen: (v: boolean) => void;
     currentPost: Partial<BlogPost> | null;
-    setCurrentPost: (v: any) => void;
+    setCurrentPost: React.Dispatch<React.SetStateAction<Partial<BlogPost> | null>>;
     contentPart1: string;
     setContentPart1: (v: string) => void;
     contentPart2: string;
@@ -32,7 +32,7 @@ export const BlogForm = ({
 }: BlogFormProps) => {
     if (!isModalOpen || !currentPost) return null;
 
-    const set = (field: string, value: any) => setCurrentPost((prev: any) => ({ ...prev, [field]: value }));
+    const set = (field: string, value: string | number | boolean) => setCurrentPost((prev) => ({ ...prev, [field]: value }));
     const isDisabled = currentPost.contentType === 'foundation' || currentPost.contentType === 'more';
 
     return (
@@ -94,7 +94,7 @@ export const BlogForm = ({
                         <div>
                             <label className="text-micro font-bold text-dim block mb-1">نوع المحتوى</label>
                             <select value={currentPost.contentType}
-                                onChange={(e) => { const v = e.target.value; setCurrentPost((prev: any) => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }}
+                                onChange={(e) => { const v = e.target.value; setCurrentPost((prev) => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }}
                                 aria-label="نوع المحتوى"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none">
                                 <option value="notes">مذكرات</option><option value="solutions">حل كتب</option>
@@ -163,7 +163,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">رابط المصدر</label>
                             <div className="relative">
                                 <LinkIcon className="absolute end-4 top-1/2 -translate-y-1/2 text-dim" size={16} />
-                                <input type="url" value={(currentPost as any).source || ''}
+                                <input type="url" value={currentPost.source || ''}
                                     onChange={(e) => set('source', e.target.value)}
                                     className="w-full bg-surface dark:bg-card border border-border px-4 py-3 pe-10 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm text-end rounded-xl outline-none"
                                     dir="ltr" placeholder="https://..." />
@@ -171,7 +171,7 @@ export const BlogForm = ({
                         </div>
                         <div>
                             <label className="text-micro font-bold text-dim block mb-1">حجم الملف</label>
-                            <input type="text" value={(currentPost as any).fileSize || ''}
+                            <input type="text" value={currentPost.fileSize || ''}
                                 onChange={(e) => set('fileSize', e.target.value)}
                                 className="w-full bg-surface dark:bg-card border border-border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none"
                                 placeholder="2.5 MB" />

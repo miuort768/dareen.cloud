@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 // https://vite.dev/config/
 export default defineConfig(async ({ command, mode }) => {
-  const plugins: any[] = [
+  const plugins: PluginOption[] = [
     react({
         // Don't let react-refresh pollute production chunks
         include: /\.(ts|tsx)$/,
