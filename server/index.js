@@ -231,19 +231,17 @@ async function startServer() {
             await fsp.mkdir(dir, { recursive: true }).catch(() => {});
         }
 
-        // Auto-sync Prisma schema for local SQLite databases
-        if ((process.env.DATABASE_URL || '').startsWith('file:')) {
-            try {
-                const { execSync } = require('child_process');
-                execSync('npx prisma db push', {
-                    cwd: __dirname,
-                    stdio: 'pipe',
-                    timeout: 30000,
-                    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
-                });
-            } catch (syncErr) {
-                console.warn('DB schema sync warning (non-fatal):', syncErr.message);
-            }
+        // Auto-sync Prisma schema to match current schema files
+        try {
+            const { execSync } = require('child_process');
+            execSync('npx prisma db push --accept-data-loss', {
+                cwd: __dirname,
+                stdio: 'pipe',
+                timeout: 30000,
+                env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
+            });
+        } catch (syncErr) {
+            console.warn('DB schema sync warning (non-fatal):', syncErr.message);
         }
 
         const { initQueueSystem } = require('./services');
