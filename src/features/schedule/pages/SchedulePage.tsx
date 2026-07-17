@@ -179,7 +179,7 @@ export const Schedule = () => {
             <div className="hidden md:block max-w-page mx-auto px-2">
 
                 {/* Header */}
-                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-2xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                <div className="shadow-sm px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 rounded-2xl bg-primary">
                     <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
                             <CalendarDays size={22} className="text-on-primary" />
@@ -363,7 +363,7 @@ export const Schedule = () => {
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
                     <div className="bg-white dark:bg-primary-active w-full max-w-sm shadow-sm border border-border dark:border-border overflow-hidden rounded-2xl" onClick={e => e.stopPropagation()}>
-                        <div className="p-4 text-on-primary flex items-center justify-between bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                        <div className="p-4 text-on-primary flex items-center justify-between bg-primary">
                             <h3 className="text-sm font-bold flex items-center gap-2">
                                 <CalendarDays size={16} />
                                 تفاصيل الحصة
@@ -404,7 +404,7 @@ export const Schedule = () => {
                                         if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
                                     } catch (e) { console.error(e); setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 text-on-primary text-micro font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)] hover:from-[var(--bg-primary-hover)] hover:to-[var(--bg-primary)]"
+                                className="flex-1 h-10 text-on-primary text-micro font-bold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-hover"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر

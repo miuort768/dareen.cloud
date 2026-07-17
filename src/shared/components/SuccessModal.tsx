@@ -78,7 +78,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     
                     {/* ── Glowing Success Icon ── */}
                     <div className="flex-shrink-0 relative">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-info)] flex items-center justify-center text-on-primary animate-pulse">
+                        <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-primary">
                             <CheckCircle2 size={20} className="stroke-[2.5]" />
                         </div>
                         <div className="absolute -top-1.5 -start-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">
@@ -113,7 +113,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                 {autoClose && (
                     <div className="absolute bottom-0 end-0 start-0 h-[3px] bg-surface dark:bg-primary-active/60 overflow-hidden">
                         <div 
-                            className="h-full bg-gradient-to-r from-[var(--bg-success)] to-[var(--bg-info)] transition-all duration-75 ease-linear rounded-s-full"
+                            className="h-full bg-success transition-all duration-75 ease-linear rounded-s-full"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
