@@ -149,7 +149,7 @@ export const MobileAdminDashboard = ({
 
                 {/* Tabs */}
                 <div className="px-4 pb-3">
-                    <div className="flex bg-gradient-to-b from-surface to-surface dark:from-[var(--bg-primary-active)]/60 dark:to-[var(--bg-primary-active)]/60 rounded-card p-1 gap-1 shadow-soft">
+                    <div className="flex bg-surface dark:bg-card rounded-card p-1 gap-1 shadow-soft">
                         {[
                             { id: 'home' as const, label: 'الرئيسية', icon: Home },
                             { id: 'quick' as const, label: 'إجراءات', icon: FilePlus },
@@ -271,7 +271,7 @@ export const MobileAdminDashboard = ({
 
                             <button
                                 onClick={() => { triggerHaptic('light'); navigate('/finance'); }}
-                                className="w-full h-11 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-all active:scale-[0.98]"
+                                className="w-full h-11 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-all active:scale-[0.98]"
                                 aria-label="لوحة المالية كاملة"
                             >
                                 <Wallet {...smallIconProps} />
@@ -299,7 +299,7 @@ export const MobileAdminDashboard = ({
                                         </p>
                                         <button
                                             onClick={() => { triggerHaptic('medium'); navigate('/students'); }}
-                                            className="mt-3 h-8 px-4 rounded-xl bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-soft shadow-info/30 active:scale-95"
+                                            className="mt-3 h-8 px-4 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-soft shadow-info/30 active:scale-95"
                                             aria-label="عرض الطلاب"
                                         >
                                             <UserPlus {...miniIconProps} />
