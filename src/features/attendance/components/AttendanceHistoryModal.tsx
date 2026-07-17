@@ -132,7 +132,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                     {loading ? (
                         <div className="space-y-3 px-5">
                             {[...Array(5)].map((_, i) => (
-                                <Skeleton key={i} className="h-16 rounded-xl" />
+                                <Skeleton key={`skel-${i}`} className="h-16 rounded-xl" />
                             ))}
                         </div>
                     ) : history.length > 0 ? (

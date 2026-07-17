@@ -95,7 +95,7 @@ export const MonitoringPage = () => {
                     <h3 className="text-sm font-bold text-main mb-2">الطلبات البطيئة (&gt;1s)</h3>
                     <div className="space-y-1">
                         {data.slow.slice(-10).reverse().map((s, i) => (
-                            <div key={i} className="text-xs text-muted font-medium">
+                            <div key={`mon-${i}`} className="text-xs text-muted font-medium">
                                 {s.method} {s.path} — {(s.duration / 1000).toFixed(1)}s
                             </div>
                         ))}

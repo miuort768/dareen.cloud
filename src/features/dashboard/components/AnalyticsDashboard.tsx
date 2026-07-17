@@ -168,7 +168,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 />
                                 <Bar dataKey="sessions" radius={[0, 6, 6, 0]} barSize={24} filter="url(#analyticsBarShadow)" animationDuration={800} animationEasing="ease-out">
                                     {subjectStats.map((_, i) => (
-                                        <Cell key={i} fill={`var(--chart-${(i % 6) + 1})`} />
+                                        <Cell key={`cell-${i}`} fill={`var(--chart-${(i % 6) + 1})`} />
                                     ))}
                                 </Bar>
                             </BarChart>

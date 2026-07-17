@@ -109,7 +109,7 @@ export const Evaluations = () => {
 
     if (isLoading) return (
         <div className="space-y-4 p-6 bg-primary-light dark:bg-background min-h-full">
-            {[...Array(6)].map((_, i) => <div key={i} className="h-40 bg-card animate-pulse rounded-card" />)}
+            {[...Array(6)].map((_, i) => <div key={`eval-${i}`} className="h-40 bg-card animate-pulse rounded-card" />)}
         </div>
     );
 

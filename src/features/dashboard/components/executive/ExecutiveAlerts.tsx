@@ -80,7 +80,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                         const Icon = cfg.icon;
                         return (
                             <div
-                                key={i}
+                                key={`alert-${i}`}
                                 className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-surface/50 dark:hover:bg-card/30 border border-transparent hover:border-border/20 group"
                                 style={{ backgroundColor: cfg.bg }}
                             >

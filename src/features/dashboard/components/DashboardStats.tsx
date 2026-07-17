@@ -47,13 +47,13 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
       )}
     >
       {cards.map((card, i) => (
-        <div key={i} style={{ transitionDelay: `${i * 80}ms` }} className="transition-all duration-500">
+        <div key={`stat-${i}`} style={{ transitionDelay: `${i * 80}ms` }} className="transition-all duration-500">
           <StatCard {...card} />
         </div>
       ))}
 
       {!isTeacher && adminCards.map((card, i) => (
-        <div key={i + 4} style={{ transitionDelay: `${(i + 4) * 80}ms` }} className="transition-all duration-500">
+        <div key={`stat-${i + 4}`} style={{ transitionDelay: `${(i + 4) * 80}ms` }} className="transition-all duration-500">
           <StatCard {...card} />
         </div>
       ))}

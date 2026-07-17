@@ -11,7 +11,7 @@ export const Skeleton = ({ className }: SkeletonBaseProps) => (
 export const SkeletonText = ({ lines = 3, className }: { lines?: number; className?: string }) => (
     <div className={cn('flex flex-col gap-2', className)}>
         {Array.from({ length: lines }).map((_, i) => (
-            <Skeleton key={i} className={cn('h-3', i === lines - 1 ? 'w-3/4' : 'w-full')} />
+            <Skeleton key={`skel-${i}`} className={cn('h-3', i === lines - 1 ? 'w-3/4' : 'w-full')} />
         ))}
     </div>
 );
@@ -44,7 +44,7 @@ export const SkeletonChart = ({ chartType = 'bar', className }: SkeletonChartPro
     <div className={cn('flex items-end gap-2 h-full', className)}>
         {chartType === 'bar' ? (
             Array.from({ length: 8 }).map((_, i) => (
-                <Skeleton key={i} className={cn('flex-1', ['h-12', 'h-20', 'h-10', 'h-24', 'h-16', 'h-8', 'h-28', 'h-14'][i])} />
+                <Skeleton key={`skel-${i}`} className={cn('flex-1', ['h-12', 'h-20', 'h-10', 'h-24', 'h-16', 'h-8', 'h-28', 'h-14'][i])} />
             ))
         ) : (
             <Skeleton className="w-full h-full rounded-full" />

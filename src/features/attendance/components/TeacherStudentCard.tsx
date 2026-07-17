@@ -253,7 +253,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                     <div className="flex flex-wrap gap-1.5">
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border/50 text-micro font-bold text-muted rounded-xl">
+                            <div key={`att-${i}`} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border/50 text-micro font-bold text-muted rounded-xl">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
                                     <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border/50">

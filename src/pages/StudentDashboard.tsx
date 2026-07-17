@@ -286,7 +286,7 @@ export const StudentDashboard = () => {
                     <div className="flex justify-center gap-1.5 mt-3">
                         {heroSlides.map((_, i) => (
                             <button
-                                key={i}
+                                key={`hero-${i}`}
                                 onClick={() => setHeroIndex(i)}
                                 aria-label={`الشريحة ${i + 1} من ${heroSlides.length}`}
                                 aria-current={i === heroIndex ? 'true' : undefined}
@@ -456,7 +456,7 @@ export const StudentDashboard = () => {
                     <div className="space-y-2">
                         {pointLogs.slice(0, 3).map((log, i) => (
                             <div
-                                key={i}
+                                key={`item-${i}`}
                                 className="bg-card rounded-card px-4 py-3 shadow-sm border border-border flex items-center justify-between"
                             >
                                 <span className="text-xs font-bold text-success bg-success-soft px-2 py-1 rounded-card">

@@ -187,7 +187,7 @@ export const Forum = () => {
                 {loading ? (
                     <div className="space-y-6">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-card h-48 animate-pulse rounded-card shadow-soft"></div>
+                            <div key={`skel-${i}`} className="bg-card h-48 animate-pulse rounded-card shadow-soft"></div>
                         ))}
                     </div>
                 ) : posts.length === 0 ? (

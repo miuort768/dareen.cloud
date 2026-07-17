@@ -81,7 +81,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                         const Icon = cfg.icon;
                         return (
                             <div
-                                key={i}
+                                key={`insight-${i}`}
                                 className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 hover:shadow-sm border border-transparent hover:border-border/20 group"
                                 style={{ backgroundColor: cfg.bg }}
                             >

@@ -86,7 +86,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                             <div className="w-[10%] text-center">
                                 <div className="flex justify-center gap-0.5">
                                     {[...Array(3)].map((_, i) => (
-                                        <Star key={i} size={11} className={cn(
+                                        <Star key={`star-${i}`} size={11} className={cn(
                                             (lead.priority === 'high' || (lead.priority === 'medium' && i < 2) || (lead.priority === 'low' && i < 1))
                                                 ? "text-warning fill-warning"
                                                 : "text-dim"

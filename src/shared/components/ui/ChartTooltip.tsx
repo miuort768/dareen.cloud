@@ -38,7 +38,7 @@ export const ChartTooltip = ({
       )}
       <div className="space-y-2">
         {payload.map((entry, i) => (
-          <div key={i} className="flex items-center justify-between gap-4">
+          <div key={`item-${i}`} className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: entry.fill || entry.color }} />
               <span className="text-micro font-bold text-muted">{entry.name}</span>

@@ -66,7 +66,7 @@ export const HeroSection = ({ typewriterText, whatsappNumber, signupNowNumber, b
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map((i) => (
                                         <img
-                                            key={i}
+                                            key={`hero-${i}`}
                                             src={`https://i.pravatar.cc/100?img=${i + 10}`}
                                             width="40"
                                             height="40"

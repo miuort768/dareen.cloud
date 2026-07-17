@@ -59,7 +59,7 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
                 </p>
                 <div className="space-y-3">
                     {entries.map((entry, i) => (
-                        <div key={i} className="flex items-start gap-2 p-3 bg-surface border border-border">
+                        <div key={`setting-${i}`} className="flex items-start gap-2 p-3 bg-surface border border-border">
                             <div className="flex-1 space-y-2">
                                 <InputField
                                     placeholder="مسمى الزر (مثال: تواصل عام)"

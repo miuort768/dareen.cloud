@@ -417,7 +417,7 @@ export const ParentDashboard = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {allPointLogs.slice(0, 4).map((log, i) => (
-                            <div key={i} className="bg-card border border-border rounded-card p-3 shadow-soft flex items-start gap-3">
+                            <div key={`pd-item-${i}`} className="bg-card border border-border rounded-card p-3 shadow-soft flex items-start gap-3">
                                 <div className="w-8 h-8 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                     <Star size={14} fill="currentColor" />
                                 </div>
@@ -776,7 +776,7 @@ className="flex-1 bg-card dark:bg-card rounded-card p-3 shadow-soft border borde
                                 <div className="bg-card rounded-card shadow-md p-3.5">
                                     <div className="space-y-2">
                                         {allPointLogs.slice(0, 4).map((log, i) => (
-                                            <div key={i} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
+                                            <div key={`pd-item-${i}`} className="bg-background dark:bg-primary-active/50 rounded-card p-3 flex items-start gap-2.5 active:scale-[0.99] transition-transform">
                                                 <div className="w-8 h-8 bg-warning rounded-card flex items-center justify-center text-on-warning shadow-soft shrink-0">
                                                     <Star size={13} fill="currentColor" />
                                                 </div>

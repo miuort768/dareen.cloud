@@ -173,7 +173,7 @@ export const Home = () => {
         {/* Hero Carousel */}
         <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
           {heroSlides.map((slide, i) => (
-            <div key={i} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
+            <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark -mt-0.5" /></span>}</h1>
@@ -220,7 +220,7 @@ export const Home = () => {
                 const s = featureStyles[f.variant];
                 return (
                   <motion.div
-                    key={i}
+                    key={`hero-${i}`}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

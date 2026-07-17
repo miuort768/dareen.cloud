@@ -143,7 +143,7 @@ export const StudentDetails = ({
                             const progressPercent = en.sessionsTotal ? Math.round((actualUsed / en.sessionsTotal) * 100) : 0;
 
                             return (
-                                <div key={i} className={cn(
+                                <div key={`detail-${i}`} className={cn(
                                     "p-3 bg-card border border-border shadow-sm relative",
                                     en.isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-error" : ""

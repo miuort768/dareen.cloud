@@ -130,7 +130,7 @@ export const AAbdullah = () => {
                             const Icon = v.icon;
                             return (
                                 <div
-                                    key={i}
+                                    key={`item-${i}`}
                                     className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-center space-y-2 border border-border/10">
                                     <div
                                         className={`w-10 h-10 mx-auto rounded-xl flex items-center justify-center ${v.bgClass}`}

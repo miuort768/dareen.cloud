@@ -77,7 +77,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
             </h3>
             <div className="space-y-2">
                 {alerts.map((alert, i) => (
-                    <div key={i} className={cn("flex items-start gap-2.5 p-3 rounded-xl border", alert.bg, alert.border)}>
+                    <div key={`alert-${i}`} className={cn("flex items-start gap-2.5 p-3 rounded-xl border", alert.bg, alert.border)}>
                         <alert.icon size={15} className={cn("shrink-0 mt-0.5", alert.iconColor)} />
                         <div className="min-w-0">
                             <p className={cn("text-micro font-bold", alert.text)}>{alert.title}</p>

@@ -41,7 +41,7 @@ export const AttendanceModal = ({
                 <div className="flex-1 overflow-y-auto no-scrollbar p-5 space-y-4">
                     {isSessionsLoading ? (
                         <div className="space-y-4">
-                            {[...Array(3)].map((_, i) =>                                 <div key={i} className="h-28 bg-background rounded-xl animate-pulse border border-border/50" />)}
+                            {[...Array(3)].map((_, i) =>                                 <div key={`skel-${i}`} className="h-28 bg-background rounded-xl animate-pulse border border-border/50" />)}
                         </div>
                     ) : (
                         <>

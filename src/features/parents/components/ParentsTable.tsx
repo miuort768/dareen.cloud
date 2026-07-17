@@ -91,7 +91,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                         <div className="flex flex-col items-center gap-1.5">
                                             <div className="flex -space-x-2 space-x-reverse">
                                                 {children.slice(0, 3).map((child, i) => (
-                                                    <div key={i} className="w-7 h-7 bg-card border-2 border-border/50 flex items-center justify-center text-micro font-medium text-primary rounded-lg">
+                                                    <div key={`child-${i}`} className="w-7 h-7 bg-card border-2 border-border/50 flex items-center justify-center text-micro font-medium text-primary rounded-lg">
                                                         {child.name.charAt(0)}
                                                     </div>
                                                 ))}
@@ -188,7 +188,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                     <span className="text-micro font-bold text-muted">الأبناء</span>
                                     <div className="flex -space-x-2 space-x-reverse">
                                         {children.slice(0, 3).map((_, i) => (
-                                            <div key={i} className="w-5 h-5 rounded-md bg-primary/10 border border-primary/25" />
+                                            <div key={`child-${i}`} className="w-5 h-5 rounded-md bg-primary/10 border border-primary/25" />
                                         ))}
                                     </div>
                                 </div>

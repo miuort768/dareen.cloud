@@ -265,7 +265,7 @@ export const Settings = () => {
         <div className="p-4 space-y-3">
             <Skeleton className="h-14" />
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-10" />)}
+                {[...Array(4)].map((_, i) => <Skeleton key={`setting-${i}`} className="h-10" />)}
             </div>
             <Skeleton className="h-64" />
         </div>

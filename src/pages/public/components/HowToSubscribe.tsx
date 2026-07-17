@@ -79,7 +79,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 {/* Steps Cards */}
                 <div className="grid grid-cols-3 gap-2.5 mb-6">
                     {steps.map((s, i) => (
-                        <div key={i} className="bg-card rounded-2xl border border-border shadow-sm p-3.5 flex flex-col items-center text-center relative">
+                        <div key={`step-${i}`} className="bg-card rounded-2xl border border-border shadow-sm p-3.5 flex flex-col items-center text-center relative">
                             {/* Number Badge */}
                             <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary dark:bg-primary flex items-center justify-center shadow-md">
                                 <span className="text-micro font-black text-on-primary">{s.num}</span>
@@ -103,7 +103,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                         { icon: 'Clock', title: 'مواعيد مرنة', desc: 'في الوقت المناسب لك' },
                         { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
                     ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3">
+                        <div key={`perk-${i}`} className="flex items-center gap-3">
                             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] flex items-center justify-center shadow-sm shrink-0">
                                 {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary" />}
                                 {item.icon === 'Clock' && <Clock size={12} className="text-on-primary" />}

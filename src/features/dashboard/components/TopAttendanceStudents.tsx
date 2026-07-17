@@ -55,7 +55,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                 {topPresentStudents.length > 0 ? (
                     topPresentStudents.map((stu, i) => (
                         <div
-                            key={i}
+                            key={`att-${i}`}
                             onClick={() => onStudentClick?.({ id: stu.name, name: stu.name })}
                             className="flex items-center justify-between p-2 rounded-xl bg-background border border-border hover:border-warning transition-all cursor-pointer"
                         >

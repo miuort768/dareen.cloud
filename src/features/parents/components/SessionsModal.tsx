@@ -107,7 +107,7 @@ export const SessionsModal = ({
 
                             {isSessionsLoading ? (
                                 <div className="space-y-3">
-                                    {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-background border border-border/50 rounded-xl animate-pulse" />)}
+                                    {[...Array(3)].map((_, i) => <div key={`parent-${i}`} className="h-16 bg-background border border-border/50 rounded-xl animate-pulse" />)}
                                 </div>
                             ) : (
                                 <div className="relative border-s-2 border-primary/10 ps-5 ms-2 space-y-4">

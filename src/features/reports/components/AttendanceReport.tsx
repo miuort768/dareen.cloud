@@ -38,7 +38,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
             <div className="bg-card border border-border shadow-xl text-main px-4 py-3 rounded-xl text-start min-w-[140px]" dir="rtl">
                 <p className="text-micro font-medium text-muted uppercase mb-2 pb-1 border-b border-border">{label}</p>
                 {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
-                    <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
+                    <div key={`report-${i}`} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
                         <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: entry.stroke || entry.fill }} />
                             <span className="text-micro text-muted font-normal">{entry.name}</span>
@@ -74,7 +74,7 @@ export const AttendanceReport = ({
                     { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, bgClass: 'bg-chart-5/10', textClass: 'text-chart-5', sub: 'غياب/إلغاء' },
                     { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, bgClass: 'bg-chart-4/10', textClass: 'text-chart-4', sub: 'نسبة النجاح الكلية' },
                 ].map((item, i) => (
-                    <div key={i} className="bg-card border border-border/50 rounded-card shadow-soft p-4">
+                    <div key={`report-${i}`} className="bg-card border border-border/50 rounded-card shadow-soft p-4">
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-3 ${item.bgClass}`}>
                             <item.icon size={16} className={item.textClass} />
                         </div>
@@ -126,7 +126,7 @@ export const AttendanceReport = ({
                         { color: 'var(--chart-3)', label: 'حضور' },
                         { color: 'var(--chart-5)', label: 'غياب' },
                     ].map((l, i) => (
-                        <div key={i} className="flex items-center gap-1.5">
+                        <div key={`report-${i}`} className="flex items-center gap-1.5">
                             <div className="w-5 h-0.5 rounded-full" style={{ backgroundColor: l.color }} />
                             <span className="text-micro font-bold text-muted">{l.label}</span>
                         </div>

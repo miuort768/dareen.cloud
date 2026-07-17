@@ -19,7 +19,7 @@ export const Reports = () => {
             <div className="space-y-6 p-4 md:p-6">
                 <Skeleton className="h-20" />
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-24" />)}
+                    {[...Array(4)].map((_, i) => <Skeleton key={`skel-${i}`} className="h-24" />)}
                 </div>
                 <Skeleton className="h-16" />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -140,7 +140,7 @@ export const Reports = () => {
                                 { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, color: 'var(--chart-3)' },
                                 { label: 'النشطة', value: state.totalEnrollments, icon: Target, color: 'var(--text-muted)' }
                             ].map((stat, i) => (
-                                <div key={i} className="bg-card border border-border shadow-soft rounded-card p-3 flex flex-col justify-between aspect-square">
+                                <div key={`stat-${i}`} className="bg-card border border-border shadow-soft rounded-card p-3 flex flex-col justify-between aspect-square">
                                     <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${stat.color} 12%, transparent)` }}>
                                         <stat.icon size={14} style={{ color: stat.color }} />
                                     </div>
@@ -169,7 +169,7 @@ export const Reports = () => {
                                     const color = chartColors[i];
                                     const pct = state.totalEnrollments > 0 ? Math.round((s.value / state.totalEnrollments) * 100) : 0;
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
+                                        <div key={`report-${i}`} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${color} 25%, transparent)` }}>
                                             <div className="flex items-center justify-between">
                                                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
                                                 <p className="text-micro font-black font-mono" style={{ color }}>{pct}%</p>

@@ -43,7 +43,7 @@ export const QuickActionsHub = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {actions.map((action, i) => (
                 <Link
-                    key={i}
+                    key={`action-${i}`}
                     to={action.href}
                     className="group block"
                 >

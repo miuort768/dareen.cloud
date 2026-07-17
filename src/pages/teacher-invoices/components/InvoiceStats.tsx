@@ -39,7 +39,7 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
   <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
     {items.map((s, i) => (
       <div
-        key={i}
+        key={`finance-${i}`}
         className={cn(
           'rounded-2xl p-3 flex items-center gap-3 dark:brightness-[0.65]'
         )}

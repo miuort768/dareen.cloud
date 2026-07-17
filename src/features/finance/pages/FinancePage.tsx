@@ -17,7 +17,7 @@ export const Finance = () => {
             <div className="space-y-4 p-4 bg-surface min-h-full">
                 <div className="h-24 bg-card rounded-2xl animate-pulse" />
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    {[...Array(4)].map((_, i) => <div key={i} className="h-28 bg-card rounded-2xl animate-pulse" />)}
+                    {[...Array(4)].map((_, i) => <div key={`finance-${i}`} className="h-28 bg-card rounded-2xl animate-pulse" />)}
                 </div>
                 <div className="h-96 bg-card rounded-2xl animate-pulse" />
             </div>

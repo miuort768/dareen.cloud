@@ -130,7 +130,7 @@ export const AdminJobs = () => {
 
             <div className="max-w-5xl mx-auto px-4 space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
+                    <div className="space-y-4">{[1,2,3].map(i => <div key={`skel-${i}`} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
                     <div className="bg-card border-2 border-dashed border-border rounded-card p-6 md:p-16 text-center">
                         <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary-soft rounded-card">

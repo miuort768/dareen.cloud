@@ -66,7 +66,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                 <div className="flex-1 overflow-y-auto p-6 bg-surface custom-scrollbar">
                     {loading ? (
                         <div className="space-y-4">
-                            {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-16 w-full" />)}
+                            {[1, 2, 3, 4, 5].map(i => <Skeleton key={`skel-${i}`} className="h-16 w-full" />)}
                         </div>
                     ) : sessions.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-64 text-dim">

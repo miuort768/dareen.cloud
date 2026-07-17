@@ -67,7 +67,7 @@ export const PageLoader = () => {
                     <div className="flex gap-1">
                         {[0, 1, 2].map((i) => (
                             <motion.div
-                                key={i}
+                                key={`dot-${i}`}
                                 animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
                                 transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }}
                                 className="w-1 h-1 bg-primary rounded-full"

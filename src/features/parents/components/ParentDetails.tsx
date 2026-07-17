@@ -169,7 +169,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                         </div>
                                         <div className="flex flex-wrap gap-2 pt-3 border-t border-border/50">
                                             {group.times.map((t, i) => (
-                                                <div key={i} className="flex items-center gap-3 px-3 py-2 bg-background border border-border/50 text-micro font-medium rounded-xl">
+                                                <div key={`parent-${i}`} className="flex items-center gap-3 px-3 py-2 bg-background border border-border/50 text-micro font-medium rounded-xl">
                                                     <span className="text-muted uppercase">{t.day}</span>
                                                     <span className="w-1 h-1 bg-primary rounded-full" />
                                                     <span className="text-primary font-mono">{t.hour} {t.period === 'am' ? 'صباحاً' : 'مساءً'}</span>

@@ -170,7 +170,7 @@ export const TransactionsLog = ({ transactions, totalCount, onDeleteAll }: Trans
                         </button>
                         {[...Array(Math.min(totalPages, 7))].map((_, i) => (
                             <button
-                                key={i}
+                                key={`tx-${i}`}
                                 onClick={() => setPage(i + 1)}
                                 className={cn(
                                     "w-8 h-8 text-xs font-medium border transition-all rounded-xl",

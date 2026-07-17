@@ -130,7 +130,7 @@ export const AdminContacts = () => {
                 {loading ? (
                     <div className="space-y-3 sm:space-y-4">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="bg-white dark:bg-card h-24 sm:h-28 md:h-32 animate-pulse border border-border/30 shadow-soft rounded-none" />
+                            <div key={`skel-${i}`} className="bg-white dark:bg-card h-24 sm:h-28 md:h-32 animate-pulse border border-border/30 shadow-soft rounded-none" />
                         ))}
                     </div>
                 ) : error ? (

@@ -140,7 +140,7 @@ export const AcademicReport = ({
                     { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, color: 'var(--chart-2)' },
                     { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, color: 'var(--chart-4)' },
                 ].map((item, i) => (
-                    <div key={i} className="bg-card border border-border rounded-card shadow-soft p-4">
+                    <div key={`report-${i}`} className="bg-card border border-border rounded-card shadow-soft p-4">
                         <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-2" style={{ backgroundColor: `${item.color}10` }}>
                             <item.icon size={16} style={{ color: item.color }} />
                         </div>
@@ -291,7 +291,7 @@ export const AcademicReport = ({
                             </button>
                             {[...Array(Math.min(totalPages, 7))].map((_, i) => (
                                 <button
-                                    key={i}
+                                    key={`page-${i}`}
                                     onClick={() => setPage(i + 1)}
                                     className={cn(
                                         'w-8 h-8 text-xs font-bold rounded-xl border shadow-soft active:scale-95 transition-all',

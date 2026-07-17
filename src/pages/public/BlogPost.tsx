@@ -209,7 +209,7 @@ export const BlogPost = () => {
                     {post.tags && (
                     <div className="flex flex-wrap gap-2 mb-4">
                         {post.tags.split(',').map((tag: string, i: number) => (
-                            <span key={i} className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>
+                            <span key={`tag-${i}`} className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>
                         ))}
                     </div>
                     )}

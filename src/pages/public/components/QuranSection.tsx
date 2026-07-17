@@ -74,7 +74,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <div className="items-center justify-center gap-4 inline-flex">
                                     <div className="flex -space-x-3 space-x-reverse">
                                         {[1, 2, 3].map(i => (
-                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-card bg-success-soft overflow-hidden shadow-sm">
+                                            <div key={`avatar-${i}`} className="w-10 h-10 rounded-full border-2 border-card bg-success-soft overflow-hidden shadow-sm">
                                                 <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-10 h-10" />
                                             </div>
                                         ))}
@@ -200,7 +200,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <div className="h-10 w-px bg-success opacity-40 dark:opacity-40"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="w-9 h-9 rounded-full border-2 border-card bg-surface dark:bg-card overflow-hidden shadow-sm">
+                                <div key={`avatar-${i}`} className="w-9 h-9 rounded-full border-2 border-card bg-surface dark:bg-card overflow-hidden shadow-sm">
                                     <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-full h-full" />
                                 </div>
                             ))}

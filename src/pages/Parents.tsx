@@ -20,7 +20,7 @@ export const Parents = () => {
                 <div className="h-24 bg-card rounded-card shadow-soft" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
-                        <div key={i} className="h-28 bg-card rounded-card shadow-soft" />
+                        <div key={`skel-${i}`} className="h-28 bg-card rounded-card shadow-soft" />
                     ))}
                 </div>
                 <div className="h-96 bg-card rounded-card shadow-soft" />
