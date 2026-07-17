@@ -24,7 +24,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
             <div className="bg-card shadow-xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-border/50 mt-20 md:mt-0 rounded-card">
                 <div className="p-5 border-b border-white/10 flex justify-between items-center bg-primary text-on-primary">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
+                        <div className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-xl">
                             <User size={18} className="text-on-primary" />
                         </div>
                         <div>
