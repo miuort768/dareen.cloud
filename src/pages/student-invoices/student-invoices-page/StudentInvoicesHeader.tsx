@@ -1,5 +1,5 @@
 import { Search, FileText, Sparkles, Plus, X, UserPlus, Printer, Trash2 } from 'lucide-react';
-import { PrimaryBtn, SecondaryBtn, DangerBtn } from './components/InvoiceUI';
+import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI';
 
 interface StudentInvoicesHeaderProps {
     totalRevenue: number;

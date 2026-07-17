@@ -1,6 +1,6 @@
 import { Search, Calendar, GraduationCap, Sparkles, Plus, X, UserPlus, Trash2, Printer } from 'lucide-react';
 import { INVOICE_STATUS } from '../../../../types/invoice';
-import { PrimaryBtn, SecondaryBtn, DangerBtn } from './components/InvoiceUI';
+import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI';
 
 interface TeacherInvoicesHeaderProps {
     stats: { totalAmount: number };
