@@ -47,7 +47,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                             <tr>
                                 <td colSpan={4} className="px-6 py-20 text-center">
                                     {/* decorative empty-state icon — 13% opacity has no semantic token */}
-                                    <CheckCircle2 className="mx-auto mb-3" size={48} style={{ color: 'color-mix(in srgb, var(--bg-success) 13%, transparent)' }} />
+                                    <CheckCircle2 className="mx-auto mb-3 text-success/[0.13]" size={48} />
                                     <p className="text-xs font-bold text-muted uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                 </td>
                             </tr>

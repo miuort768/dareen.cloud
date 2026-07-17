@@ -41,9 +41,8 @@ export const AppearanceSection = ({
                             }`}
                     >
                         <span
-                            className={`absolute top-1 w-5 h-5 bg-card rounded-full transition-transform transform duration-300 ${theme === 'dark' ? 'translate-x-[2px]' : '-translate-x-[26px]'
+                            className={`absolute top-1 w-5 h-5 bg-card rounded-full transition-transform transform duration-300 ${theme === 'dark' ? 'translate-x-[2px] dark:start-[2px] dark:end-auto' : '-translate-x-[26px] start-auto end-[2px]'
                                 }`}
-                            style={{ right: theme === 'dark' ? 'auto' : '2px', left: theme === 'dark' ? '2px' : 'auto' }}
                         ></span>
                     </button>
                 </div>

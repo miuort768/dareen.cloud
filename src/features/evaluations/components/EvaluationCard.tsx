@@ -22,7 +22,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
 
     return (
         <div className="bg-card border border-border/50 shadow-soft hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group rounded-card">
-            <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-surface')} style={{ background: lastRating ? undefined : 'var(--border)' }}>
+            <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-border')}>
                 <div className={cn("h-full w-full", lastRating?.bg ?? 'bg-surface')} />
             </div>
 
