@@ -87,7 +87,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                             </h3>
                             <div className="space-y-10">
                                 <div className="flex gap-6">
-                                    <div className="shrink-0 w-8 h-8 bg-white text-main flex items-center justify-center font-black text-xs italic rounded-xl">01</div>
+                                    <div className="shrink-0 w-8 h-8 bg-card text-main flex items-center justify-center font-black text-xs italic rounded-xl">01</div>
                                     <p className="text-xs font-bold leading-relaxed text-dim italic">
                                         تمت مراجعة وتدقيق كافة الجلسات التعليمية المنفذة ومطابقتها يدوياً وآلياً مع سجلات الدفع والتحصيل النقدي الفعلي لضمان أعلى درجات الدقة.
                                     </p>

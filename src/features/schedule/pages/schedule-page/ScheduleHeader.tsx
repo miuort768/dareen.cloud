@@ -38,7 +38,7 @@ export const ScheduleHeader = ({ searchTerm, onSearchChange, filterDay, onDayCha
                 <Clock size={12} />
                 <span className="hidden sm:inline">اليوم</span>
             </button>
-            <select value={filterDay} onChange={e => onDayChange(e.target.value)}
+            <select value={filterDay} onChange={e => onDayChange(e.target.value)} aria-label="تصفية حسب اليوم"
                 className="h-9 px-2.5 bg-white/15 border border-white/20 text-on-primary text-micro font-bold rounded-xl outline-none focus:border-white/50 transition-all">
                 <option value="all" className="text-main">كل الأيام</option>
                 {DAYS_OF_WEEK.map(day => <option key={day} value={day} className="text-main">{day}</option>)}

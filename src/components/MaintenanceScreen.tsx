@@ -48,7 +48,7 @@ export const MaintenanceScreen = () => {
                         href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center bg-white hover:bg-primary text-main hover:text-on-primary px-14 py-5 rounded-full text-sm md:text-base font-medium uppercase tracking-widest shadow-sm transition-all transform hover:scale-[1.05] active:scale-95 border-2 border-white"
+                        className="inline-flex items-center justify-center bg-card hover:bg-primary text-main hover:text-on-primary px-14 py-5 rounded-full text-sm md:text-base font-medium uppercase tracking-widest shadow-sm transition-all transform hover:scale-[1.05] active:scale-95 border-2 border-border"
                     >
                         تواصل مع الدعم الفني
                     </a>

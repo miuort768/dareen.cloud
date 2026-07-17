@@ -65,6 +65,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                             <select
                                 value={newTransaction.type}
                                 onChange={e => setNewTransaction({ ...newTransaction, type: e.target.value })}
+                                aria-label="نوع المعاملة"
                                 className="w-full bg-card border-border px-4 py-3 text-sm font-medium focus:border-primary focus:ring-2 focus:ring-focus outline-none transition-all appearance-none rounded-xl"
                             >
                                 <option value="income">إيراد مالي (+)</option>

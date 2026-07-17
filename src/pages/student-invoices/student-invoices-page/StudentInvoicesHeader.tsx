@@ -43,6 +43,7 @@ export const StudentInvoicesHeader = ({
                             className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary placeholder:opacity-50 bg-white/15" />
                     </div>
                     <select value={filterStatus} onChange={(e) => onFilterChange(e.target.value)}
+                        aria-label="تصفية حسب الحالة"
                         className="rounded-xl px-3 py-2 text-xs font-bold outline-none text-on-primary bg-white/15">
                         <option value="all">جميع الحالات</option>
                         <option value="paid">مدفوعة</option>

@@ -75,6 +75,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                         statusConfig[lead.status].color
                                     )}
                                     value={lead.status}
+                                    aria-label="حالة العميل"
                                     onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                     onClick={(e) => e.stopPropagation()}
                                 >

@@ -272,7 +272,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <div className="grid grid-cols-2 gap-2">
                                 <div>
                                     <p className="text-micro font-bold text-on-primary/60 mb-1 uppercase">اليوم</p>
-                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-micro font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none">
+                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} aria-label="اختر اليوم" className="w-full text-micro font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none">
                                         {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>

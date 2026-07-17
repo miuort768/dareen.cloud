@@ -241,7 +241,7 @@ export const MobileAttendance = () => {
                                     <Calendar size={14} className="text-primary ms-1 shrink-0" />
                                     <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
                                         className="flex-1 bg-transparent text-micro font-bold text-main outline-none" />
-                                    <select value={filterTeacher} onChange={(e) => setFilterTeacher(e.target.value)}
+                                    <select value={filterTeacher} onChange={(e) => setFilterTeacher(e.target.value)} aria-label="تصفية حسب المعلمة"
                                         className="text-micro font-bold bg-card border border-border/50 rounded-xl px-2 py-1 outline-none text-muted">
                                         <option value="all">كل المعلمات</option>
                                         {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}

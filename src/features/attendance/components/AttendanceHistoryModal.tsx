@@ -159,6 +159,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                             <select
                                                 value={editingSession.status}
                                                 onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
+                                                aria-label="حالة الحضور"
                                                 className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-card outline-none focus:border-primary transition-all"
                                             >
                                                 <option value="completed">حضور</option>

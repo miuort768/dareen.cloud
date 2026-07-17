@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Shield, Plus, X, Save, Trash2, Settings, Users } from 'lucide-react';
 import { rolesService } from '../services/rolesService';
 import type { Role, Permission } from '../services/rolesService';
+
+const loadData = async () => {
+    const [roles, permissions] = await Promise.all([
+        rolesService.getAll(),
+        rolesService.getPermissions(),
+    ]);
+    return { roles, permissions };
+};
 
 export const RolesPage = () => {
     const [roles, setRoles] = useState<Role[]>([]);
@@ -12,12 +21,16 @@ export const RolesPage = () => {
     const [newDesc, setNewDesc] = useState('');
 
     useEffect(() => {
-        const load = async () => {
-            const [r, p] = await Promise.all([rolesService.getAll(), rolesService.getPermissions()]);
+        loadData().then(({ roles: r, permissions: p }) => {
             setRoles(r);
             setPermissions(p);
-        };
-        load();
+        });
+    }, []);
+
+    const refresh = useCallback(async () => {
+        const { roles: r, permissions: p } = await loadData();
+        setRoles(r);
+        setPermissions(p);
     }, []);
 
     const startEdit = (role: Role) => {
@@ -32,7 +45,7 @@ export const RolesPage = () => {
         await rolesService.update(editingRole.id, { label: newLabel, description: newDesc });
         await rolesService.updatePermissions(editingRole.id, selectedPerms);
         setEditingRole(null);
-        load();
+        refresh();
     };
 
     const createRole = async () => {
@@ -41,13 +54,13 @@ export const RolesPage = () => {
         setNewName('');
         setNewLabel('');
         setNewDesc('');
-        load();
+        refresh();
     };
 
     const deleteRole = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this role?')) return;
+        if (!confirm('هل أنت متأكد من حذف هذا الدور؟')) return;
         await rolesService.delete(id);
-        load();
+        refresh();
     };
 
     const togglePerm = (permId: number) => {
@@ -63,54 +76,162 @@ export const RolesPage = () => {
     }, {});
 
     return (
-        <div style={{ padding: '20px', direction: 'rtl' }}>
-            <h2>إدارة الصلاحيات</h2>
-
-            <div style={{ marginBottom: 24, padding: 16, background: 'var(--bg-surface)', borderRadius: 8 }}>
-                <h3>إضافة دور جديد</h3>
-                <input placeholder="الاسم (مثل: manager)" value={newName} onChange={e => setNewName(e.target.value)} style={{ marginLeft: 8 }} />
-                <input placeholder="التسمية (مثل: مدير)" value={newLabel} onChange={e => setNewLabel(e.target.value)} style={{ marginLeft: 8 }} />
-                <input placeholder="وصف" value={newDesc} onChange={e => setNewDesc(e.target.value)} style={{ marginLeft: 8 }} />
-                <button onClick={createRole}>إضافة</button>
+        <div className="p-6" dir="rtl">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-primary-soft rounded-card flex items-center justify-center">
+                    <Shield size={20} className="text-primary" />
+                </div>
+                <div>
+                    <h1 className="text-xl font-bold font-heading text-main">إدارة الصلاحيات</h1>
+                    <p className="text-sm text-muted">{roles.length} دور · {permissions.length} صلاحية</p>
+                </div>
             </div>
 
-            {roles.map(role => (
-                <div key={role.id} style={{ marginBottom: 16, padding: 16, border: '1px solid var(--border-border)', borderRadius: 8 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <strong>{role.label}</strong>
-                        <span style={{ color: 'var(--text-muted)' }}>المستخدمون: {role._count?.userRoles || 0}</span>
-                    </div>
-                    <div style={{ marginTop: 8 }}>
-                        <button onClick={() => startEdit(role)} style={{ marginLeft: 8 }}>تعديل الصلاحيات</button>
-                        {!role.isSystem && <button onClick={() => deleteRole(role.id)} style={{ color: 'red' }}>حذف</button>}
-                    </div>
+            <div className="bg-surface border border-border rounded-card p-5 mb-6">
+                <h3 className="text-sm font-bold text-main flex items-center gap-2 mb-4">
+                    <Plus size={16} className="text-primary" /> إضافة دور جديد
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                    <input
+                        aria-label="الاسم التقني"
+                        placeholder="الاسم (مثل: manager)"
+                        value={newName}
+                        onChange={e => setNewName(e.target.value)}
+                        className="flex-1 min-w-[140px] px-3 py-2 bg-card border border-border rounded-card text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus placeholder:text-muted"
+                    />
+                    <input
+                        aria-label="التسمية"
+                        placeholder="التسمية (مثل: مدير)"
+                        value={newLabel}
+                        onChange={e => setNewLabel(e.target.value)}
+                        className="flex-1 min-w-[140px] px-3 py-2 bg-card border border-border rounded-card text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus placeholder:text-muted"
+                    />
+                    <input
+                        aria-label="الوصف"
+                        placeholder="وصف"
+                        value={newDesc}
+                        onChange={e => setNewDesc(e.target.value)}
+                        className="flex-1 min-w-[140px] px-3 py-2 bg-card border border-border rounded-card text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus placeholder:text-muted"
+                    />
+                    <button
+                        onClick={createRole}
+                        className="px-5 py-2 bg-primary hover:bg-primary-hover text-on-primary text-sm font-bold rounded-card transition-all flex items-center gap-2"
+                    >
+                        <Plus size={16} /> إضافة
+                    </button>
                 </div>
-            ))}
+            </div>
+
+            <div className="space-y-3">
+                {roles.map(role => (
+                    <div key={role.id} className="bg-card border border-border rounded-card p-5 shadow-soft">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 bg-primary-soft rounded-card flex items-center justify-center">
+                                    <Settings size={16} className="text-primary" />
+                                </div>
+                                <div>
+                                    <strong className="text-sm font-bold text-main block">{role.label}</strong>
+                                    <span className="text-xs text-muted">{role.name}</span>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs text-muted">
+                                <Users size={14} />
+                                <span>{role._count?.userRoles || 0}</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-border">
+                            <button
+                                onClick={() => startEdit(role)}
+                                className="px-4 py-1.5 bg-primary-soft text-primary text-xs font-bold rounded-card hover:bg-primary hover:text-on-primary transition-all"
+                            >
+                                تعديل الصلاحيات
+                            </button>
+                            {!role.isSystem && (
+                                <button
+                                    onClick={() => deleteRole(role.id)}
+                                    className="px-4 py-1.5 bg-error/10 text-error text-xs font-bold rounded-card hover:bg-error hover:text-on-primary transition-all flex items-center gap-1"
+                                >
+                                    <Trash2 size={14} /> حذف
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
 
             {editingRole && (
-                <div style={{
-                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'rgb(0_0_0 / 0.5)', display: 'flex',
-                    justifyContent: 'center', alignItems: 'center', zIndex: 1000
-                }}>
-                    <div className="bg-card" style={{ padding: 24, borderRadius: 8, maxHeight: '80vh', overflow: 'auto', width: 600 }}>
-                        <h3>تعديل: {editingRole.label}</h3>
-                        <input value={newLabel} onChange={e => setNewLabel(e.target.value)} style={{ width: '100%', marginBottom: 8 }} />
-                        <input value={newDesc} onChange={e => setNewDesc(e.target.value)} style={{ width: '100%', marginBottom: 16 }} />
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+                    onClick={() => setEditingRole(null)}
+                >
+                    <div
+                        className="bg-card border border-border rounded-card shadow-soft w-full max-w-lg max-h-[85vh] overflow-y-auto p-6"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className="flex items-center justify-between mb-5">
+                            <h3 className="text-lg font-bold font-heading text-main flex items-center gap-2">
+                                <Settings size={18} className="text-primary" /> تعديل: {editingRole.label}
+                            </h3>
+                            <button
+                                onClick={() => setEditingRole(null)}
+                                aria-label="إغلاق"
+                                className="w-8 h-8 flex items-center justify-center text-muted hover:text-main hover:bg-surface rounded-card transition-all"
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+
+                        <div className="space-y-3 mb-5">
+                            <input
+                                aria-label="التسمية"
+                                value={newLabel}
+                                onChange={e => setNewLabel(e.target.value)}
+                                className="w-full px-3 py-2 bg-surface border border-border rounded-card text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus"
+                            />
+                            <input
+                                aria-label="الوصف"
+                                value={newDesc}
+                                onChange={e => setNewDesc(e.target.value)}
+                                className="w-full px-3 py-2 bg-surface border border-border rounded-card text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus"
+                            />
+                        </div>
+
                         {Object.entries(groups).map(([group, perms]) => (
-                            <div key={group} style={{ marginBottom: 16 }}>
-                                <h4 className="text-muted" style={{ margin: '8px 0' }}>{group}</h4>
-                                {perms.map(p => (
-                                    <label key={p.id} style={{ display: 'block', margin: '4px 0', cursor: 'pointer' }}>
-                                        <input type="checkbox" checked={selectedPerms.includes(p.id)} onChange={() => togglePerm(p.id)} />
-                                        {p.label}
-                                    </label>
-                                ))}
+                            <div key={group} className="mb-4">
+                                <h4 className="text-xs font-bold text-muted uppercase tracking-wider mb-2">{group}</h4>
+                                <div className="space-y-1">
+                                    {perms.map(p => (
+                                        <label
+                                            key={p.id}
+                                            className="flex items-center gap-2 p-2 rounded-card cursor-pointer hover:bg-surface transition-colors"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedPerms.includes(p.id)}
+                                                onChange={() => togglePerm(p.id)}
+                                                className="w-4 h-4 accent-primary"
+                                            />
+                                            <span className="text-sm text-main">{p.label}</span>
+                                        </label>
+                                    ))}
+                                </div>
                             </div>
                         ))}
-                        <div style={{ marginTop: 16 }}>
-                            <button onClick={saveRole} style={{ marginLeft: 8 }}>حفظ</button>
-                            <button onClick={() => setEditingRole(null)}>إلغاء</button>
+
+                        <div className="flex items-center gap-3 mt-6 pt-4 border-t border-border">
+                            <button
+                                onClick={saveRole}
+                                className="flex-1 px-4 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-sm font-bold rounded-card transition-all flex items-center justify-center gap-2"
+                            >
+                                <Save size={16} /> حفظ
+                            </button>
+                            <button
+                                onClick={() => setEditingRole(null)}
+                                className="px-4 py-2.5 bg-surface hover:bg-hover text-main text-sm font-bold rounded-card transition-all"
+                            >
+                                إلغاء
+                            </button>
                         </div>
                     </div>
                 </div>

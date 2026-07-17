@@ -61,6 +61,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                         required
                         value={form.teacherId}
                         onChange={e => setForm({ ...form, teacherId: e.target.value })}
+                        aria-label="اختر المعلمة"
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
                     >
                         <option value="">المعلمة</option>
@@ -98,6 +99,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                         <select
                             value={slotInput.day}
                             onChange={e => setSlotInput({ ...slotInput, day: e.target.value })}
+                            aria-label="اختر اليوم"
                             className="flex-1 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
                         >
                             <option value="">اليوم</option>
@@ -112,6 +114,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                         <select
                             value={slotInput.period}
                             onChange={e => setSlotInput({ ...slotInput, period: e.target.value })}
+                            aria-label="الفترة صباحاً أو مساءً"
                             className="w-16 px-1 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
                         >
                             <option value="am">صباحاً</option>

@@ -46,6 +46,7 @@ export const AppointmentsFilters = ({ searchTerm, onSearchChange, filterDay, onD
             <div className="relative">
                 <Filter size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                 <select value={filterDay} onChange={(e) => onDayChange(e.target.value)}
+                    aria-label="تصفية حسب اليوم"
                     className="w-full ps-8 pe-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl">
                     <option value="all">كل الأيام</option>
                     {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -54,6 +55,7 @@ export const AppointmentsFilters = ({ searchTerm, onSearchChange, filterDay, onD
             <div className="relative">
                 <GraduationCap size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                 <select value={filterTeacher} onChange={(e) => onTeacherChange(e.target.value)}
+                    aria-label="تصفية حسب المعلمة"
                     className="w-full ps-8 pe-3 py-2 border border-border text-micro font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card appearance-none cursor-pointer text-main transition-all rounded-xl">
                     <option value="all">كل المعلمات</option>
                     {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}

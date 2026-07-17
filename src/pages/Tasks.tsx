@@ -335,6 +335,7 @@ export const Tasks = () => {
                                                 <ChevronDown size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                                 <select
                                                     className="appearance-none w-full bg-background border border-border rounded-card py-2.5 ps-8 pe-4 text-xs font-bold text-main cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
+                                                    aria-label="درجة الأولوية"
                                                     value={newTask.priority}
                                                     onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                                 >

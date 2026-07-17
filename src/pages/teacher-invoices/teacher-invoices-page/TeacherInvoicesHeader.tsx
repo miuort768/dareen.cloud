@@ -60,6 +60,7 @@ export const TeacherInvoicesHeader = ({
                         </div>
                     </div>
                     <select value={filterStatus} onChange={(e) => onFilterChange(e.target.value)}
+                        aria-label="تصفية حسب الحالة"
                         className="w-auto min-w-[140px] rounded-xl px-3 py-2 text-xs font-bold outline-none text-on-primary bg-white/15">
                         <option value="all" className="text-main">جميع الحالات</option>
                         {Object.values(INVOICE_STATUS).map(status => (

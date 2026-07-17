@@ -168,6 +168,7 @@ export const MonthlyClosing: React.FC = () => {
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
+                                aria-label="اختيار الفصل الدراسي"
                                 className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
                             >
                                 {semesterList.map(s => <option key={s} value={s}>{s}</option>)}

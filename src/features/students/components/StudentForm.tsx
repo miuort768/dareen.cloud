@@ -174,6 +174,7 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
                 required={required}
                 value={value}
                 onChange={e => onChange(e.target.value)}
+                aria-label={label}
                 className={cn(
                     "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal appearance-none",
                     Icon && "ps-10",

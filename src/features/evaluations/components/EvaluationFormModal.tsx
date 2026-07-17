@@ -33,7 +33,7 @@ export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudent
                         {!formData.studentId && (
                             <div>
                                 <label className="block text-micro md:text-xs font-medium text-muted mb-1.5 uppercase tracking-widest">اختر الطالب</label>
-                                <select value={formData.studentId} onChange={(e) => onChange({ ...formData, studentId: e.target.value })} required
+                                <select value={formData.studentId} onChange={(e) => onChange({ ...formData, studentId: e.target.value })} required aria-label="اختر الطالب"
                                     className="w-full border border-border bg-card px-3 py-2 md:px-4 md:py-3 font-normal text-xs md:text-sm text-main focus:ring-2 focus:ring-primary/30 outline-none rounded-xl">
                                     <option value="">-- اختر من قائمة طلابك --</option>
                                     {teacherStudents.map(s => (

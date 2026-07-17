@@ -95,6 +95,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">نوع المحتوى</label>
                             <select value={currentPost.contentType}
                                 onChange={(e) => { const v = e.target.value; setCurrentPost((prev: any) => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }}
+                                aria-label="نوع المحتوى"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none">
                                 <option value="notes">مذكرات</option><option value="solutions">حل كتب</option>
                                 <option value="more">المزيد</option><option value="foundation">تأسيس</option>
@@ -104,6 +105,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">المنهج</label>
                             <select value={currentPost.curriculum} onChange={(e) => set('curriculum', e.target.value)}
                                 disabled={isDisabled}
+                                aria-label="المنهج الدراسي"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                 <option value="">بدون تحديد</option>
                                 <option value="kuwait">الكويت</option><option value="qatar">قطر</option>
@@ -114,6 +116,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">المرحلة</label>
                             <select value={currentPost.level} onChange={(e) => set('level', e.target.value)}
                                 disabled={isDisabled}
+                                aria-label="المرحلة الدراسية"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                 <option value="">بدون تحديد</option>
                                 <option value="primary">ابتدائي</option><option value="middle">متوسط</option>
@@ -125,6 +128,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">الصف</label>
                             <select value={currentPost.grade} onChange={(e) => set('grade', e.target.value)}
                                 disabled={isDisabled}
+                                aria-label="الصف الدراسي"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                 <option value="">بدون تحديد</option>
                                 {grades.map(g => <option key={g} value={g}>صف {g}</option>)}
@@ -134,6 +138,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">الفصل</label>
                             <select value={currentPost.term} onChange={(e) => set('term', e.target.value)}
                                 disabled={isDisabled}
+                                aria-label="الفصل الدراسي"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                 <option value="">بدون</option><option value="1">الفصل الأول</option>
                                 <option value="2">الفصل الثاني</option>
@@ -143,6 +148,7 @@ export const BlogForm = ({
                             <label className="text-micro font-bold text-dim block mb-1">المادة</label>
                             <select value={currentPost.subject} onChange={(e) => set('subject', e.target.value)}
                                 disabled={isDisabled}
+                                aria-label="المادة الدراسية"
                                 className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
                                 <option value="">بدون تحديد</option>
                                 {subjects.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}

@@ -69,7 +69,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                 </div>
                 <div className="space-y-1">
                     <label className="text-xs text-muted ms-1">الأولوية</label>
-                    <select name="priority" className="w-full bg-card border border-border/60 px-3 py-2.5 text-xs outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all">
+                    <select name="priority" aria-label="الأولوية" className="w-full bg-card border border-border/60 px-3 py-2.5 text-xs outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all">
                         <option value="low">منخفضة</option>
                         <option value="medium">متوسطة</option>
                         <option value="high">عالية</option>

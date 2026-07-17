@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
+import { SUBJECTS } from '../data/subjects';
 
 interface JobApp {
     id: string;
@@ -19,11 +20,6 @@ interface JobApp {
     created_at: string;
 }
 
-const allSubjects = [
-    'القرآن الكريم', 'المواد الشرعية', 'اللغة العربية',
-    'اللغة الإنجليزية', 'اللغة الفرنسية', 'الرياضيات',
-    'الدراسات الاجتماعية', 'العلوم أو فروعها',
-];
 
 export const AdminJobs = () => {
     const [apps, setApps] = useState<JobApp[]>([]);
@@ -109,7 +105,7 @@ export const AdminJobs = () => {
                                 className="w-full bg-background border border-border rounded-card py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus appearance-none cursor-pointer"
                             >
                                 <option value="" className="text-main">كل المواد</option>
-                                {allSubjects.map(s => (
+                                {SUBJECTS.map(s => (
                                     <option key={s} value={s} className="text-main">{s}</option>
                                 ))}
                             </select>
@@ -130,7 +126,7 @@ export const AdminJobs = () => {
 
             <div className="max-w-5xl mx-auto px-4 space-y-4">
                 {loading ? (
-                    <div className="space-y-4">{[1,2,3].map(i => <div key={`skel-${i}`} className="bg-white h-32 animate-pulse border border-border/50" />)}</div>
+                    <div className="space-y-4">{[1,2,3].map(i => <div key={`skel-${i}`} className="bg-card h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
                     <div className="bg-card border-2 border-dashed border-border rounded-card p-6 md:p-16 text-center">
                         <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary-soft rounded-card">

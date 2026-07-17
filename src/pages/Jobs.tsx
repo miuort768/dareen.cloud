@@ -1,16 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { FileText, ChevronRight, ChevronLeft, Send, CheckCircle2, Briefcase, Sparkles } from 'lucide-react';
+import { FileText, ChevronRight, ChevronLeft, Send, CheckCircle2, Briefcase } from 'lucide-react';
 import { api } from '../lib/api';
 import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
 import { SEO } from '../components/SEO';
 import { JobsHeroBanner, JobsSuccessView, JobsFormStep, JobsErrorModal } from './jobs-page';
-
-const subjects = [
-    'القرآن الكريم', 'المواد الشرعية', 'اللغة العربية', 'اللغة الإنجليزية',
-    'اللغة الفرنسية', 'الرياضيات', 'الدراسات الاجتماعية', 'العلوم أو فروعها',
-];
+import { SUBJECTS } from '../data/subjects';
 
 const steps = [
     { id: 1, title: 'المعلومات الشخصية', icon: Briefcase },
@@ -146,7 +142,7 @@ export const Jobs = () => {
 
                         <form onSubmit={(e) => { e.preventDefault(); if (step < totalSteps) nextStep(); }} onKeyDown={handleKeyDown}>
                             <div className="p-4 md:p-10">
-                                <JobsFormStep step={step} form={form} subjects={subjects} inputRefs={inputRefs}
+                                <JobsFormStep step={step} form={form} subjects={SUBJECTS as unknown as string[]} inputRefs={inputRefs}
                                     onChange={handleChange} onSubjectChange={(s) => setForm(prev => ({ ...prev, subject: s }))}
                                     onKeyDown={handleKeyDown} />
                             </div>

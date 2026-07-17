@@ -113,6 +113,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
+                            aria-label="تصفية حسب الحالة"
                             className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">جميع الحالات</option>
@@ -127,6 +128,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
+                            aria-label="تصفية حسب المعلمة"
                             className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                         >
                             <option value="all">كافة المعلمات</option>

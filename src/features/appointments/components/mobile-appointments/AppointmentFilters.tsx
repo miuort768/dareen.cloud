@@ -20,12 +20,12 @@ export const AppointmentFilters = ({ searchTerm, onSearchChange, filterDay, onDa
                 className="w-full ps-8 pe-8 py-2.5 bg-card border border-border/50 text-xs font-bold outline-none focus:border-primary rounded-card transition-all placeholder:text-muted text-main shadow-soft" />
         </div>
         <div className="flex gap-2">
-            <select value={filterDay} onChange={(e) => onDayChange(e.target.value)}
+            <select value={filterDay} onChange={(e) => onDayChange(e.target.value)} aria-label="تصفية حسب اليوم"
                 className="flex-1 px-3 py-2 bg-card border border-border/50 text-micro font-bold rounded-card outline-none text-muted shadow-soft">
                 <option value="all">كل الأيام</option>
                 {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
             </select>
-            <select value={filterTeacher} onChange={(e) => onTeacherChange(e.target.value)}
+            <select value={filterTeacher} onChange={(e) => onTeacherChange(e.target.value)} aria-label="تصفية حسب المعلمة"
                 className="flex-1 px-3 py-2 bg-card border border-border/50 text-micro font-bold rounded-card outline-none text-muted shadow-soft">
                 <option value="all">كل المعلمات</option>
                 {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}

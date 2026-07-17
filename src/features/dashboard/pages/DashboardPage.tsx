@@ -114,7 +114,7 @@ export const Dashboard = () => {
                 {currentUser.permissions?.includes('*') && (
                     <Section>
                         <div className="flex justify-center">
-                            <div className="inline-flex bg-white rounded-full shadow-[0_2px_12px_var(--bg-shadow)] p-1 gap-1">
+                            <div className="inline-flex bg-card rounded-full shadow-soft p-1 gap-1">
                                 <button
                                     onClick={() => setView('standard')}
                                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${

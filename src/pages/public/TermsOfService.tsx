@@ -32,7 +32,7 @@ export const TermsOfService = () => {
                 <div className="absolute bottom-0 end-0 w-64 h-64 bg-warning/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-main border border-border rounded-none shadow-sm mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-card text-main border border-border rounded-none shadow-sm mb-4">
                         <Scale size={14} className="text-success" />
                         <span className="text-xs font-black tracking-[0.2em] uppercase">الشروط والأحكام</span>
                     </div>
@@ -48,7 +48,7 @@ export const TermsOfService = () => {
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:py-20 bg-white">
+            <section className="py-8 md:py-20 bg-card">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Acceptance */}

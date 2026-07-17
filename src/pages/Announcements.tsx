@@ -271,6 +271,7 @@ export const Announcements = () => {
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
+                                        aria-label="نوع الإعلان"
                                         className="w-full px-4 py-3 bg-surface dark:bg-card border border-border font-bold text-xs rounded-xl outline-none focus:outline-none focus:ring-2 focus:ring-focus text-main transition-all cursor-pointer"
                                     >
                                         <option value="general">عام</option>

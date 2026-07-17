@@ -116,6 +116,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                 <DollarSign className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                 <select
                                     value={formData.currency}
+                                    aria-label="العملة"
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
                                     className="w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
                                 >

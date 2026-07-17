@@ -64,6 +64,7 @@ export const InvoiceForm = ({
           <select
             required
             value={formData.teacherId}
+            aria-label="المعلمة"
             onChange={e => {
               const t = teachers.find(t => t.id === e.target.value);
               if (t) {
@@ -118,6 +119,7 @@ export const InvoiceForm = ({
           <FieldLabel>العملة</FieldLabel>
           <select
             value={formData.currency}
+            aria-label="العملة"
             onChange={e => setFormData({ ...formData, currency: e.target.value })}
             className={inputClasses}
           >
@@ -154,6 +156,7 @@ export const InvoiceForm = ({
           <FieldLabel>الحالة *</FieldLabel>
           <select
             value={formData.status}
+            aria-label="حالة الفاتورة"
             onChange={e => setFormData({ ...formData, status: e.target.value })}
             className={inputClasses}
           >

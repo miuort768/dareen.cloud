@@ -244,6 +244,7 @@ export const Students = () => {
                         <GraduationCap size={14} className="text-dim" />
                         <select
                             value={filterGrade}
+                            aria-label="تصفية حسب المرحلة الدراسية"
                             onChange={e => setFilterGrade(e.target.value)}
                             className="border border-border bg-card dark:bg-hover text-main text-xs font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
                         >
@@ -257,6 +258,7 @@ export const Students = () => {
                         <BookOpen size={14} className="text-dim" />
                         <select
                             value={filterCurriculum}
+                            aria-label="تصفية حسب المنهج"
                             onChange={e => setFilterCurriculum(e.target.value)}
                             className="border border-border bg-card dark:bg-hover text-main text-xs font-bold px-2 py-1.5 outline-none focus:border-primary rounded-2xl"
                         >

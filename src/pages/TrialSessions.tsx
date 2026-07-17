@@ -260,7 +260,7 @@ export const TrialSessions = () => {
                     <select value={form.teacherName} onChange={e => {
                       const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
                       setForm({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
-                    }} className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all appearance-none">
+                    }} aria-label="اختيار المعلمة" className="w-full px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all appearance-none">
                       <option value="">اختر معلمة</option>
                       {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
                         <option key={t.id} value={t.name}>{t.name}</option>
