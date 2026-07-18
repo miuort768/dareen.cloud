@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
-import { 
-    Users, BookOpen, Calendar, Megaphone, ShieldCheck, 
-    Headphones, Bell, FilePlus, UserPlus, TrendingUp, 
-    TrendingDown, Award, Loader2, Sparkles,
-    ChevronLeft, Wallet, Clock, Home, Banknote
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ShieldCheck, Clock, Home, FilePlus, Wallet, Bell, Sparkles, Loader2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { StatCard } from '../../../shared/components/ui';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { triggerHaptic } from '../../../lib/haptics';
+import { AdminHomeTab } from './AdminHomeTab';
+import { AdminQuickTab } from './AdminQuickTab';
+import { AdminFinanceTab } from './AdminFinanceTab';
+import { AdminAlertsTab } from './AdminAlertsTab';
 
 interface MobileAdminDashboardProps {
     stats: Record<string, unknown>;
@@ -18,16 +15,15 @@ interface MobileAdminDashboardProps {
     onRefresh?: () => Promise<void> | void;
 }
 
-const iconProps = { size: 18, strokeWidth: 1.5 };
-const smallIconProps = { size: 14, strokeWidth: 1.5 };
 const miniIconProps = { size: 12, strokeWidth: 1.5 };
+const smallIconProps = { size: 14, strokeWidth: 1.5 };
+const iconProps = { size: 18, strokeWidth: 1.5 };
 
 export const MobileAdminDashboard = ({
     stats,
     lowBalanceStudents,
     onRefresh
 }: MobileAdminDashboardProps) => {
-    const navigate = useNavigate();
     const [currentTime, setCurrentTime] = useState(new Date());
     const [activeTab, setActiveTab] = useState<'home' | 'quick' | 'finance' | 'alerts'>('home');
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -101,8 +97,6 @@ export const MobileAdminDashboard = ({
             className="pb-4 text-start overflow-x-hidden relative bg-background dark:bg-background"
             dir="rtl"
         >
-
-            {/* Pull to Refresh */}
             <div
                 className="overflow-hidden flex items-center justify-center w-full transition-all duration-300 ease-out"
                 style={{ height: isRefreshing ? 50 : pullDistance }}
@@ -118,7 +112,6 @@ export const MobileAdminDashboard = ({
                 </div>
             </div>
 
-            {/* Sticky Header — Glassmorphism */}
             <div className={cn(
                 "sticky top-0 z-[100] transition-all duration-500",
                 headerScrolled
@@ -147,7 +140,6 @@ export const MobileAdminDashboard = ({
                     </div>
                 </div>
 
-                {/* Tabs */}
                 <div className="px-4 pb-3">
                     <div className="flex bg-surface dark:bg-card rounded-card p-1 gap-1 shadow-soft">
                         {[
@@ -180,216 +172,14 @@ export const MobileAdminDashboard = ({
                 </div>
             </div>
 
-            {/* Tab Content */}
             <div className="px-4 pt-3 pb-4 space-y-4">
                 {activeTab === 'home' && (
-                    <div className="space-y-4">
-                        {/* Quick Stats */}
-                        <div className="grid grid-cols-3 gap-3">
-                            <div onClick={() => { triggerHaptic('light'); navigate('/students'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); navigate('/students'); } }}>
-                                <StatCard title="الطلاب" value={stats.studentsCount} icon={Users} variant="info" />
-                            </div>
-                            <div onClick={() => { triggerHaptic('light'); navigate('/schedule'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); navigate('/schedule'); } }}>
-                                <StatCard title="الاشتراكات" value={stats.totalEnrollments} icon={BookOpen} variant="success" />
-                            </div>
-                            <div onClick={() => { triggerHaptic('light'); handleTabChange('finance'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); handleTabChange('finance'); } }}>
-                                <StatCard title="صافي الربح" value={`${(stats.totalNetProfit || 0).toLocaleString()}`} icon={TrendingUp} variant="primary" />
-                            </div>
-                        </div>
-
-                        {/* Today's Progress */}
-                        <div className="bg-card rounded-card p-5 shadow-soft border border-border">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center">
-                                        <Award {...smallIconProps} className="text-success" />
-                                    </div>
-                                    <div>
-                                        <span className="text-micro font-bold text-success">اليوم</span>
-                                        <h3 className="text-xs font-bold text-main">معدل تنفيذ الحصص</h3>
-                                    </div>
-                                </div>
-                                <span className="text-lg font-bold text-success tabular-nums">{completionRate}%</span>
-                            </div>
-                            <div className="w-full h-2.5 bg-surface dark:bg-card rounded-full overflow-hidden">
-                                <div
-                                    className="h-full rounded-full bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-info)] transition-all duration-1000 ease-out"
-                                    style={{ width: `${Math.min(completionRate, 100)}%` }}
-                                />
-                            </div>
-                            <p className="text-micro font-medium text-muted mt-2">تم تنفيذ {completedSessions} من {todaySessions} حصة</p>
-                        </div>
-
-                        {/* Quick Links */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <QuickLink icon={UserPlus} label="طالب جديد" variant="info" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                            <QuickLink icon={FilePlus} label="فاتورة" variant="success" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                            <QuickLink icon={Calendar} label="الجدول" variant="primary" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                            <QuickLink icon={Megaphone} label="لوحة الإعلانات" variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
-                        </div>
-                    </div>
+                    <AdminHomeTab stats={stats} completionRate={completionRate} completedSessions={completedSessions} todaySessions={todaySessions} onTabChange={handleTabChange} />
                 )}
-
-                {activeTab === 'quick' && (
-                    <div className="space-y-3">
-                        <p className="text-micro font-bold text-muted px-1">الإجراءات السريعة</p>
-                        <div className="grid grid-cols-2 gap-3">
-                            <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                            <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} variant="success" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                            <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} variant="primary" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                            <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
-                            <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
-                            <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
-                        </div>
-                    </div>
-                )}
-
-                {activeTab === 'finance' && (
-                    <div className="space-y-4">
-                        <p className="text-micro font-bold text-muted px-1">المؤشرات المالية</p>
-
-                        <div className="bg-card rounded-card p-5 shadow-soft border border-border space-y-4">
-                            <div className="flex items-center justify-between p-4 rounded-xl bg-success-soft border border-success">
-                                <div>
-                                    <span className="text-micro font-bold text-success">الإيرادات</span>
-                                    <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
-                                </div>
-                                <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-primary shadow-soft shadow-success/40">
-                                    <TrendingUp size={20} strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <div className="flex items-center justify-between p-4 rounded-xl bg-error-soft border border-error">
-                                <div>
-                                    <span className="text-micro font-bold text-error">المصروفات</span>
-                                    <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
-                                </div>
-                                <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40">
-                                    <TrendingDown size={20} strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={() => { triggerHaptic('light'); navigate('/finance'); }}
-                                className="w-full h-11 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-info/40 hover:shadow-md hover:shadow-info/60 transition-all active:scale-[0.98]"
-                                aria-label="لوحة المالية كاملة"
-                            >
-                                <Wallet {...smallIconProps} />
-                                لوحة المالية كاملة
-                                <ChevronLeft {...miniIconProps} />
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {activeTab === 'alerts' && (
-                    <div className="space-y-4">
-                        <p className="text-micro font-bold text-muted px-1">التنبيهات</p>
-
-                        {lowBalanceCount > 0 ? (
-                            <div className="bg-card rounded-card p-5 shadow-soft border border-error dark:border-error/30">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40 shrink-0">
-                                        <Bell size={18} strokeWidth={1.5} />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-xs text-main">إشعار مالي</h3>
-                                        <p className="text-micro font-medium text-muted mt-1">
-                                            يوجد {lowBalanceCount} طلاب بحاجة إلى تجديد الاشتراك
-                                        </p>
-                                        <button
-                                            onClick={() => { triggerHaptic('medium'); navigate('/students'); }}
-                                            className="mt-3 h-8 px-4 rounded-xl bg-primary hover:bg-primary-hover text-on-primary text-micro font-bold transition-all inline-flex items-center gap-1.5 shadow-soft shadow-info/30 active:scale-95"
-                                            aria-label="عرض الطلاب"
-                                        >
-                                            <UserPlus {...miniIconProps} />
-                                            عرض الطلاب
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="bg-card rounded-card p-5 text-center shadow-soft border border-border">
-                                <div className="w-12 h-12 rounded-xl bg-success-soft flex items-center justify-center mx-auto mb-3">
-                                    <Bell size={24} strokeWidth={1.5} className="text-success" />
-                                </div>
-                                <p className="text-xs font-bold text-main">لا توجد تنبيهات</p>
-                                <p className="text-micro font-medium text-muted mt-1">كل الأنظمة تعمل بشكل طبيعي</p>
-                            </div>
-                        )}
-
-                        {/* Support Card */
-                        }
-                        <div className="relative rounded-card p-5 shadow-soft overflow-hidden bg-primary">
-                            <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
-                            <div className="absolute -top-10 -start-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-                            <div className="absolute -bottom-8 -end-8 w-24 h-24 bg-info-light/10 rounded-full blur-xl" />
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/10">
-                                        <Headphones size={18} strokeWidth={1.5} className="text-on-primary" />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs font-bold text-on-primary">الدعم الفني</h4>
-                                        <p className="text-micro font-medium text-on-primary/60">متاح 24/7</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => { triggerHaptic('heavy'); window.open('https://wa.me/message/DAREEN', '_blank'); }}
-                                    className="w-full h-11 rounded-xl bg-white/15 backdrop-blur-md text-on-primary text-micro font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-soft border border-white/10 hover:bg-white/25"
-                                    aria-label="تواصل مع الدعم الفني"
-                                >
-                                    <Headphones {...smallIconProps} />
-                                    تواصل مع الدعم الفني
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                {activeTab === 'quick' && <AdminQuickTab />}
+                {activeTab === 'finance' && <AdminFinanceTab stats={stats} />}
+                {activeTab === 'alerts' && <AdminAlertsTab lowBalanceCount={lowBalanceCount} onRefresh={onRefresh} />}
             </div>
-
         </div>
     );
 };
-
-
-
-
-const NavButton = ({ label, subtext, icon: Icon, variant, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
-    <button
-        onClick={onClick}
-        className={cn(
-            "rounded-card p-4 flex flex-col items-center justify-center gap-1.5 shadow-soft active:scale-95 transition-all w-full",
-            variant === 'info' && "bg-info",
-            variant === 'success' && "bg-success",
-            variant === 'primary' && "bg-primary",
-            variant === 'warning' && "bg-warning"
-        )}
-        aria-label={label}
-    >
-        <div className="w-10 h-10 rounded-card bg-white/15 flex items-center justify-center shadow-soft text-on-primary">
-            <Icon {...iconProps} />
-        </div>
-        <span className="text-micro font-bold text-on-primary leading-none mt-1">{label}</span>
-        <span className="text-micro font-medium text-on-primary/70">{subtext}</span>
-    </button>
-);
-
-const QuickLink = ({ icon: Icon, label, variant, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
-    <button
-        onClick={onClick}
-        className="bg-card rounded-card p-4 flex items-center gap-3 shadow-soft border border-border active:scale-95 transition-all hover:shadow-md"
-        aria-label={label}
-    >
-        <div className={cn(
-            "w-9 h-9 rounded-xl flex items-center justify-center shrink-0",
-            variant === 'info' && "bg-info-soft text-info",
-            variant === 'success' && "bg-success-soft text-success",
-            variant === 'primary' && "bg-primary-soft text-primary",
-            variant === 'warning' && "bg-warning-soft text-warning"
-        )}>
-            <Icon size={16} strokeWidth={1.5} />
-        </div>
-        <span className="text-xs font-bold text-main">{label}</span>
-    </button>
-);

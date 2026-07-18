@@ -61,7 +61,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                         </div>
                         <div className="p-2 space-y-1">
                             {filtered.map(student => {
-                                const enrollment = student.enrollments.find(e => e.teacher === teacher)!;
+                                const enrollment = student.enrollments.find(e => e.teacher === teacher) ?? { subject: '', sessionsUsed: 0, sessionsTotal: 0 };
                                 const session = filteredSessions.find(s =>
                                     s.studentId === student.id && s.teacherName === teacher && s.subject === enrollment.subject
                                 );

@@ -233,7 +233,7 @@ export const BlogPost = () => {
                         {(post.showButtons !== false && post.show_buttons !== 0) && (post.downloadLink || post.watchLink) && (
                         <div className="flex flex-wrap gap-3 justify-center my-8">
                             {post.downloadLink && (
-                                <button onClick={(e) => handleButtonClick('download', post.downloadLink!, e)}
+                                <button onClick={(e) => handleButtonClick('download', post.downloadLink, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card dark:bg-primary text-on-primary dark:text-on-primary'}`}>
                                     <Download size={16} />
@@ -241,7 +241,7 @@ export const BlogPost = () => {
                                 </button>
                             )}
                             {post.watchLink && (
-                                <button onClick={(e) => handleButtonClick('watch', post.watchLink!, e)}
+                                <button onClick={(e) => handleButtonClick('watch', post.watchLink, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'watch'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error-active transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}>
                                     <Eye size={16} />

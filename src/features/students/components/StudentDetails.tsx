@@ -165,7 +165,7 @@ export const StudentDetails = ({
                                         </div>
                                         <div className="flex items-center gap-1">
                                             {onFreezeEnrollment && en.id && (
-                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-info hover:bg-info-soft transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"} aria-label={en.isFrozen ? "تفعيل" : "تجميد"}>
+                                                <button onClick={() => en.id && onFreezeEnrollment(en.id, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-info hover:bg-info-soft transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"} aria-label={en.isFrozen ? "تفعيل" : "تجميد"}>
                                                     {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
                                                 </button>
                                             )}

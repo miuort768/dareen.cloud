@@ -64,7 +64,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
 
                         <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {filtered.map(student => {
-                                const enrollment = student.enrollments.find(e => e.teacher === teacher)!;
+                                const enrollment = student.enrollments.find(e => e.teacher === teacher) ?? { subject: '', sessionsUsed: 0, sessionsTotal: 0 };
                                 const session = filteredSessions.find(s =>
                                     s.studentId === student.id && s.teacherName === teacher && s.subject === enrollment.subject
                                 );
