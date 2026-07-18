@@ -18,6 +18,7 @@ import { HeroSection } from './components/HeroSection';
 import { HowToSubscribe } from './components/HowToSubscribe';
 import { AppDownloadSection } from './components/AppDownloadSection';
 import { StatsCounter } from './components/StatsCounter';
+import { Image } from '../../shared/components/ui';
 import { Play, Headphones, Users, Star, ChevronLeft, BadgeCheck } from 'lucide-react';
 import { featureStyles, quickFeatures, getFilteredCourses, heroSlides, stages, reviews, reviewSchema } from './home-page';
 
