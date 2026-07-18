@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -50,7 +50,7 @@ export const Leads = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [showLost, setShowLost] = useState(false);
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
-    const formRef = React.useRef<HTMLFormElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const { data: leads = [], isLoading, isError: isLeadsError } = useQuery({ queryKey: ['leads'], queryFn: crmService.getAll });
     const { data: stats } = useQuery({ queryKey: ['lead-stats'], queryFn: crmService.getStats });

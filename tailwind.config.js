@@ -102,8 +102,8 @@ module.exports = {
         'primary-active': 'var(--bg-primary-active)',
         'primary-soft': 'var(--bg-primary-soft)',
         'primary-light': 'var(--bg-primary-light)',
-        'primary-200': 'var(--bg-primary-200)',
-        'primary-400': 'var(--bg-primary-400)',
+        'primary-200': 'var(--bg-primary-soft)',
+        'primary-400': 'var(--bg-primary-light)',
 
         // Focus (ring)
         focus: 'var(--ring-focus)',

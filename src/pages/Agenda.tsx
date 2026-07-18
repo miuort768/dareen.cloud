@@ -40,10 +40,10 @@ export const Agenda = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['sessions'] });
             queryClient.invalidateQueries({ queryKey: ['students'] });
-            showNotification('�� ����� ����� �����', 'success');
+            showNotification('تم تسجيل الحضور بنجاح', 'success');
         },
         onError: () => {
-            showNotification('��� ����� �����', 'error');
+            showNotification('فشل تسجيل الحضور', 'error');
         }
     });
 
@@ -116,7 +116,7 @@ export const Agenda = () => {
         });
     };
 
-    const DAYS = ['�����', '�����', '�������', '��������', '��������', '������', '������'];
+    const DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
     if (loadingStudents || loadingSessions) {
         return <div className="p-6 lg:p-12 text-center">جاري تحميل البيانات...</div>;
@@ -126,13 +126,13 @@ export const Agenda = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans" dir="rtl">
     <div className="relative z-10 max-w-page mx-auto px-2">
             <PageHeader
-                title="����� ����� �������"
-                subtitle="������ ������ ����� �������� �����"
+                title="جدول المواعيد"
+                subtitle="متابعة جميع حصص الطلاب المسجلين"
                 icon={CalendarCheck}
                 color="amber"
                 stats={[
-                    { label: '��� �����', value: scheduledAppointments.length },
-                    { label: '�� �������', value: scheduledAppointments.filter(a => a.isDone).length }
+                    { label: 'كل المواعيد', value: scheduledAppointments.length },
+                    { label: 'تم الإنجاز', value: scheduledAppointments.filter(a => a.isDone).length }
                 ]}
             />
 
@@ -211,7 +211,7 @@ export const Agenda = () => {
                                     {!isTeacher && (
                                         <div className="flex items-center gap-2 text-xs font-normal text-muted">
                                             <User size={14} className="text-info" />
-                                            <span>�. {app.teacherName}</span>
+                                            <span>{app.teacherName}</span>
                                         </div>
                                     )}
                                 </div>
@@ -219,7 +219,7 @@ export const Agenda = () => {
                                 {/* Progress for that enrollment */}
                                 <div className="pt-2">
                                     <div className="flex justify-between items-center mb-1 text-micro font-medium uppercase tracking-widest text-muted">
-                                        <span>���� ������</span>
+                                        <span>تقدم الحصة</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
                                     <ProgressBar value={(app.enrollment.sessionsUsed / app.enrollment.sessionsTotal) * 100} variant={app.isDone ? 'success' : 'warning'} />
@@ -229,7 +229,7 @@ export const Agenda = () => {
                                     {app.isDone ? (
                                         <div className="w-full bg-success-light dark:bg-success/20 text-success py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
                                             <CheckCircle2 size={16} />
-                                            �� �������
+                                            تم الإنجاز
                                         </div>
                                     ) : (
                                         <button
@@ -237,10 +237,10 @@ export const Agenda = () => {
                                             disabled={logAttendanceMutation.isPending}
                                             className="w-full bg-warning hover:bg-warning text-on-primary py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-warning/10 active:scale-95 disabled:opacity-50"
                                         >
-                                            {logAttendanceMutation.isPending ? '���� �������...' : (
+                                            {logAttendanceMutation.isPending ? 'جاري الإنجاز...' : (
                                                 <>
                                                     <CheckCircle2 size={16} />
-                                                    ����� �������
+                                                    تسجيل الإنجاز
                                                 </>
                                             )}
                                         </button>
@@ -252,8 +252,8 @@ export const Agenda = () => {
                 ) : (
                     <div className="col-span-full py-24 text-center border-2 border-dashed border-border dark:border-border bg-white/50 dark:bg-card/50 rounded-none">
                         <Calendar size={48} className="mx-auto mb-4 text-dim" />
-                        <h3 className="text-lg font-medium text-muted">�� ���� ��� ������ ���� �����</h3>
-                        <p className="text-sm text-muted font-normal mt-1 uppercase tracking-widest">���� ������ �� ������� ��������</p>
+                        <h3 className="text-lg font-medium text-muted">لا توجد مواعيد لهذا اليوم</h3>
+                        <p className="text-sm text-muted font-normal mt-1 uppercase tracking-widest">اختر يوماً آخر من الأيام المتاحة</p>
                     </div>
                 )}
             </div>

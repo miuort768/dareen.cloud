@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
@@ -12,6 +12,8 @@ import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
 
 export const Chat = () => {
+    const [deleteType, setDeleteType] = useState<'all_conversations' | 'conversation'>('conversation');
+    const [itemToDelete, setItemToDelete] = useState<{ displayName: string } | null>(null);
     const currentUser = useAuthStore(s => s.currentUser);
     const {
         conversations,

@@ -22,7 +22,7 @@ export const MobileBottomNav = () => {
                     const isActive = location.pathname === item.path || (item.id === 'home' && location.pathname.includes('student-dashboard'));
                     const isCenter = item.isCenter;
                     return (
-                        <button key={item.id} onClick={() => { setActiveNav(item.id); navigate(item.path); }}
+                        <button key={item.id} onClick={() => navigate(item.path)}
                             className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}>
                             {isCenter ? (
                                 <div className="w-14 h-14 bg-primary rounded-card flex items-center justify-center shadow-soft">
