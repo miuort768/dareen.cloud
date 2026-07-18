@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
     GraduationCap,
@@ -36,7 +36,7 @@ import { X, Menu } from 'lucide-react';
 import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 
-export const Sidebar = () => {
+export const Sidebar = memo(() => {
     const academyName = useAcademyName();
     const logout = useLogout();
     const currentUser = useCurrentUser();
@@ -381,4 +381,4 @@ export const Sidebar = () => {
             <SessionCallAlert />
         </>
     );
-};
+});

@@ -86,6 +86,7 @@ export const Parents = () => {
                                         </div>
                                         <input
                                             type="text"
+                                            aria-label="بحث عن ولي أمر"
                                             placeholder="ابحث باسم ولي الأمر..."
                                             value={state.searchTerm}
                                             onChange={(e) => actions.setSearchTerm(e.target.value)}

@@ -95,7 +95,8 @@ export const ParentAnnouncements = () => {
                     <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
                     <input
                         type="text"
-                        placeholder="���� �� �������..."
+                        aria-label="بحث عن إعلان"
+                        placeholder="بحث عن إعلان..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full ps-12 pe-6 py-3.5 bg-card border border-border/50 rounded-xl shadow-soft text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted text-main"

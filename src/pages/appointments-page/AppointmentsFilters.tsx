@@ -34,7 +34,7 @@ export const AppointmentsFilters = ({ searchTerm, onSearchChange, filterDay, onD
         <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="relative">
                 <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
-                <input type="text" placeholder="ابحث باسم الطالب أو المادة..." value={searchTerm}
+                <input type="text" aria-label="بحث" placeholder="ابحث باسم الطالب أو المادة..." value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
                     className="w-full ps-8 pe-8 py-2 border border-border text-xs font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus bg-surface dark:bg-card transition-all placeholder:text-dim dark:placeholder:text-muted text-main rounded-xl" />
                 {searchTerm && (

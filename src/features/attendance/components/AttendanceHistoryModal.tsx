@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, Save, XSquare } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { Skeleton } from '../../../shared/components/ui';
@@ -22,6 +22,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const [loading, setLoading] = useState(true);
     const [editingSession, setEditingSession] = useState<Session | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -91,10 +92,20 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
         }
     };
 
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
+    }, [onClose]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+        <div ref={containerRef} className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in" role="dialog" aria-modal="true" aria-label={studentName} onKeyDown={handleKeyDown}>
             <div className="bg-card w-full max-w-2xl rounded-card shadow-soft border border-border/50 animate-in zoom-in-95 max-h-[90vh] flex flex-col overflow-hidden">
                 <div className="p-5 border-b border-border/50 flex justify-between items-center bg-primary text-on-primary">
                     <div>
@@ -123,7 +134,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             </div>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={20} />
                     </button>
                 </div>
@@ -150,7 +161,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                     {editingSession?.id === session.id ? (
                                         <div className="flex-1 flex items-center gap-4 p-4">
                                             <input
-                                                type="date"
+                                                type="date" aria-label="تاريخ الجلسة"
                                                 value={editingSession.date}
                                                 onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
                                                 className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-card outline-none focus:border-primary transition-all"

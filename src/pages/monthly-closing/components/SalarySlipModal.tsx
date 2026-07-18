@@ -1,3 +1,4 @@
+import { useEffect, useRef, useCallback } from 'react';
 import { Receipt, X, Activity as ActivityIcon, Printer } from 'lucide-react';
 import { SectionTitle, PrimaryBtn, SecondaryBtn } from './ClosingUI';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
@@ -12,10 +13,21 @@ interface TeacherSlip {
 }
 
 export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherSlip | null, month: string, onClose: () => void }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
+    }, [onClose]);
+
+    useEffect(() => {
+        if (!teacher) return;
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+    }, [teacher]);
+
     if (!teacher) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/40 backdrop-blur-sm p-4" dir="rtl">
+        <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-background/40 backdrop-blur-sm p-4" dir="rtl" role="dialog" aria-modal="true" aria-label="قسيمة راتب" onKeyDown={handleKeyDown}>
             <div className="bg-card border border-border shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
                 <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
@@ -27,7 +39,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <p className="text-micro font-medium text-on-primary/70 tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={18} />
                     </button>
                 </div>

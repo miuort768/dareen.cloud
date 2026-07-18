@@ -223,7 +223,7 @@ export const MobileAttendance = () => {
 
                             <div className="relative">
                                 <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-                                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                                <input type="text" aria-label="بحث" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                                     placeholder="ابحث باسم الطالب أو المادة..."
                                     className="w-full ps-8 pe-8 py-2.5 bg-card border border-border/50 text-xs font-bold outline-none focus:border-primary rounded-card transition-all placeholder:text-muted text-main shadow-soft" />
                             </div>
@@ -239,7 +239,7 @@ export const MobileAttendance = () => {
                             {!isTeacher && (
                                 <div className="flex items-center gap-2 bg-card rounded-card p-2 shadow-soft border border-border/50">
                                     <Calendar size={14} className="text-primary ms-1 shrink-0" />
-                                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
+                                    <input type="date" aria-label="التاريخ" value={date} onChange={(e) => setDate(e.target.value)}
                                         className="flex-1 bg-transparent text-micro font-bold text-main outline-none" />
                                     <select value={filterTeacher} onChange={(e) => setFilterTeacher(e.target.value)} aria-label="تصفية حسب المعلمة"
                                         className="text-micro font-bold bg-card border border-border/50 rounded-xl px-2 py-1 outline-none text-muted">

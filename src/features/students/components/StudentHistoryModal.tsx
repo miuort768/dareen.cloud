@@ -26,6 +26,7 @@ interface Session {
 export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalProps) => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -48,8 +49,16 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
         fetchHistory();
     }, [student.id]);
 
+    useEffect(() => {
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+        const handleEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+        window.addEventListener('keydown', handleEscape);
+        return () => window.removeEventListener('keydown', handleEscape);
+    }, [onClose]);
+
     return (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 ">
+        <div ref={containerRef} className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60" role="dialog" aria-modal="true" aria-label="سجل الجلسات">
             <div className="bg-card w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm animate-in fade-in zoom-in duration-300">
                 {/* Header */}
                 <div className="p-4 border-b border-border flex items-center justify-between" dir="rtl">
@@ -58,7 +67,7 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                             <Clock size={18} />
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-surface dark:hover:bg-hover transition-colors">
+                    <button onClick={onClose} className="p-2 hover:bg-surface dark:hover:bg-hover transition-colors" aria-label="إغلاق">
                         <X size={24} className="text-dim" />
                     </button>
                 </div>

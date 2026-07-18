@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { AlertCircle, X, LogOut, Info, Trash2 } from 'lucide-react';
+import { AlertCircle, X, LogOut, Info } from 'lucide-react';
 import { cn } from './utils';
+
+const FOCUSABLE_SELECTOR = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 interface ConfirmProps {
     message: string;
@@ -46,10 +48,23 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
 
         const Dialog = () => {
             const [isOpen, setIsOpen] = useState(false);
+            const containerRef = useRef<HTMLDivElement>(null);
+            const previousFocus = useRef<HTMLElement | null>(null);
 
             useEffect(() => {
-                requestAnimationFrame(() => setIsOpen(true));
+                previousFocus.current = document.activeElement as HTMLElement;
+                requestAnimationFrame(() => {
+                    setIsOpen(true);
+                    setTimeout(() => {
+                        const first = containerRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+                        first?.focus();
+                    }, 50);
+                });
             }, []);
+
+            useEffect(() => {
+                if (!isOpen) previousFocus.current?.focus();
+            }, [isOpen]);
 
             const handleClose = useCallback(() => {
                 setIsOpen(false);
@@ -57,13 +72,26 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
             }, []);
 
             const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-                if (e.key === 'Escape') handleClose();
+                if (e.key === 'Escape') { e.stopPropagation(); handleClose(); return; }
+                if (e.key === 'Tab' && containerRef.current) {
+                    const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+                    if (focusable.length === 0) return;
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
             }, [handleClose]);
 
             const title = options.title || 'إرشادات المنتدى';
 
             return (
-                <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
+                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
@@ -110,10 +138,23 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
 
         const Dialog = () => {
             const [isOpen, setIsOpen] = useState(false);
+            const containerRef = useRef<HTMLDivElement>(null);
+            const previousFocus = useRef<HTMLElement | null>(null);
 
             useEffect(() => {
-                requestAnimationFrame(() => setIsOpen(true));
+                previousFocus.current = document.activeElement as HTMLElement;
+                requestAnimationFrame(() => {
+                    setIsOpen(true);
+                    setTimeout(() => {
+                        const first = containerRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+                        first?.focus();
+                    }, 50);
+                });
             }, []);
+
+            useEffect(() => {
+                if (!isOpen) previousFocus.current?.focus();
+            }, [isOpen]);
 
             const handleClose = useCallback(() => {
                 setIsOpen(false);
@@ -126,14 +167,27 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
             }, []);
 
             const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-                if (e.key === 'Escape') handleClose();
+                if (e.key === 'Escape') { e.stopPropagation(); handleClose(); return; }
+                if (e.key === 'Tab' && containerRef.current) {
+                    const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+                    if (focusable.length === 0) return;
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
             }, [handleClose]);
 
             const isDestructive = options.isDestructive ?? true;
             const title = options.title || 'تأكيد العملية';
 
             return (
-                <div className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
+                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
                     <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
                     <div className={cn(
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",

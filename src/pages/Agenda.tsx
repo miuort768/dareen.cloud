@@ -159,6 +159,7 @@ export const Agenda = () => {
                     <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary/50" size={14} />
                     <input
                         type="text"
+                        aria-label="بحث عن طالب"
                         placeholder="بحث عن طالب..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}

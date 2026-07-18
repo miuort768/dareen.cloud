@@ -16,7 +16,7 @@ export const ParentsStudentHeader = ({ searchQuery, onSearchChange }: ParentsStu
             </div>
             <div className="relative group w-full md:w-72">
                 <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={16} />
-                <input type="text" placeholder="بحث عن ابن..." value={searchQuery} onChange={(e) => onSearchChange(e.target.value)}
+                <input type="text" aria-label="بحث عن ابن" placeholder="بحث عن ابن..." value={searchQuery} onChange={(e) => onSearchChange(e.target.value)}
                     className="w-full ps-9 pe-4 py-2.5 bg-white/80 backdrop-blur-xl border border-border/50 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 font-normal transition-all text-xs shadow-soft" />
             </div>
         </div>

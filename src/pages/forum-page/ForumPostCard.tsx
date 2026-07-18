@@ -151,7 +151,7 @@ export const ForumPostCard = ({
                         <User size={14} className="text-primary" />
                     </div>
                     <div className="flex-1 relative">
-                        <input id={`comment-input-${post.id}`} type="text"
+                        <input id={`comment-input-${post.id}`} type="text" aria-label="رد على المنشور"
                             value={commentTexts[post.id] || ''}
                             onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                             placeholder="اكتب رداً على هذا المنشور..."

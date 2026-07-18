@@ -39,7 +39,7 @@ export const StudentInvoicesHeader = ({
                 <div className="flex-1 flex gap-3 items-center w-full">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
-                        <input placeholder="بحث باسم الطالب أو البيان..." value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
+                        <input aria-label="بحث باسم الطالب" placeholder="بحث باسم الطالب أو البيان..." value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full rounded-xl px-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary placeholder:opacity-50 bg-white/15" />
                     </div>
                     <select value={filterStatus} onChange={(e) => onFilterChange(e.target.value)}

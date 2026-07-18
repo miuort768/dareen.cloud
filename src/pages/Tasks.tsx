@@ -169,6 +169,7 @@ export const Tasks = () => {
                         <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-primary" size={14} />
                         <input
                             type="text"
+                            aria-label="بحث عن مهمة"
                             placeholder="ابحث عن مهمة..."
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}

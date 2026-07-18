@@ -28,6 +28,7 @@ const ExpenseInput = ({
     return (
         <input
             type="number"
+            aria-label="المبلغ"
             step="any"
             className="w-full bg-card border-border px-2 py-1 text-xs font-normal focus:border-primary focus:ring-2 focus:ring-focus outline-none transition-all rounded-xl"
             placeholder="0"

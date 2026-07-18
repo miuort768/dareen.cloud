@@ -1,3 +1,4 @@
+import { useEffect, useRef, useCallback } from 'react';
 import { BookOpen, ChevronLeft, ChevronRight, X, Calendar } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
@@ -60,12 +61,23 @@ export const SessionsModal = ({
     sessionsEndDate,
     onEndDateChange,
 }: SessionsModalProps) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
+    }, [onClose]);
+
+    useEffect(() => {
+        if (!viewingStudent) return;
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+    }, [viewingStudent]);
+
     if (!viewingStudent) return null;
 
     const enrollments = (viewingStudent.enrollments || []) as { teacherName: string; date?: string; sessionsTotal?: number; sessionsUsed?: number; subject?: string; teacher?: string }[];
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
+        <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12" role="dialog" aria-modal="true" aria-label={viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل المواعيد'} onKeyDown={handleKeyDown}>
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-lg bg-card shadow-xl rounded-card overflow-hidden border border-border/50 flex flex-col max-h-[80vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
                 <div className="p-4 bg-primary text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">
@@ -84,12 +96,12 @@ export const SessionsModal = ({
                     </div>
                     <div className="relative z-10 flex items-center gap-2 ms-4">
                         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-xl border border-white/10">
-                            <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
+                            <input type="date" aria-label="تاريخ البداية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
                             <span className="text-micro text-on-primary/60">→</span>
-                            <input type="date" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
+                            <input type="date" aria-label="تاريخ النهاية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
                         </div>
                     </div>
-                    <button onClick={onClose} className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all"><X size={14} /></button>
+                    <button onClick={onClose} className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all" aria-label="إغلاق"><X size={14} /></button>
                 </div>
 
                 <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">

@@ -158,7 +158,7 @@ export const Attendance = () => {
                                     <SectionTitle icon={Activity} label="حصص الطلاب المقررة" />
                                     <div className="relative w-full md:w-[400px]">
                                         <Search size={14} className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" />
-                                        <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                                        <input type="text" aria-label="بحث" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                                             placeholder="ابحث باسم الطالب أو المادة..."
                                             className="w-full ps-10 pe-4 py-2 bg-surface dark:bg-card border border-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-focus transition-all" />
                                     </div>

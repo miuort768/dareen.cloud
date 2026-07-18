@@ -1,5 +1,5 @@
 import { Sun, User } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
@@ -7,7 +7,7 @@ import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 
-export const Header = () => {
+export const Header = memo(() => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
@@ -168,4 +168,4 @@ export const Header = () => {
             </div>
         </header>
     );
-};
+});

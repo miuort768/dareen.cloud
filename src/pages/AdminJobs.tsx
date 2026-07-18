@@ -102,6 +102,7 @@ export const AdminJobs = () => {
                             <select
                                 value={subjectFilter}
                                 onChange={e => setSubjectFilter(e.target.value)}
+                                aria-label="تصفية حسب المادة"
                                 className="w-full bg-background border border-border rounded-card py-3.5 ps-12 pe-4 text-sm font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus appearance-none cursor-pointer"
                             >
                                 <option value="" className="text-main">كل المواد</option>
@@ -114,6 +115,7 @@ export const AdminJobs = () => {
                             <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
                             <input
                                 type="text"
+                                aria-label="بحث بالاسم أو الهاتف"
                                 placeholder="ابحث بالاسم أو الهاتف..."
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}

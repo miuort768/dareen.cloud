@@ -46,16 +46,16 @@ export const TeacherInvoicesHeader = ({
                 <div className="flex-1 flex gap-3 items-center w-full">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary opacity-50" size={14} />
-                        <input placeholder="بحث باسم المعلمة..." value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
+                        <input aria-label="بحث باسم المعلمة" placeholder="بحث باسم المعلمة..." value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full rounded-xl ps-9 py-2 text-xs font-bold outline-none text-on-primary placeholder:text-on-primary bg-white/15" />
                     </div>
                     <div className="flex items-center gap-2 rounded-xl px-3 py-2 bg-white/15">
                         <Calendar size={14} className="text-on-primary opacity-50" />
                         <div className="flex items-center gap-1">
-                            <input type="date" className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer"
+                            <input type="date" aria-label="تاريخ البداية" className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer"
                                 value={startDate} onChange={(e) => onStartDateChange(e.target.value)} />
                             <span className="text-micro font-bold text-on-primary opacity-50">إلى</span>
-                            <input type="date" className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer"
+                            <input type="date" aria-label="تاريخ النهاية" className="bg-transparent border-none p-0 text-xs font-bold text-on-primary outline-none cursor-pointer"
                                 value={endDate} onChange={(e) => onEndDateChange(e.target.value)} />
                         </div>
                     </div>

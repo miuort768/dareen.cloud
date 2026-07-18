@@ -204,6 +204,7 @@ export const Students = () => {
                             <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-on-primary/50" />
                             <input
                                 type="text"
+                                aria-label="بحث عن طالب"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}

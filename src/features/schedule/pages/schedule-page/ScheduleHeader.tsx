@@ -26,7 +26,7 @@ export const ScheduleHeader = ({ searchTerm, onSearchChange, filterDay, onDayCha
         <div className="flex items-center gap-2 no-print">
             <div className="relative">
                 <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary/50" />
-                <input type="text" placeholder="بحث..." value={searchTerm}
+                <input type="text" aria-label="بحث" placeholder="بحث..." value={searchTerm}
                     onChange={e => onSearchChange(e.target.value)}
                     className="w-28 sm:w-36 h-9 bg-white/15 border border-white/20 text-on-primary placeholder:text-on-primary/50 text-micro font-bold rounded-xl px-8 outline-none focus:border-white/50 transition-all" />
             </div>

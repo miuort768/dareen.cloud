@@ -15,7 +15,7 @@ export const AppointmentFilters = ({ searchTerm, onSearchChange, filterDay, onDa
     <div className="px-4 pb-2 space-y-2">
         <div className="relative">
             <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-            <input type="text" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
+            <input type="text" aria-label="بحث" value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="ابحث باسم الطالب أو المادة..."
                 className="w-full ps-8 pe-8 py-2.5 bg-card border border-border/50 text-xs font-bold outline-none focus:border-primary rounded-card transition-all placeholder:text-muted text-main shadow-soft" />
         </div>

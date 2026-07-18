@@ -167,6 +167,7 @@ export const AcademicReport = React.memo(({
                         <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={13} />
                         <input
                             type="text"
+                            aria-label="بحث عن طالب"
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}

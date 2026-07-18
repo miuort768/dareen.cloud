@@ -214,7 +214,7 @@ export const NotificationsCenter = ({
                                     </div>
                                 </div>
                                 {typeof alert.action === 'function' && (
-                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-soft rounded-lg bg-primary text-on-primary">
+                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center transition-all shadow-soft rounded-lg bg-primary text-on-primary" aria-label="تنفيذ إجراء">
                                         <ArrowLeft size={14} />
                                     </button>
                                 )}

@@ -20,6 +20,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                 <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                 <input
                     type="text"
+                    aria-label="بحث عن معلمة"
                     placeholder="ابحث عن معلمة باسمها أو تخصصها..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
@@ -43,16 +44,16 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                 </button>
                 
                 <div className="flex items-center gap-2 border-s border-border/50 ps-3 ms-1">
-                    <button onClick={onImport} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-primary hover:text-on-primary rounded-xl transition-all shadow-soft" title="استيراد">
+                    <button onClick={onImport} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-primary hover:text-on-primary rounded-xl transition-all shadow-soft" aria-label="استيراد">
                         <Upload size={14} />
                     </button>
-                    <button onClick={onExportExcel} className="w-9 h-9 flex items-center justify-center bg-success/10 border border-success/30 text-success hover:bg-success hover:text-on-success rounded-xl transition-all shadow-soft" title="Excel">
+                    <button onClick={onExportExcel} className="w-9 h-9 flex items-center justify-center bg-success/10 border border-success/30 text-success hover:bg-success hover:text-on-success rounded-xl transition-all shadow-soft" aria-label="تصدير Excel">
                         <FileSpreadsheet size={14} />
                     </button>
-                    <button onClick={onExportPDF} className="w-9 h-9 flex items-center justify-center bg-error/10 border border-error/30 text-error hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" title="PDF">
+                    <button onClick={onExportPDF} className="w-9 h-9 flex items-center justify-center bg-error/10 border border-error/30 text-error hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" aria-label="تصدير PDF">
                         <FileText size={14} />
                     </button>
-                    <button onClick={onDeleteAll} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-error hover:text-on-primary rounded-xl transition-all shadow-soft" title="تصفير">
+                    <button onClick={onDeleteAll} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-error hover:text-on-primary rounded-xl transition-all shadow-soft" aria-label="تصفير الكل">
                         <Trash2 size={14} />
                     </button>
                 </div>

@@ -57,7 +57,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             />
                             <span className="text-xs font-normal text-muted">إخفاء المبالغ</span>
                         </label>
-                        <button onClick={onClose} className="p-2 hover:bg-hover transition-colors rounded-xl">
+                        <button onClick={onClose} className="p-2 hover:bg-hover transition-colors rounded-xl" aria-label="إغلاق">
                             <X size={24} className="text-dim" />
                         </button>
                     </div>

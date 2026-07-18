@@ -59,6 +59,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                 <td className="px-4 py-4 text-center">
                                     <input
                                         type="number"
+                                        aria-label="قيمة التعديل"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
                                         className="w-16 bg-background dark:bg-primary-active border border-border dark:border-border p-1 text-center font-bold text-micro outline-none focus:border-primary rounded-xl"

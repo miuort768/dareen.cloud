@@ -1,3 +1,4 @@
+import { useEffect, useRef, useCallback } from 'react';
 import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ProgressBar } from '../../../shared/components/ui';
@@ -31,13 +32,24 @@ export const AttendanceModal = ({
     childSessions,
     isSessionsLoading,
 }: AttendanceModalProps) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+    }, [onClose]);
+
+    useEffect(() => {
+        if (!viewingAttendanceStudent) return;
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+    }, [viewingAttendanceStudent]);
+
     if (!viewingAttendanceStudent) return null;
 
     const name = viewingAttendanceStudent.name || '';
     const enrollments = (viewingAttendanceStudent.enrollments || []) as { teacherName: string; sessionsTotal?: number; sessionsUsed?: number; subject?: string; teacher?: string }[];
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+        <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8" role="dialog" aria-modal="true" aria-label="تقرير الحضور" onKeyDown={handleKeyDown}>
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-2xl bg-card shadow-xl rounded-card overflow-hidden border border-border/50 flex flex-col max-h-[90vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
                 <div className="p-5 bg-success text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">

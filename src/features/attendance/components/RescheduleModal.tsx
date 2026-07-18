@@ -1,5 +1,5 @@
 import { Calendar, Clock, AlertCircle, Save, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface RescheduleModalProps {
     isOpen: boolean;
@@ -13,11 +13,21 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
     const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [time, setTime] = useState('');
     const [reason, setReason] = useState('');
+    const containerRef = useRef<HTMLDivElement>(null);
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
+    }, [onClose]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+        <div ref={containerRef} className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in" role="dialog" aria-modal="true" aria-label="طلب تغيير موعد" onKeyDown={handleKeyDown}>
             <div className="bg-card w-full max-w-md rounded-card shadow-soft border border-border/50 overflow-hidden flex flex-col">
 
                 <div className="p-4 bg-primary text-on-primary flex items-center justify-between">
@@ -25,7 +35,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                         <Calendar size={18} />
                         <h3 className="text-sm font-bold">طلب تغيير موعد حصة</h3>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={18} />
                     </button>
                 </div>

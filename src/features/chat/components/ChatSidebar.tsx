@@ -103,6 +103,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     <Search className="text-muted me-3 shrink-0" size={18} />
                     <input
                         type="text"
+                        aria-label="البحث أو بدء دردشة"
                         placeholder="البحث أو بدء دردشة جديدة"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

@@ -29,7 +29,7 @@ export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDate
                     <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15">
                         <Calendar size={14} className="text-on-primary/70" />
                         <input
-                            type="date"
+                            type="date" aria-label="التاريخ"
                             value={date}
                             onChange={(e) => onDateChange(e.target.value)}
                             className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer w-28"
