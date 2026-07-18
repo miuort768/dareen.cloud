@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Bell, CheckCircle2, Trash2, MessageCircle, TrendingUp, Clock, Calendar } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { X, Bell, MessageCircle, Clock } from 'lucide-react';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
 import { TeacherCard } from './TeacherCard';
-import { motion } from 'framer-motion';
+import { TeacherPerformanceGauge } from './TeacherPerformanceGauge';
+import { TeacherEnrollmentList } from './TeacherEnrollmentList';
+import { TeacherActivityModal } from './TeacherActivityModal';
 
 interface TeacherDetailsProps {
     teacher: Teacher;
@@ -95,132 +96,10 @@ export const TeacherDetails = ({
             </div>
 
             <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none">
-                {/* Performance Gauge */}
-                <div className="p-5 bg-card border border-border/50 shadow-soft rounded-card">
-                    <div className="flex justify-between items-start mb-4">
-                        <div>
-                            <p className="text-xs text-muted mb-1">الإنتاجية (الحالية)</p>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-2xl font-bold font-heading text-main">{monthlySessions}</span>
-                                <span className="text-xs text-muted">جلسة منجزة</span>
-                            </div>
-                        </div>
-                        <div className={cn(
-                            "flex items-center gap-1 px-2.5 py-1 text-xs rounded-card",
-                            performanceChange >= 0 ? "bg-success/10 text-success" : "bg-error/10 text-error"
-                        )}>
-                            <TrendingUp size={10} className={performanceChange < 0 ? "rotate-180" : ""} />
-                            {performanceChange > 0 ? `+${performanceChange}%` : `${performanceChange}%`}
-                        </div>
-                    </div>
-                    <div className="h-1.5 bg-hover rounded-full overflow-hidden">
-                        <motion.div 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(100, (monthlySessions / (prevMonthSessions || 1)) * 50)}%` }}
-                            className="h-full bg-success rounded-full"
-                        />
-                    </div>
-                </div>
+                <TeacherPerformanceGauge monthlySessions={monthlySessions} prevMonthSessions={prevMonthSessions} performanceChange={performanceChange} />
 
-                {/* Enrollment Section */}
-                <div className="space-y-4">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border/50">
-                        <div className="bg-card border border-border/50 px-3 py-1 rounded-card">
-                            <span className="text-xs text-primary">{enrolledStudents.length}</span>
-                        </div>
-                        <h4 className="text-xs text-muted">الطلاب المسجلون</h4>
-                    </div>
-                    <div className="space-y-2">
-                        {enrolledStudents.map(student => {
-                            const enrollment = student.enrollments.find((e: Enrollment) =>
-                                (e.teacherId && e.teacherId === teacher.id) || e.teacher === teacher.name
-                            ) ?? { sessionsUsed: 0, sessionsTotal: 0, subject: '', isFrozen: false };
-                            const actualUsed = enrollment.sessionsUsed || 0;
-                            const remaining = (enrollment.sessionsTotal || 0) - actualUsed;
-                            const isLow = remaining <= 2;
-                            const progressPercent = enrollment.sessionsTotal ? Math.round((actualUsed / enrollment.sessionsTotal) * 100) : 0;
+                <TeacherEnrollmentList enrolledStudents={enrolledStudents} teacherId={teacher.id} teacherName={teacher.name} onLogAttendance={onLogAttendance} onUnenroll={onUnenroll} isTeacherView={isTeacherView} />
 
-                            return (
-                                <div key={student.id} className={cn(
-                                    "p-3 bg-card border border-border/50 rounded-card transition-all group",
-                                    (enrollment as Enrollment).isFrozen && "opacity-50 grayscale",
-                                    isLow ? "border-error" : "hover:border-primary/30"
-                                )}>
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-medium text-sm text-main">{student.name}</h5>
-                                                {isLow && <span className="text-xs text-error bg-error/10 px-1.5 py-0.5 animate-pulse rounded-card">رصيد منخفض</span>}
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-xs text-muted bg-card border border-border/50 px-1.5 py-0.5 rounded-card">{student.grade}</span>
-                                                <span className="text-xs text-muted">{enrollment.subject}</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button
-                                                onClick={() => onLogAttendance(student, enrollment)}
-                                                className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-primary rounded-card transition-all"
-                                                title="تسجيل حضور"
-                                                aria-label="تسجيل حضور"
-                                            >
-                                                <CheckCircle2 size={14} />
-                                            </button>
-                                            {!isTeacherView && (
-                                                <button
-                                                    onClick={() => onUnenroll(student, teacher.name)}
-                                                    className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-primary rounded-card transition-all"
-                                                    title="إلغاء التسجيل"
-                                                    aria-label="إلغاء التسجيل"
-                                                >
-                                                    <Trash2 size={14} />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {[...Array(enrollment.sessionsTotal || 0)].map((_, idx) => (
-                                                <div 
-                                                    key={idx} 
-                                                    className={cn(
-                                                        "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded-card transition-all",
-                                                        idx < actualUsed 
-                                                            ? "bg-success border-success text-on-primary shadow-soft" 
-                                                            : idx === actualUsed 
-                                                                ? "bg-card border-primary text-primary" 
-                                                                : "bg-card border-border/50 text-muted"
-                                                    )}
-                                                >
-                                                    {idx < actualUsed ? <CheckCircle2 size={10} /> : idx + 1}
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        <div className="pt-3 border-t border-border/50 flex items-center justify-between">
-                                            <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-xs text-muted mb-1">
-                                                    <span>الإنجاز</span>
-                                                    <span className="tabular-nums">{progressPercent}%</span>
-                                                </div>
-                                                <div className="h-1 bg-hover rounded-full overflow-hidden">
-                                                    <div className={cn("h-full rounded-full", isLow ? "bg-error" : "bg-info")} style={{ width: `${progressPercent}%` }} />
-                                                </div>
-                                            </div>
-                                            <div className="text-center px-2">
-                                                <p className="text-xs text-muted leading-none mb-0.5">الرصيد</p>
-                                                <p className={cn("text-xs font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Detailed Activity Button */}
                 <div className="pt-4">
                     <button
                         onClick={() => setShowActivityModal(true)}
@@ -235,77 +114,14 @@ export const TeacherDetails = ({
                                 <p className="text-xs text-primary mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
-                        <CheckCircle2 size={16} className="text-primary" />
+                        <Clock size={16} className="text-primary" />
                     </button>
                 </div>
             </div>
 
             {showCard && <TeacherCard teacher={teacher} onClose={() => setShowCard(false)} />}
 
-            {/* Detailed Activity Modal */}
-            {showActivityModal && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowActivityModal(false); }}>
-                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowActivityModal(false)}></div>
-                    <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-card border border-border/50 shadow-soft w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-card">
-                        <div className="bg-primary px-5 py-4 flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-card flex items-center justify-center bg-primary-soft">
-                                    <Clock size={20} className="text-primary" />
-                                </div>
-                                <div>
-                                    <h3 className="text-card-title font-bold font-heading text-on-primary">سجل نشاطات المعلمة</h3>
-                                    <p className="text-xs text-on-primary/70">{teacher.name}</p>
-                                </div>
-                            </div>
-                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-error rounded-card transition-all" aria-label="إغلاق">
-                                <X size={18} className="text-on-primary" />
-                            </button>
-                        </div>
-                        
-                        <div className="flex-1 overflow-y-auto p-4 bg-card">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                                {teacherSessions.map(session => (
-                                    <div key={session.id} className="bg-card border border-border/50 shadow-soft p-3 rounded-card hover:-translate-y-0.5 transition-all relative overflow-hidden">
-                                        <div className={cn(
-                                            "absolute top-0 start-0 w-1 h-full rounded-s-full",
-                                            session.status === 'completed' ? "bg-success" : "bg-error"
-                                        )} />
-                                        
-                                        <div className="flex justify-between items-start mb-3">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 rounded-card flex items-center justify-center bg-primary-soft text-primary">
-                                                    <Calendar size={12} />
-                                                </div>
-                                                <div className="min-w-0">
-                                                    <p className="text-xs text-main truncate">{session.studentName}</p>
-                                                    <p className="text-xs text-muted">{session.date}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                                            <div className="flex items-center gap-1.5 text-xs text-muted">
-                                                <Clock size={8} /> {session.time}
-                                            </div>
-                                            {!isTeacherView && (
-                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-muted hover:text-error rounded transition-colors" aria-label="حذف">
-                                                    <Trash2 size={10} />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            {teacherSessions.length === 0 && (
-                                <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
-                                    <Clock size={48} className="mb-4" />
-                                    <p className="text-xs">لا توجد نشاطات مسجلة</p>
-                                </div>
-                            )}
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
+            <TeacherActivityModal isOpen={showActivityModal} onClose={() => setShowActivityModal(false)} teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} />
         </div>
     );
 };
