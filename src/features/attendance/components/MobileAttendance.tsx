@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Users, History, Activity, CheckCircle2, Loader2, Sparkles, Calendar } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../../../context/AppContext';
-import { triggerHaptic } from '../../../lib/haptics';
 import { useAttendance } from '../hooks/useAttendance';
+import { usePullToRefresh } from '../hooks/usePullToRefresh';
 import type { PeriodFilter } from './AttendanceFilters';
 import type { Student, Enrollment } from '../types';
 import { SecureAttendanceModal } from '../../../shared/components/SecureAttendanceModal';
@@ -29,9 +29,7 @@ export const MobileAttendance = () => {
     const [customStartDate, setCustomStartDate] = useState('');
     const [customEndDate, setCustomEndDate] = useState('');
 
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [pullDistance, setPullDistance] = useState(0);
-    const [startY, setStartY] = useState(0);
+    const { isRefreshing, pullDistance, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh({ onRefresh: refresh });
 
     const [logDate, setLogDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [isLogging, setIsLogging] = useState(false);
@@ -154,29 +152,6 @@ export const MobileAttendance = () => {
             if (success) successCount++;
         }
         showNotification(`تم تسجيل ${successCount} طالب بنجاح`, 'success');
-    };
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
-        const diff = e.touches[0].clientY - startY;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
-    };
-
-    const handleTouchEnd = async () => {
-        if (pullDistance > 60) {
-            setIsRefreshing(true);
-            setPullDistance(50);
-            triggerHaptic('medium');
-            try { await refresh(); } catch (e) { console.error('Refresh failed', e); }
-            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
-        } else {
-            setPullDistance(0);
-            setStartY(0);
-        }
     };
 
     return (

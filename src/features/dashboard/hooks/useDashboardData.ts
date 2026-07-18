@@ -3,17 +3,8 @@ import { useQueries, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import type { User } from '../../../types/auth';
 import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense, Enrollment, ScheduleSlot } from '../../../types';
-import type { DashboardStats, DashboardMonthData, LowBalanceStudent, DashboardTask } from '../types';
-
-const getSafeArray = (val: unknown): unknown[] => {
-    if (!val) return [];
-    if (Array.isArray(val)) return val;
-    if (val.data && Array.isArray(val.data)) return val.data;
-    if (typeof val === 'object') {
-        return (Object.values(val).find(Array.isArray) as unknown[]) || [];
-    }
-    return [];
-};
+import type { DashboardStats, DashboardTask } from '../types';
+import { getSafeArray, isSameMonth, computeLowBalanceStudents, computeChartData, getRevenue, getManualInc, getPaidInv, getManualExp } from '../utils/dashboardHelpers';
 
 export const useDashboardData = (currentUser: User | null) => {
     const queryClient = useQueryClient();
@@ -63,17 +54,15 @@ export const useDashboardData = (currentUser: User | null) => {
     const processedData = useMemo(() => {
         if (isLoading || !currentUser) return null;
 
-        const getSafeArray = (data: unknown) => Array.isArray(data) ? data : ((data as { data?: unknown[] })?.data || []);
-
-        const students = getSafeArray(studentsQuery.data);
-        const teachers = getSafeArray(teachersQuery.data);
-        const parents = getSafeArray(parentsQuery.data);
-        const sessions = getSafeArray(sessionsQuery.data);
-        const teacherInvoices = getSafeArray(teacherInvoicesQuery.data);
-        const studentInvoices = getSafeArray(studentInvoicesQuery.data);
-        const transactions = getSafeArray(transactionsQuery.data);
-        const fixedExpenses = getSafeArray(fixedExpensesQuery.data);
-        const evaluations = getSafeArray(evaluationsQuery.data);
+        const students = getSafeArray(studentsQuery.data) as Student[];
+        const teachers = getSafeArray(teachersQuery.data) as Teacher[];
+        const parents = getSafeArray(parentsQuery.data) as Parent[];
+        const sessions = getSafeArray(sessionsQuery.data) as Session[];
+        const teacherInvoices = getSafeArray(teacherInvoicesQuery.data) as TeacherInvoice[];
+        const studentInvoices = getSafeArray(studentInvoicesQuery.data) as StudentInvoice[];
+        const transactions = getSafeArray(transactionsQuery.data) as Transaction[];
+        const fixedExpenses = getSafeArray(fixedExpensesQuery.data) as FixedExpense[];
+        const evaluations = getSafeArray(evaluationsQuery.data) as Record<string, unknown>[];
 
         const isTeacher = currentUser.role === 'teacher';
         const teacherName = currentUser.teacherName || currentUser.name;
@@ -102,22 +91,11 @@ export const useDashboardData = (currentUser: User | null) => {
         const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
         const currentDayName = dayNames[now.getDay()];
 
-        const isSameMonth = (dateStr: string) => {
-            if (!dateStr) return false;
-            try {
-                const d = new Date(dateStr);
-                return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-            } catch (e) {
-                console.warn(e);
-                return dateStr.startsWith(currentMonth);
-            }
-        };
-
         // 3. Sessions & Performance
         const completedSessions = filteredSessions.filter((s: Session) =>
             ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
         );
-        const monthComplete = completedSessions.filter((s: Session) => isSameMonth(s.date));
+        const monthComplete = completedSessions.filter((s: Session) => isSameMonth(s.date, now));
 
         // Today's Scheduled via Schedule logic
         let todayScheduledCount = 0;
@@ -140,23 +118,18 @@ export const useDashboardData = (currentUser: User | null) => {
         const getRevenue = (list: Session[]) => list.reduce((sum: number, s: Session) => sum + getSessionRev(s), 0);
         const getManualInc = (list: Transaction[]) => list.filter((t: Transaction) => t.type === 'income').reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0);
         
-        const getPaidInv = (list: TeacherInvoice[]) => list.filter((inv: TeacherInvoice) =>
-            ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
-        ).reduce((sum: number, inv: TeacherInvoice) => sum + (Number(inv.amount) || 0), 0);
-        
-        const getManualExp = (list: Transaction[]) => list.filter((t: Transaction) => t.type === 'expense').reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0);
         const fixedTotal = fixedExpenses.reduce((sum: number, item: FixedExpense) => sum + (Number(item.amount) || 0), 0);
 
-        const totalRevenueValue = getRevenue(completedSessions) + getManualInc(transactions);
-        const monthRevenueValue = getRevenue(monthComplete) + getManualInc(transactions.filter((t: Transaction) => isSameMonth(t.date)));
+        const totalRevenueValue = getRevenue(completedSessions, students) + getManualInc(transactions);
+        const monthRevenueValue = getRevenue(monthComplete, students) + getManualInc(transactions.filter((t: Transaction) => isSameMonth(t.date, now)));
 
         const totalExpensesValue = isTeacher
             ? (getPaidInv(teacherInvoices) + getManualExp(transactions))
             : (getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal);
 
         const monthExpensesValue = isTeacher
-            ? (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date))))
-            : (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date))) + fixedTotal);
+            ? (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date, now))))
+            : (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date, now))) + fixedTotal);
 
         const totalNetProfitValue = totalRevenueValue - totalExpensesValue;
         const monthNetProfitValue = monthRevenueValue - monthExpensesValue;
@@ -168,66 +141,10 @@ export const useDashboardData = (currentUser: User | null) => {
             return d.toISOString().slice(0, 7);
         });
 
-        const chartData: DashboardMonthData[] = last6Months.map(month => {
-            const [y, m] = month.split('-').map(Number);
-            const isTargetMonth = (dateStr: string) => {
-                if (!dateStr) return false;
-                const d = new Date(dateStr);
-                return d.getFullYear() === y && (d.getMonth() + 1) === m;
-            };
-
-            const mSess = filteredSessions.filter((s: Session) => isTargetMonth(s.date));
-            const mComp = mSess.filter((s: Session) =>
-                ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
-            );
-
-            const rev = getRevenue(mComp) + getManualInc(transactions.filter((t: Transaction) => isTargetMonth(t.date)));
-            const expInv = getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isTargetMonth(inv.date)));
-            const expMan = getManualExp(transactions.filter((t: Transaction) => isTargetMonth(t.date)));
-            const expFixed = (y === now.getFullYear() && m === (now.getMonth() + 1)) ? fixedTotal : 0;
-
-            const exp = isTeacher ? (expInv + expMan) : (expInv + expMan + expFixed);
-
-            return {
-                month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
-                revenue: rev,
-                expenses: exp,
-                profit: rev - exp,
-                sessions: mSess.length,
-                completed: mComp.length
-            };
-        });
+        const chartData = computeChartData(last6Months, filteredSessions, transactions, teacherInvoices, fixedTotal, isTeacher, now);
 
         // 6. Low Balance
-        const lowBalance: LowBalanceStudent[] = [];
-        let anticipatedCollection = 0;
-
-        filteredStudents.forEach((s: Student) => {
-            s.enrollments?.forEach((en: Enrollment) => {
-                if (isTeacher && en.teacher !== teacherName && en.teacherId !== currentUser.id) return;
-                const total = Number(en.sessionsTotal) || 0;
-                const actualUsed = sessions.filter((ss: Session) =>
-                    ss.studentId === s.id &&
-                    (ss.teacherId === en.teacherId || ss.teacherName === en.teacher) &&
-                    ss.subject === en.subject &&
-                    ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase())
-                ).length;
-
-                const remaining = total - actualUsed;
-                if (remaining <= 2 && remaining >= 0) {
-                    const price = Number(s.sessionPrice) || 0;
-                    lowBalance.push({
-                        id: s.id,
-                        studentName: s.name || '',
-                        subject: en.subject || '',
-                        remainingSessions: remaining,
-                        teacherName: en.teacher,
-                        parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || ''
-                    });
-                    anticipatedCollection += (price * 8);
-                }
-            });
-        });
+        const { lowBalance, anticipatedCollection } = computeLowBalanceStudents(filteredStudents, sessions, teacherName, currentUser.id, isTeacher);
 
         // 6b. Focus List
         const focusStudentsList: { id: string; name: string; reason: string; type: 'attendance' | 'performance' | 'engagement' }[] = [];
@@ -281,7 +198,7 @@ export const useDashboardData = (currentUser: User | null) => {
             expectedCollection: anticipatedCollection,
             totalSessions: filteredSessions.length,
             monthCompletedSessions: monthComplete.length,
-            monthTotalSessions: filteredSessions.filter((s: Session) => isSameMonth(s.date) && (s.status === 'scheduled' || s.status === 'completed')).length,
+            monthTotalSessions: filteredSessions.filter((s: Session) => isSameMonth(s.date, now) && (s.status === 'scheduled' || s.status === 'completed')).length,
 
             teacherPoints: isTeacher ? teachers.find((t: Teacher) => t.id === currentUser.id)?.points || 0 : undefined,
             weekTotalSessions: isTeacher ? filteredSessions.filter((s: Session) => {
