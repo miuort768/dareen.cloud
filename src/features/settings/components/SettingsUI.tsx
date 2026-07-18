@@ -14,44 +14,6 @@ export const AVAILABLE_PERMISSIONS = [
     { id: 'manage_system', label: 'إدارة النظام' }
 ];
 
-export const THEME_COLORS = [
-    { id: 'indigo', label: 'نيلي', class: 'bg-primary' },
-    { id: 'blue', label: 'أزرق', class: 'bg-info' },
-    { id: 'emerald', label: 'زمردي', class: 'bg-success' },
-    { id: 'rose', label: 'وردي', class: 'bg-error' },
-    { id: 'amber', label: 'كهرماني', class: 'bg-warning' },
-    { id: 'purple', label: 'أرجواني', class: 'bg-primary' },
-    { id: 'cyan', label: 'سيان', class: 'bg-info' },
-    { id: 'teal', label: 'تركواز', class: 'bg-info' },
-    { id: 'orange', label: 'برتقالي', class: 'bg-warning' },
-    { id: 'slate', label: 'صخري', class: 'bg-background0' },
-    { id: 'pink', label: 'زهري', class: 'bg-primary' },
-    { id: 'lime', label: 'ليموني', class: 'bg-success' },
-    { id: 'sky', label: 'سماوي', class: 'bg-info' },
-    { id: 'fuchsia', label: 'فوشيا', class: 'bg-primary' },
-    { id: 'sunset', label: 'غروب', class: 'bg-gradient-to-tr from-[var(--bg-warning)] to-[var(--bg-error)]' },
-    { id: 'ocean', label: 'محيط', class: 'bg-gradient-to-tr from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'forest', label: 'غابة', class: 'bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-success)]' },
-    { id: 'royal', label: 'ملكي', class: 'bg-gradient-to-tr from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'electric', label: 'كهربائي', class: 'bg-gradient-to-tr from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'berry', label: 'توت', class: 'bg-gradient-to-tr from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'gold', label: 'ذهبي', class: 'bg-warning' },
-    { id: 'crimson', label: 'قرمزي', class: 'bg-error' },
-    { id: 'midnight', label: 'ليلي', class: 'bg-primary-active' },
-    { id: 'lava', label: 'حمم', class: 'bg-warning' },
-    { id: 'mint', label: 'نعناع', class: 'bg-success' },
-    { id: 'lavender', label: 'خزامي', class: 'bg-primary-light' },
-    { id: 'spring', label: 'ربيعي', class: 'bg-success' },
-    { id: 'flame', label: 'لهب', class: 'bg-warning' },
-    { id: 'nebula', label: 'سديم', class: 'bg-gradient-to-tr from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'aurora', label: 'شفق', class: 'bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-info)]' },
-    { id: 'fire', label: 'نار', class: 'bg-gradient-to-tr from-[var(--bg-error)] to-[var(--bg-warning)]' },
-    { id: 'ice', label: 'جليد', class: 'bg-gradient-to-tr from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'jungle', label: 'أدغال', class: 'bg-gradient-to-tr from-[var(--bg-success)] to-[var(--bg-success)]' },
-    { id: 'desert', label: 'صحراء', class: 'bg-gradient-to-tr from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'coffee', label: 'قهوة', class: 'bg-card' },
-];
-
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
         'bg-card border border-border rounded-card shadow-soft p-5',

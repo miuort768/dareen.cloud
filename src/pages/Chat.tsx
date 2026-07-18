@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
@@ -11,7 +11,7 @@ import { useChat, useMessages } from '../hooks/useChat';
 import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
 
-export const Chat: React.FC = () => {
+export const Chat = () => {
     const currentUser = useAuthStore(s => s.currentUser);
     const {
         conversations,

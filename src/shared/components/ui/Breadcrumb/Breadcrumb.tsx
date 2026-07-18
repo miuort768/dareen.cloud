@@ -17,11 +17,11 @@ export interface BreadcrumbProps {
   className?: string;
 }
 
-const DefaultSeparator: React.FC = () => (
+const DefaultSeparator = () => (
   <ChevronLeft size={14} className="text-muted shrink-0" />
 );
 
-const SlashSeparator: React.FC = () => (
+const SlashSeparator = () => (
   <span className="text-muted select-none shrink-0">/</span>
 );
 

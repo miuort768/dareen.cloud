@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     Calendar, RefreshCw, Printer,
     ArrowDownRight,
@@ -24,7 +24,7 @@ import { StrategicSummary } from './monthly-closing/components/StrategicSummary'
 
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
-export const MonthlyClosing: React.FC = () => {
+export const MonthlyClosing = () => {
     const semesterName = useSemesterName();
     const setSetting = useSetSetting();
     const semesters = useSemesters();

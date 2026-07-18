@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, type Variant } from 'framer-motion';
 import { ReactNode } from 'react';
 
 type AnimationType = 'fadeUp' | 'fadeIn' | 'slideLeft' | 'slideRight' | 'scaleIn';
@@ -12,7 +12,7 @@ interface AnimateOnScrollProps {
     once?: boolean;
 }
 
-const variants: Record<AnimationType, { hidden: object; visible: object }> = {
+const variants: Record<AnimationType, { hidden: Variant; visible: Variant }> = {
     fadeUp: {
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0 }

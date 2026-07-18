@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, Sparkles, X, Check } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
@@ -13,7 +13,7 @@ interface Announcement {
     isActive: boolean;
 }
 
-export const ModernAnnouncements: React.FC = () => {
+export const ModernAnnouncements = () => {
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [dismissedIds, setDismissedIds] = useState<string[]>(() => {
         const saved = localStorage.getItem('dismissed_announcements');

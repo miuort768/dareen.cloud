@@ -30,10 +30,9 @@ export const sendNativeNotification = async (title: string, options?: Notificati
             icon: '/logo.png',
             badge: '/logo.png',
             silent: false,
-            // @ts-expect-error - vibrate not in TS NotificationOptions types
-            vibrate: [200, 100, 200], // Mobile vibration pattern
+            vibrate: [200, 100, 200],
             ...options
-        };
+        } as NotificationOptions & { vibrate?: number[] };
 
         // Prefer Service Worker registration for better mobile/background support
         if ('serviceWorker' in navigator) {
