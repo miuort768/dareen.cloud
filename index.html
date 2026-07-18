@@ -100,6 +100,25 @@
 </head>
 
 <body>
+  <!-- ⚡ P0: patch Image() to allow bare calls (v1.2 production crash) -->
+  <script>
+    (function() {
+      var orig = window.Image;
+      if (!orig) return;
+      function ImageFix() {
+        if (!(this instanceof ImageFix)) {
+          console.warn('[P0-ImageFix] Called without `new`:', (new Error()).stack);
+        }
+        return new orig(arguments[0], arguments[1]);
+      }
+      ImageFix.prototype = orig.prototype;
+      ImageFix.prototype.constructor = ImageFix;
+      window.Image = ImageFix;
+      if (typeof globalThis !== 'undefined') globalThis.Image = ImageFix;
+      if (typeof self !== 'undefined') self.Image = ImageFix;
+    })();
+  </script>
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 

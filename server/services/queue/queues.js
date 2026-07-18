@@ -18,6 +18,15 @@ const PRIORITY = {
 let queues = {};
 
 function initializeQueues() {
+    queues.cleanup = createQueue(QUEUE_NAMES.CLEANUP, {
+        defaultJobOptions: {
+            attempts: 3,
+            backoff: { type: 'exponential', delay: 2000 },
+            removeOnComplete: { count: 100, age: 86400 },
+            removeOnFail: { count: 100, age: 604800 },
+        },
+    });
+
     queues.notifications = createQueue(QUEUE_NAMES.NOTIFICATIONS, {
         defaultJobOptions: {
             attempts: 3,
