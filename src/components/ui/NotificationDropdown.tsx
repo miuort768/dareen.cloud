@@ -170,7 +170,7 @@ export const NotificationDropdown = () => {
                 aria-expanded={isOpen}
                 aria-controls="notification-panel"
             >
-                <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse drop-shadow-[0_0_8px_rgb(0_0_0_/_0.3)] dark:drop-shadow-[0_0_8px_rgb(255_255_255_/_0.4)]" : "")} />
+                <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse" : "")} style={unreadCount > 0 ? { filter: 'var(--drop-shadow-bell)' } : undefined} />
                 {notificationsEnabled && unreadCount > 0 && (
                     <span className="absolute -top-0.5 -start-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-error text-micro font-bold flex items-center justify-center border-2 border-white dark:border-border shadow-lg">
                         {unreadCount}
@@ -179,7 +179,7 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div id="notification-panel" className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-card border-2 border-border rounded-none shadow-[0_20px_50px_rgb(0_0_0_/_0.3)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
+                <div id="notification-panel" className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-card border-2 border-border rounded-none shadow-[var(--shadow-panel)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="absolute -top-[10px] end-4 md:end-8 w-4 h-4 bg-card border-t-2 border-e-2 border-border rotate-45 hidden md:block" />
                     
                     {/* Header */}

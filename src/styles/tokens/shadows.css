@@ -12,4 +12,15 @@
   --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
   --shadow-soft: 0 8px 30px 0 rgba(0, 0, 0, 0.06);
   --shadow-broad: 0 32px 64px -12px rgba(0, 0, 0, 0.50);
+  --shadow-card-offset: 20px 20px 0px 0px rgb(0 0 0 / 0.3);
+  --shadow-sharp: 4px 4px 0px 0px rgb(99 102 241 / 0.15);
+  --shadow-glow: 0 0 50px rgb(79 70 229 / 0.15);
+  --shadow-panel: 0 20px 50px rgb(0 0 0 / 0.3);
+  --shadow-navbar: 0 8px 32px rgb(0 0 0 / 0.12);
+  --drop-shadow-bell: drop-shadow(0 0 8px rgb(0 0 0 / 0.3));
+  --bg-pattern-diamond: repeating-linear-gradient(45deg, transparent, transparent 10px, rgb(99 102 241 / 0.06) 10px, rgb(99 102 241 / 0.06) 20px);
+}
+
+.dark {
+  --drop-shadow-bell: drop-shadow(0 0 8px rgb(255 255 255 / 0.4));
 }

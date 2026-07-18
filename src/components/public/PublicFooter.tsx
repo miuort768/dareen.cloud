@@ -14,7 +14,7 @@ export const PublicFooter = () => {
 
                 <div className="absolute top-10 end-10 w-20 h-20 border border-border/20 rotate-45"></div>
                 <div className="absolute bottom-20 start-10 w-32 h-32 border border-border/20 -rotate-12"></div>
-                <div className="absolute top-1/2 end-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgb(99_102_241 / 0.06) 10px, rgb(99_102_241 / 0.06) 20px)' }}></div>
+                <div className="absolute top-1/2 end-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10" style={{ backgroundImage: 'var(--bg-pattern-diamond)' }}></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">

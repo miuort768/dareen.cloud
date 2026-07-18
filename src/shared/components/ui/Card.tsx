@@ -11,7 +11,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     const variants = {
       glass: 'bg-white/80 dark:bg-primary-active/80 backdrop-blur-xl border border-border/50 shadow-card',
       elevated: 'bg-card border border-border shadow-md hover:shadow-lg',
-      sharp: 'bg-card border-2 border-strong shadow-[4px_4px_0px_0px_var(--text-main)] dark:shadow-[4px_4px_0px_0px_rgb(99_102_241_/_0.15)] rounded-none',
+      sharp: 'bg-card border-2 border-strong shadow-[4px_4px_0px_0px_var(--text-main)] dark:shadow-[var(--shadow-sharp)] rounded-none',
       premium: 'bg-gradient-to-br from-white to-primary-soft/50 dark:from-primary-active dark:to-primary-soft/20 border border-primary/10 dark:border-primary/20 shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10',
       glow: 'bg-card border border-primary/20 dark:border-primary/30 shadow-lg shadow-primary/10 hover:shadow-xl hover:shadow-primary/20',
     };
