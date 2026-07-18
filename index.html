@@ -100,7 +100,7 @@
 </head>
 
 <body>
-  <!-- ⚡ P0: patch Image() to allow bare calls (v1.2 production crash) -->
+  <!-- ⚡ P0: patch window.Image to handle bare calls AND React usage (v1.2) -->
   <script>
     (function() {
       var orig = window.Image;
@@ -109,7 +109,12 @@
         if (!(this instanceof ImageFix)) {
           console.warn('[P0-ImageFix] Called without `new`:', (new Error()).stack);
         }
-        return new orig(arguments[0], arguments[1]);
+        var a0 = arguments[0];
+        if (typeof a0 === 'object' && a0 !== null && !Array.isArray(a0)) {
+          /* Called as React component (props object) — render nothing */
+          return null;
+        }
+        return new orig(a0, arguments[1]);
       }
       ImageFix.prototype = orig.prototype;
       ImageFix.prototype.constructor = ImageFix;
