@@ -1,5 +1,7 @@
 import { X, Link as LinkIcon, Image as ImageIcon, Star, Download, Eye, Loader2, Save, Tag } from 'lucide-react';
 import type { BlogPost } from './types';
+import { BlogFormEducationalSection } from './BlogFormEducationalSection';
+import { BlogFormSeoSection } from './BlogFormSeoSection';
 
 interface BlogFormProps {
     isModalOpen: boolean;
@@ -14,17 +16,6 @@ interface BlogFormProps {
     handleSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
-const grades = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-const subjects = [
-    { value: 'arabic', label: 'عربي' }, { value: 'math', label: 'رياضيات' },
-    { value: 'islamic', label: 'إسلامية' }, { value: 'english', label: 'إنجليزي' },
-    { value: 'science', label: 'علوم' }, { value: 'physics', label: 'فيزياء' },
-    { value: 'chemistry', label: 'كيمياء' }, { value: 'biology', label: 'أحياء' },
-    { value: 'history', label: 'تاريخ' }, { value: 'geography', label: 'جغرافيا' },
-    { value: 'social', label: 'اجتماعيات' }, { value: 'computer', label: 'حاسب آلي' },
-    { value: 'stats', label: 'إحصاء' },
-];
-
 export const BlogForm = ({
     isModalOpen, setIsModalOpen, currentPost, setCurrentPost,
     contentPart1, setContentPart1, contentPart2, setContentPart2,
@@ -33,7 +24,6 @@ export const BlogForm = ({
     if (!isModalOpen || !currentPost) return null;
 
     const set = (field: string, value: string | number | boolean) => setCurrentPost((prev) => ({ ...prev, [field]: value }));
-    const isDisabled = currentPost.contentType === 'foundation' || currentPost.contentType === 'more';
 
     return (
         <div className="bg-card w-full overflow-hidden border border-border shadow-sm rounded-2xl">
@@ -88,74 +78,7 @@ export const BlogForm = ({
                     </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-error-soft/50 border border-error/10">
-                    <p className="text-micro font-bold mb-4 text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">نوع المحتوى</label>
-                            <select value={currentPost.contentType}
-                                onChange={(e) => { const v = e.target.value; setCurrentPost((prev) => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }}
-                                aria-label="نوع المحتوى"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none">
-                                <option value="notes">مذكرات</option><option value="solutions">حل كتب</option>
-                                <option value="more">المزيد</option><option value="foundation">تأسيس</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">المنهج</label>
-                            <select value={currentPost.curriculum} onChange={(e) => set('curriculum', e.target.value)}
-                                disabled={isDisabled}
-                                aria-label="المنهج الدراسي"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
-                                <option value="">بدون تحديد</option>
-                                <option value="kuwait">الكويت</option><option value="qatar">قطر</option>
-                                <option value="uae">الإمارات</option><option value="saudi">السعودية</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">المرحلة</label>
-                            <select value={currentPost.level} onChange={(e) => set('level', e.target.value)}
-                                disabled={isDisabled}
-                                aria-label="المرحلة الدراسية"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
-                                <option value="">بدون تحديد</option>
-                                <option value="primary">ابتدائي</option><option value="middle">متوسط</option>
-                                <option value="secondary">ثانوي</option><option value="basic">أساسي (عمان)</option>
-                                <option value="preparatory">إعدادي (مصر)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">الصف</label>
-                            <select value={currentPost.grade} onChange={(e) => set('grade', e.target.value)}
-                                disabled={isDisabled}
-                                aria-label="الصف الدراسي"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
-                                <option value="">بدون تحديد</option>
-                                {grades.map(g => <option key={g} value={g}>صف {g}</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">الفصل</label>
-                            <select value={currentPost.term} onChange={(e) => set('term', e.target.value)}
-                                disabled={isDisabled}
-                                aria-label="الفصل الدراسي"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
-                                <option value="">بدون</option><option value="1">الفصل الأول</option>
-                                <option value="2">الفصل الثاني</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">المادة</label>
-                            <select value={currentPost.subject} onChange={(e) => set('subject', e.target.value)}
-                                disabled={isDisabled}
-                                aria-label="المادة الدراسية"
-                                className="w-full bg-card border border-border px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-focus rounded-xl outline-none disabled:opacity-50">
-                                <option value="">بدون تحديد</option>
-                                {subjects.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <BlogFormEducationalSection currentPost={currentPost} onSet={set} onSetCurrentPost={setCurrentPost} />
 
                 {(currentPost.contentType === 'foundation' || currentPost.contentType === 'notes') && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -283,62 +206,7 @@ export const BlogForm = ({
                     </div>
                 </div>
 
-                {/* SEO Settings */}
-                <div className="p-4 rounded-2xl bg-primary-soft/50 border border-primary/10">
-                    <p className="text-micro font-bold mb-4 text-primary">إعدادات SEO — ظهور المقال في محركات البحث</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">عنوان SEO</label>
-                            <input type="text" value={currentPost.seoTitle || ''}
-                                onChange={(e) => set('seoTitle', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">الوصف في SEO</label>
-                            <input type="text" value={currentPost.seoDescription || ''}
-                                onChange={(e) => set('seoDescription', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">صورة OG</label>
-                            <input type="url" value={currentPost.ogImage || ''}
-                                onChange={(e) => set('ogImage', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">الكلمة المفتاحية الأساسية</label>
-                            <input type="text" value={currentPost.focusKeyword || ''}
-                                onChange={(e) => set('focusKeyword', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">الوسوم (Tags)</label>
-                            <input type="text" value={currentPost.tags || ''}
-                                onChange={(e) => set('tags', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
-                        </div>
-                        <div>
-                            <label className="text-micro font-bold text-dim block mb-1">Canonical URL</label>
-                            <input type="url" value={currentPost.canonicalUrl || ''}
-                                onChange={(e) => set('canonicalUrl', e.target.value)}
-                                className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-6 mt-4">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" checked={currentPost.robotsIndex !== false}
-                                onChange={(e) => set('robotsIndex', e.target.checked)}
-                                className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
-                            <span className="text-micro font-bold text-muted">السماح بفهرسة المقال</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" checked={currentPost.isFeatured || false}
-                                onChange={(e) => set('isFeatured', e.target.checked)}
-                                className="w-4 h-4 rounded border-border text-primary focus:ring-focus" />
-                            <span className="text-micro font-bold text-muted flex items-center gap-1"><Star size={12} className="text-warning" /> مقال مميز</span>
-                        </label>
-                    </div>
-                </div>
+                <BlogFormSeoSection currentPost={currentPost} onSet={set} />
 
                 <div className="p-5 border-t border-border bg-surface dark:bg-card/50 flex justify-end gap-3 rounded-xl">
                     <button type="button" onClick={() => setIsModalOpen(false)}
