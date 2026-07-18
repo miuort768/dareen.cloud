@@ -1,4 +1,4 @@
-import { Building2, Clock, Mail, MessageSquare, Video, Globe } from 'lucide-react';
+import { Mail, MessageSquare, Video, Globe } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, ToggleRow, PrimaryBtn } from './SettingsUI';
 
 export const CommunicationsSection = ({

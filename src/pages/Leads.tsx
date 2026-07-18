@@ -7,7 +7,7 @@ import { crmService } from '../features/crm/services/crmService';
 import { socketService } from '../lib/socket';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { PageLoader } from '../components/ui/PageLoader';
-import { SectionCard, PrimaryBtn, StatItem } from './leads/components/LeadsUI';
+import { PrimaryBtn, StatItem } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';

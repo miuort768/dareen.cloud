@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, Search, MoreVertical, X } from 'lucide-react';
+import { ChevronRight, Search, MoreVertical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';

@@ -30,7 +30,7 @@ const getGradeDisplay = (studentName: string, grade?: string) => {
     return studentName.charAt(0);
 };
 
-export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, searchTerm, filteredSessions, date, onLog, onViewHistory }: AdminAttendanceViewProps) => {
+export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, searchTerm, filteredSessions, onLog, onViewHistory }: AdminAttendanceViewProps) => {
     const visibleTeachers = uniqueTeachers.filter(t => filterTeacher === 'all' || t === filterTeacher);
     if (visibleTeachers.length === 0) {
         return (

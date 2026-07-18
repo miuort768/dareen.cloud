@@ -4,7 +4,7 @@ import { api } from '../../../lib/api';
 import type { User } from '../../../types/auth';
 import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense, Enrollment, ScheduleSlot } from '../../../types';
 import type { DashboardStats, DashboardTask } from '../types';
-import { getSafeArray, isSameMonth, computeLowBalanceStudents, computeChartData, getRevenue, getManualInc, getPaidInv, getManualExp } from '../utils/dashboardHelpers';
+import { getSafeArray, isSameMonth, computeLowBalanceStudents, computeChartData, getPaidInv, getManualExp } from '../utils/dashboardHelpers';
 
 export const useDashboardData = (currentUser: User | null) => {
     const queryClient = useQueryClient();
@@ -87,7 +87,6 @@ export const useDashboardData = (currentUser: User | null) => {
         // 2. Dates
         const now = new Date();
         const today = now.toISOString().split('T')[0];
-        const currentMonth = now.toISOString().slice(0, 7);
         const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
         const currentDayName = dayNames[now.getDay()];
 

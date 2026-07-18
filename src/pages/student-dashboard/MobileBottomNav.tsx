@@ -1,10 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, User, Library, MoreHorizontal } from 'lucide-react';
 
-interface MobileBottomNavProps {
-    activeNav: string;
-    setActiveNav: (v: string) => void;
-}
 
 const navItems = [
     { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
@@ -14,7 +10,7 @@ const navItems = [
     { id: 'main', label: 'الرئيسية', icon: Home, path: '/' },
 ];
 
-export const MobileBottomNav = ({ activeNav, setActiveNav }: MobileBottomNavProps) => {
+export const MobileBottomNav = () => {
     const navigate = useNavigate();
     const location = useLocation();
 

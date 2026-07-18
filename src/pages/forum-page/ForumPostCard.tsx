@@ -1,9 +1,9 @@
-import { MessageSquare, ThumbsUp, MoreHorizontal, AlertTriangle, Clock, Trash2, User, Send } from 'lucide-react';
+import { ThumbsUp, MoreHorizontal, AlertTriangle, Clock, Trash2, User, Send } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../lib/utils';
 import { buildThreadedComments } from '../../features/forum/types';
-import type { Comment, Post } from '../../features/forum/types';
+import type { Post } from '../../features/forum/types';
 
 interface ForumPostCardProps {
     post: Post;

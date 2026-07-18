@@ -148,7 +148,7 @@ export const useSettingsHandlers = () => {
                 showNotify('تم استيراد البيانات بنجاح');
                 setTimeout(() => window.location.reload(), 2000);
             } catch (e: unknown) { alert(`⚠️ ${e instanceof Error ? e.message : 'خطأ غير متوقع'}`); }
-            finally { setIsSaving(false); e.target && (e.target.value = ''); }
+            finally { setIsSaving(false); if (e.target) e.target.value = ''; }
         };
         reader.readAsText(file);
     };

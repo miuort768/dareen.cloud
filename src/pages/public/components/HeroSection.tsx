@@ -3,12 +3,11 @@ import { Play, ArrowLeft, Star } from 'lucide-react';
 
 interface HeroSectionProps {
     typewriterText: string;
-    whatsappNumber: string;
     signupNowNumber: string;
     bannersArray: string[];
 }
 
-export const HeroSection = ({ typewriterText, whatsappNumber, signupNowNumber, bannersArray }: HeroSectionProps) => {
+export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: HeroSectionProps) => {
     return (
         <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-white dark:bg-card">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />

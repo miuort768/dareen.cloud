@@ -3,7 +3,7 @@ import {
   Calendar, MessageSquare, User, LayoutDashboard, ClipboardList
 } from 'lucide-react';
 import { useCurrentUser } from '../../context/AppContext';
-import { useUnreadStore } from '../../store/unreadStore';
+
 import { cn } from '../../lib/utils';
 import { triggerHaptic } from '../../lib/haptics';
 
@@ -11,7 +11,6 @@ export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
     const currentUser = useCurrentUser();
-  const activeConversationId = useUnreadStore(s => s.activeConversationId);
 
   const isChatPage = location.pathname.includes('/chat');
   const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');

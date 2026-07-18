@@ -77,7 +77,6 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                     if (event) {
                                         const colorIdx = getColorIndex(event);
                                         const accent = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length];
-                                        const { color } = accent;
                                         return (
                                             <div key={`${day}-${slot.hour}`}
                                                 onClick={() => onSelectEvent(event)}

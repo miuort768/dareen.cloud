@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
@@ -15,7 +15,6 @@ export const ParentDashboard = () => {
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
-    const navigate = useNavigate();
     const [children, setChildren] = useState<Student[]>([]);
     const [sessions, setSessions] = useState<Student[]>([]);
     const [allPointLogs, setAllPointLogs] = useState<{ id: string; date: string; status: string; points?: number }[]>([]);

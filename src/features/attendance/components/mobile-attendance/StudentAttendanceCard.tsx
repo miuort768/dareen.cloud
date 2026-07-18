@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, History } from 'lucide-react';
-import { cn } from '../../../../lib/utils';
 import { ProgressBar } from '../../../../shared/components/ui';
 import type { Student, Enrollment } from '../../types';
 

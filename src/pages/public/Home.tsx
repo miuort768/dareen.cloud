@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 import { useSettingsStore } from '../../store/settingsStore';
-import { Image } from '../../shared/components/ui';
+
+
 import { SEO } from '../../components/SEO';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -19,7 +20,8 @@ import { AppDownloadSection } from './components/AppDownloadSection';
 import { StatsCounter } from './components/StatsCounter';
 import { Play, Headphones, Users, Star, ChevronLeft, BadgeCheck } from 'lucide-react';
 import { featureStyles, quickFeatures, getFilteredCourses, heroSlides, stages, reviews, reviewSchema } from './home-page';
-import type { FeatureVariant } from './home-page';
+
+
 
 export const Home = () => {
     const adminPhone = useSettingsStore(s => s.adminPhone);

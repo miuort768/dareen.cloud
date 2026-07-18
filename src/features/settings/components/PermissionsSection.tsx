@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, ExternalLink, Users, KeyRound } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, ToggleRow, PrimaryBtn } from './SettingsUI';
-import { settingsService } from '../services/settingsService';
+import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './SettingsUI';
 
 const AVAILABLE_PERMISSIONS = [
     { id: '*', label: 'وصول كامل' },

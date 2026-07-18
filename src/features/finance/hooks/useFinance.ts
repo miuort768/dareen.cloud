@@ -177,7 +177,7 @@ export const useFinance = () => {
             profitMargin,
             reportCurrency
         };
-    }, [sessions, invoices, manualTransactions, fixedExpenses, serverStats, filterMonth]);
+    }, [sessions, invoices, manualTransactions, fixedExpenses, serverStats, filterMonth, reportCurrency]);
 
     const allTransactions = useMemo(() => {
         const combined: Transaction[] = [

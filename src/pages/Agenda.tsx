@@ -93,7 +93,7 @@ export const Agenda = () => {
             // Sort by time?
             return 0;
         });
-    }, [students, sessions, activeDay, isTeacher, teacherName, searchTerm]);
+    }, [students, sessions, activeDay, isTeacher, teacherName, searchTerm, currentUser?.id]);
 
     const handleMarkDone = (appointment: { id: string }) => {
         const now = new Date();

@@ -1,6 +1,6 @@
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { RefreshCcw, ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones, Sparkles } from 'lucide-react';
+import { ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 

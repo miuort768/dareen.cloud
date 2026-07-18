@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Clock, Plus, Trash2, Sun, Moon } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, SecondaryBtn, DangerBtn, ToggleRow } from './SettingsUI';
+import { Clock, Sun, Moon } from 'lucide-react';
+import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
 
 const DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];

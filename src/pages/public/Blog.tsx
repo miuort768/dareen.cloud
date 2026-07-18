@@ -9,7 +9,7 @@ import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Sun, Moon, Send, BookOpen, Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
-import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes, subjectNameMap } from '../../components/blog/LibraryConfig';
+import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes } from '../../components/blog/LibraryConfig';
 import type { ViewType } from '../../components/blog/LibraryConfig';
 import { FoundationCard, RegularCard } from '../../components/blog/BlogCard';
 import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb';
@@ -84,9 +84,7 @@ export const Blog = () => {
     });
   }, [setSearchParams]);
 
-  const setSelectedType = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('type', id); return n; }); }, [setSearchParams]);
-  const setSelectedCurriculum = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('curriculum', id); return n; }); }, [setSearchParams]);
-  const setSelectedLevel = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('level', id); return n; }); }, [setSearchParams]);
+
   const setSelectedGrade = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('grade', id); n.set('view', 'terms'); n.delete('subject'); return n; }); }, [setSearchParams]);
   const setSelectedTerm = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('term', id); n.set('view', 'subjects'); return n; }); }, [setSearchParams]);
   const setSelectedSubject = useCallback((id: string) => { setSearchParams(prev => { const n = new URLSearchParams(prev); n.set('subject', id); n.set('view', 'results'); return n; }); }, [setSearchParams]);
@@ -264,11 +262,10 @@ export const Blog = () => {
             <LoadMore page={page} totalPages={totalPages} loading={loadingMore} onLoadMore={loadMore} />
           </div>
         ) : (
-          <SelectionGrid view={view} gridItems={gridItems} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
-            currentCurriculum={selectedCurriculum} currentLevel={selectedLevel} selectedGrade={selectedGrade} termLabel={termLabel}
-            currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
+          <SelectionGrid view={view} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
+            selectedGrade={selectedGrade} termLabel={termLabel}
+            currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
             filteredCount={filteredPosts.length} goBack={goBack}
-            onSelectType={setSelectedType} onSelectCurriculum={setSelectedCurriculum} onSelectLevel={setSelectedLevel}
             onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} isMobile />
         )}
       </main>
@@ -296,11 +293,10 @@ export const Blog = () => {
               )}
             </div>
           ) : (
-            <SelectionGrid view={view} gridItems={gridItems} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
-              currentCurriculum={selectedCurriculum} currentLevel={selectedLevel} selectedGrade={selectedGrade} termLabel={termLabel}
-              currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
+            <SelectionGrid view={view} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
+              selectedGrade={selectedGrade} termLabel={termLabel}
+              currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
               filteredCount={filteredPosts.length} goBack={goBack}
-              onSelectType={setSelectedType} onSelectCurriculum={setSelectedCurriculum} onSelectLevel={setSelectedLevel}
               onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} />
           )}
         </div>

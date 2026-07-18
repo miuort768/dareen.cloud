@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+
 
 const EXAMPLES = [
   { label: 'Hover Scale', class: 'hover:scale-110 transition-transform' },
@@ -8,8 +9,6 @@ const EXAMPLES = [
 ] as const;
 
 export function MotionSection() {
-  const [active, setActive] = useState(false);
-
   return (
     <section>
       <h2 className="text-lg font-bold mb-4">الحركة — Motion</h2>

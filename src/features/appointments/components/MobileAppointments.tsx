@@ -11,7 +11,6 @@ export const MobileAppointments = () => {
     const mountedRef = useRef(true);
 
     const [students, setStudents] = useState<Student[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
     const [filterTeacher, setFilterTeacher] = useState<string>('all');
@@ -68,7 +67,6 @@ export const MobileAppointments = () => {
 
     const fetchData = async () => {
         if (!mountedRef.current) return;
-        setLoading(true);
         try {
             const data = await api.get<Record<string, unknown>[]>('/students');
             if (!mountedRef.current) return;
@@ -76,7 +74,7 @@ export const MobileAppointments = () => {
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
-            if (mountedRef.current) setLoading(false);
+            void mountedRef;
         }
     };
 

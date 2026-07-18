@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Calendar, ShieldCheck, Sparkles, TrendingUp } from 'lucide-react';
+import { Clock, Calendar, ShieldCheck, TrendingUp } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import { cn } from '../../../lib/utils';
 

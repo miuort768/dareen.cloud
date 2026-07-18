@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Cell } from 'recharts';
-import { BarChart2, DollarSign, TrendingUp } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { DollarSign } from 'lucide-react';
 import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
 import type { TooltipEntry } from '../../../shared/components/ui';
 import type { DashboardMonthData as MonthData } from '../types';
@@ -9,8 +9,6 @@ interface DashboardChartsProps {
     isTeacher: boolean;
     monthlyData: MonthData[];
 }
-
-const chartColors = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)'];
 
 export const DashboardCharts = React.memo(({ isTeacher, monthlyData }: DashboardChartsProps) => {
     const totalRevenue = useMemo(() => monthlyData.reduce((s, m) => s + (m.revenue || 0), 0), [monthlyData]);

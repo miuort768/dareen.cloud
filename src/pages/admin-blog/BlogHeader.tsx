@@ -1,4 +1,4 @@
-import { Plus, BookOpen, Settings, X } from 'lucide-react';
+import { Plus, BookOpen, Settings } from 'lucide-react';
 
 interface BlogHeaderProps {
     handleOpenModal: () => void;
@@ -8,8 +8,6 @@ interface BlogHeaderProps {
     setLibraryWhatsapp: (v: string) => void;
     libraryTelegram: string;
     setLibraryTelegram: (v: string) => void;
-    savedWhatsapp: string;
-    savedTelegram: string;
     savingSettings: boolean;
     handleSaveSettings: () => Promise<void>;
     handleCancelSettings: () => void;
@@ -18,7 +16,7 @@ interface BlogHeaderProps {
 export const BlogHeader = ({
     handleOpenModal, showSettings, setShowSettings,
     libraryWhatsapp, setLibraryWhatsapp, libraryTelegram, setLibraryTelegram,
-    savedWhatsapp, savedTelegram, savingSettings, handleSaveSettings, handleCancelSettings
+    savingSettings, handleSaveSettings, handleCancelSettings
 }: BlogHeaderProps) => (
     <>
         <div className="bg-card rounded-2xl shadow-sm border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">

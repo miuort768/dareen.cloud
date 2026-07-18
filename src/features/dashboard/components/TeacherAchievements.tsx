@@ -1,4 +1,4 @@
-import { TrendingUp, Award, AlertCircle, Clock, Star } from 'lucide-react';
+import { Award, AlertCircle, Clock, Star } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';

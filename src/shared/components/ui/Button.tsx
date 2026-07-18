@@ -28,7 +28,7 @@ const sizes = {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant = 'primary', size = 'md', type = 'button', isLoading, leftIcon, rightIcon, children, onClick, ...props },
+    { className, variant = 'primary', size = 'md', isLoading, leftIcon, rightIcon, children, onClick, ...props },
     ref
   ) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

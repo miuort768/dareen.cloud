@@ -1,5 +1,4 @@
-import { ListTodo, Calendar, Clock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ListTodo, Calendar } from 'lucide-react';
 import { ActivityFeed } from '../../../shared/components/ui';
 import type { ActivityItem } from '../../../shared/components/ui';
 
@@ -9,8 +8,6 @@ interface RecentActivityFeedProps {
 }
 
 export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps) => {
-    const navigate = useNavigate();
-
     const sessionItems: ActivityItem[] = sessions.slice(0, 5).map(s => ({
         id: `s-${s.id}`,
         title: `جلسة: ${s.studentName}`,

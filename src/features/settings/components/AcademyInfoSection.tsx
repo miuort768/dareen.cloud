@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { Building2, Phone, MapPin, Hash, Send, Image as ImageIcon } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
 import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, PrimaryBtn } from './SettingsUI';

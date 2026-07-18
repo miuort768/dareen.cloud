@@ -32,27 +32,15 @@ export const Chat: React.FC = () => {
     const setSelectedConv = useChatUIStore(s => s.setSelectedConv);
     const newMessage = useChatUIStore(s => s.newMessage);
     const setNewMessage = useChatUIStore(s => s.setNewMessage);
-    const setShowMoreMenu = useChatUIStore(s => s.setShowMoreMenu);
-    const showNewChatModal = useChatUIStore(s => s.showNewChatModal);
-    const setShowNewChatModal = useChatUIStore(s => s.setShowNewChatModal);
     const isEditingGroup = useChatUIStore(s => s.isEditingGroup);
     const setIsEditingGroup = useChatUIStore(s => s.setIsEditingGroup);
-    const isCreatingGroup = useChatUIStore(s => s.isCreatingGroup);
     const setIsCreatingGroup = useChatUIStore(s => s.setIsCreatingGroup);
+    const setShowNewChatModal = useChatUIStore(s => s.setShowNewChatModal);
     const groupName = useChatUIStore(s => s.groupName);
     const setGroupName = useChatUIStore(s => s.setGroupName);
-    const searchUser = useChatUIStore(s => s.searchUser);
-    const setSearchUser = useChatUIStore(s => s.setSearchUser);
     const selectedUsers = useChatUIStore(s => s.selectedUsers);
     const setSelectedUsers = useChatUIStore(s => s.setSelectedUsers);
-    const showDeleteConfirm = useChatUIStore(s => s.showDeleteConfirm);
-    const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
-    const deleteType = useChatUIStore(s => s.deleteType);
-    const setDeleteType = useChatUIStore(s => s.setDeleteType);
-    const itemToDelete = useChatUIStore(s => s.itemToDelete);
-    const setItemToDelete = useChatUIStore(s => s.setItemToDelete);
-    const isDeleting = useChatUIStore(s => s.isDeleting);
-    const setIsDeleting = useChatUIStore(s => s.setIsDeleting);
+    const setSearchUser = useChatUIStore(s => s.setSearchUser);
 
     const setActiveConversationId = useChatStore(s => s.setActiveConversationId);
     const isConnected = useChatStore(s => s.isConnected);
@@ -116,7 +104,7 @@ export const Chat: React.FC = () => {
         } catch (err) {
             console.error('Failed to create direct chat:', err);
         }
-    }, [createDirectChat]);
+    }, [createDirectChat, setSelectedConv, setShowNewChatModal, setSearchUser]);
 
     React.useEffect(() => {
         const targetUserId = location.state?.startChatWith;

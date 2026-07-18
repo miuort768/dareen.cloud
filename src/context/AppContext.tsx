@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { type ReactNode } from 'react';
 import { ToastContainer } from '../components/ui/Toast';
 import { useUIStore } from '../store/uiStore';
@@ -14,6 +15,5 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export * from './useApp';
 export { useUsers, useAddUser, useEditUser, useDeleteUser } from '../store/userStore';

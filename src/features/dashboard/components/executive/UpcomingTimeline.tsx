@@ -10,14 +10,6 @@ const URGENCY_DOT: Record<string, string> = {
     later: 'bg-muted',
 };
 
-const URGENCY_LABELS: Record<string, string> = {
-    now: 'الآن',
-    very_soon: 'قريباً جداً',
-    soon: 'قريباً',
-    within_hour: 'خلال ساعة',
-    later: 'لاحقاً',
-};
-
 const URGENCY_ROW: Record<string, string> = {
     now: 'bg-error/5',
     very_soon: 'bg-warning/5',

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import {
-    Users, CalendarDays, Star, Award, User, LogOut,
-    MessageSquare, BookOpen, LayoutDashboard, TrendingUp, CheckCircle, Calendar, Clock
+    Users, CalendarDays, Star, User, LogOut,
+    LayoutDashboard
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -17,7 +17,7 @@ import type { ParentViewProps } from './types';
 type DesktopViewProps = ParentViewProps;
 
 export const ParentDesktopView = ({
-    currentUser, adminPhone, children, sessions, allPointLogs,
+    currentUser, adminPhone, children, allPointLogs,
     activeTimers, stats, todayTasks, points, rank, logout, formatTime
 }: DesktopViewProps) => {
     const navigate = useNavigate();

@@ -17,7 +17,7 @@ interface ReportStudentTableProps {
 
 const PAGE_SIZE = 10;
 
-export const ReportStudentTable = React.memo(({ students, total, searchTerm, onSearchChange }: ReportStudentTableProps) => {
+export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchChange }: ReportStudentTableProps) => {
     const [page, setPage] = useState(1);
     useEffect(() => setPage(1), [searchTerm]);
 

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
-    BarChart3, TrendingUp, LayoutGrid, Database, Activity, 
+    LayoutGrid, Database, Activity, 
     CheckCircle2, XCircle, Users
 } from 'lucide-react';
 import {
@@ -8,7 +8,7 @@ import {
     AreaChart, Area, Cell
 } from 'recharts';
 import { cn } from '../../../lib/utils';
-import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
+import { ChartContainer } from '../../../shared/components/ui';
 
 interface AnalyticsDashboardProps {
     students: Record<string, unknown>[];

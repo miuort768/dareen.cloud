@@ -1,5 +1,4 @@
-import { BookOpen, Play } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { BookOpen } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { directTypes } from './LibraryConfig';
 import type { ViewType, GridItem } from './LibraryConfig';
@@ -35,7 +34,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-6">
-            {gridItems.map((item: GridItem, i: number) => (
+            {gridItems.map((item: GridItem) => (
                 <button key={item.id} onClick={() => {
                     setSearchParams(prev => {
                         const next = new URLSearchParams(prev);
@@ -89,7 +88,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                {gridItems.map((item: GridItem, i: number) => (
+                {gridItems.map((item: GridItem) => (
                     <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
                         <button onClick={() => {
                             setSearchParams(prev => {

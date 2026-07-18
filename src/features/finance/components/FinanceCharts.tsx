@@ -1,7 +1,7 @@
 import React from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from 'recharts';
-import { Calendar, Filter, PieChart as PieChartIcon, TrendingUp, TrendingDown } from 'lucide-react';
-import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
+import { Filter, TrendingUp, TrendingDown } from 'lucide-react';
+import { ChartContainer } from '../../../shared/components/ui';
 
 interface MonthlyData {
     month: string;

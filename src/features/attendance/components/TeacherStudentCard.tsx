@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { BookOpen, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
-import { useNavigate } from 'react-router-dom';
+
 import { startLiveSession } from '../../../services/liveSessionService';
 import { ProgressBar } from '../../../shared/components/ui';
 import { StudentCardTimer } from './StudentCardTimer';
@@ -95,7 +95,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch (e) { console.warn('فشل إنهاء الجلسة النشطة في الخادم'); }
+            } catch { console.warn('فشل إنهاء الجلسة النشطة في الخادم'); }
         } else {
             const start = Date.now();
             setTimerSeconds(0);
@@ -114,7 +114,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch (e) { console.warn('فشل بدء الجلسة النشطة في الخادم'); }
+            } catch { console.warn('فشل بدء الجلسة النشطة في الخادم'); }
         }
     };
 
@@ -124,12 +124,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
-    const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'مساءً' });
-    const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
-
     const attendancePercent = en.sessionsTotal > 0 ? (actualSessionsUsed / en.sessionsTotal) * 100 : 0;
-
-    const navigate = useNavigate();
 
     const startLiveStream = async () => {
         try {
@@ -141,8 +136,9 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 targetStudentId: student.id,
             });
             if (result?.meetingUrl) window.open(result.meetingUrl, '_blank');
-        } catch (err) {
-            alert(`فشل بدء البث: ${err.message}`);
+        } catch (err: unknown) {
+            const msg = err instanceof Error ? err.message : '';
+            alert(`فشل بدء البث: ${msg}`);
         }
     };
 
@@ -214,8 +210,6 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         if (editIdx !== null) newSch[editIdx] = slot;
                         else newSch.push(slot);
                         onUpdateSchedule(student, student.enrollments.indexOf(en), newSch);
-                        setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' });
-                        setEditSlotIndex(null);
                     }}
                 />
 

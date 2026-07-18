@@ -1,4 +1,4 @@
-import type { Student, Session, Transaction, FixedExpense, TeacherInvoice, Enrollment } from '../../../types';
+import type { Student, Session, Transaction, TeacherInvoice, Enrollment } from '../../../types';
 import type { LowBalanceStudent, DashboardMonthData } from '../types';
 
 export const getSafeArray = (val: unknown): unknown[] => {

@@ -1,26 +1,18 @@
 import { cn } from '../../lib/utils';
-import { ChevronLeft, ArrowLeft, GraduationCap, BookOpen } from 'lucide-react';
+import { ArrowLeft, GraduationCap, BookOpen } from 'lucide-react';
 import { gradeNames } from './LibraryConfig';
-import type { ViewType, GridItem } from './LibraryConfig';
-import { useSearchParams } from 'react-router-dom';
+import type { ViewType } from './LibraryConfig';
 
 interface SelectionGridProps {
     view: ViewType;
-    gridItems: GridItem[];
     currentClassrooms: string[];
     currentSubjects: { id: string; name: string; gradient: string }[];
-    currentCurriculum: string;
-    currentLevel: string;
     selectedGrade: string;
     termLabel: string;
-    currentTypeName: string;
     currentCurriculumName: string;
     currentLevelName: string;
     filteredCount: number;
     goBack: () => void;
-    onSelectType: (id: string) => void;
-    onSelectCurriculum: (id: string) => void;
-    onSelectLevel: (id: string) => void;
     onSelectGrade: (id: string) => void;
     onSelectTerm: (term: string) => void;
     onSelectSubject: (id: string) => void;
@@ -28,9 +20,9 @@ interface SelectionGridProps {
 }
 
 export const SelectionGrid = ({
-    view, gridItems, currentClassrooms, currentSubjects,
-    currentCurriculum, currentLevel, selectedGrade, termLabel,
-    currentTypeName, currentCurriculumName, currentLevelName,
+    view, currentClassrooms, currentSubjects,
+    selectedGrade, termLabel,
+    currentCurriculumName, currentLevelName,
     filteredCount, goBack, onSelectGrade, onSelectTerm, onSelectSubject,
     isMobile
 }: SelectionGridProps) => {
@@ -66,7 +58,7 @@ export const SelectionGrid = ({
                     </picture>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5">
-                    {view === 'classrooms' && currentClassrooms.map((cls, i) => (
+                    {view === 'classrooms' && currentClassrooms.map((cls) => (
                         <button key={cls} onClick={() => onSelectGrade(cls)}
                             className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] text-on-primary shadow-sm active:scale-[0.97] transition-all">
                             <GraduationCap size={18} />
@@ -89,7 +81,7 @@ export const SelectionGrid = ({
                         </>
                     )}
 
-                    {view === 'subjects' && currentSubjects.map((subj, i) => (
+                    {view === 'subjects' && currentSubjects.map((subj) => (
                         <button key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
                             className={cn("flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br text-on-primary shadow-sm active:scale-[0.97] transition-all", subj.gradient)}>
                             <span className="text-micro font-black text-center">{subj.name}</span>
@@ -139,7 +131,7 @@ export const SelectionGrid = ({
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                        {view === 'classrooms' && currentClassrooms.map((cls, i) => (
+                    {view === 'classrooms' && currentClassrooms.map((cls) => (
                             <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                                 <button onClick={() => onSelectGrade(cls)}
                                     className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] text-on-primary border border-white/5 shadow-lg active:scale-[0.97] transition-all">
@@ -168,7 +160,7 @@ export const SelectionGrid = ({
                             </>
                         )}
 
-                        {view === 'subjects' && currentSubjects.map((subj, i) => (
+                    {view === 'subjects' && currentSubjects.map((subj) => (
                             <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                                 <button onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
                                     className={cn("w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br text-on-primary shadow-lg active:scale-[0.97] transition-all", subj.gradient)}>

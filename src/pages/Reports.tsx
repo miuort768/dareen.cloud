@@ -5,7 +5,6 @@ import { ReportsHeader } from '../features/reports/components/ReportsHeader';
 import { AcademicReport } from '../features/reports/components/AcademicReport';
 import { AttendanceReport } from '../features/reports/components/AttendanceReport';
 import { FinancialReport } from '../features/reports/components/FinancialReport';
-import { cn } from '../lib/utils';
 import type { ReportType } from '../features/reports/types';
 
 

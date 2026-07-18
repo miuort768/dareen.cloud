@@ -30,7 +30,7 @@ export const Teachers = () => {
             return Array.isArray(data) ? data : (data.data || []);
         }
     });
-    const students = Array.isArray(studentsData) ? studentsData : [];
+    const students = useMemo(() => Array.isArray(studentsData) ? studentsData : [], [studentsData]);
     const { data: sessionsData = [], isLoading: loadingSessions } = useQuery<Session[]>({
         queryKey: ['sessions'], queryFn: async () => {
             const data = await api.get<Session[]>('/sessions');

@@ -20,7 +20,6 @@ export const AdminContacts = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState('');
-    const [retry, setRetry] = useState(0);
     const authLoading = useIsLoading();
 
     useEffect(() => {
@@ -44,7 +43,7 @@ export const AdminContacts = () => {
             }
         })();
         return () => abort.abort();
-    }, [retry, authLoading]);
+    }, [authLoading]);
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف هذه الرسالة؟ لا يمكن التراجع عن هذا الإجراء.', {

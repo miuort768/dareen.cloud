@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Image } from '../../shared/components/ui';
-import { Zap, FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame, GraduationCap } from 'lucide-react';
+import { FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame } from 'lucide-react';
 import { subjectNameMap } from './LibraryConfig';
 
 interface BlogPost {

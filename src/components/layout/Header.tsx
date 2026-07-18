@@ -11,7 +11,6 @@ export const Header = memo(() => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
-    const [headerVisible, setHeaderVisible] = useState(true);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
     const lastScrollY = useRef(0);
 

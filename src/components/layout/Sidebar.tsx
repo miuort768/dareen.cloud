@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     GraduationCap, LayoutDashboard, Users, Wallet, UserCheck, CalendarDays,
     Settings, FileText, Receipt, DollarSign, ListTodo, Presentation,
@@ -22,11 +22,8 @@ export const Sidebar = memo(() => {
     const collapsed = useSidebarCollapsed();
     const setCollapsed = useSetSidebarCollapsed();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const activeConversationId = useUnreadStore(s => s.activeConversationId);
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
-    const location = useLocation();
-    const hasOwnNav = location.pathname.includes('/student-dashboard') || location.pathname.includes('/parent-dashboard');
 
     useEffect(() => {
         localStorage.setItem('sidebar_collapsed', String(collapsed));

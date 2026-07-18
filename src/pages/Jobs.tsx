@@ -48,14 +48,14 @@ export const Jobs = () => {
         setForm(prev => ({ ...prev, [name]: value }));
     };
 
-    const canProceed = () => {
+    const canProceed = useCallback(() => {
         const fields = stepFields[step] || [];
         return fields.every(f => optionalFields.has(f) || form[f]?.trim().length > 0);
-    };
+    }, [step, form]);
 
     const nextStep = useCallback(() => {
         if (step < totalSteps && canProceed()) setStep(s => s + 1);
-    }, [step, totalSteps]);
+    }, [step, totalSteps, canProceed]);
 
     const prevStep = useCallback(() => {
         if (step > 1) setStep(s => s - 1);

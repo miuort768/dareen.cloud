@@ -1,5 +1,5 @@
 import { Plus, Edit, Check, X } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn } from './InvoiceUI';
+import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './InvoiceUI';
 
 interface Student {
     id: string;

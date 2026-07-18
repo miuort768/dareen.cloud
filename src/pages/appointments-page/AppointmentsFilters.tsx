@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Search, Filter, GraduationCap, X, SlidersHorizontal } from 'lucide-react';
 
 export const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];

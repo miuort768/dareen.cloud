@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { BookOpen, Eye, Calendar } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '../../../lib/utils';
+
 
 interface Article {
     id: string;

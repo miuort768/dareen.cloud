@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { AlertTriangle, UserCircle, Plus, Clock, CheckCircle2, X, Filter } from 'lucide-react';
+import { AlertTriangle, UserCircle, Plus, Clock, CheckCircle2, X } from 'lucide-react';
 import { api } from '../../../lib/api';
 
 interface FocusStudent {
@@ -19,12 +19,6 @@ const typeLabels: Record<string, string> = {
     attendance: 'حضور',
     performance: 'أداء',
     engagement: 'تفاعل',
-};
-
-const typeColors: Record<string, string> = {
-    attendance: 'var(--bg-error)',
-    performance: 'var(--bg-warning)',
-    engagement: 'var(--bg-info)',
 };
 
 const typeBg: Record<string, string> = {

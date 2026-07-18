@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { AlertCircle, CheckCircle2, Plus, Trash2, Search, RefreshCcw, TrendingUp } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp } from 'lucide-react';
 import { StatCard } from '../shared/components/ui';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';

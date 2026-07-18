@@ -23,7 +23,7 @@ import { StudentsToolbar } from '../components/StudentsToolbar';
 import { generateSessionDates } from '../utils/sessionUtils';
 
 // Types
-import type { Student, Enrollment, ScheduleSlot } from '../types';
+import type { Student, ScheduleSlot } from '../types';
 
 interface EnrollmentFormData {
     teacherId?: string;
@@ -42,7 +42,7 @@ export const Students = () => {
     const [filterGrade, setFilterGrade] = useState('');
     const [filterCurriculum, setFilterCurriculum] = useState('');
     const [notifyingStudent, setNotifyingStudent] = useState<Student | null>(null);
-    const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
+    const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteAllStudents } = useStudents();
 
     const uniqueGrades = useMemo(() =>
         [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[],

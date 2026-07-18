@@ -1,4 +1,4 @@
-import { Smartphone, Store, Monitor, Download, Shield, MonitorDown } from 'lucide-react';
+import { Smartphone, Monitor, Download, Shield, MonitorDown } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
 
 export const AppDownloadSection = () => {

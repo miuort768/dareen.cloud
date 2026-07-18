@@ -23,11 +23,10 @@ export const MobileAttendance = () => {
     const [activeSection, setActiveSection] = useState<'record' | 'history'>('record');
     const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterStatus, setFilterStatus] = useState<string>('all');
     const [filterTeacher, setFilterTeacher] = useState<string>('all');
     const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today');
-    const [customStartDate, setCustomStartDate] = useState('');
-    const [customEndDate, setCustomEndDate] = useState('');
+    const [customStartDate] = useState('');
+    const [customEndDate] = useState('');
 
     const { isRefreshing, pullDistance, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh({ onRefresh: refresh });
 
@@ -85,9 +84,8 @@ export const MobileAttendance = () => {
             (s.studentName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
             (s.teacherName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
             (s.subject || '').toLowerCase().includes(searchTerm.toLowerCase());
-        const statusMatch = filterStatus === 'all' || s.status === filterStatus;
         const teacherMatch = filterTeacher === 'all' || s.teacherName === filterTeacher;
-        return searchMatch && statusMatch && teacherMatch;
+        return searchMatch && teacherMatch;
     });
 
     const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {

@@ -45,7 +45,8 @@ export const StudentDashboard = () => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [activeNav, setActiveNav] = useState('home');
+
+
     const [theme, setTheme] = useDarkMode();
     const [currentTime, setCurrentTime] = useState(new Date());
     const [scrollY, setScrollY] = useState(0);
@@ -84,7 +85,7 @@ export const StudentDashboard = () => {
 
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const enrollments = studentData?.enrollments || [];
+    const enrollments = useMemo(() => studentData?.enrollments || [], [studentData?.enrollments]);
 
     const stats = useMemo(() => {
         const totalAttendance = sessions.filter(s => s.status === 'completed').length;
@@ -130,7 +131,7 @@ export const StudentDashboard = () => {
 
             <div className="h-20 md:hidden" />
             <div className="block md:hidden">
-                <MobileBottomNav activeNav={activeNav} setActiveNav={setActiveNav} />
+                <MobileBottomNav />
             </div>
         </div>
     );

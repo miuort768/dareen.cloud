@@ -1,4 +1,4 @@
-import { Bell, UserPlus, Headphones, Loader2, Sparkles } from 'lucide-react';
+import { Bell, UserPlus, Headphones } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { triggerHaptic } from '../../../lib/haptics';
 

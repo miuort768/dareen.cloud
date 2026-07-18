@@ -1,6 +1,6 @@
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Shield, Lock, Eye, Database, UserCheck, FileText, Headphones, Sparkles } from 'lucide-react';
+import { Lock, Eye, Database, UserCheck, FileText, Headphones, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard, Users, Calendar, Star, User, LogOut,
-    TrendingUp, BookOpen, Clock
+    TrendingUp, BookOpen
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';

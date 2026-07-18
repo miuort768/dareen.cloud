@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { FileText, Printer, Sparkles, Plus, X, UserPlus, Trash2 } from 'lucide-react';
+
+
 import { useShowNotification } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';

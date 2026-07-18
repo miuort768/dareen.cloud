@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Clock, Edit, Trash2 } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 import type { ScheduleSlot } from '../types';
 
 interface StudentScheduleEditorProps {

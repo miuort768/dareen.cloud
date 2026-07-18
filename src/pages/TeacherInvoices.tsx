@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { GraduationCap, Sparkles } from 'lucide-react';
+
+
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, User, ArrowRight, BookOpen, GraduationCap, School, Tag } from 'lucide-react';
-import { Image } from '../../shared/components/ui';
+
+
 
 const curriculumNames: Record<string, string> = { kuwait: 'منهج كويتي', qatar: 'منهج قطري', uae: 'منهج إماراتي', saudi: 'منهج سعودي' };
 const levelNames: Record<string, string> = { primary: 'ابتدائي', middle: 'متوسط', secondary: 'ثانوي', basic: 'أساسي', preparatory: 'إعدادي' };
@@ -10,10 +11,9 @@ const gradeNames: Record<string, string> = { '1': 'الأول', '2': 'الثان
 
 interface BlogPostHeaderProps {
     post: { title: string; category: string; date: string; readingTime?: string; author: string; contentType?: string; curriculum?: string; level?: string; grade?: string; term?: string; subject?: string; tags?: string; coverImage?: string; excerpt?: string };
-    slug: string;
 }
 
-export const BlogPostHeader = ({ post, slug }: BlogPostHeaderProps) => (
+export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
     <header className="container mx-auto px-4 max-w-4xl mb-6 md:mb-12">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 md:gap-0 mb-3 md:mb-6">
             <div className="order-2 md:order-1 flex flex-wrap gap-4 items-center">

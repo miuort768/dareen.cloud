@@ -1,7 +1,5 @@
 import { cn } from '../../../lib/utils';
 
-const iconProps = { size: 18, strokeWidth: 1.5 };
-
 export const QuickLink = ({ icon: Icon, label, variant, onClick }: { icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; label: string; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
     <button
         onClick={onClick}
