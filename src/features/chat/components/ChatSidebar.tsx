@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { NotificationDropdown } from '../../../components/ui/NotificationDropdown';
 import { useDarkMode } from '../../../shared/hooks/useDarkMode';
+import { useChatUIStore } from '../../../store/chatUIStore';
 
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -17,10 +18,7 @@ import type { User } from '../../../types/auth';
 interface ChatSidebarProps {
     conversations: Conversation[];
     selectedConv: Conversation | null;
-    setSelectedConv: (conv: Conversation | null) => void;
     currentUser: User | null;
-    setShowNewChatModal: (val: boolean) => void;
-    setIsEditingGroup: (val: boolean) => void;
     onDeleteAll: () => void;
     typingUsers: { conversationId: string; userName: string }[];
 }
@@ -28,13 +26,13 @@ interface ChatSidebarProps {
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     conversations,
     selectedConv,
-    setSelectedConv,
     currentUser,
-    setShowNewChatModal,
-    setIsEditingGroup,
     onDeleteAll,
     typingUsers
 }) => {
+    const setSelectedConv = useChatUIStore(s => s.setSelectedConv);
+    const setShowNewChatModal = useChatUIStore(s => s.setShowNewChatModal);
+    const setIsEditingGroup = useChatUIStore(s => s.setIsEditingGroup);
     const [searchQuery, setSearchQuery] = useState('');
 
     const [theme, setTheme] = useDarkMode();

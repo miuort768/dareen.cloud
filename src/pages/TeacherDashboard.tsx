@@ -33,8 +33,8 @@ export const TeacherDashboard = () => {
         focusStudents
     } = useDashboardData(currentUser);
 
-    const [briefingStudent, setBriefingStudent] = useState<Record<string, unknown> | null>(null);
-    const [selectedStudentForReport, setSelectedStudentForReport] = useState<Record<string, unknown> | null>(null);
+    const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
+    const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
     const [activeTab, setActiveTab] = useState('home');
 
     const tabs = [

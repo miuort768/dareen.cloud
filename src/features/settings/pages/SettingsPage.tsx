@@ -4,7 +4,7 @@ import {
     Palette, Users, KeyRound, Lock, Clock, UserCheck, FileText, Award, HardDrive,
     Shield, Activity
 } from 'lucide-react';
-import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useSetAcademyAddress, useWhatsappNumbers, useSetWhatsappNumbers } from '../../../context/AppContext';
+import { useAcademyName, useAcademyLogo, useAcademyTagline, useAdminPhone, useThemeColor, useNotificationsEnabled, useMaintenanceMode, useWhatsappAutoNotify, useWhatsappTemplate, useDefaultSessionPrice, useDefaultTeacherPrice, useCurrencySymbol, useSemesterName, useSemesters, useBalanceWarningThreshold, useBackdateLockEnabled, useTeacherCommissionType, useAutoFreezeThreshold, useTelegramHandle, useHeroBanners, useReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useWhatsappNumbers, useSetSetting } from '../../../context/AppContext';
 import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
@@ -18,57 +18,59 @@ import type { TabId } from './settings-page';
 
 export const Settings = () => {
     const academyName = useAcademyName();
-    const setAcademyName = useSetAcademyName();
     const academyLogo = useAcademyLogo();
-    const setAcademyLogo = useSetAcademyLogo();
     const academyTagline = useAcademyTagline();
-    const setAcademyTagline = useSetAcademyTagline();
     const adminPhone = useAdminPhone();
-    const setAdminPhone = useSetAdminPhone();
-    const academyAddress = useAcademyAddress?.() || '';
-    const setAcademyAddress = useSetAcademyAddress?.() || (() => {});
+    const academyAddress = useAcademyAddress();
     const themeColor = useThemeColor();
-    const setThemeColor = useSetThemeColor();
     const notificationsEnabled = useNotificationsEnabled();
-    const setNotificationsEnabled = useSetNotificationsEnabled();
     const maintenanceMode = useMaintenanceMode();
-    const setMaintenanceMode = useSetMaintenanceMode();
     const whatsappAutoNotify = useWhatsappAutoNotify();
-    const setWhatsappAutoNotify = useSetWhatsappAutoNotify();
     const whatsappTemplate = useWhatsappTemplate();
-    const setWhatsappTemplate = useSetWhatsappTemplate();
     const defaultSessionPrice = useDefaultSessionPrice();
-    const setDefaultSessionPrice = useSetDefaultSessionPrice();
     const defaultTeacherPrice = useDefaultTeacherPrice();
-    const setDefaultTeacherPrice = useSetDefaultTeacherPrice();
     const currencySymbol = useCurrencySymbol();
-    const setCurrencySymbol = useSetCurrencySymbol();
     const semesterName = useSemesterName();
-    const setSemesterName = useSetSemesterName();
     const semesters = useSemesters();
-    const setSemesters = useSetSemesters();
     const balanceWarningThreshold = useBalanceWarningThreshold();
-    const setBalanceWarningThreshold = useSetBalanceWarningThreshold();
     const backdateLockEnabled = useBackdateLockEnabled();
-    const setBackdateLockEnabled = useSetBackdateLockEnabled();
     const teacherCommissionType = useTeacherCommissionType();
-    const setTeacherCommissionType = useSetTeacherCommissionType();
     const autoFreezeThreshold = useAutoFreezeThreshold();
-    const setAutoFreezeThreshold = useSetAutoFreezeThreshold();
     const telegramHandle = useTelegramHandle();
-    const setTelegramHandle = useSetTelegramHandle();
     const heroBanners = useHeroBanners();
-    const setHeroBanners = useSetHeroBanners();
     const reminderMinutesBefore = useReminderMinutesBefore();
-    const setReminderMinutesBefore = useSetReminderMinutesBefore();
+    const whatsappNumbers = useWhatsappNumbers();
     const currentUser = useCurrentUser();
     const user = currentUser || { id: 'guest', name: 'ضيف', username: 'guest' };
     const users = useUsers();
     const addUser = useAddUser();
     const editUser = useEditUser();
     const deleteUser = useDeleteUser();
-    const whatsappNumbers = useWhatsappNumbers();
-    const setWhatsappNumbers = useSetWhatsappNumbers();
+
+    const setSetting = useSetSetting();
+    const setAcademyName = (v: string) => setSetting('academyName', v);
+    const setAcademyLogo = (v: string) => setSetting('academyLogo', v);
+    const setAcademyTagline = (v: string) => setSetting('academyTagline', v);
+    const setAdminPhone = (v: string) => setSetting('adminPhone', v);
+    const setAcademyAddress = (v: string) => setSetting('academyAddress', v);
+    const setThemeColor = (v: string) => setSetting('themeColor', v);
+    const setNotificationsEnabled = (v: boolean) => setSetting('notificationsEnabled', v);
+    const setMaintenanceMode = (v: boolean) => setSetting('maintenanceMode', v);
+    const setWhatsappAutoNotify = (v: boolean) => setSetting('whatsappAutoNotify', v);
+    const setWhatsappTemplate = (v: string) => setSetting('whatsappTemplate', v);
+    const setDefaultSessionPrice = (v: number) => setSetting('defaultSessionPrice', v);
+    const setDefaultTeacherPrice = (v: number) => setSetting('defaultTeacherPrice', v);
+    const setCurrencySymbol = (v: string) => setSetting('currencySymbol', v);
+    const setSemesterName = (v: string) => setSetting('semesterName', v);
+    const setSemesters = (v: string) => setSetting('semesters', v);
+    const setBalanceWarningThreshold = (v: number) => setSetting('balanceWarningThreshold', v);
+    const setBackdateLockEnabled = (v: boolean) => setSetting('backdateLockEnabled', v);
+    const setTeacherCommissionType = (v: string) => setSetting('teacherCommissionType', v as 'percentage' | 'fixed');
+    const setAutoFreezeThreshold = (v: string) => setSetting('autoFreezeThreshold', Number(v));
+    const setTelegramHandle = (v: string) => setSetting('telegramHandle', v);
+    const setHeroBanners = (v: string) => setSetting('heroBanners', v);
+    const setReminderMinutesBefore = (v: string) => setSetting('reminderMinutesBefore', Number(v));
+    const setWhatsappNumbers = (v: string) => setSetting('whatsappNumbers', v);
 
     const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);
@@ -192,12 +194,18 @@ export const Settings = () => {
         setIsSaving(true);
         try {
             await Promise.all([
-                setAcademyName(localAcademyName), setAcademyLogo(localAcademyLogo),
-                setAcademyTagline(localAcademyTagline), setAdminPhone(localAdminPhone),
-                setSemesterName(localSemesterName), setTelegramHandle(localTelegramHandle),
-                setDefaultSessionPrice(Number(localPrice)), setDefaultTeacherPrice(Number(localTeacherPrice)),
-                setCurrencySymbol(localCurrency), setBalanceWarningThreshold(Number(localThreshold)),
-                setBackdateLockEnabled(localBackdateLock), setAutoFreezeThreshold(Number(localAutoFreeze)),
+                setSetting('academyName', localAcademyName),
+                setSetting('academyLogo', localAcademyLogo),
+                setSetting('academyTagline', localAcademyTagline),
+                setSetting('adminPhone', localAdminPhone),
+                setSetting('semesterName', localSemesterName),
+                setSetting('telegramHandle', localTelegramHandle),
+                setSetting('defaultSessionPrice', Number(localPrice)),
+                setSetting('defaultTeacherPrice', Number(localTeacherPrice)),
+                setSetting('currencySymbol', localCurrency),
+                setSetting('balanceWarningThreshold', Number(localThreshold)),
+                setSetting('backdateLockEnabled', localBackdateLock),
+                setSetting('autoFreezeThreshold', Number(localAutoFreeze)),
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
         } catch (e) { console.error('Save error:', e); alert('خطأ في الحفظ'); }

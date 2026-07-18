@@ -38,7 +38,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     if (!isOpen) return null;
 
     const handleConfirm = () => {
-        const secret = import.meta.env.VITE_ATTENDANCE_SECRET || 'dareen@2024';
+        const secret = import.meta.env.VITE_ATTENDANCE_SECRET || '';
         if (password.toLowerCase() !== secret.toLowerCase()) {
             setError('كلمة المرور غير صحيحة');
             return;
@@ -48,7 +48,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
             <div
                 className="fixed inset-0 bg-background/60 backdrop-blur-sm"
                 onClick={onClose}
@@ -60,7 +60,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                         <ShieldCheck size={20} />
                         <span>تسجيل حضور مؤكد</span>
                     </div>
-                    <button onClick={onClose} className="text-on-primary/80 hover:text-on-primary">
+                    <button onClick={onClose} className="text-on-primary/80 hover:text-on-primary" aria-label="إغلاق">
                         <X size={20} />
                     </button>
                 </div>
@@ -104,10 +104,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     {status === 'completed' && (
                         <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
                             <div className="space-y-2">
-                                <label className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label htmlFor="attendance-topics" className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
                                     <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                                 </label>
                                 <textarea 
+                                    id="attendance-topics"
                                     placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
                                     className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-on-primary dark:border-border"
                                     rows={2}
@@ -116,10 +117,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label htmlFor="attendance-homework" className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
                                     <Star size={12} className="text-warning" /> الواجب المطلوب
                                 </label>
                                 <input 
+                                    id="attendance-homework"
                                     type="text"
                                     placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
                                     className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-on-primary dark:border-border"
@@ -148,10 +150,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     )}
 
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-muted dark:text-dim flex items-center gap-1">
+                        <label htmlFor="attendance-password" className="text-xs font-bold text-muted dark:text-dim flex items-center gap-1">
                             <Lock size={12} /> كلمة المرور للتأكيد
                         </label>
                         <input
+                            id="attendance-password"
                             type="password"
                             value={password}
                             onChange={(e) => {

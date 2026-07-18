@@ -2,10 +2,26 @@ import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils';
 import { ProgressBar } from '../../../shared/components/ui';
 
+interface ParentStudent {
+    id: string;
+    name: string;
+    grade?: string;
+    enrollments?: { teacherName: string; sessionsTotal?: number; sessionsUsed?: number; subject?: string; teacher?: string }[];
+    [key: string]: unknown;
+}
+
+interface ChildSession {
+    id: string;
+    date: string;
+    subject: string;
+    status: string;
+    [key: string]: unknown;
+}
+
 interface AttendanceModalProps {
-    viewingAttendanceStudent: Record<string, unknown> | null;
+    viewingAttendanceStudent: ParentStudent | null;
     onClose: () => void;
-    childSessions: Record<string, unknown>[];
+    childSessions: ChildSession[];
     isSessionsLoading: boolean;
 }
 
@@ -17,7 +33,7 @@ export const AttendanceModal = ({
 }: AttendanceModalProps) => {
     if (!viewingAttendanceStudent) return null;
 
-    const name = (viewingAttendanceStudent as { name: string }).name || '';
+    const name = viewingAttendanceStudent.name || '';
     const enrollments = (viewingAttendanceStudent.enrollments || []) as { teacherName: string; sessionsTotal?: number; sessionsUsed?: number; subject?: string; teacher?: string }[];
 
     return (

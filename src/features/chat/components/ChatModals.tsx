@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { X, Users as UsersIcon, ChevronLeft, Search, Check, Camera } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { ChatUser, DeleteType, Conversation } from '../../../types/chat.types';
+import { useChatUIStore } from '../../../store/chatUIStore';
+import type { ChatUser } from '../../../types/chat.types';
 
 export interface ProfileFormData {
     name: string;
@@ -10,40 +11,37 @@ export interface ProfileFormData {
 }
 
 interface ChatModalsProps {
-    showNewChatModal: boolean;
-    setShowNewChatModal: (val: boolean) => void;
-    isEditingGroup: boolean;
-    groupName: string;
-    setGroupName: (val: string) => void;
-    searchUser: string;
-    setSearchUser: (val: string) => void;
     availableUsers: ChatUser[];
-    selectedUsers: string[];
-    setSelectedUsers: (users: string[]) => void;
-    isCreatingGroup: boolean;
-    setIsCreatingGroup: (val: boolean) => void;
     handleCreateConversation: () => void;
     handleCreateDirectChat: (userId: string) => void;
-
-    showDeleteConfirm: boolean;
-    setShowDeleteConfirm: (val: boolean) => void;
-    deleteType: DeleteType;
-    itemToDelete: Conversation | ChatUser | { displayName: string } | null;
-    setItemToDelete: (val: Conversation | ChatUser | { displayName: string } | null) => void;
-    isDeleting: boolean;
     handleDeleteAction: () => void;
 }
 
 export const ChatModals: React.FC<ChatModalsProps> = ({
-    showNewChatModal, setShowNewChatModal, isEditingGroup, groupName, setGroupName,
-    searchUser, setSearchUser, availableUsers, selectedUsers, setSelectedUsers,
-    isCreatingGroup, setIsCreatingGroup, handleCreateConversation, handleCreateDirectChat,
-    showDeleteConfirm, setShowDeleteConfirm, setItemToDelete, deleteType, itemToDelete,
-    isDeleting, handleDeleteAction
+    availableUsers,
+    handleCreateConversation,
+    handleCreateDirectChat,
+    handleDeleteAction
 }) => {
+    const showNewChatModal = useChatUIStore(s => s.showNewChatModal);
+    const setShowNewChatModal = useChatUIStore(s => s.setShowNewChatModal);
+    const isEditingGroup = useChatUIStore(s => s.isEditingGroup);
+    const isCreatingGroup = useChatUIStore(s => s.isCreatingGroup);
+    const setIsCreatingGroup = useChatUIStore(s => s.setIsCreatingGroup);
+    const groupName = useChatUIStore(s => s.groupName);
+    const setGroupName = useChatUIStore(s => s.setGroupName);
+    const searchUser = useChatUIStore(s => s.searchUser);
+    const setSearchUser = useChatUIStore(s => s.setSearchUser);
+    const selectedUsers = useChatUIStore(s => s.selectedUsers);
+    const setSelectedUsers = useChatUIStore(s => s.setSelectedUsers);
+    const showDeleteConfirm = useChatUIStore(s => s.showDeleteConfirm);
+    const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
+    const deleteType = useChatUIStore(s => s.deleteType);
+    const itemToDelete = useChatUIStore(s => s.itemToDelete);
+    const setItemToDelete = useChatUIStore(s => s.setItemToDelete);
+    const isDeleting = useChatUIStore(s => s.isDeleting);
     
     const avatarInputRef = useRef<HTMLInputElement>(null);
-    // Internal state to track "Select Members" vs "Add Group Info" steps
     const [step, setStep] = React.useState<'select' | 'info'>('select');
 
     const selectedUsersObjects = availableUsers.filter(u => selectedUsers.includes(u.id));
@@ -70,12 +68,12 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
         <>
             {/* New Chat / Group Flow Modal */}
             {showNewChatModal && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') handleClose(); }}>
                     <div className="bg-white dark:bg-card w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-sm overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
                     
                     {/* Header - WhatsApp Style */}
                     <div className="bg-success text-on-primary p-4 flex items-center gap-4 shrink-0 transition-all">
-                        <button onClick={step === 'info' ? handleBackStep : handleClose} className="hover:bg-white/10 p-1 rounded-full">
+                        <button onClick={step === 'info' ? handleBackStep : handleClose} className="hover:bg-white/10 p-1 rounded-full" aria-label={step === 'info' ? 'رجوع' : 'إغلاق'}>
                             {step === 'info' ? <ChevronLeft size={24} /> : <X size={24} />}
                         </button>
                         <div>
@@ -98,6 +96,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         value={searchUser}
                                         onChange={(e) => setSearchUser(e.target.value)}
                                         placeholder="ابحث عن اسم أو رقم..."
+                                        aria-label="بحث عن اسم أو رقم"
                                         className="w-full bg-surface dark:bg-card border-none py-2 ps-10 pe-4 rounded-lg text-sm focus:ring-0 text-start"
                                     />
                                     <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted font-normal" size={18} />
@@ -114,6 +113,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
                                                     className="absolute -top-0 -start-0 bg-background0 text-on-primary rounded-full p-0.5 border-2 border-white dark:border-card hover:bg-error transition-colors"
+                                                    aria-label="إزالة"
                                                 >
                                                     <X size={12} />
                                                 </button>
@@ -152,6 +152,9 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                     handleCreateDirectChat(user.id);
                                                 }
                                             }}
+                                            role="button"
+                                            tabIndex={0}
+                                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (isCreatingGroup || isEditingGroup) { setSelectedUsers(selectedUsers.includes(user.id) ? selectedUsers.filter(id => id !== user.id) : [...selectedUsers, user.id]); } else { handleCreateDirectChat(user.id); } } }}
                                             className="p-4 flex items-center justify-between cursor-pointer hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border dark:border-border"
                                         >
                                             <div className="flex items-center gap-4">
@@ -181,6 +184,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <button 
                                         onClick={handleNextStep}
                                         className="bg-success text-on-primary p-4 rounded-full shadow-sm hover:scale-110 active:scale-95 transition-all"
+                                        aria-label="التالي"
                                     >
                                         <ChevronLeft size={32} />
                                     </button>
@@ -191,7 +195,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         /* Step 2: Group Info */
                         <div className="flex-1 flex flex-col p-6 animate-in slide-in-from-start-5 fade-in duration-300">
                             <div className="flex flex-col items-center mb-10">
-                                <div onClick={() => avatarInputRef.current?.click()} className="w-40 h-40 bg-surface dark:bg-card rounded-full flex items-center justify-center text-muted relative group cursor-pointer shadow-inner">
+                                <div onClick={() => avatarInputRef.current?.click()} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); avatarInputRef.current?.click(); } }} className="w-40 h-40 bg-surface dark:bg-card rounded-full flex items-center justify-center text-muted relative group cursor-pointer shadow-inner">
                                     <Camera size={48} />
                                     <div className="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <span className="text-on-primary text-xs font-normal uppercase tracking-wider">تغيير الصورة</span>
@@ -209,6 +213,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         autoFocus
                                         onChange={(e) => setGroupName(e.target.value)}
                                         placeholder="اسم المجموعة..."
+                                        aria-label="اسم المجموعة"
                                         className="w-full bg-transparent border-b-2 border-success/30 focus:border-success py-3 text-lg font-normal outline-none transition-colors text-main text-start"
                                     />
                                     <div className="flex justify-start mt-1">
@@ -256,7 +261,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
             {/* Delete Confirmation UI */}
             {showDeleteConfirm && (
-                <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') { setShowDeleteConfirm(false); setItemToDelete(null); } }}>
                     <div className="bg-white dark:bg-card w-full max-w-sm shadow-sm rounded-lg p-6">
                         <h3 className="text-xl font-normal text-error mb-4 text-start">
                             {deleteType === 'all_conversations' ? 'حذف كافة المحادثات؟' : 'هل تريد الحذف؟'}

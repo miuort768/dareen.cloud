@@ -51,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
 
 const PAGE_SIZE = 10;
 
-export const AcademicReport = ({
+export const AcademicReport = React.memo(({
     gradeBarData,
     subjectPieData,
     totalEnrollments,
@@ -315,4 +315,5 @@ export const AcademicReport = ({
             </SectionCard>
         </div>
     );
-};
+});
+AcademicReport.displayName = 'AcademicReport';

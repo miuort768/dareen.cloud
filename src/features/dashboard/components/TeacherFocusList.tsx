@@ -130,6 +130,9 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                     <div key={student.id}>
                         <div
                             onClick={() => onStudentClick?.(student)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.(student); } }}
                             className="flex items-center justify-between p-3 bg-background rounded-xl hover:bg-surface transition-colors cursor-pointer border border-transparent hover:border-border"
                         >
                             <div className="flex items-center gap-3 min-w-0">
@@ -150,6 +153,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                             <button
                                 onClick={(e) => { e.stopPropagation(); setAddingFor(addingFor === student.id ? null : student.id); setSubject(''); }}
                                 className="p-2 rounded-lg bg-primary-active text-on-primary hover:bg-success hover:text-on-primary transition-all flex items-center gap-1 shrink-0 shadow-soft"
+                                aria-expanded={addingFor === student.id}
                             >
                                 <Plus size={12} />
                                 <span className="text-micro font-bold">إضافة حصة</span>
@@ -164,10 +168,11 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
                                         placeholder="المادة (مثال: رياضيات)"
+                                        aria-label="المادة"
                                         className="flex-1 px-3 py-1.5 text-micro border border-border bg-card rounded-lg focus:outline-none focus:ring-2 focus:ring-success"
                                         dir="rtl"
                                     />
-                                    <button onClick={() => setAddingFor(null)} className="p-1.5 text-muted hover:text-muted dark:hover:text-dim rounded-lg hover:bg-surface dark:hover:bg-primary-active">
+                                    <button onClick={() => setAddingFor(null)} className="p-1.5 text-muted hover:text-muted dark:hover:text-dim rounded-lg hover:bg-surface dark:hover:bg-primary-active" aria-label="إغلاق">
                                         <X size={14} />
                                     </button>
                                 </div>

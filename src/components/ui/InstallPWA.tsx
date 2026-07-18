@@ -119,7 +119,7 @@ export const InstallPWA = () => {
 
     if (showIOSGuide) {
         return (
-            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 p-4">
+            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 p-4" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') handleDismiss(); }}>
                 <div className="bg-card border-2 border-border shadow-elevation-3 w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
                     <div className="bg-warning border-b-2 border-border px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ export const InstallPWA = () => {
                                 ثبتي التطبيق
                             </h2>
                         </div>
-                        <button onClick={handleDismiss} className="p-1 hover:bg-black/10 transition-colors">
+                        <button onClick={handleDismiss} className="p-1 hover:bg-black/10 transition-colors" aria-label="إغلاق">
                             <X size={16} className="text-main" />
                         </button>
                     </div>

@@ -121,6 +121,8 @@ export const PublicNavbar = () => {
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     className="flex items-center gap-3 text-main hover:text-primary transition-all px-2 md:px-4 py-2 group"
                                     aria-label={isDropdownOpen ? 'إغلاق القائمة' : 'فتح قائمة المستخدم'}
+                                    aria-expanded={isDropdownOpen}
+                                    aria-controls="user-dropdown"
                                 >
                                     <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary dark:border-primary shadow-sm group-hover:border-primary transition-all">
                                         {currentUser?.avatar ? (
@@ -134,7 +136,7 @@ export const PublicNavbar = () => {
                                     <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                <div id="user-dropdown" className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
                                         <p className="text-sm font-bold text-main">{currentUser?.name}</p>
                                         <p className="text-xs text-muted">{currentUser?.username}</p>

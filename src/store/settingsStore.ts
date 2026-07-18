@@ -31,33 +31,38 @@ interface SettingsState {
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
-    setAcademyName: (name: string) => Promise<void>;
-    setAcademyLogo: (logo: string) => Promise<void>;
-    setAcademyTagline: (tagline: string) => Promise<void>;
-    setAcademyAddress: (address: string) => Promise<void>;
-    setAdminPhone: (phone: string) => Promise<void>;
-    setThemeColor: (color: string) => Promise<void>;
-    setNotificationsEnabled: (enabled: boolean) => Promise<void>;
-    setAutoBackup: (enabled: boolean) => Promise<void>;
-    setMaintenanceMode: (enabled: boolean) => Promise<void>;
-    setWhatsappAutoNotify: (enabled: boolean) => Promise<void>;
-    setDefaultSessionPrice: (price: number) => Promise<void>;
-    setDefaultTeacherPrice: (price: number) => Promise<void>;
-    setCurrencySymbol: (symbol: string) => Promise<void>;
-    setSemesterName: (name: string) => Promise<void>;
-    setSemesters: (semesters: string) => Promise<void>;
-    setWhatsappTemplate: (template: string) => Promise<void>;
-    setBalanceWarningThreshold: (threshold: number) => Promise<void>;
-    setBackdateLockEnabled: (enabled: boolean) => Promise<void>;
-    setTeacherCommissionType: (type: 'percentage' | 'fixed') => Promise<void>;
-    setAutoFreezeThreshold: (threshold: number) => Promise<void>;
-    setTelegramHandle: (handle: string) => Promise<void>;
-    setHeroBanners: (banners: string) => Promise<void>;
-    setReminderMinutesBefore: (minutes: number) => Promise<void>;
-    setLibraryWhatsapp: (phone: string) => Promise<void>;
-    setLibraryTelegram: (handle: string) => Promise<void>;
-    setWhatsappNumbers: (numbers: string) => Promise<void>;
+    setSetting: <K extends keyof SettingsState>(key: K, value: SettingsState[K]) => Promise<void>;
 }
+
+// Maps camelCase state keys → snake_case API keys + coercion type for fetchSettings
+const SETTING_META: Record<string, { apiKey: string; coerce?: 'boolean' | 'number' | 'json' }> = {
+    academyName:              { apiKey: 'academy_name' },
+    academyLogo:              { apiKey: 'academy_logo' },
+    academyTagline:           { apiKey: 'academy_tagline' },
+    academyAddress:           { apiKey: 'academy_address' },
+    adminPhone:               { apiKey: 'admin_phone' },
+    themeColor:               { apiKey: 'theme_color' },
+    notificationsEnabled:     { apiKey: 'notifications_enabled', coerce: 'boolean' },
+    autoBackup:               { apiKey: 'auto_backup',           coerce: 'boolean' },
+    maintenanceMode:          { apiKey: 'maintenance_mode',      coerce: 'boolean' },
+    whatsappAutoNotify:       { apiKey: 'whatsapp_auto_notify',  coerce: 'boolean' },
+    defaultSessionPrice:      { apiKey: 'default_session_price', coerce: 'number' },
+    defaultTeacherPrice:      { apiKey: 'default_teacher_price', coerce: 'number' },
+    currencySymbol:           { apiKey: 'currency_symbol' },
+    semesterName:             { apiKey: 'semester_name' },
+    semesters:                { apiKey: 'semesters' },
+    whatsappTemplate:         { apiKey: 'whatsapp_template' },
+    balanceWarningThreshold:  { apiKey: 'balance_warning_threshold', coerce: 'number' },
+    backdateLockEnabled:      { apiKey: 'backdate_lock_enabled',     coerce: 'boolean' },
+    teacherCommissionType:    { apiKey: 'teacher_commission_type' },
+    autoFreezeThreshold:      { apiKey: 'auto_freeze_threshold',     coerce: 'number' },
+    telegramHandle:           { apiKey: 'telegram_handle' },
+    heroBanners:              { apiKey: 'hero_banners' },
+    reminderMinutesBefore:    { apiKey: 'reminder_minutes_before',   coerce: 'number' },
+    libraryWhatsapp:          { apiKey: 'library_whatsapp' },
+    libraryTelegram:          { apiKey: 'library_telegram' },
+    whatsappNumbers:          { apiKey: 'whatsapp_numbers',          coerce: 'json' },
+};
 
 // Global CSS Theme injector
 const applyThemeColor = (color: string) => {
@@ -164,72 +169,45 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     fetchSettings: async () => {
         try {
             const settings = await api.get<Record<string, unknown>>('/system/public-settings');
-            if (settings) {
-                const updates: Partial<SettingsState> = {};
-                if (settings.academy_name !== undefined && settings.academy_name !== null) updates.academyName = settings.academy_name;
-                if (settings.academy_logo !== undefined && settings.academy_logo !== null) updates.academyLogo = settings.academy_logo;
-                if (settings.academy_tagline !== undefined && settings.academy_tagline !== null) updates.academyTagline = settings.academy_tagline;
-                if (settings.academy_address !== undefined && settings.academy_address !== null) updates.academyAddress = settings.academy_address;
-                if (settings.admin_phone !== undefined && settings.admin_phone !== null) updates.adminPhone = String(settings.admin_phone);
-                if (settings.theme_color !== undefined && settings.theme_color !== null) {
-                    updates.themeColor = settings.theme_color;
-                    const savedColor = localStorage.getItem('app_theme_color');
-                    if (!savedColor) {
-                        applyThemeColor(settings.theme_color);
-                    }
-                } else {
-                    applyThemeColor(get().themeColor);
-                }
-                if (settings.notifications_enabled !== undefined && settings.notifications_enabled !== null) {
-                    updates.notificationsEnabled = settings.notifications_enabled === true || settings.notifications_enabled === 'true';
-                }
-                if (settings.auto_backup !== undefined && settings.auto_backup !== null) {
-                    updates.autoBackup = settings.auto_backup === true || settings.auto_backup === 'true';
-                }
-                if (settings.maintenance_mode !== undefined && settings.maintenance_mode !== null) {
-                    updates.maintenanceMode = settings.maintenance_mode === true || settings.maintenance_mode === 'true';
-                }
-                if (settings.whatsapp_auto_notify !== undefined && settings.whatsapp_auto_notify !== null) {
-                    updates.whatsappAutoNotify = settings.whatsapp_auto_notify === true || settings.whatsapp_auto_notify === 'true';
-                }
-                if (settings.default_session_price !== undefined && settings.default_session_price !== null) {
-                    updates.defaultSessionPrice = Number(settings.default_session_price);
-                }
-                if (settings.default_teacher_price !== undefined && settings.default_teacher_price !== null) {
-                    updates.defaultTeacherPrice = Number(settings.default_teacher_price);
-                }
-                if (settings.currency_symbol !== undefined && settings.currency_symbol !== null) updates.currencySymbol = settings.currency_symbol;
-                if (settings.semester_name !== undefined && settings.semester_name !== null) updates.semesterName = settings.semester_name;
-                if (settings.semesters !== undefined && settings.semesters !== null) updates.semesters = settings.semesters;
-                if (settings.whatsapp_template !== undefined && settings.whatsapp_template !== null) updates.whatsappTemplate = settings.whatsapp_template;
-                if (settings.balance_warning_threshold !== undefined && settings.balance_warning_threshold !== null) {
-                    updates.balanceWarningThreshold = Number(settings.balance_warning_threshold);
-                }
-                if (settings.backdate_lock_enabled !== undefined && settings.backdate_lock_enabled !== null) {
-                    updates.backdateLockEnabled = settings.backdate_lock_enabled === true || settings.backdate_lock_enabled === 'true';
-                }
-                if (settings.teacher_commission_type !== undefined && settings.teacher_commission_type !== null) {
-                    updates.teacherCommissionType = settings.teacher_commission_type as 'percentage' | 'fixed';
-                }
-                if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) {
-                    updates.autoFreezeThreshold = Number(settings.auto_freeze_threshold);
-                }
-                if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) updates.telegramHandle = String(settings.telegram_handle);
-                if (settings.hero_banners !== undefined && settings.hero_banners !== null) updates.heroBanners = settings.hero_banners;
-                if (settings.reminder_minutes_before !== undefined && settings.reminder_minutes_before !== null) {
-                    updates.reminderMinutesBefore = Number(settings.reminder_minutes_before);
-                }
-                if (settings.library_whatsapp !== undefined && settings.library_whatsapp !== null) updates.libraryWhatsapp = String(settings.library_whatsapp);
-                if (settings.library_telegram !== undefined && settings.library_telegram !== null) updates.libraryTelegram = String(settings.library_telegram);
-                if (settings.whatsapp_numbers !== undefined && settings.whatsapp_numbers !== null) {
-                    try { JSON.parse(String(settings.whatsapp_numbers)); updates.whatsappNumbers = String(settings.whatsapp_numbers); } catch (e) { console.warn('Invalid whatsapp_numbers JSON:', e); }
-                }
-
-                set({ ...updates, isSettingsLoading: false });
-            } else {
+            if (!settings) {
                 applyThemeColor(get().themeColor);
                 set({ isSettingsLoading: false });
+                return;
             }
+
+            const updates: Partial<SettingsState> = {};
+
+            for (const [stateKey, meta] of Object.entries(SETTING_META)) {
+                const raw = settings[meta.apiKey];
+                if (raw === undefined || raw === null) continue;
+
+                switch (meta.coerce) {
+                    case 'boolean':
+                        (updates as Record<string, unknown>)[stateKey] = raw === true || raw === 'true';
+                        break;
+                    case 'number':
+                        (updates as Record<string, unknown>)[stateKey] = Number(raw);
+                        break;
+                    case 'json':
+                        try {
+                            JSON.parse(String(raw));
+                            (updates as Record<string, unknown>)[stateKey] = String(raw);
+                        } catch (e) { console.warn(`Invalid JSON for ${meta.apiKey}:`, e); }
+                        break;
+                    default:
+                        (updates as Record<string, unknown>)[stateKey] = String(raw);
+                }
+            }
+
+            if (updates.themeColor !== undefined) {
+                if (!localStorage.getItem('app_theme_color')) {
+                    applyThemeColor(updates.themeColor as string);
+                }
+            } else {
+                applyThemeColor(get().themeColor);
+            }
+
+            set({ ...updates, isSettingsLoading: false });
         } catch (e) {
             console.error("Error fetching settings:", e);
             applyThemeColor(get().themeColor);
@@ -237,113 +215,20 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         }
     },
 
-    setAcademyName: async (name) => {
-        set({ academyName: name });
-        await updateSettingOnApi('academy_name', name);
+    setSetting: async (key, value) => {
+        set({ [key]: value } as Pick<SettingsState, typeof key>);
+
+        if (key === 'themeColor') {
+            localStorage.setItem('app_theme_color', value as string);
+            applyThemeColor(value as string);
+        } else if (key === 'notificationsEnabled') {
+            localStorage.setItem('app_notifications', String(value));
+        }
+
+        const apiKey = SETTING_META[key as string]?.apiKey
+            ?? (key as string).replace(/([A-Z])/g, '_$1').toLowerCase();
+        await updateSettingOnApi(apiKey, String(value));
     },
-    setAcademyLogo: async (logo) => {
-        set({ academyLogo: logo });
-        await updateSettingOnApi('academy_logo', logo);
-    },
-    setAcademyTagline: async (tagline) => {
-        set({ academyTagline: tagline });
-        await updateSettingOnApi('academy_tagline', tagline);
-    },
-    setAcademyAddress: async (address) => {
-        set({ academyAddress: address });
-        await updateSettingOnApi('academy_address', address);
-    },
-    setAdminPhone: async (phone) => {
-        set({ adminPhone: phone });
-        await updateSettingOnApi('admin_phone', phone);
-    },
-    setThemeColor: async (color) => {
-        set({ themeColor: color });
-        localStorage.setItem('app_theme_color', color);
-        applyThemeColor(color);
-        await updateSettingOnApi('theme_color', color);
-    },
-    setNotificationsEnabled: async (enabled) => {
-        set({ notificationsEnabled: enabled });
-        localStorage.setItem('app_notifications', String(enabled));
-        await updateSettingOnApi('notifications_enabled', String(enabled));
-    },
-    setAutoBackup: async (enabled) => {
-        set({ autoBackup: enabled });
-        await updateSettingOnApi('auto_backup', String(enabled));
-    },
-    setMaintenanceMode: async (enabled) => {
-        set({ maintenanceMode: enabled });
-        await updateSettingOnApi('maintenance_mode', String(enabled));
-    },
-    setWhatsappAutoNotify: async (enabled) => {
-        set({ whatsappAutoNotify: enabled });
-        await updateSettingOnApi('whatsapp_auto_notify', String(enabled));
-    },
-    setDefaultSessionPrice: async (price) => {
-        set({ defaultSessionPrice: price });
-        await updateSettingOnApi('default_session_price', String(price));
-    },
-    setDefaultTeacherPrice: async (price) => {
-        set({ defaultTeacherPrice: price });
-        await updateSettingOnApi('default_teacher_price', String(price));
-    },
-    setCurrencySymbol: async (symbol) => {
-        set({ currencySymbol: symbol });
-        await updateSettingOnApi('currency_symbol', symbol);
-    },
-    setSemesterName: async (name) => {
-        set({ semesterName: name });
-        await updateSettingOnApi('semester_name', name);
-    },
-    setSemesters: async (semesters) => {
-        set({ semesters });
-        await updateSettingOnApi('semesters', semesters);
-    },
-    setWhatsappTemplate: async (template) => {
-        set({ whatsappTemplate: template });
-        await updateSettingOnApi('whatsapp_template', template);
-    },
-    setBalanceWarningThreshold: async (threshold) => {
-        set({ balanceWarningThreshold: threshold });
-        await updateSettingOnApi('balance_warning_threshold', String(threshold));
-    },
-    setBackdateLockEnabled: async (enabled) => {
-        set({ backdateLockEnabled: enabled });
-        await updateSettingOnApi('backdate_lock_enabled', String(enabled));
-    },
-    setTeacherCommissionType: async (type) => {
-        set({ teacherCommissionType: type });
-        await updateSettingOnApi('teacher_commission_type', type);
-    },
-    setAutoFreezeThreshold: async (threshold) => {
-        set({ autoFreezeThreshold: threshold });
-        await updateSettingOnApi('auto_freeze_threshold', String(threshold));
-    },
-    setTelegramHandle: async (handle) => {
-        set({ telegramHandle: handle });
-        await updateSettingOnApi('telegram_handle', handle);
-    },
-    setHeroBanners: async (banners) => {
-        set({ heroBanners: banners });
-        await updateSettingOnApi('hero_banners', banners);
-    },
-    setReminderMinutesBefore: async (minutes) => {
-        set({ reminderMinutesBefore: minutes });
-        await updateSettingOnApi('reminder_minutes_before', String(minutes));
-    },
-    setLibraryWhatsapp: async (phone) => {
-        set({ libraryWhatsapp: phone });
-        await updateSettingOnApi('library_whatsapp', phone);
-    },
-    setLibraryTelegram: async (handle) => {
-        set({ libraryTelegram: handle });
-        await updateSettingOnApi('library_telegram', handle);
-    },
-    setWhatsappNumbers: async (numbers) => {
-        set({ whatsappNumbers: numbers });
-        await updateSettingOnApi('whatsapp_numbers', numbers);
-    }
 }));
 
 // Auto-fetch settings on store initialization (deferred to avoid TDZ issues)

@@ -110,10 +110,11 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-micro font-normal text-dim uppercase ms-1">اسم المستخدم</label>
+                            <label htmlFor="student-username" className="text-micro font-normal text-dim uppercase ms-1">اسم المستخدم</label>
                             <div className="relative">
                                 <UserIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
+                                    id="student-username"
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
                                     className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono text-main dark:text-main"
@@ -122,10 +123,11 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-micro font-normal text-dim uppercase ms-1">كلمة المرور</label>
+                            <label htmlFor="student-password" className="text-micro font-normal text-dim uppercase ms-1">كلمة المرور</label>
                             <div className="relative">
                                 <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                                 <input
+                                    id="student-password"
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
@@ -141,14 +143,15 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="space-y-2">
                     <div className="flex items-center gap-3 mb-2">
                         <FileText size={14} className="text-dim" />
-                        <label className="text-micro font-normal text-dim uppercase">ملاحظات أكاديمية</label>
+                        <label htmlFor="student-notes" className="text-micro font-normal text-dim uppercase">ملاحظات أكاديمية</label>
                     </div>
-                    <textarea
-                        value={formData.notes}
-                        onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full px-6 py-4 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary text-main dark:text-main text-xs font-normal min-h-[120px] transition-all"
-                        placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
-                    />
+                            <textarea
+                                id="student-notes"
+                                value={formData.notes}
+                                onChange={e => setFormData({ ...formData, notes: e.target.value })}
+                                className="w-full px-6 py-4 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary text-main dark:text-main text-xs font-normal min-h-[120px] transition-all"
+                                placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
+                            />
                 </div>
 
                 <div className="flex items-center justify-end pt-6 border-t border-border">
@@ -165,50 +168,57 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     );
 };
 
-const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => (
-    <div className="space-y-2">
-        <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
-        <div className="relative group">
-            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
-            <select
-                required={required}
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                aria-label={label}
-                className={cn(
-                    "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal appearance-none",
-                    Icon && "ps-10",
-                    !value && "text-dim"
-                )}
-            >
-                <option value="" disabled>{placeholder || 'اختر...'}</option>
-                {options.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
-                ))}
-            </select>
+const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => {
+    const selectId = `student-select-${label.replace(/\s+/g, '-')}`;
+    return (
+        <div className="space-y-2">
+            <label htmlFor={selectId} className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
+            <div className="relative group">
+                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
+                <select
+                    id={selectId}
+                    required={required}
+                    value={value}
+                    onChange={e => onChange(e.target.value)}
+                    className={cn(
+                        "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal appearance-none",
+                        Icon && "ps-10",
+                        !value && "text-dim"
+                    )}
+                >
+                    <option value="" disabled>{placeholder || 'اختر...'}</option>
+                    {options.map(opt => (
+                        <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                </select>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
-const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
-    <div className="space-y-2">
-        <label className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
-        <div className="relative group">
-            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
-            <input
-                required={required}
-                type={type}
-                dir={dir}
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                className={cn(
-                    "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal transition-all",
-                    Icon && "ps-10",
-                    dir === 'ltr' && "font-mono"
-                )}
-                placeholder={placeholder}
-            />
+const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => {
+    const inputId = `student-form-${label.replace(/\s+/g, '-')}`;
+    return (
+        <div className="space-y-2">
+            <label htmlFor={inputId} className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
+            <div className="relative group">
+                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
+                <input
+                    id={inputId}
+                    required={required}
+                    type={type}
+                    dir={dir}
+                    value={value}
+                    onChange={e => onChange(e.target.value)}
+                    className={cn(
+                        "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal transition-all",
+                        Icon && "ps-10",
+                        dir === 'ltr' && "font-mono"
+                    )}
+                    placeholder={placeholder}
+                />
+            </div>
         </div>
-    </div>
-);
+    );
+};
 

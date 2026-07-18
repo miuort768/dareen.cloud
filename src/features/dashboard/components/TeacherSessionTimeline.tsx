@@ -50,6 +50,9 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                         <div
                             key={session.id}
                             onClick={() => onStudentClick?.({ id: session.studentName, name: session.studentName })}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.({ id: session.studentName, name: session.studentName }); } }}
                             className={cn(
                                 "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[150px] md:min-w-0 p-4 rounded-none border transition-all relative group/card shadow-soft cursor-pointer",
                                 isCompleted

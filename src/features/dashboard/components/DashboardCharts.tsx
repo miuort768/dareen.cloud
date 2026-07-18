@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Cell } from 'recharts';
 import { BarChart2, DollarSign, TrendingUp } from 'lucide-react';
 import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
@@ -12,7 +12,7 @@ interface DashboardChartsProps {
 
 const chartColors = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)'];
 
-export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps) => {
+export const DashboardCharts = React.memo(({ isTeacher, monthlyData }: DashboardChartsProps) => {
     const totalRevenue = useMemo(() => monthlyData.reduce((s, m) => s + (m.revenue || 0), 0), [monthlyData]);
     const totalExpenses = useMemo(() => monthlyData.reduce((s, m) => s + (m.expenses || 0), 0), [monthlyData]);
 
@@ -70,4 +70,5 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
             </ResponsiveContainer>
         </ChartContainer>
     );
-};
+});
+DashboardCharts.displayName = 'DashboardCharts';

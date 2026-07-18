@@ -122,7 +122,7 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div onClick={() => navigate('/a.abdullah')} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-hover dark:from-primary-hover dark:to-primary-light border border-primary-active overflow-hidden group cursor-pointer">
+                        <div onClick={() => navigate('/a.abdullah')} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/a.abdullah'); } }} className="relative inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-hover dark:from-primary-hover dark:to-primary-light border border-primary-active overflow-hidden group cursor-pointer">
                             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-on-primary/10 to-transparent animate-shine-slow z-0 pointer-events-none"></div>
 
                             <span className="relative z-10 w-1.5 h-1.5 bg-accent animate-pulse"></span>

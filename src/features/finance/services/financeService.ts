@@ -1,6 +1,13 @@
 import { api } from '../../../lib/api';
 import type { Session, TeacherInvoice, Transaction, FixedExpense, Student, Teacher } from '../../../types';
 
+interface FinanceStats {
+    reportCurrency?: string;
+    monthlyData?: unknown;
+    pieData?: unknown;
+    [key: string]: unknown;
+}
+
 export const financeService = {
     async getFinanceData() {
         const [sessions, invoices, students, teachers, transactions, fixedExpenses] = await Promise.all([
@@ -47,7 +54,7 @@ export const financeService = {
     },
 
     async getFinanceStats() {
-        return api.get<Record<string, unknown>>('/finance/stats');
+        return api.get<FinanceStats>('/finance/stats');
     },
 
     async updateFixedExpense(id: number, amount: number) {

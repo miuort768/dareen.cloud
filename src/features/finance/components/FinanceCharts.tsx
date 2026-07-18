@@ -1,3 +1,4 @@
+import React from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from 'recharts';
 import { Calendar, Filter, PieChart as PieChartIcon, TrendingUp, TrendingDown } from 'lucide-react';
 import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
@@ -20,7 +21,10 @@ interface FinanceChartsProps {
     reportCurrency?: string;
 }
 
-export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurrency = 'KWD' }: FinanceChartsProps) => {
+export const FinanceCharts = React.memo(({ monthlyData, pieData, totalExpenses, reportCurrency = 'KWD' }: FinanceChartsProps) => {
+    const sortedPieData = React.useMemo(() => [...pieData].sort((a, b) => b.value - a.value), [pieData]);
+    const topPieEntries = React.useMemo(() => sortedPieData.slice(0, 4), [sortedPieData]);
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-0" dir="rtl">
             <div className="lg:col-span-2">
@@ -128,7 +132,7 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
                         </div>
 
                         <div className="w-full mt-6 space-y-2">
-                            {pieData.sort((a, b) => b.value - a.value).slice(0, 4).map((entry, index) => (
+                            {topPieEntries.map((entry, index) => (
                                 <div key={entry.name} className="flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
                                         <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: `var(--chart-${(index % 6) + 1})` }} />
@@ -148,4 +152,5 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurre
             </div>
         </div>
     );
-};
+});
+FinanceCharts.displayName = 'FinanceCharts';

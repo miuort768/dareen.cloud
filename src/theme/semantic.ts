@@ -12,9 +12,7 @@ export const semantic = {
   'bg-surface': palette.surface,
   'bg-background': palette.background,
   'bg-card': palette.card,
-  'bg-card-dark': palette.cardDark,
   'bg-hover': palette.hover,
-  'bg-hover-dark': palette.hoverDark,
 
   // Primary
   'bg-primary': palette.primary,
@@ -22,8 +20,6 @@ export const semantic = {
   'bg-primary-active': palette.primaryActive,
   'bg-primary-soft': palette.primarySoft,
   'bg-primary-light': palette.primaryLight,
-  'bg-primary-200': palette.primary200,
-  'bg-primary-400': palette.primary400,
   'bg-primary-dark': palette.primaryDark,
   'text-primary': palette.primary,
   'text-primary-200': palette.primary200,
@@ -46,7 +42,6 @@ export const semantic = {
   'text-muted': palette.textMuted,
   'text-dim': palette.textDim,
   'text-inverse': palette.textInverse,
-  'text-secondary': palette.textSecondary,
 
   // Focus
   'ring-focus': palette.focusRing,
@@ -54,9 +49,7 @@ export const semantic = {
   // Borders
   'border': palette.border,
   'border-strong': palette.borderAccent,
-  'border-hover': palette.borderHover,
   'divider': palette.divider,
-  'bg-surface-active': palette.surfaceActive,
 
   // Success
   'text-on-success': palette.textOnSuccess,

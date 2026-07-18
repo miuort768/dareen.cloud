@@ -22,7 +22,9 @@ import { featureStyles, quickFeatures, getFilteredCourses, heroSlides, stages, r
 import type { FeatureVariant } from './home-page';
 
 export const Home = () => {
-    const { adminPhone, heroBanners, whatsappNumbers } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
+    const heroBanners = useSettingsStore(s => s.heroBanners);
+    const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
     const defaultNumber = adminPhone.replace(/\D/g, '');
 
     const getNumber = (label: string): string => {

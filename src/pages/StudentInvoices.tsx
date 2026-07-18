@@ -24,6 +24,17 @@ interface Student {
     enrollments: { teacher: string; subject: string; sessionsTotal: number; sessionsUsed: number; price?: number }[];
 }
 
+interface SessionRecord {
+    id: string;
+    studentId: string;
+    date: string;
+    subject?: string;
+    teacherName?: string;
+    price?: number;
+    status?: string;
+    [key: string]: unknown;
+}
+
 export const StudentInvoices = () => {
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
@@ -31,7 +42,7 @@ export const StudentInvoices = () => {
     const [isSaving, setIsSaving] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
-    const [allSessions, setAllSessions] = useState<Record<string, unknown>[]>([]);
+    const [allSessions, setAllSessions] = useState<Session[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const showNotification = useShowNotification();
@@ -54,11 +65,11 @@ export const StudentInvoices = () => {
             const [invoicesData, studentsData, sessionsData] = await Promise.all([
                 api.get<StudentInvoice[]>('/studentInvoices'),
                 api.get<Student[]>('/students'),
-                api.get<Record<string, unknown>[]>('/sessions')
+                api.get<SessionRecord[]>('/sessions')
             ]);
-            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as Record<string, unknown>).data as StudentInvoice[] || []);
-            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as Record<string, unknown>).data as Student[] || []);
-            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as Record<string, unknown>).data as Record<string, unknown>[] || []);
+            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as { data?: StudentInvoice[] }).data || []);
+            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as { data?: Student[] }).data || []);
+            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as { data?: SessionRecord[] }).data || []);
         } catch (error) { console.error("Error fetching data", error); }
         finally { setLoading(false); }
     };
@@ -99,9 +110,9 @@ export const StudentInvoices = () => {
                 if (student.sessionPrice) return sum + (e.sessionsTotal * student.sessionPrice);
                 return sum;
             }, 0) || 0;
-            const studentSessions = allSessions.filter((sess: { studentId: string; status?: string }) =>
+            const studentSessions = allSessions.filter(sess =>
                 sess.studentId === studentId && (sess.status === 'completed' || sess.status === 'cancelled'));
-            const items = studentSessions.map((sess: { id: string; date: string; subject?: string; teacherName?: string; price?: number; status?: string }) => ({
+            const items = studentSessions.map(sess => ({
                 description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'حضور' : 'غياب'})`,
                 amount: sess.price || student.sessionPrice || 0, date: sess.date
             }));

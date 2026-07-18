@@ -99,9 +99,9 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
             className: 'text-center',
             render: (student) => (
                 <div className="flex items-center justify-center gap-2">
-                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-hover hover:text-success transition-all" title="تعديل"><Edit size={14} /></button>
-                    <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-warning-soft hover:text-warning transition-all" title="إشعار"><Bell size={14} /></button>
-                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-error-soft hover:text-error transition-all" title="حذف"><Trash size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-hover hover:text-success transition-all" title="تعديل" aria-label="تعديل"><Edit size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-warning-soft hover:text-warning transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-error-soft hover:text-error transition-all" title="حذف" aria-label="حذف"><Trash size={14} /></button>
                 </div>
             ),
         },
@@ -126,9 +126,9 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                         </div>
                     </div>
                     <div className="flex gap-1">
-                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-card border border-border text-dim hover:text-success flex items-center justify-center transition-all"><Edit size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center bg-warning-soft text-warning"><Bell size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center bg-error-soft text-error"><Trash size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-card border border-border text-dim hover:text-success flex items-center justify-center transition-all" aria-label="تعديل"><Edit size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center bg-warning-soft text-warning" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center bg-error-soft text-error" aria-label="حذف"><Trash size={14} /></button>
                     </div>
                 </div>
                 <div className="grid grid-cols-3 gap-3 mb-4">

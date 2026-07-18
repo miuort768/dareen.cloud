@@ -8,17 +8,53 @@ import { ParentStudentCard } from '../components/ParentStudentCard';
 import { SessionsModal } from '../components/SessionsModal';
 import { AttendanceModal } from '../components/AttendanceModal';
 
+interface ParentEnrollment {
+    teacherName?: string;
+    sessionsTotal?: number;
+    sessionsUsed?: number;
+    subject?: string;
+    teacher?: string;
+    date?: string;
+    [key: string]: unknown;
+}
+
+interface ParentStudent {
+    id: string;
+    name: string;
+    grade?: string;
+    enrollments?: ParentEnrollment[];
+    totalPoints?: number;
+    parentPhone?: string;
+    [key: string]: unknown;
+}
+
+interface ChildSession {
+    id: string;
+    date: string;
+    subject: string;
+    status: string;
+    notes?: string;
+    [key: string]: unknown;
+}
+
+interface ParentPointLog {
+    id?: string;
+    amount?: number;
+    action?: string;
+    [key: string]: unknown;
+}
+
 export const ParentStudents = () => {
-    const [students, setStudents] = useState<Record<string, unknown>[]>([]);
+    const [students, setStudents] = useState<ParentStudent[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [viewingStudent, setViewingStudent] = useState<Record<string, unknown> | null>(null);
-    const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<Record<string, unknown> | null>(null);
-    const [viewingAchievements, setViewingAchievements] = useState<Record<string, unknown> | null>(null);
-    const [viewingSubject, setViewingSubject] = useState<Record<string, unknown> | null>(null);
+    const [viewingStudent, setViewingStudent] = useState<ParentStudent | null>(null);
+    const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<ParentStudent | null>(null);
+    const [viewingAchievements, setViewingAchievements] = useState<ParentStudent | null>(null);
+    const [viewingSubject, setViewingSubject] = useState<ParentEnrollment | null>(null);
     const [sessionsPage, setSessionsPage] = useState(1);
-    const [childSessions, setChildSessions] = useState<Record<string, unknown>[]>([]);
-    const [pointLogs, setPointLogs] = useState<Record<string, unknown>[]>([]);
+    const [childSessions, setChildSessions] = useState<ChildSession[]>([]);
+    const [pointLogs, setPointLogs] = useState<ParentPointLog[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
     const [sessionsStartDate, setSessionsStartDate] = useState(() => {
         const d = new Date(); d.setDate(d.getDate() - 30); return d.toISOString().split('T')[0];
@@ -27,7 +63,7 @@ export const ParentStudents = () => {
 
     useEffect(() => {
         const fetchStudents = async () => {
-            try { setIsLoading(true); const data = await api.get<Record<string, unknown>[]>('/parents/my-children'); setStudents(data); }
+            try { setIsLoading(true); const data = await api.get<ParentStudent[]>('/parents/my-children'); setStudents(data); }
             catch (error) { console.error('Error fetching students:', error); }
             finally { setIsLoading(false); }
         };
@@ -35,28 +71,28 @@ export const ParentStudents = () => {
     }, []);
 
     const fetchChildSessions = async (studentId: string) => {
-        try { setIsSessionsLoading(true); const data = await api.get<Record<string, unknown>[]>(`/parents/child-sessions/${studentId}`); setChildSessions(data); }
+        try { setIsSessionsLoading(true); const data = await api.get<ChildSession[]>(`/parents/child-sessions/${studentId}`); setChildSessions(data); }
         catch (error) { console.error('Error fetching sessions:', error); }
         finally { setIsSessionsLoading(false); }
     };
 
-    const handleViewDates = (student: Record<string, unknown>) => {
-        setViewingStudent(student); setViewingSubject(null); setSessionsPage(1); fetchChildSessions(student.id as string);
+    const handleViewDates = (student: ParentStudent) => {
+        setViewingStudent(student); setViewingSubject(null); setSessionsPage(1); fetchChildSessions(student.id);
     };
 
-    const handleViewAttendance = (student: Record<string, unknown>) => {
-        setViewingAttendanceStudent(student); fetchChildSessions(student.id as string);
+    const handleViewAttendance = (student: ParentStudent) => {
+        setViewingAttendanceStudent(student); fetchChildSessions(student.id);
     };
 
-    const handleViewAchievements = async (student: Record<string, unknown>) => {
+    const handleViewAchievements = async (student: ParentStudent) => {
         if (viewingAchievements?.id === student.id) { setViewingAchievements(null); return; }
         setViewingAchievements(student);
-        try { const logs = await api.get<Record<string, unknown>[]>(`/student-portal/me/points-log?studentId=${student.id}`); setPointLogs(logs); }
+        try { const logs = await api.get<ParentPointLog[]>(`/student-portal/me/points-log?studentId=${student.id}`); setPointLogs(logs); }
         catch (error) { console.error('Error fetching student points log', error); }
     };
 
-    const filteredStudents = students.filter((s: Record<string, unknown>) =>
-        ((s.name as string) || '').toLowerCase().includes((searchQuery || '').toLowerCase())
+    const filteredStudents = students.filter((s) =>
+        (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
     if (isLoading) return <PageLoader />;
@@ -74,7 +110,7 @@ export const ParentStudents = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredStudents.map((student) => (
                         <ParentStudentCard
-                            key={student.id as string}
+                            key={student.id}
                             student={student}
                             viewingAchievements={viewingAchievements}
                             onViewDates={handleViewDates}

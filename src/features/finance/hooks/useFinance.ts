@@ -3,6 +3,13 @@ import { financeService } from '../services/financeService';
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types';
 import { CHART_COLORS } from '../types';
 
+interface FinanceStats {
+    reportCurrency?: string;
+    monthlyData?: unknown;
+    pieData?: unknown;
+    [key: string]: unknown;
+}
+
 export const useFinance = () => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
@@ -11,7 +18,7 @@ export const useFinance = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState<'all' | 'income' | 'expense'>('all');
     const [filterMonth, setFilterMonth] = useState<string>('all');
-    const [serverStats, setServerStats] = useState<Record<string, unknown> | null>(null);
+    const [serverStats, setServerStats] = useState<FinanceStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [showAddModal, setShowAddModal] = useState(false);
 
@@ -26,7 +33,7 @@ export const useFinance = () => {
             setInvoices(data.invoices);
             setManualTransactions(data.transactions);
             setFixedExpenses(data.fixedExpenses);
-            setServerStats(stats as Record<string, unknown> | null);
+            setServerStats(stats as FinanceStats | null);
         } catch (error) {
             console.error("Error fetching finance data", error);
         } finally {

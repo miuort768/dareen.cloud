@@ -4,14 +4,39 @@ import { cn } from '../../../lib/utils';
 import { GamificationCard } from '../../students/components/GamificationCard';
 import { ProgressBar } from '../../../shared/components/ui';
 
+interface ParentEnrollment {
+    teacherName?: string;
+    sessionsTotal?: number;
+    sessionsUsed?: number;
+    subject?: string;
+    teacher?: string;
+    [key: string]: unknown;
+}
+
+interface ParentStudent {
+    id: string;
+    name: string;
+    grade?: string;
+    enrollments?: ParentEnrollment[];
+    totalPoints?: number;
+    [key: string]: unknown;
+}
+
+interface ParentPointLog {
+    id?: string;
+    amount?: number;
+    action?: string;
+    [key: string]: unknown;
+}
+
 interface ParentStudentCardProps {
-    student: Record<string, unknown>;
-    viewingAchievements: Record<string, unknown> | null;
-    onViewDates: (student: Record<string, unknown>) => void;
-    onViewAttendance: (student: Record<string, unknown>) => void;
-    onViewAchievements: (student: Record<string, unknown>) => void;
+    student: ParentStudent;
+    viewingAchievements: ParentStudent | null;
+    onViewDates: (student: ParentStudent) => void;
+    onViewAttendance: (student: ParentStudent) => void;
+    onViewAchievements: (student: ParentStudent) => void;
     onCloseAchievements: () => void;
-    pointLogs: Record<string, unknown>[];
+    pointLogs: ParentPointLog[];
 }
 
 export const ParentStudentCard = ({

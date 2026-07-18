@@ -78,7 +78,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <p className="text-xs text-on-primary/70 mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
                     </div>
                 </div>
-                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-card transition-all">
+                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-card transition-all" aria-label="إغلاق">
                     <X size={18} />
                 </button>
             </div>
@@ -111,12 +111,12 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <label className="text-xs text-muted ms-1">العملة</label>
+                            <label htmlFor="teacher-currency" className="text-xs text-muted ms-1">العملة</label>
                             <div className="relative">
                                 <DollarSign className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                 <select
+                                    id="teacher-currency"
                                     value={formData.currency}
-                                    aria-label="العملة"
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
                                     className="w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
                                 >
@@ -153,12 +153,13 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-xs text-muted">اسم المستخدم</label>
+                                    <label htmlFor="teacher-username" className="text-xs text-muted">اسم المستخدم</label>
                                     <button type="button" onClick={generateUsername} className="text-xs text-primary hover:underline">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <User className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                     <input
+                                        id="teacher-username"
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
                                         className="w-full pe-4 ps-10 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono text-main transition-all"
@@ -168,12 +169,13 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                             </div>
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-xs text-muted">كلمة المرور</label>
+                                    <label htmlFor="teacher-password" className="text-xs text-muted">كلمة المرور</label>
                                     <button type="button" onClick={generatePassword} className="text-xs text-primary hover:underline">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
                                     <input
+                                        id="teacher-password"
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
@@ -200,24 +202,28 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
     );
 };
 
-const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
-    <div className="space-y-1.5">
-        <label className="text-xs text-muted ms-1">{label}</label>
-        <div className="relative">
-            {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />}
-            <input
-                required={required}
-                type={type}
-                dir={dir}
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                className={cn(
-                    "w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all",
-                    Icon && "ps-10",
-                    dir === 'ltr' && "font-mono"
-                )}
-                placeholder={placeholder}
-            />
+const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => {
+    const inputId = `teacher-form-${label.replace(/\s+/g, '-')}`;
+    return (
+        <div className="space-y-1.5">
+            <label htmlFor={inputId} className="text-xs text-muted ms-1">{label}</label>
+            <div className="relative">
+                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />}
+                <input
+                    id={inputId}
+                    required={required}
+                    type={type}
+                    dir={dir}
+                    value={value}
+                    onChange={e => onChange(e.target.value)}
+                    className={cn(
+                        "w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all",
+                        Icon && "ps-10",
+                        dir === 'ltr' && "font-mono"
+                    )}
+                    placeholder={placeholder}
+                />
+            </div>
         </div>
-    </div>
-);
+    );
+};

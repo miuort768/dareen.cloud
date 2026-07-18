@@ -1,4 +1,4 @@
-import { DS_VERSION_LABEL } from './version';
+const DS_VERSION_LABEL = '1.2';
 import { ColorSection } from './sections/ColorSection';
 import { TypographySection } from './sections/TypographySection';
 import { ButtonSection } from './sections/ButtonSection';
@@ -96,7 +96,7 @@ export function DesignSystemPage() {
 
           {/* Footer */}
           <div className="border-t pt-8 text-center text-xs text-dim">
-            <p>Design System v{DS_VERSION_LABEL} — آخر تحديث: 2026-07-01</p>
+            <p>Design System v{DS_VERSION_LABEL} &mdash; آخر تحديث: 2026-07-01</p>
             <p className="mt-1">مبني على Semantic Tokens من <code className="text-primary font-mono">src/theme/</code></p>
           </div>
         </main>

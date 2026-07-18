@@ -81,10 +81,10 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-1">
-                                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-success/10 hover:text-success rounded-card transition-all" title="تعديل"><Edit size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-warning/10 hover:text-warning rounded-card transition-all" title="إشعار"><Bell size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-info/10 hover:text-info rounded-card transition-all" title="مراسلة"><MessageCircle size={14} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-error/10 hover:text-error rounded-card transition-all" title="حذف"><Trash2 size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-success/10 hover:text-success rounded-card transition-all" title="تعديل" aria-label="تعديل"><Edit size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-warning/10 hover:text-warning rounded-card transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-info/10 hover:text-info rounded-card transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-error/10 hover:text-error rounded-card transition-all" title="حذف" aria-label="حذف"><Trash2 size={14} /></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -105,6 +105,9 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             onClick={() => onSelect(teacher)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(teacher); } }}
                             className={cn(
                                 "bg-card border border-border/50 shadow-soft rounded-card p-5 active:scale-[0.98] transition-all",
                                 isSelected ? "ring-1 ring-primary/30" : ""
@@ -139,9 +142,9 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
 
                             <div className="flex items-center gap-2 pt-1">
                                 <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 rounded-xl bg-primary text-on-primary text-xs shadow-soft active:scale-95 transition-all hover:bg-primary-hover">مراسلة</button>
-                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-warning/10 text-warning hover:bg-warning hover:text-on-warning"><Bell size={14} /></button>
-                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:text-success rounded-card shadow-soft transition-all"><Edit size={14} /></button>
-                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-error/10 text-error hover:bg-error hover:text-on-error"><Trash2 size={14} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-warning/10 text-warning hover:bg-warning hover:text-on-warning" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:text-success rounded-card shadow-soft transition-all" aria-label="تعديل"><Edit size={14} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-error/10 text-error hover:bg-error hover:text-on-error" aria-label="حذف"><Trash2 size={14} /></button>
                             </div>
                         </motion.div>
                     );

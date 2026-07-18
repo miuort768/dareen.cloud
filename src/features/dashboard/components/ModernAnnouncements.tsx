@@ -75,6 +75,10 @@ export const ModernAnnouncements: React.FC = () => {
                 {/* Type Indicator */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAcknowledge(true); } }}
+                    aria-expanded={showAcknowledge}
                     className={cn(
                         "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-e border-border",
                         type.bg
@@ -91,6 +95,10 @@ export const ModernAnnouncements: React.FC = () => {
                 {/* Content */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAcknowledge(true); } }}
+                    aria-expanded={showAcknowledge}
                     className="flex-1 p-6 md:p-8 relative cursor-pointer group"
                 >
                     <div className="absolute top-4 end-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-on-primary dark:bg-white dark:text-main rounded-lg">
@@ -110,8 +118,8 @@ export const ModernAnnouncements: React.FC = () => {
                     {/* Navigation */}
                     {announcements.length > 1 && (
                         <div className="absolute bottom-4 end-6 flex gap-2" onClick={e => e.stopPropagation()}>
-                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-card text-main border border-border hover:bg-surface transition-all rounded-card"><ChevronRight size={16} /></button>
-                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-card text-main border border-border hover:bg-surface transition-all rounded-card"><ChevronLeft size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-card text-main border border-border hover:bg-surface transition-all rounded-card" aria-label="السابق"><ChevronRight size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-card text-main border border-border hover:bg-surface transition-all rounded-card" aria-label="التالي"><ChevronLeft size={16} /></button>
                         </div>
                     )}
                 </div>
@@ -126,7 +134,7 @@ export const ModernAnnouncements: React.FC = () => {
 
             {/* Acknowledgment Modal */}
             {showAcknowledge && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-background/40">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-background/40" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowAcknowledge(false); }}>
                     <div className="bg-card border border-border p-6 md:p-10 max-w-lg w-full rounded-card animate-fadeIn">
                             <div className="flex items-center gap-5 mb-8">
                                 <div className={cn("w-16 h-16 border border-white/10 flex items-center justify-center shadow-soft rounded-card", type.bg)}>

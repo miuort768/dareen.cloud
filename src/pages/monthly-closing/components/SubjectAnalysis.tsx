@@ -16,7 +16,7 @@ interface SubjectAnalysisProps {
     reportCurrency?: string;
 }
 
-export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysis, reportCurrency = 'KWD' }) => {
+export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = 'KWD' }: SubjectAnalysisProps) => {
     return (
         <div className="space-y-6">
             <SectionCard className="p-6">
@@ -59,4 +59,5 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
             </div>
         </div>
     );
-};
+});
+SubjectAnalysis.displayName = 'SubjectAnalysis';

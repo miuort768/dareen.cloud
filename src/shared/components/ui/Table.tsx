@@ -246,7 +246,7 @@ function TableInner<T>({
         {sortedData.map(item => {
           const id = getId(item);
           return (
-            <div key={id} onClick={() => onRowClick?.(item)} className={cn(
+            <div key={id} onClick={() => onRowClick?.(item)} role={onRowClick ? "button" : undefined} tabIndex={onRowClick ? 0 : undefined} onKeyDown={onRowClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowClick(item); } } : undefined} className={cn(
               'bg-card border border-border p-5',
               onRowClick && 'cursor-pointer',
               selectedId !== undefined && selectedId === id && 'border-primary'

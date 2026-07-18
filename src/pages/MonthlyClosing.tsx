@@ -5,7 +5,7 @@ import {
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, Wallet, Activity as ActivityIcon
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSemesterName, useSetSemesterName, useSemesters } from '../context/AppContext';
+import { useSemesterName, useSetSetting, useSemesters } from '../context/AppContext';
 import { attendanceService } from '../features/attendance/services/attendanceService';
 import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
@@ -26,7 +26,7 @@ type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' |
 
 export const MonthlyClosing: React.FC = () => {
     const semesterName = useSemesterName();
-    const setSemesterName = useSetSemesterName();
+    const setSetting = useSetSetting();
     const semesters = useSemesters();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
@@ -39,7 +39,14 @@ export const MonthlyClosing: React.FC = () => {
         return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
     });
 
-    const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<Record<string, unknown> | null>(null);
+    const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<{
+        name: string;
+        subject: string;
+        sessionsCount: number;
+        totalAmount: number;
+        sessionsList?: { date: string; studentName: string; teacherPrice?: number }[];
+        price?: number;
+    } | null>(null);
     const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
 
     const handleTeacherAdjustment = (teacherId: string, amount: number) => {
@@ -74,8 +81,8 @@ export const MonthlyClosing: React.FC = () => {
     const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
         queryKey: ['student-invoices-closing'],
         queryFn: async () => {
-            const resp = await api.get<Record<string, unknown>[]>('/studentInvoices');
-            return Array.isArray(resp) ? resp : (resp as Record<string, unknown>).data as Record<string, unknown>[] || [];
+            const resp = await api.get<{ id: string; studentName: string; amount: number; date: string; status: string }[]>('/studentInvoices');
+            return Array.isArray(resp) ? resp : (resp as { data?: { id: string; studentName: string; amount: number; date: string; status: string }[] }).data || [];
         }
     });
 
@@ -167,7 +174,7 @@ export const MonthlyClosing: React.FC = () => {
                             <Calendar size={13} className="text-on-primary/70" />
                             <select
                                 value={semesterName}
-                                onChange={(e) => setSemesterName(e.target.value)}
+                                onChange={(e) => setSetting('semesterName', e.target.value)}
                                 aria-label="اختيار الفصل الدراسي"
                                 className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
                             >

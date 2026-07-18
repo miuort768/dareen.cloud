@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
@@ -6,10 +6,10 @@ import { ChatModals } from '../features/chat/components/ChatModals';
 import { useAuthStore } from '../store/authStore';
 import { useChatStore } from '../store/chatStore';
 import { useUnreadStore } from '../store/unreadStore';
+import { useChatUIStore } from '../store/chatUIStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
-import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
     const currentUser = useAuthStore(s => s.currentUser);
@@ -28,11 +28,34 @@ export const Chat: React.FC = () => {
         deleteAllConversations
     } = useChat(String(currentUser?.id));
 
-    const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
+    const selectedConv = useChatUIStore(s => s.selectedConv);
+    const setSelectedConv = useChatUIStore(s => s.setSelectedConv);
+    const newMessage = useChatUIStore(s => s.newMessage);
+    const setNewMessage = useChatUIStore(s => s.setNewMessage);
+    const setShowMoreMenu = useChatUIStore(s => s.setShowMoreMenu);
+    const showNewChatModal = useChatUIStore(s => s.showNewChatModal);
+    const setShowNewChatModal = useChatUIStore(s => s.setShowNewChatModal);
+    const isEditingGroup = useChatUIStore(s => s.isEditingGroup);
+    const setIsEditingGroup = useChatUIStore(s => s.setIsEditingGroup);
+    const isCreatingGroup = useChatUIStore(s => s.isCreatingGroup);
+    const setIsCreatingGroup = useChatUIStore(s => s.setIsCreatingGroup);
+    const groupName = useChatUIStore(s => s.groupName);
+    const setGroupName = useChatUIStore(s => s.setGroupName);
+    const searchUser = useChatUIStore(s => s.searchUser);
+    const setSearchUser = useChatUIStore(s => s.setSearchUser);
+    const selectedUsers = useChatUIStore(s => s.selectedUsers);
+    const setSelectedUsers = useChatUIStore(s => s.setSelectedUsers);
+    const showDeleteConfirm = useChatUIStore(s => s.showDeleteConfirm);
+    const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
+    const deleteType = useChatUIStore(s => s.deleteType);
+    const setDeleteType = useChatUIStore(s => s.setDeleteType);
+    const itemToDelete = useChatUIStore(s => s.itemToDelete);
+    const setItemToDelete = useChatUIStore(s => s.setItemToDelete);
+    const isDeleting = useChatUIStore(s => s.isDeleting);
+    const setIsDeleting = useChatUIStore(s => s.setIsDeleting);
+
     const setActiveConversationId = useChatStore(s => s.setActiveConversationId);
     const isConnected = useChatStore(s => s.isConnected);
-    const [newMessage, setNewMessage] = useState('');
-    const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
 
@@ -41,18 +64,6 @@ export const Chat: React.FC = () => {
         setActiveConversationId(id);
         useUnreadStore.getState().setActiveConversationId(id);
     }, [selectedConv, setActiveConversationId]);
-
-    // Modal States
-    const [showNewChatModal, setShowNewChatModal] = useState(false);
-    const [isEditingGroup, setIsEditingGroup] = useState(false);
-    const [isCreatingGroup, setIsCreatingGroup] = useState(false);
-    const [groupName, setGroupName] = useState('');
-    const [searchUser, setSearchUser] = useState('');
-    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [deleteType, setDeleteType] = useState<DeleteType>('conversation');
-    const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
-    const [isDeleting, setIsDeleting] = useState(false);
 
     const openGroupSettings = () => {
         if (!selectedConv || !selectedConv.isGroup || currentUser?.role !== 'admin') return;
@@ -107,12 +118,10 @@ export const Chat: React.FC = () => {
         }
     }, [createDirectChat]);
 
-    // Handle "Start Chat With" from other pages
     React.useEffect(() => {
         const targetUserId = location.state?.startChatWith;
         if (targetUserId && availableUsers.length > 0) {
             handleCreateDirectChat(targetUserId);
-            // Clear the state so it doesn't re-trigger
             window.history.replaceState({}, document.title);
         }
     }, [location.state, availableUsers, handleCreateDirectChat]);
@@ -128,7 +137,7 @@ export const Chat: React.FC = () => {
         setIsDeleting(true);
         try {
             if (deleteType === 'conversation' && itemToDelete && 'id' in itemToDelete) {
-                await deleteConversation((itemToDelete as Conversation).id);
+                await deleteConversation(itemToDelete.id);
                 if (selectedConv?.id === itemToDelete.id) setSelectedConv(null);
             } else if (deleteType === 'all_conversations') {
                 await deleteAllConversations();
@@ -155,7 +164,6 @@ export const Chat: React.FC = () => {
                 selectedConv ? "bottom-0" : "bottom-[70px]"
             )}
         >
-            {/* Standard Global Header */}
             <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shrink-0 bg-white/5 ">
@@ -174,10 +182,7 @@ export const Chat: React.FC = () => {
                 <ChatSidebar
                     conversations={conversations}
                     selectedConv={selectedConv}
-                    setSelectedConv={setSelectedConv}
                     currentUser={currentUser}
-                    setShowNewChatModal={setShowNewChatModal}
-                    setIsEditingGroup={setIsEditingGroup}
                     onDeleteAll={handleDeleteAllClick}
                     typingUsers={typingUsers}
                 />
@@ -188,20 +193,10 @@ export const Chat: React.FC = () => {
                         messages={messages}
                         isLoadingMessages={isLoadingMessages}
                         isMessagesError={isMessagesError}
-                        newMessage={newMessage}
-                        setNewMessage={setNewMessage}
                         handleSendMessage={handleSendMessage}
                         isSending={isSending}
                         currentUser={currentUser}
-                        setSelectedConv={setSelectedConv}
                         openGroupSettings={openGroupSettings}
-                        confirmDeleteConversation={(conv: Conversation) => {
-                            setDeleteType('conversation');
-                            setItemToDelete(conv);
-                            setShowDeleteConfirm(true);
-                        }}
-                        showMoreMenu={showMoreMenu}
-                        setShowMoreMenu={setShowMoreMenu}
                         menuRef={menuRef}
                         setTyping={setTyping}
                         markAsRead={markAsRead}
@@ -234,26 +229,9 @@ export const Chat: React.FC = () => {
             </div>
 
             <ChatModals
-                showNewChatModal={showNewChatModal}
-                setShowNewChatModal={setShowNewChatModal}
-                isEditingGroup={isEditingGroup}
-                groupName={groupName}
-                setGroupName={setGroupName}
-                searchUser={searchUser}
-                setSearchUser={setSearchUser}
                 availableUsers={availableUsers}
-                selectedUsers={selectedUsers}
-                setSelectedUsers={setSelectedUsers}
-                isCreatingGroup={isCreatingGroup}
-                setIsCreatingGroup={setIsCreatingGroup}
                 handleCreateConversation={handleCreateConversation}
                 handleCreateDirectChat={handleCreateDirectChat}
-                showDeleteConfirm={showDeleteConfirm}
-                setShowDeleteConfirm={setShowDeleteConfirm}
-                deleteType={deleteType}
-                itemToDelete={itemToDelete}
-                setItemToDelete={setItemToDelete}
-                isDeleting={isDeleting}
                 handleDeleteAction={handleDeleteAction}
             />
         </div>

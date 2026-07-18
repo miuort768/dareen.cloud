@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     BarChart3, TrendingUp, LayoutGrid, Database, Activity, 
     CheckCircle2, XCircle, Users
@@ -16,7 +16,7 @@ interface AnalyticsDashboardProps {
     monthlyData: Record<string, unknown>[];
 }
 
-export const AnalyticsDashboard = ({ students, sessions, monthlyData }: AnalyticsDashboardProps) => {
+export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData }: AnalyticsDashboardProps) => {
     const [activeTab, setActiveTab] = useState<'commitment' | 'database'>('commitment');
     
     const subjectStats = useMemo(() => {
@@ -178,7 +178,8 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
             </div>
         </div>
     );
-};
+});
+AnalyticsDashboard.displayName = 'AnalyticsDashboard';
 
 const TabButton = ({ active, onClick, icon: Icon, label, color }: { active: boolean; onClick: () => void; icon: React.ComponentType<{ size?: number }>; label: string; color: string }) => (
     <button 

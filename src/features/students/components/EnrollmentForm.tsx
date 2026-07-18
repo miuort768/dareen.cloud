@@ -70,6 +70,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                     <input
                         required
                         placeholder="المادة"
+                        aria-label="المادة"
                         value={form.subject}
                         onChange={e => setForm({ ...form, subject: e.target.value })}
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
@@ -79,6 +80,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                     <input
                         required
                         placeholder="المنهج"
+                        aria-label="المنهج"
                         value={form.curr}
                         onChange={e => setForm({ ...form, curr: e.target.value })}
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
@@ -87,6 +89,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                         required
                         type="number"
                         placeholder="عدد الحصص"
+                        aria-label="عدد الحصص"
                         value={form.totalSessions}
                         onChange={e => setForm({ ...form, totalSessions: e.target.value })}
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main dark:bg-hover dark:text-main"
@@ -107,6 +110,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                         </select>
                         <input
                             placeholder="الساعة"
+                            aria-label="الساعة"
                             value={slotInput.hour}
                             onChange={e => setSlotInput({ ...slotInput, hour: e.target.value.replace(/^0+/, '') })}
                             className="w-20 px-2 py-1 text-micro font-normal border border-border bg-card dark:bg-hover text-main dark:text-main"
@@ -120,13 +124,13 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                             <option value="am">صباحاً</option>
                             <option value="pm">مساءً</option>
                         </select>
-                        <button type="button" onClick={handleAddSlot} className="bg-primary text-on-primary px-2"><Plus size={14} /></button>
+                        <button type="button" onClick={handleAddSlot} className="bg-primary text-on-primary px-2" aria-label="إضافة"><Plus size={14} /></button>
                     </div>
                     <div className="flex flex-wrap gap-1">
                         {schedule.map((s, idx) => (
                             <div key={idx} className="bg-card px-2 py-1 text-micro font-medium border border-primary-soft flex items-center gap-1 dark:bg-hover shadow-sm">
                                 {s.day} {s.hour}
-                                <button type="button" onClick={() => handleRemoveSlot(idx)} className="text-error"><X size={10} /></button>
+                                <button type="button" onClick={() => handleRemoveSlot(idx)} className="text-error" aria-label="إزالة"><X size={10} /></button>
                             </div>
                         ))}
                     </div>

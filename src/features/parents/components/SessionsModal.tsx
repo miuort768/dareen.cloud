@@ -3,14 +3,42 @@ import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
+interface ParentEnrollment {
+    teacherName?: string;
+    sessionsTotal?: number;
+    sessionsUsed?: number;
+    subject?: string;
+    teacher?: string;
+    date?: string;
+    [key: string]: unknown;
+}
+
+interface ParentStudent {
+    id: string;
+    name: string;
+    grade?: string;
+    enrollments?: ParentEnrollment[];
+    totalPoints?: number;
+    [key: string]: unknown;
+}
+
+interface ChildSession {
+    id: string;
+    date: string;
+    subject: string;
+    status: string;
+    notes?: string;
+    [key: string]: unknown;
+}
+
 interface SessionsModalProps {
-    viewingStudent: Record<string, unknown> | null;
+    viewingStudent: ParentStudent | null;
     onClose: () => void;
-    viewingSubject: Record<string, unknown> | null;
-    onSelectSubject: (subject: Record<string, unknown> | null) => void;
+    viewingSubject: ParentEnrollment | null;
+    onSelectSubject: (subject: ParentEnrollment | null) => void;
     sessionsPage: number;
     onPageChange: (page: number) => void;
-    childSessions: Record<string, unknown>[];
+    childSessions: ChildSession[];
     isSessionsLoading: boolean;
     sessionsStartDate: string;
     onStartDateChange: (date: string) => void;
@@ -48,9 +76,9 @@ export const SessionsModal = ({
                             <Calendar size={20} className="text-on-primary" />
                         </div>
                         <div className="text-start">
-                            <h2 className="text-base font-medium leading-tight tracking-tight">{(viewingStudent as { name: string }).name}</h2>
+                            <h2 className="text-base font-medium leading-tight tracking-tight">{viewingStudent.name}</h2>
                             <p className="text-micro text-primary font-normal mt-0.5 uppercase tracking-widest opacity-80">
-                                {viewingSubject ? `مواعيد حصص: ${(viewingSubject as { subject: string }).subject}` : 'سجل مواعيد الحصص'}
+                                {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل مواعيد الحصص'}
                             </p>
                         </div>
                     </div>
@@ -87,9 +115,8 @@ export const SessionsModal = ({
                                     <ChevronRight size={12} /> العودة للمواد
                                 </button>
                                 {(() => {
-                                    const subj = viewingSubject as { subject: string };
                                     const filtered = childSessions.filter(s =>
-                                        s.subject === subj.subject &&
+                                        s.subject === viewingSubject.subject &&
                                         (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled') &&
                                         s.date >= sessionsStartDate && s.date <= sessionsEndDate
                                     );
@@ -112,10 +139,9 @@ export const SessionsModal = ({
                             ) : (
                                 <div className="relative border-s-2 border-primary/10 ps-5 ms-2 space-y-4">
                                     {(() => {
-                                        const subj = viewingSubject as { subject: string };
                                         const filtered = childSessions
                                             .filter(s =>
-                                                s.subject === subj.subject &&
+                                                s.subject === viewingSubject.subject &&
                                                 (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled') &&
                                                 s.date >= sessionsStartDate && s.date <= sessionsEndDate
                                             )

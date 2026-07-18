@@ -2,14 +2,33 @@ import { Users, UserPlus, Edit, Trash2, Shield, RefreshCw } from 'lucide-react';
 import { SectionCard, SectionTitle, PrimaryBtn, SecondaryBtn, InputField, FieldLabel, AVAILABLE_PERMISSIONS } from './SettingsUI';
 import { cn } from '../../../lib/utils';
 
+interface UserRecord {
+    id: string;
+    username: string;
+    name?: string;
+    password?: string;
+    permissions?: string[];
+    [key: string]: unknown;
+}
+
+interface UserFormData {
+    username: string;
+    password: string;
+    permissions: string[];
+}
+
 interface UsersSettingsProps {
-    users: Record<string, unknown>[];
-    user: Record<string, unknown>;
-    setNewUser: (v: Record<string, unknown>) => void;
+    users: UserRecord[];
+    user: UserRecord | null;
+    newUser: UserFormData;
+    setNewUser: (v: UserFormData) => void;
     onSave: () => void;
-    setShowDeleteModal: (v: boolean) => void;
+    setShowDeleteModal: (v: boolean | UserRecord) => void;
     onDeleteAll: () => void;
     onSync: () => void;
+    editingUserId: string | null;
+    setEditingUserId: (id: string | null) => void;
+    handleUserAction: () => void;
 }
 
 export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId, setEditingUserId, setShowDeleteModal, handleUserAction }: UsersSettingsProps) => (

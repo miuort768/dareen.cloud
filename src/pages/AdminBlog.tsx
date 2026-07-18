@@ -24,7 +24,7 @@ export const AdminBlog = () => {
     const [libraryWhatsapp, setLibraryWhatsapp] = useState('');
     const [libraryTelegram, setLibraryTelegram] = useState('');
     const [savingSettings, setSavingSettings] = useState(false);
-    const { libraryWhatsapp: savedWhatsapp, libraryTelegram: savedTelegram, setLibraryWhatsapp: saveWhatsapp, setLibraryTelegram: saveTelegram } = useSettingsStore();
+    const { libraryWhatsapp: savedWhatsapp, libraryTelegram: savedTelegram, setSetting } = useSettingsStore();
 
     useEffect(() => {
         if (savedWhatsapp) setLibraryWhatsapp(savedWhatsapp);
@@ -117,8 +117,10 @@ export const AdminBlog = () => {
     const handleSaveSettings = async () => {
         setSavingSettings(true);
         try {
-            await saveWhatsapp(libraryWhatsapp);
-            await saveTelegram(libraryTelegram);
+            await Promise.all([
+                setSetting('libraryWhatsapp', libraryWhatsapp),
+                setSetting('libraryTelegram', libraryTelegram),
+            ]);
             showNotification('تم حفظ إعدادات المكتبة', 'success');
             setShowSettings(false);
         } catch (e) {

@@ -24,6 +24,15 @@ interface Enrollment {
     level?: string;
 }
 
+interface StudentDashboardData {
+    id?: string;
+    name?: string;
+    grade?: string;
+    totalPoints?: number;
+    enrollments?: Enrollment[];
+    [key: string]: unknown;
+}
+
 interface Session { status: string; }
 
 interface PointLog { amount: number; action: string; }
@@ -32,7 +41,7 @@ export const StudentDashboard = () => {
     const currentUser = useCurrentUser();
     const navigate = useNavigate();
 
-    const [studentData, setStudentData] = useState<Record<string, unknown> | null>(null);
+    const [studentData, setStudentData] = useState<StudentDashboardData | null>(null);
     const [sessions, setSessions] = useState<Session[]>([]);
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +66,7 @@ export const StudentDashboard = () => {
             try {
                 setIsLoading(true);
                 const [meRes, sessionsRes, logsRes] = await Promise.all([
-                    api.get<Record<string, unknown>>('/student-portal/me'),
+                    api.get<StudentDashboardData>('/student-portal/me'),
                     api.get<Session[]>('/student-portal/me/sessions'),
                     api.get<PointLog[]>('/student-portal/me/points-log'),
                 ]);
@@ -73,9 +82,9 @@ export const StudentDashboard = () => {
         if (currentUser?.role === 'student') fetchStudentData();
     }, [currentUser]);
 
-    const points = (studentData?.totalPoints as number) || 0;
+    const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const enrollments = (studentData?.enrollments as Enrollment[]) || [];
+    const enrollments = studentData?.enrollments || [];
 
     const stats = useMemo(() => {
         const totalAttendance = sessions.filter(s => s.status === 'completed').length;

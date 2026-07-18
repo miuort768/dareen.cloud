@@ -51,12 +51,12 @@ const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m
 const RolesPage = lazy(() => import('./features/roles/pages/RolesPage').then(m => ({ default: m.RolesPage })));
 const MonitoringPage = lazy(() => import('./features/monitoring/pages/MonitoringPage').then(m => ({ default: m.MonitoringPage })));
 import ScrollToTop from './components/ScrollToTop';
-import { MaintenanceScreen } from './components/MaintenanceScreen';
-import { FloatingActions } from './components/public/FloatingActions';
+const MaintenanceScreen = lazy(() => import('./components/MaintenanceScreen').then(m => ({ default: m.MaintenanceScreen })));
+const FloatingActions = lazy(() => import('./components/public/FloatingActions').then(m => ({ default: m.FloatingActions })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const AAbdullah = lazy(() => import('./pages/AAbdullah').then(m => ({ default: m.AAbdullah })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
-import { AdminContacts } from './pages/AdminContacts';
+const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
 
 
@@ -128,14 +128,7 @@ function App() {
 
 
 
-  useEffect(() => {
-    const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
-    if (saved === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else if (saved === 'light') {
-      document.documentElement.classList.remove('dark');
-    }
-    }, []);
+
 
   if (isLoading || isSettingsLoading) {
     if (loadTimeout) {
@@ -165,9 +158,9 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
-  const isLoginPage = window.location.pathname.startsWith('/login');
+  const isLoginPage = location.pathname.startsWith('/login');
   if (maintenanceMode && !isAdmin && !isLoginPage) {
-    return <MaintenanceScreen />;
+    return <Suspense fallback={<PageLoader />}><MaintenanceScreen /></Suspense>;
   }
 
   return (
@@ -198,7 +191,7 @@ function App() {
 
 
       {['/', '/courses', '/about', '/contact'].includes(location.pathname) ? (
-        <FloatingActions />
+        <Suspense fallback={null}><FloatingActions /></Suspense>
       ) : null}
       <Suspense fallback={null}>
         <SocketInitLayer />

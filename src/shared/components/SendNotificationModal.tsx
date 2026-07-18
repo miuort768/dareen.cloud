@@ -28,7 +28,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
             <div
                 className="fixed inset-0 bg-background/60 backdrop-blur-md animate-in fade-in duration-300"
                 onClick={onClose}
@@ -45,6 +45,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                     <button
                         onClick={onClose}
                         className="absolute top-4 start-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
+                        aria-label="إغلاق"
                     >
                         <X size={18} />
                     </button>
@@ -65,8 +66,9 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-start">
                             <div className="space-y-2">
-                                <label className="text-micro font-black text-muted uppercase tracking-[0.2em] ms-1">محتوى التنبيه</label>
+                                <label htmlFor="notification-message" className="text-micro font-black text-muted uppercase tracking-[0.2em] ms-1">محتوى التنبيه</label>
                                 <textarea
+                                    id="notification-message"
                                     required
                                     autoFocus
                                     value={message}

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Activity, GraduationCap, CheckCircle2, XCircle, Calendar, TrendingUp } from 'lucide-react';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -52,7 +53,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
     return null;
 };
 
-export const AttendanceReport = ({
+export const AttendanceReport = React.memo(({
     monthlySessionsData,
     teacherPerformanceData
 }: AttendanceReportProps) => {
@@ -234,4 +235,5 @@ export const AttendanceReport = ({
             </SectionCard>
         </div>
     );
-};
+});
+AttendanceReport.displayName = 'AttendanceReport';

@@ -85,11 +85,11 @@ export const TeacherDetails = ({
                     <div className="flex items-center gap-2">
                         {!isTeacherView && (
                             <>
-                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-warning text-on-primary rounded-card transition-all" title="إرسال إشعار"><Bell size={16} /></button>
-                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-success text-on-primary rounded-card transition-all" title="مراسلة"><MessageCircle size={16} /></button>
+                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-warning text-on-primary rounded-card transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
+                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-success text-on-primary rounded-card transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
                             </>
                         )}
-                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-error text-on-primary rounded-card transition-all" title="إغلاق"><X size={16} /></button>
+                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-error text-on-primary rounded-card transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
                     </div>
                 </div>
             </div>
@@ -162,6 +162,7 @@ export const TeacherDetails = ({
                                                 onClick={() => onLogAttendance(student, enrollment)}
                                                 className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-primary rounded-card transition-all"
                                                 title="تسجيل حضور"
+                                                aria-label="تسجيل حضور"
                                             >
                                                 <CheckCircle2 size={14} />
                                             </button>
@@ -170,6 +171,7 @@ export const TeacherDetails = ({
                                                     onClick={() => onUnenroll(student, teacher.name)}
                                                     className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-primary rounded-card transition-all"
                                                     title="إلغاء التسجيل"
+                                                    aria-label="إلغاء التسجيل"
                                                 >
                                                     <Trash2 size={14} />
                                                 </button>
@@ -242,7 +244,7 @@ export const TeacherDetails = ({
 
             {/* Detailed Activity Modal */}
             {showActivityModal && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowActivityModal(false); }}>
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowActivityModal(false)}></div>
                     <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-card border border-border/50 shadow-soft w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-card">
                         <div className="bg-primary px-5 py-4 flex items-center justify-between">
@@ -255,7 +257,7 @@ export const TeacherDetails = ({
                                     <p className="text-xs text-on-primary/70">{teacher.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-error rounded-card transition-all">
+                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-error rounded-card transition-all" aria-label="إغلاق">
                                 <X size={18} className="text-on-primary" />
                             </button>
                         </div>
@@ -286,7 +288,7 @@ export const TeacherDetails = ({
                                                 <Clock size={8} /> {session.time}
                                             </div>
                                             {!isTeacherView && (
-                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-muted hover:text-error rounded transition-colors">
+                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-muted hover:text-error rounded transition-colors" aria-label="حذف">
                                                     <Trash2 size={10} />
                                                 </button>
                                             )}

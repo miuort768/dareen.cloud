@@ -23,14 +23,14 @@ interface ScheduleDetailsModalProps {
 }
 
 export const ScheduleDetailsModal = ({ event, onClose, onStartLiveSession, onViewStudent }: ScheduleDetailsModalProps) => (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose} role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
         <div className="bg-white dark:bg-primary-active w-full max-w-sm shadow-sm border border-border dark:border-border overflow-hidden rounded-2xl" onClick={e => e.stopPropagation()}>
             <div className="p-4 text-on-primary flex items-center justify-between bg-primary">
                 <h3 className="text-sm font-bold flex items-center gap-2">
                     <CalendarDays size={16} />
                     تفاصيل الحصة
                 </h3>
-                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl">
+                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
                     <X size={16} />
                 </button>
             </div>

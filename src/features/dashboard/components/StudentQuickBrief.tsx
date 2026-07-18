@@ -8,18 +8,20 @@ interface BriefSession {
     rating: string;
 }
 
+interface BriefStudent {
+    id: string;
+    name: string;
+    grade: string;
+    notes?: string;
+    curriculum?: string;
+    totalPoints?: number;
+}
+
 interface StudentQuickBriefProps {
     isOpen: boolean;
     onClose: () => void;
-    onGenerateReport?: (student: Record<string, unknown>) => void;
-    student: {
-        id: string;
-        name: string;
-        grade: string;
-        notes?: string;
-        curriculum?: string;
-        totalPoints?: number;
-    } | null;
+    onGenerateReport?: (student: BriefStudent) => void;
+    student: BriefStudent | null;
     enrollment?: {
         subject: string;
         nextSessionNotes?: string;

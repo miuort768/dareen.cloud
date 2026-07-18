@@ -69,7 +69,7 @@ export const SessionCallAlert = () => {
                             <BellRing size={20} className="animate-bounce" />
                             <span className="font-medium italic text-sm">تنبيه حصة مباشرة!</span>
                         </div>
-                        <button onClick={() => setShow(false)} className="text-on-primary hover:rotate-90 transition-transform">
+                        <button onClick={() => setShow(false)} className="text-on-primary hover:rotate-90 transition-transform" aria-label="إغلاق">
                             <X size={20} />
                         </button>
                     </div>

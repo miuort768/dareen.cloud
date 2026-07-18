@@ -51,6 +51,7 @@ export const StudentDetails = ({
                 <button
                     onClick={onClose}
                     className="absolute end-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
+                    aria-label="إغلاق"
                 >
                     <X size={18} />
                 </button>
@@ -164,13 +165,13 @@ export const StudentDetails = ({
                                         </div>
                                         <div className="flex items-center gap-1">
                                             {onFreezeEnrollment && en.id && (
-                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-info hover:bg-info-soft transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"}>
+                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-info hover:bg-info-soft transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"} aria-label={en.isFrozen ? "تفعيل" : "تجميد"}>
                                                     {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
                                                 </button>
                                             )}
-                                            <button onClick={() => onSendReminder?.(en)} className="w-6 h-6 flex items-center justify-center text-success hover:bg-success-soft transition-all" title="تذكير"><MessageCircle size={12} /></button>
-                                            <button onClick={() => onRenewEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-info hover:bg-info-soft transition-all" title="تجديد"><RefreshCw size={12} /></button>
-                                            <button onClick={() => onDeleteEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-error hover:bg-error-soft transition-all" title="حذف"><Trash size={12} /></button>
+                                            <button onClick={() => onSendReminder?.(en)} className="w-6 h-6 flex items-center justify-center text-success hover:bg-success-soft transition-all" title="تذكير" aria-label="تذكير"><MessageCircle size={12} /></button>
+                                            <button onClick={() => onRenewEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-info hover:bg-info-soft transition-all" title="تجديد" aria-label="تجديد"><RefreshCw size={12} /></button>
+                                            <button onClick={() => onDeleteEnrollment?.(i)} className="w-6 h-6 flex items-center justify-center text-error hover:bg-error-soft transition-all" title="حذف" aria-label="حذف"><Trash size={12} /></button>
                                         </div>
                                     </div>
 
@@ -209,6 +210,8 @@ export const StudentDetails = ({
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
                                                     className="w-6 h-6 bg-primary text-on-primary text-micro font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm"
+                                                    aria-label="إضافة حصص"
+                                                    aria-expanded={addingSessionsIndex === i}
                                                 >
                                                     <Plus size={12} strokeWidth={3} />
                                                 </button>

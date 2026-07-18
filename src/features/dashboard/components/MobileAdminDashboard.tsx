@@ -186,13 +186,13 @@ export const MobileAdminDashboard = ({
                     <div className="space-y-4">
                         {/* Quick Stats */}
                         <div className="grid grid-cols-3 gap-3">
-                            <div onClick={() => { triggerHaptic('light'); navigate('/students'); }} className="cursor-pointer">
+                            <div onClick={() => { triggerHaptic('light'); navigate('/students'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); navigate('/students'); } }}>
                                 <StatCard title="الطلاب" value={stats.studentsCount} icon={Users} variant="info" />
                             </div>
-                            <div onClick={() => { triggerHaptic('light'); navigate('/schedule'); }} className="cursor-pointer">
+                            <div onClick={() => { triggerHaptic('light'); navigate('/schedule'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); navigate('/schedule'); } }}>
                                 <StatCard title="الاشتراكات" value={stats.totalEnrollments} icon={BookOpen} variant="success" />
                             </div>
-                            <div onClick={() => { triggerHaptic('light'); handleTabChange('finance'); }} className="cursor-pointer">
+                            <div onClick={() => { triggerHaptic('light'); handleTabChange('finance'); }} className="cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHaptic('light'); handleTabChange('finance'); } }}>
                                 <StatCard title="صافي الربح" value={`${(stats.totalNetProfit || 0).toLocaleString()}`} icon={TrendingUp} variant="primary" />
                             </div>
                         </div>

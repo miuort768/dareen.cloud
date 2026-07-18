@@ -10,6 +10,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { useChatStore } from '../../../store/chatStore';
+import { useChatUIStore } from '../../../store/chatUIStore';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -18,16 +19,10 @@ interface ChatWindowProps {
     messages: ChatMessage[];
     isLoadingMessages?: boolean;
     isMessagesError?: boolean;
-    newMessage: string;
-    setNewMessage: (val: string) => void;
     handleSendMessage: (e: React.FormEvent) => void;
     isSending: boolean;
     currentUser: User | null;
-    setSelectedConv: (val: Conversation | null) => void;
     openGroupSettings: () => void;
-    confirmDeleteConversation: (conv: Conversation) => void;
-    showMoreMenu: boolean;
-    setShowMoreMenu: (val: boolean) => void;
     menuRef: React.RefObject<HTMLDivElement>;
     setTyping: (convId: string, isTyping: boolean, name: string) => void;
     markAsRead: (convId: string) => void;
@@ -38,20 +33,23 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     messages,
     isLoadingMessages,
     isMessagesError,
-    newMessage,
-    setNewMessage,
     handleSendMessage,
     isSending,
     currentUser,
-    setSelectedConv,
     openGroupSettings,
-    confirmDeleteConversation,
-    showMoreMenu,
-    setShowMoreMenu,
     menuRef,
     setTyping,
     markAsRead
 }) => {
+    const newMessage = useChatUIStore(s => s.newMessage);
+    const setNewMessage = useChatUIStore(s => s.setNewMessage);
+    const showMoreMenu = useChatUIStore(s => s.showMoreMenu);
+    const setShowMoreMenu = useChatUIStore(s => s.setShowMoreMenu);
+    const setSelectedConv = useChatUIStore(s => s.setSelectedConv);
+    const setDeleteType = useChatUIStore(s => s.setDeleteType);
+    const setItemToDelete = useChatUIStore(s => s.setItemToDelete);
+    const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
+
     const virtuosoRef = useRef<{ scrollToIndex: (params: { index: number; behavior?: ScrollBehavior }) => void }>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
@@ -59,7 +57,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const typingUsers = useChatStore(s => s.typingUsers);
     const lastTypingEmitRef = useRef(0);
 
-    // Safer and more efficient message sorting + Searching
     const filteredMessages = useMemo(() => {
         let list = [...messages].sort((a, b) => {
             const timeA = new Date(a.timestamp).getTime();
@@ -100,7 +97,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
     return (
         <div className="flex-1 flex flex-col bg-background dark:bg-card overflow-hidden relative h-full">
-            {/* WhatsApp Doodle Background Pattern */}
             <div 
                 className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
                 style={{ 
@@ -110,7 +106,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 }} 
             />
 
-            {/* Header - WhatsApp Style */}
             <header className="sticky top-0 h-[60px] shrink-0 bg-surface dark:bg-card flex items-center justify-between px-4 z-[50] shadow-sm">
                 <div className="flex items-center gap-3">
                     <button
@@ -123,6 +118,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     <div 
                         className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
                         onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
+                        role={selectedConv.isGroup && currentUser?.role === 'admin' ? "button" : undefined}
+                        tabIndex={selectedConv.isGroup && currentUser?.role === 'admin' ? 0 : undefined}
+                        onKeyDown={selectedConv.isGroup && currentUser?.role === 'admin' ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGroupSettings(); } } : undefined}
                     >
                         <Image src="/chat-avatar.webp" alt="avatar" className="w-full h-full" onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }} />
                     </div>
@@ -154,6 +152,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 <input 
                                     type="text"
                                     placeholder="بحث..."
+                                    aria-label="بحث في الرسائل"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="bg-transparent border-none text-xs text-start w-full focus:ring-0 placeholder:text-muted"
@@ -202,7 +201,12 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                             </button>
                                         )}
                                         <button
-                                            onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
+                                            onClick={() => {
+                                                setDeleteType('conversation');
+                                                setItemToDelete(selectedConv);
+                                                setShowDeleteConfirm(true);
+                                                setShowMoreMenu(false);
+                                            }}
                                             className="w-full text-start px-4 py-3 text-sm text-error hover:bg-hover dark:hover:bg-hover transition-colors"
                                         >
                                             حذف الدردشة
@@ -215,7 +219,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </header>
 
-            {/* Messages - Virtualized Scroll for Performance */}
             <div className="flex-1 relative z-10">
                 {isMessagesError ? (
                     <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
@@ -295,7 +298,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </div>
 
-            {/* Scroll to Bottom Button */}
             <AnimatePresence>
                 {showScrollBottom && (
                     <motion.button
@@ -310,7 +312,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Input Bar - Standardized Style */}
             <footer className="bg-surface dark:bg-card px-3 py-3 z-10 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
@@ -325,7 +326,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             const val = e.target.value;
                             setNewMessage(val);
                             
-                            // Throttled typing indicator
                             if (currentUser && selectedConv.id) {
                                 const now = Date.now();
                                 const lastSent = lastTypingEmitRef.current;
@@ -342,7 +342,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault();
                                 handleSendMessage(e as unknown as React.FormEvent);
-                                // Reset height
                                 const target = e.target as HTMLTextAreaElement;
                                 target.style.height = 'auto';
                             }
