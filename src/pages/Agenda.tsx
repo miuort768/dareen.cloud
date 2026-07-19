@@ -146,7 +146,7 @@ export const Agenda = () => {
                             className={cn(
                                 "px-4 py-2 text-micro font-bold transition-all whitespace-nowrap rounded-none",
                                 activeDay === day
-                                    ? "bg-white text-warning"
+                                    ? "bg-white dark:bg-primary-active text-warning"
                                     : "bg-white/15 text-on-primary/70 hover:bg-white/30"
                             )}
                         >

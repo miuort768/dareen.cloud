@@ -89,7 +89,7 @@ export const SelectionGrid = ({
                     ))}
 
                     <button onClick={goBack}
-                        className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white border border-border text-muted shadow-sm active:scale-[0.97] transition-all">
+                        className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white dark:bg-primary-active border border-border text-muted dark:text-on-primary shadow-sm active:scale-[0.97] transition-all">
                         <ArrowLeft size={16} />
                         <span className="text-micro font-black">العودة</span>
                     </button>

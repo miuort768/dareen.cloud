@@ -109,7 +109,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             {/* Hover play overlay */}
                             {isOngoing && (
                                 <button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary-hover/95 text-on-primary rounded-none border border-primary dark:border-primary flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
-                                    <div className="w-9 h-9 bg-white text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-soft">
+                                    <div className="w-9 h-9 bg-white dark:bg-primary-active text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-soft">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-medium text-micro uppercase">بدء الحصة</span>
