@@ -1,4 +1,4 @@
-const CACHE = 'dareen-v6';
+const CACHE = 'dareen-v7';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -27,6 +27,7 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (request.method !== 'GET') return;
 
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(networkFirst(request));
@@ -38,7 +39,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(networkFirst(request));
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request));
+  }
 });
 
 self.addEventListener('push', (event) => {
@@ -77,7 +80,7 @@ async function cacheFirst(request) {
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (response.ok && response.status !== 206) {
       const cache = await caches.open(CACHE);
       cache.put(request, response.clone());
     }
