@@ -176,7 +176,7 @@ export const Home = () => {
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
                                 className="min-w-[180px] w-[180px] bg-surface rounded-card shadow-sm border border-border overflow-hidden shrink-0 block">
                                 <div className="relative h-24 bg-surface overflow-hidden">
-                                    <img src={c.image} alt={c.title} width="180" height="96" loading="lazy" className="w-full h-full object-cover" />
+                                    <Image src={c.image} alt={c.title} className="h-24" />
                                     <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}
                                     </span>

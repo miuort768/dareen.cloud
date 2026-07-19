@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Image } from '../../shared/components/ui';
 
 export const PageLoader = () => {
     return (
@@ -19,10 +20,12 @@ export const PageLoader = () => {
                     <div className="absolute inset-[-30px] rounded-full border border-primary/5 dark:border-primary/10 animate-[spin_12s_linear_reverse_infinite]" />
 
                     <div className="relative w-36 h-36 md:w-44 md:h-44 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[var(--shadow-glow)] p-3 border border-border dark:border-white/10 overflow-hidden">
-                        <img
+                        <Image
                             src="/dareen_logo_new.webp"
                             alt="شعار دارين للتعليم والتدريب"
-                            className="w-full h-full object-contain scale-[1.35] drop-shadow-sm"
+                            className="w-full h-full"
+                            imgClassName="object-contain scale-[1.35] drop-shadow-sm"
+                            loading="eager"
                         />
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
                     </div>

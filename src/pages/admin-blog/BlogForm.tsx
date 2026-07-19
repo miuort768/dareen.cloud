@@ -1,4 +1,5 @@
 import { X, Link as LinkIcon, Image as ImageIcon, Star, Download, Eye, Loader2, Save, Tag } from 'lucide-react';
+import { Image } from '../../shared/components/ui';
 import type { BlogPost } from './types';
 import { BlogFormEducationalSection } from './BlogFormEducationalSection';
 import { BlogFormSeoSection } from './BlogFormSeoSection';
@@ -113,9 +114,7 @@ export const BlogForm = ({
                     </div>
                     {currentPost.coverImage && (
                         <div className="mt-2 h-32 w-full border border-border overflow-hidden rounded-xl">
-                            <img src={currentPost.coverImage} alt="معاينة" loading="lazy"
-                                className="w-full h-full object-cover"
-                                onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link'; }} />
+                            <Image src={currentPost.coverImage} alt="معاينة" className="h-32 w-full" />
                         </div>
                     )}
                 </div>
