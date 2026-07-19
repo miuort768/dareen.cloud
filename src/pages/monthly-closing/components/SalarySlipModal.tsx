@@ -29,7 +29,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
     return (
         <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-background/40 backdrop-blur-sm p-4" dir="rtl" role="dialog" aria-modal="true" aria-label="قسيمة راتب" onKeyDown={handleKeyDown}>
             <div className="bg-card border border-border shadow-lg w-full max-w-xl overflow-hidden rounded-2xl md:animate-in md:zoom-in-95 md:duration-200">
-                <div className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary p-5 flex justify-between items-center">
+                <div className="bg-gradient-to-l from-primary to-primary-hover text-on-primary p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/15">
                             <Receipt size={20} />

@@ -46,7 +46,7 @@ export const AdminHomeTab = ({ stats, completionRate, completedSessions, todaySe
                 </div>
                 <div className="w-full h-2.5 bg-surface dark:bg-card rounded-full overflow-hidden">
                     <div
-                        className="h-full rounded-full bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-info)] transition-all duration-1000 ease-out"
+                        className="h-full rounded-full bg-gradient-to-r from-primary to-info transition-all duration-1000 ease-out"
                         style={{ width: `${Math.min(completionRate, 100)}%` }}
                     />
                 </div>

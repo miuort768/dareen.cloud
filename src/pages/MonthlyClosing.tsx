@@ -158,7 +158,7 @@ export const MonthlyClosing = () => {
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-primary-light dark:bg-background" dir="rtl">
             <div className="mx-auto px-2 space-y-4">
-                <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
+                <div className="bg-gradient-to-br from-primary to-primary shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
                             <ActivityIcon size={22} className="text-on-primary" />

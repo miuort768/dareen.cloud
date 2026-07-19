@@ -2,7 +2,7 @@ export const typography = {
   fontFamily: {
     sans: "'Readex Pro', sans-serif",
     heading: "'El Messiri', sans-serif",
-    dash: "'IBM Plex Sans Arabic', 'Readex Pro', sans-serif",
+    dash: "'Readex Pro', sans-serif",
   },
   fontWeight: {
     normal: '400',

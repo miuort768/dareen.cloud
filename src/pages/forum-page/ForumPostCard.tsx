@@ -73,7 +73,7 @@ export const ForumPostCard = ({
             </div>
         </div>
         <div className="px-4 pb-5">
-            <p className="text-main dark:text-dim text-sm md:text-base font-medium leading-[1.9] whitespace-pre-wrap">{post.content}</p>
+            <p className="text-main dark:text-dim text-sm md:text-base font-medium leading-loose whitespace-pre-wrap">{post.content}</p>
         </div>
         <div className="px-3 md:px-4 py-1.5 flex border-t border-border dark:border-border">
             <button onClick={() => onVote(post.id, 'upvote')}

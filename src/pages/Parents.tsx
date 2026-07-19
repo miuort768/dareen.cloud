@@ -169,7 +169,7 @@ export const Parents = () => {
                                                 actions.setConfirmModal({ ...state.confirmModal, show: false });
                                             }}
                                             className={cn(
-                                                "flex-1 py-4 text-on-primary font-medium text-micro shadow-sm transition-all active:scale-95 uppercase tracking-[0.2em] border rounded-xl",
+                                                "flex-1 py-4 text-on-primary font-medium text-micro shadow-sm transition-all active:scale-95 uppercase tracking-label border rounded-xl",
                                                 state.confirmModal.variant === 'primary'
                                                     ? "bg-primary border-primary hover:bg-primary-hover shadow-lg"
                                                     : "bg-error border-error hover:bg-error-hover shadow-lg"
@@ -179,7 +179,7 @@ export const Parents = () => {
                                         </button>
                                         <button
                                             onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                            className="flex-1 py-4 bg-surface dark:bg-primary-active text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-[0.2em] rounded-xl"
+                                            className="flex-1 py-4 bg-surface dark:bg-primary-active text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-label rounded-xl"
                                         >
                                             إلغاء
                                         </button>

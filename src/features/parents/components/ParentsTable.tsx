@@ -96,7 +96,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                                     </div>
                                                 ))}
                                                 {children.length > 3 && (
-                                                    <div className="w-7 h-7 bg-primary border-2 border-white flex items-center justify-center text-micro font-medium text-on-primary rounded-lg">
+                                                    <div className="w-7 h-7 bg-primary border-2 border-white dark:border-border flex items-center justify-center text-micro font-medium text-on-primary rounded-lg">
                                                         +{children.length - 3}
                                                     </div>
                                                 )}
@@ -140,7 +140,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                             <div className="w-16 h-16 bg-background flex items-center justify-center mx-auto mb-4 border border-border/50 rounded-card">
                                         <Users size={32} className="text-dim" />
                                     </div>
-                                    <p className="text-micro font-medium text-muted uppercase tracking-[0.2em]">لا توجد سجلات حالياً</p>
+                                    <p className="text-micro font-medium text-muted uppercase tracking-label">لا توجد سجلات حالياً</p>
                                 </td>
                             </tr>
                         )}

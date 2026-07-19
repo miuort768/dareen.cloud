@@ -53,18 +53,18 @@ export const PageLoader = () => {
                         initial={{ x: '-100%' }}
                         animate={{ x: '100%' }}
                         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--bg-primary)] to-transparent w-full"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent w-full"
                     />
                     <motion.div
                         initial={{ x: '-100%' }}
                         animate={{ x: '100%' }}
                         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut", delay: 0.2 }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--bg-primary)]/50 to-transparent w-full"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/50 to-transparent w-full"
                     />
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-micro font-medium text-primary dark:text-primary animate-pulse tracking-[0.2em] uppercase">
+                    <span className="text-micro font-medium text-primary dark:text-primary animate-pulse tracking-label uppercase">
                         جاري تهيئة النظام
                     </span>
                     <div className="flex gap-1">

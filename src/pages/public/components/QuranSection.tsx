@@ -148,7 +148,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
 
                     {/* Hero Title */}
                     <div className="text-center mb-5">
-                        <h2 className="text-2xl leading-[1.2] font-black text-main font-heading">
+                        <h2 className="text-2xl leading-tight font-black text-main font-heading">
                             رحلتك مع{" "}
                             <span className="text-success relative inline-block">
                                 كتاب الله

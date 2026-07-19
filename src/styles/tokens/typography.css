@@ -36,4 +36,6 @@
   --line-height-button: 1.25rem;
   --font-size-micro: 0.625rem;
   --line-height-micro: 0.875rem;
+
+  --letter-spacing-label: 0.2em;
 }

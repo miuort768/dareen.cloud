@@ -29,8 +29,8 @@ export const SelectionGrid = ({
     if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
         return (
             <div className="pb-6">
-                <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white rounded-[32px] p-5 mb-6 shadow-sm border border-primary/50 mt-2 text-center">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full shadow-sm mb-3">
+                <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:to-card rounded-[32px] p-5 mb-6 shadow-sm border border-primary/50 mt-2 text-center">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 dark:bg-card/80 rounded-full shadow-sm mb-3">
                         <BookOpen size={10} className="text-primary" />
                         <span className="text-micro font-black text-primary">
                             {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
@@ -39,9 +39,9 @@ export const SelectionGrid = ({
                         </span>
                     </div>
                     <h2 className="text-base font-black text-primary">
-                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">الصف الدراسي</span></>)
-                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">الترم</span></>)
-                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">المادة</span></>)}
+                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">الصف الدراسي</span></>)
+                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">الترم</span></>)
+                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المادة</span></>)}
                     </h2>
                     <p className="text-micro text-muted font-medium mt-1">
                         {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
@@ -69,12 +69,12 @@ export const SelectionGrid = ({
                     {view === 'terms' && (
                         <>
                             <button onClick={() => onSelectTerm('1')}
-                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-sm active:scale-[0.97] transition-all">
+                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-sm active:scale-[0.97] transition-all">
                                 <BookOpen size={18} />
                                 <span className="text-micro font-black">ترم أول</span>
                             </button>
                             <button onClick={() => onSelectTerm('2')}
-                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-sm active:scale-[0.97] transition-all">
+                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-sm active:scale-[0.97] transition-all">
                                 <BookOpen size={18} />
                                 <span className="text-micro font-black">ترم ثاني</span>
                             </button>
@@ -111,9 +111,9 @@ export const SelectionGrid = ({
                         </span>
                     </div>
                     <h2 className="text-2xl font-black text-main dark:text-main mb-3">
-                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">الصف الدراسي</span></>)
-                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">الترم</span></>)
-                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">المادة</span></>)}
+                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">الصف الدراسي</span></>)
+                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">الترم</span></>)
+                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المادة</span></>)}
                     </h2>
                     <p className="text-sm text-muted dark:text-muted font-medium">
                         {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
@@ -145,14 +145,14 @@ export const SelectionGrid = ({
                             <>
                                 <div className="animate-in zoom-in-95 duration-500">
                                     <button onClick={() => onSelectTerm('1')}
-                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-lg active:scale-[0.97] transition-all">
+                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-lg active:scale-[0.97] transition-all">
                                         <BookOpen size={24} />
                                         <span className="text-sm font-black">ترم أول</span>
                                     </button>
                                 </div>
                                 <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: '60ms' }}>
                                     <button onClick={() => onSelectTerm('2')}
-                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-lg active:scale-[0.97] transition-all">
+                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-lg active:scale-[0.97] transition-all">
                                         <BookOpen size={24} />
                                         <span className="text-sm font-black">ترم ثاني</span>
                                     </button>

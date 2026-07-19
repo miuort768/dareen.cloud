@@ -191,7 +191,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                     )}
 
                     <div className="mt-12 text-center no-print">
-                        <p className="text-micro text-dim font-medium uppercase tracking-[0.2em] mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
+                        <p className="text-micro text-dim font-medium uppercase tracking-label mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
                         <div className="w-24 h-1 bg-primary mx-auto opacity-20"></div>
                     </div>
                 </div>

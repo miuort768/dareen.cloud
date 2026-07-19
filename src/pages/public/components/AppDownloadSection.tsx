@@ -119,7 +119,7 @@ export const AppDownloadSection = () => {
                         </div>
                     </div>
                     <div className="text-center mb-2">
-                        <h2 className="text-2xl leading-[1.2] font-black text-main font-heading">
+                        <h2 className="text-2xl leading-tight font-black text-main font-heading">
                             حمل التطبيق الآن
                         </h2>
                     </div>

@@ -48,7 +48,7 @@ export const RefundPolicy = () => {
                     </div>
 
                     <h1 className="text-lg md:text-5xl font-black text-on-primary md:text-main mb-1 md:mb-3 leading-tight font-heading">
-                        سياسة <span className="md:text-transparent md:bg-clip-text md:bg-gradient-to-r md:from-[var(--bg-info)] md:to-[var(--bg-primary)] dark:md:from-[var(--bg-info)] dark:md:to-[var(--bg-primary)] text-warning inline-block py-1">الاسترجاع</span> والإلغاء
+                        سياسة <span className="md:text-transparent md:bg-clip-text md:bg-gradient-to-r md:from-info md:to-primary dark:md:from-info dark:md:to-primary text-warning inline-block py-1">الاسترجاع</span> والإلغاء
                     </h1>
 
                     <p className="text-micro md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium md:hidden">

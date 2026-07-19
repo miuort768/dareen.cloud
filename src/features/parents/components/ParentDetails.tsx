@@ -83,7 +83,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                         <div className="flex items-center justify-between border-b border-border/50 pb-3">
                             <div className="flex items-center gap-2">
                                 <div className="w-1.5 h-6 bg-primary rounded-full" />
-                                <h4 className="text-xs font-bold text-main uppercase tracking-[0.2em]">الأبناء المسجلين</h4>
+                                <h4 className="text-xs font-bold text-main uppercase tracking-label">الأبناء المسجلين</h4>
                             </div>
                             <span className="text-micro font-medium bg-primary text-on-primary px-3 py-1 rounded-lg">
                                 {details.children.length}
@@ -137,7 +137,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                     <div className="space-y-6">
                         <div className="flex items-center gap-2 border-b border-border/50 pb-3">
                             <div className="w-1.5 h-6 bg-warning rounded-full" />
-                            <h4 className="text-xs font-bold text-main uppercase tracking-[0.2em]">الجدول العائلي الموحد</h4>
+                            <h4 className="text-xs font-bold text-main uppercase tracking-label">الجدول العائلي الموحد</h4>
                         </div>
 
                         <div className="space-y-3 ps-2">

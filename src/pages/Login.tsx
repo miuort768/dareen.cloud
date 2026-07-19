@@ -104,12 +104,12 @@ export const Login = () => {
                         <div className="mb-10 w-full">
                             <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-e-4 border-accent shadow-md mb-10">
                                 <CheckCircle className="text-accent" size={18} />
-                                <span className="text-xs font-black text-inverse uppercase tracking-[0.2em]">أفضل مدرسة افتراضية</span>
+                                <span className="text-xs font-black text-inverse uppercase tracking-label">أفضل مدرسة افتراضية</span>
                             </div>
 
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-accent" size={28} />
-                                <span className="text-sm font-black uppercase text-main tracking-[0.2em]">منصة دارين السابعة</span>
+                                <span className="text-sm font-black uppercase text-main tracking-label">منصة دارين السابعة</span>
                             </div>
                             
                             <h2 className="text-section font-bold text-main mb-8 leading-tight border-s-8 border-success ps-8 min-h-[4.5rem]">

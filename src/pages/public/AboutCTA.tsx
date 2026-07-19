@@ -3,7 +3,7 @@ import { ArrowLeft, Sparkles, Users, Target } from 'lucide-react';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const AboutCTA = () => (
-    <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary-active)] via-[var(--bg-primary)] to-[var(--bg-primary-active)]">
+    <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-primary-active via-primary to-primary-active">
         <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 8%, transparent) 0%, transparent 70%)' }} />
         <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 6%, transparent) 0%, transparent 70%)' }} />
         <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-primary) 4%, transparent) 0%, transparent 70%)' }} />
@@ -14,7 +14,7 @@ export const AboutCTA = () => (
                     <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
                         <div className="absolute -inset-[2px] opacity-50 group-hover:opacity-80 transition-opacity duration-1000 rounded-3xl pointer-events-none" style={{ background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-warning) 40%, transparent), color-mix(in srgb, var(--bg-warning) 10%, transparent), color-mix(in srgb, var(--bg-primary) 30%, transparent), color-mix(in srgb, var(--bg-warning) 40%, transparent))' }} />
                         
-                        <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-hover)]">
+                        <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden bg-gradient-to-br from-primary-active to-primary-hover">
                             <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30Z\' fill=\'none\' stroke=\'%23f59e0b\' stroke-width=\'0.5\'/%3E%3C/svg%3E")', backgroundSize: '60px 60px' }} />
 
                             <div className="relative z-20 flex flex-col lg:flex-row items-stretch gap-10 lg:gap-16">

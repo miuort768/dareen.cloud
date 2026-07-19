@@ -11,7 +11,7 @@ export const ForumCreatePost = ({ newPostContent, setNewPostContent, handleCreat
         <div className="space-y-3">
             <textarea value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
-                className="w-full bg-background rounded-card p-4 min-h-[100px] text-sm font-medium text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all placeholder:text-muted resize-none border border-border leading-[1.8]"
+                className="w-full bg-background rounded-card p-4 min-h-[100px] text-sm font-medium text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all placeholder:text-muted resize-none border border-border leading-relaxed"
                 placeholder="شارك فكرة أو سؤال…" />
             <div className="flex justify-between items-center">
                 <p className="text-micro text-muted font-medium flex items-center gap-1.5">

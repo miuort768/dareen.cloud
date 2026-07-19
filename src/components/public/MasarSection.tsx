@@ -22,7 +22,7 @@ export const MasarSection = () => {
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary)] shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary via-primary-hover to-primary shadow-2xl overflow-hidden border border-white/5 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute start-0 top-0 w-80 h-80 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute end-0 bottom-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
@@ -104,7 +104,7 @@ export const MasarSection = () => {
                     </div>
 
                     {/* Purple Gradient Section */}
-                    <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary-hover)] to-[var(--bg-primary)] rounded-3xl p-6 shadow-lg shadow-primary/20 mb-5">
+                    <div className="bg-gradient-to-br from-primary via-primary-hover to-primary rounded-3xl p-6 shadow-lg shadow-primary/20 mb-5">
                         {/* Tabs */}
                         <div className="flex items-center gap-4 mb-4">
                             <div className="relative">
@@ -123,7 +123,7 @@ export const MasarSection = () => {
                         <div className="flex flex-col gap-3">
                             <Link
                                 to="/books"
-                                className="w-full py-4 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary font-black text-base shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 rounded-2xl group"
+                                className="w-full py-4 bg-gradient-to-r from-primary to-primary-hover text-on-primary font-black text-base shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 rounded-2xl group"
                             >
                                 <FileText size={20} />
                                 <span>تحميل مذكرة</span>

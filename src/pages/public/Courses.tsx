@@ -105,7 +105,7 @@ export const Courses = () => {
                                 <span className="text-micro font-black text-primary dark:text-primary">استكشف مسيرتك التعليمية</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-[1.15] tracking-tight">
+                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-tight tracking-tight">
                                 <span className="text-primary">
                                     دورات
                                 </span>{' '}
@@ -175,7 +175,7 @@ export const Courses = () => {
                       imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-[var(--bg-card)] to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-card to-transparent" />
 
                     <div className="absolute top-3 start-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>

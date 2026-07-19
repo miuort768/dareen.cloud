@@ -202,7 +202,7 @@ export const Chat = () => {
                             <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
-                                <p className="text-micro text-primary font-medium uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
+                                <p className="text-micro text-primary font-medium uppercase tracking-label">تواصل آمن • مشفر</p>
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
                             </div>
                             <p className="text-sm text-muted dark:text-muted max-w-sm mx-auto leading-relaxed font-medium">

@@ -24,7 +24,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
-          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center shadow-lg shadow-primary/20 relative overflow-hidden">
+          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary flex items-center justify-center shadow-lg shadow-primary/20 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
             <GraduationCap className="w-6 h-6 text-on-primary relative z-10" />
           </div>

@@ -70,7 +70,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                 title: 'اشترك الآن',
                                 desc: 'تواصل لحجز مقعدك',
                                 icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
-                                color: 'from-[var(--bg-primary)] to-[var(--bg-primary)]'
+                                color: 'from-primary to-primary'
                             }
                         ].map((step) => (
                             <motion.div key={step.id} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className="relative group flex flex-col items-center">
@@ -107,7 +107,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             rel="noopener noreferrer"
                             className="group relative px-8 py-3.5 bg-primary dark:bg-primary text-on-primary font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
                                 <Gift size={16} />
                                 <span>احجز حصتك المجانية الآن</span>

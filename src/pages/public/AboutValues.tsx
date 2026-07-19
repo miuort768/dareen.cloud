@@ -4,12 +4,12 @@ import { Shield, Lightbulb, Award, Compass } from 'lucide-react';
 
 export const AboutValues = () => (
     <section className="py-4 md:py-6 bg-background dark:bg-card/50 relative overflow-hidden">
-        <div className="absolute top-0 end-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--bg-surface)] to-transparent"></div>
+        <div className="absolute top-0 end-0 w-full h-px bg-gradient-to-r from-transparent via-surface to-transparent"></div>
 
         <div className="container mx-auto px-4 relative z-10">
             <AnimateOnScroll animation="fadeUp">
             <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-full mb-4 shadow-lg shadow-primary/20">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-l from-primary to-primary-hover rounded-full mb-4 shadow-lg shadow-primary/20">
                     <span className="text-micro font-black text-on-primary">دستورنا التعليمي</span>
                 </div>
                 <h2 className="text-2xl md:text-4xl font-black text-main dark:text-on-primary mb-4 font-heading">

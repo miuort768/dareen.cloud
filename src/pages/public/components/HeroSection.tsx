@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Play, ArrowLeft, Star } from 'lucide-react';
+import { Image } from '../../../shared/components/ui';
 
 interface HeroSectionProps {
     typewriterText: string;
@@ -64,14 +65,12 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                             <div className="mt-4 pt-4 border-t border-border flex items-center justify-center gap-6">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map((i) => (
-                                        <img
+                                        <Image
                                             key={`hero-${i}`}
                                             src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                                            width="40"
-                                            height="40"
                                             alt=""
-                                            loading="lazy"
                                             className="w-10 h-10 rounded-full border-2 border-border shadow-sm"
+                                            imgClassName="rounded-full"
                                         />
                                     ))}
                                     <div className="w-10 h-10 rounded-full border-2 border-border bg-surface dark:bg-card flex items-center justify-center text-xs font-bold text-muted">

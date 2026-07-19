@@ -161,7 +161,7 @@ export const BlogForm = ({
                                 <span className="text-micro font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
                                 <button type="button" onClick={() => set('showButtons', !currentPost.showButtons)}
                                     className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim dark:bg-hover'}`}>
-                                    <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'end-0.5 translate-x-6' : 'end-0.5'}`} />
+                                    <span className={`absolute top-0.5 w-5 h-5 bg-white dark:bg-surface rounded-full shadow-sm transition-transform ${currentPost.showButtons ? 'end-0.5 translate-x-6' : 'end-0.5'}`} />
                                 </button>
                             </div>
                             <div>

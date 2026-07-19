@@ -66,7 +66,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-start">
                             <div className="space-y-2">
-                                <label htmlFor="notification-message" className="text-micro font-black text-muted uppercase tracking-[0.2em] ms-1">محتوى التنبيه</label>
+                                <label htmlFor="notification-message" className="text-micro font-black text-muted uppercase tracking-label ms-1">محتوى التنبيه</label>
                                 <textarea
                                     id="notification-message"
                                     required
@@ -82,7 +82,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="submit"
                                     disabled={!message.trim()}
-                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
+                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-xs uppercase tracking-label shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
                                 >
                                     <div className="flex items-center justify-center gap-3">
                                         <span>إرسال التنبيه الآن</span>

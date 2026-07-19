@@ -46,7 +46,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2">
             <Zap className="w-5 h-5 text-warning fill-warning md:hidden" />
             <span>لماذا{' '}</span>
-            <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-xl md:text-4xl inline-block">
+            <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover text-on-primary text-xl md:text-4xl inline-block">
               تختارنا؟
             </span>
           </h2>
@@ -64,7 +64,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className={`relative flex items-center gap-4 p-4 ${vc.card} backdrop-blur-sm rounded-2xl shadow-sm`}>
                 {f.ribbon && (
-                  <div className="absolute -top-2 -end-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -end-2 bg-gradient-to-br from-primary to-primary-hover text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>
@@ -81,7 +81,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           })}
 
           {/* Showcase card (mobile) */}
-          <div className="mt-6 p-5 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-3xl relative overflow-hidden">
+          <div className="mt-6 p-5 bg-gradient-to-br from-primary to-primary-hover rounded-3xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/10 rounded-full mb-3">
@@ -125,7 +125,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             return (
               <motion.div key={f.title} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }} className={`relative p-6 ${vc.card} rounded-2xl shadow-sm flex items-start gap-4 group hover:shadow-md transition-all`}>
                 {f.ribbon && (
-                  <div className="absolute -top-2 -end-2 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                  <div className="absolute -top-2 -end-2 bg-gradient-to-br from-primary to-primary-hover text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning text-warning" />
                     الأكثر تميزاً
                   </div>
@@ -141,7 +141,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             );
           })}
 
-          <div className="md:col-span-3 p-6 md:p-8 bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl shadow-lg relative overflow-hidden group">
+          <div className="md:col-span-3 p-6 md:p-8 bg-gradient-to-br from-primary to-primary-hover rounded-2xl shadow-lg relative overflow-hidden group">
             <div className="absolute top-0 start-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 end-0 w-64 h-64 bg-on-primary opacity-5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">

@@ -162,7 +162,7 @@ export const MobileAdminDashboard = ({
                                 <tab.icon {...smallIconProps} />
                                 <span className="text-micro">{tab.label}</span>
                                 {tab.badge !== undefined && tab.badge > 0 && (
-                                    <span className="absolute -top-1 -end-1 min-w-[16px] h-[16px] bg-success text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white border-border rounded-full shadow-soft">
+                                    <span className="absolute -top-1 -end-1 min-w-[16px] h-[16px] bg-success text-on-primary font-bold text-micro flex items-center justify-center px-1 border-2 border-white dark:border-border border-border rounded-full shadow-soft">
                                         {tab.badge}
                                     </span>
                                 )}

@@ -22,7 +22,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             icon: Users,
             title: 'اختر الخدمة',
             desc: 'حدد النظام التعليمي',
-            boxBg: 'bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)]',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
         },
         {
             num: '02',
@@ -36,7 +36,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             icon: Sparkles,
             title: 'اشترك الآن',
             desc: 'تواصل لحجز مقعدك',
-            boxBg: 'bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)]',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
         },
     ];
 
@@ -62,14 +62,14 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 </div>
 
                 {/* Badge */}
-                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-full mb-4 shadow-sm">
+                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover rounded-full mb-4 shadow-sm">
                     <Zap size={10} className="text-warning fill-warning" />
                     <span className="text-micro font-black text-on-primary">ابدأ رحلتك</span>
                 </div>
 
                 {/* Title */}
                 <h2 className="text-xl font-black text-main leading-tight mb-1">
-                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)]">المعهد؟</span>
+                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover">المعهد؟</span>
                 </h2>
                 <p className="text-xs text-muted font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
@@ -103,7 +103,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                         { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
                     ].map((item, i) => (
                         <div key={`perk-${i}`} className="flex items-center gap-3">
-                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-hover)] flex items-center justify-center shadow-sm shrink-0">
+                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-sm shrink-0">
                                 {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary" />}
                                 {item.icon === 'Clock' && <Clock size={12} className="text-on-primary" />}
                                 {item.icon === 'Hash' && <Hash size={12} className="text-on-primary" />}
@@ -121,7 +121,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary-hover)] rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
                 >
                     <Gift size={16} className="text-on-primary opacity-90" />
                     <span className="text-on-primary text-sm font-black">احجز حصتك المجانية الآن</span>

@@ -56,7 +56,7 @@ export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDel
                             <input type="text" aria-label="الساعة" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value.replace(/^0+/, '') })} placeholder="مثال: 4" className="w-full text-micro font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none" />
                         </div>
                     </div>
-                    <button onClick={() => { onSaveSlot(tempSlot, editSlotIndex); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); setEditSlotIndex(null); }} className="w-full bg-white text-primary font-bold text-micro py-2 rounded-xl hover:bg-white/90 transition-colors shadow-sm active:scale-95">
+                    <button onClick={() => { onSaveSlot(tempSlot, editSlotIndex); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); setEditSlotIndex(null); }} className="w-full bg-white dark:bg-primary text-primary dark:text-on-primary font-bold text-micro py-2 rounded-xl hover:bg-white/90 dark:hover:bg-primary-hover transition-colors shadow-sm active:scale-95">
                         {editSlotIndex !== null ? 'تحديث' : 'إضافة'}
                     </button>
                 </div>

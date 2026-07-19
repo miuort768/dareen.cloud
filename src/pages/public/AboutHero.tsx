@@ -15,7 +15,7 @@ export const AboutHero = () => (
                 <span className="text-micro font-black text-primary dark:text-primary">دارين السابعة | ريادة تعليمية</span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-main dark:text-on-primary mb-4 font-heading leading-[1.1] md:leading-tight relative">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-main dark:text-on-primary mb-4 font-heading leading-none md:leading-tight relative">
                 <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                 <span aria-hidden="true">نحن لا نُدرّس فقط،<br className="md:hidden" /><span className="hidden md:inline"> </span></span>
                 <span className="text-primary py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>

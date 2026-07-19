@@ -41,11 +41,11 @@ export const TermsOfWork = () => {
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-primary-soft dark:bg-primary/20 text-primary dark:text-on-primary border border-primary/50 dark:border-primary/50 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
                         <Briefcase size={12} className="text-primary" />
-                        <span className="text-xs md:text-xs font-black tracking-[0.2em] uppercase">قوانين العمل</span>
+                        <span className="text-xs md:text-xs font-black tracking-label uppercase">قوانين العمل</span>
                     </div>
 
                     <h1 className="text-lg md:text-5xl font-black text-primary md:text-main dark:text-on-primary mb-1 md:mb-3 leading-tight font-heading">
-                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] inline-block py-1">العمل</span> في دارين السابعة
+                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
                     <p className="text-micro md:text-lg text-warning dark:text-warning max-w-2xl mx-auto leading-relaxed font-medium whitespace-nowrap md:whitespace-normal">
@@ -237,7 +237,7 @@ export const TermsOfWork = () => {
                     </p>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-[var(--bg-background)] to-white dark:to-[var(--bg-card)] border border-border mb-3 relative overflow-hidden group rounded-card mt-8">
+                    <div className="flex flex-col items-center justify-center py-4 px-6 bg-gradient-to-br from-background to-white dark:to-card border border-border mb-3 relative overflow-hidden group rounded-card mt-8">
                         <div className="absolute top-0 start-0 w-32 h-32 bg-primary/5 rounded-full -ms-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 

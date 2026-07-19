@@ -44,7 +44,7 @@ export const Contact = () => {
             title: 'البريد الإلكتروني',
             value: 'miuort768@gmail.com',
             href: 'mailto:miuort768@gmail.com',
-            gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]',
+            gradient: 'from-primary to-primary',
             bg: 'bg-primary-soft dark:bg-primary/10',
             border: 'border-primary dark:border-primary/20',
             iconColor: 'text-primary',
@@ -91,7 +91,7 @@ export const Contact = () => {
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-on-primary mb-1 md:mb-3">
                             تواصل مع{' '}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">
                                 دارين السابعة
                             </span>
                         </h1>
@@ -115,7 +115,7 @@ export const Contact = () => {
                     <AnimateOnScroll animation="fadeUp">
                     <div className="bg-white dark:bg-card/80 dark:backdrop-blur-xl border border-border dark:border-border rounded-none overflow-hidden shadow-xl shadow-sm/40 dark:shadow-black/40">
                         {/* Top accent bar */}
-                        <div className="h-1.5 bg-gradient-to-r from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-warning)]" />
+                        <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 
                         {formState === 'success' ? (
                             <div className="py-20 text-center px-6">

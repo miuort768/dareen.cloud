@@ -180,6 +180,9 @@ module.exports = {
       animation: {
         'shine-slow': 'shine 3s ease-in-out infinite',
       },
+      letterSpacing: {
+        label: 'var(--letter-spacing-label)',
+      },
       transitionDuration: {
         fast: 'var(--duration-fast)',
         normal: 'var(--duration-normal)',

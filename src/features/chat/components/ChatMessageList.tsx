@@ -82,7 +82,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                                 {isGroup && !isMe && (
                                     <span className="block text-xs font-normal text-primary mb-0.5 text-start">{msg.senderName}</span>
                                 )}
-                                <div className="text-sm text-main leading-[1.4] whitespace-pre-wrap text-start tracking-tight">{msg.content}</div>
+                                <div className="text-sm text-main leading-snug whitespace-pre-wrap text-start tracking-tight">{msg.content}</div>
                                 <div className="flex items-center justify-end gap-1 mt-1">
                                     <span className="text-micro text-muted">
                                         {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar }) : '--:--'}

@@ -30,7 +30,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                         <div className="group transition-all">
-                            <p className="text-micro font-black text-success uppercase tracking-[0.2em] mb-3">صافي الربح المتوقع</p>
+                            <p className="text-micro font-black text-success uppercase tracking-label mb-3">صافي الربح المتوقع</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {netProjectedProfit.toLocaleString()}
@@ -41,7 +41,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         </div>
 
                         <div className="group transition-all">
-                            <p className="text-micro font-black text-primary uppercase tracking-[0.2em] mb-3">إجمالي عوائد المنظومة</p>
+                            <p className="text-micro font-black text-primary uppercase tracking-label mb-3">إجمالي عوائد المنظومة</p>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {totalProjectedIncome.toLocaleString()}

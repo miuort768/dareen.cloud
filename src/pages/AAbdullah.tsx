@@ -52,10 +52,10 @@ export const AAbdullah = () => {
                             <VCodeBracket size={22} className="text-on-primary" />
                         </div>
                         <div className="text-start">
-                            <h1 className="text-xl md:text-3xl font-black leading-tight text-[var(--text-primary)]">
+                            <h1 className="text-xl md:text-3xl font-black leading-tight text-primary">
                                 مستر احمد عبدالله
                             </h1>
-                            <p className="text-micro md:text-base font-bold leading-tight text-[var(--text-success)] mt-px">
+                            <p className="text-micro md:text-base font-bold leading-tight text-success mt-px">
                                 مؤسس منصة دارين السابعة
                             </p>
                         </div>
@@ -85,11 +85,11 @@ export const AAbdullah = () => {
                 {/* ═══════════════ نبدة تعريفية ═══════════════ */}
                 <motion.div {...sectionDelay(1)} className={cardClass}>
                     <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-black text-[var(--text-primary)]">
+                        <h2 className="text-lg font-black text-primary">
                             نبدة تعريفية
                         </h2>
-                        <VRocket size={18} className="inline text-[var(--text-success)]" />
-                        <VBolt size={16} className="inline text-[var(--text-accent)]" />
+                        <VRocket size={18} className="inline text-success" />
+                        <VBolt size={16} className="inline text-accent" />
                     </div>
                     <p className="text-sm leading-relaxed text-muted dark:text-muted">
                         خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
@@ -101,7 +101,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ الرؤية ═══════════════ */}
                 <motion.div
                     {...sectionDelay(2)}
-                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
+                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-primary to-primary-active"
                 >
                     <div className="absolute top-[-30px] left-[-30px] w-32 h-32 rounded-full bg-accent-soft/50" />
                     <div className="absolute bottom-[-20px] right-[30%] w-24 h-24 rounded-full bg-accent-soft/40" />
@@ -110,9 +110,9 @@ export const AAbdullah = () => {
                             <div
                                 className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm bg-accent-soft/80"
                             >
-                                <VTargetArrow size={20} className="text-[var(--text-accent)]" />
+                                <VTargetArrow size={20} className="text-accent" />
                             </div>
-                            <h2 className="text-lg font-black text-[var(--text-accent)]">الرؤية</h2>
+                            <h2 className="text-lg font-black text-accent">الرؤية</h2>
                         </div>
                         <p className="text-sm leading-relaxed text-main dark:text-white/90">
                             "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
@@ -124,7 +124,7 @@ export const AAbdullah = () => {
 
                 {/* ═══════════════ القيم ═══════════════ */}
                 <motion.div {...sectionDelay(3)} className="space-y-4">
-                    <h2 className="text-xl font-black text-[var(--text-primary)]">القيم</h2>
+                    <h2 className="text-xl font-black text-primary">القيم</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {values.map((v, i) => {
                             const Icon = v.icon;
@@ -154,9 +154,9 @@ export const AAbdullah = () => {
                         <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center bg-accent-soft/70"
                         >
-                            <VHeart size={20} className="text-[var(--text-accent)]" />
+                            <VHeart size={20} className="text-accent" />
                         </div>
-                        <h2 className="text-lg font-black text-[var(--text-primary)]">رسالة إلى أولياء الأمور والمعلمين</h2>
+                        <h2 className="text-lg font-black text-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
                     <div className="space-y-3 ps-4">
                         <p className="text-sm leading-relaxed text-muted dark:text-muted">
@@ -177,7 +177,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ رسالتي لكم ═══════════════ */}
                 <motion.div
                     {...sectionDelay(5)}
-                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary-active)]"
+                    className="rounded-3xl p-6 md:p-8 shadow-xl text-main relative overflow-hidden bg-gradient-to-br from-primary to-primary-active"
                 >
                     <div
                         className="absolute top-[-40px] right-[-40px] w-48 h-48 rounded-full bg-accent-soft/40"
@@ -209,7 +209,7 @@ export const AAbdullah = () => {
                             <p>
                                 ابدأ يومك بابتسامة، واعمل بإصرار، وتحلَّ بالصبر، فكل جهد تبذله اليوم سيكون ثمرةً تفتخر بها غدًا.
                             </p>
-                            <p className="font-bold text-[var(--text-accent)]">
+                            <p className="font-bold text-accent">
                                 تذكّر دائمًا: الإيجابية تصنع العقلية، والاجتهاد يصنع الإنجاز، والاستمرار يصنع النجاح.
                             </p>
                         </div>

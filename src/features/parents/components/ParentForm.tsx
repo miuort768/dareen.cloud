@@ -68,7 +68,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                     <div className="pt-6 border-t border-border/50 flex justify-end">
                         <button
                             type="submit"
-                            className="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-[0.2em] transition-all shadow-soft active:scale-95 rounded-xl"
+                            className="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-label transition-all shadow-soft active:scale-95 rounded-xl"
                         >
                             <Save size={14} className="group-hover:rotate-12 transition-transform" />
                             {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

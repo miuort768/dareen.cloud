@@ -5,7 +5,7 @@ export const MaintenanceScreen = () => {
     const adminPhone = useAdminPhone();
 
     return (
-        <div className="h-dvh w-full bg-gradient-to-br from-background via-card to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
+        <div className="h-dvh w-full bg-gradient-to-br from-background via-card to-background flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
             {/* Geometric Accents */}
             <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-primary/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-primary/10" />
             <div className="absolute bottom-0 end-0 w-[300px] h-[300px] bg-primary/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-primary/10" />

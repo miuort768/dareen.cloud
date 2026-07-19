@@ -63,7 +63,7 @@ export const SessionCallAlert = () => {
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
                 className="fixed bottom-16 end-4 start-4 md:end-auto md:start-8 md:bottom-8 z-[1000] md:w-[400px]"
             >
-                <div className="bg-card border-4 border-border shadow-[10px_10px_0px_0px_var(--bg-shadow)] p-1 overflow-hidden">
+                <div className="bg-card border-4 border-border shadow-soft p-1 overflow-hidden">
                     <div className="bg-primary p-3 flex justify-between items-center border-b-2 border-border">
                         <div className="flex items-center gap-2 text-on-primary">
                             <BellRing size={20} className="animate-bounce" />

@@ -58,7 +58,7 @@ export const PublicNavbar = () => {
                     <Link to="/" className="flex items-center gap-3 ps-2 group">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-primary-light rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                             <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-[var(--bg-primary)] via-[var(--bg-primary)] to-[var(--bg-primary)] rounded-xl flex items-center justify-center text-on-primary shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                             <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-primary via-primary to-primary rounded-xl flex items-center justify-center text-on-primary shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
                                 <GraduationCap size={24} className="relative z-10" />
                             </div>

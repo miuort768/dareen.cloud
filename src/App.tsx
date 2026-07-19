@@ -133,7 +133,7 @@ function App() {
   if (isLoading || isSettingsLoading) {
     if (loadTimeout) {
       return (
-        <div className="fixed inset-0 bg-gradient-to-br from-[var(--bg-background)] to-[var(--bg-primary)] dark:from-[var(--bg-background)] dark:to-[var(--bg-primary)] flex items-center justify-center p-6" dir="rtl">
+        <div className="fixed inset-0 bg-gradient-to-br from-background to-primary dark:from-background dark:to-primary flex items-center justify-center p-6" dir="rtl">
           <div className="bg-white dark:bg-primary-active rounded-2xl shadow-2xl border border-border dark:border-border p-8 max-w-md w-full text-center space-y-4">
             <div className="w-16 h-16 mx-auto bg-warning-light dark:bg-warning/30 rounded-2xl flex items-center justify-center">
               <span className="text-3xl">⏳</span>

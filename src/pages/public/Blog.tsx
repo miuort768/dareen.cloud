@@ -170,7 +170,7 @@ export const Blog = () => {
     const isCoursesStyle = selectedType === 'more';
     const cardStyle = selectedType === 'foundation'
         ? { gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning dark:text-warning hover:text-warning dark:hover:text-warning', fileSizeBadge: 'bg-warning-light dark:bg-warning/10 text-warning dark:text-warning border-warning/50 dark:border-warning/20' }
-        : { gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary dark:text-primary hover:text-primary dark:hover:text-primary', fileSizeBadge: 'bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary border-primary/50 dark:border-primary/20' };
+        : { gradient: 'from-primary to-primary', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary dark:text-primary hover:text-primary dark:hover:text-primary', fileSizeBadge: 'bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary border-primary/50 dark:border-primary/20' };
     if (isFoundationStyle) return <FoundationCard key={post.id} post={post} cardStyle={cardStyle} foundationBtnState={foundationBtnState} handleButtonClick={handleFoundationButtonClick} i={i} />;
     return <RegularCard key={post.id} post={post} isCoursesStyle={isCoursesStyle} i={i} />;
   };
@@ -204,7 +204,7 @@ export const Blog = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-card rounded-card shadow-sm border border-border dark:border-border">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] flex items-center justify-center">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
                       <BookOpen size={10} className="text-on-primary" />
                     </div>
                     <span className="text-xs font-bold text-main dark:text-main">dareen7.com/books</span>
@@ -229,7 +229,7 @@ export const Blog = () => {
               </div>
             </div>
 
-            <div className="relative bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white dark:from-[var(--bg-primary)] dark:via-[var(--bg-primary)] dark:to-[var(--bg-background)] rounded-card overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
+            <div className="relative bg-gradient-to-br from-primary via-primary to-white dark:from-primary dark:via-primary dark:to-background rounded-card overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
                   <p className="text-lg font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-info dark:text-info"> السابعة</span></p>

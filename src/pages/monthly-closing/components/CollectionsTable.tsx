@@ -30,7 +30,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-start">
-                    <thead className="bg-gradient-to-l from-[var(--bg-primary)] to-[var(--bg-primary)]">
+                    <thead className="bg-gradient-to-l from-primary to-primary">
                         <tr>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary uppercase tracking-wider">الطالب</th>
                             <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">المبلغ</th>

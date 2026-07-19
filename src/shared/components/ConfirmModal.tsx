@@ -102,7 +102,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                                     onClose();
                                 }}
                                 className={cn(
-                                    "px-6 h-14 text-on-primary font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95 rounded-none",
+                                    "px-6 h-14 text-on-primary font-black text-xs uppercase tracking-label shadow-xl transition-all active:scale-95 rounded-none",
                                     isDestructive
                                         ? "bg-error hover:bg-error shadow-error/20"
                                         : "bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 shadow-primary/20"
