@@ -17,7 +17,7 @@ export const TEACHER_RANKS: Rank[] = [
     { name: 'معلمة لورد', minPoints: 0, color: 'var(--bg-success)', icon: '👩‍🏫', badgeColor: 'bg-success' },
     { name: 'لورد مرشد', minPoints: 500, color: 'var(--bg-info)', icon: '🧭', badgeColor: 'bg-info' },
     { name: 'لورد خبير', minPoints: 2000, color: 'var(--bg-primary)', icon: '🎓', badgeColor: 'bg-primary' },
-    { name: 'لورد النخبة', minPoints: 5000, color: 'var(--text-main)', icon: '💎', badgeColor: 'bg-black' },
+    { name: 'لورد النخبة', minPoints: 5000, color: 'var(--text-main)', icon: '💎', badgeColor: 'bg-primary' },
 ];
 
 export const getRankByPoints = (points: number, ranks: Rank[]): Rank => {

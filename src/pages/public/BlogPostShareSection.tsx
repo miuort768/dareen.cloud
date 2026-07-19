@@ -21,7 +21,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
                 <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-info flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="فيسبوك">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
-                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' ' + url)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-black flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="تويتر">
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' ' + url)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-black dark:bg-primary-active flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="تويتر">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4l11.7 16.4L20 4"/><path d="M4 20l6.5-8.8"/><path d="M14.5 8.8L20 4"/></svg>
                 </a>
                 <a href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-info flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="تيليجرام">
