@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect } from 'react';
+import { memo } from 'react';
 import type { ActivityItem as ServiceItem } from '../../services/executiveService';
 import { History, TrendingUp, UserPlus, CreditCard, Edit3, Trash2, GraduationCap, Lock } from 'lucide-react';
 import { ActivityFeed as SharedFeed } from '../../../../shared/components/ui';
@@ -22,12 +22,6 @@ const VARIANT_MAP: Record<string, ActivityItem['variant']> = {
 };
 
 export const ActivityFeed = memo(function ActivityFeed({ items }: { items: ServiceItem[] }) {
-    const bottomRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [items]);
-
     if (!items) return null;
 
     const feedItems: ActivityItem[] = items.map((item) => ({
@@ -40,13 +34,10 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
     }));
 
     return (
-        <>
-            <SharedFeed
-                items={feedItems}
-                title="النشاطات"
-                maxHeight={288}
-            />
-            <div ref={bottomRef} />
-        </>
+        <SharedFeed
+            items={feedItems}
+            title="النشاطات"
+            maxHeight={288}
+        />
     );
 });

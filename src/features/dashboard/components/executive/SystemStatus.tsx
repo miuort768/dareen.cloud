@@ -10,9 +10,9 @@ const STATUS_ICONS: Record<string, typeof CheckCircle> = {
 };
 
 const STATUS_STYLES: Record<string, { text: string; bg: string; bgLight: string; bgBadge: string }> = {
-    healthy: { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', bgBadge: 'bg-success/15' },
-    warning: { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', bgBadge: 'bg-warning/15' },
-    critical: { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/10', bgBadge: 'bg-error/15' },
+    healthy: { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success-soft', bgBadge: 'bg-success-soft' },
+    warning: { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning-soft', bgBadge: 'bg-warning-soft' },
+    critical: { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error-soft', bgBadge: 'bg-error-soft' },
 };
 
 const DEFAULT_STYLE = { text: 'text-muted', bg: 'bg-muted', bgLight: 'bg-muted/10', bgBadge: 'bg-muted/15' };
@@ -31,25 +31,25 @@ const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, p
     const styles = STATUS_STYLES[status] || DEFAULT_STYLE;
 
     return (
-        <div className="flex items-center justify-between py-2.5 px-3 rounded-xl transition-all hover:bg-surface/30 dark:hover:bg-card/30">
+        <div className="flex items-center justify-between py-2.5 px-3 rounded-xl transition-all hover:bg-surface/30">
             <div className="flex items-center gap-2.5 min-w-0">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${styles.bgLight}`}>
                     <Icon size={15} className={styles.text} />
                 </div>
                 <div className="min-w-0">
-                    <p className="text-sm font-medium text-main dark:text-on-primary/90">{label}</p>
-                    {detail && <p className="text-micro text-muted/60 mt-0.5">{detail}</p>}
+                    <p className="text-sm font-medium text-main">{label}</p>
+                    {detail && <p className="text-micro text-muted mt-0.5">{detail}</p>}
                 </div>
             </div>
             <div className="flex items-center gap-2.5">
                     {progress !== undefined && (
                     <div className="flex items-center gap-2">
-                        <ProgressBar value={Math.min(100, progress)} variant={progress > 80 ? 'error' : progress > 60 ? 'warning' : 'success'} className="w-16" />
+                        <ProgressBar value={Math.min(100, progress)} variant={progress > 80 ? 'error' : progress > 60 ? 'warning' : 'success'} className="w-16" trackClassName="bg-border/30" />
                         {progressLabel && <span className={`text-micro font-medium tabular-nums ${styles.text}`}>{progressLabel}</span>}
                     </div>
                 )}
                 <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-micro font-semibold backdrop-blur-sm ${styles.bgBadge} ${styles.text}`}
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-micro font-semibold ${styles.bgBadge} ${styles.text}`}
                 >
                     <StatusIcon size={10} />
                     {status === 'healthy' ? 'سليم' : status === 'warning' ? 'تحذير' : 'خطأ'}
@@ -85,47 +85,44 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const uptimeHours = health.uptime ? Math.round(health.uptime / 3600) : 0;
 
     return (
-        <div className="relative overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 dark:border-border/50 shadow-lg shadow-black/5">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-soft/5 via-transparent to-surface/10 dark:from-primary-soft/5 dark:to-surface/10 pointer-events-none" />
-            <div className="relative p-5">
-                <div className="flex items-center gap-2 mb-2">
-                    <Activity size={16} className="text-muted/60" />
-                    <h3 className="text-sm font-semibold text-muted dark:text-muted/80">حالة النظام</h3>
-                </div>
+        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+            <div className="flex items-center gap-2 mb-2">
+                <Activity size={16} className="text-muted" />
+                <h3 className="text-xs text-muted">حالة النظام</h3>
+            </div>
 
-                <div className="space-y-0">
-                    <StatusRow
-                        icon={Database}
-                        label="قاعدة البيانات"
-                        status={dbStatus}
-                        detail={health.database?.latency > 0 ? `${health.database.latency}ms` : undefined}
-                    />
-                    <StatusRow
-                        icon={HardDrive}
-                        label="Redis"
-                        status={redisStatus}
-                        detail={health.redis?.fallbacks > 0 ? `تجاوز ${health.redis.fallbacks}` : undefined}
-                    />
-                    <StatusRow
-                        icon={Server}
-                        label="الذاكرة"
-                        status={memStatus}
-                        progress={memPercent}
-                        progressLabel={health.memory ? `${Math.round(health.memory.used / 1024 / 1024)}/${Math.round(health.memory.total / 1024 / 1024)} MB` : undefined}
-                    />
-                    <StatusRow
-                        icon={Cpu}
-                        label="المعالج"
-                        status={cpuStatus}
-                        progress={cpuLoad}
-                        progressLabel={health.cpu?.cores ? `${cpuLoad.toFixed(1)}% (${health.cpu.cores} نوى)` : `${cpuLoad.toFixed(1)}%`}
-                    />
-                </div>
+            <div className="space-y-0">
+                <StatusRow
+                    icon={Database}
+                    label="قاعدة البيانات"
+                    status={dbStatus}
+                    detail={health.database?.latency > 0 ? `${health.database.latency}ms` : undefined}
+                />
+                <StatusRow
+                    icon={HardDrive}
+                    label="Redis"
+                    status={redisStatus}
+                    detail={health.redis?.fallbacks > 0 ? `تجاوز ${health.redis.fallbacks}` : undefined}
+                />
+                <StatusRow
+                    icon={Server}
+                    label="الذاكرة"
+                    status={memStatus}
+                    progress={memPercent}
+                    progressLabel={health.memory ? `${Math.round(health.memory.used / 1024 / 1024)}/${Math.round(health.memory.total / 1024 / 1024)} MB` : undefined}
+                />
+                <StatusRow
+                    icon={Cpu}
+                    label="المعالج"
+                    status={cpuStatus}
+                    progress={cpuLoad}
+                    progressLabel={health.cpu?.cores ? `${cpuLoad.toFixed(1)}% (${health.cpu.cores} نوى)` : `${cpuLoad.toFixed(1)}%`}
+                />
+            </div>
 
-                <div className="mt-3 pt-3 border-t border-border/30 dark:border-border/20 flex items-center justify-between text-micro text-muted/50">
-                    <span>مدة التشغيل: {uptimeHours}h</span>
-                    <span>Node: {health.node || 'N/A'}</span>
-                </div>
+            <div className="mt-3 pt-3 border-t border-border/30 flex items-center justify-between text-micro text-muted">
+                <span>مدة التشغيل: {uptimeHours}h</span>
+                <span>Node: {health.node || 'N/A'}</span>
             </div>
         </div>
     );
