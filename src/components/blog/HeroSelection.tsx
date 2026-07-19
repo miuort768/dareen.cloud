@@ -88,7 +88,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                {gridItems.map((item: GridItem) => (
+                {gridItems.map((item: GridItem, i: number) => (
                     <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
                         <button onClick={() => {
                             setSearchParams(prev => {
