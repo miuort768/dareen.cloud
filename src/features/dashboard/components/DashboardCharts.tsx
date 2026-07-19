@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import { DollarSign } from 'lucide-react';
+import { DollarSign, TrendingUp } from 'lucide-react';
 import { ChartContainer, ChartTooltip } from '../../../shared/components/ui';
 import type { TooltipEntry } from '../../../shared/components/ui';
 import type { DashboardMonthData as MonthData } from '../types';
