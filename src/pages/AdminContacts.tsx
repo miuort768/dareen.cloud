@@ -189,7 +189,7 @@ export const AdminContacts = () => {
                                                 </div>
                                                 <div className="min-w-0">
                                                     <h3 className="text-xs sm:text-sm font-bold text-main truncate">{msg.name || 'بدون اسم'}</h3>
-                                                    <p className="text-[11px] sm:text-xs text-muted mt-0.5 truncate">{msg.subject || 'بدون موضوع'}</p>
+                                                    <p className="text-micro sm:text-xs text-muted mt-0.5 truncate">{msg.subject || 'بدون موضوع'}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
@@ -220,15 +220,15 @@ export const AdminContacts = () => {
                                         </div>
 
                                         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-success-soft dark:bg-success-dark/20 text-success dark:text-success-dark border border-success/20 dark:border-success-dark/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-success-soft dark:bg-success-dark/20 text-success dark:text-success-dark border border-success/20 dark:border-success-dark/30 text-micro sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{msg.phone}</span>
                                                 <Phone size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-primary-soft dark:bg-primary-dark/20 text-primary dark:text-primary-dark border border-primary/20 dark:border-primary-dark/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-primary-soft dark:bg-primary-dark/20 text-primary dark:text-primary-dark border border-primary/20 dark:border-primary-dark/30 text-micro sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[100px] sm:max-w-none">{msg.curriculum || '-'}</span>
                                                 <BookOpen size={11} className="sm:size-[12px]" />
                                             </span>
-                                            <span className="hidden sm:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-info-soft dark:bg-info-dark/20 text-info dark:text-info-dark border border-info/20 dark:border-info-dark/30 text-[11px] sm:text-xs shadow-sm">
+                                            <span className="hidden sm:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-none bg-info-soft dark:bg-info-dark/20 text-info dark:text-info-dark border border-info/20 dark:border-info-dark/30 text-micro sm:text-xs shadow-sm">
                                                 <span className="truncate max-w-[120px] sm:max-w-none">{formatDate(msg.createdAt)}</span>
                                                 <Clock size={11} className="sm:size-[12px]" />
                                             </span>

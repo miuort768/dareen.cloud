@@ -55,7 +55,7 @@ export const AAbdullah = () => {
                             <h1 className="text-xl md:text-3xl font-black leading-tight text-[var(--text-primary)]">
                                 مستر احمد عبدالله
                             </h1>
-                            <p className="text-[11px] md:text-base font-bold leading-tight text-[var(--text-success)] mt-px">
+                            <p className="text-micro md:text-base font-bold leading-tight text-[var(--text-success)] mt-px">
                                 مؤسس منصة دارين السابعة
                             </p>
                         </div>
