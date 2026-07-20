@@ -5,7 +5,7 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const TermsOfService = () => {
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO

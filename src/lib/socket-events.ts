@@ -40,10 +40,6 @@ export interface SessionInvitePayload {
   meetingProvider: string;
 }
 
-export interface SessionEndedPayload {
-  sessionId: string;
-}
-
 export interface TypingPayload {
   conversationId: string;
   userId: string;
@@ -60,16 +56,4 @@ export interface NewMessagePayload {
   senderName: string;
 }
 
-export interface NotificationPayload {
-  id: string;
-  title: string;
-  message: string;
-  type: string;
-  link?: string;
-}
 
-export interface LiveSessionStartedPayload {
-  id: string;
-  teacherName: string;
-  meetingUrl: string;
-}

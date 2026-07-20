@@ -27,7 +27,7 @@ export const SEO: React.FC<SEOProps> = ({
     breadcrumbs,
     noindex = false
 }) => {
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     const phone = adminPhone || '965XXXXXXXX';
     const absUrl = url.startsWith('http') ? url : `${BASE}${url}`;
     const absImage = toAbs(image);

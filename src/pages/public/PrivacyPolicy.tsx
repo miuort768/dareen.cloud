@@ -5,7 +5,8 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const PrivacyPolicy = () => {
-    const { adminPhone, whatsappNumbers } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
+    const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
 
     const getNumber = (label: string): string => {
       try {

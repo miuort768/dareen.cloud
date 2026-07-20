@@ -40,7 +40,11 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res, next) => {
+    const roles = ['admin'];
+    if (!roles.includes(req.user.role) && !req.user.permissions?.includes('*')) {
+        return res.status(403).json({ error: 'Forbidden: Admins only' });
+    }
     try {
         await prisma.contactMessage.delete({ where: { id: req.params.id } });
         res.json({ message: 'تم الحذف' });

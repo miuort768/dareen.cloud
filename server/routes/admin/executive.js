@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { authMiddleware } = require('../../middleware/auth');
+const { authMiddleware, checkRole } = require('../../middleware/auth');
 
 const services = require('../../services/executive');
 
-router.use(authMiddleware);
+router.use(authMiddleware, checkRole(['admin']));
 
 router.get('/dashboard', async (req, res) => {
     try {

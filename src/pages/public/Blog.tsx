@@ -21,7 +21,9 @@ import { PageLoader } from '../../components/ui/PageLoader';
 
 export const Blog = () => {
   const navigate = useNavigate();
-  const { adminPhone, libraryWhatsapp, libraryTelegram } = useSettingsStore();
+  const adminPhone = useSettingsStore(s => s.adminPhone);
+  const libraryWhatsapp = useSettingsStore(s => s.libraryWhatsapp);
+  const libraryTelegram = useSettingsStore(s => s.libraryTelegram);
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);

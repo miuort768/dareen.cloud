@@ -9,7 +9,7 @@ import { api } from '../../lib/api';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const Contact = () => {
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorDetail, setErrorDetail] = useState('');

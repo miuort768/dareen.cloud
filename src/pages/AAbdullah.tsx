@@ -6,7 +6,8 @@ import { MobileHeader } from '../components/public/MobileHeader';
 import { PublicFooter } from '../components/public/PublicFooter';
 
 export const AAbdullah = () => {
-    const { adminPhone, telegramHandle } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
+    const telegramHandle = useSettingsStore(s => s.telegramHandle);
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {

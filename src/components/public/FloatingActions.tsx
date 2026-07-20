@@ -8,7 +8,9 @@ import { cn } from '../../lib/utils';
 export const FloatingActions = () => {
     const location = useLocation();
     const isBooksPage = location.pathname.startsWith('/books');
-    const { adminPhone, telegramHandle, whatsappNumbers } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
+    const telegramHandle = useSettingsStore(s => s.telegramHandle);
+    const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
     const [theme, setTheme] = useDarkMode();
 
     const getNumber = (label: string): string => {

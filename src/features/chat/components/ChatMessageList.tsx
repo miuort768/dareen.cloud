@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { ArrowDown, CheckCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Virtuoso } from 'react-virtuoso';
@@ -19,13 +19,15 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
     const virtuosoRef = useRef<{ scrollToIndex: (params: { index: number; behavior?: ScrollBehavior }) => void }>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
 
-    const filteredMessages = [...messages].sort((a, b) => {
-        const timeA = new Date(a.timestamp).getTime();
-        const timeB = new Date(b.timestamp).getTime();
-        if (isNaN(timeA)) return 1;
-        if (isNaN(timeB)) return -1;
-        return timeA - timeB;
-    });
+    const filteredMessages = useMemo(() => {
+        return [...messages].sort((a, b) => {
+            const timeA = new Date(a.timestamp).getTime();
+            const timeB = new Date(b.timestamp).getTime();
+            if (isNaN(timeA)) return 1;
+            if (isNaN(timeB)) return -1;
+            return timeA - timeB;
+        });
+    }, [messages]);
 
     const scrollToBottom = () => {
         if (filteredMessages.length > 0) {
@@ -96,9 +98,9 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                     );
                 }}
             />
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {showScrollBottom && (
-                    <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+                    <motion.button key="scroll-bottom-btn" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
                         className="absolute bottom-20 end-6 w-10 h-10 bg-white dark:bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover">
                         <ArrowDown size={20} />

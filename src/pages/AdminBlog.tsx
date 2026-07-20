@@ -24,7 +24,9 @@ export const AdminBlog = () => {
     const [libraryWhatsapp, setLibraryWhatsapp] = useState('');
     const [libraryTelegram, setLibraryTelegram] = useState('');
     const [savingSettings, setSavingSettings] = useState(false);
-    const { libraryWhatsapp: savedWhatsapp, libraryTelegram: savedTelegram, setSetting } = useSettingsStore();
+    const savedWhatsapp = useSettingsStore(s => s.libraryWhatsapp);
+    const savedTelegram = useSettingsStore(s => s.libraryTelegram);
+    const setSetting = useSettingsStore(s => s.setSetting);
 
     useEffect(() => {
         if (savedWhatsapp) setLibraryWhatsapp(savedWhatsapp);

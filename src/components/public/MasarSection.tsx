@@ -3,7 +3,8 @@ import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headp
 import { useSettingsStore } from '../../store/settingsStore';
 
 export const MasarSection = () => {
-    const { adminPhone, whatsappNumbers } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
+    const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
     const contactUsNumber = (() => {
         try {
             const entries = JSON.parse(whatsappNumbers);

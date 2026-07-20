@@ -19,7 +19,7 @@ export const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const login = useLogin();
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     const navigate = useNavigate();
 
     const [typedText, setTypedText] = useState('');

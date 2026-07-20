@@ -32,7 +32,7 @@ const processContent = (text: string, alt?: string): string => {
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);

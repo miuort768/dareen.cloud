@@ -15,13 +15,11 @@ const helmet = require('helmet');
 const { Server } = require('socket.io');
 const http = require('http');
 
-const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 const monitoringMiddleware = require('./middleware/monitoring');
 const correlationIdMiddleware = require('./middleware/correlationId');
 const { auditMiddleware } = require('./middleware/audit');
 const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
-const cache = require('./services/cacheService');
 
 const { healthRouter } = require('./routes/health');
 
@@ -99,8 +97,16 @@ app.use(helmet({
 app.use(correlationIdMiddleware);
 app.use(auditMiddleware);
 app.use(monitoringMiddleware);
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+
+// Graceful JSON parse error — malformed body → 400, not 500
+app.use((err, _req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).json({ error: 'تنسيق JSON غير صالح في جسم الطلب' });
+    }
+    next(err);
+});
 
 require('./routes/seo')(app);
 
@@ -231,17 +237,20 @@ async function startServer() {
             await fsp.mkdir(dir, { recursive: true }).catch(() => {});
         }
 
-        // Auto-sync Prisma schema to match current schema files
-        try {
-            const { execSync } = require('child_process');
-            execSync('npx prisma db push --accept-data-loss', {
-                cwd: __dirname,
-                stdio: 'pipe',
-                timeout: 30000,
-                env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
-            });
-        } catch (syncErr) {
-            console.warn('DB schema sync warning (non-fatal):', syncErr.message);
+        // Schema sync is intentionally disabled in production.
+        // Use `npx prisma migrate deploy` for controlled migrations instead.
+        if (process.env.NODE_ENV !== 'production') {
+            try {
+                const { execSync } = require('child_process');
+                execSync('npx prisma db push', {
+                    cwd: __dirname,
+                    stdio: 'pipe',
+                    timeout: 30000,
+                    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
+                });
+            } catch (syncErr) {
+                console.warn('DB schema sync warning (non-fatal):', syncErr.message);
+            }
         }
 
         const { initQueueSystem } = require('./services');
@@ -266,6 +275,9 @@ async function startServer() {
 
         require('./socket/handler')(io, app);
         require('./socket/reminderScheduler')(app);
+
+        server.timeout = 120_000; // 2 min — close idle connections
+        server.headersTimeout = 65_000; // slightly above timeout for HTTP headers
 
         const serverInstance = server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);

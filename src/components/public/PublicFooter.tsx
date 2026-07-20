@@ -4,7 +4,7 @@ import { useSettingsStore } from '../../store/settingsStore';
 
 export const PublicFooter = () => {
     const navigate = useNavigate();
-    const { adminPhone } = useSettingsStore();
+    const adminPhone = useSettingsStore(s => s.adminPhone);
 
     return (
         <footer className="relative bg-surface dark:bg-card text-main overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500 min-h-[300px] border-t border-border">

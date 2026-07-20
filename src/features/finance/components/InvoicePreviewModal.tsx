@@ -20,7 +20,8 @@ interface InvoicePreviewModalProps {
 }
 
 export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreviewModalProps) => {
-    const { academyName, adminPhone } = useSettingsStore();
+    const academyName = useSettingsStore(s => s.academyName);
+    const adminPhone = useSettingsStore(s => s.adminPhone);
     const [hidePricing, setHidePricing] = useState(false);
 
     if (!isOpen) return null;

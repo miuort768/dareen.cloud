@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const authAccounts = require('../services/authAccounts');
 const { updatePresence, removePresence } = require('../services/executive/presence');
 
 const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
@@ -24,11 +25,18 @@ const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
 module.exports = (io) => {
     const rateLimit = socketRateLimiter(30, 10000);
 
-    io.use((socket, next) => {
+    io.use(async (socket, next) => {
         const token = socket.handshake.auth.token || socket.handshake.query.token;
         if (!token) return next(new Error('Authentication error'));
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            if (decoded.token_version !== undefined) {
+                const versionOk = await authAccounts.checkTokenVersion(decoded.id, decoded.role, decoded.token_version);
+                if (!versionOk) {
+                    console.warn(`[SOCKET] Token revoked for user ${decoded.id} (${decoded.name})`);
+                    return next(new Error('Authentication error'));
+                }
+            }
             socket.data.user = decoded;
             next();
         } catch (err) {

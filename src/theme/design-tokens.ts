@@ -85,9 +85,9 @@ export const shadows = {
   '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
   inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
   card: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-  gold: '0 10px 30px -10px rgba(212, 175, 55, 0.3)',
-  'gold-hover': '0 20px 40px -10px rgba(212, 175, 55, 0.4)',
-  glass: '0 8px 32px 0 rgba(15, 23, 42, 0.05)',
+  gold: '0 10px 30px -10px rgb(var(--color-gold) / 0.3)',
+  'gold-hover': '0 20px 40px -10px rgb(var(--color-gold) / 0.4)',
+  glass: '0 8px 32px 0 rgb(var(--color-primary-deep) / 0.05)',
 } as const;
 
 export type DesignTokenCategory = 'typography' | 'spacing' | 'radius' | 'shadows';

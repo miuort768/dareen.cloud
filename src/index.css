@@ -55,9 +55,9 @@ html, body {
     --border-main:   226 232 240;
     --border-accent:  15  23  42;
 
-    --shadow-premium: 0 0 20px rgba(236,72,153,0.12);
-    --glass-bg:    rgba(255,255,255,0.72);
-    --glass-border:rgba(255,255,255,0.45);
+    --shadow-premium: 0 0 20px rgb(236 72 153 / 0.12);
+    --glass-bg:    rgb(255 255 255 / 0.72);
+    --glass-border:rgb(255 255 255 / 0.45);
   }
 
   /* ── Unified Dark Mode – same brand hue, adjusted luminance ── */
@@ -82,9 +82,9 @@ html, body {
     --border-main:    30 41 59;
     --border-accent:  51 65 85;
 
-    --shadow-premium: 0 0 20px rgba(251,113,133,0.12);
-    --glass-bg:    rgba(15,23,42,0.65);
-    --glass-border:rgba(255,255,255,0.06);
+    --shadow-premium: 0 0 20px rgb(251 113 133 / 0.12);
+    --glass-bg:    rgb(15 23 42 / 0.65);
+    --glass-border:rgb(255 255 255 / 0.06);
   }
 
   html {
@@ -147,7 +147,7 @@ html, body {
   }
 
   .dark ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255 255 255 / 0.1);
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
@@ -243,17 +243,17 @@ html, body {
   }
 
   .dark .shadow-sm, .dark .shadow, .dark .shadow-md, .dark .shadow-lg {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -2px rgb(0 0 0 / 0.5) !important;
   }
 
   /* Specific Card Styling for Premium Depth */
   .dark .bg-card, .dark .sharp-card {
-    background-image: linear-gradient(to bottom right, rgba(255,255,255,0.03), transparent);
+    background-image: linear-gradient(to bottom right, rgb(255 255 255 / 0.03), transparent);
   }
 
   /* Inputs & Selects in Dark Mode */
   .dark input, .dark select, .dark textarea {
-    background-color: rgba(2, 6, 23, 0.8) !important;
+    background-color: rgb(var(--bg-surface) / 0.8) !important;
     border-color: rgb(var(--border-accent)) !important;
     color: rgb(var(--text-main)) !important;
   }
@@ -269,7 +269,7 @@ html, body {
 
   /* Tables in Dark Mode */
   .dark table thead tr {
-    background-color: rgba(30, 41, 59, 0.8) !important;
+    background-color: rgb(var(--bg-hover) / 0.8) !important;
   }
 
   .dark table tbody tr {
@@ -278,7 +278,7 @@ html, body {
   }
 
   .dark table tbody tr:hover {
-    background-color: rgba(30, 41, 59, 0.5) !important;
+    background-color: rgb(var(--bg-hover) / 0.5) !important;
   }
 }
 
