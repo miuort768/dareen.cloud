@@ -29,9 +29,9 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
             <GraduationCap className="w-6 h-6 text-on-primary relative z-10" />
           </div>
           <div>
-            <p className="text-base font-black text-main dark:text-on-primary leading-tight">دارين السابعة</p>
-            <p className="text-micro font-bold leading-tight text-main dark:text-on-primary">أفضل مدرسة افتراضية</p>
-            <p className="text-micro text-main dark:text-on-primary leading-tight mt-0.5">Dareen for Education & Online Learning</p>
+                            <p className="text-base font-black text-main dark:text-main leading-tight">دارين السابعة</p>
+                            <p className="text-micro font-bold leading-tight text-main dark:text-main">أفضل مدرسة افتراضية</p>
+                            <p className="text-micro text-main dark:text-main leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
         </Link>
         </div>
