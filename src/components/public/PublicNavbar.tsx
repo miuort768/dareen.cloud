@@ -171,7 +171,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-primary hover:bg-primary-soft rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-primary dark:text-primary hover:bg-primary-soft dark:hover:bg-primary-soft/40 rounded-full transition-all active:scale-90"
                             aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -193,7 +193,7 @@ export const PublicNavbar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg'
-                                    : 'text-main hover:bg-surface'
+                                    : 'text-main dark:text-main hover:bg-surface dark:hover:bg-hover'
                                     }`}
                             >
                                 <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-primary'}`}></span>
@@ -207,14 +207,14 @@ export const PublicNavbar = () => {
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-main hover:bg-surface"
+                                        className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-main dark:text-main hover:bg-surface dark:hover:bg-hover"
                                     >
                                         <Sparkles className="w-5 h-5 text-primary" />
                                         لوحة التحكم
                                     </Link>
                                     <button
                                         onClick={async () => { if (!await confirm('هل أنت متأكد من تسجيل الخروج؟')) return; logout(); setIsMenuOpen(false); }}
-                                        className="flex w-full items-center gap-3 px-6 py-4 rounded-full font-bold text-error hover:bg-error-light"
+                                        className="flex w-full items-center gap-3 px-6 py-4 rounded-full font-bold text-error dark:text-error hover:bg-error-light dark:hover:bg-error/20"
                                     >
                                         <LogOut size={20} className="rotate-180" />
                                         تسجيل الخروج
