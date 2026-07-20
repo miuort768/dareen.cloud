@@ -21,7 +21,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       <div className="hidden md:block">
         <PublicNavbar />
       </div>
-      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2">
+      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2 bg-surface">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
           <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary flex items-center justify-center shadow-lg shadow-primary/20 relative overflow-hidden">

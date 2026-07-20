@@ -28,7 +28,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             num: '02',
             icon: Star,
             title: 'حصة مجانية',
-            desc: 'استمتع بالتجريب أولاً',
+            desc: 'حصة تجريبية مجانية لك',
             boxBg: 'bg-success',
         },
         {
@@ -68,10 +68,10 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-xl font-black text-main leading-tight mb-1">
+                <h2 className="text-xl font-black text-main dark:text-main leading-tight mb-1">
                     كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover">المعهد؟</span>
                 </h2>
-                <p className="text-xs text-muted font-medium mb-5 leading-relaxed">
+                <p className="text-xs text-muted dark:text-muted font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
                 </p>
 
@@ -88,9 +88,9 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                                 <s.icon size={18} className="text-on-primary" />
                             </div>
                             {/* Title */}
-                            <h3 className="text-xs font-black text-main mb-0.5">{s.title}</h3>
+                            <h3 className="text-xs font-black text-main dark:text-main mb-0.5">{s.title}</h3>
                             {/* Desc */}
-                            <p className="text-micro text-muted font-medium leading-tight">{s.desc}</p>
+                            <p className="text-micro text-muted dark:text-muted font-medium leading-tight">{s.desc}</p>
                         </div>
                     ))}
                 </div>
@@ -109,8 +109,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                                 {item.icon === 'Hash' && <Hash size={12} className="text-on-primary" />}
                             </div>
                             <div>
-                                <span className="text-xs font-black text-main">{item.title}</span>
-                                <p className="text-micro text-muted">{item.desc}</p>
+                                <span className="text-xs font-black text-main dark:text-main">{item.title}</span>
+                                <p className="text-micro text-muted dark:text-muted">{item.desc}</p>
                             </div>
                         </div>
                     ))}
