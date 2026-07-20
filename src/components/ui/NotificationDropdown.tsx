@@ -165,7 +165,7 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/15 hover:scale-110 active:scale-95 transition-all duration-200"
+                className="relative w-10 h-10 flex items-center justify-center hover:bg-main/5 hover:scale-110 active:scale-95 transition-all duration-200"
                 aria-label="إظهار الإشعارات"
                 aria-expanded={isOpen}
                 aria-controls="notification-panel"

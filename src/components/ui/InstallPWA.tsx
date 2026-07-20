@@ -128,7 +128,7 @@ export const InstallPWA = () => {
                                 ثبتي التطبيق
                             </h2>
                         </div>
-                        <button onClick={handleDismiss} className="p-1 hover:bg-black/10 transition-colors" aria-label="إغلاق">
+                        <button onClick={handleDismiss} className="p-1 hover:bg-main/10 transition-colors" aria-label="إغلاق">
                             <X size={16} className="text-main" />
                         </button>
                     </div>

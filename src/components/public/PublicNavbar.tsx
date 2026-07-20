@@ -95,7 +95,7 @@ export const PublicNavbar = () => {
                                 key={item.path}
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
+                                    ? 'bg-gradient-to-r from-primary to-primary text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
                                     : 'text-main hover:bg-primary-soft hover:text-primary dark:text-main dark:hover:bg-primary-soft dark:hover:text-primary'
                                     }`}
                             >
@@ -162,7 +162,7 @@ export const PublicNavbar = () => {
                         ) : (
                                 <Link
                                     to="/login"
-                                    className="hidden md:flex bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                    className="hidden md:flex bg-gradient-to-r from-primary to-primary text-on-primary px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
                                 >
                                 تسجيل الدخول
                             </Link>
@@ -224,7 +224,7 @@ export const PublicNavbar = () => {
                                 <Link
                                     to="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center justify-center bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
+                                    className="flex items-center justify-center bg-gradient-to-r from-primary to-primary text-on-primary py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
                                 >
                                     تسجيل الدخول
                                 </Link>

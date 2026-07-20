@@ -34,7 +34,7 @@ interface WhyChooseUsProps {
 
 export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProps) => {
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-card pt-4 md:pt-10 pb-0">
+    <section className="relative overflow-hidden bg-surface dark:bg-card pt-4 md:pt-10 pb-0">
       {/* Neon glow decorations */}
       <div className="absolute -top-40 -start-40 w-80 h-80 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-40 -end-40 w-80 h-80 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />

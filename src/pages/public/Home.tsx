@@ -197,14 +197,14 @@ export const Home = () => {
                     <AnimateOnScroll animation="slideRight"><div style={{ contentVisibility: 'auto' }}><AppDownloadSection /></div></AnimateOnScroll>
                     <AnimateOnScroll><div style={{ contentVisibility: 'auto' }}><WhyChooseUs whatsappNumber={excellenceNumber} /></div></AnimateOnScroll>
                     <AnimateOnScroll><div style={{ contentVisibility: 'auto' }}><QuranSection whatsappNumber={memorizingNumber} /></div></AnimateOnScroll>
-                    <div className="hidden" style={{ contentVisibility: 'auto' }}><HowItWorks whatsappNumber={bookFreeNumber} /></div>
+                    <AnimateOnScroll><div style={{ contentVisibility: 'auto' }}><HowItWorks whatsappNumber={bookFreeNumber} /></div></AnimateOnScroll>
                     <AnimateOnScroll animation="slideLeft"><div style={{ contentVisibility: 'auto' }}><Testimonials reviews={reviews} currentIndex={currentIndex} /></div></AnimateOnScroll>
                     <AnimateOnScroll><div style={{ contentVisibility: 'auto' }}><MasarSection /></div></AnimateOnScroll>
                     <AnimateOnScroll><div style={{ contentVisibility: 'auto' }}><FAQSection /></div></AnimateOnScroll>
                 </div>
             </main>
             <div className="hidden md:block">
-                <AnimateOnScroll animation="scaleIn" duration={0.7}><HeroSection typewriterText={typewriterText} whatsappNumber={requestFreeNumber} signupNowNumber={signupNowNumber} bannersArray={bannersArray} /></AnimateOnScroll>
+                <AnimateOnScroll animation="scaleIn" duration={0.7}><HeroSection typewriterText={typewriterText} signupNowNumber={signupNowNumber} bannersArray={bannersArray} /></AnimateOnScroll>
                 <AnimateOnScroll><StatsCounter /></AnimateOnScroll>
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><WhyChooseUs whatsappNumber={excellenceNumber} /></AnimateOnScroll></div>
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><QuranSection whatsappNumber={memorizingNumber} /></AnimateOnScroll></div>

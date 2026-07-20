@@ -15,7 +15,7 @@ interface TestimonialsProps {
 
 export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
     return (
-        <section className="py-4 md:py-6 bg-white dark:bg-card relative overflow-hidden transition-colors duration-500">
+        <section className="py-4 md:py-6 bg-surface dark:bg-card relative overflow-hidden transition-colors duration-500">
 
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />

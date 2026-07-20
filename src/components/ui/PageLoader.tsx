@@ -3,7 +3,7 @@ import { Image } from '../../shared/components/ui';
 
 export const PageLoader = () => {
     return (
-        <div className="fixed inset-0 z-[9999] flex flex-col bg-white dark:bg-background overflow-hidden">
+        <div className="fixed inset-0 z-[9999] flex flex-col bg-surface dark:bg-background overflow-hidden">
             <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/10 dark:bg-primary/20 rounded-full blur-[120px] animate-pulse" />
             <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 dark:bg-primary/20 rounded-full blur-[120px] animate-pulse" />
 

@@ -36,15 +36,15 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
         </Link>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className={`w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className={`w-10 h-10 rounded-full bg-surface dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
             {theme === 'dark' ? <Sun className="w-4 h-4 text-warning" /> : <Bed className="w-4 h-4 text-primary" />}
           </button>
           <div className="relative">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-white dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center">
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-surface dark:bg-primary shadow-sm border border-border dark:border-border flex items-center justify-center">
             {menuOpen ? <X className="w-5 h-5 text-muted dark:text-on-primary" /> : <Menu className="w-5 h-5 text-muted dark:text-on-primary" />}
           </button>
           {menuOpen && (
-            <div className="absolute top-12 end-0 bg-white dark:bg-primary rounded-2xl shadow-2xl border border-border dark:border-border z-50 min-w-[180px]">
+            <div className="absolute top-12 end-0 bg-surface dark:bg-primary rounded-2xl shadow-2xl border border-border dark:border-border z-50 min-w-[180px]">
               {navItems.map((item) => (
                 <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-on-primary hover:bg-primary-soft dark:hover:bg-primary/30 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-border last:border-0 whitespace-nowrap">
                   <item.icon size={16} className="shrink-0" />

@@ -10,7 +10,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: HeroSectionProps) => {
     return (
-        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-white dark:bg-card">
+        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-card">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="container mx-auto px-4">
@@ -35,7 +35,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary font-bold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-primary to-primary text-on-primary font-bold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     aria-label="تصفح الدورات التعليمية"
                                 >
                                     <span>تصفح الدورات</span>

@@ -78,7 +78,7 @@ export const FAQSection = () => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <HelpCircle size={80} />];
                         const isOpen = openIdx === idx;
                         return (
-                            <div key={idx} className="relative bg-white dark:bg-card border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
+                            <div key={idx} className="relative bg-surface dark:bg-card border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
                                 <div className="absolute -bottom-4 -end-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>
@@ -94,7 +94,7 @@ export const FAQSection = () => {
                                     </button>
                                     {isOpen && (
                                         <div className="px-4 pb-4 pt-0">
-                                            <div className="h-px w-full bg-gradient-to-r from-[var(--bg-primary)]/10 via-[var(--bg-surface)] dark:via-[var(--bg-primary)] to-transparent mb-3"></div>
+                                            <div className="h-px w-full bg-gradient-to-r from-primary/10 via-surface dark:via-primary to-transparent mb-3"></div>
                                             <p className="text-micro md:text-xs text-main dark:text-main leading-relaxed font-medium">
                                                 {item.a}
                                             </p>

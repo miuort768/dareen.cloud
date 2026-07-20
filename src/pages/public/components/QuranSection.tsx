@@ -30,7 +30,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     return (
         <>
             {/* Desktop version */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-white dark:bg-card transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-card transition-colors duration-500">
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -130,7 +130,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-white dark:bg-card transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-card transition-colors duration-500 pt-2 pb-4">
                 <LeafDecoration />
 
                 {/* Decorative background blobs */}
