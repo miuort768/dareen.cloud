@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
+import { SOCKET_EVENTS } from '../lib/socket-events';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { PageLoader } from '../components/ui/PageLoader';
 import { TrialSessionCard } from './TrialSessionCard';
@@ -72,8 +73,8 @@ export const TrialSessions = () => {
       queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
       queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] });
     };
-    socket.on('trial_session_updated', handleUpdate);
-    return () => { socket.off('trial_session_updated', handleUpdate); };
+    socket.on(SOCKET_EVENTS.TRIAL_SESSION_UPDATED, handleUpdate);
+    return () => { socket.off(SOCKET_EVENTS.TRIAL_SESSION_UPDATED, handleUpdate); };
   }, [queryClient]);
 
   const resetForm = () => setForm({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });

@@ -10,6 +10,13 @@ const genId = () => crypto.randomBytes(16).toString('hex');
 
 const MEETING_PROVIDERS = ['google_meet', 'zoom', 'custom'];
 
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str.replace(/[<>&"']/g, (c) => ({
+    '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;'
+  }[c]));
+}
+
 function validateMeetingUrl(provider, url) {
   if (!url || typeof url !== 'string') {
     return 'رابط الاجتماع مطلوب';
@@ -86,6 +93,8 @@ router.post('/start', authMiddleware, async (req, res) => {
 
   try {
     const { title, subject, meetingProvider, meetingUrl, targetStudentId } = req.body;
+    const cleanTitle = sanitize(title || 'حصة مباشرة');
+    const cleanSubject = sanitize(subject || '');
     const provider = meetingProvider || 'google_meet';
 
     if (!MEETING_PROVIDERS.includes(provider)) {
@@ -120,8 +129,8 @@ router.post('/start', authMiddleware, async (req, res) => {
     await prisma.liveSession.create({
       data: {
         id, teacherId, teacherName,
-        title: title || 'حصة مباشرة',
-        subject: subject || '',
+        title: cleanTitle,
+        subject: cleanSubject,
         meetingProvider: provider,
         meetingUrl: meetingUrl.trim(),
         meetingCode,
@@ -132,9 +141,6 @@ router.post('/start', authMiddleware, async (req, res) => {
 
     const io = req.app.get('socketio');
     if (io) {
-      io.to(`user_${teacherId}`).emit('live_session_started', { id, teacherName, meetingUrl });
-
-      const io2 = req.app.get('socketio');
       if (targetStudentId) {
         const studentNotifId = genId();
         const msg = `بدأت المعلمة ${teacherName} حصة ${subject || ''} الآن. انضمي عبر الرابط: ${meetingUrl}`;
@@ -152,10 +158,10 @@ router.post('/start', authMiddleware, async (req, res) => {
               link: meetingUrl,
             }
           });
-          io2.to(`user_${targetStudentId}`).emit('notification', {
+          io.to(`user_${targetStudentId}`).emit('notification', {
             id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', link: meetingUrl
           });
-          io2.to(`user_${targetStudentId}`).emit('session_invite', {
+          io.to(`user_${targetStudentId}`).emit('session_invite', {
             teacherName, subject, sessionId: id, meetingUrl, meetingProvider: provider
           });
 
@@ -179,7 +185,7 @@ router.post('/start', authMiddleware, async (req, res) => {
                 link: meetingUrl,
               }
             });
-            io2.to(`user_${student.parentId}`).emit('notification', {
+            io.to(`user_${student.parentId}`).emit('notification', {
               id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', link: meetingUrl
             });
           }

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, Link, Video, CheckCircle2 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { socketService } from '../../lib/socket';
+import { SOCKET_EVENTS } from '../../lib/socket-events';
 import { useCurrentUser } from '../../context/AppContext';
 import { startLiveSession } from '../../services/liveSessionService';
 import type { LiveSession } from '../../types';
@@ -49,13 +50,13 @@ export const LiveClasses = () => {
     fetchSessions();
     const socket = socketService.getSocket();
     if (socket) {
-      socket.on('session_invite', fetchSessions);
-      socket.on('session_ended', fetchSessions);
+      socket.on(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
+      socket.on(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
     }
     return () => {
       if (socket) {
-        socket.off('session_invite', fetchSessions);
-        socket.off('session_ended', fetchSessions);
+        socket.off(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
+        socket.off(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
       }
     };
   }, [fetchSessions]);

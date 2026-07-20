@@ -5,6 +5,7 @@ import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
 import { socketService } from '../lib/socket';
+import { SOCKET_EVENTS } from '../lib/socket-events';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { PageLoader } from '../components/ui/PageLoader';
 import { PrimaryBtn, StatItem } from './leads/components/LeadsUI';
@@ -62,8 +63,8 @@ export const Leads = () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
         };
-        socket.on('lead_updated', handleLeadUpdate);
-        return () => { socket.off('lead_updated', handleLeadUpdate); };
+        socket.on(SOCKET_EVENTS.LEAD_UPDATED, handleLeadUpdate);
+        return () => { socket.off(SOCKET_EVENTS.LEAD_UPDATED, handleLeadUpdate); };
     }, [queryClient]);
 
     const addMutation = useMutation({

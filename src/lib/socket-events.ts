@@ -1,0 +1,75 @@
+// Socket.IO event names shared between client and server
+// All event names MUST be used via these constants, never as raw strings
+
+export const SOCKET_EVENTS = {
+  // Connection
+  CONNECT: 'connect',
+  DISCONNECT: 'disconnect',
+  CONNECT_ERROR: 'connect_error',
+
+  // Chat
+  JOIN_CONVERSATION: 'join_conversation',
+  LEAVE_CONVERSATION: 'leave_conversation',
+  NEW_MESSAGE: 'new_message',
+  NEW_CONVERSATION: 'new_conversation',
+  TYPING: 'typing',
+
+  // Live Sessions
+  SESSION_INVITE: 'session_invite',
+  SESSION_ENDED: 'session_ended',
+  LIVE_SESSION_STARTED: 'live_session_started',
+
+  // Notifications
+  NOTIFICATION: 'notification',
+
+  // CRM
+  TRIAL_SESSION_UPDATED: 'trial_session_updated',
+  LEAD_UPDATED: 'lead_updated',
+
+  // Presence
+  PRESENCE_UPDATE: 'presence_update',
+  PRESENCE_PING: 'presence_ping',
+} as const;
+
+// Socket event payload types shared across files
+export interface SessionInvitePayload {
+  teacherName: string;
+  subject: string;
+  sessionId: string;
+  meetingUrl: string;
+  meetingProvider: string;
+}
+
+export interface SessionEndedPayload {
+  sessionId: string;
+}
+
+export interface TypingPayload {
+  conversationId: string;
+  userId: string;
+  userName: string;
+  isTyping: boolean;
+}
+
+export interface NewMessagePayload {
+  id: string;
+  conversationId: string;
+  content: string;
+  timestamp: string;
+  senderId: string;
+  senderName: string;
+}
+
+export interface NotificationPayload {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  link?: string;
+}
+
+export interface LiveSessionStartedPayload {
+  id: string;
+  teacherName: string;
+  meetingUrl: string;
+}

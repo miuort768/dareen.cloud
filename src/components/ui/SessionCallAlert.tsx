@@ -3,13 +3,7 @@ import { ExternalLink, X, BellRing } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from '../../context/AppContext';
 import { socketService } from '../../lib/socket';
-
-interface CallData {
-    teacherName: string;
-    subject: string;
-    meetingUrl: string;
-    meetingProvider: string;
-}
+import { SOCKET_EVENTS, type SessionInvitePayload } from '../../lib/socket-events';
 
 const PROVIDER_NAMES: Record<string, string> = {
     google_meet: 'Google Meet',
@@ -19,7 +13,7 @@ const PROVIDER_NAMES: Record<string, string> = {
 
 export const SessionCallAlert = () => {
     const currentUser = useCurrentUser();
-    const [callData, setCallData] = useState<CallData | null>(null);
+    const [callData, setCallData] = useState<SessionInvitePayload | null>(null);
     const [show, setShow] = useState(false);
     const notificationAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -44,12 +38,12 @@ export const SessionCallAlert = () => {
             setCallData(null);
         };
 
-        socket.on('session_invite', handleInvite);
-        socket.on('session_ended', handleEnded);
+        socket.on(SOCKET_EVENTS.SESSION_INVITE, handleInvite);
+        socket.on(SOCKET_EVENTS.SESSION_ENDED, handleEnded);
 
         return () => {
-            socket.off('session_invite', handleInvite);
-            socket.off('session_ended', handleEnded);
+            socket.off(SOCKET_EVENTS.SESSION_INVITE, handleInvite);
+            socket.off(SOCKET_EVENTS.SESSION_ENDED, handleEnded);
         };
     }, [currentUser]);
 

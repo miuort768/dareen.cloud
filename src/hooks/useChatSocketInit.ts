@@ -1,18 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
+import { SOCKET_EVENTS, type NewMessagePayload, type TypingPayload } from '../lib/socket-events';
 import { useCurrentUser, useIsAuthenticated } from '../context/AppContext';
 import { useChatStore } from '../store/chatStore';
-
-interface ChatMessage {
-    id: string;
-    conversationId: string;
-    content: string;
-    timestamp: string;
-    senderId: string;
-    senderName: string;
-    [key: string]: unknown;
-}
 
 interface ChatConversation {
     id: string;
@@ -27,6 +18,7 @@ export const useChatSocketInit = () => {
     const currentUser = useCurrentUser();
     const queryClient = useQueryClient();
     const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const setIsConnected = useChatStore(s => s.setIsConnected);
     const activeConversationId = useChatStore(s => s.activeConversationId);
@@ -43,14 +35,14 @@ export const useChatSocketInit = () => {
         const socket = socketService.connect();
         if (!socket) return;
 
-        const typingTimeouts = typingTimeoutsRef.current;
-
-        let audio: HTMLAudioElement | null = null;
-        try {
-            audio = new Audio('/notification.ogg');
-        } catch (e) {
-            console.error('Audio initialization failed', e);
+        if (!audioRef.current) {
+            try {
+                audioRef.current = new Audio('/notification.ogg');
+            } catch (e) {
+                console.error('Audio initialization failed', e);
+            }
         }
+        const audio = audioRef.current;
 
         const playNotificationSound = () => {
             if (audio) {
@@ -73,7 +65,7 @@ export const useChatSocketInit = () => {
             }
         };
 
-        const handleTyping = (data: { conversationId: string; userId: string; userName: string; isTyping: boolean }) => {
+        const handleTyping = (data: TypingPayload) => {
             useChatStore.getState().setTypingUsers(
                 useChatStore.getState().typingUsers.filter(t => t.conversationId !== data.conversationId || t.userName !== data.userName)
             );
@@ -96,10 +88,10 @@ export const useChatSocketInit = () => {
             }
         };
 
-        const handleNewMessage = (message: ChatMessage) => {
+        const handleNewMessage = (message: NewMessagePayload) => {
             queryClient.setQueryData(['messages', message.conversationId], (old: unknown) => {
-                const msgs = (Array.isArray(old) ? old : []) as ChatMessage[];
-                if (msgs.find((m: ChatMessage) => m.id === message.id)) return msgs;
+                const msgs = (Array.isArray(old) ? old : []) as NewMessagePayload[];
+                if (msgs.find((m: NewMessagePayload) => m.id === message.id)) return msgs;
                 return [...msgs, message];
             });
 
@@ -156,20 +148,25 @@ export const useChatSocketInit = () => {
         const handleDisconnect = () => setIsConnected(false);
 
         setIsConnected(socket.connected);
-        socket.on('connect', handleConnect);
-        socket.on('disconnect', handleDisconnect);
-        socket.on('new_message', handleNewMessage);
-        socket.on('typing', handleTyping);
-        socket.on('new_conversation', handleNewConversation);
+        socket.on(SOCKET_EVENTS.CONNECT, handleConnect);
+        socket.on(SOCKET_EVENTS.DISCONNECT, handleDisconnect);
+        socket.on(SOCKET_EVENTS.NEW_MESSAGE, handleNewMessage);
+        socket.on(SOCKET_EVENTS.TYPING, handleTyping);
+        socket.on(SOCKET_EVENTS.NEW_CONVERSATION, handleNewConversation);
 
         return () => {
-            socket.off('connect', handleConnect);
-            socket.off('disconnect', handleDisconnect);
-            socket.off('new_message', handleNewMessage);
-            socket.off('typing', handleTyping);
-            socket.off('new_conversation', handleNewConversation);
+            socket.off(SOCKET_EVENTS.CONNECT, handleConnect);
+            socket.off(SOCKET_EVENTS.DISCONNECT, handleDisconnect);
+            socket.off(SOCKET_EVENTS.NEW_MESSAGE, handleNewMessage);
+            socket.off(SOCKET_EVENTS.TYPING, handleTyping);
+            socket.off(SOCKET_EVENTS.NEW_CONVERSATION, handleNewConversation);
 
-            Object.values(typingTimeouts).forEach(timeout => clearTimeout(timeout));
+            Object.values(typingTimeoutsRef.current).forEach(timeout => clearTimeout(timeout));
+            typingTimeoutsRef.current = {};
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
         };
     }, [isAuthenticated, currentUser, queryClient, setIsConnected]);
 };

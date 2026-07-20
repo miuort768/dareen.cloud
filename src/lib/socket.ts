@@ -1,13 +1,11 @@
 import { io, Socket } from 'socket.io-client';
-
-// In production, the URL might be different or dynamic
-// Path is now handled relative to the origin for better proxy support
-// const SOCKET_URL = API_BASE_URL.replace('/api', '');
+import { SOCKET_EVENTS } from './socket-events';
 
 class SocketService {
     private socket: Socket | null = null;
-
     private activeRooms: Set<string> = new Set();
+    private reconnectAttempts = 0;
+    private maxReconnectAttempts = 10;
 
     connect() {
         const token = localStorage.getItem('auth_token');
@@ -21,23 +19,29 @@ class SocketService {
                 autoConnect: true,
                 auth: { token },
                 reconnection: true,
-                reconnectionAttempts: 5,
+                reconnectionAttempts: this.maxReconnectAttempts,
                 reconnectionDelay: 1000,
                 reconnectionDelayMax: 10000,
                 timeout: 30000
             });
 
-            this.socket.on('connect', () => {
+            this.socket.on(SOCKET_EVENTS.CONNECT, () => {
+                this.reconnectAttempts = 0;
                 this.activeRooms.forEach(roomId => {
-                    this.socket?.emit('join_conversation', roomId);
+                    this.socket?.emit(SOCKET_EVENTS.JOIN_CONVERSATION, roomId);
                 });
             });
 
-            this.socket.on('connect_error', (err) => {
+            this.socket.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {
                 if (err.message === 'Authentication error') {
-                    this.socket?.disconnect();
-                    this.socket = null;
-                    console.error('❌ Socket auth failed, stopping reconnection');
+                    console.error('❌ Socket auth failed');
+                    this.reconnectAttempts++;
+                    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+                        this.socket?.disconnect();
+                        this.socket = null;
+                        this.reconnectAttempts = 0;
+                        return;
+                    }
                     return;
                 }
                 console.error('❌ Socket connection error:', err.message);
@@ -56,25 +60,22 @@ class SocketService {
 
     getSocket() {
         if (this.socket?.connected) return this.socket;
-        const s = this.connect();
-        if (!s) {
-            console.warn('⚠️ Socket not available — user may be offline or unauthenticated');
-        }
-        return s;
+        return this.connect();
     }
 
     joinConversation(id: string) {
         this.activeRooms.add(id);
-        this.getSocket()?.emit('join_conversation', id);
+        this.getSocket()?.emit(SOCKET_EVENTS.JOIN_CONVERSATION, id);
     }
 
     leaveConversation(id: string) {
         this.activeRooms.delete(id);
-        this.getSocket()?.emit('leave_conversation', id);
+        this.getSocket()?.emit(SOCKET_EVENTS.LEAVE_CONVERSATION, id);
     }
 
     disconnect() {
         this.activeRooms.clear();
+        this.reconnectAttempts = 0;
         if (this.socket) {
             this.socket.disconnect();
             this.socket = null;
