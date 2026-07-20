@@ -1,4 +1,4 @@
-import { Smartphone, Monitor, Download, Shield, MonitorDown } from 'lucide-react';
+import { Smartphone, Monitor, Download, Shield, MonitorDown, Globe, Apple } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
 
 export const AppDownloadSection = () => {
@@ -47,10 +47,30 @@ export const AppDownloadSection = () => {
                                  أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                             </p>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                                <a
+                                    href="#"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl border border-border"
+                                >
+                                    <Globe className="w-5 h-5" />
+                                    <div className="text-start">
+                                        <div className="text-micro text-white/70 font-medium leading-tight">حمله على</div>
+                                        <div className="text-sm font-black leading-tight -mt-0.5">Google Play</div>
+                                    </div>
+                                </a>
+                                <a
+                                    href="#"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl border border-border"
+                                >
+                                    <Apple className="w-5 h-5" />
+                                    <div className="text-start">
+                                        <div className="text-micro text-white/70 font-medium leading-tight">حمله على</div>
+                                        <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
+                                    </div>
+                                </a>
                                 {!pwaInstalled && (
                                 <button
                                     onClick={handlePwaInstall}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary text-on-primary font-bold text-sm shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-on-primary font-bold text-sm shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl"
                                 >
                                     <Monitor className="w-5 h-5" />
                                     <div className="text-start">
@@ -101,6 +121,20 @@ export const AppDownloadSection = () => {
                         أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                     </p>
                     <div className="flex flex-col gap-3 items-center mb-7">
+                        <a
+                            href="#"
+                            className="w-full max-w-[320px] py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 rounded-2xl border border-border"
+                        >
+                            <Globe className="w-5 h-5" />
+                            <span>حمله على Google Play</span>
+                        </a>
+                        <a
+                            href="#"
+                            className="w-full max-w-[320px] py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 rounded-2xl border border-border"
+                        >
+                            <Apple className="w-5 h-5" />
+                            <span>حمله على App Store</span>
+                        </a>
                         {!pwaInstalled && (
                         <button
                             onClick={handlePwaInstall}
