@@ -96,7 +96,7 @@ export const Home = () => {
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark -mt-0.5" /></span>}</h1>
+                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-success"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-success -mt-0.5" /></span>}</h1>
                                     <p className="text-xs font-bold text-primary dark:text-warning mb-0.5">{slide.subtitle}</p>
                                     <p className="text-micro text-muted dark:text-on-primary leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
