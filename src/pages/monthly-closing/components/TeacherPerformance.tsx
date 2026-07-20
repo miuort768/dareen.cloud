@@ -23,7 +23,7 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                     </div>
                     <div className="flex-1">
                         <div className="flex justify-between items-start mb-2">
-                            <h3 className="text-sm font-bold text-main dark:text-on-primary">{perf.name}</h3>
+                            <h3 className="text-sm font-bold text-main dark:text-main">{perf.name}</h3>
                             <span className="text-micro font-bold text-muted uppercase">{perf.total} حصة</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">

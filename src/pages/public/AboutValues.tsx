@@ -12,7 +12,7 @@ export const AboutValues = () => (
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-l from-primary to-primary-hover rounded-full mb-4 shadow-lg shadow-primary/20">
                     <span className="text-micro font-black text-on-primary">دستورنا التعليمي</span>
                 </div>
-                <h2 className="text-2xl md:text-4xl font-black text-main dark:text-on-primary mb-4 font-heading">
+                <h2 className="text-2xl md:text-4xl font-black text-main dark:text-main mb-4 font-heading">
                     القيم التي <span className="text-primary">تُحدد هويتنا</span>
                 </h2>
                 <div className="h-1 w-20 bg-warning mx-auto mb-6"></div>
@@ -27,7 +27,7 @@ export const AboutValues = () => (
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-primary)] text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
                             <Shield className="w-6 h-6" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">الأمانة</h3>
+                        <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">الأمانة</h3>
                     </div>
                     <p className="text-xs md:text-sm text-muted dark:text-muted leading-relaxed font-medium">نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل أبنائكم.</p>
                 </motion.div>
@@ -37,7 +37,7 @@ export const AboutValues = () => (
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 shrink-0">
                             <Lightbulb className="w-6 h-6" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">الابتكار</h3>
+                        <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">الابتكار</h3>
                     </div>
                     <p className="text-xs md:text-sm text-muted dark:text-muted leading-relaxed font-medium">نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.</p>
                 </motion.div>
@@ -47,7 +47,7 @@ export const AboutValues = () => (
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary flex items-center justify-center shadow-lg shadow-success/20 shrink-0">
                             <Award className="w-6 h-6" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">التميز</h3>
+                        <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">التميز</h3>
                     </div>
                     <p className="text-xs md:text-sm text-muted dark:text-muted leading-relaxed font-medium">لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.</p>
                 </motion.div>
@@ -57,7 +57,7 @@ export const AboutValues = () => (
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 shrink-0">
                             <Compass className="w-6 h-6" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-black text-main dark:text-on-primary font-heading">بناء الجيل</h3>
+                        <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">بناء الجيل</h3>
                     </div>
                     <p className="text-xs md:text-sm text-muted dark:text-muted leading-relaxed font-medium">نركز على صقل شخصية الطالب ومهاراته القيادية ليكون منارة للتغيير الإيجابي في المجتمع.</p>
                 </motion.div>

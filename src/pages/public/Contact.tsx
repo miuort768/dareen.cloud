@@ -89,7 +89,7 @@ export const Contact = () => {
                             <Sparkles size={13} className="text-primary dark:text-primary" />
                             <span className="text-micro font-black text-primary dark:text-primary mt-[3px] md:mt-0">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-on-primary mb-1 md:mb-3">
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-main dark:text-main mb-1 md:mb-3">
                             تواصل مع{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">
                                 دارين السابعة
@@ -122,7 +122,7 @@ export const Contact = () => {
                                 <div className="w-20 h-20 bg-success-light rounded-none flex items-center justify-center mx-auto mb-5 text-success">
                                     <CheckCircle2 size={44} />
                                 </div>
-                                <h2 className="text-2xl font-black text-main dark:text-on-primary mb-2">تم الإرسال بنجاح!</h2>
+                                <h2 className="text-2xl font-black text-main dark:text-main mb-2">تم الإرسال بنجاح!</h2>
                                 <p className="text-muted dark:text-muted mb-8 text-sm">سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
                                 <button
                                     onClick={() => setFormState('idle')}
@@ -134,7 +134,7 @@ export const Contact = () => {
                         ) : (
                             <div className="p-6 md:p-8">
                                 <div className="mb-4">
-                                    <h2 className="text-xl font-black text-main dark:text-on-primary mb-1">أرسل لنا رسالة</h2>
+                                    <h2 className="text-xl font-black text-main dark:text-main mb-1">أرسل لنا رسالة</h2>
                                     <p className="text-muted text-sm">سنتواصل معك خلال 24 ساعة.</p>
                                 </div>
 
@@ -156,7 +156,7 @@ export const Contact = () => {
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim dark:placeholder:text-muted"
+                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim dark:placeholder:text-muted"
                                                 placeholder="أدخل اسمك الكريم..."
                                             />
                                         </div>
@@ -170,7 +170,7 @@ export const Contact = () => {
                                                 pattern="[0-9+\s]*"
                                                 value={formData.phone}
                                                 onChange={e => setFormData(p => ({ ...p, phone: e.target.value.replace(/[^0-9+\s]/g, '') }))}
-                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-end placeholder:text-dim dark:placeholder:text-muted"
+                                                className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-end placeholder:text-dim dark:placeholder:text-muted"
                                                 placeholder="+965 XXXX XXXX"
                                                 dir="ltr"
                                             />
@@ -184,7 +184,7 @@ export const Contact = () => {
                                             id="contact-subject"
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
-                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
+                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
                                             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundPosition: 'right 14px center' }}
                                         >
                                             <option>استفسار عن دورة تعليمية</option>
@@ -202,7 +202,7 @@ export const Contact = () => {
                                             id="contact-curriculum"
                                             value={formData.curriculum}
                                             onChange={e => setFormData(p => ({ ...p, curriculum: e.target.value }))}
-                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
+                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none bg-[length:14px] bg-no-repeat ps-10"
                                             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundPosition: 'right 14px center' }}
                                         >
                                             <option>المنهج الكويتي</option>
@@ -222,7 +222,7 @@ export const Contact = () => {
                                             rows={4}
                                             value={formData.message}
                                             onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-on-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all resize-none placeholder:text-dim"
+                                            className="w-full bg-background dark:bg-card border border-border dark:border-border rounded-none px-4 py-3 text-sm font-bold text-main dark:text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all resize-none placeholder:text-dim"
                                             placeholder="اكتب استفسارك بالتفصيل هنا..."
                                         />
                                     </div>
@@ -279,7 +279,7 @@ export const Contact = () => {
                                         </div>
                                         <div className="flex-grow min-w-0">
                                             <p className="text-micro font-black text-muted dark:text-muted mb-0.5">{card.title}</p>
-                                            <p className="text-sm font-bold text-main dark:text-on-primary truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                            <p className="text-sm font-bold text-main dark:text-main truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
                                         </div>
                                     </div>
                                 </a>

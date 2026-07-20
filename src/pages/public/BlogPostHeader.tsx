@@ -36,7 +36,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
                 <ArrowRight size={16} /><span>العودة لجميع المقالات</span>
             </Link>
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-main dark:text-on-primary leading-tight mb-2 md:mb-4">{post.title}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black text-main dark:text-main leading-tight mb-2 md:mb-4">{post.title}</h1>
         {post.contentType !== 'more' && post.contentType !== 'foundation' && (post.curriculum || post.level || post.grade || post.term || post.subject) && (
             <div className="flex flex-wrap gap-2 mb-4">
                 {post.curriculum && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-info-light dark:bg-info/10 text-info dark:text-info text-xs font-bold rounded-lg border border-info/50 dark:border-info/20"><BookOpen size={12} />{curriculumNames[post.curriculum] || post.curriculum}</span>}

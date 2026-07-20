@@ -35,7 +35,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                     <tbody className="divide-y divide-border dark:divide-border">
                         {cancelledNeedingComp.map((session, idx) => (
                             <tr key={idx} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
-                                <td className="px-4 py-4 text-xs font-bold text-main dark:text-on-primary">{session.studentName}</td>
+                                <td className="px-4 py-4 text-xs font-bold text-main dark:text-main">{session.studentName}</td>
                                 <td className="px-4 py-4 text-xs font-bold text-muted dark:text-muted">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-micro text-error">{session.date}</td>
                                 <td className="px-4 py-4 text-center">

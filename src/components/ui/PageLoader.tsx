@@ -40,7 +40,7 @@ export const PageLoader = () => {
                 className="pb-16 md:pb-20 text-center space-y-6"
             >
                 <div className="space-y-1">
-                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-main dark:text-on-primary tracking-tighter">
+                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-main dark:text-main tracking-tighter">
                         دارين <span className="text-primary dark:text-primary">للتعليم والتدريب</span>
                     </h2>
                     <p className="text-muted dark:text-muted font-medium text-micro md:text-xs tracking-[0.4em] uppercase">

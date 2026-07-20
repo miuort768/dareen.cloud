@@ -42,7 +42,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                         {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
                             <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
                                 <td className="px-4 py-4">
-                                    <span className="block font-bold text-xs text-main dark:text-on-primary mb-0.5">{item.studentName}</span>
+                                    <span className="block font-bold text-xs text-main dark:text-main mb-0.5">{item.studentName}</span>
                                     <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
                                 </td>
                                 <td className="px-4 py-4 text-center font-bold text-xs text-success">

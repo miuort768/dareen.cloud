@@ -192,7 +192,7 @@ export const Agenda = () => {
                                             {app.studentName.charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-main dark:text-on-primary text-base leading-tight">{app.studentName}</h4>
+                                            <h4 className="font-medium text-main dark:text-main text-base leading-tight">{app.studentName}</h4>
                                             <p className="text-micro font-normal text-muted flex items-center gap-1 uppercase">
                                                 {app.studentGrade}
                                             </p>

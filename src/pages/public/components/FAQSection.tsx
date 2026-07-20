@@ -37,7 +37,7 @@ export const FAQSection = () => {
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary" />
-                        <span className="text-micro font-black text-muted dark:text-on-primary/70">لديك استفسار؟</span>
+                        <span className="text-micro font-black text-muted dark:text-main/70">لديك استفسار؟</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main mb-3 font-heading">
                         الأسئلة <span className="text-primary">الشائعة</span>

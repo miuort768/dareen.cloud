@@ -68,7 +68,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <div className="p-6 space-y-6">
                     <div className="text-center">
                         <p className="text-sm text-muted dark:text-muted font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-black text-main dark:text-on-primary">{studentName}</h3>
+                        <h3 className="text-lg font-black text-main dark:text-main">{studentName}</h3>
                         <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20 dark:text-primary">
                             بتاريخ: {date}
                         </p>
@@ -110,7 +110,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 <textarea 
                                     id="attendance-topics"
                                     placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-on-primary dark:border-border"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-main dark:border-border"
                                     rows={2}
                                     value={topics}
                                     onChange={(e) => setTopics(e.target.value)}
@@ -124,7 +124,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     id="attendance-homework"
                                     type="text"
                                     placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-on-primary dark:border-border"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-main dark:border-border"
                                     value={homework}
                                     onChange={(e) => setHomework(e.target.value)}
                                 />
@@ -163,7 +163,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             }}
                             placeholder="أدخل كلمة المرور..."
                             className={cn(
-                                "w-full p-3 bg-background border rounded-none outline-none focus:ring-0 focus:border-primary dark:bg-card dark:text-on-primary text-center font-mono tracking-widest",
+                                "w-full p-3 bg-background border rounded-none outline-none focus:ring-0 focus:border-primary dark:bg-card dark:text-main text-center font-mono tracking-widest",
                                 error ? "border-error" : "border-border dark:border-border"
                             )}
                             autoFocus

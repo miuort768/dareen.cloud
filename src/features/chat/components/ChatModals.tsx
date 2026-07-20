@@ -274,7 +274,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         <div className="flex gap-3">
                              <button
                                 onClick={() => { setShowDeleteConfirm(false); setItemToDelete(null); }}
-                                className="flex-1 bg-surface dark:bg-hover dark:text-on-primary py-3 rounded-lg font-normal"
+                                className="flex-1 bg-surface dark:bg-hover dark:text-main py-3 rounded-lg font-normal"
                             >
                                 إلغاء
                             </button>

@@ -15,7 +15,7 @@ export const AboutHero = () => (
                 <span className="text-micro font-black text-primary dark:text-primary">دارين السابعة | ريادة تعليمية</span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-main dark:text-on-primary mb-4 font-heading leading-none md:leading-tight relative">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-main dark:text-main mb-4 font-heading leading-none md:leading-tight relative">
                 <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                 <span aria-hidden="true">نحن لا نُدرّس فقط،<br className="md:hidden" /><span className="hidden md:inline"> </span></span>
                 <span className="text-primary py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
@@ -31,21 +31,21 @@ export const AboutHero = () => (
                     <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-none flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Award size={24} />
                     </div>
-                    <span className="text-xl md:text-2xl font-black text-main dark:text-on-primary">10+</span>
+                    <span className="text-xl md:text-2xl font-black text-main dark:text-main">10+</span>
                     <span className="text-micro text-muted dark:text-muted font-black mt-1">سنوات تميز</span>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-none flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Users size={24} />
                     </div>
-                    <span className="text-xl md:text-2xl font-black text-main dark:text-on-primary">5k+</span>
+                    <span className="text-xl md:text-2xl font-black text-main dark:text-main">5k+</span>
                     <span className="text-micro text-muted dark:text-muted font-black mt-1">طالب فخور</span>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-warning-light dark:bg-warning/20 rounded-none flex items-center justify-center text-warning mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Heart size={24} />
                     </div>
-                    <span className="text-xl md:text-2xl font-black text-main dark:text-on-primary">100%</span>
+                    <span className="text-xl md:text-2xl font-black text-main dark:text-main">100%</span>
                     <span className="text-micro text-muted dark:text-muted font-black mt-1">ثقة وتفاني</span>
                 </motion.div>
             </motion.div>

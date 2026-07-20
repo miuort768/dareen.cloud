@@ -38,7 +38,7 @@ export const AboutStory = () => (
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-none mb-4">
                         <span className="text-micro font-black">تعرف عليـــنا</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-black text-main dark:text-on-primary mb-4 font-heading leading-tight md:leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-black text-main dark:text-main mb-4 font-heading leading-tight md:leading-tight">
                         ريادة في التعليم،<br />
                         <span className="text-primary">نهضة في الفكر</span>
                     </h2>
@@ -52,7 +52,7 @@ export const AboutStory = () => (
                                 <Zap size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-black text-main dark:text-on-primary mb-1">رؤية الابتكار</h3>
+                                <h3 className="text-lg font-black text-main dark:text-main mb-1">رؤية الابتكار</h3>
                                 <p className="text-sm text-muted dark:text-muted font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                             </div>
                         </motion.div>
@@ -61,7 +61,7 @@ export const AboutStory = () => (
                                 <BookOpen size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-black text-main dark:text-on-primary mb-1">رسالة التمكين</h3>
+                                <h3 className="text-lg font-black text-main dark:text-main mb-1">رسالة التمكين</h3>
                                 <p className="text-sm text-muted dark:text-muted font-medium">تقديم تجربة تعليمية قيمّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
                             </div>
                         </motion.div>

@@ -49,7 +49,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>
-                                            <span className="block font-bold text-xs text-main dark:text-on-primary leading-tight">{item.name}</span>
+                                            <span className="block font-bold text-xs text-main dark:text-main leading-tight">{item.name}</span>
                                             <span className="text-micro text-muted font-medium">{item.subject}</span>
                                         </div>
                                     </div>

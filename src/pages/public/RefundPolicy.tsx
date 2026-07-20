@@ -73,7 +73,7 @@ export const RefundPolicy = () => {
                                 <ShieldCheck className="w-6 h-6 text-info dark:text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main dark:text-on-primary mb-2">مبادئ عامة</h2>
+                                <h2 className="text-xl md:text-2xl font-black text-main dark:text-main mb-2">مبادئ عامة</h2>
                                 <p className="text-sm md:text-base text-muted dark:text-muted leading-relaxed">
                                     في دارين السابعة، نسعى لتقديم خدمة تعليمية متميزة. تهدف هذه السياسة إلى ضمان الشفافية والعدالة لكل من الطالب والمعهد فيما يخص الرسوم المدفوعة وإجراءات الإلغاء.
                                 </p>
@@ -88,7 +88,7 @@ export const RefundPolicy = () => {
                                 <CreditCard className="w-6 h-6 text-success dark:text-success" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">حالات طلب الاسترداد</h2>
+                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">حالات طلب الاسترداد</h2>
                                 <div className="space-y-4 text-muted dark:text-muted">
                                     <div className="p-4 bg-success-light/50 dark:bg-success/20 border-s-4 border-success">
                                         <h3 className="font-bold text-main dark:text-main mb-1">قبل بدء الدورة:</h3>
@@ -114,7 +114,7 @@ export const RefundPolicy = () => {
                                 <CalendarX className="w-6 h-6 text-error dark:text-error" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">سياسة إلغاء الحصص</h2>
+                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">سياسة إلغاء الحصص</h2>
                                 <div className="space-y-4 text-muted dark:text-muted">
                                     <ul className="list-disc list-inside space-y-3 ms-4">
                                         <li><span className="font-bold">إلغاء الطالب:</span> يجب إخطار المعهد بالإلغاء قبل 24 ساعة من موعد الحصة. في حال الإلغاء المفاجئ، يتم احتساب الحصة كأنها تم تقديمها.</li>
@@ -133,7 +133,7 @@ export const RefundPolicy = () => {
                                 <Clock className="w-6 h-6 text-primary dark:text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-on-primary mb-3">إجراءات الاسترداد المالي</h2>
+                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">إجراءات الاسترداد المالي</h2>
                                 <div className="space-y-2 text-muted dark:text-muted leading-relaxed">
                                     <p>تستغرق عملية معالجة طلب الاسترداد من <span className="font-bold">5 إلى 10 أيام عمل</span> بعد الموافقة على الطلب. يتم إعادة المبلغ إلى نفس وسيلة الدفع التي تم استخدامها في عملية الشراء الأصلية.</p>
                                 </div>
@@ -149,9 +149,9 @@ export const RefundPolicy = () => {
                                 <div className="w-8 h-8 bg-warning/20 flex items-center justify-center">
                                     <AlertCircle className="w-4 h-4 text-warning" />
                                 </div>
-                                <h2 className="text-lg md:text-xl font-black text-main dark:text-on-primary">المشاكل التقنية</h2>
+                                <h2 className="text-lg md:text-xl font-black text-main dark:text-main">المشاكل التقنية</h2>
                             </div>
-                            <p className="text-muted dark:text-on-primary/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
+                            <p className="text-muted dark:text-main/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
                                 في حال عدم إمكانية تقديم الحصة بسبب مشاكل تقنية من طرف المعهد، يتم تعويض الطالب بحصة بديلة. أما إذا كان الخلل من طرف الطالب (انقطاع الإنترنت أو تعطل الجهاز)، فالمعهد غير مسؤول عن تعويض الحصة، ومع ذلك نحاول دائماً المساعدة في حال كان هناك وقت متاح.
                             </p>
                         </div>

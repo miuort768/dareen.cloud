@@ -14,7 +14,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
     return (
         <div className="border-t border-border dark:border-border pt-8 mt-0 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-                <span className="font-bold text-main dark:text-on-primary text-sm">شارك</span>
+                <span className="font-bold text-main dark:text-main text-sm">شارك</span>
                 <a href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + url)}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-success flex items-center justify-center hover:opacity-80 transition-all text-on-primary" title="واتساب">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.5 6.5a8.5 8.5 0 0 1-3.5 16.2"/><path d="M3 21l1.7-5.9a8.5 8.5 0 1 1 5.8 5.8L3 21z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
                 </a>
