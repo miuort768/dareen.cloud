@@ -95,8 +95,8 @@ export const MasarSection = () => {
                     {/* Title Card */}
                     <div className="bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-5 mb-5 flex items-center justify-between">
                         <div>
-                            <h2 className="text-main dark:text-on-primary text-lg font-black">بوابة الكتب والملخصات</h2>
-                            <p className="text-muted dark:text-on-primary/70 text-xs font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
+                            <h2 className="text-main dark:text-white text-lg font-black">بوابة الكتب والملخصات</h2>
+                            <p className="text-muted dark:text-white/70 text-xs font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
                         <div className="w-10 h-10 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
                             <Download size={20} className="text-primary dark:text-primary" />
@@ -147,19 +147,19 @@ export const MasarSection = () => {
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
                                 <Shield size={20} className="text-primary dark:text-primary" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">جودة مضمونة</span>
+                            <span className="text-main dark:text-white text-xs font-bold leading-tight block">جودة مضمونة</span>
                         </div>
                         <div className="text-center bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-success-light dark:bg-success/30 flex items-center justify-center">
                                 <BadgeCheck size={20} className="text-success dark:text-success" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">محتوى موثوق</span>
+                            <span className="text-main dark:text-white text-xs font-bold leading-tight block">محتوى موثوق</span>
                         </div>
                         <div className="text-center bg-white dark:bg-primary rounded-2xl shadow-sm border border-border/80 dark:border-border p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-warning-light dark:bg-warning/30 flex items-center justify-center">
                                 <Headphones size={20} className="text-warning dark:text-warning" />
                             </div>
-                            <span className="text-main dark:text-on-primary text-xs font-bold leading-tight block">دعم مستمر طوال اليوم</span>
+                            <span className="text-main dark:text-white text-xs font-bold leading-tight block">دعم مستمر طوال اليوم</span>
                         </div>
                     </div>
                 </div>
