@@ -127,12 +127,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     const attendancePercent = en.sessionsTotal > 0 ? (actualSessionsUsed / en.sessionsTotal) * 100 : 0;
 
     const startLiveStream = async () => {
+        const meetingUrl = prompt('أدخل رابط Google Meet أو Zoom:', 'https://meet.google.com/');
+        if (!meetingUrl || !meetingUrl.trim()) return;
         try {
             const result = await startLiveSession({
                 title: `حصة مباشرة: ${student.name}`,
                 subject: en.subject,
-                meetingProvider: 'google_meet',
-                meetingUrl: 'https://meet.google.com/new',
+                meetingProvider: meetingUrl.includes('zoom.us') ? 'zoom' : 'google_meet',
+                meetingUrl: meetingUrl.trim(),
                 targetStudentId: student.id,
             });
             if (result?.meetingUrl) window.open(result.meetingUrl, '_blank');

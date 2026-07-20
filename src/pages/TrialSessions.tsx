@@ -67,6 +67,7 @@ export const TrialSessions = () => {
 
   useEffect(() => {
     const socket = socketService.getSocket();
+    if (!socket) return;
     const handleUpdate = () => {
       queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
       queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] });

@@ -57,6 +57,7 @@ export const Leads = () => {
 
     useEffect(() => {
         const socket = socketService.getSocket();
+        if (!socket) return;
         const handleLeadUpdate = () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });

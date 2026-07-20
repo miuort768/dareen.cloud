@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, Link, Video } from 'lucide-react';
+import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, Link, Video, CheckCircle2 } from 'lucide-react';
 import { api } from '../../lib/api';
+import { socketService } from '../../lib/socket';
 import { useCurrentUser } from '../../context/AppContext';
+import { startLiveSession } from '../../services/liveSessionService';
 import type { LiveSession } from '../../types';
 
 const PROVIDERS = [
@@ -21,6 +23,7 @@ export const LiveClasses = () => {
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const currentUser = useCurrentUser();
 
   const [showDialog, setShowDialog] = useState(false);
@@ -44,8 +47,17 @@ export const LiveClasses = () => {
 
   useEffect(() => {
     fetchSessions();
-    const interval = setInterval(fetchSessions, 15000);
-    return () => clearInterval(interval);
+    const socket = socketService.getSocket();
+    if (socket) {
+      socket.on('session_invite', fetchSessions);
+      socket.on('session_ended', fetchSessions);
+    }
+    return () => {
+      if (socket) {
+        socket.off('session_invite', fetchSessions);
+        socket.off('session_ended', fetchSessions);
+      }
+    };
   }, [fetchSessions]);
 
   const openCreateMeet = () => {
@@ -60,10 +72,10 @@ export const LiveClasses = () => {
     setStarting(true);
     setDialogError(null);
     try {
-      const res = await api.post<{ id: string; meetingUrl: string }>('/live/start', {
+      const res = await startLiveSession({
         title: `حصة مباشرة: ${subject || currentUser?.name}`,
         subject,
-        meetingProvider,
+        meetingProvider: meetingProvider as 'google_meet' | 'zoom' | 'custom',
         meetingUrl: meetingUrl.trim(),
       });
       if (!res?.id) throw new Error('No session ID returned');
@@ -80,6 +92,7 @@ export const LiveClasses = () => {
   };
 
   const endSession = async (sessionId: string) => {
+    if (!window.confirm('هل أنت متأكد من إنهاء هذه الحصة المباشرة؟')) return;
     try {
       await api.post(`/live/end/${sessionId}`, {});
       await fetchSessions();
@@ -89,8 +102,14 @@ export const LiveClasses = () => {
     }
   };
 
-  const copyLink = (url: string) => {
-    navigator.clipboard.writeText(url);
+  const copyLink = async (url: string, sessionId: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedId(sessionId);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      setError('فشل نسخ الرابط');
+    }
   };
 
   const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
@@ -183,11 +202,12 @@ export const LiveClasses = () => {
                   انضم للحصة
                 </a>
                 <button
-                  onClick={() => copyLink(session.meetingUrl || '')}
+                  onClick={() => copyLink(session.meetingUrl || '', session.id)}
                   className="px-3 py-3 text-micro font-bold rounded-2xl border border-border dark:border-border text-muted dark:text-dim hover:bg-surface dark:hover:bg-primary-active transition-all flex items-center justify-center"
                   title="نسخ الرابط"
+                  aria-label="نسخ رابط الحصة"
                 >
-                  <Copy size={14} strokeWidth={1.5} />
+                  {copiedId === session.id ? <CheckCircle2 size={14} className="text-success" /> : <Copy size={14} strokeWidth={1.5} />}
                 </button>
                 {isTeacher && (
                   <button
@@ -205,7 +225,7 @@ export const LiveClasses = () => {
       )}
 
       {showDialog && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40" onClick={() => setShowDialog(false)}>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40" onClick={() => setShowDialog(false)} role="dialog" aria-modal="true" aria-label="بدء حصة مباشرة" onKeyDown={e => { if (e.key === 'Escape') setShowDialog(false); }}>
           <div className="bg-white dark:bg-primary-active rounded-2xl shadow-2xl border border-border dark:border-border p-6 max-w-md w-full space-y-5" onClick={e => e.stopPropagation()}>
             <h3 className="font-bold text-lg text-main dark:text-on-primary text-center">بدء حصة مباشرة</h3>
 

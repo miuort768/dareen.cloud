@@ -121,17 +121,20 @@ export interface Evaluation {
     created_at: string;
 }
 
+export type MeetingProvider = 'google_meet' | 'zoom' | 'custom';
+export type LiveSessionStatus = 'active' | 'ended';
+
 export interface LiveSession {
     id: string;
     teacherId: string;
     teacherName: string;
     title?: string;
     subject?: string;
-    meetingProvider: string;
+    meetingProvider: MeetingProvider;
     meetingUrl?: string;
     meetingCode?: string;
     isExternalMeeting: boolean;
-    status: string;
+    status: LiveSessionStatus;
     targetStudentId?: string;
     startedAt: string;
     endedAt?: string;

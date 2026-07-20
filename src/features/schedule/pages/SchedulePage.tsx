@@ -128,12 +128,14 @@ export const Schedule = () => {
 
     const handleStartLiveSession = async () => {
         if (!selectedEvent) return;
+        const meetingUrl = prompt('أدخل رابط Google Meet أو Zoom:', 'https://meet.google.com/');
+        if (!meetingUrl || !meetingUrl.trim()) return;
         try {
             const res = await startLiveSession({
                 title: `حصة مباشرة: ${selectedEvent.studentName}`,
                 subject: selectedEvent.subject,
-                meetingProvider: 'google_meet',
-                meetingUrl: 'https://meet.google.com/new',
+                meetingProvider: meetingUrl.includes('zoom.us') ? 'zoom' : 'google_meet',
+                meetingUrl: meetingUrl.trim(),
                 targetStudentId: selectedEvent.studentId,
             });
             if (res?.meetingUrl) window.open(res.meetingUrl, '_blank');
