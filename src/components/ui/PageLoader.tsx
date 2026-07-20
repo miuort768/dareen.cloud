@@ -19,12 +19,12 @@ export const PageLoader = () => {
                     <div className="absolute inset-[-15px] rounded-full border-2 border-primary/5 dark:border-primary/10 animate-[spin_8s_linear_infinite]" />
                     <div className="absolute inset-[-30px] rounded-full border border-primary/5 dark:border-primary/10 animate-[spin_12s_linear_reverse_infinite]" />
 
-                    <div className="relative w-36 h-36 md:w-44 md:h-44 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[var(--shadow-glow)] p-3 border border-border dark:border-white/10 overflow-hidden">
+                    <div className="relative w-44 md:w-52 bg-white dark:bg-primary-active rounded-2xl flex items-center justify-center shadow-[var(--shadow-glow)] p-3 border border-border dark:border-white/10 overflow-hidden">
                         <Image
-                            src="/dareen_logo_new.webp"
-                            alt="شعار دارين للتعليم والتدريب"
+                            src="/bbook.webp"
+                            alt="بوابة دارين التعليمية"
                             className="w-full h-full"
-                            imgClassName="object-contain scale-[1.35] drop-shadow-sm"
+                            imgClassName="object-contain"
                             loading="eager"
                         />
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
