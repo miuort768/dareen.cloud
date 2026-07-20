@@ -61,7 +61,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             {
                                 id: '02',
                                 title: 'حصة مجانية',
-                                desc: 'استمتع بالتجريب أولاً',
+                                desc: 'حصة تجريبية مجانية لك',
                                 icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-[var(--bg-success)] to-[var(--bg-success)]'
                             },
@@ -81,7 +81,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="scale-75 md:scale-100">
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-background text-main dark:text-on-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
+                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-card text-main dark:text-on-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
                                         {step.id}
                                     </span>
                                 </div>
