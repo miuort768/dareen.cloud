@@ -168,7 +168,7 @@ export const SessionsModal = ({
                                                             <div className="flex items-center gap-2">
                                                                 <p className="text-xs font-medium text-main">{format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}</p>
                                                             </div>
-                                                            <div className={cn("px-2 py-0.5 rounded-full text-micro font-medium uppercase tracking-widest", session.status === 'completed' ? "bg-success text-on-primary" : "bg-error text-on-primary")}>
+                                                            <div className={cn("px-2 py-0.5 rounded-full text-micro font-medium uppercase tracking-widest", session.status === 'completed' ? "bg-success text-on-success" : "bg-error text-on-error")}>
                                                                 {session.status === 'completed' ? 'حضر' : 'غائب'}
                                                             </div>
                                                         </div>

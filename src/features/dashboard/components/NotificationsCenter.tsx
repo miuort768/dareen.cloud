@@ -205,7 +205,7 @@ export const NotificationsCenter = ({
                         {filteredSmartAlerts.map((alert) => (
                             <div key={alert.id} className={cn("p-4 flex items-center justify-between group transition-all rounded-xl", alert.type === 'critical' ? "bg-error-soft/50 border border-error" : alert.type === 'success' ? "bg-success-soft/50 border border-success" : "bg-warning-soft/50 border border-warning")}>
                                 <div className="flex items-center gap-4">
-                                    <div className={cn("w-10 h-10 flex items-center justify-center text-on-primary shadow-soft rounded-xl", alert.type === 'critical' ? "bg-error" : alert.type === 'success' ? "bg-success" : "bg-warning")}>
+                                    <div className={cn("w-10 h-10 flex items-center justify-center text-on-success shadow-soft rounded-xl", alert.type === 'critical' ? "bg-error" : alert.type === 'success' ? "bg-success" : "bg-warning")}>
                                         {alert.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
                                     </div>
                                     <div>
@@ -260,7 +260,7 @@ export const NotificationsCenter = ({
                                 {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 bg-success text-on-primary text-micro font-bold transition-all active:scale-[0.98] shadow-soft rounded-lg"
+                                        className="h-8 px-4 bg-success text-on-success text-micro font-bold transition-all active:scale-[0.98] shadow-soft rounded-lg"
                                     >
                                         واتساب
                                     </button>

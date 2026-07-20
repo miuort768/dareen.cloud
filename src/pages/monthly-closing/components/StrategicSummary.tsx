@@ -13,7 +13,7 @@ interface StrategicSummaryProps {
 
 export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout, reportCurrency = 'KWD' }) => {
     return (
-        <SectionCard className="p-4 sm:p-6 lg:p-12 bg-background text-on-primary relative overflow-hidden shadow-2xl">
+        <SectionCard className="p-4 sm:p-6 lg:p-12 bg-background text-main relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-info/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 end-0 w-[300px] h-[300px] bg-info/5 -rotate-12 translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
             <div className="absolute top-20 end-10 w-40 h-1 bg-gradient-to-r from-transparent via-[var(--bg-info)]/20 to-transparent rotate-45 pointer-events-none"></div>

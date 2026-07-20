@@ -25,7 +25,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
             {/* Header */}
             <div className="flex items-center justify-between mb-4 px-1">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-background text-on-primary rounded-none flex items-center justify-center border border-border shadow-soft">
+                    <div className="w-10 h-10 bg-background text-main rounded-none flex items-center justify-center border border-border shadow-soft">
                         <Clock size={20} />
                     </div>
                     <div>
@@ -33,7 +33,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                         <p className="text-micro text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-primary border border-success rounded-none shadow-soft">
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-success border border-success rounded-none shadow-soft">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     <span className="text-micro font-medium uppercase">LIVE NOW</span>
                 </div>
@@ -67,9 +67,9 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                 <div className={cn(
                                     "px-2 py-0.5 rounded-none text-micro font-medium tabular-nums border",
                                     isCompleted 
-                                        ? "bg-success text-on-primary border-success" 
+                                        ? "bg-success text-on-success border-success" 
                                         : isCancelled 
-                                        ? "bg-error text-on-primary border-error" 
+                                        ? "bg-error text-on-error border-error" 
                                         : "bg-surface text-main border-border"
                                 )}>
                                     {session.time}

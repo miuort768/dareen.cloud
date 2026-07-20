@@ -23,7 +23,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         <button onClick={handlePrint} className="p-1.5 bg-card text-muted hover:text-info rounded-card transition-colors shadow-soft" aria-label="طباعة">
                             <Printer size={16} />
                         </button>
-                        <button onClick={onClose} className="p-1.5 bg-card text-error hover:bg-error hover:text-on-primary rounded-card transition-colors shadow-soft" aria-label="إغلاق">
+                        <button onClick={onClose} className="p-1.5 bg-card text-error hover:bg-error hover:text-on-error rounded-card transition-colors shadow-soft" aria-label="إغلاق">
                             <X size={16} />
                         </button>
                     </div>

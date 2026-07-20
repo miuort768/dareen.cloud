@@ -235,7 +235,7 @@ export const Agenda = () => {
                                         <button
                                             onClick={() => handleMarkDone(app)}
                                             disabled={logAttendanceMutation.isPending}
-                                            className="w-full bg-warning hover:bg-warning text-on-primary py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-warning/10 active:scale-95 disabled:opacity-50"
+                                            className="w-full bg-warning hover:bg-warning hover:text-on-warning text-on-warning py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-warning/10 active:scale-95 disabled:opacity-50"
                                         >
                                             {logAttendanceMutation.isPending ? 'جاري الإنجاز...' : (
                                                 <>

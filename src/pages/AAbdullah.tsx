@@ -65,7 +65,7 @@ export const AAbdullah = () => {
                             href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 md:gap-3 text-on-primary px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full bg-success"
+                            className="flex items-center gap-2 md:gap-3 text-on-success px-5 md:px-8 py-2.5 md:py-3.5 text-sm md:text-lg font-bold shadow-lg active:scale-95 transition-all rounded-full bg-success"
                         >
                             <VChatBubble size={16} />
                             واتساب

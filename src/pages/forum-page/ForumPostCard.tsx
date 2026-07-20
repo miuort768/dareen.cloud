@@ -173,8 +173,8 @@ export const ForumPostCard = ({
                     <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
                 </div>
                 <div className="flex gap-2">
-                    <button onClick={() => onUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">موافقة</button>
-                    <button onClick={() => onDelete(post.id)} className="bg-error hover:bg-error text-on-primary px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">حذف</button>
+                    <button onClick={() => onUpdateStatus(post.id, 'approved')} className="bg-success hover:bg-success hover:text-on-success text-on-success px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">موافقة</button>
+                    <button onClick={() => onDelete(post.id)} className="bg-error hover:bg-error hover:text-on-error text-on-error px-3.5 py-1.5 text-micro font-bold rounded-card transition-all active:scale-95">حذف</button>
                 </div>
             </div>
         )}

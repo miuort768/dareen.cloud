@@ -177,7 +177,7 @@ export const RefundPolicy = () => {
                                 href={`https://wa.me/${whatsappNumber}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-info text-on-primary px-10 py-4 w-full sm:w-auto rounded-card font-bold hover:bg-white/15 transition-all group relative overflow-hidden shadow-lg border border-white/20"
+                                className="inline-flex items-center justify-center gap-4 bg-info text-on-info px-10 py-4 w-full sm:w-auto rounded-card font-bold hover:bg-white/15 transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع قسم الحسابات</span>

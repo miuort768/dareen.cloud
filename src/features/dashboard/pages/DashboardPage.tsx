@@ -119,7 +119,7 @@ export const Dashboard = () => {
                                     onClick={() => setView('standard')}
                                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                                         view === 'standard'
-                                            ? 'bg-info text-on-primary shadow-sm'
+                                            ? 'bg-info text-on-info shadow-sm'
                                             : 'text-muted hover:text-main'
                                     }`}
                                 >
@@ -129,7 +129,7 @@ export const Dashboard = () => {
                                     onClick={() => setView('executive')}
                                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                                         view === 'executive'
-                                            ? 'bg-info text-on-primary shadow-sm'
+                                            ? 'bg-info text-on-info shadow-sm'
                                             : 'text-muted hover:text-main'
                                     }`}
                                 >

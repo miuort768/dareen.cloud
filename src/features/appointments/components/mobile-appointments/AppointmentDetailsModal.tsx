@@ -64,7 +64,7 @@ export const AppointmentDetailsModal = ({ show, appointment, activeTab, onClose,
                         {activeTab === 'upcoming' && (
                             <motion.button whileTap={{ scale: 0.95 }}
                                 onClick={(e) => { onComplete(appointment.id, e); onClose(); }}
-                                className="w-full py-3 rounded-card bg-success text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-success/30">
+                                className="w-full py-3 rounded-card bg-success text-on-success text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-success/30">
                                 <CheckCircle2 size={14} strokeWidth={1.5} /> إتمام الحصة
                             </motion.button>
                         )}

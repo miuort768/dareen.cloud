@@ -54,18 +54,18 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                 isThird ? "bg-warning-soft border border-warning" :
                                 "bg-surface border border-border"
                             )}>
-                                <div className={cn("w-7 h-7 flex items-center justify-center mb-3 shadow-soft rounded-lg", isFirst ? "bg-warning text-main" : isSecond ? "bg-card text-main" : isThird ? "bg-warning text-on-primary" : "bg-warning text-on-primary")}>
+                                <div className={cn("w-7 h-7 flex items-center justify-center mb-3 shadow-soft rounded-lg", isFirst ? "bg-warning text-main" : isSecond ? "bg-card text-main" : isThird ? "bg-warning text-on-warning" : "bg-warning text-on-warning")}>
                                     {isFirst ? <Crown size={14} /> : isSecond ? <Award size={14} /> : <Star size={12} fill={index < 3 ? "currentColor" : "none"} />}
                                 </div>
 
-                                <div className="w-11 h-11 flex items-center justify-center mb-2 relative overflow-hidden rounded-xl shadow-inner text-on-primary bg-warning-soft">
+                                <div className="w-11 h-11 flex items-center justify-center mb-2 relative overflow-hidden rounded-xl shadow-inner text-on-warning bg-warning-soft">
                                     <span className="text-lg font-bold">{student.name.charAt(0)}</span>
                                     {student.avatar && <Image src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full" />}
                                 </div>
 
                                 <div className="w-full">
                                     <p className={cn("text-micro font-bold truncate mb-1", isFirst ? "text-warning" : "text-main")}>{student.name}</p>
-                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-warning text-on-primary">
+                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-warning text-on-warning">
                                         <span className="text-micro font-bold tabular-nums">{student.totalPoints}</span>
                                         <span className="text-micro font-medium opacity-70">نقطة</span>
                                     </div>

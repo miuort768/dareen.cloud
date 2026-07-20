@@ -25,9 +25,9 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                     <div className="w-8 h-8 flex items-center justify-center rounded-card bg-error-soft">
                         <AlertTriangle size={18} className="text-error" />
                     </div>
-                    <h3 className="text-sm font-bold text-on-primary">تأكيد الحذف</h3>
+                    <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-primary/70 rounded-card transition-all" aria-label="إغلاق"><X size={16} /></button>
+                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-error/70 rounded-card transition-all" aria-label="إغلاق"><X size={16} /></button>
             </div>
             <div className="p-5">
                 <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
@@ -37,7 +37,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
             </div>
             <div className="flex gap-2 p-5 pt-0">
                 <button type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-primary bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
+                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
             </div>
         </motion.div>
     </motion.div>
@@ -161,7 +161,7 @@ export const Leads = () => {
                         )}>
                             {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                             <span>{showLost ? 'عرض' : 'المفقودين'}</span>
-                            {!showLost && <span className="bg-error text-on-primary text-micro font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
+                            {!showLost && <span className="bg-error text-on-error text-micro font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
                         </button>
                         <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 border-0">
                             <Plus size={14} /> عميل جديد

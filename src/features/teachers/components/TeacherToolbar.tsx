@@ -53,7 +53,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     <button onClick={onExportPDF} className="w-9 h-9 flex items-center justify-center bg-error/10 border border-error/30 text-error hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" aria-label="تصدير PDF">
                         <FileText size={14} />
                     </button>
-                    <button onClick={onDeleteAll} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-error hover:text-on-primary rounded-xl transition-all shadow-soft" aria-label="تصفير الكل">
+                    <button onClick={onDeleteAll} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" aria-label="تصفير الكل">
                         <Trash2 size={14} />
                     </button>
                 </div>

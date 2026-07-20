@@ -40,7 +40,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                     <h3 className="text-xs text-muted">التنبيهات</h3>
                 </div>
                 {counts.critical > 0 && (
-                    <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-error text-on-primary text-micro font-bold">
+                    <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-error text-on-error text-micro font-bold">
                         {counts.critical}
                     </span>
                 )}

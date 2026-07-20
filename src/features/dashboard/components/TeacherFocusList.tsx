@@ -146,7 +146,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
 
                             <button
                                 onClick={(e) => { e.stopPropagation(); setAddingFor(addingFor === student.id ? null : student.id); setSubject(''); }}
-                                className="p-2 rounded-lg bg-primary-active text-on-primary hover:bg-success hover:text-on-primary transition-all flex items-center gap-1 shrink-0 shadow-soft"
+                                className="p-2 rounded-lg bg-primary-active text-on-primary hover:bg-success hover:text-on-success transition-all flex items-center gap-1 shrink-0 shadow-soft"
                                 aria-expanded={addingFor === student.id}
                             >
                                 <Plus size={12} />
@@ -178,7 +178,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                                 for (let i = 0; i < num; i++) addSession(student.id, student.name);
                                             }}
                                             disabled={!subject.trim()}
-                                            className="flex-1 py-1.5 bg-success text-on-primary text-micro font-bold rounded-lg hover:bg-success transition-colors disabled:opacity-40"
+                                            className="flex-1 py-1.5 bg-success text-on-success text-micro font-bold rounded-lg hover:bg-success transition-colors disabled:opacity-40"
                                         >
                                             +{num} {num === 1 ? 'حصة' : 'حصص'}
                                         </button>

@@ -49,7 +49,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={() => onLogAttendance(student, enrollment as Enrollment)}
-                                    className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-primary rounded-card transition-all"
+                                    className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-success rounded-card transition-all"
                                     title="تسجيل حضور"
                                     aria-label="تسجيل حضور"
                                 >
@@ -58,7 +58,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                                 {!isTeacherView && (
                                     <button
                                         onClick={() => onUnenroll(student, teacherName)}
-                                        className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-primary rounded-card transition-all"
+                                        className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-error rounded-card transition-all"
                                         title="إلغاء التسجيل"
                                         aria-label="إلغاء التسجيل"
                                     >
@@ -76,7 +76,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                                         className={cn(
                                             "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded-card transition-all",
                                             idx < actualUsed
-                                                ? "bg-success border-success text-on-primary shadow-soft"
+                                                ? "bg-success border-success text-on-success shadow-soft"
                                                 : idx === actualUsed
                                                     ? "bg-card border-primary text-primary"
                                                     : "bg-card border-border/50 text-muted"

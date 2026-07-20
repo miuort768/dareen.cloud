@@ -58,7 +58,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                         }}
                                         className={cn(
                                             "px-3 py-1 font-bold text-micro uppercase transition-all shadow-sm active:scale-95 rounded-xl",
-                                            item.status === 'paid' ? "bg-success text-on-primary" : "text-error border border-error bg-error-light"
+                                            item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
                                         )}
                                     >
                                         {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}

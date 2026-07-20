@@ -57,7 +57,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                     <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
                         <div className="sticky start-0 z-10 p-3 text-micro font-bold text-inverse border-e border-border bg-primary-active dark:bg-background">الوقت</div>
                         {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background", isToday(day) ? "text-on-primary" : "text-inverse")}>
+                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background", isToday(day) ? "text-main" : "text-inverse")}>
                                 <span>{day}</span>
                                 {isToday(day) && <span className="ms-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />}
                             </div>

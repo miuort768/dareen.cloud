@@ -43,7 +43,7 @@ export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, 
                                         {activeTab === 'upcoming' ? (
                                             <motion.button whileTap={{ scale: 0.93 }}
                                                 onClick={(e) => onComplete(app.id, e)}
-                                                className="px-2.5 py-1 bg-success text-on-primary text-micro font-bold rounded-xl flex items-center gap-1 shadow-soft">
+                                                className="px-2.5 py-1 bg-success text-on-success text-micro font-bold rounded-xl flex items-center gap-1 shadow-soft">
                                                 <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
                                             </motion.button>
                                         ) : (

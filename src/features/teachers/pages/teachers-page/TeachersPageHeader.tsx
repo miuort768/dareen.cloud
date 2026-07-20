@@ -19,7 +19,7 @@ export const TeachersPageHeader = ({ totalTeachers, showAddForm, onToggleForm }:
                 <div className="hidden md:flex items-center gap-3 mt-2">
                     <span className="text-xs text-on-primary/60">{totalTeachers} معلمة</span>
                     <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
-                    <span className="text-xs px-2 py-0.5 rounded-card bg-error text-on-primary font-bold">نشطة</span>
+                    <span className="text-xs px-2 py-0.5 rounded-card bg-error text-on-error font-bold">نشطة</span>
                 </div>
             </div>
         </div>

@@ -89,13 +89,13 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                 )}
             </div>
 
-            <div className="mt-2.5 bg-warning rounded-card p-2.5 text-on-primary flex items-center justify-between">
+            <div className="mt-2.5 bg-warning rounded-card p-2.5 text-on-warning flex items-center justify-between">
                 <div>
                     <p className="text-micro font-bold text-warning">إجمالي حصص الشهر</p>
                     <p className="text-base font-black tabular-nums">{totalMonthSessions}</p>
                 </div>
                 <div className="w-7 h-7 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                    <TrendingUp size={12} className="text-on-primary" />
+                    <TrendingUp size={12} className="text-on-warning" />
                 </div>
             </div>
         </div>

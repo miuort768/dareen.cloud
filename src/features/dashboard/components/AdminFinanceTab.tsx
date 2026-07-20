@@ -21,7 +21,7 @@ export const AdminFinanceTab = ({ stats }: AdminFinanceTabProps) => {
                         <span className="text-micro font-bold text-success">الإيرادات</span>
                         <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-primary shadow-soft shadow-success/40">
+                    <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-success shadow-soft shadow-success/40">
                         <TrendingUp size={20} strokeWidth={1.5} />
                     </div>
                 </div>
@@ -31,7 +31,7 @@ export const AdminFinanceTab = ({ stats }: AdminFinanceTabProps) => {
                         <span className="text-micro font-bold text-error">المصروفات</span>
                         <p className="text-lg font-bold text-main mt-1 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40">
+                    <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-error shadow-soft shadow-error/40">
                         <TrendingDown size={20} strokeWidth={1.5} />
                     </div>
                 </div>

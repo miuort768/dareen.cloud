@@ -83,7 +83,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     className={cn(
                         "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-soft active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'completed'
-                            ? 'bg-success text-on-primary'
+                            ? 'bg-success text-on-success'
                             : 'bg-primary hover:bg-primary-hover text-on-primary'
                     )}
                 >
@@ -95,7 +95,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     className={cn(
                         "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-soft active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'cancelled'
-                            ? 'bg-error border-error text-on-primary'
+                            ? 'bg-error border-error text-on-error'
                             : 'bg-card border-border/50 text-muted hover:text-error'
                     )}
                 >

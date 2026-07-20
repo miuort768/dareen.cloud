@@ -57,7 +57,7 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
 
             <div className="flex gap-1.5">
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onAttend}
-                    className="flex-1 py-2.5 bg-success text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-soft">
+                    className="flex-1 py-2.5 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-soft">
                     <CheckCircle2 size={12} strokeWidth={1.5} /> حضور
                 </motion.button>
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onHistory}

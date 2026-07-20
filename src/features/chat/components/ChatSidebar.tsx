@@ -175,7 +175,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         </div>
 
                                         {(conv.unreadCount ?? 0) > 0 && (
-                                            <div className="bg-success text-on-primary text-xs font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center ms-2">
+                                            <div className="bg-success text-on-success text-xs font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center ms-2">
                                                 {conv.unreadCount}
                                             </div>
                                         )}

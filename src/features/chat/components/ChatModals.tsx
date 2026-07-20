@@ -72,7 +72,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                     <div className="bg-white dark:bg-card w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-sm overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
                     
                     {/* Header - WhatsApp Style */}
-                    <div className="bg-success text-on-primary p-4 flex items-center gap-4 shrink-0 transition-all">
+                    <div className="bg-success text-on-success p-4 flex items-center gap-4 shrink-0 transition-all">
                         <button onClick={step === 'info' ? handleBackStep : handleClose} className="hover:bg-white/10 p-1 rounded-full" aria-label={step === 'info' ? 'رجوع' : 'إغلاق'}>
                             {step === 'info' ? <ChevronLeft size={24} /> : <X size={24} />}
                         </button>
@@ -112,7 +112,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                 {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
-                                                    className="absolute -top-0 -start-0 bg-background0 text-on-primary rounded-full p-0.5 border-2 border-white dark:border-card hover:bg-error transition-colors"
+                                                    className="absolute -top-0 -start-0 bg-background text-main rounded-full p-0.5 border-2 border-white dark:border-card hover:bg-error transition-colors"
                                                     aria-label="إزالة"
                                                 >
                                                     <X size={12} />
@@ -131,7 +131,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         onClick={() => setIsCreatingGroup(true)}
                                         className="w-full p-4 flex items-center gap-4 hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border dark:border-border"
                                     >
-                                        <div className="w-12 h-12 bg-success text-on-primary rounded-full flex items-center justify-center shadow-sm">
+                                        <div className="w-12 h-12 bg-success text-on-success rounded-full flex items-center justify-center shadow-sm">
                                             <UsersIcon size={24} />
                                         </div>
                                         <span className="font-normal text-main text-start">إنشاء مجموعة جديدة</span>
@@ -169,7 +169,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                             {(isCreatingGroup || isEditingGroup) && (
                                                 <div className={cn(
                                                     "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
-                                                    selectedUsers.includes(user.id) ? "bg-success border-success text-on-primary" : "border-border dark:border-border"
+                                                    selectedUsers.includes(user.id) ? "bg-success border-success text-on-success" : "border-border dark:border-border"
                                                 )}>
                                                     {selectedUsers.includes(user.id) && <Check size={16} />}
                                                 </div>
@@ -183,7 +183,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 <div className="absolute bottom-6 end-6 animate-in slide-in-from-bottom-5 fade-in duration-300">
                                     <button 
                                         onClick={handleNextStep}
-                                        className="bg-success text-on-primary p-4 rounded-full shadow-sm hover:scale-110 active:scale-95 transition-all"
+                                        className="bg-success text-on-success p-4 rounded-full shadow-sm hover:scale-110 active:scale-95 transition-all"
                                         aria-label="التالي"
                                     >
                                         <ChevronLeft size={32} />
@@ -243,7 +243,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     onClick={handleCreateConversation}
                                     disabled={!groupName.trim() || isDeleting}
                                     className={cn(
-                                        "w-full bg-success text-on-primary py-4 rounded-none font-normal uppercase tracking-widest transition-all active:scale-95 shadow-sm flex items-center justify-center gap-3",
+                                        "w-full bg-success text-on-success py-4 rounded-none font-normal uppercase tracking-widest transition-all active:scale-95 shadow-sm flex items-center justify-center gap-3",
                                         (!groupName.trim() || isDeleting) && "opacity-50 grayscale cursor-not-allowed"
                                     )}
                                 >
@@ -280,7 +280,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                             </button>
                             <button
                                 onClick={handleDeleteAction}
-                                className="flex-1 bg-error text-on-primary py-3 rounded-lg font-normal"
+                                className="flex-1 bg-error text-on-error py-3 rounded-lg font-normal"
                             >
                                 حذف الآن
                             </button>

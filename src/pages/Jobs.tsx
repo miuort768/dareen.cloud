@@ -129,7 +129,7 @@ export const Jobs = () => {
                                 {steps.map((s, i) => (
                                     <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                                         <div className="flex items-center gap-1.5 md:gap-2 w-full">
-                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary' : step > s.id ? 'bg-success text-on-primary' : 'bg-card border border-border/50 text-muted'}`}>
+                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-500 shrink-0 ${step === s.id ? 'bg-primary text-on-primary' : step > s.id ? 'bg-success text-on-success' : 'bg-card border border-border/50 text-muted'}`}>
                                                 {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                                             </div>
                                             {i < steps.length - 1 && <div className={`flex-1 h-0.5 transition-colors duration-500 ${step > s.id ? 'bg-success' : 'bg-border'}`} />}
@@ -160,7 +160,7 @@ export const Jobs = () => {
                                         </button>
                                     ) : (
                                         <button type="button" onClick={handleSubmit} disabled={loading || !form.name || !form.phone || !form.position || !form.qualification}
-                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-success hover:bg-success-hover text-on-primary font-bold text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 rounded-card shadow-soft">
+                                            className="flex-1 md:flex-none px-8 md:px-10 py-3 md:py-4 bg-success hover:bg-success-hover text-on-success font-bold text-xs transition-all disabled:opacity-30 flex items-center justify-center gap-2 rounded-card shadow-soft">
                                             {loading ? <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" /> : <Send size={14} />}
                                             تقديم الطلب
                                         </button>

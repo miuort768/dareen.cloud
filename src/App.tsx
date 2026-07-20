@@ -144,7 +144,7 @@ function App() {
               <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
                 إعادة التحميل
               </button>
-              <button onClick={() => { if (window.confirm('هل أنت متأكد من مسح جميع البيانات المخزنة؟')) { ['auth_token', 'app_current_user', 'app_isAuthenticated', 'theme', 'public-theme'].forEach(k => { try { localStorage.removeItem(k); } catch (e) { console.warn(e); } }); window.location.reload(); } }} className="px-6 py-2.5 bg-error hover:bg-error text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
+              <button onClick={() => { if (window.confirm('هل أنت متأكد من مسح جميع البيانات المخزنة؟')) { ['auth_token', 'app_current_user', 'app_isAuthenticated', 'theme', 'public-theme'].forEach(k => { try { localStorage.removeItem(k); } catch (e) { console.warn(e); } }); window.location.reload(); } }} className="px-6 py-2.5 bg-error hover:bg-error hover:text-on-error text-on-error font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
                 مسح التخزين وإعادة التحميل
               </button>
             </div>
@@ -175,7 +175,7 @@ function App() {
 
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
-        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-primary text-micro font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
+        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-warning text-micro font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
           <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
             onClick={() => navigate('/settings')}

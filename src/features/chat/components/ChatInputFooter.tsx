@@ -45,7 +45,7 @@ export const ChatInputFooter = ({ newMessage, onMessageChange, onSend, isSending
                 />
             </div>
             <div className="flex items-center justify-center shrink-0">
-                <button onClick={onSend} className="bg-success text-on-primary p-3.5 rounded-none hover:brightness-90 transition-all shadow-sm active:scale-95 flex items-center justify-center h-[48px] w-[48px]" title="إرسال">
+                <button onClick={onSend} className="bg-success text-on-success p-3.5 rounded-none hover:brightness-90 transition-all shadow-sm active:scale-95 flex items-center justify-center h-[48px] w-[48px]" title="إرسال">
                     <Send size={20} className={cn("transition-transform", isSending && "animate-pulse")} />
                 </button>
             </div>

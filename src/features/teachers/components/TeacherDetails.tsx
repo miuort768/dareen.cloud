@@ -79,18 +79,18 @@ export const TeacherDetails = ({
                             <span className="font-bold text-xl text-primary">{teacher.name.charAt(0)}</span>
                         </div>
                         <div className="min-w-0">
-                            <h3 className="text-card-title font-bold font-heading text-on-primary truncate">{teacher.name}</h3>
-                            <span className="text-xs text-on-primary/70 px-2 py-0.5 bg-error text-on-primary rounded-xl">{teacher.subject}</span>
+                            <h3 className="text-card-title font-bold font-heading text-main truncate">{teacher.name}</h3>
+                            <span className="text-xs text-on-primary/70 px-2 py-0.5 bg-error text-on-error rounded-xl">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
                         {!isTeacherView && (
                             <>
-                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-warning text-on-primary rounded-card transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
-                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-success text-on-primary rounded-card transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
+                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-warning hover:text-on-warning text-main rounded-card transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
+                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-success hover:text-on-success text-main rounded-card transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
                             </>
                         )}
-                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-error text-on-primary rounded-card transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
+                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-error hover:text-on-error text-main rounded-card transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
                     </div>
                 </div>
             </div>

@@ -120,7 +120,7 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 border border-error',
-            'hover:bg-error hover:border-error hover:text-on-primary text-error bg-error-soft',
+            'hover:bg-error hover:border-error hover:text-on-error text-error bg-error-soft',
             'text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
             className
         )}

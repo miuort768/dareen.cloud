@@ -150,7 +150,7 @@ export const RolesPage = () => {
                             {!role.isSystem && (
                                 <button
                                     onClick={() => deleteRole(role.id)}
-                                    className="px-4 py-1.5 bg-error/10 text-error text-xs font-bold rounded-card hover:bg-error hover:text-on-primary transition-all flex items-center gap-1"
+                                    className="px-4 py-1.5 bg-error/10 text-error text-xs font-bold rounded-card hover:bg-error hover:text-on-error transition-all flex items-center gap-1"
                                 >
                                     <Trash2 size={14} /> حذف
                                 </button>

@@ -204,7 +204,7 @@ export const MobileAttendance = () => {
                             {isTeacher && (
                                 <motion.button onClick={() => { triggerHaptic('medium'); handleBulkAttendance(); }}
                                     whileTap={{ scale: 0.97 }}
-                                    className="w-full py-3 rounded-card bg-success text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft">
+                                    className="w-full py-3 rounded-card bg-success text-on-success text-micro font-bold flex items-center justify-center gap-2 shadow-soft">
                                     <CheckCircle2 size={14} strokeWidth={1.5} /> تسجيل حضور اليوم بالكامل
                                 </motion.button>
                             )}

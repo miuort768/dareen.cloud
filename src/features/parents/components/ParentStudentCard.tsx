@@ -154,7 +154,7 @@ export const ParentStudentCard = ({
                                 <h4 className="text-micro font-medium text-main uppercase tracking-widest">حصاد إنجازات الطالب</h4>
                             </div>
                             <GamificationCard totalPoints={totalPoints} badges={student.badges} pointLogs={pointLogs} />
-                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error text-on-primary text-micro font-medium uppercase tracking-widest rounded-xl shadow-soft shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
+                            <button onClick={onCloseAchievements} className="w-full py-2 bg-error hover:bg-error hover:text-on-error text-on-error text-micro font-medium uppercase tracking-widest rounded-xl shadow-soft shadow-error/20 transition-all mt-2 active:scale-95">إغلاق السجل</button>
                         </div>
                     </motion.div>
                 )}

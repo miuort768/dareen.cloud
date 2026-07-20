@@ -12,7 +12,7 @@ interface StudentCardTimerProps {
 export const StudentCardTimer = ({ timerRunning, timerSeconds, onToggle, onReschedule, formatTime }: StudentCardTimerProps) => (
     <div className="grid grid-cols-2 gap-2">
         <button onClick={onToggle}
-            className={cn("flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all shadow-soft active:scale-95", timerRunning ? "bg-error border-error text-on-primary" : "bg-primary border-primary text-on-primary hover:bg-primary-hover")}>
+            className={cn("flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all shadow-soft active:scale-95", timerRunning ? "bg-error border-error text-on-error" : "bg-primary border-primary text-on-primary hover:bg-primary-hover")}>
             <div className="flex items-center gap-2">
                 <Clock size={14} className={cn(timerRunning && "animate-spin-slow")} />
                 <span className="text-xs font-bold font-mono">{formatTime(timerSeconds)}</span>

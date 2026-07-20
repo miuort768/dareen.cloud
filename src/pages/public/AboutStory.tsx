@@ -16,8 +16,8 @@ export const AboutStory = () => (
                                 <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
                                     <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full" alt="تعلم تعاوني" />
                                 </div>
-                                <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-primary shadow-xl">
-                                    <Sparkles size={24} className="mb-4 text-on-primary/90" />
+                                <div className="h-48 bg-warning rounded-[2rem] p-6 flex flex-col justify-end text-on-warning shadow-xl">
+                                    <Sparkles size={24} className="mb-4 text-on-warning/90" />
                                      <p className="font-black text-xl">إبداع مستمر</p>
                                 </div>
                             </div>

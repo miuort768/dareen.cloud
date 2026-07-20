@@ -251,7 +251,7 @@ export const Contact = () => {
                                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  bg-success hover:bg-success-dark text-on-primary shadow-lg shadow-success/20 transition-all"
+                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  bg-success hover:bg-success-dark text-on-success shadow-lg shadow-success/20 transition-all"
                                         >
                                             <MessageCircle size={16} />
                                             <span>تواصل واتساب</span>

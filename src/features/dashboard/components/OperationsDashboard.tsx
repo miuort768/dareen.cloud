@@ -36,7 +36,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             <p className="text-micro font-medium text-muted">إدارة التحصيل المالي</p>
                         </div>
                     </div>
-                    <div className="px-3 py-1 text-micro font-bold rounded-xl text-on-primary shadow-soft bg-success">
+                    <div className="px-3 py-1 text-micro font-bold rounded-xl text-on-success shadow-soft bg-success">
                         {stats.lowBalanceCount} تنبيهات
                     </div>
                 </div>
@@ -69,7 +69,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                     </span>
                                     <button 
                                         onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                        className="w-8 h-8 rounded-xl text-on-primary transition-colors shadow-soft flex items-center justify-center bg-success"
+                                        className="w-8 h-8 rounded-xl text-on-success transition-colors shadow-soft flex items-center justify-center bg-success"
                                         title="إرسال تذكير واتساب"
                                     >
                                         <Phone size={14} />
@@ -142,7 +142,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 </div>
 
                 <div className="mt-6">
-                    <Link to="/tasks" className="w-full h-11 rounded-card text-on-primary text-micro font-bold flex items-center justify-center gap-2 transition-all shadow-soft hover:shadow-md active:scale-[0.98] bg-info">
+                    <Link to="/tasks" className="w-full h-11 rounded-card text-on-info text-micro font-bold flex items-center justify-center gap-2 transition-all shadow-soft hover:shadow-md active:scale-\[0\.98\] bg-info">
                         مركز المهام المتكامل
                         <ChevronLeft size={14} />
                     </Link>

@@ -34,7 +34,7 @@ export const AboutValues = () => (
 
                 <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-warning)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-primary flex items-center justify-center shadow-lg shadow-warning/20 shrink-0">
+                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-warning)] to-[var(--bg-warning)] text-on-warning flex items-center justify-center shadow-lg shadow-warning/20 shrink-0">
                             <Lightbulb className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">الابتكار</h3>
@@ -44,7 +44,7 @@ export const AboutValues = () => (
 
                 <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-success)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-primary flex items-center justify-center shadow-lg shadow-success/20 shrink-0">
+                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-success)] to-[var(--bg-success)] text-on-success flex items-center justify-center shadow-lg shadow-success/20 shrink-0">
                             <Award className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">التميز</h3>
@@ -54,7 +54,7 @@ export const AboutValues = () => (
 
                 <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-error)]/50 dark:from-[var(--bg-card)] dark:to-[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-primary flex items-center justify-center shadow-lg shadow-error/20 shrink-0">
+                        <div className="w-12 h-12 rounded-card bg-gradient-to-br from-[var(--bg-error)] to-[var(--bg-error)] text-on-error flex items-center justify-center shadow-lg shadow-error/20 shrink-0">
                             <Compass className="w-6 h-6" />
                         </div>
                         <h3 className="text-lg md:text-xl font-black text-main dark:text-main font-heading">بناء الجيل</h3>

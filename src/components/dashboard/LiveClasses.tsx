@@ -149,7 +149,7 @@ export const LiveClasses = () => {
               key={session.id}
               className="p-5 flex flex-col justify-between group bg-white dark:bg-primary-active rounded-2xl shadow-sm border border-border/50 dark:border-border/50 transition-all hover:shadow-md hover:border-border dark:hover:border-border"
             >
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-on-primary text-micro font-bold w-fit bg-success">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl shadow-sm text-on-success text-micro font-bold w-fit bg-success">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 مباشر
               </div>

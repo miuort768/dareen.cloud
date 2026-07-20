@@ -27,7 +27,7 @@ export const JobsErrorModal = ({ errorMsg, onClose }: JobsErrorModalProps) => (
                     <h3 className="text-lg font-bold font-heading text-main mb-2">عذراً</h3>
                     <p className="text-sm text-muted leading-relaxed">{errorMsg}</p>
                     <button type="button" onClick={onClose}
-                        className="mt-6 w-full py-3 bg-error hover:bg-error-hover text-on-primary font-bold text-xs rounded-card transition-all">
+                        className="mt-6 w-full py-3 bg-error hover:bg-error-hover text-on-error font-bold text-xs rounded-card transition-all">
                         حسناً
                     </button>
                 </motion.div>

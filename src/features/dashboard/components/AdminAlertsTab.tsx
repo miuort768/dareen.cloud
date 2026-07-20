@@ -17,7 +17,7 @@ export const AdminAlertsTab = ({ lowBalanceCount }: AdminAlertsTabProps) => {
             {lowBalanceCount > 0 ? (
                 <div className="bg-card rounded-card p-5 shadow-soft border border-error dark:border-error/30">
                     <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-primary shadow-soft shadow-error/40 shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-error flex items-center justify-center text-on-error shadow-soft shadow-error/40 shrink-0">
                             <Bell size={18} strokeWidth={1.5} />
                         </div>
                         <div className="flex-1 min-w-0">

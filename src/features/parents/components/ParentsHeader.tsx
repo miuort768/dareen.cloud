@@ -49,7 +49,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                     className={cn(
                         "flex items-center gap-2 h-9 md:h-10 px-2 md:px-5 text-micro font-bold transition-all shadow-soft active:scale-95 rounded-xl",
                         showAddForm 
-                            ? "bg-error text-on-primary hover:bg-error" 
+                            ? "bg-error text-on-error hover:bg-error" 
                             : "bg-white/20 backdrop-blur-sm text-on-primary hover:bg-white/30"
                     )}
                 >

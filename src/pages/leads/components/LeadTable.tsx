@@ -102,7 +102,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                         className={cn(
                                             "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                             lead.status === 'converted'
-                                                ? "bg-success text-on-primary"
+                                                ? "bg-success text-on-success"
                                                 : "bg-success/10 text-success hover:bg-success/20"
                                         )}
                                         title="تم التحويل / مشترك" aria-label="تم التحويل"
@@ -120,7 +120,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                         className={cn(
                                             "w-7 h-7 flex items-center justify-center transition-all rounded-xl",
                                             lead.status === 'lost'
-                                                ? "bg-error text-on-primary"
+                                                ? "bg-error text-on-error"
                                                 : "bg-error/10 text-error hover:bg-error/20"
                                         )}
                                         title="رفض / ملغي" aria-label="رفض العميل"

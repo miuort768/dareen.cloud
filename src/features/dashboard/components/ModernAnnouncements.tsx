@@ -101,7 +101,7 @@ export const ModernAnnouncements = () => {
                     aria-expanded={showAcknowledge}
                     className="flex-1 p-6 md:p-8 relative cursor-pointer group"
                 >
-                    <div className="absolute top-4 end-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-on-primary dark:bg-white dark:text-main rounded-lg">
+                    <div className="absolute top-4 end-6 flex items-center gap-1.5 px-2 py-0.5 bg-background text-main dark:bg-white dark:text-main rounded-lg">
                         <Sparkles size={10} className="text-warning" />
                         <span className="text-micro font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
@@ -155,7 +155,7 @@ export const ModernAnnouncements = () => {
                             <div className="grid grid-cols-2 gap-3">
                                 <button 
                                     onClick={handleDismiss}
-                                    className="h-12 bg-info text-on-primary font-medium text-micro uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary-hover transition-all shadow-soft active:scale-[0.98] rounded-card"
+                                    className="h-12 bg-info text-on-info font-medium text-micro uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary-hover transition-all shadow-soft active:scale-[0.98] rounded-card"
                                 >
                                     <Check size={16} />
                                     موافق، تم الاطلاع

@@ -123,7 +123,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                                     </a>
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                                        className="w-8 h-8 flex items-center justify-center bg-card border border-border/50 text-muted hover:bg-error hover:text-on-primary hover:border-error transition-all rounded-xl"
+                                                        className="w-8 h-8 flex items-center justify-center bg-card border border-border/50 text-muted hover:bg-error hover:text-on-error hover:border-error transition-all rounded-xl"
                                                     >
                                                         <Trash2 size={13} />
                                                     </button>

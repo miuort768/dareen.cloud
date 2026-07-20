@@ -52,7 +52,7 @@ export const AttendanceModal = ({
         <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8" role="dialog" aria-modal="true" aria-label="تقرير الحضور" onKeyDown={handleKeyDown}>
             <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={onClose} />
             <div className="relative w-full max-w-2xl bg-card shadow-xl rounded-card overflow-hidden border border-border/50 flex flex-col max-h-[90vh] md:animate-in md:slide-in-from-bottom-8 md:duration-300">
-                <div className="p-5 bg-success text-on-primary flex items-center justify-between shrink-0 relative overflow-hidden">
+                <div className="p-5 bg-success text-on-success flex items-center justify-between shrink-0 relative overflow-hidden">
                     <div className="absolute top-0 end-0 w-24 h-24 bg-white/10 -me-12 -mt-12 blur-2xl rounded-full" />
                     <div className="absolute bottom-0 start-0 w-16 h-16 bg-white/5 translate-y-8 translate-x-8 blur-lg rounded-full"></div>
                     <div className="relative z-10 flex items-center gap-4">
@@ -124,7 +124,7 @@ export const AttendanceModal = ({
                 </div>
 
                 <div className="p-5 border-t border-border/50 bg-background/50 flex justify-end shrink-0">
-                    <button onClick={onClose} className="px-6 py-2 bg-success hover:shadow-lg hover:shadow-success/25 text-on-primary text-micro font-medium uppercase tracking-widest rounded-xl transition-all active:scale-[0.98]">إغلاق</button>
+                    <button onClick={onClose} className="px-6 py-2 bg-success hover:shadow-lg hover:shadow-success/25 text-on-success text-micro font-medium uppercase tracking-widest rounded-xl transition-all active:scale-[0.98]">إغلاق</button>
                 </div>
             </div>
         </div>

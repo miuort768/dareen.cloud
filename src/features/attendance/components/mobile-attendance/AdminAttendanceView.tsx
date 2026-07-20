@@ -100,7 +100,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                                         <div className="flex gap-1.5">
                                             <motion.button whileTap={{ scale: 0.93 }}
                                                 onClick={() => { triggerHaptic('light'); onLog(student, enrollment); }}
-                                                className="flex-1 py-2 bg-success text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1">
+                                                className="flex-1 py-2 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1">
                                                 <CheckCircle2 size={11} /> حضور
                                             </motion.button>
                                             <motion.button whileTap={{ scale: 0.93 }}

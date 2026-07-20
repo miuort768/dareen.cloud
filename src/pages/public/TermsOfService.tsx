@@ -252,7 +252,7 @@ export const TermsOfService = () => {
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-card text-on-primary px-6 py-3 w-full sm:w-auto rounded-card font-bold hover:bg-success transition-all group relative overflow-hidden"
+                                className="inline-flex items-center justify-center gap-4 bg-card text-main px-6 py-3 w-full sm:w-auto rounded-card font-bold hover:bg-success hover:text-on-success transition-all group relative overflow-hidden"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-success to-success opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <Headphones className="w-5 h-5 relative z-10" />

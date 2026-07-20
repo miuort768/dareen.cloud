@@ -78,7 +78,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     
                     {/* ── Glowing Success Icon ── */}
                     <div className="flex-shrink-0 relative">
-                        <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-primary">
+                        <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-success">
                             <CheckCircle2 size={20} className="stroke-[2.5]" />
                         </div>
                         <div className="absolute -top-1.5 -start-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">

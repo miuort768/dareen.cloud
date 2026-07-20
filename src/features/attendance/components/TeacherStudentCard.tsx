@@ -232,7 +232,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 {/* Live Stream Quick Start */}
                 <button 
                     onClick={startLiveStream}
-                    className="w-full bg-error hover:bg-error text-on-primary py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-micro uppercase tracking-widest shadow-sm active:scale-95 group transition-all"
+                    className="w-full bg-error hover:bg-error hover:text-on-error text-on-error py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-micro uppercase tracking-widest shadow-sm active:scale-95 group transition-all"
                 >
                     <Radio size={14} className="animate-pulse" />
                     <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
@@ -256,13 +256,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="w-full bg-error text-on-primary px-1 py-2 font-bold text-micro rounded-xl hover:bg-error transition-all shadow-sm active:scale-95"
+                            className="w-full bg-error text-on-error px-1 py-2 font-bold text-micro rounded-xl hover:bg-error transition-all shadow-sm active:scale-95"
                         >
                             السجل
                         </button>
                         <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="w-full bg-success text-on-primary px-2 py-2 font-bold text-micro rounded-xl hover:bg-success transition-all shadow-sm active:scale-95"
+                            className="w-full bg-success text-on-success px-2 py-2 font-bold text-micro rounded-xl hover:bg-success transition-all shadow-sm active:scale-95"
                         >
                             تسجيل
                         </button>

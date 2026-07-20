@@ -40,13 +40,13 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 <div className="p-6 border-b-2 border-border bg-background">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-5">
-                            <div className="w-16 h-16 bg-background text-on-primary rounded-none flex items-center justify-center border-2 border-border shadow-md shrink-0">
+                            <div className="w-16 h-16 bg-background text-main rounded-none flex items-center justify-center border-2 border-border shadow-md shrink-0">
                                 <User size={32} />
                             </div>
                             <div>
                                 <h3 className="text-xl font-medium text-main uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
-                                    <span className="px-2 py-0.5 bg-background text-on-primary text-micro font-medium uppercase">{student.grade}</span>
+                                    <span className="px-2 py-0.5 bg-background text-main text-micro font-medium uppercase">{student.grade}</span>
                                     <span className="px-2 py-0.5 bg-warning text-warning border-2 border-border text-micro font-medium uppercase flex items-center gap-1">
                                         <Star size={10} className="fill-warning" />
                                         {student.totalPoints || 0} النقاط
@@ -56,7 +56,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                         </div>
                         <button 
                             onClick={onClose} 
-                            className="w-8 h-8 rounded-none bg-card text-main border-2 border-border hover:bg-error hover:text-on-primary transition-all flex items-center justify-center"
+                            className="w-8 h-8 rounded-none bg-card text-main border-2 border-border hover:bg-error hover:text-on-error transition-all flex items-center justify-center"
                         >
                             <X size={18} />
                         </button>
@@ -124,14 +124,14 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 <div className="p-6 bg-background dark:bg-background border-t-2 border-border flex gap-4">
                     <button 
                         onClick={() => onGenerateReport?.(student)}
-                        className="flex-1 h-12 bg-success text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-12 bg-success text-on-success rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                     >
                         <Sparkles size={16} />
                         إصدار تقرير شهري
                     </button>
                     <button 
                         onClick={onClose}
-                        className="px-8 h-12 bg-background text-on-primary rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none"
+                        className="px-8 h-12 bg-background text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none"
                     >
                         إغلاق
                     </button>

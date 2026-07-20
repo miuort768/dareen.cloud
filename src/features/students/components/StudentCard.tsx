@@ -20,10 +20,10 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                 <div className="p-4 flex justify-between items-center border-b-2 border-border print:hidden">
                     <h3 className="font-medium text-xs uppercase tracking-[0.3em] text-dim italic">Student ID Card</h3>
                     <div className="flex gap-2">
-                        <button onClick={handlePrint} className="p-2 bg-success-soft text-success hover:bg-success hover:text-on-primary transition-colors border-2 border-success" aria-label="طباعة">
+                        <button onClick={handlePrint} className="p-2 bg-success-soft text-success hover:bg-success hover:text-on-success transition-colors border-2 border-success" aria-label="طباعة">
                             <Printer size={18} />
                         </button>
-                        <button onClick={onClose} className="p-2 bg-error-soft text-error hover:bg-error hover:text-on-primary transition-colors border-2 border-error" aria-label="إغلاق">
+                        <button onClick={onClose} className="p-2 bg-error-soft text-error hover:bg-error hover:text-on-error transition-colors border-2 border-error" aria-label="إغلاق">
                             <X size={18} />
                         </button>
                     </div>
