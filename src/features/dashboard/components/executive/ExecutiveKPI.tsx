@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
-import { TrendingUp, TrendingDown, DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle, Activity } from 'lucide-react';
+import { DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle, Activity } from 'lucide-react';
 import { ProgressBar } from '../../../../shared/components/ui';
 
 const ICON_MAP: Record<string, typeof DollarSign> = {

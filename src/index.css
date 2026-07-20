@@ -347,7 +347,7 @@ html, body {
 
 /* Global focus-visible outline for keyboard accessibility */
 :focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid rgb(var(--color-primary));
   outline-offset: 2px;
 }
 
@@ -445,19 +445,6 @@ html, body {
 
   .slide-in-from-left-4 {
     animation: slideInFromLeft 0.3s ease-out;
-  }
-
-  /* Skeleton Pulse */
-  @keyframes pulse {
-
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: 0.5;
-    }
   }
 
   @keyframes slideIn {
@@ -574,6 +561,11 @@ html, body {
     animation: float 3s ease-in-out infinite;
   }
 
+  /* Content-visibility for below-fold sections — skip rendering offscreen */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
+  }
 
 
   @media (max-width: 768px) {
