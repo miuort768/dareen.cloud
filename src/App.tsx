@@ -186,7 +186,7 @@ function App() {
         </div>
       )}
       <ScrollToTop />
-      {location.pathname === '/' && <InstallPWA />}
+      <InstallPWA />
       {/* Public Facing Actions - Only show on specific public pages */}
 
 

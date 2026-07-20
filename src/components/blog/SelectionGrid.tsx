@@ -131,8 +131,8 @@ export const SelectionGrid = ({
                 </div>
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                    {view === 'classrooms' && currentClassrooms.map((cls) => (
-                            <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
+                    {view === 'classrooms' && currentClassrooms.map((cls, idx) => (
+                            <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${idx * 60}ms` }}>
                                 <button onClick={() => onSelectGrade(cls)}
                                     className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] text-on-primary border border-white/5 shadow-lg active:scale-[0.97] transition-all">
                                     <GraduationCap size={24} />
@@ -160,8 +160,8 @@ export const SelectionGrid = ({
                             </>
                         )}
 
-                    {view === 'subjects' && currentSubjects.map((subj) => (
-                            <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
+                    {view === 'subjects' && currentSubjects.map((subj, idx) => (
+                            <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${idx * 60}ms` }}>
                                 <button onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
                                     className={cn("w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br text-on-primary shadow-lg active:scale-[0.97] transition-all", subj.gradient)}>
                                     <span className="text-sm font-black text-center">{subj.name}</span>
