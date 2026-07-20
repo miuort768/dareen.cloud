@@ -35,11 +35,11 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
                 </button>
             </div>
             <div className="flex items-center gap-3">
-                <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن ' + post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-4 bg-success text-on-success font-black text-sm rounded-card hover:bg-success transition-all shadow-lg">
-                    <MessageCircle size={18} /><span>لدي سؤال؟</span>
+                <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن ' + post.title)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 bg-success text-on-success font-black text-xs rounded-xl hover:opacity-90 transition-all shadow-lg">
+                    <MessageCircle size={16} /><span>لدي سؤال؟</span>
                 </a>
-                <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-4 bg-card dark:bg-white text-main dark:text-main font-black text-sm rounded-card shadow-lg hover:bg-error dark:hover:bg-error hover:text-on-error transition-all">
-                    <Play size={18} /> ابدأ التعلم الآن
+                <Link to="/courses" className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary font-black text-xs rounded-xl shadow-lg hover:bg-primary-hover transition-all">
+                    <Play size={16} /> ابدأ التعلم الآن
                 </Link>
             </div>
         </div>

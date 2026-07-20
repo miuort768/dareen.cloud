@@ -52,9 +52,9 @@ export const SelectionGrid = ({
 
                 <div className="mb-3">
                     <picture>
-                        <source srcSet="/dareen8.webp" type="image/webp" />
-                        <source srcSet="/dareen8.avif" type="image/avif" />
-                        <img src="/dareen8.png" alt="دارين السابعة" width="1983" height="793" loading="lazy" className="w-full max-w-[260px] mx-auto h-auto block" />
+                        <source srcSet="/bbook.webp" type="image/webp" />
+                        <source srcSet="/bbook.avif" type="image/avif" />
+                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-full max-w-[200px] mx-auto h-auto block" />
                     </picture>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -89,8 +89,8 @@ export const SelectionGrid = ({
                     ))}
 
                     <button onClick={goBack}
-                        className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white dark:bg-primary-active border border-border text-muted dark:text-on-primary shadow-sm active:scale-[0.97] transition-all">
-                        <ArrowLeft size={16} />
+                        className="flex flex-row items-center justify-center gap-2 p-3 rounded-2xl bg-hover dark:bg-card border border-border text-main dark:text-main shadow-sm hover:bg-surface dark:hover:bg-primary-active active:scale-[0.97] transition-all">
+                        <ArrowLeft size={14} />
                         <span className="text-micro font-black">العودة</span>
                     </button>
                 </div>
@@ -124,9 +124,9 @@ export const SelectionGrid = ({
 
                 <div className="mb-6">
                     <picture>
-                        <source srcSet="/dareen8.webp" type="image/webp" />
-                        <source srcSet="/dareen8.avif" type="image/avif" />
-                        <img src="/dareen8.png" alt="دارين السابعة" width="1983" height="793" loading="lazy" className="w-auto mx-auto h-auto block max-w-full" />
+                        <source srcSet="/bbook.webp" type="image/webp" />
+                        <source srcSet="/bbook.avif" type="image/avif" />
+                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-auto mx-auto h-auto block max-w-[320px]" />
                     </picture>
                 </div>
                 <div className="max-w-4xl mx-auto">
@@ -171,8 +171,8 @@ export const SelectionGrid = ({
 
                         <div className="animate-in zoom-in-95 duration-500">
                             <button onClick={goBack}
-                                className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-white dark:bg-primary-active border border-border dark:border-border text-muted dark:text-muted shadow-sm active:scale-[0.97] transition-all">
-                                <ArrowLeft size={22} />
+                                className="w-full py-4 px-3 flex flex-row items-center justify-center gap-3 rounded-2xl bg-hover dark:bg-card border border-border text-main dark:text-main shadow-sm hover:bg-surface dark:hover:bg-primary-active active:scale-[0.97] transition-all">
+                                <ArrowLeft size={18} />
                                 <span className="text-sm font-black">العودة</span>
                             </button>
                         </div>
