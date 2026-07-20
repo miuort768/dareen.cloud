@@ -1,6 +1,7 @@
 import { useRef } from 'react';
-import { Building2, Phone, MapPin, Hash, Send, Image as ImageIcon } from 'lucide-react';
+import { Building2, Phone, MapPin, Hash, Send, Image as ImageIcon, Globe, Apple } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
+import { useSettingsStore } from '../../../store/settingsStore';
 import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, PrimaryBtn } from './SettingsUI';
 
 export const AcademyInfoSection = ({
@@ -23,6 +24,9 @@ export const AcademyInfoSection = ({
     handleSaveGeneral: () => void; isSaving: boolean;
 }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const googlePlayUrl = useSettingsStore(s => s.googlePlayUrl);
+    const appStoreUrl = useSettingsStore(s => s.appStoreUrl);
+    const setSetting = useSettingsStore(s => s.setSetting);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -94,6 +98,26 @@ export const AcademyInfoSection = ({
                         <div className="relative">
                             <MapPin size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
                             <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="ps-9" placeholder="رقم الواتساب" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-border">
+                <h4 className="font-bold text-main text-sm mb-4">روابط التطبيقات</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <FieldLabel>رابط Google Play</FieldLabel>
+                        <div className="relative">
+                            <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={googlePlayUrl} onChange={e => setSetting('googlePlayUrl', e.target.value)} className="ps-9" placeholder="https://play.google.com/store/apps/..." />
+                        </div>
+                    </div>
+                    <div>
+                        <FieldLabel>رابط App Store</FieldLabel>
+                        <div className="relative">
+                            <Apple size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <InputField value={appStoreUrl} onChange={e => setSetting('appStoreUrl', e.target.value)} className="ps-9" placeholder="https://apps.apple.com/app/..." />
                         </div>
                     </div>
                 </div>

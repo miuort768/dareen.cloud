@@ -1,31 +1,9 @@
-import { Smartphone, Monitor, Download, Shield, MonitorDown, Globe, Apple } from 'lucide-react';
-import { useRef, useEffect, useState } from 'react';
+import { Smartphone, Download, Shield, MonitorDown, Globe, Apple } from 'lucide-react';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 export const AppDownloadSection = () => {
-    const deferredPrompt = useRef<(Event & { prompt(): Promise<void>; userChoice: Promise<{ outcome: string }> }) | null>(null);
-    const [pwaInstalled, setPwaInstalled] = useState(false);
-
-    useEffect(() => {
-        const handler = (e: Event) => {
-            e.preventDefault();
-            deferredPrompt.current = e;
-        };
-        const onInstalled = () => setPwaInstalled(true);
-        window.addEventListener('beforeinstallprompt', handler);
-        window.addEventListener('appinstalled', onInstalled);
-        return () => {
-            window.removeEventListener('beforeinstallprompt', handler);
-            window.removeEventListener('appinstalled', onInstalled);
-        };
-    }, []);
-
-    const handlePwaInstall = async () => {
-        if (!deferredPrompt.current) return;
-        deferredPrompt.current.prompt();
-        const result = await deferredPrompt.current.userChoice;
-        if (result.outcome === 'accepted') setPwaInstalled(true);
-        deferredPrompt.current = null;
-    };
+    const googlePlayUrl = useSettingsStore(s => s.googlePlayUrl);
+    const appStoreUrl = useSettingsStore(s => s.appStoreUrl);
 
     return (
         <>
@@ -46,39 +24,31 @@ export const AppDownloadSection = () => {
                             <p className="text-muted dark:text-muted text-xs lg:text-xs leading-relaxed mb-6 max-w-xl mx-auto font-medium">
                                  أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                             </p>
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                 <a
-                                    href="#"
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl border border-border"
+                                    href={googlePlayUrl || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
                                 >
-                                    <Globe className="w-5 h-5" />
+                                    <Globe className="w-5 h-5 shrink-0" />
                                     <div className="text-start">
-                                        <div className="text-micro text-white/70 font-medium leading-tight">حمله على</div>
+                                        <div className="text-micro text-white/60 font-medium leading-tight">حمله على</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">Google Play</div>
                                     </div>
                                 </a>
                                 <a
-                                    href="#"
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl border border-border"
+                                    href={appStoreUrl || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
                                 >
-                                    <Apple className="w-5 h-5" />
+                                    <Apple className="w-5 h-5 shrink-0" />
                                     <div className="text-start">
-                                        <div className="text-micro text-white/70 font-medium leading-tight">حمله على</div>
+                                        <div className="text-micro text-white/60 font-medium leading-tight">حمله على</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
                                     </div>
                                 </a>
-                                {!pwaInstalled && (
-                                <button
-                                    onClick={handlePwaInstall}
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-on-primary font-bold text-sm shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all rounded-xl"
-                                >
-                                    <Monitor className="w-5 h-5" />
-                                    <div className="text-start">
-                                        <div className="text-micro text-on-primary/70 font-medium leading-tight">حمله على</div>
-                                        <div className="text-sm font-black leading-tight -mt-0.5">الكمبيوتر</div>
-                                    </div>
-                                </button>
-                                )}
                             </div>
                             <div className="flex items-center justify-center gap-6 mt-6">
                                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
@@ -120,30 +90,25 @@ export const AppDownloadSection = () => {
                     <p className="text-muted dark:text-muted text-micro leading-tight text-center max-w-xs mx-auto mb-6 font-medium">
                         أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                     </p>
-                    <div className="flex flex-col gap-3 items-center mb-7">
+                    <div className="flex flex-col gap-4 items-center mb-7">
                         <a
-                            href="#"
-                            className="w-full max-w-[320px] py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 rounded-2xl border border-border"
+                            href={googlePlayUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
                         >
-                            <Globe className="w-5 h-5" />
+                            <Globe className="w-5 h-5 shrink-0" />
                             <span>حمله على Google Play</span>
                         </a>
                         <a
-                            href="#"
-                            className="w-full max-w-[320px] py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 rounded-2xl border border-border"
+                            href={appStoreUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
                         >
-                            <Apple className="w-5 h-5" />
+                            <Apple className="w-5 h-5 shrink-0" />
                             <span>حمله على App Store</span>
                         </a>
-                        {!pwaInstalled && (
-                        <button
-                            onClick={handlePwaInstall}
-                            className="w-full max-w-[320px] py-4 bg-primary text-on-primary font-black text-base shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 rounded-2xl"
-                        >
-                            <Monitor className="w-5 h-5" />
-                            <span>حمله على الكمبيوتر</span>
-                        </button>
-                        )}
                     </div>
                     <div className="flex items-center justify-center gap-6 mt-5">
                         <div className="flex items-center gap-1.5 text-muted dark:text-muted">

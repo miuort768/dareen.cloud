@@ -28,6 +28,8 @@ interface SettingsState {
     libraryWhatsapp: string;
     libraryTelegram: string;
     whatsappNumbers: string;
+    googlePlayUrl: string;
+    appStoreUrl: string;
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
@@ -62,6 +64,8 @@ const SETTING_META: Record<string, { apiKey: string; coerce?: 'boolean' | 'numbe
     libraryWhatsapp:          { apiKey: 'library_whatsapp' },
     libraryTelegram:          { apiKey: 'library_telegram' },
     whatsappNumbers:          { apiKey: 'whatsapp_numbers',          coerce: 'json' },
+    googlePlayUrl:            { apiKey: 'google_play_url' },
+    appStoreUrl:              { apiKey: 'app_store_url' },
 };
 
 // Global CSS Theme injector
@@ -164,6 +168,8 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         "نخبة من المعلمين المتخصصين",
         "متابعة دورية وتقييم مستمر"
     ]),
+    googlePlayUrl: '',
+    appStoreUrl: '',
     isSettingsLoading: true,
 
     fetchSettings: async () => {
