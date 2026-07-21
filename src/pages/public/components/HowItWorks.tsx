@@ -53,8 +53,8 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         {[
                             {
                                 id: '01',
-                                title: 'اختر الخدمة',
-                                desc: 'حدد النظام التعليمي المناسب',
+                                title: 'تحميل مجاني بدون اعلانات',
+                                desc: 'اختر ما تريد من كتب او مذكرات مجانا',
                                 icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary-active to-primary-active'
                             },
@@ -90,7 +90,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="text-xs md:text-sm font-black text-main dark:text-main mb-1 group-hover:text-primary dark:group-hover:text-primary transition-colors">
                                         {step.title}
                                     </div>
-                                    <p className="hidden sm:block text-micro md:text-micro text-muted dark:text-muted leading-tight font-bold">
+                                    <p className="hidden sm:block text-micro md:text-micro text-main dark:text-main leading-tight font-bold">
                                         {step.desc}
                                     </p>
                                 </div>

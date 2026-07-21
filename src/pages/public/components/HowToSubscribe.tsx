@@ -20,8 +20,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
         {
             num: '01',
             icon: Users,
-            title: 'اختر الخدمة',
-            desc: 'حدد النظام التعليمي',
+            title: 'تحميل مجاني بدون اعلانات',
+            desc: 'اختر ما تريد من كتب او مذكرات مجانا',
             boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
         },
         {
@@ -90,7 +90,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                             {/* Title */}
                             <h3 className="text-xs font-black text-main dark:text-main mb-0.5">{s.title}</h3>
                             {/* Desc */}
-                            <p className="text-micro text-muted dark:text-muted font-medium leading-tight">{s.desc}</p>
+                            <p className="text-micro text-main dark:text-main font-medium leading-tight">{s.desc}</p>
                         </div>
                     ))}
                 </div>
