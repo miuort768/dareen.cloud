@@ -28,21 +28,21 @@ export const AboutHero = () => (
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="flex flex-wrap justify-center gap-8 md:gap-12">
                 <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-none flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-card flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Award size={24} />
                     </div>
                     <span className="text-xl md:text-2xl font-black text-main dark:text-main">10+</span>
                     <span className="text-micro text-muted dark:text-muted font-black mt-1">سنوات تميز</span>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-none flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/20 rounded-card flex items-center justify-center text-primary mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Users size={24} />
                     </div>
                     <span className="text-xl md:text-2xl font-black text-main dark:text-main">5k+</span>
                     <span className="text-micro text-muted dark:text-muted font-black mt-1">طالب فخور</span>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-warning-light dark:bg-warning/20 rounded-none flex items-center justify-center text-warning mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 bg-warning-light dark:bg-warning/20 rounded-card flex items-center justify-center text-warning mb-3 shadow-sm group-hover:scale-110 transition-transform">
                         <Heart size={24} />
                     </div>
                     <span className="text-xl md:text-2xl font-black text-main dark:text-main">100%</span>

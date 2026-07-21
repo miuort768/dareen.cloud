@@ -54,7 +54,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                     <div key={teacher} className="bg-card rounded-card shadow-soft border border-border/50 overflow-hidden">
                         <div className="px-4 py-2.5 border-b border-border/50 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black bg-primary-soft text-primary">{teacher.charAt(0)}</div>
+                                <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold bg-primary-soft text-primary">{teacher.charAt(0)}</div>
                                 <span className="text-xs font-bold text-main">{teacher}</span>
                             </div>
                             <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">{filtered.length} طالب</span>
@@ -73,7 +73,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                                         className="p-3 rounded-xl border border-border space-y-2">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-primary-soft text-primary">
+                                                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-semibold bg-primary-soft text-primary">
                                                     {getGradeDisplay(student.name, student.grade)}
                                                 </div>
                                                 <div>

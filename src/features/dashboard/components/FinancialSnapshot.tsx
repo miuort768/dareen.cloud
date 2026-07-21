@@ -31,7 +31,7 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                         <div className="flex-1 min-w-0">
                             <p className="text-micro font-bold text-muted">{item.label}</p>
                         </div>
-                        <span className={cn("text-sm font-black tabular-nums", item.valueColor)}>
+                        <span className={cn("text-sm font-semibold tabular-nums", item.valueColor)}>
                             {item.value.toLocaleString('ar-EG')} <span className="text-micro font-bold">د.ك</span>
                         </span>
                     </div>

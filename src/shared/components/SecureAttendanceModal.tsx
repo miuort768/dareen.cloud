@@ -68,7 +68,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <div className="p-6 space-y-6">
                     <div className="text-center">
                         <p className="text-sm text-muted dark:text-muted font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-black text-main dark:text-main">{studentName}</h3>
+                        <h3 className="text-lg font-bold text-main dark:text-main">{studentName}</h3>
                         <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20 dark:text-primary">
                             بتاريخ: {date}
                         </p>
@@ -104,7 +104,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     {status === 'completed' && (
                         <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
                             <div className="space-y-2">
-                                <label htmlFor="attendance-topics" className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label htmlFor="attendance-topics" className="text-micro font-semibold text-muted uppercase tracking-widest flex items-center gap-2">
                                     <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                                 </label>
                                 <textarea 
@@ -117,7 +117,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label htmlFor="attendance-homework" className="text-micro font-black text-muted uppercase tracking-widest flex items-center gap-2">
+                                <label htmlFor="attendance-homework" className="text-micro font-semibold text-muted uppercase tracking-widest flex items-center gap-2">
                                     <Star size={12} className="text-warning" /> الواجب المطلوب
                                 </label>
                                 <input 
@@ -142,7 +142,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     className="w-5 h-5 rounded-none accent-error cursor-pointer"
                                 />
                                 <div>
-                                    <p className="text-sm font-black text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
+                                    <p className="text-sm font-semibold text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
                                     <p className="text-micro font-bold text-error">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
                                 </div>
                             </label>
@@ -173,7 +173,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
                     <button
                         onClick={handleConfirm}
-                        className="w-full bg-primary text-on-primary py-3 rounded-none font-black shadow-lg shadow-primary/20 hover:bg-primary-hover flex items-center justify-center gap-2"
+                        className="w-full bg-primary text-on-primary py-3 rounded-none font-bold shadow-lg shadow-primary/20 hover:bg-primary-hover flex items-center justify-center gap-2"
                     >
                         تأكيد التسجيل
                     </button>

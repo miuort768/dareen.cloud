@@ -18,8 +18,7 @@ import { AttendanceChart } from '../features/dashboard/components/AttendanceChar
 import type { DashboardStats as DashboardStatsType, LowBalanceStudent, DashboardTask } from '../features/dashboard/types';
 import type { User } from '../types/auth';
 import { useState } from 'react';
-
-const glass = "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg shadow-black/[0.03]";
+import { GlassCard } from '@/shared/components/ui';
 
 interface TeacherDashboardDesktopProps {
     currentUser: User | null;
@@ -44,25 +43,25 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
                 <DashboardHeader isTeacher={true} currentUser={currentUser} />
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
-                <div className={glass + " p-5"}>
+                <GlassCard className="p-5">
                     {nextSession && (
                         <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
                     )}
                     <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
-                </div>
+                </GlassCard>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
                 className="grid grid-cols-1 lg:grid-cols-12 gap-6"
             >
                 <div className="lg:col-span-8">
-                    <div className={glass + " p-5"}>
+                    <GlassCard className="p-5">
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                    </div>
+                    </GlassCard>
                 </div>
                 <div className="lg:col-span-4">
-                    <div className={glass + " p-5"}>
+                    <GlassCard className="p-5">
                         <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
-                    </div>
+                    </GlassCard>
                 </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
@@ -72,33 +71,33 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
                 className="grid grid-cols-1 lg:grid-cols-12 gap-6"
             >
                 <div className="lg:col-span-8 space-y-6">
-                    <div className={glass + " p-5"}>
+                    <GlassCard className="p-5">
                         <LiveClasses />
-                    </div>
-                    <div className={glass + " p-5"}>
+                    </GlassCard>
+                    <GlassCard className="p-5">
                         <ModernAnnouncements />
-                    </div>
+                    </GlassCard>
                     {timeline.length > 0 && (
-                        <div className={glass + " p-5"}>
+                        <GlassCard className="p-5">
                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
-                        </div>
+                        </GlassCard>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className={glass + " p-5"}>
+                        <GlassCard className="p-5">
                             <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
-                        </div>
-                        <div className={glass + " p-5"}>
+                        </GlassCard>
+                        <GlassCard className="p-5">
                             <TasksAndRequests tasks={tasks} />
-                        </div>
+                        </GlassCard>
                     </div>
                 </div>
                 <div className="lg:col-span-4 space-y-6">
-                    <div className={glass + " p-5"}>
+                    <GlassCard className="p-5">
                         <AttendanceChart rate={stats.attendanceRate} />
-                    </div>
-                    <div className={glass + " p-5"}>
+                    </GlassCard>
+                    <GlassCard className="p-5">
                         <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-                    </div>
+                    </GlassCard>
                 </div>
             </motion.div>
             {briefingStudent && (

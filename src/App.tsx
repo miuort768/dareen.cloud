@@ -138,7 +138,7 @@ function App() {
             <div className="w-16 h-16 mx-auto bg-warning-light dark:bg-warning/30 rounded-2xl flex items-center justify-center">
               <span className="text-3xl">⏳</span>
             </div>
-            <h2 className="text-xl font-black text-main dark:text-on-primary">يستغرق التحميل وقتاً أطول من المعتاد</h2>
+            <h2 className="text-xl font-bold text-main dark:text-on-primary">يستغرق التحميل وقتاً أطول من المعتاد</h2>
             <p className="text-sm text-muted dark:text-muted">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
             <div className="flex gap-3 justify-center pt-2">
               <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
@@ -175,7 +175,7 @@ function App() {
 
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
-        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-warning text-micro font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
+        <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-warning text-micro font-semibold py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
           <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
             onClick={() => navigate('/settings')}

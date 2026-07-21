@@ -48,24 +48,24 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                     <div className="flex justify-between items-start pb-6 border-b border-border">
                         <div>
                             <p className="text-micro font-bold text-muted uppercase mb-1">المعلمة</p>
-                            <h3 className="text-lg font-black text-main">{teacher.name}</h3>
+                            <h3 className="text-lg font-bold text-main">{teacher.name}</h3>
                             <span className="text-micro font-bold px-2 py-0.5 inline-block mt-1 rounded-lg bg-primary-soft text-primary">{teacher.subject}</span>
                         </div>
                         <div className="text-end">
                             <p className="text-micro font-bold text-muted uppercase mb-1">التاريخ</p>
-                            <p className="text-xs font-black text-main">{new Date().toLocaleDateString('ar-EG')}</p>
+                            <p className="text-xs font-semibold text-main">{new Date().toLocaleDateString('ar-EG')}</p>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="bg-card p-4 border border-border rounded-xl">
                             <p className="text-micro font-bold text-muted uppercase mb-1">إجمالي الحصص</p>
-                            <p className="text-2xl font-black text-main font-mono">{teacher.sessionsCount}</p>
+                            <p className="text-2xl font-bold text-main font-mono">{teacher.sessionsCount}</p>
                         </div>
                         <div className="p-4 border border-primary-soft rounded-xl bg-primary-soft/30">
                             <p className="text-micro font-bold uppercase mb-1 text-primary">صافي المستحق</p>
                             <div className="flex items-baseline gap-1">
-                                <p className="text-2xl font-black font-mono text-primary">{teacher.totalAmount.toLocaleString()}</p>
+                                <p className="text-2xl font-bold font-mono text-primary">{teacher.totalAmount.toLocaleString()}</p>
                                 <span className="text-micro font-bold uppercase text-primary">{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>

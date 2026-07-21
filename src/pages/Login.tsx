@@ -104,12 +104,12 @@ export const Login = () => {
                         <div className="mb-10 w-full">
                             <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-e-4 border-accent shadow-md mb-10">
                                 <CheckCircle className="text-accent" size={18} />
-                                <span className="text-xs font-black text-inverse uppercase tracking-label">أفضل مدرسة افتراضية</span>
+                                <span className="text-xs font-semibold text-inverse uppercase tracking-label">أفضل مدرسة افتراضية</span>
                             </div>
 
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-accent" size={28} />
-                                <span className="text-sm font-black uppercase text-main tracking-label">منصة دارين السابعة</span>
+                                <span className="text-sm font-bold uppercase text-main tracking-label">منصة دارين السابعة</span>
                             </div>
                             
                             <h2 className="text-section font-bold text-main mb-8 leading-tight border-s-8 border-success ps-8 min-h-[4.5rem]">
@@ -126,8 +126,8 @@ export const Login = () => {
                                     <Users size={24} />
                                 </div>
                                 <div className="text-start">
-                                    <div className="text-xs font-black text-muted uppercase tracking-widest mb-1">ثقة الطلاب</div>
-                                    <div className="text-card-title font-black text-main">+5,000 طالب</div>
+                                    <div className="text-xs font-semibold text-muted uppercase tracking-widest mb-1">ثقة الطلاب</div>
+                                    <div className="text-card-title font-bold text-main">+5,000 طالب</div>
                                 </div>
                             </div>
 
@@ -136,8 +136,8 @@ export const Login = () => {
                                     <Trophy size={24} />
                                 </div>
                                 <div className="text-start">
-                                    <div className="text-xs font-black text-muted uppercase tracking-widest mb-1">إنجازاتنا</div>
-                                    <div className="text-card-title font-black text-main">نخبة الأوائل</div>
+                                    <div className="text-xs font-semibold text-muted uppercase tracking-widest mb-1">إنجازاتنا</div>
+                                    <div className="text-card-title font-bold text-main">نخبة الأوائل</div>
                                 </div>
                             </div>
                         </div>
@@ -145,15 +145,15 @@ export const Login = () => {
                         <div className="mt-8 flex flex-wrap gap-4 md:gap-8">
                             <div className="flex items-center gap-3">
                                 <ShieldCheck size={20} className="text-accent" />
-                                <span className="text-xs font-black tracking-widest uppercase text-accent">بيئة آمنة</span>
+                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">بيئة آمنة</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Star size={20} className="text-accent" />
-                                <span className="text-xs font-black tracking-widest uppercase text-accent">جودة معيارية</span>
+                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">جودة معيارية</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <GraduationCap size={20} className="text-accent" />
-                                <span className="text-xs font-black tracking-widest uppercase text-accent">كادر عالمي</span>
+                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">كادر عالمي</span>
                             </div>
                         </div>
                     </div>
@@ -224,8 +224,8 @@ export const Login = () => {
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="text-dim hover:text-main transition-colors"
-                                            tabIndex={-1}
+                                            className="text-dim hover:text-main transition-colors p-1 -m-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                            aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                                         >
                                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                         </button>

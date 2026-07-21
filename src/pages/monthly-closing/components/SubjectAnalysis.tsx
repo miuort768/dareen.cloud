@@ -40,14 +40,14 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
                     <SectionCard key={idx} className="p-5">
                         <div className="flex items-center gap-3 mb-3">
                             <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
-                                <span className="text-xs font-black">{String(subj.name).charAt(0)}</span>
+                                <span className="text-xs font-semibold">{String(subj.name).charAt(0)}</span>
                             </div>
                             <h3 className="text-xs font-bold text-main">{subj.name}</h3>
                         </div>
                         <div className="space-y-2">
                             <div className="flex justify-between items-center text-micro">
                                 <span className="text-muted font-bold">صافي الربح</span>
-                                <span className="font-black text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
+                                <span className="font-semibold text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
                             <ProgressBar value={Math.min(100, (subj.profit / subj.income) * 100)} variant="primary" size="sm" />
                             <div className="flex justify-between items-center text-micro text-muted mt-1">

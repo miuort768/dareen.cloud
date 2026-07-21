@@ -64,7 +64,7 @@ export const PrivacyPolicy = () => {
                     {/* Introduction */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-card flex items-center justify-center shrink-0">
                                 <FileText className="w-6 h-6 text-info dark:text-info" />
                             </div>
                             <div>
@@ -79,7 +79,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Collection */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-card flex items-center justify-center shrink-0">
                                 <Database className="w-6 h-6 text-success" />
                             </div>
                             <div>
@@ -120,7 +120,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Usage */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary/10 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary/10 rounded-card flex items-center justify-center shrink-0">
                                 <Eye className="w-6 h-6 text-primary" />
                             </div>
                             <div>
@@ -144,7 +144,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Protection */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-card flex items-center justify-center shrink-0">
                                 <Lock className="w-6 h-6 text-error" />
                             </div>
                             <div>
@@ -166,7 +166,7 @@ export const PrivacyPolicy = () => {
                     {/* Data Sharing */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-warning-light dark:bg-warning/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-warning-light dark:bg-warning/30 rounded-card flex items-center justify-center shrink-0">
                                 <UserCheck className="w-6 h-6 text-warning" />
                             </div>
                             <div>
@@ -186,7 +186,7 @@ export const PrivacyPolicy = () => {
 
                     {/* User Rights */}
                     <div className="mb-4">
-                        <div className="bg-background dark:bg-card/50 border border-border dark:border-border p-8 rounded-none">
+                        <div className="bg-background dark:bg-card/50 border border-border dark:border-border p-8 rounded-card">
                             <h2 className="text-2xl font-black text-main dark:text-main mb-4">حقوقك</h2>
                             <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
                                 <p>لديك الحق في:</p>

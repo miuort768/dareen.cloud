@@ -150,7 +150,7 @@ export const Teachers = () => {
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
             className="bg-surface min-h-screen pb-24" dir="rtl">
-            <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-6 md:pt-10">
+            <div className="relative z-10 max-w-page mx-auto px-4 md:px-6 pt-6 md:pt-10">
                 <TeachersPageHeader totalTeachers={teachers.length} showAddForm={showAddForm}
                     onToggleForm={() => { setShowAddForm(!showAddForm); if (showAddForm) setEditId(null); }} />
                 <div className="py-6 space-y-6">

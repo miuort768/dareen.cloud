@@ -74,7 +74,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                                     <td className="px-5 py-3"><span className="text-micro font-medium text-dim tabular-nums">{String(globalIdx).padStart(2, '0')}</span></td>
                                     <td className="px-5 py-3">
                                         <div className="flex items-center gap-2.5">
-                                            <div className="w-7 h-7 rounded-xl bg-chart-4/10 flex items-center justify-center text-micro font-black text-chart-4">{student.name.charAt(0)}</div>
+                                            <div className="w-7 h-7 rounded-xl bg-chart-4/10 flex items-center justify-center text-micro font-semibold text-chart-4">{student.name.charAt(0)}</div>
                                             <span className="text-xs font-bold text-main">{student.name}</span>
                                         </div>
                                     </td>
@@ -111,7 +111,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                     const { progBg, progText } = renderProgressBar(prog);
                     return (
                         <div key={student.id} className="p-4 flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 relative bg-chart-4/10 text-chart-4">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 relative bg-chart-4/10 text-chart-4">
                                 {student.name.charAt(0)}
                                 <span className="absolute -top-1 -start-1 text-micro font-bold text-on-primary w-4 h-4 flex items-center justify-center rounded-full bg-chart-4">{globalIdx}</span>
                             </div>

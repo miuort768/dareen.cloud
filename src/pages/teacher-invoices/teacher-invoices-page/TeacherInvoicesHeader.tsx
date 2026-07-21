@@ -32,7 +32,7 @@ export const TeacherInvoicesHeader = ({
                     <GraduationCap size={22} className="text-on-primary" />
                 </div>
                 <div>
-                    <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">فواتير المعلمات</h1>
+                    <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">فواتير المعلمات</h1>
                     <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">إدارة مستحقات المعلمات المالية</p>
                 </div>
             </div>

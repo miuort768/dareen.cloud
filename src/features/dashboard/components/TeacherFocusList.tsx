@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { GlassCard } from '@/shared/components/ui';
 
 interface FocusStudent {
     id: string;
@@ -17,19 +18,6 @@ interface TeacherFocusListProps {
     students: FocusStudent[];
     onStudentClick?: (student: FocusStudent) => void;
 }
-
-const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        "rounded-3xl p-6",
-        "bg-card/70 backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
-        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-        "font-dash",
-        className
-    )}>
-        {children}
-    </div>
-);
 
 const typeLabels: Record<string, string> = {
     all: 'الكل',

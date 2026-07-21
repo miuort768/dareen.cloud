@@ -87,7 +87,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             </div>
                         </div>
 
-                        <h3 className="text-2xl font-black text-main dark:text-on-primary mb-4 uppercase tracking-tighter italic">
+                        <h3 className="text-2xl font-bold text-main dark:text-on-primary mb-4 uppercase tracking-tighter italic">
                             {title}
                         </h3>
 
@@ -102,7 +102,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                                     onClose();
                                 }}
                                 className={cn(
-                                    "px-6 h-14 text-on-primary font-black text-xs uppercase tracking-label shadow-xl transition-all active:scale-95 rounded-none",
+                                    "px-6 h-14 text-on-primary font-bold text-xs uppercase tracking-label shadow-xl transition-all active:scale-95 rounded-none",
                                     isDestructive
                                         ? "bg-error hover:bg-error shadow-error/20"
                                         : "bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 shadow-primary/20"
@@ -112,7 +112,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             </button>
                             <button
                                 onClick={onClose}
-                                className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-black text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
+                                className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
                             >
                                 {cancelText}
                             </button>

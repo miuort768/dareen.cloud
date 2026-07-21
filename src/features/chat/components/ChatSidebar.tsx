@@ -194,7 +194,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <div className="bg-white/80 dark:bg-card/90  p-3 border-t border-success/10 text-center sticky bottom-0 z-[100] w-full">
                 <div className="flex items-center justify-center gap-2">
                     <ShieldCheck size={14} className="text-success animate-pulse" />
-                    <span className="text-micro text-success font-black uppercase tracking-label">تواصل آمن ومشفر</span>
+                    <span className="text-micro text-success font-semibold uppercase tracking-label">تواصل آمن ومشفر</span>
                 </div>
             </div>
         </div>

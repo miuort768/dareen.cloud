@@ -25,3 +25,4 @@ export { Avatar } from './Avatar';
 export { Dropdown } from './Dropdown';
 export { SectionErrorBoundary } from './SectionErrorBoundary';
 export { ProgressBar } from './ProgressBar';
+export { GlassCard } from './GlassCard';

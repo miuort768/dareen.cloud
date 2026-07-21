@@ -63,7 +63,7 @@ export const StatItem = ({ title, value, icon: Icon, color, subValue }: { title:
             </div>
             <div className="min-w-0">
                 <p className="text-micro font-bold text-on-primary/70">{title}</p>
-                <p className="text-lg font-black leading-none mt-0.5 text-on-primary">{value}</p>
+                <p className="text-lg font-bold leading-none mt-0.5 text-on-primary">{value}</p>
                 {subValue && <p className="text-micro font-bold text-on-primary/60 mt-1">{subValue}</p>}
             </div>
         </div>

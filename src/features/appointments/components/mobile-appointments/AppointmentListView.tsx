@@ -51,7 +51,7 @@ export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, 
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black shrink-0 bg-primary/10 text-primary">
+                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold shrink-0 bg-primary/10 text-primary">
                                             {app.studentName.charAt(0)}
                                         </div>
                                         <div className="min-w-0 flex-1">

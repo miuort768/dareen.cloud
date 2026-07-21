@@ -4,6 +4,7 @@ import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { GlassCard } from '@/shared/components/ui';
 
 interface Announcement {
     id: string;
@@ -13,19 +14,6 @@ interface Announcement {
     date: string;
     isActive: boolean;
 }
-
-const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        "rounded-3xl",
-        "bg-card/70 backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
-        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-        "font-dash overflow-hidden",
-        className
-    )}>
-        {children}
-    </div>
-);
 
 export const ModernAnnouncements = () => {
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);

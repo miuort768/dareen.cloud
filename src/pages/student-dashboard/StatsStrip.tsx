@@ -1,4 +1,5 @@
 import { Star, CheckCircle, TrendingUp, type LucideIcon } from 'lucide-react';
+import { GlassCard } from '@/shared/components/ui';
 
 interface StatItem {
     icon: LucideIcon;
@@ -32,13 +33,13 @@ export const StatsStrip = ({ points, attendanceRate, rankName }: StatsStripProps
             {items.map((item, idx) => {
                 const Icon = item.icon;
                 return (
-                    <div key={idx} className="bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl p-3 shadow-lg shadow-black/[0.03] flex flex-col items-center text-center gap-1">
+                    <GlassCard key={idx} className="p-3 flex flex-col items-center text-center gap-1">
                         <div className={`w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg ${variantGradient[item.variant]}`}>
                             <Icon size={16} className="text-white" />
                         </div>
-                        <span className="text-sm font-black text-main">{item.value}</span>
+                        <span className="text-sm font-semibold text-main">{item.value}</span>
                         <span className="text-micro text-dim font-medium">{item.label}</span>
-                    </div>
+                    </GlassCard>
                 );
             })}
         </div>

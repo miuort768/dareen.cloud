@@ -155,7 +155,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-black bg-primary-soft text-primary">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-micro font-semibold bg-primary-soft text-primary">
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>

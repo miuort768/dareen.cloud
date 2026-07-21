@@ -65,7 +65,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
                     <span className="text-on-primary/70 text-micro font-bold uppercase tracking-wider">الحصة القادمة</span>
                 </div>
-                <h2 className="text-lg font-black text-on-primary leading-tight mb-0.5">
+                <h2 className="text-lg font-bold text-on-primary leading-tight mb-0.5">
                     {nextSession.subject}
                 </h2>
                 <p className="text-primary text-xs font-bold">
@@ -74,7 +74,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                 <div className="mt-4 flex items-center gap-3">
                     <Clock size={16} className="text-primary" />
                     <span className={cn(
-                        "text-3xl font-black tabular-nums tracking-wider",
+                        "text-3xl font-bold tabular-nums tracking-wider",
                         isNow ? "text-success" : "text-on-primary"
                     )}>
                         {isNow ? "الآن" : timeLeft}

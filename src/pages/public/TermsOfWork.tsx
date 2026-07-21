@@ -42,10 +42,10 @@ export const TermsOfWork = () => {
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 bg-primary-soft dark:bg-primary/20 text-primary dark:text-main border border-primary/50 dark:border-primary/50 rounded-full md:rounded-none shadow-sm mb-3 md:mb-4">
                         <Briefcase size={12} className="text-primary" />
-                        <span className="text-xs md:text-xs font-black tracking-label uppercase">قوانين العمل</span>
+                        <span className="text-xs md:text-xs font-semibold tracking-label uppercase">قوانين العمل</span>
                     </div>
 
-                    <h1 className="text-lg md:text-5xl font-black text-primary md:text-main dark:text-main mb-1 md:mb-3 leading-tight font-heading">
+                    <h1 className="text-lg md:text-5xl font-bold text-primary md:text-main dark:text-main mb-1 md:mb-3 leading-tight font-heading">
                         قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
@@ -66,7 +66,7 @@ export const TermsOfWork = () => {
                                 <FileCheck className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">مقدمة</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-2">مقدمة</h2>
                                 <p className="text-sm md:text-base text-muted leading-relaxed">
                                     تهدف هذه القوانين إلى تنظيم علاقة العمل بين دارين السابعة وجميع المعلمين والموظفين العاملين في المنصة. الالتزام بهذه القوانين يضمن بيئة عمل مهنية ومنتظمة تحقق أهدافنا التعليمية المشتركة.
                                 </p>
@@ -81,7 +81,7 @@ export const TermsOfWork = () => {
                                 <Award className="w-6 h-6 text-success" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">مؤهلات المعلمين</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">مؤهلات المعلمين</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
@@ -102,7 +102,7 @@ export const TermsOfWork = () => {
                                 <Shield className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">قواعد السلوك المهني</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">قواعد السلوك المهني</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <p>يلتزم جميع المعلمين والموظفين بـ:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
@@ -126,7 +126,7 @@ export const TermsOfWork = () => {
                                 <Clock className="w-6 h-6 text-warning" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">الحضور والمواعيد</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">الحضور والمواعيد</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>الدخول قبل موعد الحصة بـ 5 دقائق لضمان جاهزية التقنية</li>
@@ -148,7 +148,7 @@ export const TermsOfWork = () => {
                                 <Award className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">نظام المكافآت والخصومات</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">نظام المكافآت والخصومات</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">المكافآت:</h3>
@@ -179,7 +179,7 @@ export const TermsOfWork = () => {
                                 <AlertCircle className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">إنهاء التعاقد</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">إنهاء التعاقد</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <p>يحق لدارين السابعة إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
@@ -202,7 +202,7 @@ export const TermsOfWork = () => {
                                 <UserCheck className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-3">التطوير المهني</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-3">التطوير المهني</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>حضور ورش التطوير المهني إلزامي.</li>
@@ -218,7 +218,7 @@ export const TermsOfWork = () => {
 
                     {/* Commitment */}
                     <div className="bg-background border border-border p-8 rounded-none mb-4">
-                        <h2 className="text-xl md:text-2xl font-black text-main mb-4">التعهد والالتزام</h2>
+                        <h2 className="text-xl md:text-2xl font-bold text-main mb-4">التعهد والالتزام</h2>
                         <div className="space-y-1 text-muted text-xs md:text-sm">
                             <p>بتوقيعك على هذه القوانين، فإنك تتعهد بـ:</p>
                             <ul className="list-disc list-inside space-y-1 ms-4">
@@ -243,7 +243,7 @@ export const TermsOfWork = () => {
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-primary/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-xl md:text-2xl font-black text-main mb-2">هل لديك استفسارات؟</h2>
+                            <h2 className="text-xl md:text-2xl font-bold text-main mb-2">هل لديك استفسارات؟</h2>
                             <p className="text-muted mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a

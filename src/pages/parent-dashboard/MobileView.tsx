@@ -11,6 +11,7 @@ import { confirm } from '../../lib/confirmDialog';
 import { ParentMobileHeroSection, ParentQuickNav, ParentMobileLiveClasses } from './HeroSections';
 import { ParentStatsStrip, ParentActiveTimers, ParentTodaySchedule, ParentRecentActivity, ParentSupportCard } from './DataWidgets';
 import { ParentMobileNotesSection, ParentMobileAcademicProgress } from './InfoWidgets';
+import { GlassCard } from '@/shared/components/ui';
 import type { ParentViewProps } from './types';
 
 type MobileViewProps = ParentViewProps & {
@@ -26,7 +27,6 @@ const tabs = [
 ];
 
 const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
-const cardGlass = "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg shadow-black/[0.03]";
 
 export const ParentMobileView = ({
     currentUser, adminPhone, children, allPointLogs,
@@ -52,19 +52,19 @@ export const ParentMobileView = ({
                             <LogOut size={14} />
                         </button>
                     </div>
-                    <div className={cn("p-4 flex items-center justify-between", cardGlass)}>
+                    <GlassCard className="p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
                                 <User size={18} className="text-white" />
                             </div>
                             <div>
-                                <h1 className="text-main font-black text-base leading-tight">
+                                <h1 className="text-main font-bold text-base leading-tight">
                                     أهلاً {(currentUser?.name || currentUser?.username || 'ولي الأمر')}
                                 </h1>
                                 <p className="text-[11px] font-medium text-muted mt-0.5">{format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                             </div>
                         </div>
-                    </div>
+                    </GlassCard>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
@@ -72,7 +72,7 @@ export const ParentMobileView = ({
                                 <TrendingUp size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-main font-black text-sm">{stats.academicProgress}%</span>
+                                <span className="text-main font-semibold text-sm">{stats.academicProgress}%</span>
                                 <span className="text-muted text-[10px] font-bold">الالتزام</span>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ export const ParentMobileView = ({
                                 <BookOpen size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-main font-black text-sm">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
+                                <span className="text-main font-semibold text-sm">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
                                 <span className="text-muted text-[10px] font-bold">المادة</span>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ export const ParentMobileView = ({
                                 <Users size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-main font-black text-sm">{stats.childCount}</span>
+                                <span className="text-main font-semibold text-sm">{stats.childCount}</span>
                                 <span className="text-muted text-[10px] font-bold">الأبناء</span>
                             </div>
                         </div>
@@ -127,9 +127,9 @@ export const ParentMobileView = ({
                                     <Sparkles size={13} className="text-primary" />
                                     <h2 className="text-xs font-bold text-muted">جدول حصص اليوم</h2>
                                 </div>
-                                <div className={cardGlass + " p-4"}>
+                                <GlassCard className="p-4">
                                     <ParentTodaySchedule todayTasks={todayTasks} variant="mobile" />
-                                </div>
+                                </GlassCard>
                             </section>
                         )}
 
@@ -140,9 +140,9 @@ export const ParentMobileView = ({
                                         <Sparkles size={13} className="text-warning" />
                                         <h2 className="text-xs font-bold text-muted">آخر النشاطات</h2>
                                     </div>
-                                    <div className={cardGlass + " p-4"}>
+                                    <GlassCard className="p-4">
                                         <ParentRecentActivity allPointLogs={allPointLogs} />
-                                    </div>
+                                    </GlassCard>
                                 </section>
                                 <ParentSupportCard adminPhone={adminPhone} variant="mobile" />
                             </div>

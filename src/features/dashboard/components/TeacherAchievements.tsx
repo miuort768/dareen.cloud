@@ -35,7 +35,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     </span>
                 </div>
                 <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black tabular-nums">
+                    <span className="text-2xl font-bold tabular-nums">
                         {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
                     </span>
                     <span className="text-micro font-bold text-primary">ج.م</span>
@@ -54,7 +54,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         <AlertCircle size={13} className="text-error" />
                     </div>
                     <div>
-                        <span className="text-lg font-black text-error tabular-nums">{expiredCount}</span>
+                        <span className="text-lg font-semibold text-error tabular-nums">{expiredCount}</span>
                         <p className="text-micro font-bold text-error">منتهي</p>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         <Clock size={13} className="text-warning" />
                     </div>
                     <div>
-                        <span className="text-lg font-black text-warning tabular-nums">{lowCount}</span>
+                        <span className="text-lg font-semibold text-warning tabular-nums">{lowCount}</span>
                         <p className="text-micro font-bold text-warning">مستحق</p>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ export const ReportsHeader = ({ onExport }: ReportsHeaderProps) => {
                     <BarChart3 size={22} className="text-primary" />
                 </div>
                 <div>
-                    <h1 className="text-lg md:text-xl font-black text-main leading-tight">التحليلات والتقارير العامة</h1>
+                    <h1 className="text-lg md:text-xl font-bold text-main leading-tight">التحليلات والتقارير العامة</h1>
                     <p className="text-xs font-bold text-muted mt-0.5">{dateStr}</p>
                 </div>
             </div>

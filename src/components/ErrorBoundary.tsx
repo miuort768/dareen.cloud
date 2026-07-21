@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         <div className="w-16 h-16 mx-auto mb-5 bg-error-soft border border-error/20 flex items-center justify-center rounded-card">
                             <span className="text-2xl">!</span>
                         </div>
-                        <h1 className="text-xl font-heading font-black text-main dark:text-main mb-2">
+                        <h1 className="text-xl font-heading font-bold text-main dark:text-main mb-2">
                             عذراً، حدث خطأ غير متوقع
                         </h1>
                         <p className="text-sm text-muted dark:text-muted mb-6 leading-relaxed">
@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         </p>
                         <button
                             onClick={() => window.location.reload()}
-                            className="px-6 py-3 bg-primary-active dark:bg-surface text-on-primary dark:text-main text-sm font-black transition-all hover:bg-primary-active dark:hover:bg-surface active:scale-[0.98]"
+                            className="px-6 py-3 bg-primary-active dark:bg-surface text-on-primary dark:text-main text-sm font-bold transition-all hover:bg-primary-active dark:hover:bg-surface active:scale-[0.98]"
                         >
                             إعادة تحميل الصفحة
                         </button>

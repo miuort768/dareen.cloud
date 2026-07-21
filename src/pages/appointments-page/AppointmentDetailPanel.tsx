@@ -37,7 +37,7 @@ export const AppointmentDetailPanel = ({ appointment, showDetails, onClose }: Ap
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="px-3 py-1 text-center rounded-xl bg-white/15">
-                            <p className="font-black text-lg tabular-nums leading-none text-on-primary">{appointment.time}</p>
+                            <p className="font-bold text-lg tabular-nums leading-none text-on-primary">{appointment.time}</p>
                         </div>
                         <button onClick={onClose}
                             className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-all rounded-xl">

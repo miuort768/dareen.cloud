@@ -26,7 +26,7 @@ export const EvaluationsHeader = ({ totalXP, showAddButton, searchTerm, onSearch
                 <div className="flex items-center gap-2">
                     <div className="px-3 py-1.5 flex items-center gap-1.5 bg-white/10 rounded-xl">
                         <p className="text-micro font-bold text-on-primary/70">إجمالي النقاط:</p>
-                        <p className="text-sm font-black text-on-primary tabular-nums">{totalXP} <span className="text-micro font-bold text-on-primary/70">XP</span></p>
+                        <p className="text-sm font-bold text-on-primary tabular-nums">{totalXP} <span className="text-micro font-semibold text-on-primary/70">XP</span></p>
                     </div>
                     {showAddButton && (
                         <button onClick={onAddClick} className="flex items-center gap-1.5 bg-primary-hover hover:bg-primary text-on-primary font-bold text-micro px-3 py-2 shadow-soft active:scale-95 transition-all shrink-0 rounded-xl">

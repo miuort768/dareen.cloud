@@ -50,7 +50,7 @@ export const InvoiceStats = ({ stats }: InvoiceStatsProps) => (
         </div>
         <div className="min-w-0">
           <p className="text-micro font-bold text-on-primary/70 leading-none">{s.label}</p>
-          <p className="text-sm font-black mt-1 tabular-nums leading-none text-on-primary">
+          <p className="text-sm font-bold mt-1 tabular-nums leading-none text-on-primary">
             {getValue(stats, s.key)}
           </p>
         </div>

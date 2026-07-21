@@ -106,7 +106,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                                 <Info size={28} />
                             </div>
 
-                            <h3 className="text-lg font-black text-main mb-2">
+                            <h3 className="text-lg font-bold text-main mb-2">
                                 {title}
                             </h3>
 
@@ -207,7 +207,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 {options.icon || (isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />)}
                             </div>
 
-                            <h3 className="text-lg font-black text-main mb-2">
+                            <h3 className="text-lg font-bold text-main mb-2">
                                 {title}
                             </h3>
 

@@ -85,7 +85,7 @@ export const ParentAnnouncements = () => {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <h1 className="text-xl md:text-2xl font-black text-main leading-tight">���� ������� ������</h1>
+                    <h1 className="text-xl md:text-2xl font-bold text-main leading-tight">���� ������� ������</h1>
                     <p className="text-xs font-bold text-muted">��� ��� ����� ����� ��������� ���������� ���� �������</p>
                 </div>
             </div>

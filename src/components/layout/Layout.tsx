@@ -43,6 +43,12 @@ export const Layout = () => {
             <Helmet>
                 <meta name="robots" content="noindex, nofollow" />
             </Helmet>
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:start-2 focus:z-[200] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-card focus:shadow-lg focus:outline-none"
+            >
+                تخطي إلى المحتوى
+            </a>
             {!isChatOnly && (
                 <div className={cn(
                     "hidden lg:block shrink-0 transition-all duration-300",
@@ -56,7 +62,7 @@ export const Layout = () => {
             <div className="flex-1 flex flex-col transition-all duration-300 min-w-0 max-w-full">
                 {(!isChatOnly && !location.pathname.includes('/chat') && !location.pathname.includes('/student-dashboard')) && <Header />}
 
-                <main className={cn(
+                <main id="main-content" className={cn(
                     "flex-1 overflow-x-hidden overflow-y-auto custom-scrollbar relative min-w-0 max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat') || location.pathname.includes('/student-dashboard'))
                         ? "p-0"

@@ -16,15 +16,15 @@ export const AttendanceStatsBar = ({ completedToday, cancelledToday, scheduledTo
     <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
         <div className="grid grid-cols-3 gap-2">
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-success/30">
-                <p className="text-lg font-black text-success tabular-nums leading-none">{completedToday}</p>
+                <p className="text-lg font-bold text-success tabular-nums leading-none">{completedToday}</p>
                 <p className="text-micro font-bold text-success/70 mt-1">حضور</p>
             </div>
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-error/30">
-                <p className="text-lg font-black text-error tabular-nums leading-none">{cancelledToday}</p>
+                <p className="text-lg font-bold text-error tabular-nums leading-none">{cancelledToday}</p>
                 <p className="text-micro font-bold text-error/70 mt-1">غياب</p>
             </div>
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-border/30">
-                <p className="text-lg font-black text-main tabular-nums leading-none">{scheduledToday}</p>
+                <p className="text-lg font-bold text-main tabular-nums leading-none">{scheduledToday}</p>
                 <p className="text-micro font-bold text-muted mt-1">متبقي</p>
             </div>
         </div>

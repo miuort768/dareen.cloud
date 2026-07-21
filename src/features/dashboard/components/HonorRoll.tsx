@@ -1,6 +1,7 @@
 import React from 'react';
 import { Award, Star, Trophy, Crown, Sparkles } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { GlassCard } from '@/shared/components/ui';
 
 interface Student {
     id: string;
@@ -12,19 +13,6 @@ interface Student {
 interface HonorRollProps {
     students: Student[];
 }
-
-const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        "rounded-3xl p-6",
-        "bg-card/70 backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
-        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-        "font-dash",
-        className
-    )}>
-        {children}
-    </div>
-);
 
 export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
     const topStudents = [...students]

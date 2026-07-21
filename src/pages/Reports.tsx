@@ -48,7 +48,7 @@ export const Reports = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="mx-auto px-2 space-y-4">
+            <div className="max-w-page mx-auto px-2 space-y-4">
 
             <ReportsHeader onExport={() => window.print()} />
 
@@ -84,7 +84,7 @@ export const Reports = () => {
                                         <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft">
                                             <BarChart3 size={16} className="text-primary" />
                                         </div>
-                                        <h2 className="text-base font-black text-main">ملخص الأداء العام</h2>
+                                        <h2 className="text-base font-bold text-main">ملخص الأداء العام</h2>
                                     </div>
                                     <p className="text-xs font-bold text-muted leading-relaxed max-w-md">
                                         تقرير شامل يوضح الحالة الأكاديمية والمالية للمؤسسة. تم تحليل {state.totalEnrollments} اشتراك نشط عبر {uniqueSubjects} مادة مختلفة.
@@ -93,12 +93,12 @@ export const Reports = () => {
                                 <div className="flex items-center gap-4 p-4 rounded-xl border bg-surface border-border">
                                     <div>
                                         <p className="text-xs font-bold text-primary">معدل الإنجاز</p>
-                                        <p className="text-2xl font-black font-mono leading-none mt-1 text-main">{state.attendanceRate}%</p>
+                                        <p className="text-2xl font-bold font-mono leading-none mt-1 text-main">{state.attendanceRate}%</p>
                                     </div>
                                     <div className="w-px h-10 bg-border" />
                                     <div>
                                         <p className="text-xs font-bold text-success">النمو الشهري</p>
-                                        <p className="text-2xl font-black font-mono leading-none mt-1 text-main">+{Math.round((state.monthRevenue / (state.totalRevenue || 1)) * 100)}%</p>
+                                        <p className="text-2xl font-bold font-mono leading-none mt-1 text-main">+{Math.round((state.monthRevenue / (state.totalRevenue || 1)) * 100)}%</p>
                                     </div>
                                 </div>
                              </div>
@@ -144,7 +144,7 @@ export const Reports = () => {
                                         <stat.icon size={14} className={stat.textClass} />
                                     </div>
                                     <div className="mt-auto">
-                                        <p className={`text-sm font-black font-mono leading-none ${stat.textClass}`}>{stat.value}</p>
+                                        <p className={`text-sm font-bold font-mono leading-none ${stat.textClass}`}>{stat.value}</p>
                                         <p className="text-micro font-bold mt-1 truncate text-muted">{stat.label}</p>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@ export const Reports = () => {
                                         <div key={`report-${i}`} className="flex flex-col gap-2 p-3 rounded-card border transition-all bg-card" style={{ borderColor: `color-mix(in srgb, ${cc.var} 25%, transparent)` }}>
                                             <div className="flex items-center justify-between">
                                                 <div className={`w-2.5 h-2.5 rounded-sm ${cc.bg}`} />
-                                                <p className={`text-micro font-black font-mono ${cc.text}`}>{pct}%</p>
+                                                <p className={`text-micro font-bold font-mono ${cc.text}`}>{pct}%</p>
                                             </div>
                                             <p className="text-micro font-bold text-muted truncate">{s.name}</p>
                                             <div className="w-full h-1.5 rounded-xl overflow-hidden bg-surface">

@@ -125,7 +125,7 @@ export const Tasks = () => {
                                 <Sparkles size={10} className="text-primary dark:text-primary" />
                                 <span className="text-micro font-bold text-primary dark:text-inverse">مركز القيادة</span>
                             </div>
-                            <h1 className="text-xl font-black text-main dark:text-inverse leading-tight mb-1">
+                            <h1 className="text-xl font-bold text-main dark:text-inverse leading-tight mb-1">
                                 مركز التحكم بالمهام
                             </h1>
                             <p className="text-xs font-bold text-dim dark:text-muted">

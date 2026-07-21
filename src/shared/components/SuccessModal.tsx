@@ -88,7 +88,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     
                     {/* ── Text Content ── */}
                     <div className="flex-1 min-w-0 pt-0.5">
-                        <h3 className="text-xs font-black text-main dark:text-dim font-sans tracking-tight leading-none">
+                        <h3 className="text-xs font-semibold text-main dark:text-dim font-sans tracking-tight leading-none">
                             {title}
                         </h3>
                         <p className="text-xs text-muted dark:text-muted mt-1.5 leading-relaxed font-medium">

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
+import { GlassCard } from '@/shared/components/ui';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
@@ -37,7 +38,6 @@ const tabs = [
 ];
 
 const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
-const cardGlass = "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg shadow-black/[0.03]";
 
 export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardMobileProps) => {
     const navigate = useNavigate();
@@ -72,15 +72,15 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     <div className="flex items-center gap-2 mt-3">
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
                             <Clock size={12} className="text-primary shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
                         </div>
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
                             <Users size={12} className="text-info shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
                         </div>
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
                             <Award size={12} className="text-success shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
                         </div>
                     </div>
                 </div>
@@ -93,16 +93,16 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                         {activeTab === 'home' && (
                             <div className="space-y-4">
                                 {nextSession && (
-                                    <div className={cardGlass + " p-4"}>
+                                    <GlassCard className="p-4">
                                         <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
-                                    </div>
+                                    </GlassCard>
                                 )}
-                                <div className={cardGlass + " p-4"}>
+                                <GlassCard className="p-4">
                                     <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
-                                </div>
-                                <div className={cardGlass + " p-4"}>
+                                </GlassCard>
+                                <GlassCard className="p-4">
                                     <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                                </div>
+                                </GlassCard>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={13} className="text-primary" />
@@ -127,9 +127,9 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                             <Sparkles size={13} className="text-info" />
                                             <h2 className="text-xs font-bold text-muted">حصص اليوم</h2>
                                         </div>
-                                        <div className={cardGlass + " p-4"}>
+                                        <GlassCard className="p-4">
                                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
-                                        </div>
+                                        </GlassCard>
                                     </section>
                                 ) : (
                                     <div className="py-12 text-center"><Calendar size={36} className="mx-auto text-dim mb-3" /><p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p><p className="text-dim text-micro mt-1">استمتع بيومك!</p></div>
@@ -139,12 +139,12 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                         {activeTab === 'reports' && (
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-3">
-                                    <div className={cardGlass + " p-4"}>
+                                    <GlassCard className="p-4">
                                         <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
-                                    </div>
-                                    <div className={cardGlass + " p-4"}>
+                                    </GlassCard>
+                                    <GlassCard className="p-4">
                                         <AttendanceChart rate={stats.attendanceRate} />
-                                    </div>
+                                    </GlassCard>
                                 </div>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">

@@ -80,7 +80,7 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
                 <span className="text-micro font-medium text-dim truncate max-w-[150px] inline-block">{inv.description}</span>
               </td>
               <td className="px-4 py-3 text-center">
-                <span className="font-mono text-xs font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
+                <span className="font-mono text-xs font-semibold text-main">{inv.amount.toLocaleString()} ج.م</span>
               </td>
               <td className="px-4 py-3 text-center">
                 <span className="text-micro font-medium text-dim">{inv.dueDate}</span>

@@ -37,7 +37,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                             className="transition-all duration-1000" />
                         <text x="45" y="45" textAnchor="middle" dominantBaseline="central"
                             fill={getTextColor(rate)}
-                            className="text-lg font-black">
+                            className="text-lg font-bold">
                             {rate}%
                         </text>
                     </svg>

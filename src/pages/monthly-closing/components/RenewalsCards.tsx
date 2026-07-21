@@ -30,7 +30,7 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                         </div>
                         <div className="bg-surface dark:bg-card p-3 flex items-center justify-between mb-4 border border-border rounded-xl">
                             <span className="text-micro font-bold text-muted">الحصص المتبقية</span>
-                            <span className="text-lg font-black text-main font-mono">{item.remaining}</span>
+                            <span className="text-lg font-bold text-main font-mono">{item.remaining}</span>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">

@@ -124,7 +124,7 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                 <div className="flex items-center gap-3">
                   <div>
                     <p className="text-micro font-bold text-dim uppercase mb-0.5">المبلغ</p>
-                    <span className="font-mono text-sm font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
+                    <span className="font-mono text-sm font-bold text-main">{inv.amount.toLocaleString()} ج.م</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>

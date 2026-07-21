@@ -25,7 +25,7 @@ export const BlogHeader = ({
                     <BookOpen size={22} />
                 </div>
                 <div>
-                    <h1 className="text-lg md:text-xl font-black text-main leading-tight">المقالات التعليمية</h1>
+                    <h1 className="text-lg md:text-xl font-bold text-main leading-tight">المقالات التعليمية</h1>
                     <p className="text-xs font-bold text-muted mt-0.5">إدارة وإضافة المقالات والدروس على المنصة</p>
                 </div>
             </div>
@@ -44,7 +44,7 @@ export const BlogHeader = ({
 
         {showSettings && (
             <div className="bg-card p-5 border border-border shadow-sm rounded-2xl space-y-4">
-                <h3 className="font-black text-sm text-main">إعدادات صفحة المكتبة</h3>
+                <h3 className="font-semibold text-sm text-main">إعدادات صفحة المكتبة</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-micro font-bold text-muted mb-1.5">رقم واتساب المكتبة</label>

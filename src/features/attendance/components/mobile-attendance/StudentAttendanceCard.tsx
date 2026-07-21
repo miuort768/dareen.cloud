@@ -24,7 +24,7 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
             className="bg-card rounded-card p-3.5 shadow-soft border border-border/50 space-y-2.5">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black shrink-0 bg-primary-soft text-primary">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 bg-primary-soft text-primary">
                         {student.name.charAt(0)}
                     </div>
                     <div>

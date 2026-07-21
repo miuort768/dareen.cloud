@@ -35,7 +35,7 @@ export const AboutStory = () => (
                 </div>
 
                 <div className="w-full lg:w-1/2 order-1 lg:order-2 text-start">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-none mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-card mb-4">
                         <span className="text-micro font-black">تعرف عليـــنا</span>
                     </div>
                     <h2 className="text-2xl md:text-4xl font-black text-main dark:text-main mb-4 font-heading leading-tight md:leading-tight">
@@ -47,8 +47,8 @@ export const AboutStory = () => (
                     </p>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="space-y-4">
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-none hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
-                            <div className="w-12 h-12 bg-white dark:bg-card rounded-none shadow-sm flex items-center justify-center text-primary shrink-0">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                            <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-primary shrink-0">
                                 <Zap size={24} />
                             </div>
                             <div>
@@ -56,8 +56,8 @@ export const AboutStory = () => (
                                 <p className="text-sm text-muted dark:text-muted font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                             </div>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-none hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
-                            <div className="w-12 h-12 bg-white dark:bg-card rounded-none shadow-sm flex items-center justify-center text-warning shrink-0">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                            <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-warning shrink-0">
                                 <BookOpen size={24} />
                             </div>
                             <div>

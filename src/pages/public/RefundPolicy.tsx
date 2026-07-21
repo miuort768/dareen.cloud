@@ -70,7 +70,7 @@ export const RefundPolicy = () => {
                     {/* General Principles */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-card flex items-center justify-center shrink-0">
                                 <ShieldCheck className="w-6 h-6 text-info dark:text-info" />
                             </div>
                             <div>
@@ -85,7 +85,7 @@ export const RefundPolicy = () => {
                     {/* Refund Eligibility */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-card flex items-center justify-center shrink-0">
                                 <CreditCard className="w-6 h-6 text-success dark:text-success" />
                             </div>
                             <div>
@@ -111,7 +111,7 @@ export const RefundPolicy = () => {
                     {/* Cancellation Rules */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-card flex items-center justify-center shrink-0">
                                 <CalendarX className="w-6 h-6 text-error dark:text-error" />
                             </div>
                             <div>
@@ -130,7 +130,7 @@ export const RefundPolicy = () => {
                     {/* Processing Time */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-card flex items-center justify-center shrink-0">
                                 <Clock className="w-6 h-6 text-primary dark:text-primary" />
                             </div>
                             <div>

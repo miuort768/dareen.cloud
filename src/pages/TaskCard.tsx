@@ -98,7 +98,7 @@ export const EmptyTaskState = () => (
         <div className="w-16 h-16 bg-primary rounded-card flex items-center justify-center mx-auto mb-4 shadow-soft">
             <ClipboardList size={24} className="text-on-primary" />
         </div>
-        <h2 className="text-base font-black text-main mb-1">قائمة المهام</h2>
+        <h2 className="text-base font-semibold text-main mb-1">قائمة المهام</h2>
         <p className="text-micro font-bold text-primary uppercase tracking-wider">لم يتم العثور على مهام تطابق معايير البحث</p>
     </div>
 );

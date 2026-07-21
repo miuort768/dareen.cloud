@@ -184,7 +184,7 @@ export const Students = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-surface dark:bg-background" dir="rtl">
-            <div className="relative z-10 mx-auto px-2 space-y-4">
+            <div className="relative z-10 max-w-page mx-auto px-2 space-y-4">
 
                 <StudentsPageHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} totalStudents={allStudents.length} onAdd={() => { setEditId(null); setShowAddForm(true); }} />
 

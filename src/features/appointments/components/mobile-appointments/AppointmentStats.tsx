@@ -16,15 +16,15 @@ export const AppointmentStats = ({ todayCount, totalCount, completedCount }: App
     <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
         <div className="grid grid-cols-3 gap-2">
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-primary/20">
-                <p className="text-lg font-black text-primary tabular-nums leading-none">{todayCount}</p>
+                <p className="text-lg font-bold text-primary tabular-nums leading-none">{todayCount}</p>
                 <p className="text-micro font-bold text-primary/70 mt-1">اليوم</p>
             </div>
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-success/50">
-                <p className="text-lg font-black text-success tabular-nums leading-none">{totalCount - completedCount}</p>
+                <p className="text-lg font-bold text-success tabular-nums leading-none">{totalCount - completedCount}</p>
                 <p className="text-micro font-bold text-success/70 mt-1">المتبقي</p>
             </div>
             <div className="bg-card rounded-card p-3 text-center shadow-soft border border-info/50">
-                <p className="text-lg font-black text-primary tabular-nums leading-none">{totalCount}</p>
+                <p className="text-lg font-bold text-primary tabular-nums leading-none">{totalCount}</p>
                 <p className="text-micro font-bold text-info/70 mt-1">الإجمالي</p>
             </div>
         </div>

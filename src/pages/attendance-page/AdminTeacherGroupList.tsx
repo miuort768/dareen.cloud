@@ -49,7 +49,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                     <SectionCard key={teacher} className="p-0 overflow-hidden">
                         <div className="bg-primary px-5 py-3 flex items-center justify-between border-b border-border">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shadow-sm bg-white/15 text-on-primary">
+                                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-semibold shadow-sm bg-white/15 text-on-primary">
                                     {teacher.charAt(0)}
                                 </div>
                                 <div>
@@ -74,7 +74,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                         <div key={session.id} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4">
                                             <div className="flex justify-between items-start">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-black">
+                                                    <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-semibold">
                                                         {getGradeDisplay(student.name, student.grade)}
                                                     </div>
                                                     <div>
@@ -115,7 +115,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                     <div key={`${student.id}-${enrollment.subject}`} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                         <div className="flex justify-between items-start">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-black">
+                                                <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-semibold">
                                                     {getGradeDisplay(student.name, student.grade)}
                                                 </div>
                                                 <div>

@@ -63,7 +63,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(
-                                    "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-black",
+                                    "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-semibold",
                                     i === 0 ? "bg-warning-soft text-warning" :
                                     i === 1 ? "bg-surface text-main" :
                                     i === 2 ? "bg-warning-soft text-warning" :
@@ -76,7 +76,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                 </div>
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-base font-black text-main tabular-nums">{stu.count}</span>
+                                <span className="text-base font-bold text-main tabular-nums">{stu.count}</span>
                                 <span className="text-micro font-bold text-warning">حصة</span>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             <div className="mt-2.5 bg-warning rounded-card p-2.5 text-on-warning flex items-center justify-between">
                 <div>
                     <p className="text-micro font-bold text-warning">إجمالي حصص الشهر</p>
-                    <p className="text-base font-black tabular-nums">{totalMonthSessions}</p>
+                    <p className="text-base font-bold tabular-nums">{totalMonthSessions}</p>
                 </div>
                 <div className="w-7 h-7 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
                     <TrendingUp size={12} className="text-on-warning" />

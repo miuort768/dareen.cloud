@@ -135,7 +135,7 @@ export const AcademicReport = React.memo(({
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 ${item.bgClass}`}>
                             <item.icon size={16} className={item.textClass} />
                         </div>
-                        <p className={`text-xl font-black tabular-nums ${item.textClass}`}>{item.value}</p>
+                        <p className={`text-xl font-bold tabular-nums ${item.textClass}`}>{item.value}</p>
                         <p className="text-micro font-bold mt-1 text-muted">{item.label}</p>
                     </div>
                 ))}

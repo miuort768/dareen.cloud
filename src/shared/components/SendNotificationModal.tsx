@@ -57,7 +57,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                             </div>
                         </div>
 
-                        <h3 className="text-2xl font-black text-main dark:text-on-primary mb-1 uppercase tracking-tighter italic">
+                        <h3 className="text-2xl font-bold text-main dark:text-on-primary mb-1 uppercase tracking-tighter italic">
                             بث إشعار فوري
                         </h3>
                         <p className="text-muted dark:text-muted font-bold text-micro mb-8 uppercase tracking-widest">
@@ -66,7 +66,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
                         <form onSubmit={handleSubmit} className="w-full space-y-6 text-start">
                             <div className="space-y-2">
-                                <label htmlFor="notification-message" className="text-micro font-black text-muted uppercase tracking-label ms-1">محتوى التنبيه</label>
+                                <label htmlFor="notification-message" className="text-micro font-semibold text-muted uppercase tracking-label ms-1">محتوى التنبيه</label>
                                 <textarea
                                     id="notification-message"
                                     required
@@ -74,7 +74,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     placeholder="اكتب رسالتك هنا..."
-                                    className="w-full h-32 p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] dark:text-on-primary text-xs font-black resize-none leading-relaxed transition-all"
+                                    className="w-full h-32 p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] dark:text-on-primary text-xs font-normal resize-none leading-relaxed transition-all"
                                 />
                             </div>
 
@@ -82,7 +82,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="submit"
                                     disabled={!message.trim()}
-                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-black text-xs uppercase tracking-label shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
+                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-bold text-xs uppercase tracking-label shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
                                 >
                                     <div className="flex items-center justify-center gap-3">
                                         <span>إرسال التنبيه الآن</span>
@@ -92,7 +92,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-black text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
+                                    className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
                                 >
                                     إلغاء العملية
                                 </button>

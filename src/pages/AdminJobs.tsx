@@ -93,7 +93,7 @@ export const AdminJobs = () => {
                         <Briefcase size={26} className="text-primary" />
                     </div>
                     <div className="text-center">
-                        <h1 className="text-xl font-black text-main">طلبات التوظيف</h1>
+                        <h1 className="text-xl font-bold text-main">طلبات التوظيف</h1>
                         <p className="text-sm font-bold text-muted mt-1">{apps.length} طلب</p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 w-full max-w-lg">
@@ -156,7 +156,7 @@ export const AdminJobs = () => {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <Award size={14} className={app.contacted ? 'text-dim' : 'text-primary'} />
-                                        <span className="font-black text-sm uppercase tracking-label text-muted">أكاديمية دارين السابعة</span>
+                                        <span className="font-semibold text-sm uppercase tracking-label text-muted">أكاديمية دارين السابعة</span>
                                     </div>
                                     <div className="flex gap-1">
                                         <button

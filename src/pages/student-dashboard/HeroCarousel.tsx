@@ -43,7 +43,7 @@ export const HeroCarousel = () => {
                     transition={{ duration: 0.4, ease: 'easeInOut' }}
                     className={`${slide.gradient} p-5 rounded-card flex items-center justify-between gap-4 min-h-[200px]`}>
                     <div className="flex-1 space-y-2">
-                        <h2 className={`text-2xl font-black leading-tight ${slide.textColor}`}>
+                        <h2 className={`text-2xl font-bold leading-tight ${slide.textColor}`}>
                             {slide.title}{' '}
                             <span className="inline-block border-s-4 border-current ps-0.5 animate-pulse">|</span>
                         </h2>

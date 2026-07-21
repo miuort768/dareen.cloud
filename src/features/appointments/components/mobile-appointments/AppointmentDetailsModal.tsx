@@ -28,10 +28,10 @@ export const AppointmentDetailsModal = ({ show, appointment, activeTab, onClose,
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-micro font-bold text-muted">تفاصيل الموعد</p>
-                                <h3 className="text-sm font-black text-main">{appointment.day}</h3>
+                                <h3 className="text-sm font-semibold text-main">{appointment.day}</h3>
                             </div>
                             <div className="px-3 py-1.5 rounded-xl bg-primary/10">
-                                <p className="font-black text-lg tabular-nums text-primary leading-none">{appointment.time}</p>
+                                <p className="font-bold text-lg tabular-nums text-primary leading-none">{appointment.time}</p>
                             </div>
                         </div>
 

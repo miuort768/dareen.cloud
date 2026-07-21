@@ -53,7 +53,7 @@ export const AAbdullah = () => {
                             <VCodeBracket size={22} className="text-on-primary" />
                         </div>
                         <div className="text-start">
-                            <h1 className="text-xl md:text-3xl font-black leading-tight text-primary">
+                            <h1 className="text-xl md:text-3xl font-bold leading-tight text-primary">
                                 مستر احمد عبدالله
                             </h1>
                             <p className="text-micro md:text-base font-bold leading-tight text-success mt-px">
@@ -86,7 +86,7 @@ export const AAbdullah = () => {
                 {/* ═══════════════ نبدة تعريفية ═══════════════ */}
                 <motion.div {...sectionDelay(1)} className={cardClass}>
                     <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-black text-primary">
+                        <h2 className="text-lg font-semibold text-primary">
                             نبدة تعريفية
                         </h2>
                         <VRocket size={18} className="inline text-success" />
@@ -113,7 +113,7 @@ export const AAbdullah = () => {
                             >
                                 <VTargetArrow size={20} className="text-accent" />
                             </div>
-                            <h2 className="text-lg font-black text-accent">الرؤية</h2>
+                            <h2 className="text-lg font-semibold text-accent">الرؤية</h2>
                         </div>
                         <p className="text-sm leading-relaxed text-main dark:text-white/90">
                             "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
@@ -125,7 +125,7 @@ export const AAbdullah = () => {
 
                 {/* ═══════════════ القيم ═══════════════ */}
                 <motion.div {...sectionDelay(3)} className="space-y-4">
-                    <h2 className="text-xl font-black text-primary">القيم</h2>
+                    <h2 className="text-xl font-bold text-primary">القيم</h2>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {values.map((v, i) => {
                             const Icon = v.icon;
@@ -157,7 +157,7 @@ export const AAbdullah = () => {
                         >
                             <VHeart size={20} className="text-accent" />
                         </div>
-                        <h2 className="text-lg font-black text-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
+                        <h2 className="text-lg font-semibold text-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
                     <div className="space-y-3 ps-4">
                         <p className="text-sm leading-relaxed text-muted dark:text-muted">

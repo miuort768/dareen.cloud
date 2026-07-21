@@ -99,7 +99,7 @@ export const Modal: React.FC<ModalProps> = ({
           >
             <div className="flex items-center justify-between mb-5 px-6 pt-6">
               {title && (
-                <h3 className="text-base font-black text-main">{title}</h3>
+                <h3 className="text-base font-semibold text-main">{title}</h3>
               )}
               <button
                 onClick={handleClose}

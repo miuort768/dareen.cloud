@@ -24,7 +24,7 @@ const StatItem = ({ label, value, icon: Icon }: { label: string, value: string |
             </div>
             <div className="min-w-0">
                 <p className="text-micro font-bold text-inverse opacity-70 leading-none">{label}</p>
-                <p className="text-xl font-black text-inverse tabular-nums mt-1">{value}</p>
+                <p className="text-xl font-bold text-inverse tabular-nums mt-1">{value}</p>
             </div>
         </div>
     );

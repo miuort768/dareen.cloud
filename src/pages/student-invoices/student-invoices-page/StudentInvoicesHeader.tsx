@@ -25,7 +25,7 @@ export const StudentInvoicesHeader = ({
                     <FileText size={22} className="text-on-primary" />
                 </div>
                 <div>
-                    <h1 className="text-lg md:text-xl font-black text-on-primary leading-tight">فواتير الطلاب</h1>
+                    <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">فواتير الطلاب</h1>
                     <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">إدارة الفواتير والمستحقات المالية للطلاب</p>
                 </div>
             </div>

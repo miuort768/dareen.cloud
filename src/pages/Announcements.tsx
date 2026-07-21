@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Megaphone, Plus, ArrowLeftRight } from 'lucide-react';
+import { Megaphone, Plus } from 'lucide-react';
 import { api } from '../lib/api';
 import { useShowNotification } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
@@ -113,13 +113,13 @@ export const Announcements = () => {
                         <Megaphone size={22} />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-main leading-tight">الإعلانات</h1>
+                        <h1 className="text-lg md:text-xl font-bold text-main leading-tight">الإعلانات</h1>
                         <p className="text-xs font-bold text-muted mt-0.5">إدارة الإعلانات والتنبيهات</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-info-soft text-info">
-                        <span className="text-sm font-black leading-none">{announcements.filter(a => a.isActive).length}</span>
+                        <span className="text-sm font-semibold leading-none">{announcements.filter(a => a.isActive).length}</span>
                         <span className="text-micro font-bold leading-none">نشط</span>
                     </div>
                     <button
@@ -144,7 +144,7 @@ export const Announcements = () => {
                 {announcements.length === 0 && !isLoading && (
                     <div className="col-span-full py-20 bg-card border border-dashed border-border flex flex-col items-center justify-center text-center rounded-2xl">
                         <div className="w-12 h-12 rounded-xl bg-info-soft text-info flex items-center justify-center mx-auto mb-3">
-                            <ArrowLeftRight size={22} />
+                            <Megaphone size={22} />
                         </div>
                         <h3 className="text-sm font-bold text-muted">لا توجد إعلانات بعد</h3>
                     </div>

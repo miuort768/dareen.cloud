@@ -32,12 +32,12 @@ export const TermsOfService = () => {
                 <div className="absolute bottom-0 end-0 w-64 h-64 bg-warning/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-card text-main border border-border rounded-none shadow-sm mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-card text-main border border-border rounded-card shadow-sm mb-4">
                         <Scale size={14} className="text-success" />
-                        <span className="text-xs font-black tracking-label uppercase">الشروط والأحكام</span>
+                        <span className="text-xs font-semibold tracking-label uppercase">الشروط والأحكام</span>
                     </div>
 
-                    <h1 className="text-xl md:text-5xl font-black text-main mb-3 leading-tight font-heading">
+                    <h1 className="text-xl md:text-5xl font-bold text-main mb-3 leading-tight font-heading">
                         شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from-success to-success inline-block py-1">الاستخدام</span> والأحكام
                     </h1>
 
@@ -54,11 +54,11 @@ export const TermsOfService = () => {
                     {/* Acceptance */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-success-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-success-light rounded-card flex items-center justify-center shrink-0">
                                 <FileCheck className="w-6 h-6 text-success" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">قبول الشروط</h2>
+                                <h2 className="text-xl md:text-2xl font-bold text-main mb-2">قبول الشروط</h2>
                                 <p className="text-sm md:text-base text-muted leading-relaxed">
                                     بالوصول إلى منصة دارين السابعة للتعليم والتدريب واستخدامها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا توافق على أي من هذه الشروط، يُمنع عليك استخدام هذه المنصة أو الوصول إليها.
                                 </p>
@@ -69,11 +69,11 @@ export const TermsOfService = () => {
                     {/* Services */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-info-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-info-light rounded-card flex items-center justify-center shrink-0">
                                 <BookOpen className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main mb-3">الخدمات المقدمة</h2>
+                                <h2 className="text-2xl font-bold text-main mb-3">الخدمات المقدمة</h2>
                                 <div className="space-y-2 text-muted">
                                     <p>يوفر دارين السابعة خدمات تعليمية عبر الإنترنت تشمل:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
@@ -94,11 +94,11 @@ export const TermsOfService = () => {
                     {/* Registration */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft rounded-card flex items-center justify-center shrink-0">
                                 <UserX className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main mb-3">التسجيل والحساب</h2>
+                                <h2 className="text-2xl font-bold text-main mb-3">التسجيل والحساب</h2>
                                 <div className="space-y-2 text-muted">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">1. إنشاء الحساب:</h3>
@@ -127,11 +127,11 @@ export const TermsOfService = () => {
                     {/* Payment */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-warning-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-warning-light rounded-card flex items-center justify-center shrink-0">
                                 <CreditCard className="w-6 h-6 text-warning" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main mb-3">الرسوم والدفع</h2>
+                                <h2 className="text-2xl font-bold text-main mb-3">الرسوم والدفع</h2>
                                 <div className="space-y-2 text-muted">
                                     <div>
                                         <h3 className="font-bold text-main mb-2">1. الأسعار:</h3>
@@ -166,11 +166,11 @@ export const TermsOfService = () => {
                     {/* User Conduct */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-error-light rounded-none flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-error-light rounded-card flex items-center justify-center shrink-0">
                                 <AlertCircle className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main mb-3">قواعد السلوك</h2>
+                                <h2 className="text-2xl font-bold text-main mb-3">قواعد السلوك</h2>
                                 <div className="space-y-2 text-muted">
                                     <p>عند استخدام منصتنا، توافق على:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
@@ -190,8 +190,8 @@ export const TermsOfService = () => {
 
                     {/* Intellectual Property */}
                     <div className="mb-4">
-                        <div className="bg-background border border-border p-4 sm:p-8 rounded-none">
-                            <h2 className="text-2xl font-black text-main mb-4">الملكية الفكرية</h2>
+                        <div className="bg-background border border-border p-4 sm:p-8 rounded-card">
+                            <h2 className="text-2xl font-bold text-main mb-4">الملكية الفكرية</h2>
                             <div className="space-y-2 text-muted">
                                 <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.</p>
                                 <p className="font-bold mt-4">يُحظر عليك:</p>
@@ -206,7 +206,7 @@ export const TermsOfService = () => {
 
                     {/* Liability */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-main mb-4">إخلاء المسؤولية</h2>
+                        <h2 className="text-2xl font-bold text-main mb-4">إخلاء المسؤولية</h2>
                         <div className="space-y-2 text-muted">
                             <p>يتم توفير الخدمات "كما هي" دون أي ضمانات من أي نوع. نحن لا نضمن:</p>
                             <ul className="list-disc list-inside space-y-1 ms-4">
@@ -222,7 +222,7 @@ export const TermsOfService = () => {
 
                     {/* Changes */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-main mb-4">التعديلات على الشروط</h2>
+                        <h2 className="text-2xl font-bold text-main mb-4">التعديلات على الشروط</h2>
                         <p className="text-muted leading-relaxed">
                             نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة مع تحديث تاريخ "آخر تحديث". استمرارك في استخدام المنصة بعد نشر التغييرات يعني قبولك لهذه التغييرات.
                         </p>
@@ -233,7 +233,7 @@ export const TermsOfService = () => {
 
                     {/* Governing Law */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-main mb-4">القانون الحاكم</h2>
+                        <h2 className="text-2xl font-bold text-main mb-4">القانون الحاكم</h2>
                         <p className="text-muted leading-relaxed">
                             تخضع هذه الشروط والأحكام وتُفسر وفقًا لقوانين دولة الكويت. أي نزاعات تنشأ عن هذه الشروط ستخضع للاختصاص القضائي الحصري لمحاكم الكويت.
                         </p>
@@ -245,7 +245,7 @@ export const TermsOfService = () => {
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-warning/5 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-main mb-2">هل لديك استفسارات فنية؟</h2>
+                            <h2 className="text-2xl font-bold text-main mb-2">هل لديك استفسارات فنية؟</h2>
                             <p className="text-muted mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a

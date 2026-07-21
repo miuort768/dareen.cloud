@@ -134,15 +134,15 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                 <div className="grid grid-cols-3 gap-3 mb-4">
                     <div className="p-2 text-center bg-primary-soft">
                         <span className="text-micro font-bold text-primary block mb-1">العقود</span>
-                        <span className="text-xs font-black text-primary">{student.enrollments?.length || 0}</span>
+                        <span className="text-xs font-semibold text-primary">{student.enrollments?.length || 0}</span>
                     </div>
                     <div className="p-2 text-center bg-success-soft">
                         <span className="text-micro font-bold text-success block mb-1">المستخدم</span>
-                        <span className="text-xs font-black text-success">{totalUsed}</span>
+                        <span className="text-xs font-semibold text-success">{totalUsed}</span>
                     </div>
                     <div className="p-2 text-center bg-warning-soft">
                         <span className="text-micro font-bold text-warning block mb-1">الرصيد</span>
-                        <span className={cn('text-xs font-black', hasLowBalance ? 'text-error' : 'text-warning')}>{totalExpected - totalUsed}</span>
+                        <span className={cn('text-xs font-semibold', hasLowBalance ? 'text-error' : 'text-warning')}>{totalExpected - totalUsed}</span>
                     </div>
                 </div>
                 <div className="space-y-1.5">

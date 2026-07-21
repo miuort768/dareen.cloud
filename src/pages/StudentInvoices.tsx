@@ -173,7 +173,7 @@ export const StudentInvoices = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="mx-auto px-2 space-y-4">
+            <div className="max-w-page mx-auto px-2 space-y-4">
                 <StudentInvoicesHeader totalRevenue={totalRevenue} searchTerm={searchTerm} onSearchChange={setSearchTerm}
                     filterStatus={filterStatus} onFilterChange={(v) => setFilterStatus(v as 'all' | 'paid' | 'pending' | 'overdue')}
                     showForm={showForm} onToggleForm={() => setShowForm(!showForm)}

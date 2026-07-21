@@ -79,7 +79,7 @@ export const AttendanceReport = React.memo(({
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-3 ${item.bgClass}`}>
                             <item.icon size={16} className={item.textClass} />
                         </div>
-                        <p className={`text-xl font-black font-mono ${item.textClass}`}>{item.value}</p>
+                        <p className={`text-xl font-bold font-mono ${item.textClass}`}>{item.value}</p>
                         <p className="text-micro font-bold text-dim mt-1">{item.label}</p>
                         <p className="text-micro font-bold text-dim mt-0.5">{item.sub}</p>
                     </div>
@@ -173,7 +173,7 @@ export const AttendanceReport = React.memo(({
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black shrink-0 bg-chart-3/10 text-chart-3">
+                                                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-semibold shrink-0 bg-chart-3/10 text-chart-3">
                                                         {teacher.teacher.charAt(0)}
                                                     </div>
                                                     <span className="text-xs font-bold text-main">{teacher.teacher}</span>
@@ -211,7 +211,7 @@ export const AttendanceReport = React.memo(({
                             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black shrink-0 bg-chart-3/10 text-chart-3">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 bg-chart-3/10 text-chart-3">
                                         {medal || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">

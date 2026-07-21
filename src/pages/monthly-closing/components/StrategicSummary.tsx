@@ -21,7 +21,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
                 <div className="lg:col-span-7 space-y-12">
                     <div>
-                        <h2 className="text-2xl md:text-4xl font-black tracking-tighter mb-4 uppercase">الملخص المالي الاستراتيجي</h2>
+                        <h2 className="text-2xl md:text-4xl font-bold tracking-tighter mb-4 uppercase">الملخص المالي الاستراتيجي</h2>
                         <div className="w-20 h-1.5 bg-primary"></div>
                         <p className="text-xs text-muted mt-6 max-w-lg leading-relaxed font-bold uppercase tracking-widest opacity-80">
                             تقرير تحليلي شامل يوضح التوازن الجوهري بين التدفقات النقدية المحصلة والالتزامات التعليمية المنفذة خلال الدورة المالية الحالية.
@@ -30,23 +30,23 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                         <div className="group transition-all">
-                            <p className="text-micro font-black text-success uppercase tracking-label mb-3">صافي الربح المتوقع</p>
+                            <p className="text-micro font-semibold text-success uppercase tracking-label mb-3">صافي الربح المتوقع</p>
                             <div className="flex items-baseline gap-2">
-                                <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
+                                <p className="text-3xl md:text-6xl font-bold tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {netProjectedProfit.toLocaleString()}
                                 </p>
-                                <span className="text-xs font-black text-muted uppercase tracking-widest">{reportCurrency}</span>
+                                <span className="text-xs font-semibold text-muted uppercase tracking-widest">{reportCurrency}</span>
                             </div>
                             <ProgressBar value={totalProjectedIncome > 0 ? (netProjectedProfit / totalProjectedIncome) * 100 : 0} variant="success" size="sm" trackClassName="bg-primary-active" />
                         </div>
 
                         <div className="group transition-all">
-                            <p className="text-micro font-black text-primary uppercase tracking-label mb-3">إجمالي عوائد المنظومة</p>
+                            <p className="text-micro font-semibold text-primary uppercase tracking-label mb-3">إجمالي عوائد المنظومة</p>
                             <div className="flex items-baseline gap-2">
-                                <p className="text-3xl md:text-6xl font-black tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
+                                <p className="text-3xl md:text-6xl font-bold tracking-tighter italic group-hover:scale-105 transition-transform origin-right">
                                     {totalProjectedIncome.toLocaleString()}
                                 </p>
-                                <span className="text-xs font-black text-muted uppercase tracking-widest">{reportCurrency}</span>
+                                <span className="text-xs font-semibold text-muted uppercase tracking-widest">{reportCurrency}</span>
                             </div>
                             <div className="mt-4 h-1 w-full bg-primary-active"></div>
                         </div>
@@ -58,8 +58,8 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 <TrendingUp size={16} className="text-success" />
                             </div>
                             <div>
-                                <p className="text-micro font-black text-muted uppercase tracking-widest">معدل التحصيل</p>
-                                <p className="text-sm font-black">{totalProjectedIncome > 0 ? ((totalActualCollections / totalProjectedIncome) * 100).toFixed(1) : 0}%</p>
+                                <p className="text-micro font-semibold text-muted uppercase tracking-widest">معدل التحصيل</p>
+                                <p className="text-sm font-semibold">{totalProjectedIncome > 0 ? ((totalActualCollections / totalProjectedIncome) * 100).toFixed(1) : 0}%</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -67,8 +67,8 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 <Receipt size={16} className="text-error" />
                             </div>
                             <div>
-                                <p className="text-micro font-black text-muted uppercase tracking-widest">التزامات الرواتب</p>
-                                <p className="text-sm font-black">{totalTeacherPayout.toLocaleString()} {reportCurrency}</p>
+                                <p className="text-micro font-semibold text-muted uppercase tracking-widest">التزامات الرواتب</p>
+                                <p className="text-sm font-semibold">{totalTeacherPayout.toLocaleString()} {reportCurrency}</p>
                             </div>
                         </div>
                     </div>
@@ -80,19 +80,19 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         <div className="absolute bottom-0 end-0 w-2 h-2 bg-primary translate-x-1/2 translate-y-1/2"></div>
 
                         <div>
-                            <h3 className="text-xs font-black text-primary uppercase tracking-label mb-10 flex items-center gap-3">
+                            <h3 className="text-xs font-semibold text-primary uppercase tracking-label mb-10 flex items-center gap-3">
                                 <span className="w-6 h-[1px] bg-primary"></span>
                                 ملاحظات التدقيق المالي
                             </h3>
                             <div className="space-y-10">
                                 <div className="flex gap-6">
-                                    <div className="shrink-0 w-8 h-8 bg-card text-main flex items-center justify-center font-black text-xs italic rounded-xl">01</div>
+                                    <div className="shrink-0 w-8 h-8 bg-card text-main flex items-center justify-center font-semibold text-xs italic rounded-xl">01</div>
                                     <p className="text-xs font-bold leading-relaxed text-dim italic">
                                         تمت مراجعة وتدقيق كافة الجلسات التعليمية المنفذة ومطابقتها يدوياً وآلياً مع سجلات الدفع والتحصيل النقدي الفعلي لضمان أعلى درجات الدقة.
                                     </p>
                                 </div>
                                 <div className="flex gap-6">
-                                    <div className="shrink-0 w-8 h-8 bg-primary text-on-primary flex items-center justify-center font-black text-xs italic rounded-xl">02</div>
+                                    <div className="shrink-0 w-8 h-8 bg-primary text-on-primary flex items-center justify-center font-semibold text-xs italic rounded-xl">02</div>
                                     <p className="text-xs font-bold leading-relaxed text-dim italic">
                                         إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة {(totalActualCollections / totalTeacherPayout * 100).toFixed(0)}% مما يعزز الاستقرار المالي للمؤسسة.
                                     </p>
@@ -101,8 +101,8 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         </div>
 
                             <div className="mt-12 p-6 bg-white/[0.03] border-s-2 border-primary rounded-xl">
-                            <p className="text-micro font-black text-muted uppercase tracking-widest mb-2 italic">حالة التقرير</p>
-                            <p className="text-xs font-black text-success flex items-center gap-2">
+                            <p className="text-micro font-semibold text-muted uppercase tracking-widest mb-2 italic">حالة التقرير</p>
+                            <p className="text-xs font-semibold text-success flex items-center gap-2">
                                 <CheckCircle2 size={14} /> معتمد وجاهز للتقفيل النهائي
                             </p>
                         </div>

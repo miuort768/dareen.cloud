@@ -62,7 +62,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                                 النظام نشط
                             </Badge>
                         </div>
-                        <h1 className="text-2xl md:text-3xl font-black text-main leading-tight tracking-tight">
+                        <h1 className="text-2xl md:text-3xl font-bold text-main leading-tight tracking-tight">
                             {greeting()}، {currentUser?.name || 'المستخدم'}
                         </h1>
                         <div className="flex items-center gap-3 text-sm text-muted">

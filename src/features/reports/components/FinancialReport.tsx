@@ -17,7 +17,7 @@ const FinancialCard = ({ title, value, subValue, icon: Icon, color, textClass, s
             </div>
             <h3 className="text-xs font-bold text-muted">{title}</h3>
         </div>
-        <p className="text-lg font-black text-main tabular-nums">{value.toLocaleString()} {currency}</p>
+        <p className="text-lg font-bold text-main tabular-nums">{value.toLocaleString()} {currency}</p>
         <p className={`text-micro font-bold mt-1 ${subTextClass || textClass}`}>هذا الشهر: {subValue.toLocaleString()} {currency}</p>
     </div>
 );

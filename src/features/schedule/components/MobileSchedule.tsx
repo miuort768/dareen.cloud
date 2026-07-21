@@ -174,7 +174,7 @@ export const MobileSchedule = () => {
                         <span className="text-micro font-bold text-muted">{selectedDay}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <span className="text-lg font-black text-primary tabular-nums">{totalToday}</span>
+                        <span className="text-lg font-bold text-primary tabular-nums">{totalToday}</span>
                         <span className="text-micro font-bold text-muted">حصة</span>
                     </div>
                 </div>
@@ -212,7 +212,7 @@ export const MobileSchedule = () => {
                                                 className={`bg-card rounded-card p-3 shadow-soft border-e-[3px] cursor-pointer active:scale-[0.97] transition-all ${ts.border}`}>
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-micro font-black text-on-primary ${ts.bg}`}>
+                                                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold text-on-primary ${ts.bg}`}>
                                                             {event.studentName.charAt(0)}
                                                         </div>
                                                         <div>

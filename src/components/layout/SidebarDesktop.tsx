@@ -39,6 +39,7 @@ const NavLinkItem = ({ item, collapsed, totalUnreadCount }: { item: NavItem; col
                         size={collapsed ? 20 : 18}
                         className="shrink-0"
                         strokeWidth={isActive ? 2.5 : 2}
+                        aria-hidden="true"
                     />
                     {item.id === 'chat' && totalUnreadCount > 0 && (
                         <Badge variant="destructive" className="absolute -top-2 -end-2 h-4 min-w-[16px] px-1 text-micro leading-none flex items-center justify-center">

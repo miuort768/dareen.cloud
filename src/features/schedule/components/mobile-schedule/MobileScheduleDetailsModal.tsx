@@ -41,7 +41,7 @@ export const MobileScheduleDetailsModal = ({ showDetails, event, onClose, onStar
                     <div className="px-5 pb-6 space-y-4">
                         <div className="text-center">
                             <p className="text-micro font-bold text-muted">تفاصيل الحصة</p>
-                            <h3 className="text-sm font-black text-main mt-0.5">{event.day}</h3>
+                            <h3 className="text-sm font-semibold text-main mt-0.5">{event.day}</h3>
                         </div>
                         <div className="space-y-3">
                             <div className="flex items-center justify-between p-3.5 rounded-card bg-primary-soft border-e-[3px] border-e-primary">

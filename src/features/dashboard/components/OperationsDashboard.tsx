@@ -6,25 +6,13 @@ import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import { useAdminPhone } from '../../../context/AppContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { GlassCard } from '@/shared/components/ui';
 
 interface OperationsDashboardProps {
     tasks: Task[];
     lowBalanceStudents: LowBalanceStudent[];
     stats: Stats;
 }
-
-const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        "rounded-3xl p-6",
-        "bg-card/70 backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
-        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-        "font-dash",
-        className
-    )}>
-        {children}
-    </div>
-);
 
 export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: OperationsDashboardProps) => {
     const adminPhone = useAdminPhone();
