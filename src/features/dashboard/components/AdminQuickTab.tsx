@@ -1,22 +1,32 @@
-import { UserPlus, FilePlus, Calendar, Megaphone, Users, Banknote } from 'lucide-react';
+import { UserPlus, FilePlus, Calendar, Megaphone, Users, Banknote, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { triggerHaptic } from '../../../lib/haptics';
+import { motion } from 'framer-motion';
 import { NavButton } from './AdminNavButton';
 
 export const AdminQuickTab = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="space-y-3">
-            <p className="text-micro font-bold text-muted px-1">الإجراءات السريعة</p>
-            <div className="grid grid-cols-2 gap-3">
-                <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/students?action=new'); }} />
-                <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} variant="success" onClick={() => { triggerHaptic('medium'); navigate('/student-invoices?action=new'); }} />
-                <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} variant="primary" onClick={() => { triggerHaptic('medium'); navigate('/schedule'); }} />
-                <NavButton label="لوحة الإعلانات" subtext="إدارة ونشر" icon={Megaphone} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/announcements'); }} />
-                <NavButton label="المعلمات" subtext="إدارة البيانات" icon={Users} variant="info" onClick={() => { triggerHaptic('medium'); navigate('/teachers'); }} />
-                <NavButton label="التقارير" subtext="إحصائيات" icon={Banknote} variant="warning" onClick={() => { triggerHaptic('medium'); navigate('/reports'); }} />
+        <div className="space-y-4 px-1">
+            <div className="flex items-center gap-2 px-1">
+                <Sparkles size={14} className="text-primary" />
+                <h2 className="text-xs font-bold text-muted">الإجراءات السريعة</h2>
             </div>
+
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-2 gap-3">
+                {[
+                    { label: 'إضافة طالب جديد', subtext: 'تسجيل جديد', icon: UserPlus, variant: 'info' as const, onClick: () => navigate('/students?action=new') },
+                    { label: 'إصدار فاتورة', subtext: 'فاتورة مالية', icon: FilePlus, variant: 'success' as const, onClick: () => navigate('/student-invoices?action=new') },
+                    { label: 'الجدول الاسبوعي', subtext: 'إدارة المواعيد', icon: Calendar, variant: 'primary' as const, onClick: () => navigate('/schedule') },
+                    { label: 'لوحة الإعلانات', subtext: 'إدارة ونشر', icon: Megaphone, variant: 'warning' as const, onClick: () => navigate('/announcements') },
+                    { label: 'المعلمات', subtext: 'إدارة البيانات', icon: Users, variant: 'info' as const, onClick: () => navigate('/teachers') },
+                    { label: 'التقارير', subtext: 'إحصائيات', icon: Banknote, variant: 'warning' as const, onClick: () => navigate('/reports') },
+                ].map((item, i) => (
+                    <motion.div key={item.label} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
+                        <NavButton {...item} />
+                    </motion.div>
+                ))}
+            </motion.div>
         </div>
     );
 };

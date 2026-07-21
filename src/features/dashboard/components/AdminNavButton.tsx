@@ -1,23 +1,32 @@
+import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 
 const iconProps = { size: 18, strokeWidth: 1.5 };
 
-export const NavButton = ({ label, subtext, icon: Icon, variant, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number; strokeWidth?: number }>; variant: 'info' | 'success' | 'primary' | 'warning'; onClick?: () => void }) => (
-    <button
+const gradients: Record<string, string> = {
+    info: "from-info to-cyan-500",
+    success: "from-success to-emerald-500",
+    primary: "from-primary to-purple-500",
+    warning: "from-warning to-amber-500"
+};
+
+export const NavButton = ({ label, subtext, icon: Icon, variant, onClick }: {
+    label: string;
+    subtext: string;
+    icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+    variant: 'info' | 'success' | 'primary' | 'warning';
+    onClick?: () => void
+}) => (
+    <motion.button
+        whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className={cn(
-            "rounded-card p-4 flex flex-col items-center justify-center gap-1.5 shadow-soft active:scale-95 transition-all w-full",
-            variant === 'info' && "bg-info",
-            variant === 'success' && "bg-success",
-            variant === 'primary' && "bg-primary",
-            variant === 'warning' && "bg-warning"
-        )}
+        className={cn("rounded-2xl p-5 flex flex-col items-center gap-2 shadow-lg active:scale-95 w-full", "bg-gradient-to-br", gradients[variant])}
         aria-label={label}
     >
-        <div className="w-10 h-10 rounded-card bg-white/15 flex items-center justify-center shadow-soft text-on-primary">
+        <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shadow-inner text-white">
             <Icon {...iconProps} />
         </div>
-        <span className="text-micro font-bold text-on-primary leading-none mt-1">{label}</span>
-        <span className="text-micro font-medium text-on-primary/70">{subtext}</span>
-    </button>
+        <span className="text-xs font-bold text-white leading-tight text-center">{label}</span>
+        <span className="text-[10px] font-medium text-white/70">{subtext}</span>
+    </motion.button>
 );
