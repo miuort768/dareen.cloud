@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { PresenceUser } from '../../services/executiveService';
 import { Users } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const STATUS_COLORS: Record<string, string> = {
     online: 'var(--bg-success)',
@@ -24,7 +25,8 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
     const onlineCount = users.filter(u => u.status === 'online').length;
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                     <Users size={16} className="text-muted" />
@@ -85,6 +87,6 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

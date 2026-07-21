@@ -31,7 +31,6 @@ module.exports = {
         'micro': ['var(--font-size-micro)', { lineHeight: 'var(--line-height-micro)' }],
       },
       colors: {
-        /* ========== Legacy Colors (للمكونات الحالية — ستستبدل تدريجيًا) ========== */
         primary: {
           DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
           50: 'rgb(var(--color-primary) / 0.1)',
@@ -58,57 +57,38 @@ module.exports = {
           emerald: '#10b981',
           slate: '#0F172A',
         },
-
-        /* ========== Semantic Tokens (Design System v0.9) ========== */
-        // Background levels
         surface: 'var(--bg-surface)',
         background: 'var(--bg-background)',
         card: 'var(--bg-card)',
-
-        // Text levels
         main: 'var(--text-main)',
         muted: 'var(--text-muted)',
         dim: 'var(--text-dim)',
         inverse: 'var(--text-inverse)',
-
-        // Background levels
         hover: 'var(--bg-hover)',
-
-        // Border
         border: {
           DEFAULT: 'var(--border)',
           strong: 'var(--border-strong)',
         },
         divider: 'var(--divider)',
-
-        // Accent (Gold)
         accent: {
           DEFAULT: 'var(--bg-accent)',
           hover: 'var(--bg-accent-hover)',
           soft: 'var(--bg-accent-soft)',
           light: 'var(--bg-accent-light)',
         },
-
-        // Text on colored backgrounds — key name = what follows "text-"
         'on-primary': 'var(--text-on-primary)',
         'on-success': 'var(--text-on-success)',
         'on-warning': 'var(--text-on-warning)',
         'on-error': 'var(--text-on-error)',
         'on-info': 'var(--text-on-info)',
         'on-accent': 'var(--text-on-accent)',
-
-        // Primary extended
         'primary-hover': 'var(--bg-primary-hover)',
         'primary-active': 'var(--bg-primary-active)',
         'primary-soft': 'var(--bg-primary-soft)',
         'primary-light': 'var(--bg-primary-light)',
         'primary-200': 'var(--bg-primary-soft)',
         'primary-400': 'var(--bg-primary-light)',
-
-        // Focus (ring)
         focus: 'var(--ring-focus)',
-
-        // Chart colors
         chart: {
           1: 'var(--chart-1)',
           2: 'var(--chart-2)',
@@ -117,8 +97,6 @@ module.exports = {
           5: 'var(--chart-5)',
           6: 'var(--chart-6)',
         },
-
-        // Status colors
         success: {
           DEFAULT: 'var(--bg-success)',
           dark: 'var(--bg-success-dark)',
@@ -145,9 +123,22 @@ module.exports = {
           soft: 'var(--bg-info-soft)',
           light: 'var(--bg-info-light)',
         },
+        sidebar: {
+          DEFAULT: 'var(--sidebar-background)',
+          foreground: 'var(--sidebar-foreground)',
+          primary: 'var(--sidebar-primary)',
+          'primary-foreground': 'var(--sidebar-primary-foreground)',
+          accent: 'var(--sidebar-accent)',
+          'accent-foreground': 'var(--sidebar-accent-foreground)',
+          border: 'var(--sidebar-border)',
+          ring: 'var(--sidebar-ring)',
+        },
       },
       borderRadius: {
         card: 'var(--radius-card)',
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       maxWidth: {
         page: 'var(--container-width)',
@@ -175,10 +166,20 @@ module.exports = {
         shine: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
-        }
+        },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         'shine-slow': 'shine 3s ease-in-out infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       letterSpacing: {
         label: 'var(--letter-spacing-label)',
@@ -187,10 +188,11 @@ module.exports = {
         fast: 'var(--duration-fast)',
         normal: 'var(--duration-normal)',
         slow: 'var(--duration-slow)',
-      }
+      },
     },
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('tailwindcss-animate'),
   ],
 }

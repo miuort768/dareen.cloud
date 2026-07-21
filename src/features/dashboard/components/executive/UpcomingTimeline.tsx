@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { UpcomingSession } from '../../services/executiveService';
 import { Clock, GraduationCap, User, Calendar } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const URGENCY_DOT: Record<string, string> = {
     now: 'bg-error',
@@ -31,7 +32,8 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
     const sorted = [...sessions].sort((a, b) => a.minutesUntil - b.minutesUntil);
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
                 <Calendar size={16} className="text-muted" />
                 <h3 className="text-xs text-muted">الجلسات القادمة</h3>
@@ -78,6 +80,6 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Activity, TrendingUp, AlertTriangle } from 'lucide-react';
 import type { ExecutivePulse } from '../../services/executiveService';
+import { Card, CardContent } from '@/components/ui/card';
 
 const PULSE_COLORS: Record<string, string> = {
     excellent: 'var(--bg-success)',
@@ -51,7 +52,8 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
     const offset = circumference - (pulse.score / 100) * circumference;
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5 flex flex-col items-center">
+        <Card>
+            <CardContent className="p-5 flex flex-col items-center">
             <h3 className="text-xs text-muted mb-4">مؤشر الأداء العام</h3>
             <div className="relative w-40 h-40">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
@@ -99,6 +101,6 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
                 {PULSE_LABELS[pulse.status] || 'غير متاح'}
             </span>
             <p className="text-xs text-muted text-center mt-3 leading-relaxed">{pulse.message}</p>
-        </div>
+        </CardContent></Card>
     );
 });

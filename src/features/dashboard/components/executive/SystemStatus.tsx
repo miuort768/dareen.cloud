@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { SystemHealth } from '../../services/executiveService';
 import { HardDrive, Database, Server, Cpu, CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
 import { ProgressBar } from '../../../../shared/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 
 const STATUS_ICONS: Record<string, typeof CheckCircle> = {
     healthy: CheckCircle,
@@ -85,7 +86,8 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const uptimeHours = health.uptime ? Math.round(health.uptime / 3600) : 0;
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-2">
                 <Activity size={16} className="text-muted" />
                 <h3 className="text-xs text-muted">حالة النظام</h3>
@@ -124,6 +126,6 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                 <span>مدة التشغيل: {uptimeHours}h</span>
                 <span>Node: {health.node || 'N/A'}</span>
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

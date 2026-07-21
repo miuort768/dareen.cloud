@@ -1,16 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Calendar, MessageSquare, User, LayoutDashboard, ClipboardList
-} from 'lucide-react';
+import { Calendar, MessageSquare, User, LayoutDashboard, ClipboardList } from 'lucide-react';
 import { useCurrentUser } from '../../context/AppContext';
-
+import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
 import { triggerHaptic } from '../../lib/haptics';
 
 export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-    const currentUser = useCurrentUser();
+  const currentUser = useCurrentUser();
 
   const isChatPage = location.pathname.includes('/chat');
   const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
@@ -46,37 +44,24 @@ export const BottomNav = () => {
           const Icon = item.icon;
 
           return (
-            <button
+            <Button
               key={item.path}
+              variant="ghost"
+              size="sm"
               onClick={() => handleNav(item.path)}
               className={cn(
                 "flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-200 touch-manipulation relative",
+                "rounded-none"
               )}
             >
-              <div className={cn(
-                "p-1.5 rounded-2xl transition-all duration-200",
-                isActive && "bg-primary-soft"
-              )}>
-                <Icon 
-                  size={24} 
-                  className={cn(
-                    "transition-all duration-200",
-                    isActive 
-                      ? "text-primary stroke-[2.5]" 
-                      : "text-muted stroke-[1.5]"
-                  )} 
-                />
+              <div className={cn("p-1.5 rounded-2xl transition-all duration-200", isActive && "bg-primary-soft")}>
+                <Icon size={24} className={cn("transition-all duration-200", isActive ? "text-primary stroke-[2.5]" : "text-muted stroke-[1.5]")} />
               </div>
-              <span className={cn(
-                "text-micro font-medium tracking-tight transition-all duration-200",
-                isActive ? "text-primary" : "text-muted"
-              )}>
+              <span className={cn("text-micro font-medium tracking-tight transition-all duration-200", isActive ? "text-primary" : "text-muted")}>
                 {item.label}
               </span>
-              {isActive && (
-                <div className="absolute -top-0.5 w-6 h-1 bg-primary rounded-full" />
-              )}
-            </button>
+              {isActive && <div className="absolute -top-0.5 w-6 h-1 bg-primary rounded-full" />}
+            </Button>
           );
         })}
       </div>

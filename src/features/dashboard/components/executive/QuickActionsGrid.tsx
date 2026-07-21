@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlusCircle, UserPlus, FileText, Settings, Shield, BookOpen, Zap } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const QUICK_ACTIONS = [
     { label: 'إضافة طالب', icon: UserPlus, colorClass: 'text-chart-1', bgClass: 'bg-card', iconBgClass: 'bg-chart-1/15', path: '/students/add' },
@@ -15,7 +16,8 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
     const navigate = useNavigate();
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
                 <Zap size={16} className="text-muted" />
                 <h3 className="text-xs text-muted">إجراءات سريعة</h3>
@@ -40,6 +42,6 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 type InsightType = 'positive' | 'negative' | 'neutral';
 
@@ -64,7 +65,8 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
     const insights = buildInsights(stats);
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
                 <Lightbulb size={16} className="text-primary" />
                 <h3 className="text-xs text-muted">تحليلات ذكية</h3>
@@ -92,6 +94,6 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

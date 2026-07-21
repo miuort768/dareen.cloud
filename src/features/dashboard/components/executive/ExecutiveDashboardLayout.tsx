@@ -10,6 +10,7 @@ import { ActivityFeed } from './ActivityFeed';
 import { InsightsPanel } from './InsightsPanel';
 import { QuickActionsGrid } from './QuickActionsGrid';
 import { SectionErrorBoundary } from '../../../../shared/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp } from 'lucide-react';
 
 const AnimatedSection = ({ children }: { children: React.ReactNode }) => (
@@ -39,16 +40,18 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
 
     return (
         <div className="space-y-6">
-            {/* Purity UI Header */}
-            <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
-                    <TrendingUp size={22} className="text-primary" />
-                </div>
-                <div>
-                    <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">لوحة القيادة التنفيذية</h1>
-                    <p className="text-xs text-on-primary/70 mt-0.5">نظرة شاملة على أداء المنشأة</p>
-                </div>
-            </div>
+            {/* Executive Header */}
+            <Card className="bg-primary border-none px-5 md:px-7 py-5 flex items-center gap-4">
+                <CardContent className="p-0 flex items-center gap-4 w-full">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary-soft">
+                        <TrendingUp size={22} className="text-primary" />
+                    </div>
+                    <div>
+                        <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">لوحة القيادة التنفيذية</h1>
+                        <p className="text-xs text-on-primary/70 mt-0.5">نظرة شاملة على أداء المنشأة</p>
+                    </div>
+                </CardContent>
+            </Card>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
                 <div className="lg:col-span-1">

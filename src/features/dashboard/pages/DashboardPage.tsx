@@ -13,11 +13,13 @@ import { ModernAnnouncements } from '../components/ModernAnnouncements';
 import { QuickActionsHub } from '../components/QuickActionsHub';
 import { RecentActivityFeed } from '../components/RecentActivityFeed';
 import { RecentArticles } from '../components/RecentArticles';
-import { Skeleton, SkeletonCard } from '../../../shared/components/ui';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
 import { LayoutDashboard, TrendingUp } from 'lucide-react';
 
 const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
@@ -51,7 +53,6 @@ export const Dashboard = () => {
     if (loading) {
         return (
             <div className="min-h-full bg-background pb-24" dir="rtl">
-                {/* Desktop skeleton */}
                 <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
                     <div className="flex items-center justify-between py-6">
                         <Skeleton className="h-8 w-48" />
@@ -59,24 +60,29 @@ export const Dashboard = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         {Array.from({ length: 4 }).map((_, i) => (
-                            <SkeletonCard key={`skel-${i}`} />
+                            <Card key={`skel-card-${i}`}>
+                                <CardContent className="p-6">
+                                    <Skeleton className="h-4 w-24 mb-2" />
+                                    <Skeleton className="h-8 w-16 mb-2" />
+                                    <Skeleton className="h-3 w-20" />
+                                </CardContent>
+                            </Card>
                         ))}
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <Skeleton className="h-80 rounded-card" />
+                        <Skeleton className="h-80 rounded-xl" />
                         <div className="space-y-4">
                             {Array.from({ length: 5 }).map((_, i) => (
-                                <Skeleton key={`skel-${i}`} className="h-16 rounded-card" />
+                                <Skeleton key={`skel-row-${i}`} className="h-16 rounded-xl" />
                             ))}
                         </div>
                     </div>
-                    <Skeleton className="h-72 rounded-card" />
+                    <Skeleton className="h-72 rounded-xl" />
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <Skeleton className="h-96 rounded-card" />
-                        <Skeleton className="h-96 rounded-card" />
+                        <Skeleton className="h-96 rounded-xl" />
+                        <Skeleton className="h-96 rounded-xl" />
                     </div>
                 </div>
-                {/* Mobile skeleton */}
                 <div className="block md:hidden px-4 pt-4 space-y-4">
                     <div className="flex items-center gap-3 mb-6">
                         <Skeleton className="w-9 h-9 rounded-2xl" />
@@ -87,13 +93,18 @@ export const Dashboard = () => {
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                         {Array.from({ length: 3 }).map((_, i) => (
-                            <SkeletonCard key={`skel-${i}`} />
+                            <Card key={`skel-mob-${i}`}>
+                                <CardContent className="p-4">
+                                    <Skeleton className="h-3 w-16 mb-1" />
+                                    <Skeleton className="h-6 w-12" />
+                                </CardContent>
+                            </Card>
                         ))}
                     </div>
                     <Skeleton className="h-40 rounded-2xl" />
                     <div className="grid grid-cols-2 gap-3">
                         {Array.from({ length: 4 }).map((_, i) => (
-                            <Skeleton key={`skel-${i}`} className="h-20 rounded-2xl" />
+                            <Skeleton key={`skel-btn-${i}`} className="h-20 rounded-2xl" />
                         ))}
                     </div>
                 </div>
@@ -115,26 +126,22 @@ export const Dashboard = () => {
                     <Section>
                         <div className="flex justify-center">
                             <div className="inline-flex bg-card rounded-full shadow-soft p-1 gap-1">
-                                <button
+                                <Button
+                                    variant={view === 'standard' ? 'default' : 'ghost'}
+                                    size="sm"
                                     onClick={() => setView('standard')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                                        view === 'standard'
-                                            ? 'bg-info text-on-info shadow-sm'
-                                            : 'text-muted hover:text-main'
-                                    }`}
+                                    className="rounded-full"
                                 >
                                     <LayoutDashboard size={18} /> لوحة الإدارة
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    variant={view === 'executive' ? 'default' : 'ghost'}
+                                    size="sm"
                                     onClick={() => setView('executive')}
-                                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                                        view === 'executive'
-                                            ? 'bg-info text-on-info shadow-sm'
-                                            : 'text-muted hover:text-main'
-                                    }`}
+                                    className="rounded-full"
                                 >
                                     <TrendingUp size={18} /> لوحة القيادة التنفيذية
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </Section>

@@ -1,16 +1,13 @@
 import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+import path from 'path'
 
-// https://vite.dev/config/
 export default defineConfig(async () => {
   const plugins: PluginOption[] = [
     react({
-        // Don't let react-refresh pollute production chunks
         include: /\.(ts|tsx)$/,
-        babel: {
-            plugins: []
-        }
+        babel: { plugins: [] }
     }),
     ViteImageOptimizer({
       jpg: { quality: 80, mozjpeg: true },
@@ -29,6 +26,11 @@ export default defineConfig(async () => {
 
   return {
     base: '/',
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+    },
     plugins,
     server: {
       proxy: {
@@ -54,4 +56,3 @@ export default defineConfig(async () => {
     }
   };
 })
-

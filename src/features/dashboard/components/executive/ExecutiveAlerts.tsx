@@ -1,6 +1,8 @@
 import { memo, useState } from 'react';
 import type { ExecutiveAlerts as AlertsType } from '../../services/executiveService';
 import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const SEVERITY_CONFIG: Record<string, { icon: typeof XCircle; activeBg: string; rowBg: string; text: string; dot: string; label: string }> = {
     critical: { icon: XCircle, activeBg: 'bg-error', rowBg: 'bg-error/5', text: 'text-error', dot: 'bg-error', label: 'حرج' },
@@ -33,16 +35,15 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
     const filtered = filter === 'all' ? allAlerts : allAlerts.filter(a => a.severity === filter);
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                     <Bell size={16} className="text-muted" />
                     <h3 className="text-xs text-muted">التنبيهات</h3>
                 </div>
                 {counts.critical > 0 && (
-                    <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-error text-on-error text-micro font-bold">
-                        {counts.critical}
-                    </span>
+                    <Badge variant="destructive">{counts.critical}</Badge>
                 )}
             </div>
 
@@ -93,6 +94,6 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });

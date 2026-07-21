@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle, Activity } from 'lucide-react';
 import { ProgressBar } from '../../../../shared/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 
 const ICON_MAP: Record<string, typeof DollarSign> = {
     revenue: DollarSign,
@@ -46,7 +47,8 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
     const isUp = trend === 'up';
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-4 flex items-center gap-3">
+        <Card>
+            <CardContent className="p-4 flex items-center gap-3">
             <div className={`w-11 h-11 rounded-card flex items-center justify-center shrink-0 ${isUp ? 'bg-success-soft' : 'bg-error-soft'}`}>
                 <Icon size={20} className={isUp ? 'text-success' : 'text-error'} />
             </div>
@@ -57,7 +59,7 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
                     <ProgressBar value={Math.min(100, percent)} variant={isUp ? 'success' : 'error'} size="sm" trackClassName="bg-border/30" />
                 </div>
             </div>
-        </div>
+        </CardContent></Card>
     );
 });
 
@@ -66,13 +68,14 @@ export const ExecutiveKPI = memo(function ExecutiveKPI({ stats }: { stats: Execu
     const metrics = METRICS(stats);
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-5">
+        <Card>
+            <CardContent className="p-5">
             <h3 className="text-xs text-muted mb-4">المؤشرات الرئيسية</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {metrics.map((m) => (
                     <MetricCard key={m.label} {...m} />
                 ))}
             </div>
-        </div>
+        </CardContent></Card>
     );
 });
