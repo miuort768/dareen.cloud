@@ -28,7 +28,8 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             <div className="p-4 border-b border-border/50 dark:border-border/50">
                 <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="var(--bg-success)" />
             </div>
-            <div className="overflow-x-auto">
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-start">
                     <thead className="bg-gradient-to-l from-primary to-primary">
                         <tr>
@@ -68,6 +69,36 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                         ))}
                     </tbody>
                 </table>
+            </div>
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-3 p-4">
+                {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
+                    <div key={item.id} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-2">
+                        <div className="flex items-start justify-between">
+                            <div className="min-w-0 flex-1">
+                                <span className="block font-bold text-xs text-main leading-tight truncate">{item.studentName}</span>
+                                <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
+                            </div>
+                            <span className="text-xs font-bold text-success me-2">{item.amount.toLocaleString()} ج.م</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-micro text-muted font-mono">{item.date}</span>
+                            <button
+                                onClick={async () => {
+                                    const newStatus = item.status === 'paid' ? 'pending' : 'paid';
+                                    await api.patch(`/studentInvoices/${item.id}`, { status: newStatus });
+                                    queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
+                                }}
+                                className={cn(
+                                    "px-3 py-1 font-bold text-micro uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                    item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
+                                )}
+                            >
+                                {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </SectionCard>
     );

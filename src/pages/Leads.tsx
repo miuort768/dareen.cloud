@@ -126,7 +126,7 @@ export const Leads = () => {
     if (isLeadsError) {
         return (
             <div className="bg-surface dark:bg-background min-h-screen pb-24" dir="rtl">
-                <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
+            <div className="relative z-10 mx-auto px-2 md:px-4 max-w-page">
                     <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>

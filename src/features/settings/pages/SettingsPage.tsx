@@ -22,7 +22,7 @@ export const Settings = () => {
     );
 
     return (
-        <div className="space-y-0 pb-24 min-h-full max-w-full w-full overflow-x-hidden" dir="rtl">
+        <div className="space-y-0 pb-24 min-h-full max-w-page mx-auto overflow-x-hidden" dir="rtl">
             <div className="bg-primary px-4 md:px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">

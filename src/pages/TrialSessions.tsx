@@ -111,7 +111,7 @@ export const TrialSessions = () => {
       className="bg-surface dark:bg-background min-h-screen pb-24"
       dir="rtl"
     >
-      <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
+      <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-page mx-auto">
         {/* Header */}
         <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">

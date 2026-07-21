@@ -90,7 +90,7 @@ export const AdminContacts = () => {
                 <div className="absolute -bottom-40 -start-40 w-96 h-96 bg-gradient-to-tr from-primary-200/10 via-primary/5 to-transparent rounded-full blur-3xl" />
             </div>
 
-            <div className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
+            <div className="relative z-10 max-w-page mx-auto px-3 sm:px-4 mb-4 sm:mb-6">
                 {/* Premium Header Card */}
                 <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-600 to-primary-700 shadow-xl shadow-primary/25">
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
@@ -125,7 +125,7 @@ export const AdminContacts = () => {
                 </div>
             </div>
 
-            <div className="relative z-10 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4">
+            <div className="relative z-10 max-w-page mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4">
                 {loading ? (
                     <div className="space-y-3 sm:space-y-4">
                         {[1, 2, 3].map(i => (

@@ -29,7 +29,8 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                     <Download size={14} /> تصدير PDF
                 </SecondaryBtn>
             </div>
-            <div className="overflow-x-auto">
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-start">
                     <thead className="bg-primary">
                         <tr>
@@ -78,6 +79,49 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                         ))}
                     </tbody>
                 </table>
+            </div>
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-3 p-4">
+                {payrollData.map((item) => (
+                    <div key={item.id} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
+                                {item.name.charAt(0)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <span className="block font-bold text-xs text-main leading-tight truncate">{item.name}</span>
+                                <span className="text-micro text-muted font-medium">{item.subject}</span>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                            <div className="text-center p-2 bg-card rounded-lg">
+                                <span className="block text-micro text-dim mb-0.5">الحصص</span>
+                                <span className="text-xs font-bold text-main">{item.sessionsCount}</span>
+                            </div>
+                            <div className="text-center p-2 bg-card rounded-lg">
+                                <span className="block text-micro text-dim mb-0.5">الأساسي</span>
+                                <span className="text-xs font-bold text-muted">{item.baseAmount.toLocaleString()}</span>
+                            </div>
+                            <div className="text-center p-2 bg-card rounded-lg">
+                                <span className="block text-micro text-dim mb-0.5">الصافي</span>
+                                <span className="text-xs font-bold text-success">{item.totalAmount.toLocaleString()} ج.م</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="number"
+                                aria-label="قيمة التعديل"
+                                value={teacherAdjustments[item.id] || ''}
+                                onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
+                                className="flex-1 bg-background border border-border p-2 text-center font-bold text-xs outline-none focus:border-primary rounded-xl"
+                                placeholder="تعديل"
+                            />
+                            <button onClick={() => setSelectedTeacherForSlip(item)} className="flex items-center gap-1 px-3 py-2 text-micro font-bold text-primary bg-primary-soft rounded-xl">
+                                <Receipt size={10} /> القسيمة
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </SectionCard>
     );

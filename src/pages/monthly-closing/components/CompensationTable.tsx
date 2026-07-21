@@ -22,7 +22,8 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
             <div className="p-4 border-b border-border/50 dark:border-border/50">
                 <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" />
             </div>
-            <div className="overflow-x-auto">
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-start">
                     <thead className="bg-primary">
                         <tr>
@@ -46,7 +47,6 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                         {cancelledNeedingComp.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="px-6 py-20 text-center">
-                                    {/* decorative empty-state icon — 13% opacity has no semantic token */}
                                     <CheckCircle2 className="mx-auto mb-3 text-success/[0.13]" size={48} />
                                     <p className="text-xs font-bold text-muted uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                 </td>
@@ -54,6 +54,28 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                         )}
                     </tbody>
                 </table>
+            </div>
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-3 p-4">
+                {cancelledNeedingComp.length === 0 ? (
+                    <div className="py-16 text-center">
+                        <CheckCircle2 className="mx-auto mb-3 text-success/[0.13]" size={48} />
+                        <p className="text-xs font-bold text-muted uppercase tracking-widest">لا توجد تعويضات معلقة</p>
+                    </div>
+                ) : (
+                    cancelledNeedingComp.map((session, idx) => (
+                        <div key={idx} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-2">
+                            <div className="flex items-center justify-between">
+                                <span className="font-bold text-xs text-main leading-tight">{session.studentName}</span>
+                                <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg bg-error-soft text-error">تعويض معلق</div>
+                            </div>
+                            <div className="flex items-center justify-between text-micro text-muted">
+                                <span>{session.teacherName}</span>
+                                <span className="font-mono text-error">{session.date}</span>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </SectionCard>
     );
