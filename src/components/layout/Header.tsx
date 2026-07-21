@@ -12,6 +12,7 @@ export const Header = memo(() => {
     const location = useLocation();
     const currentUser = useCurrentUser();
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+    const [headerVisible, setHeaderVisible] = useState(true);
     const lastScrollY = useRef(0);
 
     useEffect(() => {
