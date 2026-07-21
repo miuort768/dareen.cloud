@@ -190,7 +190,7 @@ function App() {
       {/* Public Facing Actions - Only show on specific public pages */}
 
 
-      {['/', '/courses', '/about', '/contact'].includes(location.pathname) ? (
+      {['/', '/courses', '/about', '/contact', '/books'].includes(location.pathname) ? (
         <Suspense fallback={null}><FloatingActions /></Suspense>
       ) : null}
       <Suspense fallback={null}>
