@@ -209,7 +209,7 @@ export const Blog = () => {
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
                       <BookOpen size={10} className="text-on-primary" />
                     </div>
-                    <span className="text-xs font-bold text-main dark:text-main">dareen7.com/books</span>
+                    <span className="text-xs font-bold text-main dark:text-main">7SCHOOL.ONLINE/BOOKS</span>
                   </div>
                 </div>
               </div>
