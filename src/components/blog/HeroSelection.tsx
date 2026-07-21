@@ -17,14 +17,14 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
         <div className="bg-gradient-to-br from-primary/80 via-white to-primary/30 dark:from-primary-active dark:via-primary-active dark:to-primary-active rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-primary/50 dark:border-border">
             <h2 className="text-xl font-black text-primary dark:text-primary leading-tight">
                 {view === 'types' ? (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">الخدمة</span></>
+                    <>تحميل مجاني بدون اعلانات</>
                 ) : view === 'curriculums' ? (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المنهج</span></>
                 ) : (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المرحلة</span></>
                 )}
             </h2>
-            <p className="text-xs text-muted dark:text-muted font-medium mt-1.5 leading-relaxed">
+            <p className="text-xs text-main dark:text-main font-medium mt-1.5 leading-relaxed">
                 {view === 'types'
                     ? 'اختر ما تريد من كتب او مذكرات مجانا'
                     : view === 'curriculums'
