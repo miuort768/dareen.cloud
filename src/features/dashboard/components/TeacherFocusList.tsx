@@ -2,9 +2,9 @@ import { useState, useMemo } from 'react';
 import { AlertTriangle, UserCircle, Plus, Clock, CheckCircle2, X } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 
 interface FocusStudent {
     id: string;
@@ -18,6 +18,19 @@ interface TeacherFocusListProps {
     onStudentClick?: (student: FocusStudent) => void;
 }
 
+const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        "rounded-3xl p-6",
+        "bg-card/70 backdrop-blur-xl",
+        "border border-white/20 dark:border-white/10",
+        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
+        "font-dash",
+        className
+    )}>
+        {children}
+    </div>
+);
+
 const typeLabels: Record<string, string> = {
     all: 'الكل',
     attendance: 'حضور',
@@ -25,21 +38,21 @@ const typeLabels: Record<string, string> = {
     engagement: 'تفاعل',
 };
 
-const typeStyles: Record<string, { active: string; badge: string; inactive: string }> = {
+const typeStyles: Record<string, { gradient: string; badge: string; inactive: string }> = {
     attendance: {
-        active: 'bg-error text-on-error shadow-sm',
-        badge: 'bg-error/10 text-error',
-        inactive: 'bg-card text-muted hover:bg-accent/50'
+        gradient: 'from-error to-rose-500',
+        badge: 'bg-error/10 text-error border-error/20',
+        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
     },
     performance: {
-        active: 'bg-warning text-on-warning shadow-sm',
-        badge: 'bg-warning/10 text-warning',
-        inactive: 'bg-card text-muted hover:bg-accent/50'
+        gradient: 'from-warning to-amber-500',
+        badge: 'bg-warning/10 text-warning border-warning/20',
+        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
     },
     engagement: {
-        active: 'bg-info text-on-info shadow-sm',
-        badge: 'bg-info/10 text-info',
-        inactive: 'bg-card text-muted hover:bg-accent/50'
+        gradient: 'from-info to-cyan-500',
+        badge: 'bg-info/10 text-info border-info/20',
+        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
     },
 };
 
@@ -84,164 +97,172 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
 
     if (!students || students.length === 0) {
         return (
-            <Card className="border-border/50 shadow-sm" dir="rtl">
-                <CardContent className="p-8">
-                    <div className="flex flex-col items-center justify-center text-center">
-                        <div className="w-12 h-12 rounded-xl bg-success/5 flex items-center justify-center ring-1 ring-success/20 mb-3">
-                            <CheckCircle2 size={24} className="text-success" />
-                        </div>
-                        <h4 className="text-sm font-bold text-main mb-1">كل شيء ممتاز!</h4>
-                        <p className="text-xs text-muted">جميع الطلاب ملتزمون بالخطط والمواعيد حالياً.</p>
+            <GlassCard dir="rtl">
+                <div className="flex flex-col items-center justify-center text-center py-8">
+                    <div className="w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
+                        <CheckCircle2 size={26} className="text-success/40" />
                     </div>
-                </CardContent>
-            </Card>
+                    <h4 className="text-sm font-bold text-main mb-1">كل شيء ممتاز!</h4>
+                    <p className="text-xs text-muted">جميع الطلاب ملتزمون بالخطط والمواعيد حالياً.</p>
+                </div>
+            </GlassCard>
         );
     }
 
     return (
-        <Card className="border-border/50 shadow-sm" dir="rtl">
-            <CardHeader className="pb-3 pt-5 px-5">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-error/10 text-error ring-1 ring-error/20">
-                        <AlertTriangle size={18} />
-                    </div>
-                    <div>
-                        <CardTitle className="text-sm font-bold text-main leading-tight">قائمة التركيز</CardTitle>
-                        <CardDescription className="text-[11px] text-muted">طلاب يحتاجون لاهتمامك</CardDescription>
-                    </div>
+        <GlassCard dir="rtl">
+            <div className="flex items-center gap-3 mb-5">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-error to-rose-500 flex items-center justify-center shadow-lg shadow-error/20">
+                    <AlertTriangle size={18} className="text-white" />
                 </div>
-            </CardHeader>
-            <CardContent className="px-5 pb-5">
-                {/* Filter Tabs */}
-                <div className="flex items-center gap-1.5 mb-4 overflow-x-auto pb-1 scrollbar-none">
-                    {['all', 'attendance', 'performance', 'engagement'].map(key => {
-                        const isActive = activeFilter === key;
-                        const style = key === 'all'
-                            ? { active: 'bg-primary text-on-primary shadow-sm', badge: 'bg-primary/10 text-primary' }
-                            : typeStyles[key];
-
-                        return (
-                            <button
-                                key={key}
-                                onClick={() => setActiveFilter(key)}
-                                className={cn(
-                                    "px-3 py-1.5 rounded-lg text-[10px] font-semibold whitespace-nowrap transition-all",
-                                    isActive ? style.active : 'bg-card text-muted hover:bg-accent/50 border border-border/50'
-                                )}
-                            >
-                                {typeLabels[key]}
-                                <span className={cn("me-1.5 opacity-70", isActive ? '' : 'text-muted')}>
-                                    {counts[key as keyof typeof counts]}
-                                </span>
-                            </button>
-                        );
-                    })}
+                <div>
+                    <h3 className="text-base font-bold text-main leading-tight">قائمة التركيز</h3>
+                    <p className="text-xs text-muted">طلاب يحتاجون لاهتمامك</p>
                 </div>
+            </div>
 
-                {/* Student List */}
-                <div className="space-y-2">
-                    {filteredStudents.map((student) => (
-                        <div key={student.id}>
+            {/* Filter Tabs */}
+            <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1 scrollbar-none">
+                {['all', 'attendance', 'performance', 'engagement'].map(key => {
+                    const isActive = activeFilter === key;
+                    const style = key === 'all'
+                        ? { gradient: 'from-primary to-purple-500', badge: 'bg-primary/10 text-primary' }
+                        : typeStyles[key];
+
+                    return (
+                        <button
+                            key={key}
+                            onClick={() => setActiveFilter(key)}
+                            className={cn(
+                                "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
+                                isActive
+                                    ? "bg-gradient-to-r text-white shadow-md border-0"
+                                    : style.inactive + ' border-white/20 backdrop-blur-sm'
+                            )}
+                            style={isActive ? { backgroundImage: `linear-gradient(to left, ${style.gradient.replace('from-', '').replace('to-', '').split(' ').join(', ')})` } : undefined}
+                        >
+                            {typeLabels[key]}
+                            <Badge variant={isActive ? "secondary" : "outline"} className={cn("me-1.5 px-1.5 py-0 rounded text-[9px] h-auto min-w-[18px] leading-none", isActive ? "bg-white/20 text-white border-0" : style.badge + ' border')}>
+                                {counts[key as keyof typeof counts]}
+                            </Badge>
+                        </button>
+                    );
+                })}
+            </div>
+
+            {/* Student List */}
+            <div className="space-y-2.5 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
+                {filteredStudents.map((student) => (
+                    <div key={student.id}>
+                        <div className={cn(
+                            "flex items-center justify-between p-4 rounded-2xl transition-all cursor-pointer border backdrop-blur-sm",
+                            addingFor === student.id
+                                ? "bg-white/60 dark:bg-white/10 border-primary/30 shadow-md"
+                                : "bg-white/40 dark:bg-white/5 border-white/20 hover:border-white/30 hover:shadow-md"
+                        )}>
                             <div
                                 onClick={() => onStudentClick?.(student)}
                                 role="button"
                                 tabIndex={0}
                                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.(student); } }}
-                                className="flex items-center justify-between p-3 rounded-xl hover:bg-accent/30 transition-colors cursor-pointer border border-transparent hover:border-border/50"
+                                className="flex items-center gap-3 min-w-0 flex-1"
                             >
-                                <div className="flex items-center gap-3 min-w-0">
-                                    <div className="w-9 h-9 shrink-0 rounded-xl bg-card border border-border/50 flex items-center justify-center">
-                                        <UserCircle size={20} className="text-muted" />
-                                    </div>
-                                    <div className="min-w-0">
-                                        <h4 className="text-xs font-semibold text-main truncate">{student.name}</h4>
-                                        <div className="flex items-center gap-2 mt-0.5">
-                                            <span className={cn(
-                                                "px-1.5 py-0.5 rounded text-[9px] font-semibold",
-                                                typeStyles[student.type]?.badge || 'bg-primary/10 text-primary'
-                                            )}>
-                                                {typeLabels[student.type]}
-                                            </span>
-                                            <span className="text-[10px] text-muted truncate">{student.reason}</span>
-                                        </div>
+                                <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-primary/10 to-purple-500/10 border border-white/30 flex items-center justify-center">
+                                    <UserCircle size={20} className="text-primary" />
+                                </div>
+                                <div className="min-w-0">
+                                    <h4 className="text-sm font-bold text-main truncate">{student.name}</h4>
+                                    <div className="flex items-center gap-2 mt-0.5">
+                                        <Badge variant="outline" className={cn(
+                                            "text-[9px] h-5 px-2 rounded-lg border",
+                                            typeStyles[student.type]?.badge || 'bg-primary/10 text-primary'
+                                        )}>
+                                            {typeLabels[student.type]}
+                                        </Badge>
+                                        <span className="text-[10px] text-muted truncate">{student.reason}</span>
                                     </div>
                                 </div>
-
-                                <Button
-                                    onClick={(e) => { e.stopPropagation(); setAddingFor(addingFor === student.id ? null : student.id); setSubject(''); }}
-                                    variant="default"
-                                    size="sm"
-                                    className="h-7 px-2.5 text-[10px] font-semibold gap-1 shrink-0"
-                                    aria-expanded={addingFor === student.id}
-                                >
-                                    <Plus size={11} />
-                                    إضافة حصة
-                                </Button>
                             </div>
 
-                            {addingFor === student.id && (
-                                <div className="p-3 mt-2 me-12 bg-success/5 border border-success/20 rounded-xl">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <Input
-                                            type="text"
-                                            value={subject}
-                                            onChange={(e) => setSubject(e.target.value)}
-                                            placeholder="المادة (مثال: رياضيات)"
-                                            aria-label="المادة"
-                                            className="h-8 text-xs"
-                                            dir="rtl"
-                                        />
+                            <Button
+                                onClick={(e) => { e.stopPropagation(); setAddingFor(addingFor === student.id ? null : student.id); setSubject(''); }}
+                                variant="default"
+                                size="sm"
+                                className={cn(
+                                    "h-8 px-3 text-[10px] font-bold gap-1 shrink-0 rounded-xl border-0",
+                                    addingFor === student.id
+                                        ? "bg-gradient-to-r from-primary to-purple-500 text-white shadow-md"
+                                        : "bg-white/60 dark:bg-white/10 text-primary hover:bg-primary hover:text-on-primary border border-white/20"
+                                )}
+                                aria-expanded={addingFor === student.id}
+                            >
+                                <Plus size={11} />
+                                إضافة حصة
+                            </Button>
+                        </div>
+
+                        {addingFor === student.id && (
+                            <div className="p-4 mt-2 me-14 rounded-2xl bg-gradient-to-br from-success/5 via-emerald-500/5 to-success/5 border border-success/20 backdrop-blur-sm">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <Input
+                                        type="text"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                        placeholder="المادة (مثال: رياضيات)"
+                                        aria-label="المادة"
+                                        className="h-9 text-xs rounded-xl border-white/20 bg-white/50 dark:bg-white/5"
+                                        dir="rtl"
+                                    />
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => setAddingFor(null)}
+                                        className="h-9 w-9 rounded-xl shrink-0"
+                                        aria-label="إغلاق"
+                                    >
+                                        <X size={14} />
+                                    </Button>
+                                </div>
+                                <div className="flex gap-1.5">
+                                    {[1, 2, 4, 8].map(num => (
                                         <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => setAddingFor(null)}
-                                            className="h-8 w-8 shrink-0"
-                                            aria-label="إغلاق"
-                                        >
-                                            <X size={13} />
-                                        </Button>
-                                    </div>
-                                    <div className="flex gap-1.5">
-                                        {[1, 2, 4, 8].map(num => (
-                                            <Button
-                                                key={num}
-                                                onClick={() => {
-                                                    for (let i = 0; i < num; i++) addSession(student.id, student.name);
-                                                }}
-                                                disabled={!subject.trim()}
-                                                variant="success"
-                                                size="sm"
-                                                className="flex-1 h-7 text-[10px] font-semibold"
-                                            >
-                                                +{num} {num === 1 ? 'حصة' : 'حصص'}
-                                            </Button>
-                                        ))}
-                                        <Button
+                                            key={num}
                                             onClick={() => {
-                                                const val = prompt('أدخل عدد الحصص:');
-                                                if (val && !isNaN(Number(val)) && Number(val) > 0) {
-                                                    for (let i = 0; i < Number(val); i++) addSession(student.id, student.name);
-                                                }
+                                                for (let i = 0; i < num; i++) addSession(student.id, student.name);
                                             }}
                                             disabled={!subject.trim()}
-                                            variant="outline"
+                                            variant="success"
                                             size="sm"
-                                            className="h-7 text-[10px] font-semibold"
+                                            className="flex-1 h-8 text-[10px] font-bold rounded-xl"
                                         >
-                                            مخصص
+                                            +{num} {num === 1 ? 'حصة' : 'حصص'}
                                         </Button>
-                                    </div>
+                                    ))}
+                                    <Button
+                                        onClick={() => {
+                                            const val = prompt('أدخل عدد الحصص:');
+                                            if (val && !isNaN(Number(val)) && Number(val) > 0) {
+                                                for (let i = 0; i < Number(val); i++) addSession(student.id, student.name);
+                                            }
+                                        }}
+                                        disabled={!subject.trim()}
+                                        variant="outline"
+                                        size="sm"
+                                        className="h-8 text-[10px] font-bold rounded-xl border-white/20 bg-white/50 dark:bg-white/5"
+                                    >
+                                        مخصص
+                                    </Button>
                                 </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
 
-                <div className="mt-4 flex items-center gap-1.5 text-[10px] text-muted">
-                    <Clock size={9} />
-                    <span>يتم تحديث هذه القائمة دورياً بناءً على الحضور والتقييمات الأخيرة.</span>
-                </div>
-            </CardContent>
-        </Card>
+            <div className="mt-5 pt-4 border-t border-white/20 dark:border-white/10 flex items-center gap-1.5 text-[10px] text-muted">
+                <Clock size={10} />
+                <span>يتم تحديث هذه القائمة دورياً بناءً على الحضور والتقييمات الأخيرة.</span>
+            </div>
+        </GlassCard>
     );
 };

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, TooltipProps } from 'recharts';
-import { DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { DollarSign, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DashboardMonthData as MonthData } from '../types';
 
@@ -13,15 +12,15 @@ interface DashboardChartsProps {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (!active || !payload?.length) return null;
     return (
-        <div className="bg-card border border-border/50 shadow-xl px-4 py-3 min-w-[160px] rounded-xl" dir="rtl">
+        <div className="bg-card/90 backdrop-blur-xl border border-white/20 shadow-xl px-5 py-4 min-w-[180px] rounded-2xl" dir="rtl">
             <p className="text-xs font-bold text-main mb-2">{label}</p>
             {payload.map((entry, i) => (
-                <div key={i} className="flex items-center justify-between gap-4 py-0.5">
+                <div key={i} className="flex items-center justify-between gap-4 py-1">
                     <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: entry.color }} />
-                        <span className="text-[11px] font-medium text-muted">{entry.name}</span>
+                        <div className="w-3 h-3 rounded-md" style={{ backgroundColor: entry.color }} />
+                        <span className="text-xs font-medium text-muted">{entry.name}</span>
                     </div>
-                    <span className="text-xs font-bold text-main tabular-nums">
+                    <span className="text-sm font-bold text-main tabular-nums">
                         {Number(entry.value).toLocaleString()} ج.م
                     </span>
                 </div>
@@ -42,77 +41,83 @@ export const DashboardCharts = React.memo(({ isTeacher, monthlyData }: Dashboard
     };
 
     return (
-        <Card className="border-border/50 shadow-sm overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between pb-0 pt-5 px-5">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center ring-1 ring-primary/20">
-                        <TrendingUp size={18} className="text-primary" />
+        <div className={cn(
+            "rounded-3xl p-6",
+            "bg-card/70 backdrop-blur-xl",
+            "border border-white/20 dark:border-white/10",
+            "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
+            "font-dash"
+        )}>
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                        <BarChart3 size={20} className="text-white" />
                     </div>
                     <div>
-                        <CardTitle className="text-sm font-bold text-main">مركز تحليل الأداء</CardTitle>
-                        <CardDescription className="text-[11px] text-muted">نظرة عامة على أداء المؤسسة</CardDescription>
+                        <h3 className="text-lg font-bold text-main">مركز تحليل الأداء</h3>
+                        <p className="text-xs text-muted">نظرة عامة على أداء المؤسسة</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-chart-1/10">
+                <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-chart-1/10 border border-chart-1/20">
                         <DollarSign size={11} className="text-chart-1" />
                         <span className="text-[10px] font-bold tabular-nums text-chart-1">{totalRevenue.toLocaleString()} ج.م</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-chart-3/10">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-chart-3/10 border border-chart-3/20">
                         <TrendingDown size={11} className="text-chart-3" />
                         <span className="text-[10px] font-bold tabular-nums text-chart-3">{totalExpenses.toLocaleString()} ج.م</span>
                     </div>
                     {!isTeacher && (
-                        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-chart-2/10">
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-chart-2/10 border border-chart-2/20">
                             <TrendingUp size={11} className="text-chart-2" />
                             <span className="text-[10px] font-bold tabular-nums text-chart-2">{totalProfit.toLocaleString()} ج.م</span>
                         </div>
                     )}
                 </div>
-            </CardHeader>
-            <CardContent className="p-0">
-                {monthlyData.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-16 text-center">
-                        <TrendingUp size={32} className="text-muted/30 mb-3" />
-                        <p className="text-sm font-medium text-muted">لا توجد بيانات متاحة</p>
-                        <p className="text-xs text-muted/60 mt-1">ستظهر بيانات الأداء عند توفر جلسات ومعاملات مالية</p>
+            </div>
+
+            {/* Chart */}
+            {monthlyData.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-purple-500/10 flex items-center justify-center mb-4">
+                        <BarChart3 size={28} className="text-primary/40" />
                     </div>
-                ) : (
-                    <div className="h-[280px] px-2 pb-2 pt-4">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={4}>
-                                <defs>
-                                    <linearGradient id="chartRevGrad2" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor={chartColors.revenue} stopOpacity={1} />
-                                        <stop offset="100%" stopColor={chartColors.revenue} stopOpacity={0.7} />
-                                    </linearGradient>
-                                    <linearGradient id="chartPerfGrad2" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor={chartColors.completed} stopOpacity={1} />
-                                        <stop offset="100%" stopColor={chartColors.completed} stopOpacity={0.7} />
-                                    </linearGradient>
-                                    <linearGradient id="chartExpGrad2" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor={chartColors.expenses} stopOpacity={1} />
-                                        <stop offset="100%" stopColor={chartColors.expenses} stopOpacity={0.7} />
-                                    </linearGradient>
-                                    <filter id="chartShadow2">
-                                        <feDropShadow dx="0" dy="1" stdDeviation="2" floodOpacity="0.08" />
-                                    </filter>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.35} />
-                                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: '600', fill: 'var(--text-muted)' }} dy={8} />
-                                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: '600', fill: 'var(--text-muted)' }} tickFormatter={(val) => val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val} />
-                                <Tooltip cursor={{ fill: 'var(--bg-hover)', opacity: 0.5 }} content={<CustomTooltip />} />
-                                <Bar dataKey="revenue" name="الإيرادات" fill="url(#chartRevGrad2)" radius={[4, 4, 0, 0]} barSize={16} filter="url(#chartShadow2)" animationDuration={800} animationEasing="ease-out" />
-                                <Bar dataKey="completed" name="الأداء" fill="url(#chartPerfGrad2)" radius={[4, 4, 0, 0]} barSize={16} filter="url(#chartShadow2)" animationDuration={800} animationEasing="ease-out" />
-                                {!isTeacher && (
-                                    <Bar dataKey="expenses" name="المصروفات" fill="url(#chartExpGrad2)" radius={[4, 4, 0, 0]} barSize={16} filter="url(#chartShadow2)" animationDuration={800} animationEasing="ease-out" />
-                                )}
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                )}
-            </CardContent>
-        </Card>
+                    <p className="text-base font-bold text-muted">لا توجد بيانات متاحة</p>
+                    <p className="text-xs text-muted/60 mt-1">ستظهر بيانات الأداء عند توفر جلسات ومعاملات مالية</p>
+                </div>
+            ) : (
+                <div className="h-[300px] -mx-2">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={6}>
+                            <defs>
+                                <linearGradient id="g-chart-rev" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor={chartColors.revenue} stopOpacity={1} />
+                                    <stop offset="100%" stopColor={chartColors.revenue} stopOpacity={0.6} />
+                                </linearGradient>
+                                <linearGradient id="g-chart-perf" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor={chartColors.completed} stopOpacity={1} />
+                                    <stop offset="100%" stopColor={chartColors.completed} stopOpacity={0.6} />
+                                </linearGradient>
+                                <linearGradient id="g-chart-exp" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor={chartColors.expenses} stopOpacity={1} />
+                                    <stop offset="100%" stopColor={chartColors.expenses} stopOpacity={0.6} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.25} />
+                            <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: '600', fill: 'var(--text-muted)' }} dy={8} />
+                            <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: '600', fill: 'var(--text-muted)' }} tickFormatter={(val) => val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val} />
+                            <Tooltip cursor={{ fill: 'var(--bg-hover)', opacity: 0.3 }} content={<CustomTooltip />} />
+                            <Bar dataKey="revenue" name="الإيرادات" fill="url(#g-chart-rev)" radius={[8, 8, 0, 0]} barSize={18} animationDuration={800} animationEasing="ease-out" />
+                            <Bar dataKey="completed" name="الأداء" fill="url(#g-chart-perf)" radius={[8, 8, 0, 0]} barSize={18} animationDuration={800} animationEasing="ease-out" />
+                            {!isTeacher && (
+                                <Bar dataKey="expenses" name="المصروفات" fill="url(#g-chart-exp)" radius={[8, 8, 0, 0]} barSize={18} animationDuration={800} animationEasing="ease-out" />
+                            )}
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            )}
+        </div>
     );
 });
 DashboardCharts.displayName = 'DashboardCharts';

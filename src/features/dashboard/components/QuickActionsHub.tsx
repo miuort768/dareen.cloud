@@ -2,85 +2,105 @@ import { UserPlus, FilePlus, Megaphone, Calendar, ArrowLeft } from 'lucide-react
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
 
 const actions = [
     {
         title: 'إضافة طالب جديد',
         icon: UserPlus,
         href: '/students?action=new',
-        color: 'primary',
+        gradient: 'from-primary to-purple-500',
         description: 'تسجيل طالب جديد في النظام'
     },
     {
         title: 'إصدار فاتورة',
         icon: FilePlus,
         href: '/student-invoices?action=new',
-        color: 'success',
+        gradient: 'from-success to-emerald-500',
         description: 'إنشاء فاتورة مالية جديدة'
     },
     {
         title: 'الجدول الاسبوعي',
         icon: Calendar,
         href: '/schedule',
-        color: 'info',
+        gradient: 'from-info to-cyan-500',
         description: 'إدارة المواعيد والجدول'
     },
     {
         title: 'إعلان عام',
         icon: Megaphone,
         href: '/announcements',
-        color: 'warning',
+        gradient: 'from-warning to-amber-500',
         description: 'بث إعلان للمنصة بأكملها'
     }
 ];
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } }
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.4, delay: i * 0.06, ease: [0.25, 0.1, 0.25, 1] }
+    })
+};
+
+const bgGlow: Record<string, string> = {
+    'from-primary to-purple-500': 'shadow-primary/10',
+    'from-success to-emerald-500': 'shadow-success/10',
+    'from-info to-cyan-500': 'shadow-info/10',
+    'from-warning to-amber-500': 'shadow-warning/10',
 };
 
 export const QuickActionsHub = () => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {actions.map((action, i) => {
                 const Icon = action.icon;
-                const colorMap: Record<string, { bg: string; text: string; ring: string; hover: string }> = {
-                    primary: { bg: 'bg-primary/5', text: 'text-primary', ring: 'ring-primary/20', hover: 'hover:ring-primary/30' },
-                    success: { bg: 'bg-success/5', text: 'text-success', ring: 'ring-success/20', hover: 'hover:ring-success/30' },
-                    info: { bg: 'bg-info/5', text: 'text-info', ring: 'ring-info/20', hover: 'hover:ring-info/30' },
-                    warning: { bg: 'bg-warning/5', text: 'text-warning', ring: 'ring-warning/20', hover: 'hover:ring-warning/30' },
-                };
-                const c = colorMap[action.color] || colorMap.primary;
 
                 return (
                     <motion.div
                         key={`action-${i}`}
-                        variants={itemVariants}
                         custom={i}
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="visible"
                     >
                         <Link to={action.href} className="block h-full">
-                            <Card className="group h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer border-border/50">
-                                <CardContent className="p-4 md:p-5 h-full flex flex-col justify-between gap-3">
-                                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center ring-1 transition-all duration-200 group-hover:scale-110", c.bg, c.text, c.ring)}>
-                                        <Icon size={18} />
+                            <div className={cn(
+                                "group h-full p-5 rounded-3xl",
+                                "bg-card/70 backdrop-blur-xl",
+                                "border border-white/20 dark:border-white/10",
+                                "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
+                                "hover:shadow-[0_16px_48px_-8px_rgba(99,102,241,0.12)]",
+                                "hover:-translate-y-1",
+                                "transition-all duration-300",
+                                "font-dash"
+                            )}>
+                                <div className="flex flex-col gap-4">
+                                    <div className={cn(
+                                        "w-12 h-12 rounded-2xl flex items-center justify-center",
+                                        "bg-gradient-to-br shadow-lg",
+                                        action.gradient,
+                                        "text-white",
+                                        "group-hover:scale-110 transition-transform duration-300"
+                                    )}>
+                                        <Icon size={20} />
                                     </div>
 
-                                    <div className="space-y-0.5">
-                                        <h3 className="font-semibold text-sm text-main leading-tight truncate">
+                                    <div className="space-y-1">
+                                        <h3 className="font-bold text-base text-main leading-tight">
                                             {action.title}
                                         </h3>
-                                        <p className="text-[11px] font-medium text-muted leading-tight">
+                                        <p className="text-xs text-muted leading-tight">
                                             {action.description}
                                         </p>
                                     </div>
 
-                                    <div className="flex items-center gap-1 text-[11px] font-medium text-muted group-hover:text-primary transition-colors">
+                                    <div className="flex items-center gap-1 text-xs font-medium text-muted group-hover:text-primary transition-colors">
                                         <span>انتقال</span>
                                         <ArrowLeft size={11} />
                                     </div>
-                                </CardContent>
-                            </Card>
+                                </div>
+                            </div>
                         </Link>
                     </motion.div>
                 );

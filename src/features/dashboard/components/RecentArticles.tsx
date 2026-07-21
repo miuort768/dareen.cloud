@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { BookOpen, Eye, Calendar, ArrowLeft } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface Article {
     id: string;
@@ -13,6 +14,19 @@ interface Article {
     date: string;
     views: number;
 }
+
+const GlassCard = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        "rounded-3xl p-6",
+        "bg-card/70 backdrop-blur-xl",
+        "border border-white/20 dark:border-white/10",
+        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
+        "font-dash",
+        className
+    )}>
+        {children}
+    </div>
+);
 
 export const RecentArticles = () => {
     const [articles, setArticles] = useState<Article[]>([]);
@@ -30,48 +44,51 @@ export const RecentArticles = () => {
     if (articles.length === 0) return null;
 
     return (
-        <Card className="border-border/50 shadow-sm" dir="rtl">
-            <CardHeader className="pb-2 pt-4 px-5">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-error/10 text-error flex items-center justify-center">
-                            <BookOpen size={14} />
-                        </div>
-                        <CardTitle className="text-xs font-bold text-main">آخر المقالات</CardTitle>
+        <GlassCard dir="rtl">
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-error to-rose-500 flex items-center justify-center shadow-lg shadow-error/20">
+                        <BookOpen size={14} className="text-white" />
                     </div>
-                    <Button
-                        variant="ghost"
-                        size="sm"
+                    <h3 className="text-sm font-bold text-main">آخر المقالات</h3>
+                </div>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate('/admin/blog')}
+                    className="text-[10px] font-bold h-8 px-3 gap-1.5 rounded-xl text-muted hover:text-main hover:bg-white/30 dark:hover:bg-white/5"
+                >
+                    إدارة المقالات
+                    <ArrowLeft size={10} />
+                </Button>
+            </div>
+
+            <div className="space-y-1.5">
+                {articles.map(article => (
+                    <div
+                        key={article.id}
                         onClick={() => navigate('/admin/blog')}
-                        className="text-[10px] font-semibold h-7 px-2 gap-1 text-muted hover:text-main"
+                        className="flex items-center justify-between p-3 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 hover:border-white/30 transition-all cursor-pointer hover:shadow-md"
                     >
-                        إدارة المقالات
-                        <ArrowLeft size={10} />
-                    </Button>
-                </div>
-            </CardHeader>
-            <CardContent className="px-5 pb-4">
-                <div className="space-y-1">
-                    {articles.map(article => (
-                        <div
-                            key={article.id}
-                            onClick={() => navigate('/admin/blog')}
-                            className="flex items-center justify-between p-2.5 rounded-lg hover:bg-accent/50 transition-all cursor-pointer"
-                        >
-                            <div className="flex items-center gap-2 min-w-0">
-                                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-error/10 text-error shrink-0">
-                                    {article.category}
-                                </span>
-                                <span className="text-xs font-medium text-main truncate">{article.title}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-[10px] font-medium text-muted shrink-0">
-                                <span className="flex items-center gap-1"><Calendar size={10} /> {article.date}</span>
-                                <span className="flex items-center gap-1"><Eye size={10} /> {article.views}</span>
-                            </div>
+                        <div className="flex items-center gap-2.5 min-w-0">
+                            <Badge variant="outline" className="text-[9px] h-5 px-2.5 rounded-lg bg-gradient-to-br from-error/10 to-rose-500/10 text-error border-error/20 font-bold shrink-0">
+                                {article.category}
+                            </Badge>
+                            <span className="text-xs font-semibold text-main truncate">{article.title}</span>
                         </div>
-                    ))}
-                </div>
-            </CardContent>
-        </Card>
+                        <div className="flex items-center gap-3 text-[10px] font-medium text-muted shrink-0">
+                            <span className="flex items-center gap-1 bg-white/30 dark:bg-white/5 px-2 py-0.5 rounded-lg">
+                                <Calendar size={9} />
+                                {article.date}
+                            </span>
+                            <span className="flex items-center gap-1 bg-white/30 dark:bg-white/5 px-2 py-0.5 rounded-lg">
+                                <Eye size={9} />
+                                {article.views}
+                            </span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </GlassCard>
     );
 };
