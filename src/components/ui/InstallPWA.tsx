@@ -202,7 +202,7 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-3 py-1.5 bg-success-soft text-success-dark font-medium uppercase text-micro rounded-lg hover:bg-success/20 transition-all flex items-center gap-1.5 active:scale-95"
+                        className="px-3 py-1.5 bg-white/20 text-on-success font-medium uppercase text-micro rounded-lg hover:bg-white/30 transition-all flex items-center gap-1.5 active:scale-95"
                     >
                         {isIOS ? <Share size={10} /> : <Download size={10} />}
                         {isIOS ? 'كيف؟' : 'تثبيت'}
