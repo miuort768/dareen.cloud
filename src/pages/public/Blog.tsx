@@ -6,7 +6,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { MessageCircle, Send, BookOpen, Zap, FileText } from 'lucide-react';
+import { MessageCircle, Send, Download, Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes } from '../../components/blog/LibraryConfig';
@@ -206,10 +206,10 @@ export const Blog = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-card rounded-card shadow-sm border border-border dark:border-border">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
-                      <BookOpen size={10} className="text-on-primary" />
-                    </div>
                     <span className="text-xs font-bold text-main dark:text-main">7SCHOOL.ONLINE/BOOKS</span>
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
+                      <Download size={10} className="text-on-primary" />
+                    </div>
                   </div>
                 </div>
               </div>
