@@ -38,9 +38,9 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                         return (
                             <motion.div key={idx} initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}
-                                className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3">
-                                <div className="w-14 h-14 rounded-card bg-primary flex items-center justify-center shrink-0 shadow-sm">
-                                    <BookOpen size={22} className="text-on-primary" />
+                                className="bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl p-4 shadow-lg shadow-black/[0.03] flex items-center gap-3">
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                                    <BookOpen size={22} className="text-white" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
@@ -53,7 +53,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                                             <motion.div initial={{ width: 0 }}
                                                 animate={{ width: `${progress}%` }}
                                                 transition={{ duration: 0.8, delay: 0.3 + idx * 0.1 }}
-                                                className="h-full bg-primary rounded-full" />
+                                                className="h-full rounded-full bg-gradient-to-l from-primary to-purple-500 shadow-lg shadow-primary/30" />
                                         </div>
                                         <div className="flex justify-between mt-1">
                                             <span className="text-micro font-bold text-primary">{progress}%</span>
@@ -65,8 +65,8 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                     })}
                 </div>
             ) : (
-                <div className="bg-card rounded-card p-4 shadow-sm border border-border flex items-center gap-3">
-                    <div className="w-14 h-14 rounded-card bg-primary flex items-center justify-center shrink-0 shadow-sm">
+                <div className="bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl p-4 shadow-lg shadow-black/[0.03] flex items-center gap-3">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
                         <span className="text-2xl">💻</span>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -78,7 +78,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                         <div className="relative">
                             <div className="h-2 bg-hover rounded-full overflow-hidden">
                                 <motion.div initial={{ width: 0 }} animate={{ width: '60%' }}
-                                    transition={{ duration: 0.8, delay: 0.3 }} className="h-full bg-primary rounded-full" />
+                                    transition={{ duration: 0.8, delay: 0.3 }} className="h-full rounded-full bg-gradient-to-l from-primary to-purple-500 shadow-lg shadow-primary/30" />
                             </div>
                             <span className="text-micro font-bold text-primary mt-1 block text-end">60%</span>
                         </div>

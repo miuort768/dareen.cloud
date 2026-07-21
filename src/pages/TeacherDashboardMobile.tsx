@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles } from 'lucide-react';
+import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
@@ -29,98 +31,181 @@ interface TeacherDashboardMobileProps {
 }
 
 const tabs = [
-    { id: 'home', label: 'الرئيسية', icon: LayoutDashboard },
-    { id: 'schedule', label: 'الجدول', icon: Calendar },
-    { id: 'reports', label: 'التقارير', icon: CheckSquare },
+    { id: 'home' as const, label: 'الرئيسية', icon: LayoutDashboard },
+    { id: 'schedule' as const, label: 'الجدول', icon: Calendar },
+    { id: 'reports' as const, label: 'التقارير', icon: CheckSquare },
 ];
+
+const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
+const cardGlass = "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-lg shadow-black/[0.03]";
 
 export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardMobileProps) => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('home');
+    const [activeTab, setActiveTab] = useState<'home' | 'schedule' | 'reports'>('home');
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
 
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="min-h-full pb-28 relative bg-surface font-sans" dir="rtl">
-            <div className="sticky top-0 z-30 bg-primary shadow-sm">
-                <div className="px-4 pt-12 pb-2">
+        <div className="min-h-full pb-28 relative bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background font-sans" dir="rtl">
+
+            {/* Frosted Glass Header */}
+            <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
+                <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 bg-primary-soft rounded-card flex items-center justify-center">
-                                <User size={18} className="text-on-primary" />
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                                <User size={18} className="text-white" />
                             </div>
                             <div>
-                                <h1 className="text-on-primary font-black text-sm leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
-                                <p className="text-on-primary opacity-50 text-micro font-medium">معلم</p>
+                                <h1 className="text-sm font-bold text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
+                                <p className="text-[11px] font-medium text-muted">معلم</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary-soft rounded-card flex items-center justify-center relative">
-                                <Bell size={15} className="text-on-primary opacity-80" />
-                                <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border border-primary" />
-                            </div>
+                        <div className="w-8 h-8 rounded-xl bg-white/50 dark:bg-white/10 flex items-center justify-center relative">
+                            <Bell size={15} className="text-muted" />
+                            <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-white dark:border-black" />
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 mt-2.5">
-                        <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
-                            <Clock size={11} className="text-on-primary opacity-60 shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-on-primary font-black text-sm">{stats.todaySessions || 0}</span><span className="text-on-primary opacity-50 text-micro font-medium">حصص</span></div>
+                    {/* Stats row */}
+                    <div className="flex items-center gap-2 mt-3">
+                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                            <Clock size={12} className="text-primary shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
-                            <Users size={11} className="text-on-primary opacity-60 shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-on-primary font-black text-sm">{stats.studentsCount || 0}</span><span className="text-on-primary opacity-50 text-micro font-medium">طلاب</span></div>
+                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                            <Users size={12} className="text-info shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft rounded-card py-1.5 px-2.5 flex items-center gap-2">
-                            <Award size={11} className="text-on-primary opacity-60 shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-on-primary font-black text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-on-primary opacity-50 text-micro font-medium">حضور</span></div>
+                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                            <Award size={12} className="text-success shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-black text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
                         </div>
-                    </div>
-                </div>
-                <div className="px-4 pb-0.5">
-                    <div className="flex gap-1 bg-primary-soft rounded-card p-1">
-                        {tabs.map(tab => (
-                            <button key={tab.id} id={`tab-${tab.id}`} onClick={() => setActiveTab(tab.id)} role="tab" aria-selected={activeTab === tab.id} aria-controls={`tabpanel-${tab.id}`}
-                                className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-micro font-bold transition-all ${activeTab === tab.id ? 'bg-card text-primary shadow-sm' : 'text-on-primary opacity-70'}`}>
-                                <tab.icon size={14} /> {tab.label}
-                            </button>
-                        ))}
                     </div>
                 </div>
             </div>
 
-            <div className="px-3 pt-3 space-y-3.5">
-                {activeTab === 'home' && (
-                    <div role="tabpanel" id="tabpanel-home" aria-labelledby="tab-home">
-                        {nextSession && <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />}
-                        <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
-                        <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-primary rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">البث المباشر</h2></div><Card><div className="p-3.5"><LiveClasses /></div></Card></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإعلانات</h2></div><Card><div className="p-3.5"><ModernAnnouncements /></div></Card></section>
-                    </div>
-                )}
-                {activeTab === 'schedule' && (
-                    <div role="tabpanel" id="tabpanel-schedule" aria-labelledby="tab-schedule">
-                        {timeline.length > 0 ? (
-                            <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-info rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">حصص اليوم</h2></div><Card><div className="p-3.5"><TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} /></div></Card></section>
-                        ) : (
-                            <div className="py-12 text-center"><Calendar size={36} className="mx-auto text-dim mb-3" /><p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p><p className="text-dim text-micro mt-1">استمتع بيومك!</p></div>
+            {/* Tab Content */}
+            <div className="px-4 pt-4 pb-4">
+                <AnimatePresence mode="wait">
+                    <motion.div key={activeTab} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
+                        {activeTab === 'home' && (
+                            <div className="space-y-4">
+                                {nextSession && (
+                                    <div className={cardGlass + " p-4"}>
+                                        <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                                    </div>
+                                )}
+                                <div className={cardGlass + " p-4"}>
+                                    <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
+                                </div>
+                                <div className={cardGlass + " p-4"}>
+                                    <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
+                                </div>
+                                <section>
+                                    <div className="flex items-center gap-2 mb-3 px-1">
+                                        <Sparkles size={13} className="text-primary" />
+                                        <h2 className="text-xs font-bold text-muted">البث المباشر</h2>
+                                    </div>
+                                    <Card><div className="p-3.5"><LiveClasses /></div></Card>
+                                </section>
+                                <section>
+                                    <div className="flex items-center gap-2 mb-3 px-1">
+                                        <Sparkles size={13} className="text-warning" />
+                                        <h2 className="text-xs font-bold text-muted">الإعلانات</h2>
+                                    </div>
+                                    <Card><div className="p-3.5"><ModernAnnouncements /></div></Card>
+                                </section>
+                            </div>
                         )}
+                        {activeTab === 'schedule' && (
+                            <div className="space-y-4">
+                                {timeline.length > 0 ? (
+                                    <section>
+                                        <div className="flex items-center gap-2 mb-3 px-1">
+                                            <Sparkles size={13} className="text-info" />
+                                            <h2 className="text-xs font-bold text-muted">حصص اليوم</h2>
+                                        </div>
+                                        <div className={cardGlass + " p-4"}>
+                                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+                                        </div>
+                                    </section>
+                                ) : (
+                                    <div className="py-12 text-center"><Calendar size={36} className="mx-auto text-dim mb-3" /><p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p><p className="text-dim text-micro mt-1">استمتع بيومك!</p></div>
+                                )}
+                            </div>
+                        )}
+                        {activeTab === 'reports' && (
+                            <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className={cardGlass + " p-4"}>
+                                        <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
+                                    </div>
+                                    <div className={cardGlass + " p-4"}>
+                                        <AttendanceChart rate={stats.attendanceRate} />
+                                    </div>
+                                </div>
+                                <section>
+                                    <div className="flex items-center gap-2 mb-3 px-1">
+                                        <Sparkles size={13} className="text-success" />
+                                        <h2 className="text-xs font-bold text-muted">الإنجازات</h2>
+                                    </div>
+                                    <Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card>
+                                </section>
+                                <section>
+                                    <div className="flex items-center gap-2 mb-3 px-1">
+                                        <Sparkles size={13} className="text-error" />
+                                        <h2 className="text-xs font-bold text-muted">المهام والطلبات</h2>
+                                    </div>
+                                    <Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card>
+                                </section>
+                                <section>
+                                    <div className="flex items-center gap-2 mb-3 px-1">
+                                        <Sparkles size={13} className="text-warning" />
+                                        <h2 className="text-xs font-bold text-muted">أعلى حضور</h2>
+                                    </div>
+                                    <Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card>
+                                </section>
+                            </div>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
+            {/* iOS-style Bottom Tab Bar */}
+            <div className="fixed bottom-0 inset-x-0 z-50">
+                <div className="h-2 bg-white dark:bg-black" />
+                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl border-t border-white/20 dark:border-white/10 shadow-2xl shadow-black/5">
+                    <div className="flex items-center justify-around px-2 py-1.5">
+                        {tabs.map(tab => {
+                            const isActive = activeTab === tab.id;
+                            return (
+                                <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className="relative flex flex-col items-center gap-0.5 py-1 px-4 min-w-[64px]"
+                                >
+                                    <div className={cn(
+                                        "rounded-xl p-1.5 transition-all duration-300 relative",
+                                        isActive && "bg-gradient-to-br from-primary/10 to-purple-500/10"
+                                    )}>
+                                        <tab.icon size={20} strokeWidth={isActive ? 2 : 1.5}
+                                            className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
+                                        />
+                                    </div>
+                                    <span className={cn("text-[10px] font-bold transition-all duration-300", isActive ? "text-primary" : "text-muted")}>
+                                        {tab.label}
+                                    </span>
+                                    {isActive && (
+                                        <motion.div layoutId="teacher-tab-indicator"
+                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-purple-500 shadow-lg shadow-primary/30"
+                                        />
+                                    )}
+                                </motion.button>
+                            );
+                        })}
                     </div>
-                )}
-                {activeTab === 'reports' && (
-                    <div role="tabpanel" id="tabpanel-reports" aria-labelledby="tab-reports">
-                        <div className="grid grid-cols-2 gap-3">
-                            <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
-                            <AttendanceChart rate={stats.attendanceRate} />
-                        </div>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-success rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإنجازات</h2></div><Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-error rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">المهام والطلبات</h2></div><Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">أعلى حضور</h2></div><Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card></section>
-                    </div>
-                )}
-                <div className="h-4" />
+                </div>
             </div>
 
             {briefingStudent && (

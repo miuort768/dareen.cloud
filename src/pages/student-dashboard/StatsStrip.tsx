@@ -7,11 +7,11 @@ interface StatItem {
     variant: string;
 }
 
-const variantBg: Record<string, string> = {
-    success: 'bg-success-soft', info: 'bg-info-soft', primary: 'bg-primary-soft', warning: 'bg-warning-soft',
-};
-const variantText: Record<string, string> = {
-    success: 'text-success', info: 'text-info', primary: 'text-primary', warning: 'text-warning',
+const variantGradient: Record<string, string> = {
+    success: 'from-success to-emerald-500 shadow-success/20',
+    info: 'from-info to-blue-500 shadow-info/20',
+    primary: 'from-primary to-purple-500 shadow-primary/20',
+    warning: 'from-warning to-orange-500 shadow-warning/20',
 };
 
 interface StatsStripProps {
@@ -32,9 +32,9 @@ export const StatsStrip = ({ points, attendanceRate, rankName }: StatsStripProps
             {items.map((item, idx) => {
                 const Icon = item.icon;
                 return (
-                    <div key={idx} className="bg-card rounded-card p-3 shadow-sm border border-border flex flex-col items-center text-center gap-1">
-                        <div className={`w-9 h-9 rounded-card flex items-center justify-center ${variantBg[item.variant]}`}>
-                            <Icon size={18} className={variantText[item.variant]} />
+                    <div key={idx} className="bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl p-3 shadow-lg shadow-black/[0.03] flex flex-col items-center text-center gap-1">
+                        <div className={`w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg ${variantGradient[item.variant]}`}>
+                            <Icon size={16} className="text-white" />
                         </div>
                         <span className="text-sm font-black text-main">{item.value}</span>
                         <span className="text-micro text-dim font-medium">{item.label}</span>

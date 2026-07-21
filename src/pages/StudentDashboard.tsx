@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { api } from '../lib/api';
 import { useCurrentUser } from '../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
@@ -107,27 +108,33 @@ export const StudentDashboard = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-screen bg-surface font-sans overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background font-sans overflow-x-hidden" dir="rtl">
             <StudentDashboardHeader headerScrolled={headerScrolled} theme={theme} setTheme={setTheme}
                 currentTime={currentTime} onBellClick={() => navigate('/parent-announcements')} />
 
-            <div className="px-4 pt-4 pb-3">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="px-4 pt-4 pb-3">
                 <HeroCarousel />
-            </div>
+            </motion.div>
 
-            <div className="px-4 py-3">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }} className="px-4 py-3">
                 <QuickAccessGrid />
-            </div>
+            </motion.div>
 
-            <ContinueLearning enrollments={enrollments} />
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                <ContinueLearning enrollments={enrollments} />
+            </motion.div>
 
-            <div className="px-4 py-3">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="px-4 py-3">
                 <StatsStrip points={points} attendanceRate={stats.attendanceRate} rankName={rank.name} />
-            </div>
+            </motion.div>
 
-            <ActivityFeed pointLogs={pointLogs} />
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}>
+                <ActivityFeed pointLogs={pointLogs} />
+            </motion.div>
 
-            <SupportBanner />
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
+                <SupportBanner />
+            </motion.div>
 
             <div className="h-20 md:hidden" />
             <div className="block md:hidden">

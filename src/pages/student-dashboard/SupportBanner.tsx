@@ -7,13 +7,16 @@ export const SupportBanner = () => {
 
     return (
         <div className="px-4 py-3 pb-6">
-            <div className="bg-primary rounded-card p-5 shadow-soft">
-                <h3 className="text-on-primary font-black text-lg mb-1 text-start">تحتاج مساعدة؟</h3>
-                <p className="text-on-primary opacity-80 text-xs mb-4 text-start">فريقنا جاهز لمساعدتك في أي وقت</p>
-                <a href={`https://wa.me/${waPhone}`} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-card text-primary py-3 rounded-card font-black text-sm shadow-soft active:scale-95 transition-transform">
-                    <MessageSquare size={16} /> تواصل الآن
-                </a>
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-purple-600 p-5 shadow-lg shadow-primary/20">
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
+                <div className="relative z-10">
+                    <h3 className="text-white font-black text-lg mb-1 text-start">تحتاج مساعدة؟</h3>
+                    <p className="text-white/80 text-xs mb-4 text-start">فريقنا جاهز لمساعدتك في أي وقت</p>
+                    <a href={`https://wa.me/${waPhone}`} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 bg-white text-primary py-3 rounded-xl font-black text-sm shadow-lg active:scale-95 transition-transform">
+                        <MessageSquare size={16} /> تواصل الآن
+                    </a>
+                </div>
             </div>
         </div>
     );

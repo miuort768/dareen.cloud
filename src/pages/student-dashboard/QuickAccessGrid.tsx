@@ -19,11 +19,11 @@ const quickAccessItems: QuickAccessItem[] = [
     { id: 'announcements', label: 'الإعلانات', icon: Megaphone, variant: 'warning' },
 ];
 
-const variantBg: Record<string, string> = {
-    success: 'bg-success-soft', info: 'bg-info-soft', primary: 'bg-primary-soft', warning: 'bg-warning-soft',
-};
-const variantText: Record<string, string> = {
-    success: 'text-success', info: 'text-info', primary: 'text-primary', warning: 'text-warning',
+const variantGradient: Record<string, string> = {
+    success: 'from-success to-emerald-500 shadow-success/20',
+    info: 'from-info to-blue-500 shadow-info/20',
+    primary: 'from-primary to-purple-500 shadow-primary/20',
+    warning: 'from-warning to-orange-500 shadow-warning/20',
 };
 
 export const QuickAccessGrid = () => {
@@ -46,8 +46,8 @@ export const QuickAccessGrid = () => {
                             }
                         }}
                         className="flex flex-col items-center gap-1.5">
-                        <div className={`w-12 h-12 rounded-card flex items-center justify-center shadow-sm ${variantBg[item.variant]}`}>
-                            <Icon size={22} className={variantText[item.variant]} />
+                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg ${variantGradient[item.variant]}`}>
+                            <Icon size={20} className="text-white" />
                         </div>
                         <span className="text-micro font-semibold text-muted text-center leading-tight">{item.label}</span>
                     </motion.button>
