@@ -14,7 +14,7 @@ interface BlogPostRelatedPostsProps {
 }
 
 export const BlogPostRelatedPosts = ({ posts }: BlogPostRelatedPostsProps) => {
-    if (posts.length === 0) return null;
+    if (!posts || !Array.isArray(posts) || posts.length === 0) return null;
     return (
         <div className="container mx-auto px-4 max-w-5xl mt-16 mb-8">
             <h2 className="text-2xl font-black text-main dark:text-main mb-6">مقالات ذات صلة</h2>

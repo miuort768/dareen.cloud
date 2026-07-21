@@ -15,8 +15,9 @@ import { BlogPostRelatedPosts } from './BlogPostRelatedPosts';
 
 const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
 
-const processContent = (text: string, alt?: string): string => {
+const processContent = (text: unknown, alt?: string): string => {
     if (!text) return '';
+    if (typeof text !== 'string') return String(text);
     const lines = text.split('\n');
     const hasHtml = /<[a-z][\s\S]*>/i.test(text);
     const processed = lines.map((line: string) => {
@@ -103,7 +104,8 @@ export const BlogPost = () => {
         );
     }
 
-    const content = post.content || '';
+    const rawContent = typeof post.content === 'string' ? post.content : String(post.content || '');
+    const content = rawContent || '';
     const contentParts = (() => {
         if (!content) return { first: '', rest: '' };
         const parts = content.split(/\n\n/);

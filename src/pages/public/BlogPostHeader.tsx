@@ -46,10 +46,14 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
                 {post.subject && <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-error-light dark:bg-error/10 text-error dark:text-error text-xs font-bold rounded-lg border border-error/50 dark:border-error/20"><BookOpen size={12} />{subjectNames[post.subject] || post.subject}</span>}
             </div>
         )}
-        {post.tags && (
-            <div className="flex flex-wrap gap-2 mb-4">
-                {post.tags.split(',').map((tag, i) => <span key={`tag-${i}`} className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag.trim()}</span>)}
-            </div>
-        )}
+        {post.tags && (() => {
+            const tags = Array.isArray(post.tags) ? post.tags : (typeof post.tags === 'string' ? post.tags.split(',').map(t => t.trim()) : []);
+            if (tags.length === 0) return null;
+            return (
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {tags.map((tag: string, i: number) => <span key={`tag-${i}`} className="text-micro font-bold text-muted dark:text-muted bg-surface dark:bg-card px-2 py-1 rounded-lg">#{tag}</span>)}
+                </div>
+            );
+        })()}
     </header>
 );
