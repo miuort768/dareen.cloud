@@ -5,6 +5,7 @@ import { cn } from '../../../lib/utils';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../../../context/AppContext';
 import { useAttendance } from '../hooks/useAttendance';
 import { usePullToRefresh } from '../hooks/usePullToRefresh';
+import { triggerHaptic } from '../../../lib/haptics';
 import type { PeriodFilter } from './AttendanceFilters';
 import type { Student, Enrollment } from '../types';
 import { SecureAttendanceModal } from '../../../shared/components/SecureAttendanceModal';
@@ -27,8 +28,6 @@ export const MobileAttendance = () => {
     const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today');
     const [customStartDate] = useState('');
     const [customEndDate] = useState('');
-
-    const { isRefreshing, pullDistance, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh({ onRefresh: refresh });
 
     const [logDate, setLogDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [isLogging, setIsLogging] = useState(false);
@@ -74,6 +73,8 @@ export const MobileAttendance = () => {
     const { students, allSessions, logAttendance, updateSchedule, requestReschedule,
         stats, matchedEnrollments, uniqueTeachers, refresh
     } = useAttendance(currentUser, date, dateRange);
+
+    const { isRefreshing, pullDistance, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh({ onRefresh: refresh });
 
     const isTeacher = currentUser?.role === 'teacher';
 
