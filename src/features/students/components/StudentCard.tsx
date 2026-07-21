@@ -18,7 +18,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                 
                 {/* Header Actions - Hidden on Print */}
                 <div className="p-4 flex justify-between items-center border-b-2 border-border print:hidden">
-                    <h3 className="font-medium text-xs uppercase tracking-[0.3em] text-dim italic">Student ID Card</h3>
+                    <h3 className="font-medium text-xs uppercase tracking-label text-dim italic">Student ID Card</h3>
                     <div className="flex gap-2">
                         <button onClick={handlePrint} className="p-2 bg-success-soft text-success hover:bg-success hover:text-on-success transition-colors border-2 border-success" aria-label="طباعة">
                             <Printer size={18} />
@@ -101,7 +101,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
 
                     {/* Vertical Text Rind */}
                     <div className="absolute end-0 bottom-10 h-32 w-8 -rotate-90 flex items-center gap-2 pointer-events-none opacity-20">
-                         <span className="text-micro font-medium text-muted uppercase whitespace-nowrap tracking-[1em]">STU-ID-{student.id.slice(0,4)}</span>
+                         <span className="text-micro font-medium text-muted uppercase whitespace-nowrap tracking-label">STU-ID-{student.id.slice(0,4)}</span>
                     </div>
                 </div>
 

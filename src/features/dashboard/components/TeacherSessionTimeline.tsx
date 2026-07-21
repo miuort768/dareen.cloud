@@ -1,5 +1,8 @@
 import { Clock, Play, CheckCircle2, AlertCircle } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface TimelineSession {
     id: string;
@@ -21,7 +24,8 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
     const sortedSessions = [...sessions].sort((a, b) => a.time.localeCompare(b.time));
 
     return (
-        <div className="relative" dir="rtl">
+        <Card className="relative" dir="rtl">
+            <CardContent>
             {/* Header */}
             <div className="flex items-center justify-between mb-4 px-1">
                 <div className="flex items-center gap-3">
@@ -33,10 +37,10 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                         <p className="text-micro text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-success text-on-success border border-success rounded-none shadow-soft">
+                <Badge variant="secondary" className="hidden md:inline-flex items-center gap-2 px-3 py-1 bg-success text-on-success border border-success rounded-none">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     <span className="text-micro font-medium uppercase">LIVE NOW</span>
-                </div>
+                </Badge>
             </div>
 
             {/* Session Cards */}
@@ -108,17 +112,17 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
 
                             {/* Hover play overlay */}
                             {isOngoing && (
-                                <button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary-hover/95 text-on-primary rounded-none border border-primary dark:border-primary flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 group-focus-visible/card:opacity-100 group-focus-visible/card:scale-100 group-active/card:opacity-100 group-active/card:scale-100 transition-all z-10">
+                                <Button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary-hover/95 text-on-primary rounded-none border border-primary dark:border-primary flex-col opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
                                     <div className="w-9 h-9 bg-white dark:bg-primary-active text-primary rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-soft">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-medium text-micro uppercase">بدء الحصة</span>
-                                </button>
+                                </Button>
                             )}
                         </div>
                     );
                 })}
             </div>
-        </div>
+        </CardContent></Card>
     );
 };

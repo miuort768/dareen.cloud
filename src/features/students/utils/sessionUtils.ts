@@ -42,6 +42,4 @@ export const generateSessionDates = (schedule: ScheduleSlot[], total: number): {
     return results;
 };
 
-export const formatTimeStr = (slot: ScheduleSlot): string => {
-    return `${slot.hour} ${slot.period === 'am' ? 'صباحاً' : 'مساءً'}`;
-};
+

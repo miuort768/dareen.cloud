@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { DashboardHeader } from '../components/DashboardHeader';
@@ -20,12 +21,29 @@ import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle, Database, BarChart3 } from 'lucide-react';
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.06 }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+    }
+};
 
 const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <section className={cn("relative animate-fadeIn", className)}>
+    <motion.div variants={itemVariants} className={cn("w-full", className)}>
         {children}
-    </section>
+    </motion.div>
 );
 
 export const Dashboard = () => {
@@ -47,102 +65,139 @@ export const Dashboard = () => {
     const [view, setView] = useState<'standard' | 'executive'>('standard');
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
-        return <div className="min-h-full bg-background dark:bg-background" />;
-    }
-
-    if (loading) {
         return (
-            <div className="min-h-full bg-background pb-24" dir="rtl">
-                <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
-                    <div className="flex items-center justify-between py-6">
-                        <Skeleton className="h-8 w-48" />
-                        <Skeleton className="h-8 w-32 rounded-full" />
+            <div className="min-h-[60vh] flex items-center justify-center">
+                <div className="text-center max-w-md">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-error/10 flex items-center justify-center ring-1 ring-error/20">
+                        <AlertCircle size={28} className="text-error" />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Card key={`skel-card-${i}`}>
-                                <CardContent className="p-6">
-                                    <Skeleton className="h-4 w-24 mb-2" />
-                                    <Skeleton className="h-8 w-16 mb-2" />
-                                    <Skeleton className="h-3 w-20" />
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <Skeleton className="h-80 rounded-xl" />
-                        <div className="space-y-4">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                                <Skeleton key={`skel-row-${i}`} className="h-16 rounded-xl" />
-                            ))}
-                        </div>
-                    </div>
-                    <Skeleton className="h-72 rounded-xl" />
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <Skeleton className="h-96 rounded-xl" />
-                        <Skeleton className="h-96 rounded-xl" />
-                    </div>
-                </div>
-                <div className="block md:hidden px-4 pt-4 space-y-4">
-                    <div className="flex items-center gap-3 mb-6">
-                        <Skeleton className="w-9 h-9 rounded-2xl" />
-                        <div className="space-y-2">
-                            <Skeleton className="h-4 w-28" />
-                            <Skeleton className="h-3 w-36" />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                            <Card key={`skel-mob-${i}`}>
-                                <CardContent className="p-4">
-                                    <Skeleton className="h-3 w-16 mb-1" />
-                                    <Skeleton className="h-6 w-12" />
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                    <Skeleton className="h-40 rounded-2xl" />
-                    <div className="grid grid-cols-2 gap-3">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Skeleton key={`skel-btn-${i}`} className="h-20 rounded-2xl" />
-                        ))}
-                    </div>
+                    <h2 className="text-lg font-bold text-main mb-2">لا تملك صلاحية الوصول</h2>
+                    <p className="text-sm text-muted mb-4">ليس لديك صلاحية لعرض لوحة التحكم. يرجى التواصل مع مدير النظام.</p>
+                    <Button variant="outline" size="sm" onClick={() => window.history.back()}>العودة</Button>
                 </div>
             </div>
         );
     }
 
+    if (loading) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="min-h-full pb-24"
+                dir="rtl"
+            >
+                <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
+                    {/* Header skeleton */}
+                    <Skeleton className="h-[120px] rounded-2xl" />
+
+                    {/* View toggle skeleton */}
+                    <div className="flex justify-center">
+                        <Skeleton className="h-10 w-64 rounded-full" />
+                    </div>
+
+                    {/* Stats skeleton */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Card key={`skel-card-${i}`} className="overflow-hidden">
+                                <CardContent className="p-5">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <Skeleton className="h-10 w-10 rounded-xl" />
+                                        <Skeleton className="h-5 w-14 rounded-full" />
+                                    </div>
+                                    <Skeleton className="h-8 w-24 mb-1" />
+                                    <Skeleton className="h-3 w-20" />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+
+                    {/* Quick actions skeleton */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Card key={`skel-action-${i}`}>
+                                <CardContent className="p-5">
+                                    <Skeleton className="h-10 w-10 rounded-xl mb-3" />
+                                    <Skeleton className="h-4 w-24 mb-1" />
+                                    <Skeleton className="h-3 w-16" />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+
+                    {/* Charts skeleton */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <Skeleton className="h-[320px] rounded-2xl" />
+                        <Skeleton className="h-[320px] rounded-2xl" />
+                    </div>
+
+                    {/* Activity skeleton */}
+                    <Skeleton className="h-[240px] rounded-2xl" />
+                </div>
+
+                <div className="block md:hidden px-4 pt-4 space-y-4">
+                    <Skeleton className="h-[100px] rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-3">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Skeleton key={`skel-mob-${i}`} className="h-24 rounded-2xl" />
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+
     return (
-        <div className={cn(
-            "min-h-full pb-24 overflow-x-hidden relative",
-            "bg-background",
-            "dark:bg-background"
-        )} dir="rtl">
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className={cn(
+                "min-h-full pb-24",
+                "bg-background"
+            )}
+            dir="rtl"
+        >
+            <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
+                {/* Header */}
+                <Section>
+                    <DashboardHeader isTeacher={false} currentUser={currentUser} />
+                </Section>
 
-            <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
-                <Section><DashboardHeader isTeacher={false} currentUser={currentUser} /></Section>
-
+                {/* View Toggle */}
                 {currentUser.permissions?.includes('*') && (
                     <Section>
-                        <div className="flex justify-center">
-                            <div className="inline-flex bg-card rounded-full shadow-soft p-1 gap-1">
+                        <div className="flex items-center justify-between">
+                            <div />
+                            <div className="inline-flex items-center bg-card border border-border/50 rounded-xl p-0.5 gap-0.5 shadow-sm">
                                 <Button
                                     variant={view === 'standard' ? 'default' : 'ghost'}
                                     size="sm"
                                     onClick={() => setView('standard')}
-                                    className="rounded-full"
+                                    className="rounded-lg gap-1.5 h-8 text-xs"
                                 >
-                                    <LayoutDashboard size={18} /> لوحة الإدارة
+                                    <LayoutDashboard size={14} />
+                                    لوحة الإدارة
                                 </Button>
                                 <Button
                                     variant={view === 'executive' ? 'default' : 'ghost'}
                                     size="sm"
                                     onClick={() => setView('executive')}
-                                    className="rounded-full"
+                                    className="rounded-lg gap-1.5 h-8 text-xs"
                                 >
-                                    <TrendingUp size={18} /> لوحة القيادة التنفيذية
+                                    <TrendingUp size={14} />
+                                    لوحة القيادة
                                 </Button>
                             </div>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-muted"
+                                onClick={fetchDashboardData}
+                                title="تحديث البيانات"
+                            >
+                                <RefreshCw size={14} />
+                            </Button>
                         </div>
                     </Section>
                 )}
@@ -150,79 +205,94 @@ export const Dashboard = () => {
                 {view === 'executive' ? (
                     <ExecutiveDashboard />
                 ) : (
-                    <>
-                <Section>
-                    <QuickActionsHub />
-                </Section>
-
-                <Section>
-                    <DashboardStats stats={stats} isTeacher={false} />
-                </Section>
-
-                <div className="space-y-8">
-
-                    {/* 1. غرفة البث المباشر */}
-                    <Section><LiveClasses /></Section>
-
-                    {/* 2. تجديد الاشتراكات + المهام والطلبات */}
-                    <Section><OperationsDashboard tasks={tasks} lowBalanceStudents={lowBalanceStudents} stats={stats} /></Section>
-
-                    {/* 3. مركز التنبيهات (الإخطارات الذكية + غرفة العمليات) */}
-                    <Section>
-                        <NotificationsCenter
-                            tasks={tasks}
-                            lowBalanceStudents={lowBalanceStudents}
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            studentInvoices={rawStudentInvoices}
-                        />
-                    </Section>
-
-                    {/* 3.5 الطلاب ذوو الرصد المنخفض */}
-                    {focusStudents && focusStudents.length > 0 && (
+                    <motion.div variants={containerVariants} className="space-y-6">
+                        {/* Quick Actions */}
                         <Section>
-                            <TeacherFocusList students={focusStudents} />
+                            <QuickActionsHub />
                         </Section>
-                    )}
 
-                    {/* 4. مركز تحليل الأداء */}
-                    <Section>
-                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                    </Section>
-
-                    {/* 5. مركز تحليل البيانات + خارطة توزيع المناهج */}
-                    <Section>
-                        <AnalyticsDashboard students={rawStudents} sessions={rawSessions} monthlyData={monthlyData} />
-                    </Section>
-
-                    {/* 6. لوحة الشرف */}
-                    <Section>
-                        <HonorRoll students={rawStudents} />
-                    </Section>
-
-                    {/* 7. سجل النشاطات + الإعلانات */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Stats */}
                         <Section>
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <DashboardStats stats={stats} isTeacher={false} />
                         </Section>
-                        <Section>
-                            <ModernAnnouncements />
-                        </Section>
-                    </div>
 
-                    {/* 8. أحدث المقالات */}
-                    <Section>
-                        <RecentArticles />
-                    </Section>
-                </div>
-                    </>
+                        {/* Live Classes + Operations Dashboard */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Section>
+                                <LiveClasses />
+                            </Section>
+                            <Section>
+                                <OperationsDashboard
+                                    tasks={tasks}
+                                    lowBalanceStudents={lowBalanceStudents}
+                                    stats={stats}
+                                />
+                            </Section>
+                        </div>
+
+                        {/* Notifications Center */}
+                        <Section>
+                            <NotificationsCenter
+                                tasks={tasks}
+                                lowBalanceStudents={lowBalanceStudents}
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                studentInvoices={rawStudentInvoices}
+                            />
+                        </Section>
+
+                        {/* Focus List */}
+                        {focusStudents && focusStudents.length > 0 && (
+                            <Section>
+                                <TeacherFocusList students={focusStudents} />
+                            </Section>
+                        )}
+
+                        {/* Charts */}
+                        <Section>
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        </Section>
+
+                        {/* Analytics */}
+                        <Section>
+                            <AnalyticsDashboard
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                monthlyData={monthlyData}
+                            />
+                        </Section>
+
+                        {/* Honor Roll */}
+                        <Section>
+                            <HonorRoll students={rawStudents} />
+                        </Section>
+
+                        {/* Activity + Announcements */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Section>
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            </Section>
+                            <Section>
+                                <ModernAnnouncements />
+                            </Section>
+                        </div>
+
+                        {/* Recent Articles */}
+                        <Section>
+                            <RecentArticles />
+                        </Section>
+                    </motion.div>
                 )}
             </div>
 
             <div className="block md:hidden">
-                <MobileAdminDashboard stats={stats} lowBalanceStudents={lowBalanceStudents} onRefresh={fetchDashboardData} />
+                <MobileAdminDashboard
+                    stats={stats}
+                    lowBalanceStudents={lowBalanceStudents}
+                    onRefresh={fetchDashboardData}
+                />
             </div>
-        </div>
+        </motion.div>
     );
 };
 

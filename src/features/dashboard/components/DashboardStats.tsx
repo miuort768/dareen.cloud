@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { StatCard } from '../../../shared/components/ui';
 import type { DashboardStats as Stats } from '../types';
 
 interface DashboardStatsProps {
@@ -9,54 +8,143 @@ interface DashboardStatsProps {
     isTeacher: boolean;
 }
 
-export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+interface StatCardData {
+    title: string;
+    value: string | number;
+    icon: React.ComponentType<{ size?: number; className?: string }>;
+    color: string;
+    trend?: { value: number; isUp: boolean };
+    prefix?: string;
+    formatter?: (val: number) => string;
+}
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.1 }
+const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
+    const Icon = item.icon;
+    const colorMap: Record<string, { bg: string; text: string; ring: string; iconBg: string }> = {
+        primary: { bg: 'bg-primary/5', text: 'text-primary', ring: 'ring-primary/20', iconBg: 'bg-primary/10' },
+        success: { bg: 'bg-success/5', text: 'text-success', ring: 'ring-success/20', iconBg: 'bg-success/10' },
+        info: { bg: 'bg-info/5', text: 'text-info', ring: 'ring-info/20', iconBg: 'bg-info/10' },
+        warning: { bg: 'bg-warning/5', text: 'text-warning', ring: 'ring-warning/20', iconBg: 'bg-warning/10' },
+        error: { bg: 'bg-error/5', text: 'text-error', ring: 'ring-error/20', iconBg: 'bg-error/10' },
+    };
+
+    const c = colorMap[item.color] || colorMap.primary;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.06 }}
+            className={cn(
+                "relative group p-5 rounded-2xl border border-border/50 bg-card hover:border-border/80",
+                "transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
+                "cursor-default"
+            )}
+        >
+            <div className="flex items-start justify-between mb-4">
+                <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center ring-1", c.iconBg, c.text, c.ring)}>
+                    <Icon size={18} />
+                </div>
+                {item.trend && (
+                    <div className={cn(
+                        "flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold",
+                        item.trend.isUp ? "bg-success/10 text-success" : "bg-error/10 text-error"
+                    )}>
+                        {item.trend.isUp ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+                        <span>{item.trend.value}%</span>
+                    </div>
+                )}
+            </div>
+
+            <div className="space-y-1">
+                <p className={cn("text-2xl font-bold tabular-nums tracking-tight text-main", item.prefix && "flex items-baseline gap-1")}>
+                    {item.formatter && typeof item.value === 'number'
+                        ? item.formatter(item.value)
+                        : item.value}
+                    {item.prefix && <span className="text-xs font-medium text-muted">{item.prefix}</span>}
+                </p>
+                <p className="text-xs text-muted font-medium">{item.title}</p>
+            </div>
+        </motion.div>
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+};
 
-  const cards = [
-    { title: 'إجمالي الطلاب', value: stats.studentsCount, icon: Users, variant: 'info' as const, trend: { value: 12, isUp: true, label: 'نمو الشهر' } },
-    { title: 'الاشتراكات النشطة', value: stats.totalEnrollments, icon: BookOpen, variant: 'success' as const, trend: { value: 7, isUp: true, label: 'نشطة' } },
-    { title: 'حصص اليوم', value: stats.todaySessions, icon: CalendarCheck, variant: 'primary' as const, trend: { value: 22, isUp: true, label: 'مجدولة' } },
-    { title: 'الحصص المنفذة', value: stats.completedSessions, icon: CheckCircle2, variant: 'info' as const, trend: { value: 18, isUp: true, label: 'مكتملة' } },
-  ];
+export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
+    const cards: StatCardData[] = [
+        {
+            title: 'إجمالي الطلاب',
+            value: stats.studentsCount,
+            icon: Users,
+            color: 'primary',
+            trend: { value: 12, isUp: true },
+        },
+        {
+            title: 'الاشتراكات النشطة',
+            value: stats.totalEnrollments,
+            icon: BookOpen,
+            color: 'success',
+            trend: { value: 7, isUp: true },
+        },
+        {
+            title: 'حصص اليوم',
+            value: stats.todaySessions,
+            icon: CalendarCheck,
+            color: 'info',
+            trend: { value: 22, isUp: true },
+        },
+        {
+            title: 'الحصص المنفذة',
+            value: stats.completedSessions,
+            icon: CheckCircle2,
+            color: 'success',
+            trend: { value: stats.totalSessions > 0 ? Math.round((stats.completedSessions / stats.totalSessions) * 100) : 0, isUp: true },
+        },
+    ];
 
-  const adminCards = [
-    { title: 'إجمالي المعلمين', value: stats.teachersCount, icon: GraduationCap, variant: 'warning' as const, trend: { value: 3, isUp: true, label: 'جدد' } },
-    { title: 'إجمالي الإيرادات', value: (stats.totalRevenue || 0).toLocaleString(), icon: TrendingUp, unit: 'ج.م', variant: 'success' as const, trend: { value: 8, isUp: true, label: 'زيادة الإيرادات' } },
-    { title: 'إجمالي المصروفات', value: (stats.totalExpenses || 0).toLocaleString(), icon: TrendingDown, unit: 'ج.م', variant: 'error' as const, trend: { value: 5, isUp: false, label: 'تقليل التكاليف' } },
-    { title: 'صافي الربح', value: (stats.totalNetProfit || 0).toLocaleString(), icon: DollarSign, unit: 'ج.م', variant: 'warning' as const, trend: { value: 15, isUp: true, label: 'نمو الأرباح' } },
-  ];
+    const adminCards: StatCardData[] = [
+        {
+            title: 'إجمالي المعلمين',
+            value: stats.teachersCount,
+            icon: GraduationCap,
+            color: 'warning',
+            trend: { value: 3, isUp: true },
+        },
+        {
+            title: 'إجمالي الإيرادات',
+            value: stats.totalRevenue || 0,
+            icon: TrendingUp,
+            color: 'success',
+            prefix: 'ج.م',
+            trend: { value: 8, isUp: true },
+            formatter: (val: number) => val.toLocaleString(),
+        },
+        {
+            title: 'إجمالي المصروفات',
+            value: stats.totalExpenses || 0,
+            icon: TrendingDown,
+            color: 'error',
+            prefix: 'ج.م',
+            trend: { value: 5, isUp: false },
+            formatter: (val: number) => val.toLocaleString(),
+        },
+        {
+            title: 'صافي الربح',
+            value: stats.totalNetProfit || 0,
+            icon: DollarSign,
+            color: 'info',
+            prefix: 'ج.م',
+            trend: { value: 15, isUp: true },
+            formatter: (val: number) => val.toLocaleString(),
+        },
+    ];
 
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full transition-all duration-700",
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      )}
-    >
-      {cards.map((card, i) => (
-        <div key={`stat-${i}`} style={{ transitionDelay: `${i * 80}ms` }} className="transition-all duration-500">
-          <StatCard {...card} />
+    const allCards = [...cards, ...(!isTeacher ? adminCards : [])];
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full">
+            {allCards.map((card, i) => (
+                <StatCard key={`stat-${i}`} item={card} index={i} />
+            ))}
         </div>
-      ))}
-
-      {!isTeacher && adminCards.map((card, i) => (
-        <div key={`stat-${i + 4}`} style={{ transitionDelay: `${(i + 4) * 80}ms` }} className="transition-all duration-500">
-          <StatCard {...card} />
-        </div>
-      ))}
-    </div>
-  );
+    );
 };

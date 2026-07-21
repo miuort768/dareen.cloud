@@ -150,13 +150,12 @@ export const Blog = () => {
     } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 
-  const [libraryTheme, setLibraryTheme] = useState(() => {
+  const [libraryTheme] = useState(() => {
     try { return localStorage.getItem('library-theme') || 'light'; } catch (e) { console.warn(e); return 'light'; }
   });
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(libraryTheme);
-    try { localStorage.setItem('library-theme', libraryTheme); } catch (e) { console.warn(e); }
   }, [libraryTheme]);
 
   const breadcrumbItems = [
@@ -230,9 +229,9 @@ export const Blog = () => {
             <div className="relative bg-gradient-to-br from-primary via-primary to-white dark:from-primary dark:via-primary dark:to-background rounded-card overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <p className="text-lg font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-white"> السابعة</span></p>
+                  <p className="text-lg font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-inverse"> السابعة</span></p>
                   <p className="text-xs font-bold text-on-primary dark:text-main/90 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-[8.4px] text-on-primary/80 dark:text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <p className="text-micro text-on-primary/80 dark:text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"

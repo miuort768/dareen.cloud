@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ListTodo, ChevronLeft, Clock, AlertTriangle } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
 import type { DashboardTask as Task } from '../types';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface TasksAndRequestsProps {
     tasks: Task[];
@@ -9,14 +12,17 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-card rounded-card p-5 shadow-soft border border-border h-full flex flex-col">
+        <Card>
+            <CardContent className="p-5 flex flex-col h-full">
             <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-bold text-muted flex items-center gap-2">
                     <ListTodo size={12} className="text-primary" />
                     المهام والطلبات
                 </h3>
-                <Link to="/tasks" className="w-7 h-7 rounded-lg bg-surface flex items-center justify-center text-muted hover:bg-primary-soft0 hover:text-on-primary transition-all">
-                    <ChevronLeft size={14} />
+                <Link to="/tasks">
+                    <Button variant="ghost" size="icon" className="w-7 h-7 rounded-lg">
+                        <ChevronLeft size={14} />
+                    </Button>
                 </Link>
             </div>
 
@@ -42,7 +48,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                                 <div className="flex items-center gap-2 mt-0.5">
                                     <span className="text-micro font-medium text-muted">{task.dueDate}</span>
                                     {task.priority === 'high' && (
-                                        <span className="text-micro font-bold text-error bg-error-soft px-1.5 py-0.5 rounded">عاجل</span>
+                                        <Badge variant="destructive" className="text-micro">عاجل</Badge>
                                     )}
                                 </div>
                             </div>
@@ -58,12 +64,13 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                 )}
             </div>
 
-            <Link
-                to="/tasks"
-                className="mt-3 w-full h-9 flex items-center justify-center bg-primary hover:bg-primary text-on-primary text-micro font-bold rounded-xl transition-all active:scale-[0.98]"
-            >
-                عرض كافة المهام
-            </Link>
-        </div>
+            <div className="mt-3">
+                <Link to="/tasks" className="w-full">
+                    <Button className="w-full" size="sm">
+                        عرض كافة المهام
+                    </Button>
+                </Link>
+            </div>
+        </CardContent></Card>
     );
 };

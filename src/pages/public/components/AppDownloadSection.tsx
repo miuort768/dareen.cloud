@@ -29,11 +29,11 @@ export const AppDownloadSection = () => {
                                     href={googlePlayUrl || '#'}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
+                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-inverse font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
                                 >
                                     <Globe className="w-5 h-5 shrink-0" />
                                     <div className="text-start">
-                                        <div className="text-micro text-white/60 font-medium leading-tight">حمله على</div>
+                                        <div className="text-micro text-inverse font-medium leading-tight opacity-60">حمله على</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">Google Play</div>
                                     </div>
                                 </a>
@@ -41,11 +41,11 @@ export const AppDownloadSection = () => {
                                     href={appStoreUrl || '#'}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-white font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
+                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black dark:bg-gray-900 text-inverse font-bold text-sm shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-xl border border-gray-700 dark:border-gray-700 w-full sm:w-auto"
                                 >
                                     <Apple className="w-5 h-5 shrink-0" />
                                     <div className="text-start">
-                                        <div className="text-micro text-white/60 font-medium leading-tight">حمله على</div>
+                                        <div className="text-micro text-inverse font-medium leading-tight opacity-60">حمله على</div>
                                         <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
                                     </div>
                                 </a>
@@ -95,7 +95,7 @@ export const AppDownloadSection = () => {
                             href={googlePlayUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
+                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-inverse font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
                         >
                             <Globe className="w-5 h-5 shrink-0" />
                             <span>حمله على Google Play</span>
@@ -104,7 +104,7 @@ export const AppDownloadSection = () => {
                             href={appStoreUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-white font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
+                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black dark:bg-gray-900 text-inverse font-black text-base shadow-lg hover:bg-gray-800 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all rounded-2xl border border-gray-700 dark:border-gray-700"
                         >
                             <Apple className="w-5 h-5 shrink-0" />
                             <span>حمله على App Store</span>

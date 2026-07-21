@@ -160,7 +160,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
         return (
             <div className="py-24 text-center opacity-40">
                 <GraduationCap size={48} className="mx-auto mb-4 text-dim" />
-                <p className="text-micro font-normal text-dim uppercase tracking-[4px]">لا توجد بيانات طلاب حالياً</p>
+                <p className="text-micro font-normal text-dim uppercase tracking-label">لا توجد بيانات طلاب حالياً</p>
             </div>
         );
     }

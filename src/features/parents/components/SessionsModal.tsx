@@ -162,7 +162,7 @@ export const SessionsModal = ({
                                             .slice((sessionsPage - 1) * 7, sessionsPage * 7)
                                             .map((session, sIdx) => (
                                                 <div key={sIdx} className="relative">
-                                                     <div className={cn("absolute -right-[27px] top-1 w-3 h-3 rounded-full bg-card border-[3px]", session.status === 'completed' ? "border-success shadow-soft" : "border-error shadow-soft")}></div>
+                                                     <div className={cn("absolute -end-[27px] top-1 w-3 h-3 rounded-full bg-card border-[3px]", session.status === 'completed' ? "border-success shadow-soft" : "border-error shadow-soft")}></div>
                                                     <div className="bg-card p-3 rounded-xl border border-border/50 group hover:border-primary/30 hover:shadow-soft transition-all shadow-soft">
                                                         <div className="flex items-center justify-between gap-2">
                                                             <div className="flex items-center gap-2">

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
@@ -81,7 +82,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     <div className="flex gap-1 bg-primary-soft rounded-card p-1">
                         {tabs.map(tab => (
                             <button key={tab.id} id={`tab-${tab.id}`} onClick={() => setActiveTab(tab.id)} role="tab" aria-selected={activeTab === tab.id} aria-controls={`tabpanel-${tab.id}`}
-                                className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-card text-micro font-bold transition-all ${activeTab === tab.id ? 'bg-card text-primary shadow-sm' : 'text-on-primary opacity-70'}`}>
+                                className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-micro font-bold transition-all ${activeTab === tab.id ? 'bg-card text-primary shadow-sm' : 'text-on-primary opacity-70'}`}>
                                 <tab.icon size={14} /> {tab.label}
                             </button>
                         ))}
@@ -95,14 +96,14 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                         {nextSession && <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />}
                         <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-primary rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">البث المباشر</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><LiveClasses /></div></div></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإعلانات</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><ModernAnnouncements /></div></div></section>
+                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-primary rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">البث المباشر</h2></div><Card><div className="p-3.5"><LiveClasses /></div></Card></section>
+                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإعلانات</h2></div><Card><div className="p-3.5"><ModernAnnouncements /></div></Card></section>
                     </div>
                 )}
                 {activeTab === 'schedule' && (
                     <div role="tabpanel" id="tabpanel-schedule" aria-labelledby="tab-schedule">
                         {timeline.length > 0 ? (
-                            <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-info rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">حصص اليوم</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} /></div></div></section>
+                            <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-info rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">حصص اليوم</h2></div><Card><div className="p-3.5"><TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} /></div></Card></section>
                         ) : (
                             <div className="py-12 text-center"><Calendar size={36} className="mx-auto text-dim mb-3" /><p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p><p className="text-dim text-micro mt-1">استمتع بيومك!</p></div>
                         )}
@@ -114,9 +115,9 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                             <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
                             <AttendanceChart rate={stats.attendanceRate} />
                         </div>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-success rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإنجازات</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></div></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-error rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">المهام والطلبات</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></div></section>
-                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">أعلى حضور</h2></div><div className="bg-card rounded-card shadow-sm overflow-hidden"><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></div></section>
+                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-success rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">الإنجازات</h2></div><Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card></section>
+                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-error rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">المهام والطلبات</h2></div><Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card></section>
+                        <section><div className="flex items-center gap-2 mb-2 px-1"><div className="w-1 h-4 bg-warning rounded-full" /><h2 className="text-main dark:text-main text-sm font-black">أعلى حضور</h2></div><Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card></section>
                     </div>
                 )}
                 <div className="h-4" />

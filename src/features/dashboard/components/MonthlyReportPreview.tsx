@@ -1,5 +1,6 @@
 import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface MonthlyReportPreviewProps {
     isOpen: boolean;
@@ -91,26 +92,28 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
 
                 {/* Footer Actions */}
                 <div className="p-10 bg-background border-t-2 border-border flex gap-4 pt-6">
-                    <button 
+                    <Button
                         onClick={() => onShare('whatsapp')}
-                        className="flex-1 h-14 bg-success text-on-success rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-14 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <Share2 size={18} />
                         إرسال لولي الأمر
-                    </button>
-                    <button 
+                    </Button>
+                    <Button
                         onClick={() => window.print()}
-                        className="flex-1 h-14 bg-card text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        variant="outline"
+                        className="flex-1 h-14 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <FileDown size={18} />
                         تحميل PDF
-                    </button>
-                    <button 
-                        onClick={onClose} 
-                        className="w-14 h-14 bg-background text-main rounded-none border-2 border-border flex items-center justify-center hover:bg-error transition-colors shadow-[4px_4px_0px_0px_black]"
+                    </Button>
+                    <Button
+                        onClick={onClose}
+                        variant="ghost"
+                        className="w-14 h-14 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:bg-error hover:text-on-error"
                     >
                         <X size={24} />
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

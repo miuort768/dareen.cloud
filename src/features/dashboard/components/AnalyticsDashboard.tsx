@@ -1,14 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import {
-    LayoutGrid, Database, Activity, 
+    LayoutGrid, Database, Activity,
     CheckCircle2, XCircle, Users
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    AreaChart, Area, Cell
+    AreaChart, Area, Cell, TooltipProps
 } from 'recharts';
 import { cn } from '../../../lib/utils';
-import { ChartContainer } from '../../../shared/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface AnalyticsDashboardProps {
     students: Record<string, unknown>[];
@@ -16,9 +17,36 @@ interface AnalyticsDashboardProps {
     monthlyData: Record<string, unknown>[];
 }
 
+const AreaTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+    if (!active || !payload?.length) return null;
+    return (
+        <div className="bg-card border border-border/50 shadow-xl px-4 py-3 min-w-[140px] rounded-xl" dir="rtl">
+            <p className="text-xs font-bold text-main mb-1">{label}</p>
+            <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-chart-2" />
+                <span className="text-[10px] font-medium text-muted">معدل الالتزام</span>
+                <span className="text-sm font-bold text-main tabular-nums">{payload[0].value}%</span>
+            </div>
+        </div>
+    );
+};
+
+const BarTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+    if (!active || !payload?.length) return null;
+    return (
+        <div className="bg-card border border-border/50 shadow-xl px-4 py-3 min-w-[150px] rounded-xl" dir="rtl">
+            <p className="text-xs font-bold text-main mb-1">{label}</p>
+            <div className="flex items-center gap-2">
+                <span className="text-[10px] font-medium text-muted">الحصص</span>
+                <span className="text-sm font-bold text-main tabular-nums">{payload[0].value}</span>
+            </div>
+        </div>
+    );
+};
+
 export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData }: AnalyticsDashboardProps) => {
     const [activeTab, setActiveTab] = useState<'commitment' | 'database'>('commitment');
-    
+
     const subjectStats = useMemo(() => {
         const map: Record<string, { count: number; completed: number; cancelled: number }> = {};
         sessions.forEach(s => {
@@ -40,7 +68,7 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
     }, [sessions]);
 
     const attendanceData = useMemo(() => {
-        return monthlyData.map(m => ({
+        return monthlyData.map((m: Record<string, unknown>) => ({
             ...m,
             rate: (m.sessions as number) > 0 ? Math.round(((m.completed as number) / (m.sessions as number)) * 100) : 0
         }));
@@ -49,156 +77,156 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
     const totalCompleted = sessions.filter(s => s.status === 'completed').length;
     const totalCancelled = sessions.filter(s => s.status === 'cancelled').length;
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
-    const avgAttendance = attendanceData.length > 0 ? Math.round(attendanceData.reduce((s, m) => s + m.rate, 0) / attendanceData.length) : 0;
+    const avgAttendance = attendanceData.length > 0 ? Math.round(attendanceData.reduce((s: number, m: Record<string, unknown>) => s + (m.rate as number), 0) / attendanceData.length) : 0;
 
     return (
-        <div className="w-full space-y-6" dir="rtl">
-            <ChartContainer className="!p-0">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-chart-2/10 flex items-center justify-center">
-                            <Database size={24} className="text-chart-2" />
+        <div className="w-full space-y-4" dir="rtl">
+            {/* Header */}
+            <Card className="border-border/50 shadow-sm">
+                <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-chart-2/10 text-chart-2 ring-1 ring-chart-2/20">
+                                <Database size={18} />
+                            </div>
+                            <div>
+                                <CardTitle className="text-sm font-bold text-main">مركز تحليل البيانات</CardTitle>
+                                <CardDescription className="text-[11px] text-muted">وحدة ذكاء الأعمال</CardDescription>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-main">مركز تحليل البيانات</h3>
-                            <p className="text-micro font-medium text-muted mt-0.5">وحدة ذكاء الأعمال</p>
-                        </div>
-                    </div>
 
-                    <div className="flex p-1 rounded-xl bg-chart-2/10">
-                        <TabButton active={activeTab === 'commitment'} onClick={() => setActiveTab('commitment')} icon={Activity} label="معدل الالتزام" color="var(--chart-2)" />
-                        <TabButton active={activeTab === 'database'} onClick={() => setActiveTab('database')} icon={LayoutGrid} label="تحليل المواد" color="var(--chart-2)" />
+                        <div className="flex p-0.5 rounded-lg bg-card border border-border/50 gap-0.5 w-fit">
+                            <button
+                                onClick={() => setActiveTab('commitment')}
+                                className={cn(
+                                    "px-4 py-1.5 text-[11px] font-semibold transition-all flex items-center gap-1.5 rounded-md",
+                                    activeTab === 'commitment' ? "bg-chart-2 text-white shadow-sm" : "text-muted hover:text-main"
+                                )}
+                            >
+                                <Activity size={12} />
+                                معدل الالتزام
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('database')}
+                                className={cn(
+                                    "px-4 py-1.5 text-[11px] font-semibold transition-all flex items-center gap-1.5 rounded-md",
+                                    activeTab === 'database' ? "bg-chart-2 text-white shadow-sm" : "text-muted hover:text-main"
+                                )}
+                            >
+                                <LayoutGrid size={12} />
+                                تحليل المواد
+                            </button>
+                        </div>
                     </div>
+                </CardContent>
+            </Card>
+
+            {/* Stats Pills */}
+            <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-chart-2/10">
+                    <CheckCircle2 size={12} className="text-chart-2" />
+                    <span className="text-[10px] font-bold tabular-nums text-chart-2">{totalCompleted}</span>
+                    <span className="text-[10px] font-medium text-muted">مكتملة</span>
                 </div>
-            </ChartContainer>
-
-            <div className="flex items-center gap-3 mb-6">
-                <StatPill icon={CheckCircle2} value={totalCompleted} label="مكتملة" color="var(--chart-2)" />
-                <StatPill icon={XCircle} value={totalCancelled} label="ملغاة" color="var(--chart-3)" />
-                <StatPill icon={Users} value={`${avgAttendance}%`} label="متوسط" color="var(--chart-4)" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-chart-3/10">
+                    <XCircle size={12} className="text-chart-3" />
+                    <span className="text-[10px] font-bold tabular-nums text-chart-3">{totalCancelled}</span>
+                    <span className="text-[10px] font-medium text-muted">ملغاة</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-chart-4/10">
+                    <Users size={12} className="text-chart-4" />
+                    <span className="text-[10px] font-bold tabular-nums text-chart-4">{avgAttendance}%</span>
+                    <span className="text-[10px] font-medium text-muted">متوسط</span>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className={cn("transition-all", activeTab !== 'commitment' && "hidden lg:block")}>
-                    <ChartContainer
-                        title="التحليل التحصيلي"
-                        subtitle="التقدم الأكاديمي"
-                        height={300}
-                        headerExtra={
-                            <div className="px-4 py-1.5 rounded-lg bg-chart-2 text-on-success text-xs font-black tabular-nums">
+                    <Card className="border-border/50 shadow-sm">
+                        <CardHeader className="flex flex-row items-center justify-between pb-0 pt-4 px-5">
+                            <div>
+                                <CardTitle className="text-xs font-bold text-main">التحليل التحصيلي</CardTitle>
+                                <CardDescription className="text-[10px] text-muted">التقدم الأكاديمي</CardDescription>
+                            </div>
+                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-white text-[10px] font-bold tabular-nums">
                                 {overallRate}%
                             </div>
-                        }
-                    >
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={attendanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                <defs>
-                                    <linearGradient id="analyticsRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="var(--chart-2)" stopOpacity={0.3}/>
-                                        <stop offset="40%" stopColor="var(--chart-2)" stopOpacity={0.12}/>
-                                        <stop offset="100%" stopColor="var(--chart-2)" stopOpacity={0}/>
-                                    </linearGradient>
-                                    <filter id="analyticsGlow">
-                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                                        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                    </filter>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.3} />
-                                <XAxis dataKey="month" tick={{ fontSize: 10, fontWeight: '700', fill: 'var(--text-dim)' }} axisLine={false} tickLine={false} dy={10} />
-                                <YAxis tick={{ fontSize: 10, fontWeight: '700', fill: 'var(--text-dim)' }} domain={[0, 100]} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}%`} />
-                                <Tooltip cursor={{ stroke: 'var(--chart-2)', strokeWidth: 2 }}
-                                    content={({ active, payload, label }) => {
-                                        if (!active || !payload?.length) return null;
-                                        return (
-                                            <div className="bg-card border border-border shadow-xl px-4 py-3 min-w-[140px] rounded-xl" dir="rtl">
-                                                <p className="text-xs font-bold text-main mb-1">{label}</p>
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-2.5 h-2.5 rounded-full bg-chart-2" />
-                                                    <span className="text-micro font-bold text-muted">معدل الالتزام</span>
-                                                    <span className="text-sm font-black text-main tabular-nums">{payload[0].value}%</span>
-                                                </div>
-                                            </div>
-                                        );
-                                    }}
-                                />
-                                <Area type="monotone" dataKey="rate" stroke="var(--chart-2)" strokeWidth={3} fill="url(#analyticsRate)" filter="url(#analyticsGlow)"
-                                    dot={{ r: 4, fill: 'var(--chart-2)', stroke: 'var(--bg-card)', strokeWidth: 2 }}
-                                    activeDot={{ r: 6, fill: 'var(--chart-2)', stroke: 'var(--bg-card)', strokeWidth: 2 }}
-                                    animationDuration={1000} animationEasing="ease-out"
-                                />
-                            </AreaChart>
-                        </ResponsiveContainer>
-                    </ChartContainer>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            {attendanceData.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center py-16 text-center">
+                                    <Activity size={28} className="text-muted/30 mb-2" />
+                                    <p className="text-xs font-medium text-muted">لا توجد بيانات</p>
+                                </div>
+                            ) : (
+                                <div className="h-[280px] px-2 pb-2 pt-4">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <AreaChart data={attendanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                            <defs>
+                                                <linearGradient id="analyticsRate2" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="var(--chart-2)" stopOpacity={0.25} />
+                                                    <stop offset="40%" stopColor="var(--chart-2)" stopOpacity={0.08} />
+                                                    <stop offset="100%" stopColor="var(--chart-2)" stopOpacity={0} />
+                                                </linearGradient>
+                                            </defs>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" opacity={0.3} />
+                                            <XAxis dataKey="month" tick={{ fontSize: 10, fontWeight: '600', fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} dy={8} />
+                                            <YAxis tick={{ fontSize: 10, fontWeight: '600', fill: 'var(--text-muted)' }} domain={[0, 100]} axisLine={false} tickLine={false} tickFormatter={(val) => `${val}%`} />
+                                            <Tooltip content={<AreaTooltip />} />
+                                            <Area
+                                                type="monotone" dataKey="rate" stroke="var(--chart-2)" strokeWidth={2.5} fill="url(#analyticsRate2)"
+                                                dot={{ r: 3, fill: 'var(--chart-2)', stroke: 'var(--bg-card)', strokeWidth: 2 }}
+                                                activeDot={{ r: 5, fill: 'var(--chart-2)', stroke: 'var(--bg-card)', strokeWidth: 2 }}
+                                                animationDuration={1000} animationEasing="ease-out"
+                                            />
+                                        </AreaChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
                 </div>
 
                 <div className={cn("transition-all", activeTab !== 'database' && "hidden lg:block")}>
-                    <ChartContainer
-                        title="خارطة توزيع المناهج"
-                        subtitle="تحليلات المناهج"
-                        height={280}
-                        headerExtra={
-                            <div className="px-3 py-1.5 rounded-lg bg-chart-2 text-on-success text-micro font-bold">
+                    <Card className="border-border/50 shadow-sm">
+                        <CardHeader className="flex flex-row items-center justify-between pb-0 pt-4 px-5">
+                            <div>
+                                <CardTitle className="text-xs font-bold text-main">خارطة توزيع المناهج</CardTitle>
+                                <CardDescription className="text-[10px] text-muted">تحليلات المناهج</CardDescription>
+                            </div>
+                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-white text-[10px] font-bold">
                                 {students.length} مستخدم
                             </div>
-                        }
-                    >
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 40, top: 0, bottom: 0 }}>
-                                <defs>
-                                    <filter id="analyticsBarShadow">
-                                        <feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.12" />
-                                    </filter>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} opacity={0.3} />
-                                <XAxis type="number" hide />
-                                <YAxis type="category" dataKey="subject" tick={{ fontSize: 10, fontWeight: '700', fill: 'var(--text-dim)' }} width={85} axisLine={false} tickLine={false} />
-                                <Tooltip cursor={{ fill: 'var(--bg-hover)' }}
-                                    content={({ active, payload, label }) => {
-                                        if (!active || !payload?.length) return null;
-                                        return (
-                                            <div className="bg-card border border-border shadow-xl px-4 py-3 min-w-[150px] rounded-xl" dir="rtl">
-                                                <p className="text-xs font-bold text-main mb-1">{label}</p>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-micro font-bold text-muted">الحصص</span>
-                                                    <span className="text-sm font-black text-main tabular-nums">{payload[0].value}</span>
-                                                </div>
-                                            </div>
-                                        );
-                                    }}
-                                />
-                                <Bar dataKey="sessions" radius={[0, 6, 6, 0]} barSize={24} filter="url(#analyticsBarShadow)" animationDuration={800} animationEasing="ease-out">
-                                    {subjectStats.map((_, i) => (
-                                        <Cell key={`cell-${i}`} fill={`var(--chart-${(i % 6) + 1})`} />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </ChartContainer>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            {subjectStats.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center py-16 text-center">
+                                    <LayoutGrid size={28} className="text-muted/30 mb-2" />
+                                    <p className="text-xs font-medium text-muted">لا توجد بيانات</p>
+                                </div>
+                            ) : (
+                                <div className="h-[280px] px-2 pb-2 pt-4">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 40, top: 0, bottom: 0 }}>
+                                            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} opacity={0.3} />
+                                            <XAxis type="number" hide />
+                                            <YAxis type="category" dataKey="subject" tick={{ fontSize: 10, fontWeight: '600', fill: 'var(--text-muted)' }} width={85} axisLine={false} tickLine={false} />
+                                            <Tooltip content={<BarTooltip />} />
+                                            <Bar dataKey="sessions" radius={[0, 4, 4, 0]} barSize={20} animationDuration={800} animationEasing="ease-out">
+                                                {subjectStats.map((_, i) => (
+                                                    <Cell key={`cell-${i}`} fill={`var(--chart-${(i % 6) + 1})`} />
+                                                ))}
+                                            </Bar>
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </div>
     );
 });
 AnalyticsDashboard.displayName = 'AnalyticsDashboard';
-
-const TabButton = ({ active, onClick, icon: Icon, label, color }: { active: boolean; onClick: () => void; icon: React.ComponentType<{ size?: number }>; label: string; color: string }) => (
-    <button 
-        onClick={onClick}
-        className={cn(
-            "flex-1 px-6 py-2 font-bold text-micro transition-all flex items-center justify-center gap-2 rounded-lg",
-            !active && "text-muted hover:text-main"
-        )}
-        style={active ? { backgroundColor: color, color: 'var(--color-on-primary)' } : {}}
-    >
-        <Icon size={14} />
-        {label}
-    </button>
-);
-
-const StatPill = ({ icon: Icon, value, label, color }: { icon: React.ComponentType<{ size?: number }>; value: string | number; label: string; color: string }) => (
-    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg" style={{ backgroundColor: `${color}15` }}>
-        <Icon size={12} strokeWidth={2} style={{ color }} />
-        <span className="text-micro font-bold tabular-nums" style={{ color }}>{value}</span>
-        <span className="text-micro font-bold text-muted">{label}</span>
-    </div>
-);

@@ -1,6 +1,7 @@
 import { TrendingUp, User, Medal } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
 import { useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface TopAttendanceStudentsProps {
     sessions: { id?: string; status?: string; date?: string; studentId?: string; studentName?: string }[];
@@ -40,7 +41,8 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     }, [sessions]);
 
     return (
-        <div className="bg-card rounded-card p-3.5 shadow-soft border border-border">
+        <Card>
+            <CardContent className="p-3.5">
             <div className="flex items-center justify-between mb-2.5">
                 <h3 className="text-xs font-bold text-muted flex items-center gap-1.5">
                     <Medal size={11} className="text-warning" />
@@ -98,6 +100,6 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                     <TrendingUp size={12} className="text-on-warning" />
                 </div>
             </div>
-        </div>
+        </CardContent></Card>
     );
 };

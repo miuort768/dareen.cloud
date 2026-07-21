@@ -66,7 +66,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                                 title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
                             >
                                 <Award size={14} strokeWidth={2.5} className="md:w-4 md:h-4" />
-                                <span className="text-[6px] md:text-micro font-medium uppercase text-center leading-none">{badge.name}</span>
+                                <span className="text-micro font-medium uppercase text-center leading-none">{badge.name}</span>
                             </div>
                         )) : (
                             <div className="col-span-4 py-4 text-center bg-surface dark:bg-hover border border-dashed border-border opacity-40 rounded-lg">
@@ -86,7 +86,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                             <div key={log.id} className="flex items-center justify-between p-2 bg-surface dark:bg-hover border border-border transition-colors hover:border-primary dark:hover:border-primary rounded-xl">
                                 <div className="min-w-0">
                                     <p className="text-micro md:text-micro font-medium text-main truncate">{log.action}</p>
-                                    <p className="text-[6px] md:text-micro text-dim font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
+                                    <p className="text-micro text-dim font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
                                 </div>
                                 <span className={cn(
                                     "font-medium text-micro md:text-micro shrink-0 me-1.5",

@@ -15,9 +15,4 @@ export const mockTableData = [
   { id: 5, name: 'فهد عمر', subject: 'اللغة الإنجليزية', status: 'منتهي', grade: 65 },
 ];
 
-export const mockNotifications = [
-  { id: 1, title: 'تم تسجيل طالب جديد', type: 'info' as const, time: 'منذ 5 دقائق' },
-  { id: 2, title: 'فاتورة جديدة مستحقة', type: 'warning' as const, time: 'منذ ساعة' },
-  { id: 3, title: 'تم تأكيد الدفع', type: 'success' as const, time: 'منذ ساعتين' },
-  { id: 4, title: 'خطأ في تحديث البيانات', type: 'error' as const, time: 'منذ 3 ساعات' },
-];
+

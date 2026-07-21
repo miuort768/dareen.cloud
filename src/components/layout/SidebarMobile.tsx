@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { X, Menu, LogOut } from 'lucide-react';
+import { Menu, LogOut } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -45,7 +45,7 @@ export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, ac
                             <div className="relative">
                                 <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <Badge variant="destructive" className="absolute -top-2 -start-2 h-4 min-w-[16px] px-1 text-[9px] leading-none flex items-center justify-center">
+                                    <Badge variant="destructive" className="absolute -top-2 -start-2 h-4 min-w-[16px] px-1 text-micro leading-none flex items-center justify-center">
                                         {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                     </Badge>
                                 )}
@@ -82,7 +82,7 @@ export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, ac
                             <div className="relative">
                                 <item.icon size={18} />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <Badge variant="destructive" className="absolute -top-2 -start-2 h-3.5 min-w-[14px] px-1 text-[8px] leading-none flex items-center justify-center">
+                                    <Badge variant="destructive" className="absolute -top-2 -start-2 h-3.5 min-w-[14px] px-1 text-micro leading-none flex items-center justify-center">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </Badge>
                                 )}

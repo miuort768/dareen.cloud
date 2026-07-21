@@ -80,7 +80,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                         <div className="absolute bottom-0 end-0 w-2 h-2 bg-primary translate-x-1/2 translate-y-1/2"></div>
 
                         <div>
-                            <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-10 flex items-center gap-3">
+                            <h3 className="text-xs font-black text-primary uppercase tracking-label mb-10 flex items-center gap-3">
                                 <span className="w-6 h-[1px] bg-primary"></span>
                                 ملاحظات التدقيق المالي
                             </h3>

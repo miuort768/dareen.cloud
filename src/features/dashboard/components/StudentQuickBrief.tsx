@@ -1,4 +1,5 @@
 import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 
 interface BriefSession {
@@ -54,12 +55,13 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                 </div>
                             </div>
                         </div>
-                        <button 
-                            onClick={onClose} 
-                            className="w-8 h-8 rounded-none bg-card text-main border-2 border-border hover:bg-error hover:text-on-error transition-all flex items-center justify-center"
+                        <Button
+                            onClick={onClose}
+                            variant="ghost"
+                            className="w-8 h-8 rounded-none border-2 border-border hover:bg-error hover:text-on-error"
                         >
                             <X size={18} />
-                        </button>
+                        </Button>
                     </div>
                 </div>
 
@@ -122,19 +124,20 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
 
                 {/* Footer Actions */}
                 <div className="p-6 bg-background dark:bg-background border-t-2 border-border flex gap-4">
-                    <button 
+                    <Button
                         onClick={() => onGenerateReport?.(student)}
-                        className="flex-1 h-12 bg-success text-on-success rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                        className="flex-1 h-12 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <Sparkles size={16} />
                         إصدار تقرير شهري
-                    </button>
-                    <button 
+                    </Button>
+                    <Button
                         onClick={onClose}
-                        className="px-8 h-12 bg-background text-main rounded-none font-medium text-xs uppercase border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all active:translate-y-0 active:shadow-none"
+                        variant="outline"
+                        className="px-8 h-12 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         إغلاق
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

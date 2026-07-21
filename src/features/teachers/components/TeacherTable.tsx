@@ -20,7 +20,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
         return (
             <div className="py-24 text-center opacity-40">
                 <GraduationCap size={48} className="mx-auto mb-4 text-muted" />
-                <p className="text-xs text-muted tracking-[4px]">لا توجد بيانات معلمات حالياً</p>
+                <p className="text-xs text-muted tracking-label">لا توجد بيانات معلمات حالياً</p>
             </div>
         );
     }

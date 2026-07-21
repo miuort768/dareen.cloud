@@ -1,4 +1,5 @@
 import { ProgressBar } from '../../../shared/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface AttendanceChartProps {
     rate: number;
@@ -23,7 +24,8 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
     };
 
     return (
-        <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
+        <Card>
+            <CardContent className="p-5">
             <h3 className="text-xs font-bold text-muted mb-3">{label}</h3>
             <div className="flex items-center gap-4">
                 <div className="relative shrink-0">
@@ -50,6 +52,6 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                     </p>
                 </div>
             </div>
-        </div>
+        </CardContent></Card>
     );
 };

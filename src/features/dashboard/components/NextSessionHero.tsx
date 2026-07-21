@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Clock, Play } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface TimelineSession {
     id: string;
@@ -79,17 +80,14 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                         {isNow ? "الآن" : timeLeft}
                     </span>
                 </div>
-                <button
+                <Button
                     onClick={() => onStart(nextSession.id)}
-                    className={cn(
-                        "mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold transition-all",
-                        "bg-white/20 backdrop-blur-sm border border-white/30 text-on-primary",
-                        "hover:bg-white/30 active:scale-[0.98]"
-                    )}
+                    variant="outline"
+                    className="mt-4 w-full bg-white/20 backdrop-blur-sm border-white/30 text-on-primary hover:bg-white/30"
                 >
                     <Play size={14} fill="currentColor" />
                     بدء الحصة
-                </button>
+                </Button>
             </div>
         </div>
     );

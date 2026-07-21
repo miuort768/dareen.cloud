@@ -127,10 +127,10 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                     </div>
 
                     <div className="flex gap-4 pt-4">
-                        <button type="button" onClick={onClose} className="flex-1 px-6 py-3 bg-hover text-muted font-bold text-xs uppercase tracking-[2px] transition-all hover:bg-primary-light rounded-xl">
+                        <button type="button" onClick={onClose} className="flex-1 px-6 py-3 bg-hover text-muted font-bold text-xs uppercase tracking-label transition-all hover:bg-primary-light rounded-xl">
                             إلغاء
                         </button>
-                        <button type="submit" className="flex-[2] bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 uppercase tracking-[2px] shadow-sm transition-all active:scale-95 flex items-center justify-center gap-3 rounded-xl">
+                        <button type="submit" className="flex-[2] bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 uppercase tracking-label shadow-sm transition-all active:scale-95 flex items-center justify-center gap-3 rounded-xl">
                             <Save size={18} />
                             تأكيد وحفظ العملية
                         </button>

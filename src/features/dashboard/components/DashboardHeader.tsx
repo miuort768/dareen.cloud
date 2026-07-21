@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Calendar, ShieldCheck, TrendingUp } from 'lucide-react';
+import { Clock, ShieldCheck, Sparkles, CalendarDays } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -17,54 +17,61 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
         return () => clearInterval(timer);
     }, []);
 
+    const greeting = () => {
+        const hour = new Date().getHours();
+        if (hour < 12) return 'صباح الخير';
+        if (hour < 17) return 'مساء الخير';
+        return 'مساء الخير';
+    };
+
+    const dateStr = new Intl.DateTimeFormat('ar-EG', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    }).format(new Date());
+
     return (
-        <div className={cn(
-            "hidden md:flex relative overflow-hidden rounded-3xl",
-            "dashboard-header-gradient",
-            "px-8 py-8 flex-col md:flex-row md:items-center justify-between gap-6"
-        )} dir="rtl">
-            <div className="absolute top-0 start-0 w-40 h-40 rounded-full blur-[60px] pointer-events-none dashboard-header-orb" />
-            <div className="absolute bottom-0 end-0 w-32 h-32 rounded-full blur-[50px] pointer-events-none dashboard-header-orb-subtle" />
+        <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card to-card/80 p-6 md:p-8">
+            {/* Subtle background decoration */}
+            <div className="absolute -top-20 -end-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 -start-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
-                <div className="w-14 h-14 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg shadow-info/20 border border-white/10 shrink-0">
-                    <span className="text-xl font-black text-on-primary">د</span>
-                </div>
-
-                <div className="text-start">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline" className="bg-white/15 backdrop-blur-sm text-on-primary border-white/10">
-                            <ShieldCheck size={10} strokeWidth={1.5} className="ms-1" />
-                            {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
-                        </Badge>
-                        <Badge variant="success" className="backdrop-blur-sm">
-                            <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse ms-1" />
-                            نشط
-                        </Badge>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 ring-1 ring-primary/20">
+                        <Sparkles size={22} className="text-primary" />
                     </div>
-                    <h1 className="text-2xl font-black text-on-primary leading-tight drop-shadow-sm">
-                        {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
-                    </h1>
-                    <div className="flex items-center gap-3 mt-2">
-                        <span className="inline-flex items-center gap-1.5 text-xs text-on-primary/70">
-                            <Calendar size={12} strokeWidth={1.5} className="text-on-primary/50" />
-                            {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
-                        </span>
-                        <span className="w-0.5 h-3 bg-white/20" />
-                        <span className="inline-flex items-center gap-1 text-micro text-on-primary/60">
-                            <TrendingUp size={10} strokeWidth={1.5} className="text-on-primary/50" />
-                            النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%
-                        </span>
+                    <div>
+                        <div className="flex items-center gap-2 mb-1">
+                            <Badge variant="outline" className="text-[10px] h-5 px-2 border-primary/20 text-primary bg-primary/5 gap-1">
+                                <ShieldCheck size={10} />
+                                {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
+                            </Badge>
+                            <Badge variant="success" className="text-[10px] h-5 px-2 gap-1">
+                                <span className="w-1.5 h-1.5 bg-on-success rounded-full animate-pulse" />
+                                النظام نشط
+                            </Badge>
+                        </div>
+                        <h1 className="text-xl md:text-2xl font-bold text-main leading-tight">
+                            {greeting()}، {currentUser?.name || 'المستخدم'}
+                        </h1>
+                        <p className="text-sm text-muted mt-0.5 flex items-center gap-2">
+                            <CalendarDays size={13} className="text-muted" />
+                            {dateStr}
+                        </p>
                     </div>
                 </div>
-            </div>
 
-            <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
-                <div className="flex items-center gap-2 px-4 h-10 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl shadow-sm">
-                    <Clock size={14} strokeWidth={1.5} className="text-on-primary/60" />
-                    <span className="text-xs font-medium text-on-primary tabular-nums">
-                        {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                    </span>
+                <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 px-3.5 h-9 bg-card border border-border/50 rounded-xl text-muted text-xs font-medium tabular-nums">
+                        <Clock size={13} className="text-primary" />
+                        {currentTime.toLocaleTimeString('ar-EG', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

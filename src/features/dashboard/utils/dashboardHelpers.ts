@@ -22,16 +22,13 @@ export const isSameMonth = (dateStr: string, now: Date): boolean => {
     }
 };
 
-export const getSessionRev = (s: Session, students: Student[]): number => {
+const getSessionRev = (s: Session, students: Student[]): number => {
     if (s.price !== null && s.price !== undefined) return Number(s.price);
     const stu = students.find((st: Student) => st.id === s.studentId);
     return Number(stu?.sessionPrice) || 0;
 };
 
-export const getRevenue = (list: Session[], students: Student[]): number =>
-    list.reduce((sum: number, s: Session) => sum + getSessionRev(s, students), 0);
-
-export const getManualInc = (list: Transaction[]): number =>
+const getManualInc = (list: Transaction[]): number =>
     list.filter((t: Transaction) => t.type === 'income').reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0);
 
 export const getPaidInv = (list: TeacherInvoice[]): number =>
