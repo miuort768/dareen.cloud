@@ -100,7 +100,7 @@ export const Courses = () => {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
                         <AnimateOnScroll animation="fadeUp">
-                        <div className="text-center mb-6 md:mb-8">
+                        <div className="text-center mb-4 md:mb-6">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-2 md:mb-6">
                                 <Sparkles size={13} className="text-primary dark:text-primary" />
                                 <span className="text-micro font-black text-primary dark:text-primary">استكشف مسيرتك التعليمية</span>
@@ -119,7 +119,7 @@ export const Courses = () => {
                         </div>
                         </AnimateOnScroll>
 
-                        <div className="max-w-4xl mx-auto mb-10">
+                        <div className="max-w-4xl mx-auto mb-6">
             <div className="relative group">
               <input
                 type="text"
@@ -160,7 +160,7 @@ export const Courses = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"
             >
               {filteredCourses.map((course) => (
                 <motion.div
@@ -191,7 +191,7 @@ export const Courses = () => {
                     </div>
                   </div>
 
-                  <div className="p-4 pb-0 flex flex-col flex-1">
+                    <div className="p-3 pb-0 flex flex-col flex-1">
                     <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
                       {course.title}
                     </h2>
@@ -222,7 +222,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-primary-dark text-on-success dark:text-on-primary text-xs font-black py-3 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-primary-dark text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
