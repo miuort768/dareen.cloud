@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Megaphone, Plus } from 'lucide-react';
+import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api } from '../lib/api';
 import { useShowNotification } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
@@ -142,12 +143,11 @@ export const Announcements = () => {
                     <AnnouncementCard key={ann.id} announcement={ann} onEdit={openEdit} onDelete={handleDelete} />
                 ))}
                 {announcements.length === 0 && !isLoading && (
-                    <div className="col-span-full py-20 bg-card border border-dashed border-border flex flex-col items-center justify-center text-center rounded-2xl">
-                        <div className="w-12 h-12 rounded-xl bg-info-soft text-info flex items-center justify-center mx-auto mb-3">
-                            <Megaphone size={22} />
-                        </div>
-                        <h3 className="text-sm font-bold text-muted">لا توجد إعلانات بعد</h3>
-                    </div>
+                    <EmptyState
+                        icon={Megaphone}
+                        title="لا توجد إعلانات بعد"
+                        className="col-span-full bg-card border border-dashed border-border rounded-2xl"
+                    />
                 )}
             </div>
 

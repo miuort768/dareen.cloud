@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles } from 'lucide-react';
+import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
 import { GlassCard } from '@/shared/components/ui';
@@ -132,7 +133,12 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                         </GlassCard>
                                     </section>
                                 ) : (
-                                    <div className="py-12 text-center"><Calendar size={36} className="mx-auto text-dim mb-3" /><p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p><p className="text-dim text-micro mt-1">استمتع بيومك!</p></div>
+                                    <EmptyState
+                                    icon={Calendar}
+                                    title="لا توجد حصص اليوم"
+                                    subtitle="استمتع بيومك!"
+                                    compact
+                                />
                                 )}
                             </div>
                         )}

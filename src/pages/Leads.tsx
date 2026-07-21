@@ -8,6 +8,7 @@ import { socketService } from '../lib/socket';
 import { SOCKET_EVENTS } from '../lib/socket-events';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { PageLoader } from '../components/ui/PageLoader';
+import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { PrimaryBtn, StatItem } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
@@ -126,9 +127,7 @@ export const Leads = () => {
         return (
             <div className="bg-surface dark:bg-background min-h-screen pb-24" dir="rtl">
                 <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
-                    <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-card text-sm font-medium mt-6 md:mt-10">
-                        عذراً، حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.
-                    </div>
+                    <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>
         );

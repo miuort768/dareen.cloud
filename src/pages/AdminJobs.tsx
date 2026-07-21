@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
+import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { SUBJECTS } from '../data/subjects';
@@ -130,12 +131,11 @@ export const AdminJobs = () => {
                 {loading ? (
                     <div className="space-y-4">{[1,2,3].map(i => <div key={`skel-${i}`} className="bg-card h-32 animate-pulse border border-border/50" />)}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="bg-card border-2 border-dashed border-border rounded-card p-6 md:p-16 text-center">
-                        <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 bg-primary-soft rounded-card">
-                            <Briefcase size={28} className="text-primary" />
-                        </div>
-                        <p className="text-sm font-bold text-muted">لا توجد طلبات</p>
-                    </div>
+                    <EmptyState
+                        icon={Briefcase}
+                        title="لا توجد طلبات"
+                        className="bg-card border-2 border-dashed border-border rounded-card p-6 md:p-16"
+                    />
                 ) : (
                     filtered.map(app => (
                         <div key={app.id} className={`bg-card rounded-card border border-border shadow-soft relative overflow-hidden group transition-all duration-300 ${

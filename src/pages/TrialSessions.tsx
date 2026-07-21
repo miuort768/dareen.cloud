@@ -7,6 +7,7 @@ import { socketService } from '../lib/socket';
 import { SOCKET_EVENTS } from '../lib/socket-events';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { PageLoader } from '../components/ui/PageLoader';
+import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { TrialSessionCard } from './TrialSessionCard';
 import { TrialSessionFormModal } from './TrialSessionFormModal';
 
@@ -96,9 +97,7 @@ export const TrialSessions = () => {
     return (
       <div className="bg-surface dark:bg-background min-h-screen pb-24" dir="rtl">
         <div className="pt-6 md:pt-10 px-4 md:px-6 max-w-7xl mx-auto">
-          <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-card text-sm font-medium">
-            عذراً، حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.
-          </div>
+          <ErrorBanner />
         </div>
       </div>
     );

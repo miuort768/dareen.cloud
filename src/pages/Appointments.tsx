@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useCurrentUser } from '../context/AppContext';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
+import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { MobileAppointments } from '../features/appointments/components/MobileAppointments';
 import { AppointmentsHeader, AppointmentsFilters, DAYS_OF_WEEK, AppointmentScheduleGrid, AppointmentDetailPanel } from './appointments-page';
 
@@ -215,9 +216,7 @@ export const Appointments = () => {
         return (
             <div className="min-h-full pb-24 relative" dir="rtl">
                 <div className="hidden md:block max-w-page mx-auto px-2">
-                    <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-card text-sm font-medium mt-6 md:mt-10">
-                        عذراً، حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.
-                    </div>
+                    <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>
         );

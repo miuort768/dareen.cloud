@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { MessageSquare } from 'lucide-react';
+import { EmptyState } from '../shared/components/ui/EmptyState';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
@@ -151,12 +152,11 @@ export const Forum = () => {
                             {[1, 2, 3].map(i => <div key={`skel-${i}`} className="bg-card h-48 animate-pulse rounded-card shadow-soft" />)}
                         </div>
                     ) : posts.length === 0 ? (
-                        <div className="bg-card rounded-card shadow-soft p-6 md:p-16 text-center border-2 border-dashed border-border">
-                            <div className="w-16 h-16 bg-primary-soft rounded-card flex items-center justify-center mx-auto mb-4">
-                                <MessageSquare size={24} className="text-primary" />
-                            </div>
-                            <p className="text-sm font-bold text-muted">لا توجد منشورات هنا</p>
-                        </div>
+                        <EmptyState
+                            icon={MessageSquare}
+                            title="لا توجد منشورات هنا"
+                            className="bg-card rounded-card shadow-soft p-6 md:p-16 border-2 border-dashed border-border"
+                        />
                     ) : (
                         <div className="space-y-6">
                             {posts.map((post: Post) => {
