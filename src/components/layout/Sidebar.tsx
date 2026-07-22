@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     GraduationCap, LayoutDashboard, Users, Wallet, UserCheck, CalendarDays,
     Settings, FileText, Receipt, DollarSign, ListTodo, Presentation,
@@ -38,8 +38,6 @@ export const Sidebar = memo(() => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
-    const location = useLocation();
-    const isAdminDashboard = location.pathname.includes('/admin-dashboard');
 
     useEffect(() => {
         localStorage.setItem('sidebar_collapsed', String(collapsed));
@@ -199,17 +197,15 @@ export const Sidebar = memo(() => {
                 onToggleCollapse={() => setCollapsed(!collapsed)}
                 onLogout={handleLogout}
             />
-            {!isAdminDashboard && (
-                <SidebarMobile
-                    navigation={filteredNavigation}
-                    mobileMenuOpen={mobileMenuOpen}
-                    totalUnreadCount={totalUnreadCount}
-                    academyName={academyName}
-                    onToggleMenu={() => setMobileMenuOpen(true)}
-                    onCloseMenu={() => setMobileMenuOpen(false)}
-                    onLogout={handleLogout}
-                />
-            )}
+            <SidebarMobile
+                navigation={filteredNavigation}
+                mobileMenuOpen={mobileMenuOpen}
+                totalUnreadCount={totalUnreadCount}
+                academyName={academyName}
+                onToggleMenu={() => setMobileMenuOpen(true)}
+                onCloseMenu={() => setMobileMenuOpen(false)}
+                onLogout={handleLogout}
+            />
             <SessionCallAlert />
         </>
     );
