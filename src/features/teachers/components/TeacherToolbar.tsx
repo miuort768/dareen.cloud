@@ -14,47 +14,43 @@ interface TeacherToolbarProps {
 
 export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExportExcel, onExportPDF, onDeleteAll }: TeacherToolbarProps) => {
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-6" dir="rtl">
-            {/* Search Input */}
-            <div className="relative flex-1 w-full">
-                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+        <div className="space-y-2">
+            <div className="relative">
+                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
                 <input
                     type="text"
                     aria-label="بحث عن معلمة"
-                    placeholder="ابحث عن معلمة باسمها أو تخصصها..."
+                    placeholder="بحث بالاسم أو التخصص..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pe-4 ps-9 py-2.5 bg-card border border-border/60 rounded-xl outline-none text-xs text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                    className="w-full bg-background border border-border text-main text-xs font-bold ps-9 pe-3 py-2.5 outline-none focus:border-primary rounded-xl transition-colors placeholder:text-dim"
                 />
             </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+            <div className="flex items-center justify-between">
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "h-9 px-5 flex items-center gap-2 text-xs font-bold rounded-xl transition-all shadow-soft active:scale-95",
+                        "h-8 px-3 flex items-center gap-1.5 text-[11px] font-bold rounded-lg transition-all active:scale-95",
                         showAddForm 
-                        ? "bg-error text-on-error hover:bg-error-hover" 
+                        ? "bg-error text-on-error" 
                         : "bg-primary text-on-primary"
                     )}
                 >
-                    {showAddForm ? <X size={14} /> : <Plus size={14} />}
-                    <span>{showAddForm ? 'إلغاء' : 'إضافة معلمة'}</span>
+                    {showAddForm ? <X size={12} /> : <Plus size={12} />}
+                    {showAddForm ? 'إلغاء' : 'إضافة معلمة'}
                 </button>
-                
-                <div className="flex items-center gap-2 border-s border-border/50 ps-3 ms-1">
-                    <button onClick={onImport} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-primary hover:text-on-primary rounded-xl transition-all shadow-soft" aria-label="استيراد">
-                        <Upload size={14} />
+                <div className="flex items-center gap-1">
+                    <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-background border border-border text-dim rounded-lg active:scale-95 transition-transform" aria-label="استيراد">
+                        <Upload size={12} />
                     </button>
-                    <button onClick={onExportExcel} className="w-9 h-9 flex items-center justify-center bg-success/10 border border-success/30 text-success hover:bg-success hover:text-on-success rounded-xl transition-all shadow-soft" aria-label="تصدير Excel">
-                        <FileSpreadsheet size={14} />
+                    <button onClick={onExportExcel} className="w-8 h-8 flex items-center justify-center bg-success-soft border border-success/20 text-success rounded-lg active:scale-95 transition-transform" aria-label="تصدير Excel">
+                        <FileSpreadsheet size={12} />
                     </button>
-                    <button onClick={onExportPDF} className="w-9 h-9 flex items-center justify-center bg-error/10 border border-error/30 text-error hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" aria-label="تصدير PDF">
-                        <FileText size={14} />
+                    <button onClick={onExportPDF} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform" aria-label="تصدير PDF">
+                        <FileText size={12} />
                     </button>
-                    <button onClick={onDeleteAll} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:bg-error hover:text-on-error rounded-xl transition-all shadow-soft" aria-label="تصفير الكل">
-                        <Trash2 size={14} />
+                    <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform" aria-label="حذف الكل">
+                        <Trash2 size={12} />
                     </button>
                 </div>
             </div>

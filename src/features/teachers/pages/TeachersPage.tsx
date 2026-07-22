@@ -153,7 +153,7 @@ export const Teachers = () => {
             <div className="relative z-10 max-w-page mx-auto px-4 md:px-6 pt-6 md:pt-10">
                 <TeachersPageHeader totalTeachers={teachers.length} showAddForm={showAddForm}
                     onToggleForm={() => { setShowAddForm(!showAddForm); if (showAddForm) setEditId(null); }} />
-                <div className="py-6 space-y-6">
+                <div className="mt-3 space-y-3">
                     <TeacherStats totalTeachers={teachers.length} totalStudents={totalStudentsCount} uniqueSubjects={uniqueSubjects} averagePrice={averagePrice} />
                     <TeacherToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}
                         showAddForm={showAddForm} onToggleAddForm={() => { setShowAddForm(!showAddForm); if (showAddForm) setEditId(null); }}

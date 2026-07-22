@@ -96,55 +96,43 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
             </div>
 
             {/* Mobile View */}
-            <div className="lg:hidden space-y-3">
+            <div className="lg:hidden space-y-2">
                 {teachers.map((teacher) => {
                     const isSelected = selectedId === teacher.id;
                     return (
                         <motion.div
                             key={teacher.id}
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             onClick={() => onSelect(teacher)}
                             role="button"
                             tabIndex={0}
                             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(teacher); } }}
                             className={cn(
-                                "bg-card border border-border/50 shadow-soft rounded-card p-5 active:scale-[0.98] transition-all",
-                                isSelected ? "ring-1 ring-primary/30" : ""
+                                "bg-card border border-border/50 rounded-xl p-3 active:scale-[0.98] transition-all",
+                                isSelected && "ring-1 ring-primary/30"
                             )}
                         >
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-card flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                    <div className="w-9 h-9 rounded-lg bg-primary-soft flex items-center justify-center font-bold text-sm text-primary shrink-0">
                                         {teacher.name.charAt(0)}
                                     </div>
-                                    <div>
-                                        <h4 className="text-sm font-bold font-heading text-main leading-tight mb-1">{teacher.name}</h4>
-                                        <span className="text-xs px-1.5 py-0.5 rounded-card bg-primary-soft text-primary">{teacher.subject}</span>
+                                    <div className="min-w-0 flex-1">
+                                        <h4 className="text-xs font-bold text-main leading-tight truncate">{teacher.name}</h4>
+                                        <span className="text-[10px] px-1.5 py-0.5 bg-primary-soft text-primary rounded">{teacher.subject}</span>
                                     </div>
                                 </div>
-                                <div className="text-end">
-                                    <span className="text-sm font-bold text-success block leading-none">{teacher.price}</span>
-                                    <span className="text-xs text-success/60">ج.م / حصة</span>
+                                <div className="text-end shrink-0 ms-2">
+                                    <span className="text-xs font-bold text-success">{teacher.price}</span>
+                                    <span className="text-[9px] text-dim block">ج.م / حصة</span>
                                 </div>
                             </div>
-                            
-                            <div className="grid grid-cols-2 gap-3 mb-4">
-                                <div className="p-2 text-center flex items-center justify-center gap-2 rounded-card bg-primary-soft">
-                                    <Users size={12} className="text-primary" />
-                                    <span className="text-xs text-primary">{studentCounts[teacher.name] || 0} طالبة</span>
-                                </div>
-                                <div className="p-2 text-center flex items-center justify-center gap-2 rounded-card bg-success-soft">
-                                    <BookOpen size={12} className="text-success" />
-                                    <span className="text-xs text-success">نشطة</span>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 pt-1">
-                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-9 rounded-xl bg-primary text-on-primary text-xs shadow-soft active:scale-95 transition-all hover:bg-primary-hover">مراسلة</button>
-                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-warning/10 text-warning hover:bg-warning hover:text-on-warning" aria-label="إرسال إشعار"><Bell size={14} /></button>
-                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-9 h-9 flex items-center justify-center bg-card border border-border/60 text-muted hover:text-success rounded-card shadow-soft transition-all" aria-label="تعديل"><Edit size={14} /></button>
-                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-9 h-9 flex items-center justify-center rounded-card shadow-soft transition-all bg-error/10 text-error hover:bg-error hover:text-on-error" aria-label="حذف"><Trash2 size={14} /></button>
+                            <div className="flex items-center gap-1.5">
+                                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-8 rounded-lg bg-primary text-on-primary text-[10px] font-bold active:scale-95 transition-transform">مراسلة</button>
+                                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-warning-soft text-warning active:bg-hover transition-colors" aria-label="إرسال إشعار"><Bell size={13} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="w-8 h-8 flex items-center justify-center bg-background border border-border text-dim rounded-lg active:bg-hover transition-colors" aria-label="تعديل"><Edit size={13} /></button>
+                                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-error-soft text-error active:bg-hover transition-colors" aria-label="حذف"><Trash2 size={13} /></button>
                             </div>
                         </motion.div>
                     );

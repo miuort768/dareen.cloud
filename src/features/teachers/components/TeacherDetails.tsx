@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X, Bell, MessageCircle, Clock } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
 import { TeacherCard } from './TeacherCard';
