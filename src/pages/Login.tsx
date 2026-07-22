@@ -88,10 +88,7 @@ export const Login = () => {
 
     return (
         <div className="min-h-screen bg-surface flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
-            <div className="md:hidden absolute inset-0 z-0">
-                <img src="/login-mobile-bg.webp" alt="" className="w-full h-full object-cover" aria-hidden="true" />
-                <div className="absolute inset-0 bg-surface/80" />
-            </div>
+            <div className="md:hidden absolute inset-0 z-0 bg-main" />
             <SEO title="تسجيل الدخول | دارين السابعة - منصة تعليم عن بعد" description="تسجيل دخول الطلاب، المعلمين، وأولياء الأمور إلى منصة دارين السابعة للتعليم عن بعد. متابعة الحصص، الجدول الدراسي، والنتائج من مكان واحد." url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'تسجيل الدخول', item: '/login' }]} />
 
             <div className="hidden md:block absolute top-0 w-full z-50">
