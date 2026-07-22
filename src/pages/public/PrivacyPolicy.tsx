@@ -219,8 +219,8 @@ export const PrivacyPolicy = () => {
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-on-primary mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-on-primary/80 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <h2 className="text-2xl font-black text-on-primary dark:text-white mb-2">هل لديك استفسارات فنية؟</h2>
+                            <p className="text-on-primary/80 dark:text-white/80 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
                                 href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}`}
