@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, FilePlus, Wallet, Bell, Loader2, ShieldCheck } from 'lucide-react';
+import { Home, FilePlus, Wallet, Bell, Sparkles, Loader2, Clock, ShieldCheck } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -23,13 +23,14 @@ const tabs = [
     { id: 'alerts' as const, label: 'التنبيهات', icon: Bell },
 ];
 
+const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
+
 export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: MobileAdminDashboardProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
     const [activeTab, setActiveTab] = useState<'home' | 'quick' | 'finance' | 'alerts'>('home');
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [pullDistance, setPullDistance] = useState(0);
-    const startYRef = useRef(0);
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const [startY, setStartY] = useState(0);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 30000);
@@ -41,84 +42,77 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
     const completedSessions = stats.completedSessions || 0;
     const completionRate = todaySessions > 0 ? Math.round((completedSessions / todaySessions) * 100) : 0;
 
-    const handleTouchStart = useCallback((e: React.TouchEvent) => {
-        const el = scrollRef.current;
-        if (el && el.scrollTop <= 0 && !isRefreshing) {
-            startYRef.current = e.touches[0].clientY;
-        }
-    }, [isRefreshing]);
+    const handleTouchStart = (e: React.TouchEvent) => {
+        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
+    };
 
-    const handleTouchMove = useCallback((e: React.TouchEvent) => {
-        if (startYRef.current === 0 || isRefreshing) return;
-        const el = scrollRef.current;
-        if (el && el.scrollTop > 0) return;
-        const diff = e.touches[0].clientY - startYRef.current;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 80));
-    }, [isRefreshing]);
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
+        const diff = e.touches[0].clientY - startY;
+        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
+    };
 
-    const handleTouchEnd = useCallback(async () => {
-        if (pullDistance > 55) {
+    const handleTouchEnd = async () => {
+        if (pullDistance > 60) {
             setIsRefreshing(true);
-            setPullDistance(44);
+            setPullDistance(50);
             triggerHaptic('medium');
             if (onRefresh) try { await onRefresh(); } catch (e) { console.error("Refresh failed", e); }
-            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); startYRef.current = 0; triggerHaptic('light'); }, 600);
-        } else {
-            setPullDistance(0);
-            startYRef.current = 0;
-        }
-    }, [pullDistance, onRefresh]);
+            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
+        } else { setPullDistance(0); setStartY(0); }
+    };
 
-    const handleTabChange = useCallback((tabId: 'home' | 'quick' | 'finance' | 'alerts') => {
+    const handleTabChange = (tabId: 'home' | 'quick' | 'finance' | 'alerts') => {
         triggerHaptic('light');
         setActiveTab(tabId);
-        scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
+    };
 
     return (
-        <div className="h-screen flex flex-col bg-background overflow-hidden" dir="rtl">
-            {/* Compact Header */}
-            <div className="shrink-0 bg-surface border-b border-border/50">
-                <div className="px-4 py-3">
+        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
+            className="min-h-screen pb-20 overflow-x-hidden relative bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background" dir="rtl"
+        >
+            {/* Pull to refresh */}
+            <motion.div animate={{ height: isRefreshing ? 48 : pullDistance }}
+                className="overflow-hidden flex items-center justify-center"
+            >
+                <div className="flex items-center gap-2.5 text-primary font-bold text-xs">
+                    {isRefreshing ? (
+                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
+                    ) : pullDistance > 55 ? (
+                        <><Sparkles size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
+                    ) : (
+                        <span className="text-muted">اسحب للتحديث</span>
+                    )}
+                </div>
+            </motion.div>
+
+            {/* Frosted Glass Header */}
+            <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
+                <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-                                <ShieldCheck size={17} className="text-on-primary" />
+                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                                <ShieldCheck size={18} className="text-white" />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-main leading-tight">مركز القيادة</h1>
-                                <p className="text-[10px] text-dim">
-                                    {format(currentTime, 'EEEE, d MMM', { locale: ar })}
+                                <h1 className="text-base font-bold text-main leading-tight">مركز القيادة</h1>
+                                <p className="text-[11px] font-medium text-muted">
+                                    {format(new Date(), 'eeee, d MMMM', { locale: ar })}
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold text-primary tabular-nums bg-primary-soft px-2 py-1 rounded-lg">
-                                {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                            </span>
+                        <div className="px-3 py-1.5 rounded-xl bg-white/50 dark:bg-white/10 backdrop-blur-sm text-primary font-bold text-[11px] tabular-nums shadow-sm border border-white/20">
+                            <Clock size={11} className="inline ms-1" />
+                            {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Pull to refresh */}
-            <motion.div animate={{ height: isRefreshing ? 40 : pullDistance }} className="shrink-0 overflow-hidden flex items-center justify-center">
-                <div className="flex items-center gap-2 text-primary text-[11px] font-bold">
-                    {isRefreshing ? (
-                        <><Loader2 size={14} className="animate-spin" /><span>جاري التحديث...</span></>
-                    ) : pullDistance > 50 ? (
-                        <span>أفلت للتحديث</span>
-                    ) : (
-                        <span className="text-dim">اسحب للتحديث</span>
-                    )}
-                </div>
-            </motion.div>
-
-            {/* Scrollable Content */}
-            <div ref={scrollRef} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-                className="flex-1 overflow-y-auto overscroll-contain px-4 pt-3 pb-4">
+            {/* Tab Content */}
+            <div className="px-4 pt-4 pb-4">
                 <AnimatePresence mode="wait">
-                    <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
+                    <motion.div key={activeTab} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
                         {activeTab === 'home' && <AdminHomeTab stats={stats} completionRate={completionRate} completedSessions={completedSessions} todaySessions={todaySessions} onTabChange={handleTabChange} />}
                         {activeTab === 'quick' && <AdminQuickTab />}
                         {activeTab === 'finance' && <AdminFinanceTab stats={stats} />}
@@ -127,40 +121,48 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
                 </AnimatePresence>
             </div>
 
-            {/* Bottom Tab Bar — iOS-style with safe area */}
-            <div className="shrink-0 bg-surface border-t border-border/50" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-                <div className="flex items-center justify-around px-1 py-1">
-                    {tabs.map(tab => {
-                        const isActive = activeTab === tab.id;
-                        const hasBadge = tab.id === 'alerts' && lowBalanceCount > 0;
-                        return (
-                            <button key={tab.id}
-                                onClick={() => handleTabChange(tab.id)}
-                                className={cn(
-                                    "relative flex flex-col items-center gap-0.5 py-2 px-5 min-w-[60px] rounded-xl transition-colors",
-                                    isActive ? "text-primary" : "text-dim active:bg-hover"
-                                )}
-                                aria-label={tab.label}
-                                aria-current={isActive ? 'page' : undefined}
-                            >
-                                <div className="relative">
-                                    <tab.icon size={20} strokeWidth={isActive ? 2.2 : 1.5} />
-                                    {hasBadge && (
-                                        <span className="absolute -top-1 -end-1.5 min-w-[14px] h-[14px] bg-error text-on-error text-[8px] font-bold flex items-center justify-center px-1 rounded-full">
-                                            {lowBalanceCount > 9 ? '9+' : lowBalanceCount}
-                                        </span>
+            {/* iOS-style Bottom Tab Bar */}
+            <div className="fixed bottom-0 inset-x-0 z-50">
+                {/* Safe area spacer */}
+                <div className="h-2 bg-white dark:bg-black" />
+                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl border-t border-white/20 dark:border-white/10 shadow-2xl shadow-black/5">
+                    <div className="flex items-center justify-around px-2 py-1.5">
+                        {tabs.map(tab => {
+                            const isActive = activeTab === tab.id;
+                            const hasBadge = tab.id === 'alerts' && lowBalanceCount > 0;
+                            return (
+                                <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
+                                    onClick={() => handleTabChange(tab.id)}
+                                    className="relative flex flex-col items-center gap-0.5 py-1 px-4 min-w-[64px]"
+                                >
+                                    <div className={cn(
+                                        "rounded-xl p-1.5 transition-all duration-300 relative",
+                                        isActive && "bg-gradient-to-br from-primary/10 to-purple-500/10"
+                                    )}>
+                                        <tab.icon size={20} strokeWidth={isActive ? 2 : 1.5}
+                                            className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
+                                        />
+                                        {hasBadge && (
+                                            <span className="absolute -top-0.5 -end-0.5 min-w-[14px] h-[14px] bg-gradient-to-br from-error to-rose-500 text-white text-[8px] font-bold flex items-center justify-center px-1 rounded-full shadow-lg shadow-error/30">
+                                                {lowBalanceCount > 9 ? '9+' : lowBalanceCount}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <span className={cn(
+                                        "text-[10px] font-bold transition-all duration-300",
+                                        isActive ? "text-primary" : "text-muted"
+                                    )}>
+                                        {tab.label}
+                                    </span>
+                                    {isActive && (
+                                        <motion.div layoutId="tab-indicator"
+                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-purple-500 shadow-lg shadow-primary/30"
+                                        />
                                     )}
-                                </div>
-                                <span className="text-[10px] font-bold">{tab.label}</span>
-                                {isActive && (
-                                    <motion.div layoutId="mobile-tab-indicator"
-                                        className="absolute -top-0.5 w-6 h-0.5 rounded-full bg-primary"
-                                        transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-                                    />
-                                )}
-                            </button>
-                        );
-                    })}
+                                </motion.button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

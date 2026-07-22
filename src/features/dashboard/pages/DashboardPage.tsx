@@ -153,7 +153,7 @@ export const Dashboard = () => {
             initial="hidden"
             animate="visible"
             className={cn(
-                "min-h-full pb-0 md:pb-24",
+                "min-h-full pb-24",
                 "bg-background"
             )}
             dir="rtl"
