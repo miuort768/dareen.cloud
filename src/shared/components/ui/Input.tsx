@@ -27,7 +27,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
           <span className="absolute start-3 top-1/2 -translate-y-1/2 text-muted">{leftIcon}</span>
         )}
         {rightIcon && (
-          <span className="absolute end-3 top-1/2 -translate-y-1/2 text-muted">{rightIcon}</span>
+          <span className="absolute end-2 top-1/2 -translate-y-1/2 text-muted">{rightIcon}</span>
         )}
         <input
           ref={ref}
@@ -40,7 +40,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
             'placeholder:text-dim/50',
             sizeStyles[sz],
             leftIcon ? 'ps-10' : '',
-            rightIcon ? 'pe-10' : '',
+            rightIcon ? 'pe-12' : '',
             error ? 'border-error/70 focus:border-error focus:ring-error/10' : '',
             className
           )}

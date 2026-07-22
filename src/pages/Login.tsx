@@ -205,19 +205,24 @@ export const Login = () => {
                                     </Alert>
                                 )}
 
-                                <Input
-                                    label="اسم المستخدم"
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    placeholder="أدخل اسم المستخدم..."
-                                    leftIcon={<User size={20} className="text-dim" />}
-                                    required
-                                />
+                                <div>
+                                    <label htmlFor="login-username" className="text-sm font-bold text-main block mb-1.5">اسم المستخدم</label>
+                                    <Input
+                                        id="login-username"
+                                        type="text"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        placeholder="أدخل اسم المستخدم..."
+                                        leftIcon={<User size={20} className="text-dim" />}
+                                        required
+                                    />
+                                </div>
 
-                                <Input
-                                    label="كلمة المرور"
-                                    type={showPassword ? 'text' : 'password'}
+                                <div>
+                                    <label htmlFor="login-password" className="text-sm font-bold text-main block mb-1.5">كلمة المرور</label>
+                                    <Input
+                                        id="login-password"
+                                        type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setIsPasswordFocused(true)}
@@ -228,15 +233,16 @@ export const Login = () => {
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="text-dim hover:text-main transition-colors p-1 -m-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                            className="text-muted hover:text-main transition-colors w-9 h-9 flex items-center justify-center -m-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                                             aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                                         >
-                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                         </button>
                                     }
                                     required
                                     style={{ fontFamily: showPassword ? 'inherit' : 'caption' } as React.CSSProperties}
-                                />
+                                    />
+                                </div>
 
                                 <Button
                                     type="submit"
