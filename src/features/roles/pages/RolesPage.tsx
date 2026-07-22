@@ -76,8 +76,9 @@ export const RolesPage = () => {
     }, {});
 
     return (
-        <div className="p-6" dir="rtl">
-            <div className="flex items-center gap-3 mb-6">
+        <div className="min-h-full pb-24 relative" dir="rtl">
+            <div className="max-w-page mx-auto px-2 py-4 space-y-4">
+                <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 bg-primary-soft rounded-card flex items-center justify-center">
                     <Shield size={20} className="text-primary" />
                 </div>
@@ -236,6 +237,7 @@ export const RolesPage = () => {
                     </div>
                 </div>
             )}
+            </div>
         </div>
     );
 };

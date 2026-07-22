@@ -20,8 +20,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
         {
             num: '01',
             icon: Users,
-            title: 'تحميل مجاني بدون اعلانات',
-            desc: 'اختر ما تريد من كتب او مذكرات مجانا',
+            title: 'اختر المنهج والمادة',
+            desc: 'حدد منهجك و المادة التي تدرسها',
             boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
         },
         {
