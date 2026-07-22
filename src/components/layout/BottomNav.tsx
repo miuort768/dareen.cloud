@@ -11,12 +11,13 @@ export const BottomNav = () => {
   const currentUser = useCurrentUser();
 
   const isChatPage = location.pathname.includes('/chat');
-  const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/parent-dashboard');
+  const isTeacherDash = location.pathname.includes('/teacher-dashboard');
+  const isParentDash = location.pathname.includes('/parent-dashboard');
   const isSchedule = location.pathname.includes('/schedule');
   const isTasks = location.pathname.includes('/tasks');
   const isStudentDash = location.pathname.includes('/student-dashboard');
 
-  if (isChatPage || isDashboard || isSchedule || isTasks || isStudentDash) return null;
+  if (isChatPage || isTeacherDash || isParentDash || isSchedule || isTasks || isStudentDash) return null;
 
   const handleNav = (path: string) => {
     triggerHaptic('light');
