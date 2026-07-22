@@ -30,7 +30,7 @@ const logoutAllLimiter = createRateLimiter({
     message: 'محاولات تسجيل خروج كثيرة جداً، يرجى المحاولة بعد ساعة'
 });
 
-router.post('/login', loginLimiter, async (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required' });
