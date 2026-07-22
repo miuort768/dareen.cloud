@@ -20,8 +20,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
         {
             num: '01',
             icon: Users,
-            title: 'اختر المنهج والمادة',
-            desc: 'حدد منهجك و المادة التي تدرسها',
+            title: 'اختر المنهج',
+            desc: 'حدد منهجك والمادة',
             boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
         },
         {
