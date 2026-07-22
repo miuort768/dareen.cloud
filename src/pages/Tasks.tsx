@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp, Sparkles } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';
 import { api } from '../lib/api';
@@ -117,27 +117,23 @@ export const Tasks = () => {
         <div className="min-h-full pb-24 relative bg-surface" dir="rtl">
             <div className="max-w-page mx-auto px-3 space-y-4">
 
-                {/* Hero */}
-                <div className="bg-card rounded-card shadow-sm border border-border">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
-                        <div className="flex flex-col items-start">
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-soft dark:bg-primary-soft border border-primary-light dark:border-primary-light rounded-card mb-3">
-                                <Sparkles size={10} className="text-primary dark:text-primary" />
-                                <span className="text-micro font-bold text-primary dark:text-inverse">مركز القيادة</span>
+                {/* ── Header ── */}
+                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <TrendingUp size={17} className="text-primary" />
                             </div>
-                            <h1 className="text-xl font-bold text-main dark:text-inverse leading-tight mb-1">
-                                مركز التحكم بالمهام
-                            </h1>
-                            <p className="text-xs font-bold text-dim dark:text-muted">
-                                تتبع وإدارة جميع المهام الخاصة بك <span className="text-primary dark:text-primary">في مكان واحد</span>
-                            </p>
+                            <div>
+                                <h1 className="text-sm font-bold text-main leading-tight">المهام</h1>
+                                <p className="text-[10px] text-dim">{stats.score}% إنجاز</p>
+                            </div>
                         </div>
                         <button
                             onClick={() => setShowAddForm(true)}
-                            className="group relative inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 font-bold text-micro uppercase tracking-widest transition-all hover:shadow-md active:scale-[0.97] rounded-card shadow-sm"
+                            className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform"
                         >
-                            <Plus size={14} className="group-hover:rotate-90 transition-transform duration-500" />
-                            إضافة مهمة جديدة
+                            <Plus size={11} /> مهمة جديدة
                         </button>
                     </div>
                 </div>
@@ -163,16 +159,16 @@ export const Tasks = () => {
                             className="w-full bg-card border border-border rounded-card py-3 px-4 ps-10 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all placeholder:text-muted shadow-sm"
                         />
                     </div>
-                    <div className="grid grid-cols-4 gap-2 w-full md:flex md:w-auto">
+                    <div className="flex overflow-x-auto no-scrollbar gap-2 w-full md:flex md:w-auto">
                         {['all', 'high', 'medium', 'low'].map(p => (
                             <button
                                 key={p}
                                 onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                                 className={cn(
-                                    "px-4 py-2.5 font-bold text-micro uppercase tracking-wider transition-all whitespace-nowrap rounded-card border shadow-sm",
+                                    "px-3 py-2 font-bold text-[10px] uppercase tracking-wider transition-all whitespace-nowrap rounded-xl border",
                                     filterPriority === p
-                                        ? "bg-primary border-primary text-on-primary shadow-sm"
-                                        : "bg-card border-border text-dim hover:border-primary hover:text-primary"
+                                        ? "bg-primary border-primary text-on-primary"
+                                        : "bg-surface border-border text-dim hover:border-primary hover:text-primary"
                                 )}
                             >
                                 {p === 'all' ? 'الكل' : p === 'high' ? 'عالية' : p === 'medium' ? 'متوسطة' : 'منخفضة'}

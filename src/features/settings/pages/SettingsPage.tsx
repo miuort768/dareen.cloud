@@ -23,34 +23,32 @@ export const Settings = () => {
 
     return (
         <div className="space-y-0 pb-24 min-h-full max-w-page mx-auto overflow-x-hidden" dir="rtl">
-            <div className="bg-primary px-4 md:px-6 py-5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
-                        <SettingsIcon size={22} className="text-on-primary" />
+            <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-2">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                            <SettingsIcon size={17} className="text-primary" />
+                        </div>
+                        <div>
+                            <h1 className="text-sm font-bold text-main leading-tight">الإعدادات</h1>
+                            <p className="text-[10px] text-dim">{TABS.find(t => t.id === h.activeTab)?.label}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-lg md:text-xl font-bold text-on-primary leading-tight">مركز الإعدادات</h1>
-                        <p className="text-xs font-bold text-on-primary opacity-70 mt-0.5">إدارة كافة إعدادات النظام من مكان واحد</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-2 text-micro font-bold px-3 py-1.5 bg-white/15 text-on-primary">
-                    <SettingsIcon size={12} />
-                    {TABS.find(t => t.id === h.activeTab)?.label}
                 </div>
             </div>
-            <div className="bg-primary px-2 md:px-4 py-1">
+            <div className="bg-surface border border-border/50 rounded-2xl p-1 mx-2 mb-3">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button key={tab.id} onClick={() => h.setActiveTab(tab.id)}
-                            className={cn('flex items-center gap-2 px-4 py-3 text-sm font-bold whitespace-nowrap transition-all tracking-tight',
-                                h.activeTab === tab.id ? 'bg-card text-primary shadow-sm' : 'text-on-primary opacity-70 hover:text-on-primary')}>
-                            <tab.icon size={15} />
+                            className={cn('flex items-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all',
+                                h.activeTab === tab.id ? 'bg-primary text-on-primary shadow-sm' : 'text-dim hover:text-main')}>
+                            <tab.icon size={13} />
                             {tab.label}
                         </button>
                     ))}
                 </div>
             </div>
-            <div className="px-3 md:px-5 lg:px-8 pt-4 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-3 md:px-5 lg:px-8 pt-3 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 <SettingsTabContent
                     activeTab={h.activeTab}
                     localAcademyName={h.localAcademyName} setLocalAcademyName={h.setLocalAcademyName}

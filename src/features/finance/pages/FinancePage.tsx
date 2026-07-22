@@ -28,46 +28,30 @@ export const Finance = () => {
             <div className="relative z-10 max-w-page mx-auto px-2">
 
                 {/* ── Header ── */}
-                <div className="bg-primary shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 rounded-2xl mt-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
-                            <span className="text-xl font-bold text-on-primary">د</span>
-                        </div>
-                        <div>
-                            <h1 className="text-lg font-bold text-on-primary leading-tight">الإدارة المالية والحسابات</h1>
-                            <div className="flex items-center gap-2 mt-1">
-                                <TrendingUp size={10} className="text-on-primary opacity-80" />
-                                <span className="text-micro font-bold uppercase tracking-widest text-on-primary opacity-80">
-                                    هامش الربح: {state.profitMargin}%
-                                </span>
-                                <span className="w-1 h-1 bg-white/30 rounded-full" />
-                                <span className="text-micro font-bold text-on-primary opacity-60">مركز التقارير الموحد</span>
+                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <TrendingUp size={17} className="text-primary" />
+                            </div>
+                            <div>
+                                <h1 className="text-sm font-bold text-main leading-tight">الإدارة المالية</h1>
+                                <p className="text-[10px] text-dim">هامش الربح: {state.profitMargin}%</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 no-print">
-                        <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-2 h-9 px-4 bg-white/15 backdrop-blur-sm hover:bg-white/30 text-on-primary text-micro font-bold transition-all rounded-xl shadow-sm border border-white/10">
-                            <CalendarCheck size={13} />
-                            <span className="hidden sm:inline whitespace-nowrap">تسوية الشهر</span>
-                        </button>
-                        <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-2 h-9 px-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-on-primary text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl">
-                            <Plus size={13} />
-                            تسجيل معاملة
-                        </button>
-                        <button aria-label="تصدير التقرير إلى CSV" onClick={() => {
-                            const csv = [['التاريخ','الوصف','النوع','المبلغ','الرصيد'].join(','), ...state.filteredTransactions.map(t => [t.date, t.description, t.type, t.amount, t.balance].join(','))].join('\n');
-                            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a'); a.href = url; a.download = 'finance-report.csv'; a.click(); URL.revokeObjectURL(url);
-                        }} className="w-9 h-9 flex items-center justify-center bg-white/15 backdrop-blur-sm hover:bg-white/30 text-on-primary transition-all rounded-xl shadow-sm border border-white/10">
-                            <Download size={14} />
-                        </button>
+                        <div className="flex items-center gap-1.5">
+                            <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-1 h-8 px-2.5 bg-background border border-border text-dim text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
+                                <CalendarCheck size={11} /> <span className="hidden sm:inline">تسوية</span>
+                            </button>
+                            <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
+                                <Plus size={11} /> تسجيل
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="py-5 space-y-6">
-                    <div className="bg-card border-border p-5 md:p-6 shadow-sm rounded-2xl">
+                <div className="space-y-3 mt-3">
+                    <div className="bg-card border-border p-4 shadow-sm rounded-2xl">
                         <FinanceStats
                             totalIncome={state.totalIncome}
                             monthIncome={state.monthIncome}
@@ -80,7 +64,7 @@ export const Finance = () => {
                         />
                     </div>
 
-                    <div className="bg-card border-border p-5 md:p-6 shadow-sm rounded-2xl">
+                    <div className="bg-card border-border p-4 shadow-sm rounded-2xl">
                         <FixedExpensesManager
                             expenses={state.fixedExpenses}
                             onUpdateExpense={actions.handleUpdateFixedExpense}

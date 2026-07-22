@@ -108,20 +108,17 @@ export const Announcements = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-page mx-auto px-2">
             
-            <div className="bg-card rounded-2xl shadow-sm border border-border px-4 md:px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-info-soft text-info flex items-center justify-center shrink-0">
-                        <Megaphone size={22} />
-                    </div>
-                    <div>
-                        <h1 className="text-lg md:text-xl font-bold text-main leading-tight">الإعلانات</h1>
-                        <p className="text-xs font-bold text-muted mt-0.5">إدارة الإعلانات والتنبيهات</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-info-soft text-info">
-                        <span className="text-sm font-semibold leading-none">{announcements.filter(a => a.isActive).length}</span>
-                        <span className="text-micro font-bold leading-none">نشط</span>
+            {/* ── Header ── */}
+            <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-info-soft flex items-center justify-center">
+                            <Megaphone size={17} className="text-info" />
+                        </div>
+                        <div>
+                            <h1 className="text-sm font-bold text-main leading-tight">الإعلانات</h1>
+                            <p className="text-[10px] text-dim">{announcements.filter(a => a.isActive).length} نشط</p>
+                        </div>
                     </div>
                     <button
                         onClick={() => {
@@ -129,10 +126,9 @@ export const Announcements = () => {
                             setFormData({ title: '', content: '', type: 'general', isActive: true });
                             setIsModalOpen(true);
                         }}
-                        className="bg-primary text-on-primary h-10 px-4 flex items-center justify-center gap-2 hover:bg-primary-hover transition-all font-bold shadow-sm active:scale-95 rounded-xl"
+                        className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform"
                     >
-                        <Plus size={16} />
-                        <span className="text-micro font-bold">إضافة إعلان</span>
+                        <Plus size={11} /> إضافة
                     </button>
                 </div>
             </div>
