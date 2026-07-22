@@ -6,7 +6,7 @@ import { PublicFooter } from '../../components/public/PublicFooter';
 export const JobsSuccessView = () => (
     <div className="min-h-screen bg-background flex flex-col" dir="rtl">
         <MobileHeader hideThemeToggle />
-        <main className="flex-grow flex items-center justify-center px-4 pt-8 pb-20 min-h-[calc(100vh-4rem)]">
+        <main className="flex-grow flex items-start md:items-center justify-center px-4 md:pt-0 pt-8 pb-20">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
                 className="max-w-lg w-full bg-card border border-success/30 shadow-soft rounded-card p-8 md:p-10 text-center">
