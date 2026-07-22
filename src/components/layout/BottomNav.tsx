@@ -49,14 +49,13 @@ export const BottomNav = () => {
               variant="ghost"
               size="sm"
               onClick={() => handleNav(item.path)}
-              aria-current={isActive ? 'page' : undefined}
               className={cn(
                 "flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-200 touch-manipulation relative",
                 "rounded-none"
               )}
             >
               <div className={cn("p-1.5 rounded-2xl transition-all duration-200", isActive && "bg-primary-soft")}>
-                <Icon size={24} className={cn("transition-all duration-200", isActive ? "text-primary stroke-[2.5]" : "text-muted stroke-[1.5]")} aria-hidden="true" />
+                <Icon size={24} className={cn("transition-all duration-200", isActive ? "text-primary stroke-[2.5]" : "text-muted stroke-[1.5]")} />
               </div>
               <span className={cn("text-micro font-medium tracking-tight transition-all duration-200", isActive ? "text-primary" : "text-muted")}>
                 {item.label}
