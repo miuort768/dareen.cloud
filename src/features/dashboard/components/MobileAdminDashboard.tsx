@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, FilePlus, Wallet, Bell, Sparkles, Loader2, Clock, ShieldCheck } from 'lucide-react';
+import { Home, FilePlus, Wallet, Bell, Sparkles, Loader2, Clock, ShieldCheck, ListTodo } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { triggerHaptic } from '../../../lib/haptics';
+import { useNavigate } from 'react-router-dom';
 import { AdminHomeTab } from './AdminHomeTab';
 import { AdminQuickTab } from './AdminQuickTab';
 import { AdminFinanceTab } from './AdminFinanceTab';
@@ -18,6 +19,7 @@ interface MobileAdminDashboardProps {
 
 const tabs = [
     { id: 'home' as const, label: 'الرئيسية', icon: Home },
+    { id: 'tasks' as const, label: 'المهام', icon: ListTodo, href: '/tasks' },
     { id: 'quick' as const, label: 'إجراءات', icon: FilePlus },
     { id: 'finance' as const, label: 'المالية', icon: Wallet },
     { id: 'alerts' as const, label: 'التنبيهات', icon: Bell },
@@ -28,6 +30,7 @@ const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-whi
 export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: MobileAdminDashboardProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
     const [activeTab, setActiveTab] = useState<'home' | 'quick' | 'finance' | 'alerts'>('home');
+    const navigate = useNavigate();
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [pullDistance, setPullDistance] = useState(0);
     const [startY, setStartY] = useState(0);
@@ -62,9 +65,14 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
         } else { setPullDistance(0); setStartY(0); }
     };
 
-    const handleTabChange = (tabId: 'home' | 'quick' | 'finance' | 'alerts') => {
+    const handleTabChange = (tabId: string) => {
         triggerHaptic('light');
-        setActiveTab(tabId);
+        const tab = tabs.find(t => t.id === tabId);
+        if (tab && 'href' in tab && tab.href) {
+            navigate(tab.href);
+        } else {
+            setActiveTab(tabId as 'home' | 'quick' | 'finance' | 'alerts');
+        }
     };
 
     return (
