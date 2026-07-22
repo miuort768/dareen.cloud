@@ -53,8 +53,8 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         {[
                             {
                                 id: '01',
-                                title: 'تحميل مجاني بدون اعلانات',
-                                desc: 'اختر ما تريد من كتب او مذكرات مجانا',
+                                title: 'اختر المنهج والمادة',
+                                desc: 'حدد منهجك والمادة التي تدرسها',
                                 icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary-active to-primary-active'
                             },
