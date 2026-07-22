@@ -108,14 +108,14 @@ export const Evaluations = () => {
     if (currentUser?.role === 'teacher') return <Navigate to="/" replace />;
 
     if (isLoading) return (
-        <div className="space-y-4 p-6 bg-primary-light dark:bg-background min-h-full">
-            {[...Array(6)].map((_, i) => <div key={`eval-${i}`} className="h-40 bg-card animate-pulse rounded-card" />)}
+        <div className="space-y-3 p-4 bg-surface min-h-full">
+            {[...Array(6)].map((_, i) => <div key={`eval-${i}`} className="h-36 bg-surface border border-border/30 animate-pulse rounded-2xl" />)}
         </div>
     );
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-primary-light dark:bg-background" dir="rtl">
-            <div className="relative z-10 max-w-page mx-auto px-2">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
+            <div className="relative z-10 max-w-page mx-auto px-2 space-y-3">
                 <EvaluationsHeader
                     totalXP={totalXP}
                     showAddButton={currentUser?.role !== 'parent'}
@@ -123,8 +123,7 @@ export const Evaluations = () => {
                     onSearchChange={setSearchTerm}
                     onAddClick={() => setIsModalOpen(true)}
                 />
-                <div className="px-2 md:px-0">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                         {sortedStudents.map((student) => (
                             <EvaluationCard
                                 key={student.id}
@@ -136,16 +135,15 @@ export const Evaluations = () => {
                             />
                         ))}
                         {sortedStudents.length === 0 && (
-                            <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-card border border-border/50 shadow-soft rounded-card">
-                                <div className="w-20 h-20 mx-auto flex items-center justify-center mb-4 rounded-card bg-primary/5 border-2 border-dashed border-primary/30">
-                                    <User size={36} className="text-primary" />
+                            <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-surface border border-dashed border-border rounded-2xl">
+                                <div className="w-12 h-12 mx-auto flex items-center justify-center mb-3 rounded-xl bg-primary-soft">
+                                    <User size={20} className="text-primary" />
                                 </div>
-                                <h3 className="text-lg font-bold text-main mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون حالياً'}</h3>
-                                <p className="text-sm font-medium text-muted max-w-xs">{searchTerm ? 'حاول استخدام كلمات بحث مختلفة.' : 'سيظهر الطلاب هنا بمجرد تسجيلهم في النظام.'}</p>
+                                <h3 className="text-xs font-bold text-main mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}</h3>
+                                <p className="text-[10px] text-dim">{searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}</p>
                             </div>
                         )}
                     </div>
-                </div>
                 <EvaluationFormModal
                     isOpen={isModalOpen}
                     formData={formData}

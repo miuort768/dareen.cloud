@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import {
-    Calendar, RefreshCw, Printer,
+    RefreshCw,
     ArrowDownRight,
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, Wallet, Activity as ActivityIcon
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSemesterName, useSetSetting, useSemesters } from '../context/AppContext';
+import { useSemesterName } from '../context/AppContext';
 import { attendanceService } from '../features/attendance/services/attendanceService';
 import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
 
-import { PrimaryBtn, StatItem } from './monthly-closing/components/ClosingUI';
+import { StatItem } from './monthly-closing/components/ClosingUI';
 import { SalarySlipModal } from './monthly-closing/components/SalarySlipModal';
 import { PayrollTable } from './monthly-closing/components/PayrollTable';
 import { CollectionsTable } from './monthly-closing/components/CollectionsTable';
@@ -26,8 +26,6 @@ type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' |
 
 export const MonthlyClosing = () => {
     const semesterName = useSemesterName();
-    const setSetting = useSetSetting();
-    const semesters = useSemesters();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [startDate, setStartDate] = useState(() => {
@@ -52,9 +50,6 @@ export const MonthlyClosing = () => {
     const handleTeacherAdjustment = (teacherId: string, amount: number) => {
         setTeacherAdjustments(prev => ({ ...prev, [teacherId]: amount }));
     };
-
-    const semesterList = (semesters || '').split(',').map(s => s.trim()).filter(Boolean);
-    if (!semesterList.includes(semesterName)) semesterList.push(semesterName);
 
     const handleRefresh = () => {
         queryClient.invalidateQueries({ queryKey: ['sessions-closing'] });
@@ -156,55 +151,27 @@ export const MonthlyClosing = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-primary-light dark:bg-background" dir="rtl">
-            <div className="max-w-page mx-auto px-2 space-y-4">
-                <div className="bg-gradient-to-br from-primary to-primary shadow-lg px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl mt-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-white/15 backdrop-blur-sm rounded-xl">
-                            <ActivityIcon size={22} className="text-on-primary" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-surface" dir="rtl">
+            <div className="max-w-page mx-auto px-2 space-y-3">
+                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <ActivityIcon size={17} className="text-primary" />
+                            </div>
+                            <div>
+                                <h1 className="text-sm font-bold text-main leading-tight">التقرير الشهري</h1>
+                                <p className="text-[10px] text-dim">{semesterName}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-lg font-bold text-on-primary leading-tight">التقرير الشهري والإغلاق المالي</h1>
-                            <p className="text-micro font-bold text-on-primary/70 mt-0.5">تحليل الأداء المالي والإداري للشهر الحالي</p>
+                        <div className="flex items-center gap-1.5 no-print">
+                            <input type="date" className="h-8 px-2 bg-background border border-border text-[10px] font-bold text-main rounded-lg cursor-pointer w-20" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                            <span className="text-[10px] text-dim">إلى</span>
+                            <input type="date" className="h-8 px-2 bg-background border border-border text-[10px] font-bold text-main rounded-lg cursor-pointer w-20" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                            <button onClick={handleRefresh} className="w-8 h-8 flex items-center justify-center bg-background border border-border rounded-lg text-dim" aria-label="تحديث">
+                                <RefreshCw size={13} />
+                            </button>
                         </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-2 no-print">
-                        <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15 backdrop-blur-sm">
-                            <Calendar size={13} className="text-on-primary/70" />
-                            <select
-                                value={semesterName}
-                                onChange={(e) => setSetting('semesterName', e.target.value)}
-                                aria-label="اختيار الفصل الدراسي"
-                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none focus:ring-0 cursor-pointer"
-                            >
-                                {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
-                        </div>
-
-                        <div className="flex items-center gap-2 rounded-xl px-3 py-1.5 bg-white/15 backdrop-blur-sm">
-                            <input
-                                type="date"
-                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none cursor-pointer w-24"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                            />
-                            <span className="text-micro text-on-primary/50">إلى</span>
-                            <input
-                                type="date"
-                                className="bg-transparent border-none p-0 text-micro font-bold text-on-primary outline-none cursor-pointer w-24"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                            />
-                        </div>
-
-                        <button onClick={handleRefresh} className="p-1.5 rounded-xl bg-white/15 backdrop-blur-sm hover:bg-white/30 transition-colors" aria-label="تحديث">
-                            <RefreshCw size={14} className="text-on-primary" />
-                        </button>
-
-                        <PrimaryBtn onClick={() => window.print()}>
-                            <Printer size={14} />
-                            طباعة                        </PrimaryBtn>
                     </div>
                 </div>
 
@@ -239,8 +206,8 @@ export const MonthlyClosing = () => {
                     />
                 </div>
 
-                <div className="px-0 mb-4">
-                    <div className="bg-card rounded-card border border-border/50 p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-soft">
+                <div className="px-0 mb-3">
+                    <div className="bg-surface border border-border/50 rounded-2xl p-1 flex overflow-x-auto no-scrollbar gap-1">
                         {[
                             { id: 'payroll', label: 'الرواتب', icon: Receipt },
                             { id: 'collections', label: 'التحصيلات', icon: Wallet },
@@ -254,10 +221,10 @@ export const MonthlyClosing = () => {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as TabType)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 rounded-xl text-micro font-normal transition-all whitespace-nowrap",
+                                    "flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-bold transition-all whitespace-nowrap",
                                     activeTab === tab.id
-                                        ? "bg-primary-soft text-primary shadow-sm"
-                                        : "text-muted hover:text-muted dark:hover:text-dim"
+                                        ? "bg-primary text-on-primary shadow-sm"
+                                        : "text-dim hover:text-main"
                                 )}
                             >
                                 <tab.icon size={14} />

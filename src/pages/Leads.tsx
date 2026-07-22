@@ -141,32 +141,33 @@ export const Leads = () => {
             className="bg-surface dark:bg-background min-h-screen pb-24"
             dir="rtl"
         >
-            <div className="relative z-10 mx-auto px-2 md:px-4 max-w-7xl">
+            <div className="relative z-10 mx-auto px-2 max-w-page">
                 {/* Header */}
-                <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 mt-6 md:mt-10">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
-                            <Users size={22} className="text-primary" />
+                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4 mt-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center">
+                                <Users size={17} className="text-success" />
+                            </div>
+                            <div>
+                                <h1 className="text-sm font-bold text-main leading-tight">العملاء المتوقعون</h1>
+                                <p className="text-[10px] text-dim">{filteredLeads.length} عميل نشط</p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">إدارة العملاء المتوقعين</h1>
-                            <p className="text-xs text-on-primary/70 mt-0.5">تتبع وإدارة العملاء المتوقعين</p>
+                        <div className="flex items-center gap-1.5">
+                            <button onClick={() => setShowLost(!showLost)} className={cn(
+                                "h-8 px-2.5 flex items-center justify-center gap-1 text-[10px] font-bold transition-all rounded-lg border",
+                                showLost
+                                    ? "bg-error-soft text-error border-error/20"
+                                    : "bg-background border-border text-dim"
+                            )}>
+                                {showLost ? <Eye size={11} /> : <EyeOff size={11} />}
+                                <span>{showLost ? 'عرض' : 'المفقودين'}</span>
+                            </button>
+                            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-8 px-2.5 text-[10px]">
+                                <Plus size={11} /> جديد
+                            </PrimaryBtn>
                         </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
-                        <button onClick={() => setShowLost(!showLost)} className={cn(
-                            "h-9 px-3 flex items-center justify-center gap-1.5 text-xs font-bold transition-all rounded-xl",
-                            showLost
-                                ? "bg-card text-error border border-border/50 shadow-soft"
-                                : "bg-white/15 text-on-primary border border-white/20 hover:bg-white/25 shadow-soft"
-                        )}>
-                            {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                            <span>{showLost ? 'عرض' : 'المفقودين'}</span>
-                            {!showLost && <span className="bg-error text-on-error text-micro font-bold w-4 h-4 flex items-center justify-center rounded-full">{leads.filter(l => l.status === 'lost').length}</span>}
-                        </button>
-                        <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 border-0">
-                            <Plus size={14} /> عميل جديد
-                        </PrimaryBtn>
                     </div>
                 </div>
 

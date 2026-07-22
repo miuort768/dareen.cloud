@@ -111,51 +111,53 @@ export const TrialSessions = () => {
       className="bg-surface dark:bg-background min-h-screen pb-24"
       dir="rtl"
     >
-      <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-page mx-auto">
+      <div className="px-3 space-y-3 max-w-page mx-auto">
         {/* Header */}
-        <div className="bg-primary shadow-soft rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
-              <BookOpen size={22} className="text-primary" />
+        <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                <BookOpen size={17} className="text-primary" />
+              </div>
+              <div>
+                <h1 className="text-sm font-bold text-main leading-tight">الحصص التجريبية</h1>
+                <p className="text-[10px] text-dim">{filtered.length} حصة</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-card-title font-bold font-heading text-on-primary leading-tight">الحصص التجريبية</h1>
-              <p className="text-xs text-on-primary/70 mt-0.5">إدارة الحصص التجريبية للطلاب الجدد</p>
-            </div>
+            <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
+              <Plus size={11} /> حصة جديدة
+            </button>
           </div>
-          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/15 text-on-primary border border-white/20 text-xs font-bold rounded-xl hover:bg-white/25 transition-all active:scale-95">
-            <Plus size={14} /> إضافة حصة
-          </button>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           {[
             { title: 'الإجمالي', value: stats?.total || 0, icon: BookOpen, iconBg: 'bg-primary-soft', iconColor: 'text-primary' },
             { title: 'تم', value: stats?.completed || 0, icon: CheckCircle2, iconBg: 'bg-success-soft', iconColor: 'text-success' },
             { title: 'قيد الانتظار', value: stats?.pending || 0, icon: Clock, iconBg: 'bg-warning-soft', iconColor: 'text-warning' },
             { title: 'ملغي', value: stats?.cancelled || 0, icon: X, iconBg: 'bg-error-soft', iconColor: 'text-error' },
           ].map(s => (
-            <div key={s.title} className="flex items-center gap-3 p-4 rounded-card shadow-soft bg-card border border-border/50">
-              <div className={cn('w-11 h-11 rounded-card flex items-center justify-center shrink-0', s.iconBg)}>
-                <s.icon size={20} className={s.iconColor} />
+            <div key={s.title} className="flex items-center gap-2.5 p-3 rounded-xl bg-surface border border-border/50">
+              <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', s.iconBg)}>
+                <s.icon size={14} className={s.iconColor} />
               </div>
               <div className="min-w-0">
-                <p className="text-xs text-muted leading-none">{s.title}</p>
-                <p className="text-card-title font-bold text-main tabular-nums mt-1">{s.value}</p>
+                <p className="text-[10px] text-dim leading-none">{s.title}</p>
+                <p className="text-sm font-bold text-main tabular-nums mt-0.5">{s.value}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* Search & Filters */}
-        <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+        <div className="bg-surface border border-border/50 rounded-2xl p-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
-              <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="ابحث باسم الطالب أو رقم الهاتف..." aria-label="بحث عن حصة" className="w-full ps-9 pe-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" />
+              <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="بحث باسم الطالب أو رقم الهاتف..." aria-label="بحث عن حصة" className="w-full ps-8 pe-3 py-2.5 bg-background border border-border/50 rounded-xl text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all" />
             </div>
-            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} aria-label="تصفية حسب الحالة" className="px-3 py-2.5 bg-card border border-border/60 rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all">
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} aria-label="تصفية حسب الحالة" className="px-3 py-2.5 bg-background border border-border/50 rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary transition-all">
               <option value="">كل الحالات</option>
               <option value="pending">قيد الانتظار</option>
               <option value="completed">تم</option>
@@ -167,12 +169,12 @@ export const TrialSessions = () => {
 
         {/* List */}
         {filtered.length === 0 ? (
-          <div className="text-center py-16 bg-card border border-border/50 shadow-soft rounded-card">
-            <div className="w-16 h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-4">
-              <BookOpen size={28} className="text-primary" />
+          <div className="text-center py-12 bg-surface border border-border/50 rounded-2xl">
+            <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
+              <BookOpen size={20} className="text-primary" />
             </div>
-            <p className="text-sm font-bold text-muted">لا توجد حصص تجريبية</p>
-            <p className="text-xs text-dim mt-1.5">ستظهر هنا الحصص التجريبية المسجلة</p>
+            <p className="text-xs font-bold text-muted">لا توجد حصص تجريبية</p>
+            <p className="text-[10px] text-dim mt-1">ستظهر هنا الحصص التجريبية المسجلة</p>
           </div>
         ) : (
           <div className="space-y-3">

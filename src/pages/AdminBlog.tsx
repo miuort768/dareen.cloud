@@ -147,7 +147,7 @@ export const AdminBlog = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-page mx-auto px-2 space-y-6">
+            <div className="max-w-page mx-auto px-2 space-y-3">
                 <BlogHeader
                     handleOpenModal={() => handleOpenModal()}
                     showSettings={showSettings} setShowSettings={setShowSettings}

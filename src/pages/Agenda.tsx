@@ -137,109 +137,108 @@ export const Agenda = () => {
             />
 
             {/* Quick Filters */}
-            <div className="shadow-sm p-3 flex flex-col md:flex-row gap-4 items-center justify-between rounded-none mb-6 bg-warning">
-                <div className="flex gap-2 overflow-x-auto w-full md:w-auto custom-scrollbar">
+            <div className="bg-surface border border-border/50 rounded-2xl p-2 mx-2 mb-3">
+                <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
                     {DAYS.map(day => (
                         <button
                             key={day}
                             onClick={() => setActiveDay(day)}
                             className={cn(
-                                "px-4 py-2 text-micro font-bold transition-all whitespace-nowrap rounded-none",
+                                "px-3 py-2 text-[10px] font-bold transition-all whitespace-nowrap rounded-xl shrink-0",
                                 activeDay === day
-                                    ? "bg-white dark:bg-primary-active text-warning"
-                                    : "bg-white/15 text-on-primary/70 hover:bg-white/30"
+                                    ? "bg-primary text-on-primary shadow-sm"
+                                    : "bg-background border border-border text-dim hover:text-main"
                             )}
                         >
                             {day}
                         </button>
                     ))}
                 </div>
-
-                <div className="relative w-full md:w-64 shrink-0">
-                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-on-primary/50" size={14} />
+            </div>
+            <div className="px-3 mb-4">
+                <div className="relative">
+                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={13} />
                     <input
                         type="text"
                         aria-label="بحث عن طالب"
                         placeholder="بحث عن طالب..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/15 border border-white/20 text-on-primary placeholder:text-on-primary/50 ps-10 py-2 text-xs font-bold outline-none rounded-none"
+                        className="w-full bg-surface border border-border/50 text-xs font-bold text-main placeholder:text-muted ps-8 pe-3 py-2.5 rounded-xl focus:outline-none focus:border-primary transition-all"
                     />
                 </div>
             </div>
 
             {/* Appointments Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 px-2">
                 {scheduledAppointments.length > 0 ? (
                     scheduledAppointments.map((app) => (
                         <div key={app.id} className={cn(
-                            "relative group bg-white dark:bg-card border-2 transition-all overflow-hidden rounded-none shadow-sm hover:shadow-sm",
-                            app.isDone ? "border-success dark:border-success/30" : "border-border dark:border-border hover:border-warning"
+                            "relative group bg-surface border transition-all overflow-hidden rounded-2xl shadow-sm",
+                            app.isDone ? "border-success/30" : "border-border hover:border-warning/50"
                         )}>
                             {/* Status Stripe */}
                             <div className={cn(
-                                "absolute top-0 start-0 w-1.5 h-full transition-all",
-                                app.isDone ? "bg-success" : "bg-warning scale-y-50 group-hover:scale-y-100"
+                                "absolute top-0 start-0 w-1 h-full transition-all",
+                                app.isDone ? "bg-success" : "bg-warning"
                             )}></div>
 
-                            <div className="p-5 space-y-4">
+                            <div className="p-3 ps-4 space-y-2.5">
                                 <div className="flex justify-between items-start">
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-2.5">
                                         <div className={cn(
-                                            "w-12 h-12 flex items-center justify-center font-medium text-lg rounded-none transition-colors",
-                                            app.isDone ? "bg-success-light text-success" : "bg-warning-light text-warning dark:bg-warning/20"
+                                            "w-9 h-9 flex items-center justify-center font-bold text-xs rounded-xl transition-colors",
+                                            app.isDone ? "bg-success-soft text-success" : "bg-warning-soft text-warning"
                                         )}>
                                             {app.studentName.charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-main dark:text-main text-base leading-tight">{app.studentName}</h4>
-                                            <p className="text-micro font-normal text-muted flex items-center gap-1 uppercase">
-                                                {app.studentGrade}
-                                            </p>
+                                            <h4 className="font-bold text-xs text-main leading-tight">{app.studentName}</h4>
+                                            <p className="text-[10px] font-bold text-dim">{app.studentGrade}</p>
                                         </div>
                                     </div>
-                                    <div className="px-2 py-1 bg-surface dark:bg-card text-micro font-medium text-muted rounded-none font-mono">
+                                    <div className="px-2 py-1 bg-background text-[10px] font-bold text-dim rounded-lg font-mono">
                                         {app.time}
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-xs font-normal text-muted dark:text-muted">
-                                        <BookOpen size={14} className="text-warning" />
+                                    <div className="flex items-center gap-1.5 text-xs font-bold text-dim">
+                                        <BookOpen size={12} className="text-warning" />
                                         <span>{app.subject}</span>
                                     </div>
                                     {!isTeacher && (
-                                        <div className="flex items-center gap-2 text-xs font-normal text-muted">
-                                            <User size={14} className="text-info" />
+                                        <div className="flex items-center gap-1.5 text-xs font-bold text-dim">
+                                            <User size={12} className="text-info" />
                                             <span>{app.teacherName}</span>
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Progress for that enrollment */}
-                                <div className="pt-2">
-                                    <div className="flex justify-between items-center mb-1 text-micro font-medium uppercase tracking-widest text-muted">
-                                        <span>تقدم الحصة</span>
-                                        <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
+                                <div className="pt-1">
+                                    <div className="flex justify-between items-center mb-1 text-[10px] font-bold text-dim">
+                                        <span>التقدم</span>
+                                        <span>{app.enrollment.sessionsUsed}/{app.enrollment.sessionsTotal}</span>
                                     </div>
                                     <ProgressBar value={(app.enrollment.sessionsUsed / app.enrollment.sessionsTotal) * 100} variant={app.isDone ? 'success' : 'warning'} />
                                 </div>
 
-                                <div className="pt-2">
+                                <div className="pt-1">
                                     {app.isDone ? (
-                                        <div className="w-full bg-success-light dark:bg-success/20 text-success py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
-                                            <CheckCircle2 size={16} />
+                                        <div className="w-full bg-success-soft text-success py-2 flex items-center justify-center gap-1.5 font-bold text-[10px] rounded-xl">
+                                            <CheckCircle2 size={13} />
                                             تم الإنجاز
                                         </div>
                                     ) : (
                                         <button
                                             onClick={() => handleMarkDone(app)}
                                             disabled={logAttendanceMutation.isPending}
-                                            className="w-full bg-warning hover:bg-warning hover:text-on-warning text-on-warning py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-warning/10 active:scale-95 disabled:opacity-50"
+                                            className="w-full bg-warning text-on-warning py-2 flex items-center justify-center gap-1.5 font-bold text-[10px] rounded-xl transition-all active:scale-95 disabled:opacity-50"
                                         >
-                                            {logAttendanceMutation.isPending ? 'جاري الإنجاز...' : (
+                                            {logAttendanceMutation.isPending ? 'جاري...' : (
                                                 <>
-                                                    <CheckCircle2 size={16} />
+                                                    <CheckCircle2 size={13} />
                                                     تسجيل الإنجاز
                                                 </>
                                             )}
@@ -250,10 +249,10 @@ export const Agenda = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="col-span-full py-24 text-center border-2 border-dashed border-border dark:border-border bg-white/50 dark:bg-card/50 rounded-none">
-                        <Calendar size={48} className="mx-auto mb-4 text-dim" />
-                        <h3 className="text-lg font-medium text-muted">لا توجد مواعيد لهذا اليوم</h3>
-                        <p className="text-sm text-muted font-normal mt-1 uppercase tracking-widest">اختر يوماً آخر من الأيام المتاحة</p>
+                    <div className="col-span-full py-16 text-center border border-dashed border-border bg-surface rounded-2xl mx-2">
+                        <Calendar size={32} className="mx-auto mb-2 text-dim" />
+                        <h3 className="text-xs font-bold text-muted">لا توجد مواعيد لهذا اليوم</h3>
+                        <p className="text-[10px] text-dim mt-1">اختر يوماً آخر</p>
                     </div>
                 )}
             </div>
