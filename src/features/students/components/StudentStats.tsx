@@ -8,36 +8,28 @@ interface StudentStatsProps {
     averageSessionsPerStudent: number;
 }
 
-const statClass: Record<string, string> = {
-  'إجمالي القوة الطلابية': 'bg-primary',
-  'التراخيص النشطة': 'bg-success',
-  'التنوع الأكاديمي': 'bg-info',
-  'الكثافة التشغيلية': 'bg-warning',
-};
-
-const StatItem = ({ label, value, icon: Icon }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }> }) => {
-    const bgClass = statClass[label] || 'bg-primary';
-    return (
-        <div className={cn("flex items-center gap-3 shadow-sm p-4 transition-all hover:shadow-md rounded-2xl", bgClass)}>
-            <div className="w-11 h-11 flex items-center justify-center shrink-0 shadow-sm rounded-2xl bg-white/15 text-inverse">
-                <Icon size={20} />
-            </div>
-            <div className="min-w-0">
-                <p className="text-micro font-bold text-inverse opacity-70 leading-none">{label}</p>
-                <p className="text-xl font-bold text-inverse tabular-nums mt-1">{value}</p>
-            </div>
-        </div>
-    );
-};
+const statConfig = [
+    { label: 'الطلاب', icon: Users, bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info/20' },
+    { label: 'الاشتراكات', icon: UserCheck, bg: 'bg-success-soft', text: 'text-success', ring: 'ring-success/20' },
+    { label: 'المراحل', icon: GraduationCap, bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-primary/20' },
+    { label: 'متوسط الحصص', icon: BookOpen, bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-warning/20' },
+];
 
 export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, averageSessionsPerStudent }: StudentStatsProps) => {
+    const values = [totalStudents, activeEnrollments, uniqueGrades, averageSessionsPerStudent];
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2">
-            <StatItem label="إجمالي القوة الطلابية" value={totalStudents} icon={Users} />
-            <StatItem label="التراخيص النشطة" value={activeEnrollments} icon={UserCheck} />
-            <StatItem label="التنوع الأكاديمي" value={uniqueGrades} icon={GraduationCap} />
-            <StatItem label="الكثافة التشغيلية" value={averageSessionsPerStudent} icon={BookOpen} />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {statConfig.map((stat, i) => (
+                <div key={stat.label} className={cn("flex items-center gap-2.5 p-3 bg-card border border-border/50 rounded-xl")}>
+                    <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ring-1", stat.bg, stat.ring)}>
+                        <stat.icon size={16} strokeWidth={1.5} className={stat.text} />
+                    </div>
+                    <div className="min-w-0">
+                        <p className="text-[10px] font-bold text-dim truncate">{stat.label}</p>
+                        <p className="text-sm font-bold text-main tabular-nums">{values[i]}</p>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };
-

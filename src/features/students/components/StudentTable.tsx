@@ -114,43 +114,48 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
         const hasLowBalance = (student.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2);
 
         return (
-            <div>
-                <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
+            <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center font-bold text-sm text-primary shrink-0">
                             {student.name.charAt(0)}
                         </div>
-                        <div>
-                            <h4 className="text-sm font-bold text-main leading-tight mb-1">{student.name}</h4>
-                            <span className="text-micro font-bold px-1.5 py-0.5 bg-primary-soft text-primary">{student.grade}</span>
+                        <div className="min-w-0 flex-1">
+                            <h4 className="text-sm font-bold text-main leading-tight truncate">{student.name}</h4>
+                            <div className="flex items-center gap-2 mt-0.5">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 bg-primary-soft text-primary rounded">{student.grade}</span>
+                                {hasLowBalance && (
+                                    <span className="text-[10px] font-bold text-error">رصيد منخفض</span>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <div className="flex gap-1">
-                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-card border border-border text-dim hover:text-success flex items-center justify-center transition-all" aria-label="تعديل"><Edit size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center bg-warning-soft text-warning" aria-label="إرسال إشعار"><Bell size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center bg-error-soft text-error" aria-label="حذف"><Trash size={14} /></button>
+                    <div className="flex items-center gap-1 shrink-0">
+                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-success rounded-lg active:bg-hover transition-colors" aria-label="تعديل"><Edit size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-warning rounded-lg active:bg-hover transition-colors" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-error rounded-lg active:bg-hover transition-colors" aria-label="حذف"><Trash size={14} /></button>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                    <div className="p-2 text-center bg-primary-soft">
-                        <span className="text-micro font-bold text-primary block mb-1">العقود</span>
-                        <span className="text-xs font-semibold text-primary">{student.enrollments?.length || 0}</span>
+                <div className="grid grid-cols-3 gap-2">
+                    <div className="text-center p-2 bg-primary-soft/50 rounded-lg">
+                        <span className="text-[9px] font-bold text-dim block">العقود</span>
+                        <span className="text-xs font-bold text-primary">{student.enrollments?.length || 0}</span>
                     </div>
-                    <div className="p-2 text-center bg-success-soft">
-                        <span className="text-micro font-bold text-success block mb-1">المستخدم</span>
-                        <span className="text-xs font-semibold text-success">{totalUsed}</span>
+                    <div className="text-center p-2 bg-success-soft/50 rounded-lg">
+                        <span className="text-[9px] font-bold text-dim block">المستخدم</span>
+                        <span className="text-xs font-bold text-success">{totalUsed}</span>
                     </div>
-                    <div className="p-2 text-center bg-warning-soft">
-                        <span className="text-micro font-bold text-warning block mb-1">الرصيد</span>
-                        <span className={cn('text-xs font-semibold', hasLowBalance ? 'text-error' : 'text-warning')}>{totalExpected - totalUsed}</span>
+                    <div className="text-center p-2 bg-warning-soft/50 rounded-lg">
+                        <span className="text-[9px] font-bold text-dim block">الرصيد</span>
+                        <span className={cn('text-xs font-bold', hasLowBalance ? 'text-error' : 'text-warning')}>{totalExpected - totalUsed}</span>
                     </div>
                 </div>
-                <div className="space-y-1.5">
-                    <div className="flex justify-between text-micro font-normal text-dim">
+                <div>
+                    <div className="flex justify-between text-[10px] text-dim mb-1">
                         <span>معدل الاستهلاك</span>
-                        <span className="font-mono">{progress}%</span>
+                        <span className="font-bold tabular-nums">{progress}%</span>
                     </div>
-                    <ProgressBar value={progress} />
+                    <ProgressBar value={progress} className="h-1.5" />
                 </div>
             </div>
         );
@@ -158,9 +163,9 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
 
     if (students.length === 0) {
         return (
-            <div className="py-24 text-center opacity-40">
-                <GraduationCap size={48} className="mx-auto mb-4 text-dim" />
-                <p className="text-micro font-normal text-dim uppercase tracking-label">لا توجد بيانات طلاب حالياً</p>
+            <div className="py-16 text-center">
+                <GraduationCap size={40} className="mx-auto mb-3 text-dim/30" />
+                <p className="text-xs font-bold text-dim">لا توجد بيانات طلاب حالياً</p>
             </div>
         );
     }
