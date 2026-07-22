@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { GlassCard } from '@/shared/components/ui';
 
 interface Article {
     id: string;
@@ -32,11 +31,11 @@ export const RecentArticles = () => {
     if (articles.length === 0) return null;
 
     return (
-        <GlassCard dir="rtl">
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
             <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-error to-rose-500 flex items-center justify-center shadow-lg shadow-error/20">
-                        <BookOpen size={14} className="text-white" />
+                <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-error-soft flex items-center justify-center">
+                        <BookOpen size={16} className="text-error" />
                     </div>
                     <h3 className="text-sm font-bold text-main">آخر المقالات</h3>
                 </div>
@@ -44,7 +43,7 @@ export const RecentArticles = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => navigate('/admin/blog')}
-                    className="text-[10px] font-bold h-8 px-3 gap-1.5 rounded-xl text-muted hover:text-main hover:bg-white/30 dark:hover:bg-white/5"
+                    className="text-[10px] font-bold h-7 px-2.5 gap-1 rounded-lg text-muted hover:text-main"
                 >
                     إدارة المقالات
                     <ArrowLeft size={10} />
@@ -56,20 +55,20 @@ export const RecentArticles = () => {
                     <div
                         key={article.id}
                         onClick={() => navigate('/admin/blog')}
-                        className="flex items-center justify-between p-3 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 hover:border-white/30 transition-all cursor-pointer hover:shadow-md"
+                        className="flex items-center justify-between p-3 rounded-xl bg-surface hover:bg-hover transition-colors cursor-pointer"
                     >
                         <div className="flex items-center gap-2.5 min-w-0">
-                            <Badge variant="outline" className="text-[9px] h-5 px-2.5 rounded-lg bg-gradient-to-br from-error/10 to-rose-500/10 text-error border-error/20 font-bold shrink-0">
+                            <Badge variant="outline" className="text-[9px] h-5 px-2 rounded-lg bg-error-soft text-error border-error/20 font-bold shrink-0">
                                 {article.category}
                             </Badge>
                             <span className="text-xs font-semibold text-main truncate">{article.title}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-[10px] font-medium text-muted shrink-0">
-                            <span className="flex items-center gap-1 bg-white/30 dark:bg-white/5 px-2 py-0.5 rounded-lg">
+                        <div className="flex items-center gap-2 text-[10px] font-medium text-muted shrink-0">
+                            <span className="flex items-center gap-1">
                                 <Calendar size={9} />
                                 {article.date}
                             </span>
-                            <span className="flex items-center gap-1 bg-white/30 dark:bg-white/5 px-2 py-0.5 rounded-lg">
+                            <span className="flex items-center gap-1">
                                 <Eye size={9} />
                                 {article.views}
                             </span>
@@ -77,6 +76,6 @@ export const RecentArticles = () => {
                     </div>
                 ))}
             </div>
-        </GlassCard>
+        </div>
     );
 };

@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { GlassCard } from '@/shared/components/ui';
 
 interface FocusStudent {
     id: string;
@@ -26,22 +25,10 @@ const typeLabels: Record<string, string> = {
     engagement: 'تفاعل',
 };
 
-const typeStyles: Record<string, { gradient: string; badge: string; inactive: string }> = {
-    attendance: {
-        gradient: 'from-error to-rose-500',
-        badge: 'bg-error/10 text-error border-error/20',
-        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
-    },
-    performance: {
-        gradient: 'from-warning to-amber-500',
-        badge: 'bg-warning/10 text-warning border-warning/20',
-        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
-    },
-    engagement: {
-        gradient: 'from-info to-cyan-500',
-        badge: 'bg-info/10 text-info border-info/20',
-        inactive: 'bg-white/40 dark:bg-white/5 text-muted hover:text-main'
-    },
+const typeBadge: Record<string, string> = {
+    attendance: 'bg-error-soft text-error border-error/20',
+    performance: 'bg-warning-soft text-warning border-warning/20',
+    engagement: 'bg-info-soft text-info border-info/20',
 };
 
 export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListProps) => {
@@ -85,52 +72,52 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
 
     if (!students || students.length === 0) {
         return (
-            <GlassCard dir="rtl">
+            <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
                 <div className="flex flex-col items-center justify-center text-center py-8">
-                    <div className="w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
-                        <CheckCircle2 size={26} className="text-success/40" />
+                    <div className="w-12 h-12 mb-2 rounded-xl bg-success-soft flex items-center justify-center">
+                        <CheckCircle2 size={22} className="text-success/50" />
                     </div>
-                    <h4 className="text-sm font-bold text-main mb-1">كل شيء ممتاز!</h4>
-                    <p className="text-xs text-muted">جميع الطلاب ملتزمون بالخطط والمواعيد حالياً.</p>
+                    <h4 className="text-xs font-bold text-main mb-0.5">كل شيء ممتاز!</h4>
+                    <p className="text-[10px] text-muted">جميع الطلاب ملتزمون بالخطط والمواعيد حالياً.</p>
                 </div>
-            </GlassCard>
+            </div>
         );
     }
 
     return (
-        <GlassCard dir="rtl">
-            <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-error to-rose-500 flex items-center justify-center shadow-lg shadow-error/20">
-                    <AlertTriangle size={18} className="text-white" />
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
+            <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-error-soft flex items-center justify-center">
+                    <AlertTriangle size={16} className="text-error" />
                 </div>
                 <div>
-                    <h3 className="text-base font-bold text-main leading-tight">قائمة التركيز</h3>
-                    <p className="text-xs text-muted">طلاب يحتاجون لاهتمامك</p>
+                    <h3 className="text-sm font-bold text-main leading-tight">قائمة التركيز</h3>
+                    <p className="text-[10px] text-muted">طلاب يحتاجون لاهتمامك</p>
                 </div>
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1 scrollbar-none">
+            <div className="flex items-center gap-1 mb-4 overflow-x-auto pb-1 scrollbar-none">
                 {['all', 'attendance', 'performance', 'engagement'].map(key => {
                     const isActive = activeFilter === key;
-                    const style = key === 'all'
-                        ? { gradient: 'from-primary to-purple-500', badge: 'bg-primary/10 text-primary' }
-                        : typeStyles[key];
+                    const badgeClass = key === 'all' ? 'bg-primary-soft text-primary' : (typeBadge[key] || 'bg-surface text-muted');
 
                     return (
                         <button
                             key={key}
                             onClick={() => setActiveFilter(key)}
                             className={cn(
-                                "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
+                                "px-3 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-colors flex items-center gap-1.5",
                                 isActive
-                                    ? "bg-gradient-to-r text-white shadow-md border-0"
-                                    : style.inactive + ' border-white/20 backdrop-blur-sm'
+                                    ? "bg-primary text-on-primary"
+                                    : "bg-surface text-muted hover:text-main"
                             )}
-                            style={isActive ? { backgroundImage: `linear-gradient(to left, ${style.gradient.replace('from-', '').replace('to-', '').split(' ').join(', ')})` } : undefined}
                         >
                             {typeLabels[key]}
-                            <Badge variant={isActive ? "secondary" : "outline"} className={cn("me-1.5 px-1.5 py-0 rounded text-[9px] h-auto min-w-[18px] leading-none", isActive ? "bg-white/20 text-white border-0" : style.badge + ' border')}>
+                            <Badge variant={isActive ? "secondary" : "outline"} className={cn(
+                                "px-1.5 py-0 rounded text-[9px] h-auto min-w-[16px] leading-none",
+                                isActive ? "bg-white/20 text-on-primary border-0" : badgeClass
+                            )}>
                                 {counts[key as keyof typeof counts]}
                             </Badge>
                         </button>
@@ -139,31 +126,31 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
             </div>
 
             {/* Student List */}
-            <div className="space-y-2.5 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
+            <div className="space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
                 {filteredStudents.map((student) => (
                     <div key={student.id}>
                         <div className={cn(
-                            "flex items-center justify-between p-4 rounded-2xl transition-all cursor-pointer border backdrop-blur-sm",
+                            "flex items-center justify-between p-3 rounded-xl transition-colors cursor-pointer border",
                             addingFor === student.id
-                                ? "bg-white/60 dark:bg-white/10 border-primary/30 shadow-md"
-                                : "bg-white/40 dark:bg-white/5 border-white/20 hover:border-white/30 hover:shadow-md"
+                                ? "bg-primary-soft border-primary/20"
+                                : "bg-surface border-border hover:bg-hover"
                         )}>
                             <div
                                 onClick={() => onStudentClick?.(student)}
                                 role="button"
                                 tabIndex={0}
                                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.(student); } }}
-                                className="flex items-center gap-3 min-w-0 flex-1"
+                                className="flex items-center gap-2.5 min-w-0 flex-1"
                             >
-                                <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-primary/10 to-purple-500/10 border border-white/30 flex items-center justify-center">
-                                    <UserCircle size={20} className="text-primary" />
+                                <div className="w-9 h-9 shrink-0 rounded-xl bg-primary-soft flex items-center justify-center">
+                                    <UserCircle size={18} className="text-primary" />
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className="text-sm font-bold text-main truncate">{student.name}</h4>
-                                    <div className="flex items-center gap-2 mt-0.5">
+                                    <h4 className="text-xs font-bold text-main truncate">{student.name}</h4>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
                                         <Badge variant="outline" className={cn(
-                                            "text-[9px] h-5 px-2 rounded-lg border",
-                                            typeStyles[student.type]?.badge || 'bg-primary/10 text-primary'
+                                            "text-[9px] h-4 px-1.5 rounded border",
+                                            typeBadge[student.type] || 'bg-surface text-muted'
                                         )}>
                                             {typeLabels[student.type]}
                                         </Badge>
@@ -177,41 +164,41 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                 variant="default"
                                 size="sm"
                                 className={cn(
-                                    "h-8 px-3 text-[10px] font-bold gap-1 shrink-0 rounded-xl border-0",
+                                    "h-7 px-2.5 text-[10px] font-bold gap-1 shrink-0 rounded-lg",
                                     addingFor === student.id
-                                        ? "bg-gradient-to-r from-primary to-purple-500 text-white shadow-md"
-                                        : "bg-white/60 dark:bg-white/10 text-primary hover:bg-primary hover:text-on-primary border border-white/20"
+                                        ? "bg-primary text-on-primary"
+                                        : "bg-surface text-primary border border-border hover:bg-primary hover:text-on-primary"
                                 )}
                                 aria-expanded={addingFor === student.id}
                             >
-                                <Plus size={11} />
+                                <Plus size={10} />
                                 إضافة حصة
                             </Button>
                         </div>
 
                         {addingFor === student.id && (
-                            <div className="p-4 mt-2 me-14 rounded-2xl bg-gradient-to-br from-success/5 via-emerald-500/5 to-success/5 border border-success/20 backdrop-blur-sm">
-                                <div className="flex items-center gap-2 mb-3">
+                            <div className="p-3 mt-1.5 me-12 rounded-xl bg-success-soft border border-success/20">
+                                <div className="flex items-center gap-2 mb-2">
                                     <Input
                                         type="text"
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
                                         placeholder="المادة (مثال: رياضيات)"
                                         aria-label="المادة"
-                                        className="h-9 text-xs rounded-xl border-white/20 bg-white/50 dark:bg-white/5"
+                                        className="h-8 text-[11px] rounded-lg"
                                         dir="rtl"
                                     />
                                     <Button
                                         variant="ghost"
                                         size="icon"
                                         onClick={() => setAddingFor(null)}
-                                        className="h-9 w-9 rounded-xl shrink-0"
+                                        className="h-8 w-8 rounded-lg shrink-0"
                                         aria-label="إغلاق"
                                     >
-                                        <X size={14} />
+                                        <X size={13} />
                                     </Button>
                                 </div>
-                                <div className="flex gap-1.5">
+                                <div className="flex gap-1">
                                     {[1, 2, 4, 8].map(num => (
                                         <Button
                                             key={num}
@@ -221,9 +208,9 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                             disabled={!subject.trim()}
                                             variant="success"
                                             size="sm"
-                                            className="flex-1 h-8 text-[10px] font-bold rounded-xl"
+                                            className="flex-1 h-7 text-[10px] font-bold rounded-lg"
                                         >
-                                            +{num} {num === 1 ? 'حصة' : 'حصص'}
+                                            +{num}
                                         </Button>
                                     ))}
                                     <Button
@@ -236,7 +223,7 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                                         disabled={!subject.trim()}
                                         variant="outline"
                                         size="sm"
-                                        className="h-8 text-[10px] font-bold rounded-xl border-white/20 bg-white/50 dark:bg-white/5"
+                                        className="h-7 text-[10px] font-bold rounded-lg"
                                     >
                                         مخصص
                                     </Button>
@@ -247,10 +234,10 @@ export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListP
                 ))}
             </div>
 
-            <div className="mt-5 pt-4 border-t border-white/20 dark:border-white/10 flex items-center gap-1.5 text-[10px] text-muted">
-                <Clock size={10} />
+            <div className="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[10px] text-muted">
+                <Clock size={9} />
                 <span>يتم تحديث هذه القائمة دورياً بناءً على الحضور والتقييمات الأخيرة.</span>
             </div>
-        </GlassCard>
+        </div>
     );
 };

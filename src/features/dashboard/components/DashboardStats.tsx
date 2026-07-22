@@ -12,86 +12,41 @@ interface StatCardData {
     title: string;
     value: string | number;
     icon: React.ComponentType<{ size?: number; className?: string }>;
-    gradient: string;
-    iconGradient: string;
+    color: string;
     trend?: { value: number; isUp: boolean };
     prefix?: string;
     formatter?: (val: number) => string;
 }
 
-const gradientMap: Record<string, { gradient: string; iconGradient: string; from: string; via: string; to: string }> = {
-    primary: {
-        gradient: 'from-primary/5 via-purple-500/5 to-primary/5',
-        iconGradient: 'from-primary to-purple-500',
-        from: 'rgba(99,102,241,0.1)',
-        via: 'rgba(139,92,246,0.08)',
-        to: 'rgba(99,102,241,0.05)',
-    },
-    success: {
-        gradient: 'from-success/5 via-emerald-500/5 to-success/5',
-        iconGradient: 'from-success to-emerald-500',
-        from: 'rgba(16,185,129,0.1)',
-        via: 'rgba(5,150,105,0.08)',
-        to: 'rgba(16,185,129,0.05)',
-    },
-    info: {
-        gradient: 'from-info/5 via-cyan-500/5 to-info/5',
-        iconGradient: 'from-info to-cyan-500',
-        from: 'rgba(14,165,233,0.1)',
-        via: 'rgba(6,182,212,0.08)',
-        to: 'rgba(14,165,233,0.05)',
-    },
-    warning: {
-        gradient: 'from-warning/5 via-amber-500/5 to-warning/5',
-        iconGradient: 'from-warning to-amber-500',
-        from: 'rgba(245,158,11,0.1)',
-        via: 'rgba(217,119,6,0.08)',
-        to: 'rgba(245,158,11,0.05)',
-    },
-    error: {
-        gradient: 'from-error/5 via-rose-500/5 to-error/5',
-        iconGradient: 'from-error to-rose-500',
-        from: 'rgba(225,29,72,0.1)',
-        via: 'rgba(244,63,94,0.08)',
-        to: 'rgba(225,29,72,0.05)',
-    },
+const colorMap: Record<string, { bg: string; text: string }> = {
+    primary: { bg: 'bg-primary-soft', text: 'text-primary' },
+    success: { bg: 'bg-success-soft', text: 'text-success' },
+    info: { bg: 'bg-info-soft', text: 'text-info' },
+    warning: { bg: 'bg-warning-soft', text: 'text-warning' },
+    error: { bg: 'bg-error-soft', text: 'text-error' },
 };
 
 const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
     const Icon = item.icon;
-    const g = gradientMap[item.gradient] || gradientMap.primary;
+    const c = colorMap[item.color] || colorMap.primary;
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
             className={cn(
-                "relative group p-6 rounded-3xl",
-                "bg-gradient-to-br bg-card/70 backdrop-blur-xl",
-                "border border-white/20 dark:border-white/10",
-                "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-                "hover:shadow-[0_16px_48px_-8px_rgba(99,102,241,0.12)]",
-                "hover:-translate-y-1",
-                "transition-all duration-300",
+                "p-5 rounded-2xl bg-card border border-border",
                 "font-dash"
             )}
-            style={{
-                backgroundImage: `linear-gradient(135deg, ${g.from}, ${g.via}, ${g.to})`,
-            }}
         >
-            <div className="flex items-start justify-between mb-4">
-                <div className={cn(
-                    "w-12 h-12 rounded-2xl flex items-center justify-center",
-                    "bg-gradient-to-br shadow-lg",
-                    g.iconGradient,
-                    "text-white"
-                )}>
-                    <Icon size={20} />
+            <div className="flex items-start justify-between mb-3">
+                <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center", c.bg)}>
+                    <Icon size={18} className={c.text} />
                 </div>
                 {item.trend && (
                     <div className={cn(
-                        "flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold",
+                        "flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold",
                         item.trend.isUp ? "bg-success/10 text-success" : "bg-error/10 text-error"
                     )}>
                         {item.trend.isUp ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
@@ -100,18 +55,14 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
                 )}
             </div>
 
-            <div className="space-y-1">
-                <h3 className={cn(
-                    "text-3xl font-black tabular-nums tracking-tight",
-                    "bg-gradient-to-r bg-clip-text text-transparent",
-                    g.iconGradient
-                )}>
+            <div className="space-y-0.5">
+                <p className="text-2xl font-bold tabular-nums text-main tracking-tight">
                     {item.formatter && typeof item.value === 'number'
                         ? item.formatter(item.value)
                         : item.value}
-                    {item.prefix && <span className="text-base font-bold text-muted me-1">{item.prefix}</span>}
-                </h3>
-                <p className="text-sm text-muted font-medium">{item.title}</p>
+                    {item.prefix && <span className="text-xs font-medium text-muted ms-1">{item.prefix}</span>}
+                </p>
+                <p className="text-xs text-muted font-medium">{item.title}</p>
             </div>
         </motion.div>
     );
@@ -123,32 +74,28 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             title: 'إجمالي الطلاب',
             value: stats.studentsCount,
             icon: Users,
-            gradient: 'primary',
-            iconGradient: 'from-primary to-purple-500',
+            color: 'primary',
             trend: { value: 12, isUp: true },
         },
         {
             title: 'الاشتراكات النشطة',
             value: stats.totalEnrollments,
             icon: BookOpen,
-            gradient: 'success',
-            iconGradient: 'from-success to-emerald-500',
+            color: 'success',
             trend: { value: 7, isUp: true },
         },
         {
             title: 'حصص اليوم',
             value: stats.todaySessions,
             icon: CalendarCheck,
-            gradient: 'info',
-            iconGradient: 'from-info to-cyan-500',
+            color: 'info',
             trend: { value: 22, isUp: true },
         },
         {
             title: 'الحصص المنفذة',
             value: stats.completedSessions,
             icon: CheckCircle2,
-            gradient: 'success',
-            iconGradient: 'from-success to-emerald-500',
+            color: 'success',
             trend: { value: stats.totalSessions > 0 ? Math.round((stats.completedSessions / stats.totalSessions) * 100) : 0, isUp: true },
         },
     ];
@@ -158,16 +105,14 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             title: 'إجمالي المعلمين',
             value: stats.teachersCount,
             icon: GraduationCap,
-            gradient: 'warning',
-            iconGradient: 'from-warning to-amber-500',
+            color: 'warning',
             trend: { value: 3, isUp: true },
         },
         {
             title: 'إجمالي الإيرادات',
             value: stats.totalRevenue || 0,
             icon: TrendingUp,
-            gradient: 'success',
-            iconGradient: 'from-success to-emerald-500',
+            color: 'success',
             prefix: 'ج.م',
             trend: { value: 8, isUp: true },
             formatter: (val: number) => val.toLocaleString(),
@@ -176,8 +121,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             title: 'إجمالي المصروفات',
             value: stats.totalExpenses || 0,
             icon: TrendingDown,
-            gradient: 'error',
-            iconGradient: 'from-error to-rose-500',
+            color: 'error',
             prefix: 'ج.م',
             trend: { value: 5, isUp: false },
             formatter: (val: number) => val.toLocaleString(),
@@ -186,8 +130,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             title: 'صافي الربح',
             value: stats.totalNetProfit || 0,
             icon: DollarSign,
-            gradient: 'info',
-            iconGradient: 'from-info to-cyan-500',
+            color: 'info',
             prefix: 'ج.م',
             trend: { value: 15, isUp: true },
             formatter: (val: number) => val.toLocaleString(),

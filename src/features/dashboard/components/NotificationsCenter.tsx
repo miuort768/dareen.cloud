@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, ShieldAlert, Info, Sparkles } from 'lucide-react';
+import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, ShieldAlert, Info } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
@@ -30,19 +30,6 @@ type RoomAlertItem = {
     action?: () => void;
     link?: string;
 };
-
-const GlassBox = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        "rounded-3xl p-6",
-        "bg-card/70 backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
-        "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-        "font-dash",
-        className
-    )}>
-        {children}
-    </div>
-);
 
 export const NotificationsCenter = ({
     tasks,
@@ -152,146 +139,144 @@ export const NotificationsCenter = ({
     }, [tasks, lowBalanceStudents, adminPhone]);
 
     return (
-        <div className="w-full space-y-4" dir="rtl">
+        <div className="w-full space-y-3 font-dash" dir="rtl">
             {/* Header */}
-            <GlassBox className="!p-5">
+            <div className="rounded-2xl bg-card border border-border p-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
-                            <ShieldAlert size={18} className="text-white" />
+                        <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                            <ShieldAlert size={16} className="text-primary" />
                         </div>
                         <div>
-                            <h3 className="text-base font-bold text-main">مركز العمليات الذكي</h3>
-                            <p className="text-xs text-muted">غرفة التحكم الذكية</p>
+                            <h3 className="text-sm font-bold text-main">مركز العمليات الذكي</h3>
+                            <p className="text-[10px] text-muted">غرفة التحكم الذكية</p>
                         </div>
                     </div>
-                    <div className="flex p-1 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 gap-1 w-fit">
+                    <div className="flex p-0.5 rounded-xl bg-surface gap-0.5 w-fit">
                         <button
                             onClick={() => setActiveTab('smart')}
                             className={cn(
-                                "px-5 py-2 text-xs font-bold transition-all flex items-center gap-1.5 rounded-xl",
-                                activeTab === 'smart' ? "bg-gradient-to-r from-primary to-purple-500 text-white shadow-md" : "text-muted hover:text-main"
+                                "px-4 py-1.5 text-[11px] font-bold transition-colors flex items-center gap-1.5 rounded-lg",
+                                activeTab === 'smart' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
                             )}
                         >
-                            <Zap size={12} />
+                            <Zap size={11} />
                             إخطارات ذكية
                         </button>
                         <button
                             onClick={() => setActiveTab('room')}
                             className={cn(
-                                "px-5 py-2 text-xs font-bold transition-all flex items-center gap-1.5 rounded-xl",
-                                activeTab === 'room' ? "bg-gradient-to-r from-primary to-purple-500 text-white shadow-md" : "text-muted hover:text-main"
+                                "px-4 py-1.5 text-[11px] font-bold transition-colors flex items-center gap-1.5 rounded-lg",
+                                activeTab === 'room' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
                             )}
                         >
-                            <Bell size={12} />
+                            <Bell size={11} />
                             غرفة التنبيهات
                         </button>
                     </div>
                 </div>
-            </GlassBox>
+            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
                 {/* Smart Alerts */}
                 <div className={cn("lg:col-span-7", activeTab !== 'smart' && "hidden lg:block")}>
-                    <GlassBox className="h-full">
-                        <div className="flex items-center justify-between mb-6">
+                    <div className="rounded-2xl bg-card border border-border p-5 h-full">
+                        <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <Sparkles size={16} className="text-primary" />
-                                <h4 className="text-sm font-bold text-main">النظام التحليلي</h4>
+                                <h4 className="text-xs font-bold text-main">النظام التحليلي</h4>
                             </div>
-                            <Badge variant="default" className="text-[10px] h-6 px-3 rounded-xl bg-gradient-to-r from-primary to-purple-500 border-0 text-white">
+                            <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20">
                                 {smartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج
                             </Badge>
                         </div>
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                             {smartAlerts.map((alert) => (
                                 <div key={alert.id} className={cn(
-                                    "p-4 flex items-center justify-between rounded-2xl border backdrop-blur-sm",
-                                    alert.type === 'critical' ? "bg-error/5 border-error/20" :
-                                    alert.type === 'success' ? "bg-success/5 border-success/20" :
-                                    "bg-warning/5 border-warning/20"
+                                    "p-3 flex items-center justify-between rounded-xl border",
+                                    alert.type === 'critical' ? "bg-error-soft border-error/20" :
+                                    alert.type === 'success' ? "bg-success-soft border-success/20" :
+                                    "bg-warning-soft border-warning/20"
                                 )}>
-                                    <div className="flex items-center gap-3 min-w-0">
+                                    <div className="flex items-center gap-2.5 min-w-0">
                                         <div className={cn(
-                                            "w-9 h-9 rounded-xl flex items-center justify-center shrink-0",
-                                            alert.type === 'critical' ? "bg-error/20 text-error" :
-                                            alert.type === 'success' ? "bg-success/20 text-success" :
-                                            "bg-warning/20 text-warning"
+                                            "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                                            alert.type === 'critical' ? "bg-error/15 text-error" :
+                                            alert.type === 'success' ? "bg-success/15 text-success" :
+                                            "bg-warning/15 text-warning"
                                         )}>
-                                            {alert.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
+                                            {alert.type === 'success' ? <CheckCircle2 size={14} /> : <AlertTriangle size={14} />}
                                         </div>
                                         <div className="min-w-0">
-                                            <h3 className="font-bold text-sm text-main">{alert.title}</h3>
-                                            <p className="text-xs text-muted mt-0.5">{alert.desc}</p>
+                                            <h3 className="font-bold text-xs text-main">{alert.title}</h3>
+                                            <p className="text-[10px] text-muted mt-0.5">{alert.desc}</p>
                                         </div>
                                     </div>
                                     {typeof alert.action === 'function' && (
-                                        <Button variant="ghost" size="icon" onClick={alert.action} className="h-8 w-8 rounded-xl text-primary hover:text-primary hover:bg-primary/10 shrink-0" aria-label="تنفيذ إجراء">
-                                            <ArrowLeft size={14} />
+                                        <Button variant="ghost" size="icon" onClick={alert.action} className="h-7 w-7 rounded-lg text-primary shrink-0" aria-label="تنفيذ إجراء">
+                                            <ArrowLeft size={13} />
                                         </Button>
                                     )}
                                 </div>
                             ))}
                             {smartAlerts.length === 0 && (
-                                <div className="text-center py-14">
-                                    <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
-                                        <CheckCircle2 size={24} className="text-success/40" />
+                                <div className="text-center py-10">
+                                    <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
+                                        <CheckCircle2 size={20} className="text-success/50" />
                                     </div>
-                                    <p className="text-sm font-bold text-muted">لا توجد تنبيهات ذكية</p>
-                                    <p className="text-xs text-muted/60 mt-0.5">جميع الأنظمة تعمل بكفاءة</p>
+                                    <p className="text-xs font-bold text-muted">لا توجد تنبيهات ذكية</p>
+                                    <p className="text-[10px] text-muted/60 mt-0.5">جميع الأنظمة تعمل بكفاءة</p>
                                 </div>
                             )}
                         </div>
-                    </GlassBox>
+                    </div>
                 </div>
 
                 {/* Alerts Room */}
                 <div className={cn("lg:col-span-5", activeTab !== 'room' && "hidden lg:block")}>
-                    <GlassBox className="h-full">
-                        <div className="flex items-center justify-between mb-6">
+                    <div className="rounded-2xl bg-card border border-border p-5 h-full">
+                        <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <Bell size={16} className="text-primary" />
-                                <h4 className="text-sm font-bold text-main">غرفة العمليات</h4>
+                                <h4 className="text-xs font-bold text-main">غرفة العمليات</h4>
                             </div>
-                            <Badge variant="default" className="text-[10px] h-6 px-3 rounded-xl bg-gradient-to-r from-primary to-purple-500 border-0 text-white">
+                            <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-primary-soft text-primary border-primary/20">
                                 {roomAlerts.length} تنبيهات
                             </Badge>
                         </div>
-                        <div className="space-y-2.5 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
+                        <div className="space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
                             {roomAlerts.length > 0 ? roomAlerts.map((alert) => (
-                                <div key={alert.id} className="flex items-center justify-between p-4 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 transition-all hover:shadow-md">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary/10 to-purple-500/10 flex items-center justify-center shrink-0">
-                                            <alert.icon size={15} className="text-primary" />
+                                <div key={alert.id} className="flex items-center justify-between p-3 rounded-xl bg-surface hover:bg-hover transition-colors">
+                                    <div className="flex items-center gap-2.5 min-w-0">
+                                        <div className="w-8 h-8 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                            <alert.icon size={14} className="text-primary" />
                                         </div>
                                         <div className="min-w-0">
-                                            <h4 className="text-sm font-bold text-main truncate">{alert.title}</h4>
-                                            <p className="text-xs text-muted truncate mt-0.5">{alert.description}</p>
+                                            <h4 className="text-xs font-bold text-main truncate">{alert.title}</h4>
+                                            <p className="text-[10px] text-muted truncate mt-0.5">{alert.description}</p>
                                         </div>
                                     </div>
                                     {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
-                                        <Button onClick={alert.action} size="sm" className="h-9 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-success to-emerald-500 hover:from-success-dark hover:to-emerald-600 text-white shadow-md border-0 shrink-0">
+                                        <Button onClick={alert.action} size="sm" className="h-8 px-3 rounded-lg text-[10px] font-bold bg-success text-on-success shrink-0">
                                             واتساب
                                         </Button>
                                     ) : (
                                         <Link to={alert.link || '#'}>
-                                            <Button variant="default" size="sm" className="h-9 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-primary to-purple-500 hover:from-primary-hover hover:to-purple-600 shadow-md border-0 shrink-0">
+                                            <Button variant="default" size="sm" className="h-8 px-3 rounded-lg text-[10px] font-bold shrink-0">
                                                 عرض
                                             </Button>
                                         </Link>
                                     )}
                                 </div>
                             )) : (
-                                <div className="text-center py-14">
-                                    <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
-                                        <Info size={24} className="text-success/40" />
+                                <div className="text-center py-10">
+                                    <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
+                                        <Info size={20} className="text-success/50" />
                                     </div>
-                                    <p className="text-sm font-bold text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
-                                    <p className="text-xs text-muted/60 mt-0.5">لا توجد تنبيهات حالياً</p>
+                                    <p className="text-xs font-bold text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
+                                    <p className="text-[10px] text-muted/60 mt-0.5">لا توجد تنبيهات حالياً</p>
                                 </div>
                             )}
                         </div>
-                    </GlassBox>
+                    </div>
                 </div>
             </div>
         </div>
