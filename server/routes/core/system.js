@@ -605,6 +605,9 @@ router.get('/dismissed-notifications', async (req, res) => {
         const dismissed = await prisma.$queryRawUnsafe('SELECT id FROM dismissed_notifications');
         res.json((dismissed || []).map(d => d.id));
     } catch (err) {
+        if (err?.code === 'P2021' || err?.message?.includes('does not exist') || err?.message?.includes('no such table')) {
+            return res.json([]);
+        }
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
