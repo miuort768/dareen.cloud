@@ -115,7 +115,7 @@ export const AAbdullah = () => {
                             </div>
                             <h2 className="text-lg font-semibold text-accent">الرؤية</h2>
                         </div>
-                        <p className="text-sm leading-relaxed text-main dark:text-white/90">
+                        <p className="text-sm leading-relaxed text-white">
                             "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
                             {' '}هدفنا إنا نصير أكبر منصة تعليمية عربية نقدم محتوى مفيد وممتع،
                             {' '}وتساعد في بناء جيل واعي ومتعلم."
@@ -197,7 +197,7 @@ export const AAbdullah = () => {
                             <span>رسالتي لكم</span>
                             <VHeart size={14} className="fill-current text-accent" />
                         </div>
-                        <div className="space-y-4 text-sm leading-relaxed text-main dark:text-white/90">
+                        <div className="space-y-4 text-sm leading-relaxed text-white">
                             <p>
                                 كن إيجابيًا، واجعل الاجتهاد طريقك إلى النجاح.
                             </p>
