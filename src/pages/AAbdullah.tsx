@@ -10,6 +10,7 @@ export const AAbdullah = () => {
     const telegramHandle = useSettingsStore(s => s.telegramHandle);
 
     useEffect(() => {
+        document.title = 'مستر احمد عبدالله | دارين السابعة';
         const handler = (e: MouseEvent) => {
             if (e.button === 2) {
                 e.preventDefault();
