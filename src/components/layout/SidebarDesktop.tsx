@@ -38,8 +38,8 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     <NavLink
         to={item.href}
         className={({ isActive }) => cn(
-            "flex items-center gap-2.5 mx-2 my-0.5 transition-all duration-200 group relative rounded-xl text-sm",
-            collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2",
+            "flex items-center gap-2.5 transition-all duration-200 group relative rounded-xl text-sm",
+            collapsed ? "justify-center mx-1 my-0 px-0 py-1.5" : "mx-2 my-0.5 px-3 py-2",
             isActive
                 ? "bg-primary/10 text-primary font-semibold before:absolute before:start-0 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:bg-primary before:rounded-full"
                 : "text-muted hover:bg-hover hover:text-main"
@@ -76,8 +76,8 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
     )}>
         {/* Logo */}
         <div className={cn(
-            "h-14 flex items-center shrink-0 transition-all duration-300 border-b border-border/50",
-            collapsed ? "justify-center px-0" : "justify-between px-5"
+            "flex items-center shrink-0 transition-all duration-300 border-b border-border/50",
+            collapsed ? "h-11 justify-center px-0" : "h-14 justify-between px-5"
         )}>
             <div className={cn("flex items-center gap-2.5 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                 <div className={cn(
@@ -96,9 +96,9 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-3 overflow-y-auto custom-scrollbar" data-sidebar-nav>
+        <nav className={cn("flex-1 overflow-y-auto custom-scrollbar transition-all duration-300", collapsed ? "py-1.5" : "py-3")} data-sidebar-nav>
             {sections.map((section, sIdx) => (
-                <div key={section.label} className={cn(sIdx > 0 && "mt-1")}>
+                <div key={section.label} className={cn(sIdx > 0 && (collapsed ? "mt-0" : "mt-1"))}>
                     <div className={cn(
                         "transition-all duration-300 overflow-hidden",
                         collapsed ? "h-0 opacity-0" : "h-auto opacity-100"
@@ -123,10 +123,10 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
         <div className="shrink-0 border-t border-border/50">
             {user && (
                 <div className={cn(
-                    "flex items-center transition-all duration-300 mx-2 mt-2 rounded-xl",
-                    collapsed ? "justify-center px-0 py-2" : "gap-2.5 px-3 py-2"
+                    "flex items-center transition-all duration-300 rounded-xl",
+                    collapsed ? "justify-center mx-1 mt-1.5 py-1.5" : "mx-2 mt-2 gap-2.5 px-3 py-2"
                 )}>
-                    <Avatar className="shrink-0 w-8 h-8">
+                    <Avatar className={cn("shrink-0 transition-all duration-300", collapsed ? "w-7 h-7" : "w-8 h-8")}>
                         {user.avatar ? (
                             <AvatarImage src={user.avatar} alt={user.name} />
                         ) : (
@@ -144,12 +144,12 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                     </div>
                 </div>
             )}
-            <div className="px-2 pb-2 space-y-0.5">
+            <div className={cn("transition-all duration-300", collapsed ? "px-1.5 pb-1.5 space-y-0" : "px-2 pb-2 space-y-0.5")}>
                 <button
                     onClick={onToggleCollapse}
                     className={cn(
                         "flex items-center gap-2.5 w-full transition-all duration-200 text-muted hover:text-main hover:bg-hover rounded-xl",
-                        collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2"
+                        collapsed ? "justify-center px-0 py-1.5" : "px-3 py-2"
                     )}
                 >
                     {collapsed ? (
@@ -165,7 +165,7 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                     onClick={onLogout}
                     className={cn(
                         "flex items-center gap-2.5 w-full transition-all duration-200 text-error/70 hover:text-error hover:bg-error-soft rounded-xl",
-                        collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2"
+                        collapsed ? "justify-center px-0 py-1.5" : "px-3 py-2"
                     )}
                 >
                     <LogOut size={18} strokeWidth={1.8} />
