@@ -141,6 +141,7 @@ export const Sidebar = memo(() => {
                 sections={navigationSections}
                 collapsed={collapsed}
                 totalUnreadCount={totalUnreadCount}
+                user={currentUser ? { name: currentUser.name, avatar: currentUser.avatar, role: currentUser.role } : null}
                 onToggleCollapse={() => setCollapsed(!collapsed)}
                 onLogout={handleLogout}
             />
