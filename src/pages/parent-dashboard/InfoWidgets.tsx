@@ -12,7 +12,7 @@ export const ParentNotesSection = ({ children }: NotesSectionProps) => {
     return (
         <GlassCard className="p-4 md:p-5">
             <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-warning to-orange-500 flex items-center justify-center shadow-lg shadow-warning/20">
+                <div className="w-7 h-7 rounded-xl bg-warning-soft flex items-center justify-center shadow-lg shadow-warning/20">
                     <MessageSquare size={13} className="text-white" />
                 </div>
                 <h3 className="text-sm md:text-lg font-medium text-main">الواجبات والملاحظات</h3>
@@ -47,7 +47,7 @@ export const ParentMobileNotesSection = ({ children }: NotesSectionProps) => {
     return (
         <section>
             <div className="flex items-center gap-2 mb-3 px-1">
-                <div className="w-1 h-4 bg-gradient-to-b from-warning to-orange-500 rounded-full" />
+                <div className="w-1 h-4 bg-warning rounded-full" />
                 <h2 className="text-main text-sm font-semibold">الواجبات والملاحظات</h2>
             </div>
             <GlassCard className="p-3.5 space-y-3">
@@ -80,7 +80,7 @@ interface AcademicProgressProps {
 }
 
 export const ParentAcademicProgress = ({ academicProgress }: AcademicProgressProps) => (
-    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-warning to-orange-600 p-5 md:p-6 shadow-lg shadow-warning/20">
+    <div className="relative rounded-2xl overflow-hidden bg-warning p-5 md:p-6 shadow-lg shadow-warning/20">
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
         <div className="relative z-10">
             <div className="flex justify-between items-start mb-4">
@@ -108,10 +108,10 @@ export const ParentAcademicProgress = ({ academicProgress }: AcademicProgressPro
 export const ParentMobileAcademicProgress = ({ academicProgress }: AcademicProgressProps) => (
     <section>
         <div className="flex items-center gap-2 mb-3 px-1">
-            <div className="w-1 h-4 bg-gradient-to-b from-success to-emerald-500 rounded-full" />
+            <div className="w-1 h-4 bg-success rounded-full" />
             <h2 className="text-main text-sm font-semibold">التقدم الأكاديمي</h2>
         </div>
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-purple-600 p-4 shadow-lg shadow-primary/20">
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-primary-active p-4 shadow-lg shadow-primary/20">
             <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
             <div className="relative z-10">
                 <div className="flex justify-between items-center mb-3">

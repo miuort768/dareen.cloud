@@ -40,7 +40,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                             <motion.div key={idx} initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}>
                                 <GlassCard className="p-4 flex items-center gap-3">
-                                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
                                         <BookOpen size={22} className="text-white" />
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -54,7 +54,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                                                 <motion.div initial={{ width: 0 }}
                                                     animate={{ width: `${progress}%` }}
                                                     transition={{ duration: 0.8, delay: 0.3 + idx * 0.1 }}
-                                                    className="h-full rounded-full bg-gradient-to-l from-primary to-purple-500 shadow-lg shadow-primary/30" />
+                                                    className="h-full rounded-full bg-gradient-to-l from-primary to-primary-active shadow-lg shadow-primary/30" />
                                             </div>
                                             <div className="flex justify-between mt-1">
                                                 <span className="text-micro font-bold text-primary">{progress}%</span>
@@ -68,7 +68,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                 </div>
             ) : (
                 <GlassCard className="p-4 flex items-center gap-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
                         <span className="text-2xl">💻</span>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -80,7 +80,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                         <div className="relative">
                             <div className="h-2 bg-hover rounded-full overflow-hidden">
                                 <motion.div initial={{ width: 0 }} animate={{ width: '60%' }}
-                                    transition={{ duration: 0.8, delay: 0.3 }} className="h-full rounded-full bg-gradient-to-l from-primary to-purple-500 shadow-lg shadow-primary/30" />
+                                    transition={{ duration: 0.8, delay: 0.3 }} className="h-full rounded-full bg-gradient-to-l from-primary to-primary-active shadow-lg shadow-primary/30" />
                             </div>
                             <span className="text-micro font-bold text-primary mt-1 block text-end">60%</span>
                         </div>

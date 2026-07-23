@@ -11,11 +11,11 @@ interface StatsStripProps {
     rankName: string;
 }
 
-const variantGradient: Record<string, string> = {
-    success: 'from-success to-emerald-500 shadow-success/20',
-    info: 'from-info to-blue-500 shadow-info/20',
-    primary: 'from-primary to-purple-500 shadow-primary/20',
-    warning: 'from-warning to-orange-500 shadow-warning/20',
+const variantBadge: Record<string, string> = {
+    success: 'bg-success-soft shadow-success/20',
+    info: 'bg-info-soft shadow-info/20',
+    primary: 'bg-primary-soft shadow-primary/20',
+    warning: 'bg-warning-soft shadow-warning/20',
 };
 
 export const ParentStatsStrip = ({ points, attendanceRate, rankName }: StatsStripProps) => {
@@ -30,7 +30,7 @@ export const ParentStatsStrip = ({ points, attendanceRate, rankName }: StatsStri
                 const Icon = item.icon;
                 return (
                     <GlassCard key={item.label} className="flex-1 p-3 flex flex-col items-center text-center gap-1">
-                        <div className={`w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg ${variantGradient[item.variant]}`}>
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg ${variantBadge[item.variant]}`}>
                             <Icon size={16} className="text-white" />
                         </div>
                         <span className="text-sm font-semibold text-main">{item.value}</span>
@@ -64,7 +64,7 @@ export const ParentActiveTimers = ({ activeTimers, children, formatTime, variant
             const child = children.find(c => c.id === session.studentId);
             return (
                 <div key={session.id}
-                    className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-warning to-orange-600 p-4 shadow-lg shadow-warning/20"
+                    className="relative rounded-2xl overflow-hidden bg-warning p-4 shadow-lg shadow-warning/20"
                 >
                     <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
                     <div className="relative z-10 flex items-center justify-between">
@@ -105,7 +105,7 @@ export const ParentTodaySchedule = ({ todayTasks, variant = 'desktop' }: TodaySc
                 <motion.div key={`tsk-${idx}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
                     <GlassCard className="p-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-warning to-orange-500 flex items-center justify-center shadow-lg shadow-warning/20"><BookOpen size={16} className="text-white" /></div>
+                            <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center shadow-lg shadow-warning/20"><BookOpen size={16} className="text-white" /></div>
                             <div>
                                 <h4 className="text-xs font-bold text-main">{task.subject}</h4>
                                 <p className="text-micro font-medium text-muted">{task.studentName}</p>
@@ -157,7 +157,7 @@ export const ParentRecentActivity = ({ allPointLogs }: RecentActivityProps) => (
             {allPointLogs.slice(0, 4).map((log, i) => (
                 <motion.div key={`pd-item-${i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                     <GlassCard className="p-3 flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-warning to-orange-500 flex items-center justify-center shadow-lg shadow-warning/20 shrink-0"><Star size={14} fill="currentColor" className="text-white" /></div>
+                        <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shadow-lg shadow-warning/20 shrink-0"><Star size={14} fill="currentColor" className="text-white" /></div>
                         <div className="min-w-0 flex-1">
                             <p className="text-micro font-bold text-warning mb-0.5 truncate">{log.studentName}</p>
                             <h4 className="text-micro font-medium text-main leading-snug">
@@ -189,7 +189,7 @@ export const ParentSupportCard = ({ adminPhone, variant = 'desktop' }: SupportCa
     const whatsappUrl = `https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`;
     if (variant === 'desktop') {
         return (
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-purple-600 p-5 shadow-lg shadow-primary/20">
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-primary-active p-5 shadow-lg shadow-primary/20">
                 <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="text-center md:text-start">
@@ -198,7 +198,7 @@ export const ParentSupportCard = ({ adminPhone, variant = 'desktop' }: SupportCa
                     </div>
                     <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
                         className="bg-white text-primary px-5 py-3 rounded-xl font-bold text-micro flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center">
-                        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-purple-500 text-white flex items-center justify-center"><MessageSquare size={12} /></div>
+                        <div className="w-6 h-6 rounded-lg bg-primary-soft text-white flex items-center justify-center"><MessageSquare size={12} /></div>
                         تواصل معنا
                     </a>
                 </div>
@@ -208,10 +208,10 @@ export const ParentSupportCard = ({ adminPhone, variant = 'desktop' }: SupportCa
     return (
         <section>
             <div className="flex items-center gap-2 mb-3 px-1">
-                <div className="w-1 h-4 bg-gradient-to-b from-primary to-purple-500 rounded-full" />
+                <div className="w-1 h-4 bg-primary rounded-full" />
                 <h2 className="text-main text-sm font-semibold">الدعم الفني</h2>
             </div>
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-purple-600 p-4 shadow-lg shadow-primary/20">
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-primary-active p-4 shadow-lg shadow-primary/20">
                 <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
                 <div className="relative z-10 flex items-center justify-between">
                     <div>

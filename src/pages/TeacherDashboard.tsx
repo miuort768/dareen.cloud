@@ -15,7 +15,7 @@ export const TeacherDashboard = () => {
 
     return (
         <>
-            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background font-sans" dir="rtl">
+            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-background font-sans" dir="rtl">
                 <TeacherDashboardDesktop currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} />
             </div>
             <div className="block md:hidden">

@@ -52,7 +52,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 end-0 start-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 dark:bg-card backdrop-blur-2xl shadow-[var(--shadow-navbar)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-border px-4 md:px-6 py-2 md:py-3 relative desktop-light">
+            <nav className="bg-card shadow-[var(--shadow-navbar)] rounded-full md:rounded-[2rem] border border-border px-4 md:px-6 py-2 md:py-3 relative desktop-light">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 ps-2 group">
@@ -181,7 +181,7 @@ export const PublicNavbar = () => {
 
                 {/* Mobile Menu - Floating Card Style */}
                     <div className={`
-                    absolute top-full end-0 start-0 mt-3 p-4 bg-white/95 dark:bg-card backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border shadow-2xl
+                    absolute top-full end-0 start-0 mt-3 p-4 bg-card rounded-[2rem] border border-border shadow-2xl
                     transition-all duration-500 md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
                 `} style={{ transitionTimingFunction: 'cubic-bezier(0.23,1,0.32,1)' }}>

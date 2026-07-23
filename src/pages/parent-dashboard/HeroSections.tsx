@@ -5,7 +5,7 @@ import { LiveClasses } from '../../components/dashboard/LiveClasses';
 import { GlassCard } from '@/shared/components/ui';
 
 export const ParentHeroSection = ({ navigate: nav }: { navigate: ReturnType<typeof useNavigate> }) => (
-    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-info to-blue-600 p-6 md:p-8 shadow-lg shadow-info/20">
+    <div className="relative rounded-2xl overflow-hidden bg-info p-6 md:p-8 shadow-lg shadow-info/20">
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
         <div className="relative z-10 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold leading-tight text-white">
@@ -31,7 +31,7 @@ export const ParentHeroSection = ({ navigate: nav }: { navigate: ReturnType<type
 );
 
 export const ParentMobileHeroSection = ({ navigate: nav }: { navigate: ReturnType<typeof useNavigate> }) => (
-    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-info to-blue-600 p-5 shadow-lg shadow-info/20">
+    <div className="relative rounded-2xl overflow-hidden bg-info p-5 shadow-lg shadow-info/20">
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
         <div className="relative z-10 space-y-2">
             <h2 className="text-2xl font-bold leading-tight text-white">
@@ -59,28 +59,28 @@ export const ParentMobileHeroSection = ({ navigate: nav }: { navigate: ReturnTyp
 export const ParentQuickNav = ({ navigate: nav }: { navigate: ReturnType<typeof useNavigate> }) => (
     <section>
         <div className="flex items-center gap-2 mb-3 px-1">
-            <div className="w-1 h-4 bg-gradient-to-b from-primary to-purple-500 rounded-full" />
+            <div className="w-1 h-4 bg-primary rounded-full" />
             <h2 className="text-main text-sm font-semibold">التنقل السريع</h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             <GlassCard className="p-3">
                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => nav('/parent-students')}
                     className="flex flex-col items-center gap-1.5 w-full">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20"><Users size={18} className="text-white" /></div>
+                    <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20"><Users size={18} className="text-white" /></div>
                     <span className="text-main text-micro font-bold">ملفات الأبناء</span>
                 </motion.button>
             </GlassCard>
             <GlassCard className="p-3">
                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => nav('/forum')}
                     className="flex flex-col items-center gap-1.5 w-full">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-info to-blue-500 flex items-center justify-center shadow-lg shadow-info/20"><LayoutDashboard size={18} className="text-white" /></div>
+                    <div className="w-10 h-10 rounded-xl bg-info-soft flex items-center justify-center shadow-lg shadow-info/20"><LayoutDashboard size={18} className="text-white" /></div>
                     <span className="text-main text-micro font-bold">المنتدى</span>
                 </motion.button>
             </GlassCard>
             <GlassCard className="p-3">
                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => nav('/chat')}
                     className="flex flex-col items-center gap-1.5 w-full">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-success to-emerald-500 flex items-center justify-center shadow-lg shadow-success/20"><MessageSquare size={18} className="text-white" /></div>
+                    <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center shadow-lg shadow-success/20"><MessageSquare size={18} className="text-white" /></div>
                     <span className="text-main text-micro font-bold">الدردشة</span>
                 </motion.button>
             </GlassCard>
@@ -91,7 +91,7 @@ export const ParentQuickNav = ({ navigate: nav }: { navigate: ReturnType<typeof 
 export const ParentMobileLiveClasses = () => (
     <section>
         <div className="flex items-center gap-2 mb-3 px-1">
-            <div className="w-1 h-4 bg-gradient-to-b from-primary to-purple-500 rounded-full" />
+            <div className="w-1 h-4 bg-primary rounded-full" />
             <h2 className="text-main text-sm font-semibold">البث المباشر</h2>
         </div>
         <GlassCard className="overflow-hidden">

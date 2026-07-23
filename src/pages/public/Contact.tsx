@@ -113,7 +113,7 @@ export const Contact = () => {
 
                     {/* ── Contact Form Card ── */}
                     <AnimateOnScroll animation="fadeUp">
-                    <div className="bg-white dark:bg-card/80 dark:backdrop-blur-xl border border-border dark:border-border rounded-none overflow-hidden shadow-xl shadow-sm/40 dark:shadow-black/40">
+                    <div className="bg-card border border-border dark:border-border rounded-none overflow-hidden shadow-xl shadow-sm/40 dark:shadow-black/40">
                         {/* Top accent bar */}
                         <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 
@@ -271,7 +271,7 @@ export const Contact = () => {
                                     href={card.href}
                                     target={card.href !== '#' ? '_blank' : undefined}
                                     rel="noopener noreferrer"
-                                    className="group bg-white dark:bg-card/80 dark:backdrop-blur-xl p-5 rounded-none border border-border dark:border-border shadow-sm block"
+                                    className="group bg-card p-5 rounded-none border border-border dark:border-border shadow-sm block"
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className={cn("w-12 h-12 rounded-none bg-gradient-to-br text-on-primary flex items-center justify-center shadow-lg shrink-0", card.gradient)}>

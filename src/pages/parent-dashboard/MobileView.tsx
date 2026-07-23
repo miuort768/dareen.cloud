@@ -26,7 +26,7 @@ const tabs = [
     { id: 'activity' as const, label: 'النشاط', icon: Star },
 ];
 
-const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
+const glass = "bg-surface/80 backdrop-blur-xl border-b border-border";
 
 export const ParentMobileView = ({
     currentUser, adminPhone, children, allPointLogs,
@@ -35,14 +35,14 @@ export const ParentMobileView = ({
 }: MobileViewProps) => {
     const navigate = useNavigate();
     return (
-        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background font-sans" dir="rtl">
+        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-background font-sans" dir="rtl">
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
                 <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-xl bg-primary-soft flex items-center justify-center">
                                 <LayoutDashboard size={11} className="text-white" />
                             </div>
                             <h2 className="text-muted text-[10px] font-bold tracking-wide">لوحة التحكم</h2>
@@ -54,7 +54,7 @@ export const ParentMobileView = ({
                     </div>
                     <GlassCard className="p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                            <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20">
                                 <User size={18} className="text-white" />
                             </div>
                             <div>
@@ -68,7 +68,7 @@ export const ParentMobileView = ({
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
-                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-success to-emerald-500 flex items-center justify-center shadow-lg shadow-success/20">
+                            <div className="w-6 h-6 rounded-lg bg-success-soft flex items-center justify-center shadow-lg shadow-success/20">
                                 <TrendingUp size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
@@ -77,7 +77,7 @@ export const ParentMobileView = ({
                             </div>
                         </div>
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
-                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-info to-blue-500 flex items-center justify-center shadow-lg shadow-info/20">
+                            <div className="w-6 h-6 rounded-lg bg-info-soft flex items-center justify-center shadow-lg shadow-info/20">
                                 <BookOpen size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
@@ -86,7 +86,7 @@ export const ParentMobileView = ({
                             </div>
                         </div>
                         <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
-                            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                            <div className="w-6 h-6 rounded-lg bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20">
                                 <Users size={11} className="text-white" />
                             </div>
                             <div className="flex items-baseline gap-1">
@@ -154,7 +154,7 @@ export const ParentMobileView = ({
             {/* iOS-style Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
                 <div className="h-2 bg-white dark:bg-black" />
-                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl border-t border-white/20 dark:border-white/10 shadow-2xl shadow-black/5">
+                <div className="bg-card border-t border-border shadow-2xl shadow-black/5">
                     <div className="flex items-center justify-around px-2 py-1.5">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
@@ -165,7 +165,7 @@ export const ParentMobileView = ({
                                 >
                                     <div className={cn(
                                         "rounded-xl p-1.5 transition-all duration-300 relative",
-                                        isActive && "bg-gradient-to-br from-primary/10 to-purple-500/10"
+                                        isActive && "bg-primary/10"
                                     )}>
                                         <tab.icon size={20} strokeWidth={isActive ? 2 : 1.5}
                                             className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
@@ -176,7 +176,7 @@ export const ParentMobileView = ({
                                     </span>
                                     {isActive && (
                                         <motion.div layoutId="parent-tab-indicator"
-                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-purple-500 shadow-lg shadow-primary/30"
+                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-primary-active shadow-lg shadow-primary/30"
                                         />
                                     )}
                                 </motion.button>

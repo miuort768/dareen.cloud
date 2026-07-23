@@ -8,11 +8,11 @@ interface StatItem {
     variant: string;
 }
 
-const variantGradient: Record<string, string> = {
-    success: 'from-success to-emerald-500 shadow-success/20',
-    info: 'from-info to-blue-500 shadow-info/20',
-    primary: 'from-primary to-purple-500 shadow-primary/20',
-    warning: 'from-warning to-orange-500 shadow-warning/20',
+const variantBg: Record<string, string> = {
+    success: 'bg-success-soft shadow-success/20',
+    info: 'bg-info-soft shadow-info/20',
+    primary: 'bg-primary-soft shadow-primary/20',
+    warning: 'bg-warning-soft shadow-warning/20',
 };
 
 interface StatsStripProps {
@@ -34,7 +34,7 @@ export const StatsStrip = ({ points, attendanceRate, rankName }: StatsStripProps
                 const Icon = item.icon;
                 return (
                     <GlassCard key={idx} className="p-3 flex flex-col items-center text-center gap-1">
-                        <div className={`w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg ${variantGradient[item.variant]}`}>
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg ${variantBg[item.variant]}`}>
                             <Icon size={16} className="text-white" />
                         </div>
                         <span className="text-sm font-semibold text-main">{item.value}</span>

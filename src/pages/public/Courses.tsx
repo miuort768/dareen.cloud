@@ -127,7 +127,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-white dark:bg-card/80 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold dark:focus:shadow-lg"
+                className="w-full px-5 ps-12 py-4 rounded-card bg-card border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold dark:focus:shadow-lg"
               />
               <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-muted w-5 h-5 group-focus-within:text-primary transition-colors" />
             </div>
@@ -166,7 +166,7 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                  className="group relative bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-xl transition-all duration-500"
+                   className="group relative bg-card border border-border dark:border-border/50 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-xl transition-all duration-500"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
                     <Image

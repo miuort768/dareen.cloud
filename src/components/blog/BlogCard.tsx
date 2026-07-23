@@ -50,7 +50,7 @@ interface FoundationCardProps {
 export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButtonClick, i }: FoundationCardProps) => {
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="group bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 shadow-sm transition-all duration-500 h-full flex flex-col relative">
+            <div className="group bg-card border border-border dark:border-border/50 shadow-sm transition-all duration-500 h-full flex flex-col relative">
                 <div className={`absolute start-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
                 <div className="p-4 sm:p-5 flex flex-col flex-1">
                     <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
@@ -118,7 +118,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
             <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                className="group block bg-white dark:bg-card/50 dark:backdrop-blur-xl border border-border dark:border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500 h-full flex flex-col">
+                className="group block bg-card border border-border dark:border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/5 transition-all duration-500 h-full flex flex-col">
                 <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-background dark:bg-card/30`}>
                     <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" imgClassName={`transition-transform duration-700 ease-out ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'}`} />
                     <div className={`absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t ${isCoursesStyle ? 'from-white dark:from-[var(--bg-card)]' : 'from-black/40'} to-transparent`} />
