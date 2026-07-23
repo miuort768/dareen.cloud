@@ -38,10 +38,10 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     <NavLink
         to={item.href}
         className={({ isActive }) => cn(
-            "flex items-center gap-2.5 transition-all duration-200 group relative rounded-xl text-sm",
+            "flex items-center gap-2.5 transition-all duration-200 group relative rounded-xl text-sm overflow-visible",
             collapsed ? "justify-center mx-1 my-0 px-0 py-1.5" : "mx-2 my-0.5 px-3 py-2",
             isActive
-                ? "bg-primary/10 text-primary font-semibold before:absolute before:start-0 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:bg-primary before:rounded-full"
+                ? "bg-primary/10 text-primary font-semibold before:absolute before:-start-0.5 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:bg-primary before:rounded-full"
                 : "text-muted hover:bg-hover hover:text-main"
         )}
         title={collapsed ? item.name : ''}
