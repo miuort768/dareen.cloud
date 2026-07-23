@@ -182,9 +182,9 @@ export const PublicNavbar = () => {
                 {/* Mobile Menu - Floating Card Style */}
                     <div className={`
                     absolute top-full end-0 start-0 mt-3 p-4 bg-white/95 dark:bg-card backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-border shadow-2xl
-                    transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden
+                    transition-all duration-500 md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
-                `}>
+                `} style={{ transitionTimingFunction: 'cubic-bezier(0.23,1,0.32,1)' }}>
                     <div className="space-y-2">
                         {navItems.filter(item => !isActive(item.path)).map((item) => (
                             <Link

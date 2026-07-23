@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { Edit, Trash2, GraduationCap, MessageCircle, BookOpen, Users, Bell } from 'lucide-react';
+import { Edit, Trash2, GraduationCap, MessageCircle, Bell } from 'lucide-react';
 import type { Teacher } from '../types';
 import { cn } from '../../../lib/utils';
 

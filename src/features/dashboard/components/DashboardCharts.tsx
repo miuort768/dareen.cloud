@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, TooltipProps } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import type { TooltipProps } from 'recharts';
 import { DollarSign, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import type { DashboardMonthData as MonthData } from '../types';
 
 interface DashboardChartsProps {
@@ -12,7 +12,7 @@ interface DashboardChartsProps {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (!active || !payload?.length) return null;
     return (
-        <div className="bg-card/90 backdrop-blur-xl border border-white/20 shadow-xl px-5 py-4 min-w-[180px] rounded-2xl" dir="rtl">
+        <div className="bg-card border border-border shadow-lg px-5 py-4 min-w-[180px] rounded-2xl" dir="rtl">
             <p className="text-xs font-bold text-main mb-2">{label}</p>
             {payload.map((entry, i) => (
                 <div key={i} className="flex items-center justify-between gap-4 py-1">
@@ -41,18 +41,12 @@ export const DashboardCharts = React.memo(({ isTeacher, monthlyData }: Dashboard
     };
 
     return (
-        <div className={cn(
-            "rounded-3xl p-6",
-            "bg-card/70 backdrop-blur-xl",
-            "border border-white/20 dark:border-white/10",
-            "shadow-[0_8px_32px_-4px_rgba(0,0,0,0.04)]",
-            "font-dash"
-        )}>
+        <div className="rounded-3xl p-6 bg-card border border-border font-dash">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
-                        <BarChart3 size={20} className="text-white" />
+                    <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center">
+                        <BarChart3 size={20} className="text-primary" />
                     </div>
                     <div>
                         <h3 className="text-lg font-bold text-main">مركز تحليل الأداء</h3>
@@ -80,7 +74,7 @@ export const DashboardCharts = React.memo(({ isTeacher, monthlyData }: Dashboard
             {/* Chart */}
             {monthlyData.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-purple-500/10 flex items-center justify-center mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-4">
                         <BarChart3 size={28} className="text-primary/40" />
                     </div>
                     <p className="text-base font-bold text-muted">لا توجد بيانات متاحة</p>

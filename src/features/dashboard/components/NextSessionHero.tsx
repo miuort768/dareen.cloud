@@ -83,7 +83,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                 <Button
                     onClick={() => onStart(nextSession.id)}
                     variant="outline"
-                    className="mt-4 w-full bg-white/20 backdrop-blur-sm border-white/30 text-on-primary hover:bg-white/30"
+                    className="mt-4 w-full bg-on-primary/20 border-on-primary/30 text-on-primary hover:bg-on-primary/30"
                 >
                     <Play size={14} fill="currentColor" />
                     بدء الحصة

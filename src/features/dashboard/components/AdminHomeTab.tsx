@@ -5,8 +5,6 @@ import { StatCard } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 import { QuickLink } from './AdminQuickLink';
 
-const glass = "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl border border-white/20 dark:border-white/10";
-
 interface AdminHomeTabProps {
     stats: Record<string, unknown>;
     completionRate: number;
@@ -29,7 +27,7 @@ export const AdminHomeTab = ({ stats, completionRate, completedSessions, todaySe
                 ].map((card, i) => (
                     <motion.div key={card.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
                         <div onClick={card.onClick} role="button" tabIndex={0} className="cursor-pointer">
-                            <div className={cn("rounded-2xl p-4 shadow-lg shadow-black/[0.03]", glass)}>
+                            <div className="rounded-2xl p-4 bg-card border border-border">
                                 <StatCard title={card.title} value={card.value} icon={card.icon} variant={card.variant} />
                             </div>
                         </div>
@@ -39,12 +37,12 @@ export const AdminHomeTab = ({ stats, completionRate, completedSessions, todaySe
 
             {/* Progress Card */}
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
-                className={cn("rounded-2xl p-5 shadow-lg shadow-black/[0.03]", glass)}
+                className="rounded-2xl p-5 bg-card border border-border"
             >
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-success to-emerald-500 flex items-center justify-center shadow-lg shadow-success/20">
-                            <Award size={16} className="text-white" />
+                        <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center">
+                            <Award size={16} className="text-success" />
                         </div>
                         <div>
                             <span className="text-[10px] font-bold text-success tracking-wider">اليوم</span>
@@ -53,12 +51,12 @@ export const AdminHomeTab = ({ stats, completionRate, completedSessions, todaySe
                     </div>
                     <span className="text-xl font-bold text-success tabular-nums">{completionRate}%</span>
                 </div>
-                <div className="w-full h-3 bg-white/50 dark:bg-white/5 rounded-full overflow-hidden shadow-inner">
+                <div className="w-full h-3 bg-surface rounded-full overflow-hidden">
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.min(completionRate, 100)}%` }}
                         transition={{ duration: 1, ease: 'easeOut' }}
-                        className="h-full rounded-full bg-gradient-to-l from-success to-emerald-400 shadow-lg shadow-success/30"
+                        className="h-full rounded-full bg-success"
                     />
                 </div>
                 <p className="text-xs text-muted mt-3 flex items-center gap-1">

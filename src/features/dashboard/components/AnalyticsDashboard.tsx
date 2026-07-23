@@ -5,11 +5,11 @@ import {
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    AreaChart, Area, Cell, TooltipProps
+    AreaChart, Area, Cell
 } from 'recharts';
+import type { TooltipProps } from 'recharts';
 import { cn } from '../../../lib/utils';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 interface AnalyticsDashboardProps {
     students: Record<string, unknown>[];
@@ -100,7 +100,7 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
                                 onClick={() => setActiveTab('commitment')}
                                 className={cn(
                                     "px-4 py-1.5 text-[11px] font-semibold transition-all flex items-center gap-1.5 rounded-md",
-                                    activeTab === 'commitment' ? "bg-chart-2 text-white shadow-sm" : "text-muted hover:text-main"
+                                    activeTab === 'commitment' ? "bg-chart-2 text-inverse shadow-sm" : "text-muted hover:text-main"
                                 )}
                             >
                                 <Activity size={12} />
@@ -110,7 +110,7 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
                                 onClick={() => setActiveTab('database')}
                                 className={cn(
                                     "px-4 py-1.5 text-[11px] font-semibold transition-all flex items-center gap-1.5 rounded-md",
-                                    activeTab === 'database' ? "bg-chart-2 text-white shadow-sm" : "text-muted hover:text-main"
+                                    activeTab === 'database' ? "bg-chart-2 text-inverse shadow-sm" : "text-muted hover:text-main"
                                 )}
                             >
                                 <LayoutGrid size={12} />
@@ -149,7 +149,7 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
                                 <CardTitle className="text-xs font-bold text-main">التحليل التحصيلي</CardTitle>
                                 <CardDescription className="text-[10px] text-muted">التقدم الأكاديمي</CardDescription>
                             </div>
-                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-white text-[10px] font-bold tabular-nums">
+                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-inverse text-[10px] font-bold tabular-nums">
                                 {overallRate}%
                             </div>
                         </CardHeader>
@@ -195,7 +195,7 @@ export const AnalyticsDashboard = React.memo(({ students, sessions, monthlyData 
                                 <CardTitle className="text-xs font-bold text-main">خارطة توزيع المناهج</CardTitle>
                                 <CardDescription className="text-[10px] text-muted">تحليلات المناهج</CardDescription>
                             </div>
-                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-white text-[10px] font-bold">
+                            <div className="px-3 py-1 rounded-lg bg-chart-2 text-inverse text-[10px] font-bold">
                                 {students.length} مستخدم
                             </div>
                         </CardHeader>

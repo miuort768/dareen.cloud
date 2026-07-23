@@ -6,7 +6,6 @@ import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import { useAdminPhone } from '../../../context/AppContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { GlassCard } from '@/shared/components/ui';
 
 interface OperationsDashboardProps {
     tasks: Task[];
@@ -20,11 +19,11 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4" dir="rtl">
             {/* Subscriptions & Renewals */}
-            <GlassCard>
+            <div className="bg-card border border-border rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-success to-emerald-500 flex items-center justify-center shadow-lg shadow-success/20">
-                            <CreditCard size={18} className="text-white" />
+                        <div className="w-11 h-11 rounded-2xl bg-success-soft flex items-center justify-center">
+                            <CreditCard size={18} className="text-success" />
                         </div>
                         <div>
                             <h3 className="text-base font-bold text-main">تجديد الاشتراكات</h3>
@@ -37,9 +36,9 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="space-y-2.5 max-h-[360px] overflow-y-auto custom-scrollbar ps-1">
                     {lowBalanceStudents.length > 0 ? (
                         lowBalanceStudents.map((item, idx) => (
-                            <div key={idx} className="p-4 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 transition-all flex items-center justify-between group hover:shadow-md">
+                            <div key={idx} className="p-4 rounded-2xl bg-surface border border-border transition-all flex items-center justify-between group hover:shadow-md">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-success to-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-sm shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center text-success font-bold text-sm shrink-0">
                                         {item.studentName.charAt(0)}
                                     </div>
                                     <div className="min-w-0">
@@ -55,8 +54,8 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                     <span className={cn(
                                         "text-[10px] font-bold px-3 py-1.5 rounded-xl",
                                         item.remainingSessions === 0
-                                            ? "bg-error/10 text-error border border-error/20"
-                                            : "bg-warning/10 text-warning border border-warning/20"
+                                            ? "bg-error-soft text-error border border-error/20"
+                                            : "bg-warning-soft text-warning border border-warning/20"
                                     )}>
                                         {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} جلسة`}
                                     </span>
@@ -74,7 +73,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         ))
                     ) : (
                         <div className="text-center py-12">
-                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
+                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-success-soft flex items-center justify-center">
                                 <UserX size={24} className="text-success/40" />
                             </div>
                             <p className="text-sm font-bold text-muted">لا توجد تجديدات معلقة</p>
@@ -85,20 +84,20 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
 
                 <div className="mt-6 pt-5 border-t border-border/50">
                     <Link to="/students">
-                        <Button variant="default" size="lg" className="w-full gap-2 rounded-2xl h-11 text-sm font-bold bg-gradient-to-r from-primary to-purple-500 hover:from-primary-hover hover:to-purple-600 shadow-lg shadow-primary/20 border-0">
+                        <Button variant="default" size="lg" className="w-full gap-2 rounded-2xl h-11 text-sm font-bold bg-primary text-on-primary border-0">
                             إدارة كافة الطلاب
                             <ChevronLeft size={14} />
                         </Button>
                     </Link>
                 </div>
-            </GlassCard>
+            </div>
 
             {/* Tasks & Requests */}
-            <GlassCard>
+            <div className="bg-card border border-border rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-info to-cyan-500 flex items-center justify-center shadow-lg shadow-info/20">
-                            <Briefcase size={18} className="text-white" />
+                        <div className="w-11 h-11 rounded-2xl bg-info-soft flex items-center justify-center">
+                            <Briefcase size={18} className="text-info" />
                         </div>
                         <div>
                             <h3 className="text-base font-bold text-main">المهام والطلبات</h3>
@@ -111,7 +110,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 <div className="space-y-2.5 max-h-[360px] overflow-y-auto custom-scrollbar ps-1">
                     {tasks.length > 0 ? (
                         tasks.slice(0, 10).map((task) => (
-                            <div key={task.id} className="p-4 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-sm border border-white/20 transition-all flex items-center justify-between hover:shadow-md">
+                            <div key={task.id} className="p-4 rounded-2xl bg-surface border border-border transition-all flex items-center justify-between hover:shadow-md">
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className={cn("w-1.5 h-10 rounded-full shrink-0", task.priority === 'high' ? "bg-error" : task.priority === 'medium' ? "bg-info" : "bg-primary")} />
                                     <div className="min-w-0">
@@ -123,9 +122,9 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                             </div>
                                             <span className={cn(
                                                 "text-[10px] font-bold px-2 py-0.5 rounded-lg",
-                                                task.priority === 'high' ? "bg-error/10 text-error" :
-                                                task.priority === 'medium' ? "bg-info/10 text-info" :
-                                                "bg-primary/10 text-primary"
+                                                task.priority === 'high' ? "bg-error-soft text-error" :
+                                                task.priority === 'medium' ? "bg-info-soft text-info" :
+                                                "bg-primary-soft text-primary"
                                             )}>
                                                 {task.priority === 'high' ? 'عالية' : task.priority === 'medium' ? 'متوسطة' : 'عادية'}
                                             </span>
@@ -142,7 +141,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         ))
                     ) : (
                         <div className="text-center py-12">
-                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-success/10 to-emerald-500/10 flex items-center justify-center">
+                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-success-soft flex items-center justify-center">
                                 <ListTodo size={24} className="text-success/40" />
                             </div>
                             <p className="text-sm font-bold text-muted">تم إنجاز كافة المهام</p>
@@ -153,13 +152,13 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
 
                 <div className="mt-6 pt-5 border-t border-border/50">
                     <Link to="/tasks">
-                        <Button variant="default" size="lg" className="w-full gap-2 rounded-2xl h-11 text-sm font-bold bg-gradient-to-r from-primary to-purple-500 hover:from-primary-hover hover:to-purple-600 shadow-lg shadow-primary/20 border-0">
+                        <Button variant="default" size="lg" className="w-full gap-2 rounded-2xl h-11 text-sm font-bold bg-primary text-on-primary border-0">
                             مركز المهام المتكامل
                             <ChevronLeft size={14} />
                         </Button>
                     </Link>
                 </div>
-            </GlassCard>
+            </div>
         </div>
     );
 };

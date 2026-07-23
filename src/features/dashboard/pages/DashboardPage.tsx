@@ -21,7 +21,7 @@ import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle, Database, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
 
 const containerVariants = {
     hidden: { opacity: 0 },

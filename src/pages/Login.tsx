@@ -173,7 +173,7 @@ export const Login = () => {
                                                 <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
                                             </div>
                                         </div>
-                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
                                     </div>
 
                                     <div className="w-4 h-1.5 bg-main rounded-full shrink-0 -mt-2"></div>
@@ -184,7 +184,7 @@ export const Login = () => {
                                                 <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
                                             </div>
                                         </div>
-                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Breadcrumb, Tabs } from '../../../shared/components/ui';
 import { Home, Settings, Shield } from 'lucide-react';
 

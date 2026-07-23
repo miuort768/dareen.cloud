@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { X, Menu, LogOut } from 'lucide-react';
+import { Menu, LogOut } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';

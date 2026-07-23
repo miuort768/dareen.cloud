@@ -1,4 +1,4 @@
-import { ListTodo, Calendar, Activity } from 'lucide-react';
+import { ListTodo, Calendar } from 'lucide-react';
 import { ActivityFeed } from '../../../shared/components/ui';
 import type { ActivityItem } from '../../../shared/components/ui';
 

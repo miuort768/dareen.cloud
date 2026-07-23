@@ -25,7 +25,7 @@ const tabs = [
     { id: 'alerts' as const, label: 'التنبيهات', icon: Bell },
 ];
 
-const glass = "bg-white/80 dark:bg-black/50 backdrop-blur-xl border-b border-white/20 dark:border-white/10";
+const glass = "bg-surface/80 backdrop-blur-xl border-b border-border";
 
 export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: MobileAdminDashboardProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -77,7 +77,7 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
 
     return (
         <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            className="min-h-screen pb-20 overflow-x-hidden relative bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background" dir="rtl"
+            className="min-h-screen pb-20 overflow-x-hidden relative bg-background" dir="rtl"
         >
             {/* Pull to refresh */}
             <motion.div animate={{ height: isRefreshing ? 48 : pullDistance }}
@@ -99,8 +99,8 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
                 <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20">
-                                <ShieldCheck size={18} className="text-white" />
+                            <div className="w-10 h-10 rounded-2xl bg-primary-soft flex items-center justify-center">
+                                <ShieldCheck size={18} className="text-primary" />
                             </div>
                             <div>
                                 <h1 className="text-base font-bold text-main leading-tight">مركز القيادة</h1>
@@ -109,7 +109,7 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
                                 </p>
                             </div>
                         </div>
-                        <div className="px-3 py-1.5 rounded-xl bg-white/50 dark:bg-white/10 backdrop-blur-sm text-primary font-bold text-[11px] tabular-nums shadow-sm border border-white/20">
+                        <div className="px-3 py-1.5 rounded-xl bg-surface text-primary font-bold text-[11px] tabular-nums border border-border">
                             <Clock size={11} className="inline ms-1" />
                             {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                         </div>
@@ -132,8 +132,8 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
             {/* iOS-style Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
                 {/* Safe area spacer */}
-                <div className="h-2 bg-white dark:bg-black" />
-                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-2xl border-t border-white/20 dark:border-white/10 shadow-2xl shadow-black/5">
+                <div className="h-2 bg-card" />
+                <div className="bg-card border-t border-border shadow-lg">
                     <div className="flex items-center justify-around px-2 py-1.5">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
@@ -145,13 +145,13 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
                                 >
                                     <div className={cn(
                                         "rounded-xl p-1.5 transition-all duration-300 relative",
-                                        isActive && "bg-gradient-to-br from-primary/10 to-purple-500/10"
+                                        isActive && "bg-primary-soft"
                                     )}>
                                         <tab.icon size={20} strokeWidth={isActive ? 2 : 1.5}
                                             className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
                                         />
                                         {hasBadge && (
-                                            <span className="absolute -top-0.5 -end-0.5 min-w-[14px] h-[14px] bg-gradient-to-br from-error to-rose-500 text-white text-[8px] font-bold flex items-center justify-center px-1 rounded-full shadow-lg shadow-error/30">
+                                            <span className="absolute -top-0.5 -end-0.5 min-w-[14px] h-[14px] bg-error text-on-error text-[8px] font-bold flex items-center justify-center px-1 rounded-full">
                                                 {lowBalanceCount > 9 ? '9+' : lowBalanceCount}
                                             </span>
                                         )}
@@ -164,7 +164,7 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
                                     </span>
                                     {isActive && (
                                         <motion.div layoutId="tab-indicator"
-                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-purple-500 shadow-lg shadow-primary/30"
+                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-primary"
                                         />
                                     )}
                                 </motion.button>

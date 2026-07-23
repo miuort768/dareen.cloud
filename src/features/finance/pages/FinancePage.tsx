@@ -1,4 +1,4 @@
-import { CalendarCheck, Download, Plus, TrendingUp } from 'lucide-react';
+import { CalendarCheck, Plus, TrendingUp } from 'lucide-react';
 import { TransactionsLog } from '../components/TransactionsLog';
 import { FinanceCharts } from '../components/FinanceCharts';
 import { FinanceStats } from '../components/FinanceStats';
