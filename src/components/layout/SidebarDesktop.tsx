@@ -4,7 +4,7 @@ import { Image } from '../../shared/components/ui';
 import { Badge } from '../ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 import { cn } from '../../lib/utils';
-import type { NavSection } from './Sidebar';
+import type { NavSection, NavItem } from './Sidebar';
 
 interface UserData {
     name: string;
@@ -27,6 +27,54 @@ const roleLabels: Record<string, string> = {
     parent: 'ولي أمر',
     student: 'طالب',
 };
+
+interface SidebarLinkProps {
+    item: NavItem;
+    collapsed: boolean;
+    totalUnreadCount: number;
+}
+
+const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) => (
+    <NavLink
+        to={item.href}
+        className={({ isActive }) => cn(
+            "flex items-center gap-2.5 mx-2 my-0.5 transition-all duration-200 group relative rounded-xl text-sm",
+            collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2",
+            isActive
+                ? "bg-primary/10 text-primary font-semibold"
+                : "text-muted hover:bg-hover hover:text-main"
+        )}
+        title={collapsed ? item.name : ''}
+    >
+        {({ isActive }) => (
+            <>
+                {isActive && (
+                    <div className="absolute start-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-full" />
+                )}
+                <div className="relative shrink-0 transition-transform duration-200 group-hover:scale-110">
+                    <item.icon size={18} className="shrink-0" strokeWidth={isActive ? 2.2 : 1.8} />
+                    {item.id === 'chat' && totalUnreadCount > 0 && (
+                        <Badge variant="destructive" className="absolute -top-1.5 -start-1.5 h-3.5 min-w-[14px] px-0.5 text-[8px] leading-none flex items-center justify-center">
+                            {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                        </Badge>
+                    )}
+                </div>
+                <span className={cn(
+                    "whitespace-nowrap transition-all duration-300 text-[13px]",
+                    collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
+                )}>
+                    {item.name}
+                </span>
+            </>
+        )}
+        {collapsed && (
+            <div className="absolute end-full top-1/2 -translate-y-1/2 me-3 px-2.5 py-1.5 bg-popover text-popover-foreground text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg border border-border transition-all duration-150 group-hover:translate-x-0 translate-x-1">
+                {item.name}
+                <div className="absolute top-1/2 -translate-y-1/2 -start-1.5 w-2.5 h-2.5 bg-popover border-s border-t border-border rotate-45" />
+            </div>
+        )}
+    </NavLink>
+);
 
 export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, onToggleCollapse, onLogout }: SidebarDesktopProps) => (
     <div className={cn(
@@ -70,49 +118,12 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
 
                     {/* Section items */}
                     {section.items.map((item) => (
-                        <NavLink
+                        <SidebarLink
                             key={`${item.href}-${item.id}`}
-                            to={item.href}
-                            className={({ isActive }) => cn(
-                                "flex items-center gap-2.5 mx-2 my-0.5 transition-all duration-200 group relative rounded-xl text-sm",
-                                collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2",
-                                isActive
-                                    ? "bg-primary/10 text-primary font-semibold"
-                                    : "text-muted hover:bg-hover hover:text-main"
-                            )}
-                            title={collapsed ? item.name : ''}
-                        >
-                            {/* Active indicator bar */}
-                            {({ isActive }) => (
-                                <>
-                                    {isActive && (
-                                        <div className="absolute start-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-full" />
-                                    )}
-                                    <div className="relative shrink-0 transition-transform duration-200 group-hover:scale-110">
-                                        <item.icon size={18} className="shrink-0" strokeWidth={isActive ? 2.2 : 1.8} />
-                                        {item.id === 'chat' && totalUnreadCount > 0 && (
-                                            <Badge variant="destructive" className="absolute -top-1.5 -start-1.5 h-3.5 min-w-[14px] px-0.5 text-[8px] leading-none flex items-center justify-center">
-                                                {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                                            </Badge>
-                                        )}
-                                    </div>
-                                    <span className={cn(
-                                        "whitespace-nowrap transition-all duration-300 text-[13px]",
-                                        collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
-                                    )}>
-                                        {item.name}
-                                    </span>
-                                </>
-                            )}
-
-                            {/* Collapsed tooltip */}
-                            {collapsed && (
-                                <div className="absolute end-full top-1/2 -translate-y-1/2 me-3 px-2.5 py-1.5 bg-popover text-popover-foreground text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg border border-border transition-all duration-150 group-hover:translate-x-0 translate-x-1">
-                                    {item.name}
-                                    <div className="absolute top-1/2 -translate-y-1/2 -start-1.5 w-2.5 h-2.5 bg-popover border-s border-t border-border rotate-45" />
-                                </div>
-                            )}
-                        </NavLink>
+                            item={item}
+                            collapsed={collapsed}
+                            totalUnreadCount={totalUnreadCount}
+                        />
                     ))}
                 </div>
             ))}
