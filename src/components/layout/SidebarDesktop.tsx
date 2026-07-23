@@ -90,7 +90,7 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                     "font-bold text-sm text-main transition-all duration-300 whitespace-nowrap",
                     collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100"
                 )}>
-                    دارين
+                    دارين السابعة
                 </span>
             </div>
         </div>

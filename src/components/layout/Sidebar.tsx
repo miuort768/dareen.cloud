@@ -125,7 +125,7 @@ export const Sidebar = memo(() => {
                         <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-7 h-7")}>
                             <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                         </div>
-                        <span className={cn("font-semibold text-sm text-main transition-all duration-300", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100")}>دارين</span>
+                        <span className={cn("font-semibold text-sm text-main transition-all duration-300", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100")}>دارين السابعة</span>
                     </div>
                 </div>
                 <div className="flex-1 flex items-center justify-center">
