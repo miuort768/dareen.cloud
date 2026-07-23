@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { PanelLeftClose, PanelLeftOpen, LogOut, ChevronDown } from 'lucide-react';
+import { PanelLeftClose, PanelLeftOpen, LogOut } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Badge } from '../ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
@@ -41,32 +41,25 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
             "flex items-center gap-2.5 mx-2 my-0.5 transition-all duration-200 group relative rounded-xl text-sm",
             collapsed ? "justify-center px-0 py-2.5" : "px-3 py-2",
             isActive
-                ? "bg-primary/10 text-primary font-semibold"
+                ? "bg-primary/10 text-primary font-semibold before:absolute before:start-0 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:bg-primary before:rounded-full"
                 : "text-muted hover:bg-hover hover:text-main"
         )}
         title={collapsed ? item.name : ''}
     >
-        {({ isActive }) => (
-            <>
-                {isActive && (
-                    <div className="absolute start-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-full" />
-                )}
-                <div className="relative shrink-0 transition-transform duration-200 group-hover:scale-110">
-                    <item.icon size={18} className="shrink-0" strokeWidth={isActive ? 2.2 : 1.8} />
-                    {item.id === 'chat' && totalUnreadCount > 0 && (
-                        <Badge variant="destructive" className="absolute -top-1.5 -start-1.5 h-3.5 min-w-[14px] px-0.5 text-[8px] leading-none flex items-center justify-center">
-                            {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                        </Badge>
-                    )}
-                </div>
-                <span className={cn(
-                    "whitespace-nowrap transition-all duration-300 text-[13px]",
-                    collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
-                )}>
-                    {item.name}
-                </span>
-            </>
-        )}
+        <div className="relative shrink-0 transition-transform duration-200 group-hover:scale-110">
+            <item.icon size={18} className="shrink-0" strokeWidth={1.8} />
+            {item.id === 'chat' && totalUnreadCount > 0 && (
+                <Badge variant="destructive" className="absolute -top-1.5 -start-1.5 h-3.5 min-w-[14px] px-0.5 text-[8px] leading-none flex items-center justify-center">
+                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                </Badge>
+            )}
+        </div>
+        <span className={cn(
+            "whitespace-nowrap transition-all duration-300 text-[13px]",
+            collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
+        )}>
+            {item.name}
+        </span>
         {collapsed && (
             <div className="absolute end-full top-1/2 -translate-y-1/2 me-3 px-2.5 py-1.5 bg-popover text-popover-foreground text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg border border-border transition-all duration-150 group-hover:translate-x-0 translate-x-1">
                 {item.name}
@@ -106,7 +99,6 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
         <nav className="flex-1 py-3 overflow-y-auto custom-scrollbar" data-sidebar-nav>
             {sections.map((section, sIdx) => (
                 <div key={section.label} className={cn(sIdx > 0 && "mt-1")}>
-                    {/* Section label */}
                     <div className={cn(
                         "transition-all duration-300 overflow-hidden",
                         collapsed ? "h-0 opacity-0" : "h-auto opacity-100"
@@ -115,8 +107,6 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                             {section.label}
                         </span>
                     </div>
-
-                    {/* Section items */}
                     {section.items.map((item) => (
                         <SidebarLink
                             key={`${item.href}-${item.id}`}
@@ -131,13 +121,12 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
 
         {/* User profile + actions */}
         <div className="shrink-0 border-t border-border/50">
-            {/* User info */}
             {user && (
                 <div className={cn(
                     "flex items-center transition-all duration-300 mx-2 mt-2 rounded-xl",
                     collapsed ? "justify-center px-0 py-2" : "gap-2.5 px-3 py-2"
                 )}>
-                    <Avatar className={cn("shrink-0 transition-all duration-300", collapsed ? "w-8 h-8" : "w-8 h-8")}>
+                    <Avatar className="shrink-0 w-8 h-8">
                         {user.avatar ? (
                             <AvatarImage src={user.avatar} alt={user.name} />
                         ) : (
@@ -155,8 +144,6 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                     </div>
                 </div>
             )}
-
-            {/* Actions */}
             <div className="px-2 pb-2 space-y-0.5">
                 <button
                     onClick={onToggleCollapse}
@@ -174,7 +161,6 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                         </>
                     )}
                 </button>
-
                 <button
                     onClick={onLogout}
                     className={cn(
