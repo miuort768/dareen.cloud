@@ -1,77 +1,132 @@
 import { NavLink } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
+import { PanelLeftClose, PanelLeftOpen, LogOut } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
-import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { cn } from '../../lib/utils';
-
-interface NavItem {
-    name: string;
-    href: string;
-    id: string;
-    icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
-}
+import type { NavSection } from './Sidebar';
 
 interface SidebarDesktopProps {
-    navigation: NavItem[];
+    sections: NavSection[];
     collapsed: boolean;
     totalUnreadCount: number;
     onToggleCollapse: () => void;
     onLogout: () => void;
 }
 
-export const SidebarDesktop = ({ navigation, collapsed, totalUnreadCount, onToggleCollapse, onLogout }: SidebarDesktopProps) => (
-    <div className={cn("hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col fixed top-0 start-0 z-50 shrink-0", collapsed ? "w-20" : "w-72")}>
-        <div className={cn("h-14 items-center border-b border-border transition-all duration-300", collapsed ? "flex justify-center px-0" : "hidden xl:flex justify-between px-6")}>
-            <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-6 h-6")}>
+export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, onToggleCollapse, onLogout }: SidebarDesktopProps) => (
+    <div className={cn(
+        "hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col fixed top-0 start-0 z-50 shrink-0",
+        collapsed ? "w-16" : "w-56"
+    )}>
+        {/* Logo */}
+        <div className={cn(
+            "h-14 flex items-center shrink-0 transition-all duration-300",
+            collapsed ? "justify-center px-0" : "justify-between px-5"
+        )}>
+            <div className={cn("flex items-center gap-2.5 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
+                <div className={cn("shrink-0 transition-all duration-300", collapsed ? "w-8 h-8" : "w-7 h-7")}>
                     <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                 </div>
-                <span className={cn("font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pe-3")}>
-                    نظام دارين السابعة
+                <span className={cn(
+                    "font-semibold text-sm text-main transition-all duration-300 whitespace-nowrap",
+                    collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100"
+                )}>
+                    دارين
                 </span>
             </div>
         </div>
 
-        <nav data-sidebar-nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
-            {navigation.map((item) => (
-                <NavLink key={`${item.href}-${item.id}`} to={item.href}
-                    className={({ isActive }) => cn(
-                        "flex items-center gap-2.5 px-3 py-1.5 transition-all duration-200 group relative text-sm rounded-lg",
-                        isActive ? "bg-primary-soft text-primary font-medium" : "text-muted hover:bg-hover hover:text-main",
-                        collapsed && "justify-center py-2"
-                    )}
-                    title={collapsed ? item.name : ''}
-                >
-                    <div className="relative shrink-0">
-                        <item.icon size={collapsed ? 20 : 18} className="shrink-0" strokeWidth={collapsed ? 2.5 : 2} />
-                        {item.id === 'chat' && totalUnreadCount > 0 && (
-                            <Badge variant="destructive" className="absolute -top-2 -start-2 h-4 min-w-[16px] px-1 text-[9px] leading-none flex items-center justify-center">
-                                {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
-                            </Badge>
-                        )}
+        {/* Navigation */}
+        <nav className="flex-1 py-2 overflow-y-auto custom-scrollbar" data-sidebar-nav>
+            {sections.map((section, sIdx) => (
+                <div key={section.label} className={cn(sIdx > 0 && "mt-3")}>
+                    {/* Section label */}
+                    <div className={cn(
+                        "transition-all duration-300 overflow-hidden",
+                        collapsed ? "h-0 opacity-0" : "h-auto opacity-100"
+                    )}>
+                        <span className="px-5 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted/60 block">
+                            {section.label}
+                        </span>
                     </div>
-                    <span className={cn("whitespace-nowrap transition-all duration-300", collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100")}>{item.name}</span>
-                    {collapsed && (
-                        <div className="absolute end-full top-1/2 -translate-y-1/2 ms-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg border border-border">
-                            {item.name}
-                        </div>
-                    )}
-                </NavLink>
+
+                    {/* Section items */}
+                    {section.items.map((item) => (
+                        <NavLink
+                            key={`${item.href}-${item.id}`}
+                            to={item.href}
+                            className={({ isActive }) => cn(
+                                "flex items-center gap-2.5 mx-2 my-0.5 transition-all duration-200 group relative rounded-lg text-sm",
+                                collapsed ? "justify-center px-0 py-2" : "px-2.5 py-1.5",
+                                isActive
+                                    ? "bg-primary/10 text-primary font-medium border-s-2 border-primary"
+                                    : "text-muted hover:bg-hover hover:text-main border-s-2 border-transparent"
+                            )}
+                            title={collapsed ? item.name : ''}
+                        >
+                            <div className="relative shrink-0">
+                                <item.icon size={18} className="shrink-0" strokeWidth={1.8} />
+                                {item.id === 'chat' && totalUnreadCount > 0 && (
+                                    <Badge variant="destructive" className="absolute -top-1.5 -start-1.5 h-3.5 min-w-[14px] px-0.5 text-[8px] leading-none flex items-center justify-center">
+                                        {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                                    </Badge>
+                                )}
+                            </div>
+                            <span className={cn(
+                                "whitespace-nowrap transition-all duration-300 text-[13px]",
+                                collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
+                            )}>
+                                {item.name}
+                            </span>
+
+                            {/* Collapsed tooltip */}
+                            {collapsed && (
+                                <div className="absolute end-full top-1/2 -translate-y-1/2 me-3 px-2.5 py-1.5 bg-popover text-popover-foreground text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 shadow-lg border border-border transition-opacity duration-150">
+                                    {item.name}
+                                </div>
+                            )}
+                        </NavLink>
+                    ))}
+                </div>
             ))}
         </nav>
 
-        <div className="px-4 pt-2 pb-0 border-t border-border">
-            <Button variant="ghost" size="sm" onClick={onToggleCollapse} className="w-full flex items-center gap-3 justify-start text-muted">
-                {collapsed ? <ChevronRight size={18} className="mx-auto" /> : <><ChevronLeft size={18} /><span>تصغير القائمة</span></>}
-            </Button>
-        </div>
+        {/* Bottom actions */}
+        <div className="shrink-0 border-t border-border py-2">
+            {/* Collapse toggle */}
+            <button
+                onClick={onToggleCollapse}
+                className={cn(
+                    "flex items-center gap-2.5 w-full transition-all duration-200 text-muted hover:text-main hover:bg-hover rounded-lg mx-2",
+                    collapsed ? "justify-center px-0 py-2" : "px-2.5 py-1.5"
+                )}
+            >
+                {collapsed ? (
+                    <PanelLeftOpen size={18} strokeWidth={1.8} />
+                ) : (
+                    <>
+                        <PanelLeftClose size={18} strokeWidth={1.8} />
+                        <span className="text-[13px]">تصغير</span>
+                    </>
+                )}
+            </button>
 
-        <div className="px-4 pb-4 pt-2">
-            <Button variant="ghost" size="sm" onClick={onLogout} className={cn("w-full flex items-center gap-3 text-error hover:text-error hover:bg-error-soft", collapsed && "justify-center")}>
-                <LogOut size={18} />
-                <span className={cn("whitespace-nowrap", collapsed ? "hidden" : "")}>تسجيل الخروج</span>
-            </Button>
+            {/* Logout */}
+            <button
+                onClick={onLogout}
+                className={cn(
+                    "flex items-center gap-2.5 w-full transition-all duration-200 text-error/80 hover:text-error hover:bg-error-soft rounded-lg mx-2",
+                    collapsed ? "justify-center px-0 py-2" : "px-2.5 py-1.5"
+                )}
+            >
+                <LogOut size={18} strokeWidth={1.8} />
+                <span className={cn(
+                    "whitespace-nowrap text-[13px] transition-all duration-300",
+                    collapsed ? "hidden" : ""
+                )}>
+                    خروج
+                </span>
+            </button>
         </div>
     </div>
 );

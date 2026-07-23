@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     GraduationCap, LayoutDashboard, Users, Wallet, UserCheck, CalendarDays,
@@ -14,6 +14,18 @@ import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 import { SidebarDesktop } from './SidebarDesktop';
 import { SidebarMobile } from './SidebarMobile';
+
+export interface NavItem {
+    name: string;
+    href: string;
+    id: string;
+    icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+}
+
+export interface NavSection {
+    label: string;
+    items: NavItem[];
+}
 
 export const Sidebar = memo(() => {
     const academyName = useAcademyName();
@@ -92,19 +104,32 @@ export const Sidebar = memo(() => {
         return currentUser.permissions?.includes(item.id);
     });
 
+    const navigationSections = useMemo<NavSection[]>(() => {
+        const byId = new Map(filteredNavigation.map(item => [item.id, item]));
+        const pick = (...ids: string[]) => ids.map(id => byId.get(id)).filter(Boolean) as NavItem[];
+        return [
+            { label: 'الرئيسية', items: pick('dashboard', 'parent_dashboard', 'student_dashboard', 'chat') },
+            { label: 'الأشخاص', items: pick('leads', 'trial_sessions', 'teachers', 'students', 'parents') },
+            { label: 'التعلّم', items: pick('evaluations', 'attendance', 'schedule', 'appointments', 'tasks') },
+            { label: 'المالية', items: pick('finance', 'monthly_closing', 'student_invoices', 'teacher_invoices') },
+            { label: 'المحتوى', items: pick('announcements', 'admin-blog', 'forum', 'reports', 'admin_contacts', 'admin_jobs') },
+            { label: 'النظام', items: pick('settings') },
+        ].filter(section => section.items.length > 0);
+    }, [filteredNavigation]);
+
     if (!currentUser) {
         return (
-            <div className={cn("hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0", collapsed ? "w-20" : "w-72")}>
-                <div className={cn("h-16 flex items-center border-b border-border transition-all duration-300", collapsed ? "justify-center px-0" : "justify-between px-6")}>
-                    <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <div className={cn("shrink-0", collapsed ? "w-10 h-10" : "w-8 h-8")}>
+            <div className={cn("hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col sticky top-0 z-50 shrink-0", collapsed ? "w-16" : "w-56")}>
+                <div className={cn("h-14 flex items-center border-b border-border transition-all duration-300", collapsed ? "justify-center px-0" : "justify-between px-5")}>
+                    <div className={cn("flex items-center gap-2.5 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
+                        <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-7 h-7")}>
                             <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                         </div>
-                        <span className={cn("font-medium text-lg text-main transition-all duration-300 uppercase tracking-tighter", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pe-3")}>دارين السابعة</span>
+                        <span className={cn("font-semibold text-sm text-main transition-all duration-300", collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100")}>دارين</span>
                     </div>
                 </div>
                 <div className="flex-1 flex items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-primary-light border-t-primary rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-3 border-primary-light border-t-primary rounded-full animate-spin" />
                 </div>
             </div>
         );
@@ -113,7 +138,7 @@ export const Sidebar = memo(() => {
     return (
         <>
             <SidebarDesktop
-                navigation={filteredNavigation}
+                sections={navigationSections}
                 collapsed={collapsed}
                 totalUnreadCount={totalUnreadCount}
                 onToggleCollapse={() => setCollapsed(!collapsed)}

@@ -46,9 +46,9 @@ export const Layout = () => {
             {!isChatOnly && (
                 <div className={cn(
                     "hidden lg:block shrink-0 transition-all duration-300",
-                    isChatOnly ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72")
+                    isChatOnly ? "w-0" : (sidebarCollapsed ? "w-16" : "w-56")
                 )}>
-                    <div className={cn("transition-all duration-300", isChatOnly ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72"))} />
+                    <div className={cn("transition-all duration-300", isChatOnly ? "w-0" : (sidebarCollapsed ? "w-16" : "w-56"))} />
                 </div>
             )}
             {!isChatOnly && <Sidebar />}
