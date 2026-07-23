@@ -23,7 +23,7 @@ export const ParentDesktopView = ({
 }: DesktopViewProps) => {
     const navigate = useNavigate();
     return (
-        <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-background font-sans" dir="rtl">
+        <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-white dark:bg-background font-sans" dir="rtl">
             <div className="max-w-page mx-auto px-2 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
                 <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
                     <GlassCard className="p-4 md:p-5 flex items-center justify-between">

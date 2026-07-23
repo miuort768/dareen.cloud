@@ -154,7 +154,7 @@ export const Dashboard = () => {
             animate="visible"
             className={cn(
                 "min-h-full pb-24",
-                "bg-background"
+                "bg-white dark:bg-background"
             )}
             dir="rtl"
         >

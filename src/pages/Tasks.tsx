@@ -114,7 +114,7 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 relative bg-surface" dir="rtl">
+        <div className="min-h-full pb-24 relative bg-white dark:bg-background" dir="rtl">
             <div className="max-w-page mx-auto px-3 space-y-4">
 
                 {/* ── Header ── */}

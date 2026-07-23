@@ -151,7 +151,7 @@ export const MonthlyClosing = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-surface" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-white dark:bg-background" dir="rtl">
             <div className="max-w-page mx-auto px-2 space-y-3">
                 <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
                     <div className="flex items-center justify-between">

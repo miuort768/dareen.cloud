@@ -77,7 +77,7 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
 
     return (
         <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            className="min-h-screen pb-20 overflow-x-hidden relative bg-background" dir="rtl"
+            className="min-h-screen pb-20 overflow-x-hidden relative bg-white dark:bg-background" dir="rtl"
         >
             {/* Pull to refresh */}
             <motion.div animate={{ height: isRefreshing ? 48 : pullDistance }}

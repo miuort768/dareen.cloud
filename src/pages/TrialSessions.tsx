@@ -108,7 +108,7 @@ export const TrialSessions = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-surface dark:bg-background min-h-screen pb-24"
+      className="bg-white dark:bg-background min-h-screen pb-24"
       dir="rtl"
     >
       <div className="px-3 space-y-3 max-w-page mx-auto">

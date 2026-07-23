@@ -49,7 +49,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="min-h-full pb-28 relative bg-background font-sans" dir="rtl">
+        <div className="min-h-full pb-28 relative bg-white dark:bg-background font-sans" dir="rtl">
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>

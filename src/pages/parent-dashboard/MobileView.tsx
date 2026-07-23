@@ -35,7 +35,7 @@ export const ParentMobileView = ({
 }: MobileViewProps) => {
     const navigate = useNavigate();
     return (
-        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-background font-sans" dir="rtl">
+        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-white dark:bg-background font-sans" dir="rtl">
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>

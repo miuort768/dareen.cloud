@@ -108,7 +108,7 @@ export const StudentDashboard = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-background dark:to-background font-sans overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-white dark:bg-background font-sans overflow-x-hidden" dir="rtl">
             <StudentDashboardHeader headerScrolled={headerScrolled} theme={theme} setTheme={setTheme}
                 currentTime={currentTime} onBellClick={() => navigate('/parent-announcements')} />
 

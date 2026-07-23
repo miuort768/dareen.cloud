@@ -142,7 +142,7 @@ export const Forum = () => {
     };
 
     return (
-        <div className="min-h-full overflow-x-hidden relative bg-surface pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full overflow-x-hidden relative bg-white dark:bg-background pb-20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="relative z-10">
                 <ForumHeader />
                 <div className="max-w-[700px] mx-auto px-4 space-y-6">
