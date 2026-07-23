@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Download, X, Smartphone, Monitor, Share } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 type Platform = 'android-chrome' | 'ios-safari' | 'windows-edge' | 'mac-safari' | 'desktop-chrome' | 'other';
 
@@ -28,12 +29,16 @@ const isStandaloneMode = () =>
     document.referrer.includes('android-app://');
 
 export const InstallPWA = () => {
+    const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
     const [platform, setPlatform] = useState<Platform>('other');
     const [showIOSGuide, setShowIOSGuide] = useState(false);
     const deferredPromptRef = useRef<Event | null>(null);
 
+    const isDashboard = /^\/(admin-dashboard|teacher-dashboard|student-dashboard|parent-dashboard|students|teachers|parents|finance|attendance|schedule|appointments|tasks|announcements|forum|settings|evaluations|monthly-closing|reports|leads|trial-sessions|student-invoices|teacher-invoices|admin-blog|admin-contacts|admin-jobs|parent-students|parent-announcements|chat)/.test(location.pathname);
+
     useEffect(() => {
+        if (isDashboard) return;
         if (isStandaloneMode()) return;
         if (localStorage.getItem('pwa_dismissed_permanent')) return;
 
@@ -112,7 +117,7 @@ export const InstallPWA = () => {
         localStorage.setItem('pwa_dismissed_permanent', 'true');
     };
 
-    if (!isVisible) return null;
+    if (!isVisible || isDashboard) return null;
 
     const isDesktop = platform === 'desktop-chrome' || platform === 'windows-edge';
     const isIOS = platform === 'ios-safari';
