@@ -1,4 +1,4 @@
-import { Smartphone, Download, Shield, MonitorDown, Globe, Apple } from 'lucide-react';
+import { Smartphone, Download, Shield, MonitorDown } from 'lucide-react';
 import { useSettingsStore } from '../../../store/settingsStore';
 
 export const AppDownloadSection = () => {
@@ -29,25 +29,17 @@ export const AppDownloadSection = () => {
                                     href={googlePlayUrl || '#'}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black text-white font-bold text-sm shadow-lg hover:bg-hover hover:-translate-y-0.5 transition-all rounded-xl border border-border w-full sm:w-auto"
+                                    className="hover:-translate-y-0.5 transition-all"
                                 >
-                                    <Globe className="w-5 h-5 shrink-0 text-white" />
-                                    <div className="text-start">
-                                        <div className="text-micro text-white font-medium leading-tight opacity-60">حمله على</div>
-                                        <div className="text-sm font-black text-white leading-tight -mt-0.5">Google Play</div>
-                                    </div>
+                                    <img src="/google-play.svg" alt="Google Play" className="h-12 w-auto" />
                                 </a>
                                 <a
                                     href={appStoreUrl || '#'}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-black text-white font-bold text-sm shadow-lg hover:bg-hover hover:-translate-y-0.5 transition-all rounded-xl border border-border w-full sm:w-auto"
+                                    className="hover:-translate-y-0.5 transition-all"
                                 >
-                                    <Apple className="w-5 h-5 shrink-0 text-white" />
-                                    <div className="text-start">
-                                        <div className="text-micro text-white font-medium leading-tight opacity-60">حمله على</div>
-                                        <div className="text-sm font-black leading-tight -mt-0.5">App Store</div>
-                                    </div>
+                                    <img src="/app-store.svg" alt="App Store" className="h-12 w-auto" />
                                 </a>
                             </div>
                             <div className="flex items-center justify-center gap-6 mt-6">
@@ -90,24 +82,22 @@ export const AppDownloadSection = () => {
                     <p className="text-muted dark:text-muted text-micro leading-tight text-center max-w-xs mx-auto mb-6 font-medium">
                         أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من أي مكان وفي أي وقت.
                     </p>
-                    <div className="flex flex-col gap-4 items-center mb-7">
+                    <div className="flex flex-col gap-3 items-center mb-7">
                         <a
                             href={googlePlayUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black text-white font-black text-base shadow-lg hover:bg-hover hover:-translate-y-0.5 transition-all rounded-2xl border border-border"
+                            className="hover:-translate-y-0.5 transition-all"
                         >
-                            <Globe className="w-5 h-5 shrink-0 text-white" />
-                            <span className="text-white">حمله على Google Play</span>
+                            <img src="/google-play.svg" alt="Google Play" className="h-11 w-auto" />
                         </a>
                         <a
                             href={appStoreUrl || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] flex items-center justify-center gap-3 px-6 py-4 bg-black text-white font-black text-base shadow-lg hover:bg-hover hover:-translate-y-0.5 transition-all rounded-2xl border border-border"
+                            className="hover:-translate-y-0.5 transition-all"
                         >
-                            <Apple className="w-5 h-5 shrink-0 text-white" />
-                            <span className="text-white">حمله على App Store</span>
+                            <img src="/app-store.svg" alt="App Store" className="h-11 w-auto" />
                         </a>
                     </div>
                     <div className="flex items-center justify-center gap-6 mt-5">
