@@ -21,6 +21,7 @@ import { StatsCounter } from './components/StatsCounter';
 import { Image } from '../../shared/components/ui';
 import { Play, Headphones, Users, Star, ChevronLeft, BadgeCheck } from 'lucide-react';
 import { featureStyles, quickFeatures, getFilteredCourses, heroSlides, stages, reviews, reviewSchema } from './home-page';
+import { useIsAuthenticated } from '../../context/useApp';
 
 
 
@@ -28,6 +29,7 @@ export const Home = () => {
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const heroBanners = useSettingsStore(s => s.heroBanners);
     const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
+    const isAuthenticated = useIsAuthenticated();
     const defaultNumber = adminPhone.replace(/\D/g, '');
 
     const getNumber = (label: string): string => {
@@ -103,7 +105,7 @@ export const Home = () => {
                                         <Link to="/courses" className="bg-surface text-main text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
                                             <Play className="w-3 h-3 fill-main" /> تصفح الدورات
                                         </Link>
-                                        <Link to="/login" className="bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-primary-hover transition-all w-full text-center">تسجيل الدخول</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-primary-hover transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">

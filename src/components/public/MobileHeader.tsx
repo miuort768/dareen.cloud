@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Phone } from 'lucide-react';
+import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Phone, LayoutDashboard } from 'lucide-react';
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
+import { useIsAuthenticated } from '../../context/useApp';
 
 export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useDarkMode();
+  const isAuthenticated = useIsAuthenticated();
 
   const navItems = [
     { label: 'الرئيسية', path: '/', icon: Home },
@@ -51,10 +53,17 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
                   {item.label}
                 </Link>
               ))}
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-on-primary hover:bg-info-light dark:hover:bg-info/30 transition-colors border-t border-border dark:border-border">
-                <LogIn size={14} />
-                تسجيل الدخول
-              </Link>
+              {isAuthenticated ? (
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-on-primary hover:bg-info-light dark:hover:bg-info/30 transition-colors border-t border-border dark:border-border">
+                  <LayoutDashboard size={14} />
+                  لوحة التحكم
+                </Link>
+              ) : (
+                <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-on-primary hover:bg-info-light dark:hover:bg-info/30 transition-colors border-t border-border dark:border-border">
+                  <LogIn size={14} />
+                  تسجيل الدخول
+                </Link>
+              )}
             </div>
           )}
         </div>

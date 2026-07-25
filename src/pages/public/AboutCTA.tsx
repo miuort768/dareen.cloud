@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Users, Target } from 'lucide-react';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
+import { useIsAuthenticated } from '../../context/useApp';
 
-export const AboutCTA = () => (
+export const AboutCTA = () => {
+    const isAuthenticated = useIsAuthenticated();
+    return (
     <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-primary-active via-primary to-primary-active">
         <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 8%, transparent) 0%, transparent 70%)' }} />
         <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 6%, transparent) 0%, transparent 70%)' }} />
@@ -39,9 +42,9 @@ export const AboutCTA = () => (
                                             <span className="relative z-10">ابدأ رحلتك الآن</span>
                                             <ArrowLeft size={18} className="relative z-10 group-hover:-translate-x-1.5 transition-transform" />
                                         </Link>
-                                        <Link to="/login" onClick={() => window.scrollTo(0, 0)}
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} onClick={() => window.scrollTo(0, 0)}
                                             className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border border-white/10 backdrop-blur-sm hover:-translate-y-1 text-on-primary/85 bg-white/5">
-                                            <span>تسجيل الدخول</span>
+                                            <span>{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</span>
                                         </Link>
                                     </div>
                                 </div>
@@ -78,4 +81,5 @@ export const AboutCTA = () => (
             </div>
         </div>
     </section>
-);
+    );
+};
