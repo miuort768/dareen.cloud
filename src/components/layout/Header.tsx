@@ -74,13 +74,13 @@ export const Header = memo(() => {
             "translate-y-0"
         )}>
             <div className="flex items-center gap-3 flex-1 min-w-0 overflow-hidden">
-                <div className="w-px h-8 bg-white/20 shrink-0 hidden md:block" />
+                <div className="w-px h-8 bg-on-primary/20 shrink-0 hidden md:block" />
                 {title && (
                     <div className="min-w-0 flex-1">
-                        <h1 className="text-sm md:text-lg font-bold text-white truncate tracking-tight leading-none">
+                        <h1 className="text-sm md:text-lg font-bold text-on-primary truncate tracking-tight leading-none">
                             {title}
                         </h1>
-                        <p className="text-micro font-normal text-white opacity-70 uppercase tracking-widest leading-none mt-0.5">
+                        <p className="text-micro font-normal text-on-primary opacity-70 uppercase tracking-widest leading-none mt-0.5">
                             {subtitle || 'دارين للتعليم والتدريب'}
                         </p>
                     </div>
@@ -93,7 +93,7 @@ export const Header = memo(() => {
                         variant="ghost"
                         size="icon"
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="text-white bg-white/15 hover:bg-white/25"
+                        className="text-on-primary bg-on-primary/15 hover:bg-on-primary/25"
                     >
                         <Sun size={18} />
                     </Button>
@@ -106,12 +106,12 @@ export const Header = memo(() => {
                         to="/chat"
                         className={cn(
                             "relative flex items-center justify-center w-9 h-9 rounded-lg",
-                            "bg-white/15 hover:bg-white/25 transition-colors text-white"
+                            "bg-on-primary/15 hover:bg-on-primary/25 transition-colors text-on-primary"
                         )}
                     >
                         <MessageSquare size={18} />
                         {totalUnreadCount > 0 && (
-                            <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-white rounded-full leading-none">
+                            <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
                                 {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                             </span>
                         )}
@@ -124,12 +124,12 @@ export const Header = memo(() => {
                             to="/chat"
                             className={cn(
                                 "relative flex items-center justify-center w-9 h-9 rounded-lg",
-                                "bg-white/15 hover:bg-white/25 transition-colors text-white"
+                                "bg-on-primary/15 hover:bg-on-primary/25 transition-colors text-on-primary"
                             )}
                         >
                             <MessageSquare size={18} />
                             {totalUnreadCount > 0 && (
-                                <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-white rounded-full leading-none">
+                                <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
                                     {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                 </span>
                             )}

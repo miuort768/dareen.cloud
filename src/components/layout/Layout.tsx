@@ -7,7 +7,6 @@ import { useCurrentUser, useSidebarCollapsed } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
 import { PageLoader } from '../ui/PageLoader';
 import { ErrorBoundary } from '../ErrorBoundary';
-import { BottomNav } from './BottomNav';
 import { triggerHaptic } from '../../lib/haptics';
 
 export const Layout = () => {
@@ -37,7 +36,7 @@ export const Layout = () => {
         <div
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="min-h-screen flex font-sans text-main transition-colors duration-300 relative bg-white dark:bg-card"
+            className="min-h-screen flex font-sans text-main transition-colors duration-300 relative bg-background"
         dir="rtl"
         >
             <Helmet>
@@ -60,7 +59,7 @@ export const Layout = () => {
                     "flex-1 overflow-x-hidden overflow-y-auto custom-scrollbar relative min-w-0 max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat') || location.pathname.includes('/student-dashboard'))
                         ? "p-0"
-                        : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 z-10"
+                        : "px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-4 lg:pb-8 z-10"
                 )}>
                     <ErrorBoundary>
                         <Suspense fallback={<PageLoader />}>
@@ -71,8 +70,6 @@ export const Layout = () => {
                     </ErrorBoundary>
                 </main>
             </div>
-
-            {!isChatOnly && <BottomNav />}
         </div>
     );
 };

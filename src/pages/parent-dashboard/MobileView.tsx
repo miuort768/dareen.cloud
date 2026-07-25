@@ -35,7 +35,7 @@ export const ParentMobileView = ({
 }: MobileViewProps) => {
     const navigate = useNavigate();
     return (
-        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-white dark:bg-background font-sans" dir="rtl">
+        <div className="block md:hidden min-h-screen pb-28 overflow-y-auto relative bg-background font-sans" dir="rtl">
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
@@ -43,19 +43,19 @@ export const ParentMobileView = ({
                     <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
                             <div className="w-6 h-6 rounded-xl bg-primary-soft flex items-center justify-center">
-                                <LayoutDashboard size={11} className="text-white" />
+                                <LayoutDashboard size={11} className="text-on-primary" />
                             </div>
                             <h2 className="text-muted text-[10px] font-bold tracking-wide">لوحة التحكم</h2>
                         </div>
                         <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                            className="w-8 h-8 rounded-xl bg-white/50 dark:bg-white/10 flex items-center justify-center text-muted border border-white/20 dark:border-white/5" aria-label="تسجيل الخروج">
+                            className="w-8 h-8 rounded-xl bg-card/50 flex items-center justify-center text-muted border border-border" aria-label="تسجيل الخروج">
                             <LogOut size={14} />
                         </button>
                     </div>
                     <GlassCard className="p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20">
-                                <User size={18} className="text-white" />
+                                <User size={18} className="text-on-primary" />
                             </div>
                             <div>
                                 <h1 className="text-main font-bold text-base leading-tight">
@@ -67,27 +67,27 @@ export const ParentMobileView = ({
                     </GlassCard>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
-                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                        <div className="flex-1 bg-card/50 rounded-xl py-2 px-3 flex items-center gap-2 border border-border">
                             <div className="w-6 h-6 rounded-lg bg-success-soft flex items-center justify-center shadow-lg shadow-success/20">
-                                <TrendingUp size={11} className="text-white" />
+                                <TrendingUp size={11} className="text-on-success" />
                             </div>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-main font-semibold text-sm">{stats.academicProgress}%</span>
                                 <span className="text-muted text-[10px] font-bold">الالتزام</span>
                             </div>
                         </div>
-                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                        <div className="flex-1 bg-card/50 rounded-xl py-2 px-3 flex items-center gap-2 border border-border">
                             <div className="w-6 h-6 rounded-lg bg-info-soft flex items-center justify-center shadow-lg shadow-info/20">
-                                <BookOpen size={11} className="text-white" />
+                                <BookOpen size={11} className="text-on-info" />
                             </div>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-main font-semibold text-sm">{children.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)}</span>
                                 <span className="text-muted text-[10px] font-bold">المادة</span>
                             </div>
                         </div>
-                        <div className="flex-1 bg-white/50 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
+                        <div className="flex-1 bg-card/50 rounded-xl py-2 px-3 flex items-center gap-2 border border-border">
                             <div className="w-6 h-6 rounded-lg bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20">
-                                <Users size={11} className="text-white" />
+                                <Users size={11} className="text-on-primary" />
                             </div>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-main font-semibold text-sm">{stats.childCount}</span>

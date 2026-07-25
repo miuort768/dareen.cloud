@@ -49,7 +49,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="min-h-full pb-28 relative bg-white dark:bg-background font-sans" dir="rtl">
+        <div className="min-h-full pb-28 relative bg-background font-sans" dir="rtl">
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
@@ -57,29 +57,29 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shadow-lg shadow-primary/20">
-                                <User size={18} className="text-white" />
+                                <User size={18} className="text-on-primary" />
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                 <p className="text-[11px] font-medium text-muted">معلم</p>
                             </div>
                         </div>
-                        <div className="w-8 h-8 rounded-xl bg-on-primary/20 dark:bg-white/10 flex items-center justify-center relative">
+                        <div className="w-8 h-8 rounded-xl bg-on-primary/10 flex items-center justify-center relative">
                             <Bell size={15} className="text-muted" />
                             <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
                         </div>
                     </div>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
-                        <div className="flex-1 bg-on-primary/10 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20 dark:border-white/5">
+                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
                             <Clock size={12} className="text-primary shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
                         </div>
-                        <div className="flex-1 bg-on-primary/10 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20 dark:border-white/5">
+                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
                             <Users size={12} className="text-info shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
                         </div>
-                        <div className="flex-1 bg-on-primary/10 dark:bg-white/5 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20 dark:border-white/5">
+                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
                             <Award size={12} className="text-success shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
                         </div>
