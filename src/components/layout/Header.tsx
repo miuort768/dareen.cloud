@@ -1,4 +1,4 @@
-import { Sun, Moon, User } from 'lucide-react';
+import { Sun, User, MessageSquare } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
@@ -7,11 +7,13 @@ import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
+import { useUnreadStore } from '../../store/unreadStore';
 
 export const Header = memo(() => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
+    const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
     useEffect(() => {
@@ -85,17 +87,56 @@ export const Header = memo(() => {
                 )}
             </div>
 
-            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="text-white hover:bg-white/10"
-                >
-                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                </Button>
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                {isDesktop && (
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        className="text-white bg-white/15 hover:bg-white/25"
+                    >
+                        <Sun size={18} />
+                    </Button>
+                )}
 
                 {isDesktop && <NotificationDropdown />}
+
+                {isDesktop && (
+                    <Link
+                        to="/chat"
+                        className={cn(
+                            "relative flex items-center justify-center w-9 h-9 rounded-lg",
+                            "bg-white/15 hover:bg-white/25 transition-colors text-white"
+                        )}
+                    >
+                        <MessageSquare size={18} />
+                        {totalUnreadCount > 0 && (
+                            <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-white rounded-full leading-none">
+                                {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                            </span>
+                        )}
+                    </Link>
+                )}
+
+                {!isDesktop && (
+                    <>
+                        <Link
+                            to="/chat"
+                            className={cn(
+                                "relative flex items-center justify-center w-9 h-9 rounded-lg",
+                                "bg-white/15 hover:bg-white/25 transition-colors text-white"
+                            )}
+                        >
+                            <MessageSquare size={18} />
+                            {totalUnreadCount > 0 && (
+                                <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-white rounded-full leading-none">
+                                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                                </span>
+                            )}
+                        </Link>
+                        <NotificationDropdown />
+                    </>
+                )}
 
                 <Link to={userLink} className="shrink-0">
                     <Avatar className="w-9 h-9 border-2 border-success/30 dark:border-success/40">
