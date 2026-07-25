@@ -148,16 +148,16 @@ router.post('/verify', verifyLimiter, async (req, res) => {
         if (decoded.role === 'admin') {
             userData = await prisma.user.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, role: true, permissions: true, tokenVersion: true } });
         } else if (decoded.role === 'teacher') {
-            const teacher = await prisma.teacher.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, tokenVersion: true } });
+            const teacher = await prisma.teacher.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true } });
             if (teacher) userData = { ...teacher, role: 'teacher', teacherName: teacher.name };
         } else if (decoded.role === 'chat_user') {
             const cp = await prisma.chatProfile.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true } });
             if (cp) userData = { ...cp, role: 'chat_user' };
         } else if (decoded.role === 'parent') {
-            const parent = await prisma.parent.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, phone: true, tokenVersion: true } });
+            const parent = await prisma.parent.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, phone: true } });
             if (parent) userData = { ...parent, role: 'parent' };
         } else if (decoded.role === 'student') {
-            const student = await prisma.student.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, studentPhone: true, tokenVersion: true } });
+            const student = await prisma.student.findUnique({ where: { id: decoded.id }, select: { id: true, name: true, username: true, studentPhone: true } });
             if (student) userData = { ...student, role: 'student' };
         }
 
