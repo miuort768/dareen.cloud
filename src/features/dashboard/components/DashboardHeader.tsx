@@ -42,30 +42,30 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                        <Compass size={22} className="text-on-primary" />
+                        <Compass size={22} className="text-white" />
                     </div>
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="h-6 px-2.5 rounded-lg border-white/20 text-on-primary bg-white/10 text-[10px] gap-1 font-semibold">
+                            <Badge variant="outline" className="h-6 px-2.5 rounded-lg border-white/20 text-white bg-white/10 text-[10px] gap-1 font-semibold">
                                 <ShieldCheck size={10} />
                                 {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
                             </Badge>
-                            <Badge variant="success" className="h-6 px-2.5 rounded-lg text-[10px] gap-1.5 font-semibold bg-white/15 border-white/20 text-on-primary">
-                                <span className="w-1.5 h-1.5 bg-on-primary rounded-full animate-pulse" />
+                            <Badge variant="success" className="h-6 px-2.5 rounded-lg text-[10px] gap-1.5 font-semibold bg-white/15 border-white/20 text-white">
+                                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                 النظام نشط
                             </Badge>
                         </div>
-                        <h1 className="text-xl md:text-2xl font-bold text-on-primary leading-tight">
+                        <h1 className="text-xl md:text-2xl font-bold text-white leading-tight">
                             {greeting()}، {currentUser?.name || 'المستخدم'}
                         </h1>
-                        <div className="flex items-center gap-2 text-sm text-on-primary/70">
+                        <div className="flex items-center gap-2 text-sm text-white/70">
                             <CalendarDays size={13} />
                             {dateStr}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 px-3.5 h-9 rounded-lg bg-white/10 text-on-primary text-sm font-semibold tabular-nums">
+                <div className="flex items-center gap-2 px-3.5 h-9 rounded-lg bg-white/10 text-white text-sm font-semibold tabular-nums">
                     <Clock size={13} />
                     {currentTime.toLocaleTimeString('ar-EG', {
                         hour: '2-digit',

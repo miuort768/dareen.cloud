@@ -60,7 +60,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
         <div
           className={cn(
             'flex items-center justify-center min-h-[300px] rounded-3xl',
-            'bg-white/50 dark:bg-primary-active/50 border border-error/20'
+            'bg-white/50 dark:bg-surface border border-error/20'
           )}
           dir="rtl"
         >
@@ -68,7 +68,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
             <div className="w-12 h-12 rounded-xl bg-error/10 flex items-center justify-center mx-auto mb-4">
               <AlertTriangle size={24} className="text-error" />
             </div>
-            <p className="text-sm font-bold text-main dark:text-on-primary mb-2">عذراً، حدث خطأ غير متوقع</p>
+            <p className="text-sm font-bold text-main mb-2">عذراً، حدث خطأ غير متوقع</p>
             <p className="text-xs text-muted mb-4">تعذر تحميل هذا القسم. يرجى المحاولة مرة أخرى.</p>
             <button
               onClick={this.handleReset}

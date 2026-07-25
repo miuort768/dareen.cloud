@@ -58,7 +58,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white dark:bg-surface border border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 <div className={cn(
                     "h-1.5 w-full",
                     isDestructive ? "bg-error" : "bg-[var(--primary-color,var(--bg-primary))]"
@@ -69,7 +69,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 start-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
+                        className="absolute top-4 start-4 p-2 text-muted hover:text-main transition-colors"
                         aria-label="إغلاق"
                     >
                         <X size={18} />
@@ -87,7 +87,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             </div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-main dark:text-on-primary mb-4 uppercase tracking-tighter italic">
+                        <h3 className="text-2xl font-bold text-main mb-4 uppercase tracking-tighter italic">
                             {title}
                         </h3>
 
@@ -112,7 +112,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             </button>
                             <button
                                 onClick={onClose}
-                                className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
+                                className="px-6 h-12 bg-background text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface transition-all rounded-none"
                             >
                                 {cancelText}
                             </button>

@@ -97,7 +97,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-                        <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface dark:bg-primary-active flex items-center justify-center text-muted hover:text-main dark:hover:text-on-primary transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted hover:text-main transition-colors" aria-label="إغلاق">
                                     <X size={15} />
                                 </button>
 
@@ -229,7 +229,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 </button>
                                 <button
                                     onClick={handleClose}
-                                    className="w-full h-11 rounded-xl bg-surface dark:bg-primary-active text-muted dark:text-muted font-bold text-sm hover:bg-surface dark:hover:bg-primary-active transition-all"
+                                    className="w-full h-11 rounded-xl bg-surface text-muted font-bold text-sm hover:bg-surface transition-all"
                                 >
                                     {options.cancelText || 'إلغاء'}
                                 </button>

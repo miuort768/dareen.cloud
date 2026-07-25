@@ -51,7 +51,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
     const getColorIndex = (event: ScheduleEvent) => Math.max(0, uniqueTeachers.indexOf(event.teacherName));
 
     return (
-        <div className="bg-white dark:bg-primary-active border border-border/50 dark:border-border/50 shadow-sm overflow-hidden rounded-2xl mt-4">
+        <div className="bg-white dark:bg-surface border border-border/50 shadow-sm overflow-hidden rounded-2xl mt-4">
             <div className="overflow-x-auto custom-scrollbar">
                 <div className="min-w-[900px]">
                     <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
@@ -67,7 +67,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                         const currentTimeSlots = filteredEvents.filter(e => e.hour === String(slot.hour) && e.period === slot.period);
                         const isEmpty = currentTimeSlots.length === 0;
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className={cn("grid grid-cols-[80px_repeat(7,1fr)]", slotIdx % 2 === 0 ? "bg-white dark:bg-primary-active" : "bg-background/30 dark:bg-background/20")}>
+                            <div key={`${slot.hour}-${slot.period}`} className={cn("grid grid-cols-[80px_repeat(7,1fr)]", slotIdx % 2 === 0 ? "bg-white dark:bg-surface" : "bg-background/30 dark:bg-background/20")}>
                                 <div className="sticky start-0 z-10 p-2 text-micro font-bold text-muted border-e border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
                                     <Clock size={10} className="me-1 inline" />{slot.label}
                                 </div>

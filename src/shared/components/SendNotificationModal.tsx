@@ -34,7 +34,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-primary-active border border-border dark:border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white dark:bg-surface border border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
                 {/* Visual Header Accent */}
                 <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))]"></div>
 
@@ -44,7 +44,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 start-4 p-2 text-muted hover:text-main dark:hover:text-on-primary transition-colors"
+                        className="absolute top-4 start-4 p-2 text-muted hover:text-main transition-colors"
                         aria-label="إغلاق"
                     >
                         <X size={18} />
@@ -57,7 +57,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                             </div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-main dark:text-on-primary mb-1 uppercase tracking-tighter italic">
+                        <h3 className="text-2xl font-bold text-main mb-1 uppercase tracking-tighter italic">
                             بث إشعار فوري
                         </h3>
                         <p className="text-muted dark:text-muted font-bold text-micro mb-8 uppercase tracking-widest">
@@ -74,7 +74,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     placeholder="اكتب رسالتك هنا..."
-                                    className="w-full h-32 p-4 bg-background dark:bg-primary-active/50 border border-border dark:border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] dark:text-on-primary text-xs font-normal resize-none leading-relaxed transition-all"
+                                    className="w-full h-32 p-4 bg-background border border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] text-xs font-normal resize-none leading-relaxed transition-all"
                                 />
                             </div>
 
@@ -92,7 +92,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="px-6 h-12 bg-background dark:bg-primary-active text-muted dark:text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface dark:hover:bg-primary-active transition-all rounded-none"
+                                    className="px-6 h-12 bg-background text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface transition-all rounded-none"
                                 >
                                     إلغاء العملية
                                 </button>

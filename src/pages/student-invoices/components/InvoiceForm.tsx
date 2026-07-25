@@ -42,9 +42,9 @@ interface InvoiceFormProps {
 }
 
 const inputClasses = [
-  'w-full bg-background dark:bg-primary-active border border-border dark:border-border',
-  'px-3 py-2 text-xs font-bold text-main dark:text-on-primary',
-  'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary/50',
+  'w-full bg-background border border-border',
+  'px-3 py-2 text-xs font-bold text-main',
+  'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50',
   'transition-all duration-200 rounded-xl',
 ].join(' ');
 
