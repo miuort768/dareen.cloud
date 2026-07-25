@@ -80,7 +80,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             "w-20 h-20 rounded-none flex items-center justify-center mb-8 border-2 rotate-3 shadow-xl",
                             isDestructive
                                 ? "bg-error-light text-error border-error dark:bg-error/20 dark:border-error/30"
-                                : "bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-primary dark:bg-primary-active/20 dark:border-primary/30"
+                                : "bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-primary dark:bg-card dark:border-border"
                         )}>
                             <div className="-rotate-3">
                                 {isDestructive ? <Trash2 size={36} strokeWidth={1.5} /> : <AlertCircle size={36} strokeWidth={1.5} />}

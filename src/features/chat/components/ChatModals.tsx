@@ -108,7 +108,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 <div className="p-3 border-b border-border dark:border-border flex gap-3 overflow-x-auto custom-scrollbar bg-background/50 dark:bg-card/50 grow-0 shrink-0 min-h-[85px]">
                                     {selectedUsersObjects.map(user => (
                                         <div key={user.id} className="flex flex-col items-center gap-1 shrink-0 relative px-1">
-                                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-full flex items-center justify-center relative shadow-sm text-primary dark:text-primary font-medium text-xs">
+                                            <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center relative shadow-sm text-primary dark:text-primary font-medium text-xs">
                                                 {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
@@ -158,7 +158,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                             className="p-4 flex items-center justify-between cursor-pointer hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border dark:border-border"
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-full flex items-center justify-center font-medium text-primary dark:text-primary shadow-sm transition-all border-2 border-white dark:border-border">
+                                                <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center font-medium text-primary dark:text-primary shadow-sm transition-all border-2 border-white dark:border-border">
                                                     {user.name.charAt(0)}
                                                 </div>
                                                 <div className="text-start">

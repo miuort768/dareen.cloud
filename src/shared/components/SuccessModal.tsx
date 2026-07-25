@@ -63,7 +63,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
     return (
         <div className="fixed bottom-6 end-6 z-[9999] w-full max-w-sm pointer-events-none px-4 sm:px-0" dir="rtl">
             <div className={cn(
-                'relative overflow-hidden bg-white/70 dark:bg-primary-active/75 backdrop-blur-lg',
+                'relative overflow-hidden bg-white/70 dark:bg-card/75 backdrop-blur-lg',
                 'border border-success/30 dark:border-success/20 rounded-2xl p-4.5',
                 'pointer-events-auto transition-all duration-300 ease-out',
                 'shadow-lg',
@@ -101,7 +101,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                         onClick={handleClose}
                         className={cn(
                             'flex-shrink-0 text-muted hover:text-main dark:text-muted dark:hover:text-dim',
-                            'p-1.5 rounded-xl bg-background dark:bg-primary-active/40 hover:bg-surface dark:hover:bg-primary-active',
+                            'p-1.5 rounded-xl bg-background dark:bg-surface hover:bg-surface dark:hover:bg-hover',
                             'border border-border dark:border-border transition-all active:scale-95'
                         )}
                     >
@@ -111,7 +111,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
 
                 {/* ── Smooth Progress Count Down Bar ── */}
                 {autoClose && (
-                    <div className="absolute bottom-0 end-0 start-0 h-[3px] bg-surface dark:bg-primary-active/60 overflow-hidden">
+                    <div className="absolute bottom-0 end-0 start-0 h-[3px] bg-surface dark:bg-surface overflow-hidden">
                         <div 
                             className="h-full bg-success transition-all duration-75 ease-linear rounded-s-full"
                             style={{ width: `${progress}%` }}

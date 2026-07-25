@@ -51,7 +51,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                     </button>
 
                     <div className="flex flex-col items-center text-center">
-                        <div className="w-20 h-20 bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-2 border-primary dark:bg-primary-active/20 dark:border-primary/30 flex items-center justify-center mb-6 shadow-xl rotate-3">
+                        <div className="w-20 h-20 bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-2 border-primary dark:bg-card dark:border-border flex items-center justify-center mb-6 shadow-xl rotate-3">
                             <div className="-rotate-3">
                                 <Bell size={36} strokeWidth={1.5} />
                             </div>

@@ -16,7 +16,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-active dark:bg-primary-active text-on-primary rounded-full mb-4 mx-auto scale-90">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-on-primary rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-warning" />
                         <span className="text-micro font-black ">ابدأ رحلتك</span>
                     </div>
@@ -95,7 +95,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     </p>
                                 </div>
                                 
-                                <div className="hidden md:block absolute top-[45px] -start-2 w-1.5 h-1.5 rounded-full bg-surface dark:bg-primary-active group-last:hidden"></div>
+                                <div className="hidden md:block absolute top-[45px] -start-2 w-1.5 h-1.5 rounded-full bg-surface dark:bg-card group-last:hidden"></div>
                             </motion.div>
                         ))}
                     </motion.div>

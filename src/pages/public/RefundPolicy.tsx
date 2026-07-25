@@ -130,7 +130,7 @@ export const RefundPolicy = () => {
                     {/* Processing Time */}
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-primary-soft dark:bg-primary-active/30 rounded-card flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-card flex items-center justify-center shrink-0">
                                 <Clock className="w-6 h-6 text-primary dark:text-primary" />
                             </div>
                             <div>

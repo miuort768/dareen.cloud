@@ -63,7 +63,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                         aria-label="قيمة التعديل"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                        className="w-16 bg-background dark:bg-primary-active border border-border dark:border-border p-1 text-center font-bold text-micro outline-none focus:border-primary rounded-xl"
+                                        className="w-16 bg-background dark:bg-surface border border-border dark:border-border p-1 text-center font-bold text-micro outline-none focus:border-primary rounded-xl"
                                         placeholder="0"
                                     />
                                 </td>
@@ -83,7 +83,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
             {/* Mobile cards */}
             <div className="md:hidden space-y-3 p-4">
                 {payrollData.map((item) => (
-                    <div key={item.id} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-3">
+                    <div key={item.id} className="bg-surface dark:bg-card rounded-xl p-4 space-y-3">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
                                 {item.name.charAt(0)}

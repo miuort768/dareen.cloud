@@ -16,7 +16,7 @@ const variants = {
   outline: 'border-2 border-primary/40 text-primary hover:bg-primary-soft hover:border-primary active:bg-primary active:text-on-primary',
   ghost: 'text-muted hover:bg-hover/80 active:text-dim hover:text-main',
   destructive: 'bg-error text-on-error hover:bg-error-hover active:bg-error-active shadow-sm hover:shadow-md',
-  glass: 'bg-white/70 dark:bg-primary-active/60 backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-sm hover:shadow-md',
+  glass: 'bg-white/70 dark:bg-card/60 backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-sm hover:shadow-md',
   premium: 'bg-gradient-to-l from-primary via-primary-hover to-primary-active text-on-primary shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] hover:from-primary-hover hover:via-primary-active hover:to-primary-active',
 };
 

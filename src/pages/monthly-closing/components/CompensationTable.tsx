@@ -64,7 +64,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                     </div>
                 ) : (
                     cancelledNeedingComp.map((session, idx) => (
-                        <div key={idx} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-2">
+                        <div key={idx} className="bg-surface dark:bg-card rounded-xl p-4 space-y-2">
                             <div className="flex items-center justify-between">
                                 <span className="font-bold text-xs text-main leading-tight">{session.studentName}</span>
                                 <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg bg-error-soft text-error">تعويض معلق</div>

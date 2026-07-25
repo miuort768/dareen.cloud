@@ -116,7 +116,7 @@ export const Leads = () => {
         new: { label: 'جديد', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
         contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
         interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success-light dark:bg-success/20' },
-        trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary-soft dark:bg-primary-active/20' },
+        trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary-soft dark:bg-card' },
         converted: { label: 'محول', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
         lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' }
     };

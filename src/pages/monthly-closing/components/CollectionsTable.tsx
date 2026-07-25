@@ -73,7 +73,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             {/* Mobile cards */}
             <div className="md:hidden space-y-3 p-4">
                 {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
-                    <div key={item.id} className="bg-surface dark:bg-primary-active/20 rounded-xl p-4 space-y-2">
+                    <div key={item.id} className="bg-surface dark:bg-card rounded-xl p-4 space-y-2">
                         <div className="flex items-start justify-between">
                             <div className="min-w-0 flex-1">
                                 <span className="block font-bold text-xs text-main leading-tight truncate">{item.studentName}</span>

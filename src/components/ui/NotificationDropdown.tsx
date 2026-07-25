@@ -219,7 +219,7 @@ export const NotificationDropdown = () => {
 
                     {/* Push Notification Activation Prompt */}
                     {Notification.permission !== 'granted' && (
-                        <div className="p-3 bg-primary-soft border-b border-primary dark:bg-primary-active/20 dark:border-primary/30 flex items-center justify-between gap-3">
+                        <div className="p-3 bg-primary-soft border-b border-primary dark:bg-primary-soft dark:border-primary/30 flex items-center justify-between gap-3">
                             <div className="flex items-center gap-2">
                                 <div className="p-1.5 bg-primary rounded-lg text-on-primary">
                                     <Smartphone size={14} />

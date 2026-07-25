@@ -185,7 +185,7 @@ export const Courses = () => {
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="bg-white/90 dark:bg-primary-active/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                      <div className="bg-white/90 dark:bg-card backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>

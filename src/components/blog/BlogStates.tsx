@@ -9,7 +9,7 @@ export const LoadingState = () => (
 
 export const EmptyState = () => (
     <div className="text-center py-20 sm:py-24 animate-in fade-in duration-500">
-        <div className="w-16 h-16 rounded-2xl sm:rounded-3xl bg-background dark:bg-primary-active/50 flex items-center justify-center mx-auto mb-4 border border-border dark:border-border/50">
+        <div className="w-16 h-16 rounded-2xl sm:rounded-3xl bg-background dark:bg-card flex items-center justify-center mx-auto mb-4 border border-border dark:border-border">
             <BookOpen size={24} className="text-dim dark:text-muted" />
         </div>
         <p className="text-muted font-black text-base sm:text-lg mb-1">لا يوجد محتوى بعد</p>

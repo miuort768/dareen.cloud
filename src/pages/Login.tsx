@@ -121,7 +121,7 @@ export const Login = () => {
                         </div>
 
                         <div className="grid grid-cols-1 gap-5 w-full">
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-error">
+                            <div className="bg-white/60 dark:bg-card backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-error">
                                 <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error border border-border rounded-card">
                                     <Users size={24} />
                                 </div>
@@ -131,7 +131,7 @@ export const Login = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-white/60 dark:bg-primary-active/60 backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-success">
+                            <div className="bg-white/60 dark:bg-card backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-success">
                                 <div className="w-12 h-12 bg-success-soft flex items-center justify-center text-success border border-border rounded-card">
                                     <Trophy size={24} />
                                 </div>

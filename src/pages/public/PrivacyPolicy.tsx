@@ -226,7 +226,7 @@ export const PrivacyPolicy = () => {
                                 href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-white dark:bg-primary-active text-primary dark:text-main hover:bg-white/90 dark:hover:bg-primary-active/90 px-6 py-3 w-full sm:w-auto rounded-card font-bold transition-all group relative overflow-hidden shadow-lg border border-white/20 dark:border-primary/20"
+                                className="inline-flex items-center justify-center gap-4 bg-white dark:bg-card text-primary dark:text-main hover:bg-white/90 px-6 py-3 w-full sm:w-auto rounded-card font-bold transition-all group relative overflow-hidden shadow-lg border border-white/20 dark:border-border"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>

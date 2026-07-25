@@ -19,7 +19,7 @@ export const PageLoader = () => {
                     <div className="absolute inset-[-15px] rounded-full border-2 border-primary/5 dark:border-primary/10 animate-[spin_8s_linear_infinite]" />
                     <div className="absolute inset-[-30px] rounded-full border border-primary/5 dark:border-primary/10 animate-[spin_12s_linear_reverse_infinite]" />
 
-                    <div className="relative w-44 h-44 md:w-52 md:h-52 bg-white dark:bg-primary-active rounded-full flex items-center justify-center shadow-[var(--shadow-glow)] p-3 border border-border dark:border-white/10 overflow-hidden">
+                    <div className="relative w-44 h-44 md:w-52 md:h-52 bg-white dark:bg-card rounded-full flex items-center justify-center shadow-[var(--shadow-glow)] p-3 border border-border dark:border-white/10 overflow-hidden">
                         <Image
                             src="/bbook.webp"
                             alt="بوابة دارين التعليمية"
@@ -48,7 +48,7 @@ export const PageLoader = () => {
                     </p>
                 </div>
 
-                <div className="w-56 h-1 bg-surface dark:bg-primary-active/50 overflow-hidden relative mx-auto border border-border/50 dark:border-border/30">
+                <div className="w-56 h-1 bg-surface dark:bg-surface overflow-hidden relative mx-auto border border-border/50 dark:border-border/30">
                     <motion.div
                         initial={{ x: '-100%' }}
                         animate={{ x: '100%' }}

@@ -78,7 +78,7 @@ export const ForumPostCard = ({
         <div className="px-3 md:px-4 py-1.5 flex border-t border-border dark:border-border">
             <button onClick={() => onVote(post.id, 'upvote')}
                 className={cn("flex-1 py-2.5 flex items-center justify-center gap-2 text-xs font-bold transition-all active:scale-95 rounded-xl",
-                    isLiked ? "text-primary bg-primary-soft dark:bg-primary-active/20" : "text-muted hover:text-muted hover:bg-surface dark:hover:bg-primary-active/50")}>
+                    isLiked ? "text-primary bg-primary-soft dark:bg-card" : "text-muted hover:text-muted hover:bg-surface dark:hover:bg-hover")}>
                 <ThumbsUp size={15} className={cn(isLiked && "fill-current")} />
                 <span>إعجاب</span>
             </button>

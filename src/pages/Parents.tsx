@@ -179,7 +179,7 @@ export const Parents = () => {
                                         </button>
                                         <button
                                             onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                            className="flex-1 py-4 bg-surface dark:bg-primary-active text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-label rounded-xl"
+                                            className="flex-1 py-4 bg-surface dark:bg-surface text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-label rounded-xl"
                                         >
                                             إلغاء
                                         </button>

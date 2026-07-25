@@ -29,11 +29,11 @@ export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherP
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <div className="flex justify-between text-micro font-bold text-muted uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
-                                <ProgressBar value={perf.attendanceRate} variant="success" size="sm" trackClassName="bg-background dark:bg-primary-active" />
+                                <ProgressBar value={perf.attendanceRate} variant="success" size="sm" trackClassName="bg-background dark:bg-surface" />
                             </div>
                             <div className="space-y-1">
                                 <div className="flex justify-between text-micro font-bold text-muted uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                <ProgressBar value={perf.documentationRate} variant="primary" size="sm" trackClassName="bg-background dark:bg-primary-active" />
+                                <ProgressBar value={perf.documentationRate} variant="primary" size="sm" trackClassName="bg-background dark:bg-surface" />
                             </div>
                         </div>
                     </div>
