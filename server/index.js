@@ -174,7 +174,7 @@ prerender.set('crawlerUserAgents', [
     'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
     'ahrefsbot', 'dotbot'
 ]);
-prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/books/.*']);
+prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/blog', '/books/.*']);
 app.use(prerender);
 
 // RSS Feed (sitemap handled in routes/seo.js)

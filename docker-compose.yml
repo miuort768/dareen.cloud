@@ -20,6 +20,7 @@ services:
       - FRONTEND_URL=${FRONTEND_URL:-https://dareen.cloud}
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - PRERENDER_TOKEN=${PRERENDER_TOKEN}
     depends_on:
       postgres:
         condition: service_healthy

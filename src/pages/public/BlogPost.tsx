@@ -121,7 +121,7 @@ export const BlogPost = () => {
                 description={post.seoDescription || post.excerpt}
                 keywords={post.focusKeyword || post.keywords}
                 image={post.ogImage || post.coverImage}
-                url={`https://dareen.cloud/books/${post.slug}`}
+                url={post.canonicalUrl || `https://dareen.cloud/books/${post.slug}`}
                 noindex={post.robotsIndex === false}
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },

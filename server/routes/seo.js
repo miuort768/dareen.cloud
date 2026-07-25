@@ -14,6 +14,7 @@ module.exports = (app) => {
                 { url: '/contact', priority: '0.8', changefreq: 'monthly' },
                 { url: '/books', priority: '0.9', changefreq: 'weekly' },
                 { url: '/jobs', priority: '0.5', changefreq: 'weekly' },
+                { url: '/blog', priority: '0.8', changefreq: 'weekly' },
                 { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly' },
                 { url: '/refund-policy', priority: '0.3', changefreq: 'yearly' },
                 { url: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
@@ -60,16 +61,56 @@ module.exports = (app) => {
         res.type('text/plain');
         res.send(`User-agent: *
 Allow: /
-Disallow: /dashboard
+Allow: /courses
+Allow: /books
+Allow: /books/*
+Allow: /about
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
+Allow: /refund-policy
+Allow: /terms-of-work
+Allow: /jobs
+Allow: /blog
+
 Disallow: /admin
 Disallow: /api/
+Disallow: /login
 Disallow: /chat
+Disallow: /dashboard
 Disallow: /settings
-Disallow: /teacher/
-Disallow: /profile
+Disallow: /teacher-dashboard
+Disallow: /student-dashboard
+Disallow: /parent-dashboard
+Disallow: /teacher-invoices
+Disallow: /student-invoices
+Disallow: /leads
+Disallow: /trial-sessions
+Disallow: /appointments
 Disallow: /classroom
+Disallow: /attendance
+Disallow: /finance
+Disallow: /reports
+Disallow: /forum
+Disallow: /tasks
+Disallow: /agenda
+Disallow: /announcements
+Disallow: /parent-students
+Disallow: /parent-announcements
+Disallow: /teachers
+Disallow: /students
+Disallow: /evaluations
+Disallow: /parents
+Disallow: /monthly-closing
+Disallow: /roles
+Disallow: /monitoring
+Disallow: /admin-jobs
+Disallow: /admin-contacts
+Disallow: /admin/blog
+Disallow: /student-schedule
 
 Sitemap: https://dareen.cloud/sitemap.xml
+Host: https://dareen.cloud
 `);
     });
 
