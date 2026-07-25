@@ -30,7 +30,7 @@ const TIME_SLOTS = [
 ];
 
 const ACCENT_COLORS = [
-    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي' },
+    { text: 'text-main', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي' },
     { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/5', label: 'أخضر' },
     { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/5', label: 'عنبر' },
     { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/5', label: 'وردي' },
@@ -55,9 +55,9 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
             <div className="overflow-x-auto custom-scrollbar">
                 <div className="min-w-[900px]">
                     <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
-                        <div className="sticky start-0 z-10 p-3 text-micro font-bold text-inverse border-e border-border bg-primary-active dark:bg-background">الوقت</div>
+                        <div className="sticky start-0 z-10 p-3 text-micro font-bold text-main border-e border-border bg-primary-active dark:bg-background">الوقت</div>
                         {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background", isToday(day) ? "text-main" : "text-inverse")}>
+                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background", isToday(day) ? "text-main" : "text-main")}>
                                 <span>{day}</span>
                                 {isToday(day) && <span className="ms-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />}
                             </div>

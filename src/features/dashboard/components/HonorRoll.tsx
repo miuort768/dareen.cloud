@@ -52,7 +52,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                             <div className={cn(
                                 "w-7 h-7 flex items-center justify-center mb-2 rounded-lg",
                                 isFirst ? "bg-warning text-on-warning" :
-                                isSecond ? "bg-muted text-on-primary" :
+                                isSecond ? "bg-muted text-main" :
                                 "bg-warning-soft text-warning"
                             )}>
                                 {isFirst ? <Crown size={12} /> : isSecond ? <Award size={12} /> : <Star size={11} fill={index < 3 ? "currentColor" : "none"} />}

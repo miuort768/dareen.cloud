@@ -24,7 +24,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                         <Plus size={16} className="text-on-primary" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main dark:text-inverse">إنشاء مهمة جديدة</h3>
+                        <h3 className="text-sm font-bold text-main">إنشاء مهمة جديدة</h3>
                         <p className="text-micro font-bold text-muted uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                         <input
                             required
                             type="text"
-                            className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main dark:text-inverse focus:outline-none focus:ring-2 focus:ring-focus transition-all"
+                            className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all"
                             value={data.title}
                             onChange={e => onChange({...data, title: e.target.value})}
                         />
