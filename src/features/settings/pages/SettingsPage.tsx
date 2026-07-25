@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Settings as SettingsIcon } from 'lucide-react';
 import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
@@ -9,6 +10,7 @@ import { TABS, SettingsTabContent } from './settings-page';
 import { useSettingsHandlers } from '../hooks/useSettingsHandlers';
 
 export const Settings = () => {
+    useEffect(() => { document.title = 'الإعدادات | دارين السابعة للتعليم والتدريب'; }, []);
     const h = useSettingsHandlers();
 
     if (h.loading) return (

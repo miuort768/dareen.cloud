@@ -12,6 +12,7 @@ import { ParentBottomNav } from './parent-dashboard/BottomNav';
 import type { Student } from '../types';
 
 export const ParentDashboard = () => {
+    useEffect(() => { document.title = 'لوحة تحكم ولي الأمر | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();

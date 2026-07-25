@@ -21,7 +21,7 @@ export const RefundPolicy = () => {
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO
-                title="سياسة الاسترداد والاسترجاع | دارين السابعة"
+                title="سياسة الاسترداد والاسترجاع"
                 description="سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة. تعرف على شروط الاسترجاع، إلغاء الحصص، وآلية استرداد المبالغ المدفوعة."
                 url="https://dareen.cloud/refund-policy"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'سياسة الاسترداد', item: '/refund-policy' }]}

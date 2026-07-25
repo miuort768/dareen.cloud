@@ -26,6 +26,7 @@ export interface TrialSession {
 }
 
 export const TrialSessions = () => {
+  useEffect(() => { document.title = 'الجلسات التجريبية | دارين السابعة للتعليم والتدريب'; }, []);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [showModal, setShowModal] = useState(false);

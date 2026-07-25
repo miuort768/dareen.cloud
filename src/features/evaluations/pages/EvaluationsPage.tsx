@@ -10,6 +10,7 @@ import { HistoryModal } from '../components/HistoryModal';
 import type { Student, Evaluation } from '../../../types';
 
 export const Evaluations = () => {
+    useEffect(() => { document.title = 'التقييمات | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
     const [students, setStudents] = useState<Student[]>([]);

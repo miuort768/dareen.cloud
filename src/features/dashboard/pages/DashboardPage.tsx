@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
@@ -47,6 +47,7 @@ const Section = ({ children, className }: { children: React.ReactNode; className
 );
 
 export const Dashboard = () => {
+    useEffect(() => { document.title = 'لوحة التحكم | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useAuthStore(s => s.currentUser);
 
     const {

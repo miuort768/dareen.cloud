@@ -12,6 +12,7 @@ const loadData = async () => {
 };
 
 export const RolesPage = () => {
+    useEffect(() => { document.title = 'الأدوار والصلاحيات | دارين السابعة للتعليم والتدريب'; }, []);
     const [roles, setRoles] = useState<Role[]>([]);
     const [permissions, setPermissions] = useState<Permission[]>([]);
     const [editingRole, setEditingRole] = useState<Role | null>(null);

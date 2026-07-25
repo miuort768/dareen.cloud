@@ -7,7 +7,7 @@ import { Home, ArrowLeft } from 'lucide-react';
 export const NotFound = () => {
     return (
         <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
-            <SEO title="الصفحة غير موجودة | دارين السابعة" description="عذراً، الصفحة التي تبحث عنها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية أو تصفح دوراتنا التعليمية." url="https://dareen.cloud/404" noindex />
+            <SEO title="الصفحة غير موجودة" description="عذراً، الصفحة التي تبحث عنها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية أو تصفح دوراتنا التعليمية." url="https://dareen.cloud/404" noindex />
 
             <MobileHeader />
 

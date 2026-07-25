@@ -46,6 +46,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
 );
 
 export const Leads = () => {
+    useEffect(() => { document.title = 'العملاء المحتملون | دارين السابعة للتعليم والتدريب'; }, []);
     const queryClient = useQueryClient();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<LeadStatus | 'all'>('all');

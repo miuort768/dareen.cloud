@@ -23,6 +23,7 @@ interface JobApp {
 
 
 export const AdminJobs = () => {
+    useEffect(() => { document.title = 'الوظائف | دارين السابعة للتعليم والتدريب'; }, []);
     const [apps, setApps] = useState<JobApp[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');

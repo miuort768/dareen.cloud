@@ -19,6 +19,7 @@ interface Announcement {
 }
 
 export const Announcements = () => {
+    useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
     const showNotification = useShowNotification();
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading, setIsLoading] = useState(true);

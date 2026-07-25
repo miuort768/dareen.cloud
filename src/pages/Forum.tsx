@@ -9,6 +9,7 @@ import type { Comment, Post } from '../features/forum/types';
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page';
 
 export const Forum = () => {
+    useEffect(() => { document.title = 'المنتدى | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const isAdmin = currentUser?.role === 'admin';

@@ -12,6 +12,7 @@ import { InvoiceTable } from './teacher-invoices/components/InvoiceTable';
 import { TeacherInvoicesHeader } from './teacher-invoices/teacher-invoices-page';
 
 export const TeacherInvoices = () => {
+    useEffect(() => { document.title = 'فواتير المعلمات | دارين السابعة للتعليم والتدريب'; }, []);
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);

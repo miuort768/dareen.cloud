@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, Users, Activity } from 'lucide-react';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -17,6 +17,7 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 import { SectionCard, SectionTitle, BulkAttendanceButton, AdminTeacherGroupList } from './attendance-page';
 
 export const Attendance = () => {
+    useEffect(() => { document.title = 'الحضور والغياب | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const whatsappAutoNotify = useWhatsappAutoNotify();

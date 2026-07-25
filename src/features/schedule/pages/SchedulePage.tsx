@@ -48,6 +48,7 @@ interface ScheduleEvent {
 }
 
 export const Schedule = () => {
+    useEffect(() => { document.title = 'الجدول الدراسي | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');

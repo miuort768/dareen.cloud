@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CalendarCheck, Plus, TrendingUp } from 'lucide-react';
 import { TransactionsLog } from '../components/TransactionsLog';
 import { FinanceCharts } from '../components/FinanceCharts';
@@ -8,6 +9,7 @@ import { useFinance } from '../hooks/useFinance';
 import { useNavigate } from 'react-router-dom';
 
 export const Finance = () => {
+    useEffect(() => { document.title = 'المالية | دارين السابعة للتعليم والتدريب'; }, []);
     const { state, actions } = useFinance();
     const navigate = useNavigate();
 

@@ -44,6 +44,7 @@ interface AppointmentEvent {
 }
 
 export const Appointments = () => {
+    useEffect(() => { document.title = 'المواعيد | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');

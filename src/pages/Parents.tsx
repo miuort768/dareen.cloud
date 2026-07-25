@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Search, AlertCircle, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -11,6 +12,7 @@ import { ParentForm } from '../features/parents/components/ParentForm';
 import { useParents } from '../features/parents/hooks/useParents';
 
 export const Parents = () => {
+    useEffect(() => { document.title = 'أولياء الأمور | دارين السابعة للتعليم والتدريب'; }, []);
     const { state, actions } = useParents();
     const showNotification = useShowNotification();
 

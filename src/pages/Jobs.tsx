@@ -91,7 +91,7 @@ export const Jobs = () => {
 
     return (
         <div className="min-h-screen bg-background flex flex-col" dir="rtl">
-            <SEO title="التوظيف | دارين السابعة" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن."
+            <SEO title="التوظيف" description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن."
                 url="https://dareen.cloud/jobs" image="/dareen_logo_new.jpg"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'التوظيف', item: '/jobs' }]} />
             <script type="application/ld+json">

@@ -16,6 +16,7 @@ interface ContactMsg {
 }
 
 export const AdminContacts = () => {
+    useEffect(() => { document.title = 'رسائل التواصل | دارين السابعة للتعليم والتدريب'; }, []);
     const [messages, setMessages] = useState<ContactMsg[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

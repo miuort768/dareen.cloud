@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -8,6 +8,7 @@ import { PageHeader, ProgressBar } from '../shared/components/ui';
 import type { Student, Session, Enrollment } from '../types';
 
 export const Agenda = () => {
+    useEffect(() => { document.title = 'الأجندة | دارين السابعة للتعليم والتدريب'; }, []);
     const queryClient = useQueryClient();
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();

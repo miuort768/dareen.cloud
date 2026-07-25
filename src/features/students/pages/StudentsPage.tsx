@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useStudents } from '../hooks/useStudents';
 import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
@@ -35,6 +35,7 @@ interface EnrollmentFormData {
 }
 
 export const Students = () => {
+    useEffect(() => { document.title = 'الطلاب | دارين السابعة للتعليم والتدريب'; }, []);
     const queryClient = useQueryClient();
     const showNotification = useShowNotification();
 

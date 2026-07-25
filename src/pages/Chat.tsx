@@ -12,6 +12,7 @@ import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
 
 export const Chat = () => {
+    React.useEffect(() => { document.title = 'المحادثات | دارين السابعة للتعليم والتدريب'; }, []);
     const [deleteType, setDeleteType] = useState<'all_conversations' | 'conversation'>('conversation');
     const [itemToDelete, setItemToDelete] = useState<{ displayName: string } | null>(null);
     const currentUser = useAuthStore(s => s.currentUser);

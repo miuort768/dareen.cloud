@@ -180,7 +180,7 @@ export const Blog = () => {
     <>
       {showSplash && createPortal(<PageLoader />, document.body)}
       <div className="min-h-screen bg-background dark:bg-background font-sans relative flex flex-col">
-      <SEO title="المكتبة التعليمية | دارين السابعة - نصائح وموارد تعليمية"
+      <SEO title="المكتبة التعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
         url="https://dareen.cloud/books" image="/dareen_books_banner.webp"

@@ -19,6 +19,7 @@ export interface Task {
 }
 
 export const Tasks = () => {
+    useEffect(() => { document.title = 'المهام | دارين السابعة للتعليم والتدريب'; }, []);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');
     const [searchTerm, setSearchTerm] = useState('');

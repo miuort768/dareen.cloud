@@ -37,6 +37,7 @@ interface SessionRecord {
 }
 
 export const StudentInvoices = () => {
+    useEffect(() => { document.title = 'فواتير الطلاب | دارين السابعة للتعليم والتدريب'; }, []);
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState(false);

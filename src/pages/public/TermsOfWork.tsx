@@ -18,7 +18,7 @@ export const TermsOfWork = () => {
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
             <SEO
-                title="قوانين العمل | دارين السابعة"
+                title="قوانين العمل"
                 description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
                 url="https://dareen.cloud/terms-of-work"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'قوانين العمل', item: '/terms-of-work' }]}

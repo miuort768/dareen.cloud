@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { PageLoader } from '../components/ui/PageLoader';
 import { useCurrentUser } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
@@ -5,6 +6,7 @@ import { TeacherDashboardDesktop } from './TeacherDashboardDesktop';
 import { TeacherDashboardMobile } from './TeacherDashboardMobile';
 
 export const TeacherDashboard = () => {
+    useEffect(() => { document.title = 'لوحة تحكم المعلمة | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const { stats, tasks, loading, rawSessions, lowBalanceStudents, focusStudents } = useDashboardData(currentUser);
 

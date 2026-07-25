@@ -39,6 +39,7 @@ interface Session { status: string; }
 interface PointLog { amount: number; action: string; }
 
 export const StudentDashboard = () => {
+    useEffect(() => { document.title = 'لوحة تحكم الطالب | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const navigate = useNavigate();
 

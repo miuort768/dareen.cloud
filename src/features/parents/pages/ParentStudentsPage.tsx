@@ -45,6 +45,7 @@ interface ParentPointLog {
 }
 
 export const ParentStudents = () => {
+    useEffect(() => { document.title = 'أطفالي | دارين السابعة للتعليم والتدريب'; }, []);
     const [students, setStudents] = useState<ParentStudent[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     RefreshCw,
     ArrowDownRight,
@@ -25,6 +25,7 @@ import { StrategicSummary } from './monthly-closing/components/StrategicSummary'
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
 export const MonthlyClosing = () => {
+    useEffect(() => { document.title = 'الإغلاق الشهري | دارين السابعة للتعليم والتدريب'; }, []);
     const semesterName = useSemesterName();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');

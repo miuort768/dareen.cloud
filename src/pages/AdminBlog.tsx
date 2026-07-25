@@ -10,6 +10,7 @@ import { BlogGrid } from './admin-blog/BlogGrid';
 import type { BlogPost, BlogPostRaw } from './admin-blog/types';
 
 export const AdminBlog = () => {
+    useEffect(() => { document.title = 'المدونة | دارين السابعة للتعليم والتدريب'; }, []);
     const showNotification = useShowNotification();
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);

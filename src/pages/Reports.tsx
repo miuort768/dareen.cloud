@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Award, CheckCircle2, DollarSign, Target, LayoutDashboard, Users, TrendingUp, Calendar, BarChart3 } from 'lucide-react';
 import { Skeleton } from '../shared/components/ui';
 import { useReports } from '../features/reports/hooks/useReports';
@@ -11,6 +12,7 @@ import type { ReportType } from '../features/reports/types';
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export const Reports = () => {
+    useEffect(() => { document.title = 'التقارير | دارين السابعة للتعليم والتدريب'; }, []);
     const { state, actions, filtered } = useReports();
 
     if (state.loading) {

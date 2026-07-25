@@ -17,6 +17,7 @@ interface MonitoringData {
 }
 
 export const MonitoringPage = () => {
+    useEffect(() => { document.title = 'المراقبة | دارين السابعة للتعليم والتدريب'; }, []);
     const [data, setData] = useState<MonitoringData | null>(null);
     const [loading, setLoading] = useState(true);
 

@@ -75,7 +75,7 @@ export const Home = () => {
 
     return (
         <div className="min-h-full bg-surface text-main relative overflow-x-hidden transition-colors duration-500">
-            <SEO title="دارين السابعة | منصة تعليم عن بعد في الكويت والخليج"
+            <SEO title="منصة تعليم عن بعد في الكويت والخليج"
                 description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
                 url="https://dareen.cloud/" image="/hero-child.png"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />

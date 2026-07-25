@@ -36,6 +36,7 @@ interface Announcement {
 }
 
 export const ParentAnnouncements = () => {
+    useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
     const adminPhone = useAdminPhone();
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading, setIsLoading] = useState(true);

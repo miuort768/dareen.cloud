@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUIStore } from '../../../store/uiStore';
@@ -18,6 +18,7 @@ import type { Teacher, Session, Student, Enrollment } from '../../../types';
 import { TeachersPageHeader, TeachersPageModals } from './teachers-page';
 
 export const Teachers = () => {
+    useEffect(() => { document.title = 'المعلمات | دارين السابعة للتعليم والتدريب'; }, []);
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const showNotification = useUIStore(s => s.showNotification);
