@@ -75,10 +75,10 @@ export const Header = memo(() => {
                 <div className="w-px h-8 bg-white/20 shrink-0 hidden md:block" />
                 {title && (
                     <div className="min-w-0 flex-1">
-                        <h1 className="text-sm md:text-lg font-bold text-on-primary truncate tracking-tight leading-none">
+                        <h1 className="text-sm md:text-lg font-bold text-white truncate tracking-tight leading-none">
                             {title}
                         </h1>
-                        <p className="text-micro font-normal text-on-primary opacity-70 uppercase tracking-widest leading-none mt-0.5">
+                        <p className="text-micro font-normal text-white opacity-70 uppercase tracking-widest leading-none mt-0.5">
                             {subtitle || 'دارين للتعليم والتدريب'}
                         </p>
                     </div>
@@ -90,7 +90,7 @@ export const Header = memo(() => {
                     variant="ghost"
                     size="icon"
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="text-on-primary hover:bg-white/10"
+                    className="text-white hover:bg-white/10"
                 >
                     {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </Button>
