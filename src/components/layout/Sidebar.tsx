@@ -129,7 +129,7 @@ export const Sidebar = memo(() => {
                     </div>
                 </div>
                 <div className="flex-1 flex items-center justify-center">
-                    <div className="w-6 h-6 border-3 border-primary-light border-t-primary rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-[3px] border-primary-light border-t-primary rounded-full animate-spin" />
                 </div>
             </div>
         );

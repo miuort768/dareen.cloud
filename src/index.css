@@ -362,7 +362,7 @@ html, body {
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600;
+    @apply bg-surface rounded-full hover:bg-hover transition-colors;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */

@@ -82,7 +82,7 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
             <div className={cn("flex items-center gap-2.5 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                 <div className={cn(
                     "shrink-0 transition-all duration-300 rounded-xl overflow-hidden",
-                    collapsed ? "w-8 h-8" : "w-7 h-7"
+                    collapsed ? "w-7 h-7" : "w-8 h-8"
                 )}>
                     <Image src="/dareen_logo_new.webp" alt="الشعار" className="w-full h-full" imgClassName="object-contain" />
                 </div>
