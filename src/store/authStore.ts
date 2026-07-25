@@ -100,13 +100,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         }
 
         try {
-            const data = await api.post<{ valid: boolean; user: User }>('/auth/verify', { token });
+            const data = await api.post<{ valid: boolean; user: User; token?: string }>('/auth/verify', { token });
             if (data.valid && data.user) {
+                // Rolling token: server issues a fresh token on successful verify
+                if (data.token) {
+                    localStorage.setItem('auth_token', data.token);
+                    set({ token: data.token });
+                }
                 localStorage.setItem('app_current_user', JSON.stringify(data.user));
                 localStorage.setItem('app_isAuthenticated', 'true');
                 set({ currentUser: data.user, isAuthenticated: true });
 
-                // Silently subscribe if push permission is granted
                 import('../services/pushService').then(({ pushService }) => {
                     pushService.checkPermission().then(permission => {
                         if (permission === 'granted') {
@@ -115,6 +119,28 @@ export const useAuthStore = create<AuthState>((set, get) => ({
                     });
                 });
             } else {
+                // Token verify failed (expired/revoked) — try refresh before logout
+                try {
+                    const refreshData = await api.post<{ token: string }>('/auth/refresh', { token });
+                    if (refreshData.token) {
+                        localStorage.setItem('auth_token', refreshData.token);
+                        set({ token: refreshData.token });
+                        // Re-verify with the new token
+                        const retryData = await api.post<{ valid: boolean; user: User; token?: string }>('/auth/verify', { token: refreshData.token });
+                        if (retryData.valid && retryData.user) {
+                            if (retryData.token) {
+                                localStorage.setItem('auth_token', retryData.token);
+                                set({ token: retryData.token });
+                            }
+                            localStorage.setItem('app_current_user', JSON.stringify(retryData.user));
+                            localStorage.setItem('app_isAuthenticated', 'true');
+                            set({ currentUser: retryData.user, isAuthenticated: true });
+                            return;
+                        }
+                    }
+                } catch {
+                    // Refresh failed (token_version revoked or user deleted)
+                }
                 logout();
             }
         } catch (error) {

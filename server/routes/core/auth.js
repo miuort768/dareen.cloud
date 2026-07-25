@@ -176,7 +176,15 @@ router.post('/verify', verifyLimiter, async (req, res) => {
         }
 
         req.audit({ action: AUDIT_ACTIONS.TOKEN_VERIFIED, entityType: decoded.role, entityId: decoded.id });
-        res.json({ valid: true, user: userData });
+
+        // Rolling token: issue a fresh token on successful verify so JWT never expires for active users
+        const newToken = jwt.sign(
+            { id: decoded.id, username: decoded.username, role: decoded.role, phone: decoded.phone, teacherName: decoded.teacherName, token_version: decoded.token_version, permissions: decoded.permissions },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        );
+
+        res.json({ valid: true, user: userData, token: newToken });
     } catch (error) {
         res.json({ valid: false });
     }
@@ -186,9 +194,19 @@ router.post('/refresh', async (req, res) => {
     const { token } = req.body;
     if (!token) return res.status(400).json({ error: 'Token is required' });
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // Use jwt.decode instead of jwt.verify so expired tokens can still be refreshed
+        const decoded = jwt.decode(token);
+        if (!decoded || !decoded.id || !decoded.role) {
+            return res.status(401).json({ error: 'Invalid token payload' });
+        }
 
-        // Verify user still exists in DB before issuing a new token
+        // Verify token_version still matches (prevents refresh after password change / logout-all)
+        const versionOk = await authAccounts.checkTokenVersion(decoded.id, decoded.role, decoded.token_version);
+        if (!versionOk) {
+            return res.status(401).json({ error: 'Session revoked' });
+        }
+
+        // Verify user still exists in DB
         const modelMap = { admin: 'user', teacher: 'teacher', parent: 'parent', student: 'student', chat_user: 'chatProfile' };
         const modelName = modelMap[decoded.role];
         if (modelName) {
@@ -204,7 +222,7 @@ router.post('/refresh', async (req, res) => {
         req.audit({ action: AUDIT_ACTIONS.REFRESH_TOKEN, entityType: decoded.role, entityId: decoded.id });
         res.json({ token: newToken });
     } catch {
-        res.status(401).json({ error: 'Token expired or invalid' });
+        res.status(401).json({ error: 'Token invalid' });
     }
 });
 
