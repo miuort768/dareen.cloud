@@ -40,7 +40,7 @@ export const BottomNav = () => {
     <nav className="md:hidden fixed bottom-0 end-0 start-0 z-[50] bg-card/90 backdrop-blur-2xl border-t border-border pb-[env(safe-area-inset-bottom)] shadow-2xl">
       <div className="flex justify-around items-center h-[72px] px-2">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
           const Icon = item.icon;
 
           return (

@@ -153,8 +153,8 @@ export const ParentMobileView = ({
 
             {/* iOS-style Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
-                <div className="h-2 bg-white dark:bg-black" />
-                <div className="bg-card border-t border-border shadow-2xl shadow-black/5">
+                <div className="h-2 bg-background" />
+                <div className="bg-card border-t border-border shadow-2xl shadow-black/5 pb-[env(safe-area-inset-bottom)]">
                     <div className="flex items-center justify-around px-2 py-1.5">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;

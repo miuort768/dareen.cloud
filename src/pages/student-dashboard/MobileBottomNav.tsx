@@ -22,18 +22,18 @@ export const MobileBottomNav = () => {
                 <div className="flex items-center justify-around h-[68px] px-2">
                     {navItems.map((item) => {
                         const Icon = item.icon;
-                        const isActive = location.pathname === item.path || (item.id === 'home' && location.pathname.includes('student-dashboard'));
+                        const isActive = location.pathname === item.path || (item.id === 'home' && location.pathname === '/student-dashboard');
                         const isCenter = item.isCenter;
                         return (
                             <motion.button key={item.id} whileTap={{ scale: 0.9 }} onClick={() => navigate(item.path)}
                                 className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}>
                                 {isCenter ? (
                                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shadow-lg shadow-primary/20">
-                                        <Icon size={26} className="text-white" />
+                                        <Icon size={26} className="text-on-primary" />
                                     </div>
                                 ) : (
                                     <>
-                                        <div className={cn("rounded-xl p-1 transition-all duration-300", isActive && "bg-gradient-to-br from-primary/10 to-primary-active/10")}>
+                                        <div className={cn("rounded-xl p-1 transition-all duration-300", isActive && "bg-primary-soft")}>
                                             <Icon size={20}
                                                 className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
                                                 strokeWidth={isActive ? 2 : 1.5} />

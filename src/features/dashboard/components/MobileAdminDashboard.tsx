@@ -132,8 +132,8 @@ export const MobileAdminDashboard = ({ stats, lowBalanceStudents, onRefresh }: M
             {/* iOS-style Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
                 {/* Safe area spacer */}
-                <div className="h-2 bg-card" />
-                <div className="bg-card border-t border-border shadow-lg">
+                <div className="h-2 bg-background" />
+                <div className="bg-card border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
                     <div className="flex items-center justify-around px-2 py-1.5">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
