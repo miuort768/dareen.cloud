@@ -89,7 +89,7 @@ export const PublicNavbar = () => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft dark:bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm min-w-0 shrink">
+                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft dark:bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm min-w-0 shrink relative z-10">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
