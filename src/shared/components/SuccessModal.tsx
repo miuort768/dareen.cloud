@@ -37,7 +37,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     const elapsed = Date.now() - startTime;
                     const remaining = Math.max(0, 100 - (elapsed / duration) * 100);
                     setProgress(remaining);
-                }, 16); // ~60fps update for butter-smooth animation
+                }, 100);
                 
                 timeoutRef.current = setTimeout(() => {
                     handleClose();

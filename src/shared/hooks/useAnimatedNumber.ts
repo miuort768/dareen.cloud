@@ -10,9 +10,14 @@ export const useAnimatedNumber = (target: number, duration = 1500) => {
   const startedRef = useRef(false);
 
   useEffect(() => {
+    startedRef.current = false;
+    setValue(0);
+  }, [target, duration]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !startedRef.current) {
+        if (entry?.isIntersecting && !startedRef.current) {
           startedRef.current = true;
           const startTime = performance.now();
 

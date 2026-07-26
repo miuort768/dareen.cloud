@@ -10,7 +10,7 @@ interface FinanceStats {
 
 export const financeService = {
     async getFinanceData() {
-        const [sessions, invoices, students, teachers, transactions, fixedExpenses] = await Promise.all([
+        const [sessR, invR, stuR, teaR, txnR, fixR] = await Promise.allSettled([
             api.get<Session[]>('/sessions'),
             api.get<TeacherInvoice[]>('/invoices'),
             api.get<Student[]>('/students'),
@@ -18,6 +18,16 @@ export const financeService = {
             api.get<Transaction[]>('/finance/transactions'),
             api.get<FixedExpense[]>('/finance/fixed-expenses'),
         ]);
+
+        const sessions = sessR.status === 'fulfilled' ? sessR.value : [];
+        const invoices = invR.status === 'fulfilled' ? invR.value : [];
+        const students = stuR.status === 'fulfilled' ? stuR.value : [];
+        const teachers = teaR.status === 'fulfilled' ? teaR.value : [];
+        const transactions = txnR.status === 'fulfilled' ? txnR.value : [];
+        const fixedExpenses = fixR.status === 'fulfilled' ? fixR.value : [];
+
+        if (sessR.status === 'rejected') console.error('Sessions fetch failed:', sessR.reason);
+        if (invR.status === 'rejected') console.error('Invoices fetch failed:', invR.reason);
 
         // Process sessions to include effective price
         const processedSessions = sessions.map(session => {

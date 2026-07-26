@@ -117,7 +117,11 @@ class ApiClient {
 
         const text = await response.text();
         if (!text) return {} as T;
-        return JSON.parse(text);
+        try {
+            return JSON.parse(text);
+        } catch {
+            return text as unknown as T;
+        }
     }
 
     private buildUrl(url: string, params?: Record<string, string>): string {

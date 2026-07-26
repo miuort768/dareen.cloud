@@ -37,7 +37,11 @@ export const useUIStore = create<UIState>()(
                 });
 
                 // Auto remove toast after 5 seconds
-                setTimeout(() => get().removeToast(id), 5000);
+                setTimeout(() => {
+                    if (get().toasts.some(t => t.id === id)) {
+                        get().removeToast(id);
+                    }
+                }, 5000);
             },
 
             removeToast: (id) => {

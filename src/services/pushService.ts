@@ -33,7 +33,11 @@ export const pushService = {
 
       // Send subscription to server
       const token = localStorage.getItem('auth_token');
-      await fetch(`${import.meta.env.VITE_API_URL || '/api'}/push/subscribe`, {
+      if (!token) {
+        console.warn('No auth token, skipping push subscription');
+        return false;
+      }
+      const res = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/push/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,6 +48,10 @@ export const pushService = {
           deviceType: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop'
         })
       });
+      if (!res.ok) {
+        console.error('Push subscribe failed:', res.status);
+        return false;
+      }
 
       return true;
     } catch (error) {

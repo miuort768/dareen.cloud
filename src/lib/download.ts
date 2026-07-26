@@ -26,9 +26,9 @@ export async function downloadExport(
     link.href = URL.createObjectURL(blob);
     const disposition = response.headers.get('Content-Disposition') || '';
     const match = disposition.match(/filename="?(.+?)"?$/);
-    link.download = match ? match[1] : `${entity}_${new Date().toISOString().split('T')[0]}.${format}`;
+    link.download = match?.[1] || `${entity}_${new Date().toISOString().split('T')[0]}.${format}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }

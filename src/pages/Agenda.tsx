@@ -50,7 +50,7 @@ export const Agenda = () => {
 
     // Extract scheduled slots for the active day
     const scheduledAppointments = useMemo(() => {
-        const list: { id: string; date: string; time: string; title: string; description?: string; type: string; studentName?: string; teacherName?: string }[] = [];
+        const list: { id: string; date: string; time: string; title: string; description?: string; type: string; studentName: string; studentId: string; studentGrade: string; teacherName: string; subject: string; hour: string; period: string; isDone: boolean; enrollment: Enrollment }[] = [];
         students.forEach(student => {
             student.enrollments?.forEach((enrollment: Enrollment) => {
                 // If teacher view, only show their students
@@ -70,6 +70,9 @@ export const Agenda = () => {
 
                         list.push({
                             id: `${student.id}-${enrollment.teacher}-${enrollment.subject}-${slot.hour}-${slot.period}`,
+                            date: today,
+                            type: 'session',
+                            title: `${student.name} - ${enrollment.subject}`,
                             studentId: student.id,
                             studentName: student.name,
                             studentGrade: student.grade,
@@ -90,13 +93,16 @@ export const Agenda = () => {
             item.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.teacherName.toLowerCase().includes(searchTerm.toLowerCase())
-        ).sort(() => {
-            // Sort by time?
-            return 0;
-        });
+        );
     }, [students, sessions, activeDay, isTeacher, teacherName, searchTerm, currentUser?.id]);
 
-    const handleMarkDone = (appointment: { id: string }) => {
+    type ScheduledAppointment = {
+        id: string; date: string; time: string; title: string; description?: string; type: string;
+        studentName: string; studentId: string; studentGrade: string; teacherName: string;
+        subject: string; hour: string; period: string; isDone: boolean; enrollment: Enrollment;
+    };
+
+    const handleMarkDone = (appointment: ScheduledAppointment) => {
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', {
             hour: 'numeric',
@@ -129,12 +135,19 @@ export const Agenda = () => {
             <PageHeader
                 title="جدول المواعيد"
                 subtitle="متابعة جميع حصص الطلاب المسجلين"
-                icon={CalendarCheck}
-                color="amber"
-                stats={[
-                    { label: 'كل المواعيد', value: scheduledAppointments.length },
-                    { label: 'تم الإنجاز', value: scheduledAppointments.filter(a => a.isDone).length }
-                ]}
+                icon={<CalendarCheck />}
+                stats={
+                    <>
+                        <div className="flex items-center gap-2 text-xs font-bold text-dim">
+                            <span>كل المواعيد:</span>
+                            <span className="text-main">{scheduledAppointments.length}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-bold text-dim">
+                            <span>تم الإنجاز:</span>
+                            <span className="text-success">{scheduledAppointments.filter(a => a.isDone).length}</span>
+                        </div>
+                    </>
+                }
             />
 
             {/* Quick Filters */}

@@ -109,7 +109,7 @@ const applyThemeColor = (color: string) => {
         desert:   { primary: '180 83 9', deep: '69 26 3', mid: '217 119 6', light: '254 243 199' },
         coffee:   { primary: '120 113 108', deep: '41 37 36', mid: '168 162 158', light: '231 229 228' },
     };
-    const c = colors[color] || colors.indigo;
+    const c = colors[color] ?? colors.indigo!;
     root.style.setProperty('--color-primary', c.primary);
     root.style.setProperty('--color-primary-deep', c.deep);
     root.style.setProperty('--color-primary-mid', c.mid);
@@ -222,6 +222,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     },
 
     setSetting: async (key, value) => {
+        const previousValue = get()[key];
         set({ [key]: value } as Pick<SettingsState, typeof key>);
 
         if (key === 'themeColor') {
@@ -233,7 +234,19 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
 
         const apiKey = SETTING_META[key as string]?.apiKey
             ?? (key as string).replace(/([A-Z])/g, '_$1').toLowerCase();
-        await updateSettingOnApi(apiKey, String(value));
+        try {
+            await updateSettingOnApi(apiKey, String(value));
+        } catch (e) {
+            console.error("Failed to persist setting, rolling back:", e);
+            set({ [key]: previousValue } as Pick<SettingsState, typeof key>);
+            if (key === 'themeColor') {
+                localStorage.setItem('app_theme_color', previousValue as string);
+                applyThemeColor(previousValue as string);
+            } else if (key === 'notificationsEnabled') {
+                localStorage.setItem('app_notifications', String(previousValue));
+            }
+            throw e;
+        }
     },
 }));
 

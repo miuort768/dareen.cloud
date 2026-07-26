@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { api } from '../../../lib/api';
 import { attendanceService } from '../services/attendanceService';
 import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser, ScheduleSlot } from '../types';
@@ -7,26 +7,34 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
     const [students, setStudents] = useState<Student[]>([]);
     const [allSessions, setAllSessions] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
+    const mountedRef = useRef(true);
 
-    const fetchAll = async () => {
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => { mountedRef.current = false; };
+    }, []);
+
+    const fetchAll = useCallback(async () => {
         setLoading(true);
         try {
             const [sessionsData, studentsData] = await Promise.all([
                 attendanceService.getSessions(),
                 attendanceService.getStudents()
             ]);
-            setAllSessions(sessionsData);
-            setStudents(studentsData);
+            if (mountedRef.current) {
+                setAllSessions(sessionsData);
+                setStudents(studentsData);
+            }
         } catch (error) {
             console.error("Error fetching attendance data", error);
         } finally {
-            setLoading(false);
+            if (mountedRef.current) setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchAll();
-    }, [date]);
+    }, [date, fetchAll]);
 
     const updateStatus = async (id: string, newStatus: Session['status']) => {
         try {
@@ -54,7 +62,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
     const updateSchedule = async (student: Student, enrollmentIndex: number, newSchedule: ScheduleSlot[]) => {
         try {
             const updatedStudent = { ...student };
-            updatedStudent.enrollments[enrollmentIndex].schedule = newSchedule;
+            updatedStudent.enrollments[enrollmentIndex]!.schedule = newSchedule;
             await attendanceService.updateStudent(updatedStudent);
             fetchAll();
             return true;

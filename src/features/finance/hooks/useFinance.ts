@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { financeService } from '../services/financeService';
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types';
 import { CHART_COLORS } from '../types';
@@ -21,29 +21,37 @@ export const useFinance = () => {
     const [serverStats, setServerStats] = useState<FinanceStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [showAddModal, setShowAddModal] = useState(false);
+    const mountedRef = useRef(true);
 
-    const fetchData = async () => {
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => { mountedRef.current = false; };
+    }, []);
+
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const [data, stats] = await Promise.all([
                 financeService.getFinanceData(),
                 financeService.getFinanceStats().catch(() => null),
             ]);
-            setSessions(data.sessions);
-            setInvoices(data.invoices);
-            setManualTransactions(data.transactions);
-            setFixedExpenses(data.fixedExpenses);
-            setServerStats(stats as FinanceStats | null);
+            if (mountedRef.current) {
+                setSessions(data.sessions);
+                setInvoices(data.invoices);
+                setManualTransactions(data.transactions);
+                setFixedExpenses(data.fixedExpenses);
+                setServerStats(stats as FinanceStats | null);
+            }
         } catch (error) {
             console.error("Error fetching finance data", error);
         } finally {
-            setLoading(false);
+            if (mountedRef.current) setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     const handleUpdateFixedExpense = async (id: number, amount: string) => {
         try {
@@ -75,7 +83,7 @@ export const useFinance = () => {
                     type: 'expense',
                     category: exp.name,
                     amount: exp.amount,
-                    date: new Date().toISOString().split('T')[0],
+                    date: new Date().toISOString().split('T')[0]!,
                     description: `تحويل تلقائي من المصاريف الثابتة: ${exp.name}`
                 })
             ));
@@ -269,7 +277,7 @@ export const useFinance = () => {
                 .filter(t => t.type === 'expense' && t.status === 'completed' && isMonth(t.date))
                 .reduce((sum: number, t: { amount: number }) => sum + t.amount, 0);
             return {
-                month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
+                month: new Date(y!, m! - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 income: inc,
                 expense: exp
             };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { triggerHaptic } from '../../../lib/haptics';
 
 interface UsePullToRefreshOptions {
@@ -21,14 +21,21 @@ export const usePullToRefresh = ({ onRefresh }: UsePullToRefreshOptions): UsePul
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [pullDistance, setPullDistance] = useState(0);
     const [startY, setStartY] = useState(0);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
+        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0]?.clientY ?? 0);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (startY === 0 || isRefreshing || window.scrollY > 0) return;
-        const diff = e.touches[0].clientY - startY;
+        const diff = (e.touches[0]?.clientY ?? 0) - startY;
         if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
     };
 
@@ -38,7 +45,7 @@ export const usePullToRefresh = ({ onRefresh }: UsePullToRefreshOptions): UsePul
             setPullDistance(50);
             triggerHaptic('medium');
             try { await onRefresh(); } catch (e) { console.error('Refresh failed', e); }
-            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
+            timerRef.current = setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
         } else {
             setPullDistance(0);
             setStartY(0);

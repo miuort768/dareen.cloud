@@ -14,7 +14,7 @@ import { cn } from '../lib/utils';
 export const Chat = () => {
     React.useEffect(() => { document.title = 'المحادثات | دارين السابعة للتعليم والتدريب'; }, []);
     const [deleteType, setDeleteType] = useState<'all_conversations' | 'conversation'>('conversation');
-    const [itemToDelete, setItemToDelete] = useState<{ displayName: string } | null>(null);
+    const [itemToDelete, setItemToDelete] = useState<{ displayName: string; id?: string } | null>(null);
     const currentUser = useAuthStore(s => s.currentUser);
     const {
         conversations,
@@ -44,6 +44,8 @@ export const Chat = () => {
     const selectedUsers = useChatUIStore(s => s.selectedUsers);
     const setSelectedUsers = useChatUIStore(s => s.setSelectedUsers);
     const setSearchUser = useChatUIStore(s => s.setSearchUser);
+    const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
+    const setIsDeleting = useChatUIStore(s => s.setIsDeleting);
 
     const setActiveConversationId = useChatStore(s => s.setActiveConversationId);
     const isConnected = useChatStore(s => s.isConnected);
@@ -127,7 +129,7 @@ export const Chat = () => {
         if (!itemToDelete) return;
         setIsDeleting(true);
         try {
-            if (deleteType === 'conversation' && itemToDelete && 'id' in itemToDelete) {
+            if (deleteType === 'conversation' && itemToDelete && itemToDelete.id) {
                 await deleteConversation(itemToDelete.id);
                 if (selectedConv?.id === itemToDelete.id) setSelectedConv(null);
             } else if (deleteType === 'all_conversations') {

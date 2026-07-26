@@ -14,37 +14,24 @@ interface ConfirmProps {
     icon?: React.ReactNode;
 }
 
-let container: HTMLDivElement | null = null;
-let root: ReactDOM.Root | null = null;
-
-function getRoot() {
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'confirm-dialog-root';
-        document.body.appendChild(container);
-    }
-    if (!root) {
-        root = ReactDOM.createRoot(container);
-    }
-    return root;
+function createDialogRoot() {
+    const container = document.createElement('div');
+    container.id = 'confirm-dialog-root';
+    document.body.appendChild(container);
+    const root = ReactDOM.createRoot(container);
+    return { container, root };
 }
 
-function cleanup() {
-    if (root) {
-        root.unmount();
-        root = null;
-    }
-    if (container) {
-        document.body.removeChild(container);
-        container = null;
-    }
+function destroyDialogRoot(dialogRoot: { container: HTMLDivElement; root: ReactDOM.Root }) {
+    dialogRoot.root.unmount();
+    document.body.removeChild(dialogRoot.container);
 }
 
 export function alert(opts: ConfirmProps | string): Promise<void> {
     const options: ConfirmProps = typeof opts === 'string' ? { message: opts } : opts;
 
     return new Promise(resolve => {
-        const r = getRoot();
+        const { container, root } = createDialogRoot();
 
         const Dialog = () => {
             const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +55,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
 
             const handleClose = useCallback(() => {
                 setIsOpen(false);
-                setTimeout(() => { cleanup(); resolve(); }, 200);
+                setTimeout(() => { destroyDialogRoot({ container, root }); resolve(); }, 200);
             }, []);
 
             const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
@@ -76,8 +63,8 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                 if (e.key === 'Tab' && containerRef.current) {
                     const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
                     if (focusable.length === 0) return;
-                    const first = focusable[0];
-                    const last = focusable[focusable.length - 1];
+                    const first = focusable[0]!;
+                    const last = focusable[focusable.length - 1]!;
                     if (e.shiftKey && document.activeElement === first) {
                         e.preventDefault();
                         last.focus();
@@ -126,7 +113,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
             );
         };
 
-        r.render(<Dialog />);
+        root.render(<Dialog />);
     });
 }
 
@@ -134,7 +121,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
     const options: ConfirmProps = typeof opts === 'string' ? { message: opts } : opts;
 
     return new Promise(resolve => {
-        const r = getRoot();
+        const { container, root } = createDialogRoot();
 
         const Dialog = () => {
             const [isOpen, setIsOpen] = useState(false);
@@ -158,12 +145,12 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
 
             const handleClose = useCallback(() => {
                 setIsOpen(false);
-                setTimeout(() => { cleanup(); resolve(false); }, 200);
+                setTimeout(() => { destroyDialogRoot({ container, root }); resolve(false); }, 200);
             }, []);
 
             const handleConfirm = useCallback(() => {
                 setIsOpen(false);
-                setTimeout(() => { cleanup(); resolve(true); }, 200);
+                setTimeout(() => { destroyDialogRoot({ container, root }); resolve(true); }, 200);
             }, []);
 
             const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
@@ -171,8 +158,8 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 if (e.key === 'Tab' && containerRef.current) {
                     const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
                     if (focusable.length === 0) return;
-                    const first = focusable[0];
-                    const last = focusable[focusable.length - 1];
+                    const first = focusable[0]!;
+                    const last = focusable[focusable.length - 1]!;
                     if (e.shiftKey && document.activeElement === first) {
                         e.preventDefault();
                         last.focus();
@@ -193,7 +180,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
                     )}>
-<button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted transition-colors" aria-label="إغلاق">
+                        <button onClick={handleClose} className="absolute top-3 end-3 z-10 w-8 h-8 rounded-full bg-surface flex items-center justify-center text-muted transition-colors" aria-label="إغلاق">
                                     <X size={15} />
                                 </button>
 
@@ -240,6 +227,6 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
             );
         };
 
-        r.render(<Dialog />);
+        root.render(<Dialog />);
     });
 }
