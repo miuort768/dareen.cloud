@@ -18,7 +18,7 @@ interface Notification {
     link?: string;
 }
 
-export const NotificationDropdown = () => {
+export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolean }) => {
     const notificationsEnabled = useNotificationsEnabled();
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
@@ -165,14 +165,18 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center hover:bg-main/5 hover:scale-110 active:scale-95 transition-all duration-200"
+                className={cn(
+                    "relative flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg transition-all duration-200",
+                    "bg-on-primary/15 hover:bg-on-primary/25 text-on-primary"
+                )}
                 aria-label="إظهار الإشعارات"
                 aria-expanded={isOpen}
                 aria-controls="notification-panel"
             >
-                <Bell size={24} className={cn(isChatPage ? "text-main dark:text-main" : "text-on-primary", unreadCount > 0 ? "animate-pulse" : "")} style={unreadCount > 0 ? { filter: 'var(--drop-shadow-bell)' } : undefined} />
+                <Bell size={16} className={cn(unreadCount > 0 ? "animate-pulse" : "")} style={unreadCount > 0 ? { filter: 'var(--drop-shadow-bell)' } : undefined} />
+                {showLabel && <span className="text-xs font-medium hidden sm:inline">الإشعارات</span>}
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute -top-0.5 -start-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-error text-micro font-bold flex items-center justify-center border-2 border-white dark:border-border shadow-lg">
+                    <span className="absolute -top-0.5 -start-0.5 min-w-[20px] h-5 px-1 bg-error rounded-full text-on-error text-micro font-bold flex items-center justify-center border-2 border-surface shadow-lg">
                         {unreadCount}
                     </span>
                 )}

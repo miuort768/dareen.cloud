@@ -1,4 +1,4 @@
-import { Sun, User, MessageSquare } from 'lucide-react';
+import { Sun, Moon, User, MessageSquare, Bell } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
@@ -91,25 +91,27 @@ export const Header = memo(() => {
                 {isDesktop && (
                     <Button
                         variant="ghost"
-                        size="icon"
+                        size="sm"
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="text-on-primary bg-on-primary/15 hover:bg-on-primary/25"
+                        className="text-on-primary bg-on-primary/15 hover:bg-on-primary/25 gap-1.5 h-9 px-3"
                     >
-                        <Sun size={18} />
+                        {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                        <span className="text-xs font-medium hidden sm:inline">{theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}</span>
                     </Button>
                 )}
 
-                {isDesktop && <NotificationDropdown />}
+                {isDesktop && <NotificationDropdown showLabel />}
 
                 {isDesktop && (
                     <Link
                         to="/chat"
                         className={cn(
-                            "relative flex items-center justify-center w-9 h-9 rounded-lg",
+                            "relative flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg",
                             "bg-on-primary/15 hover:bg-on-primary/25 transition-colors text-on-primary"
                         )}
                     >
-                        <MessageSquare size={18} />
+                        <MessageSquare size={16} />
+                        <span className="text-xs font-medium hidden sm:inline">الدردشة</span>
                         {totalUnreadCount > 0 && (
                             <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
                                 {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
