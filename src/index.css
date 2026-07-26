@@ -751,26 +751,26 @@ html, body {
   }
 }
 
-/* ─── Sidebar Active Item — Inset Cutout Effect ─── */
+/* ─── Sidebar Active Item — Sharp Inset Cutout Effect ─── */
 [data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::before,
 [data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::after {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   background: transparent;
   pointer-events: none;
   z-index: 1;
 }
 [data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::before {
-  top: -20px;
-  inset-inline-end: -4px;
-  border-radius: 0 0 20px 0;
-  box-shadow: 10px 10px 0 0 var(--bg-card);
+  top: -16px;
+  inset-inline-end: 0;
+  border-radius: 0;
+  box-shadow: 16px 16px 0 0 var(--bg-card);
 }
 [data-sidebar-nav] a[aria-current="page"]:not(.justify-center)::after {
-  bottom: -20px;
-  inset-inline-end: -4px;
-  border-radius: 0 20px 0 0;
-  box-shadow: 10px -10px 0 0 var(--bg-card);
+  bottom: -16px;
+  inset-inline-end: 0;
+  border-radius: 0;
+  box-shadow: 16px -16px 0 0 var(--bg-card);
 }
