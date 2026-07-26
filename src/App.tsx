@@ -166,14 +166,6 @@ function App() {
 
   return (
     <>
-      {/* Skip to main content for keyboard users */}
-      <a
-        href="#main-content"
-        className="fixed top-2 start-2 z-[99999] -translate-y-20 focus:translate-y-0 bg-primary text-on-primary px-4 py-2 text-sm font-bold shadow-lg transition-transform duration-200 outline-none"
-      >
-        تخطي إلى المحتوى الرئيسي
-      </a>
-
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
         <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-warning text-micro font-semibold py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">

@@ -1,4 +1,4 @@
-const CACHE = 'dareen-v8';
+const CACHE = 'dareen-v9';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -6,6 +6,7 @@ const STATIC_ASSETS = [
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   '/icons/maskable-icon-512x512.png',
+  '/notification.ogg',
 ];
 
 self.addEventListener('install', (event) => {

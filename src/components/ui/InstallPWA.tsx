@@ -52,22 +52,15 @@ export const InstallPWA = () => {
         }
 
         const handleBeforeInstall = (e: Event) => {
-            e.preventDefault();
             deferredPromptRef.current = e;
             (window as unknown as { deferredPrompt: Event }).deferredPrompt = e;
             setIsVisible(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
-        const timer = setTimeout(() => {
-            if (!isStandaloneMode()) {
-                setIsVisible(true);
-            }
-        }, 1000);
-
         return () => {
-            clearTimeout(timer);
             window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
+            deferredPromptRef.current = null;
         };
     }, [isDashboard]);
 
