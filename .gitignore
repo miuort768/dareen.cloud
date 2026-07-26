@@ -29,6 +29,12 @@ dist-ssr
 server/.env
 server/.env.production
 
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
 # SQLite databases
 *.sqlite*
 database.sqlite*
