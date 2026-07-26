@@ -128,9 +128,10 @@ export const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await api.get<{ posts: typeof staticPosts; total: number; page: number; totalPages: number }>('/blog?page=1&limit=12');
-        setPosts(res.posts.length > 0 ? res.posts : staticPosts);
-        setTotalPages(res.totalPages || 1);
+        const res = await api.get<any>('/blog?page=1&limit=12');
+        const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
+        setPosts(fetchedPosts.length > 0 ? fetchedPosts : staticPosts);
+        setTotalPages(res?.totalPages || 1);
         setPage(1);
       } catch (e) { console.warn(e); setPosts(staticPosts); }
       finally { setLoading(false); }
@@ -143,10 +144,11 @@ export const Blog = () => {
     setLoadingMore(true);
     try {
       const nextPage = page + 1;
-      const res = await api.get<{ posts: typeof staticPosts; total: number; page: number; totalPages: number }>(`/blog?page=${nextPage}&limit=12`);
-      setPosts(prev => [...prev, ...res.posts]);
+      const res = await api.get<any>(`/blog?page=${nextPage}&limit=12`);
+      const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
+      setPosts(prev => [...prev, ...fetchedPosts]);
       setPage(nextPage);
-      setTotalPages(res.totalPages);
+      setTotalPages(res?.totalPages || 1);
     } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 
