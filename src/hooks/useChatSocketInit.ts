@@ -118,8 +118,6 @@ export const useChatSocketInit = () => {
                 });
             });
 
-            queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
-
             const isCurrentlyActive = activeConvRef.current === message.conversationId;
             const isFromOthers = String(message.senderId) !== currentUserId;
 

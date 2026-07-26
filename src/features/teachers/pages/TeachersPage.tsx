@@ -140,7 +140,7 @@ export const Teachers = () => {
 
     const unenrollMutation = useMutation({
         mutationFn: async ({ student, teacherName, teacherId }: { student: Student, teacherName: string, teacherId?: string }) => {
-            const updatedEnrollments = student.enrollments.filter((en: Enrollment) => (en.teacherId && en.teacherId === teacherId) || en.teacher !== teacherName);
+            const updatedEnrollments = (student.enrollments || []).filter((en: Enrollment) => (en.teacherId && en.teacherId === teacherId) || en.teacher !== teacherName);
             await api.put(`/students/${student.id}`, { ...student, enrollments: updatedEnrollments });
         },
         onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['students'] }); queryClient.invalidateQueries({ queryKey: ['sessions'] }); showNotification('تم إزالة الطالب بنجاح', 'success'); }

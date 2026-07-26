@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAcademyName, useAcademyLogo, useAcademyTagline, useAdminPhone, useThemeColor, useNotificationsEnabled, useMaintenanceMode, useWhatsappAutoNotify, useWhatsappTemplate, useDefaultSessionPrice, useDefaultTeacherPrice, useCurrencySymbol, useSemesterName, useSemesters, useBalanceWarningThreshold, useBackdateLockEnabled, useTeacherCommissionType, useAutoFreezeThreshold, useTelegramHandle, useHeroBanners, useReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useWhatsappNumbers, useSetSetting } from '../../../context/AppContext';
 import { confirm } from '../../../lib/confirmDialog';
 import { settingsService } from '../services/settingsService';
@@ -93,12 +93,15 @@ export const useSettingsHandlers = () => {
     const [secureInput, setSecureInput] = useState('');
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const notifyTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+    const showNotify = (msg: string) => { clearTimeout(notifyTimeoutRef.current); setNotificationMessage(msg); setShowSuccess(true); notifyTimeoutRef.current = setTimeout(() => setShowSuccess(false), 3000); };
+
+    useEffect(() => () => clearTimeout(notifyTimeoutRef.current), []);
 
     const fetchLogs = useCallback(async () => {
         try { const logs = await settingsService.getAuditLogs(); setAuditLogs(logs || []); } catch (e) { console.error(e); }
     }, []);
-
-    const showNotify = (msg: string) => { setNotificationMessage(msg); setShowSuccess(true); setTimeout(() => setShowSuccess(false), 3000); };
 
     const handleSaveGeneral = async () => {
         setIsSaving(true);

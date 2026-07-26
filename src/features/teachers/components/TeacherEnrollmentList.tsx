@@ -21,7 +21,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
         </div>
         <div className="space-y-2">
             {enrolledStudents.map(student => {
-                const enrollment = student.enrollments.find((e: Enrollment) =>
+                const enrollment = (student.enrollments || []).find((e: Enrollment) =>
                     (e.teacherId && e.teacherId === teacherId) || e.teacher === teacherName
                 ) ?? { sessionsUsed: 0, sessionsTotal: 0, subject: '', isFrozen: false };
                 const actualUsed = enrollment.sessionsUsed || 0;

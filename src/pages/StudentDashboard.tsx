@@ -65,6 +65,7 @@ export const StudentDashboard = () => {
     }, []);
 
     useEffect(() => {
+        let cancelled = false;
         const fetchStudentData = async () => {
             try {
                 setIsLoading(true);
@@ -73,16 +74,18 @@ export const StudentDashboard = () => {
                     api.get<Session[]>('/student-portal/me/sessions'),
                     api.get<PointLog[]>('/student-portal/me/points-log'),
                 ]);
+                if (cancelled) return;
                 setStudentData(meRes);
                 setSessions(sessionsRes);
                 setPointLogs(logsRes);
             } catch (error) {
                 console.error('Error fetching student dashboard:', error);
             } finally {
-                setIsLoading(false);
+                if (!cancelled) setIsLoading(false);
             }
         };
         if (currentUser?.role === 'student') fetchStudentData();
+        return () => { cancelled = true; };
     }, [currentUser]);
 
     const points = studentData?.totalPoints || 0;
