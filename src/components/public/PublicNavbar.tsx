@@ -89,14 +89,14 @@ export const PublicNavbar = () => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-primary-soft dark:bg-primary-soft backdrop-blur-md px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm">
+                    <div className="hidden md:flex items-center gap-2 bg-primary-soft dark:bg-primary-soft px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-primary to-primary text-on-primary shadow-lg shadow-primary/30 -translate-y-0.5'
-                                    : 'text-main hover:bg-primary-soft hover:text-primary dark:text-main dark:hover:bg-primary-soft dark:hover:text-primary'
+                                className={`px-6 py-2 rounded-full font-bold text-sm transition-colors duration-150 ${isActive(item.path)
+                                    ? 'bg-primary text-on-primary shadow-lg shadow-primary/30'
+                                    : 'text-main hover:bg-primary hover:text-on-primary dark:text-main dark:hover:bg-primary dark:hover:text-on-primary'
                                     }`}
                             >
                                 {item.name}
