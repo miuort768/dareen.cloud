@@ -75,7 +75,8 @@ async function staleWhileRevalidate(request) {
   const cached = await caches.match(request);
   const fetchPromise = fetch(request).then(response => {
     if (response.ok) {
-      caches.open(CACHE).then(c => c.put(request, response.clone()));
+      const clone = response.clone();
+      caches.open(CACHE).then(c => c.put(request, clone));
     }
     return response;
   }).catch(() => cached);
@@ -86,8 +87,8 @@ async function networkFirst(request) {
   try {
     const response = await fetch(request);
     if (response.ok && response.status !== 206) {
-      const cache = await caches.open(CACHE);
-      cache.put(request, response.clone());
+      const clone = response.clone();
+      caches.open(CACHE).then(cache => cache.put(request, clone));
     }
     return response;
   } catch {
