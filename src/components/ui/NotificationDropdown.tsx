@@ -166,8 +166,8 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                    "relative flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg transition-all duration-200",
-                    "bg-on-primary/15 hover:bg-on-primary/25 text-on-primary"
+                    "relative flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-lg transition-all duration-200",
+                    "text-on-primary hover:bg-on-primary/15"
                 )}
                 aria-label="إظهار الإشعارات"
                 aria-expanded={isOpen}

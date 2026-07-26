@@ -89,47 +89,51 @@ export const Header = memo(() => {
 
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 {isDesktop && (
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="text-on-primary bg-on-primary/15 hover:bg-on-primary/25 gap-1.5 h-9 px-3"
-                    >
-                        {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                        <span className="text-xs font-medium hidden sm:inline">{theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}</span>
-                    </Button>
-                )}
+                    <div className="flex items-center bg-on-primary/10 rounded-xl p-1 gap-0.5">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            className="text-on-primary hover:bg-on-primary/15 gap-1.5 h-8 px-2.5 rounded-lg"
+                        >
+                            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+                            <span className="text-xs font-medium hidden sm:inline">{theme === 'dark' ? 'النهار' : 'الليل'}</span>
+                        </Button>
 
-                {isDesktop && <NotificationDropdown showLabel />}
+                        <div className="w-px h-5 bg-on-primary/15" />
 
-                {isDesktop && (
-                    <Link
-                        to="/chat"
-                        className={cn(
-                            "relative flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg",
-                            "bg-on-primary/15 hover:bg-on-primary/25 transition-colors text-on-primary"
-                        )}
-                    >
-                        <MessageSquare size={16} />
-                        <span className="text-xs font-medium hidden sm:inline">الدردشة</span>
-                        {totalUnreadCount > 0 && (
-                            <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
-                                {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                            </span>
-                        )}
-                    </Link>
-                )}
+                        <NotificationDropdown showLabel />
 
-                {!isDesktop && (
-                    <>
+                        <div className="w-px h-5 bg-on-primary/15" />
+
                         <Link
                             to="/chat"
                             className={cn(
-                                "relative flex items-center justify-center w-9 h-9 rounded-lg",
-                                "bg-on-primary/15 hover:bg-on-primary/25 transition-colors text-on-primary"
+                                "relative flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-lg",
+                                "text-on-primary hover:bg-on-primary/15 transition-colors"
                             )}
                         >
-                            <MessageSquare size={18} />
+                            <MessageSquare size={15} />
+                            <span className="text-xs font-medium hidden sm:inline">الدردشة</span>
+                            {totalUnreadCount > 0 && (
+                                <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
+                                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                                </span>
+                            )}
+                        </Link>
+                    </div>
+                )}
+
+                {!isDesktop && (
+                    <div className="flex items-center bg-on-primary/10 rounded-xl p-1 gap-0.5">
+                        <Link
+                            to="/chat"
+                            className={cn(
+                                "relative flex items-center justify-center w-8 h-8 rounded-lg",
+                                "text-on-primary hover:bg-on-primary/15 transition-colors"
+                            )}
+                        >
+                            <MessageSquare size={17} />
                             {totalUnreadCount > 0 && (
                                 <span className="absolute -top-1 -start-1 min-w-[16px] h-4 px-1 flex items-center justify-center text-[9px] font-black bg-error text-on-error rounded-full leading-none">
                                     {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
@@ -137,7 +141,7 @@ export const Header = memo(() => {
                             )}
                         </Link>
                         <NotificationDropdown />
-                    </>
+                    </div>
                 )}
 
                 <Link to={userLink} className="shrink-0">
