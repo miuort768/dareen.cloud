@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Bell,
@@ -12,7 +13,7 @@ import {
     Umbrella,
     MessageCircle
 } from 'lucide-react';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { useAdminPhone } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
@@ -38,34 +39,26 @@ interface Announcement {
 export const ParentAnnouncements = () => {
     useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
     const adminPhone = useAdminPhone();
-    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterType, setFilterType] = useState<string>('all');
 
-    useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                setIsLoading(true);
-                const data = await api.get<Announcement[]>('/announcements');
-                setAnnouncements(data?.filter(a => a.isActive) || []);
-            } catch (error) {
-                console.error('Error fetching announcements:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    const { data: allAnnouncements = [], isLoading } = useQuery({
+        queryKey: ['announcements'],
+        queryFn: async () => {
+            const data = await api.get<Announcement[]>('/announcements');
+            return safeArray<Announcement>(data).filter(a => a.isActive);
+        },
+    });
 
-        fetchAnnouncements();
-    }, []);
-
-    const filteredAnnouncements = announcements
+    const filteredAnnouncements = useMemo(() => allAnnouncements
         .filter(ann =>
             (filterType === 'all' || ann.type === filterType) &&
             ((ann.title || '').toLowerCase().includes((searchQuery || '').toLowerCase()) ||
                 (ann.content || '').toLowerCase().includes((searchQuery || '').toLowerCase()))
         )
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+        [allAnnouncements, filterType, searchQuery]
+    );
 
     const getTypeConfig = (type: string) => TYPE_CONFIG[type] || TYPE_CONFIG.general;
 

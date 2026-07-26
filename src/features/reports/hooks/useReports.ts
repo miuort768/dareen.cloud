@@ -1,33 +1,21 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { reportsService } from '../services/reportsService';
 import { safeArray } from '../../../lib/api';
 import type { ReportData, ReportType } from '../types';
 
+const EMPTY_DATA: ReportData = { students: [], sessions: [], invoices: [] };
+
 export const useReports = () => {
-    const [data, setData] = useState<ReportData>({
-        students: [],
-        sessions: [],
-        invoices: []
-    });
-    const [loading, setLoading] = useState(true);
     const [activeReport, setActiveReport] = useState<ReportType>('overview');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const reportData = await reportsService.getReportData();
-            setData(reportData);
-        } catch (error) {
-            console.error("Error fetching report data", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { data: reportData = EMPTY_DATA, isLoading } = useQuery({
+        queryKey: ['reports'],
+        queryFn: () => reportsService.getReportData(),
+    });
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const data = reportData;
 
     const stats = useMemo(() => {
         const currentMonth = new Date().toISOString().slice(0, 7);
@@ -162,15 +150,14 @@ export const useReports = () => {
 
     return {
         state: {
-            loading,
+            loading: isLoading,
             activeReport,
             searchTerm,
             ...stats
         },
         actions: {
             setActiveReport,
-            setSearchTerm,
-            refresh: fetchData
+            setSearchTerm
         },
         filtered: {
             studentProgress: filteredStudentProgress

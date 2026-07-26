@@ -9,6 +9,9 @@ const FALLBACK_SRC =
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   withSkeleton?: boolean;
   imgClassName?: string;
+  srcSet?: string;
+  sizes?: string;
+  webpSrc?: string;
 }
 
 export const Image = ({
@@ -18,10 +21,52 @@ export const Image = ({
   decoding = 'async',
   withSkeleton,
   alt,
+  srcSet,
+  sizes,
+  webpSrc,
   ...props
 }: ImageProps) => {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  if (webpSrc) {
+    return (
+      <div className={cn('relative overflow-hidden', className)}>
+        {withSkeleton && !loaded && (
+          <div className="absolute inset-0 animate-pulse bg-surface dark:bg-surface rounded-inherit" />
+        )}
+        <picture>
+          <source srcSet={webpSrc} type="image/webp" />
+          <img
+            {...props}
+            srcSet={srcSet}
+            sizes={sizes}
+            alt={alt || ''}
+            loading={loading}
+            decoding={decoding}
+            onError={(e) => {
+              if (!error) {
+                setError(true);
+                e.currentTarget.src = FALLBACK_SRC;
+              }
+              props.onError?.(e);
+            }}
+            onLoad={() => {
+              setLoaded(true);
+              props.onLoad?.();
+            }}
+            className={cn(
+              'w-full h-full object-cover',
+              imgClassName,
+              withSkeleton && !loaded && 'opacity-0',
+              loaded && 'opacity-100 transition-opacity duration-slow',
+              error && 'opacity-80'
+            )}
+          />
+        </picture>
+      </div>
+    );
+  }
 
   return (
     <div className={cn('relative overflow-hidden', className)}>
@@ -30,6 +75,8 @@ export const Image = ({
       )}
       <img
         {...props}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt || ''}
         loading={loading}
         decoding={decoding}

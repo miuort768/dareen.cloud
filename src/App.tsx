@@ -5,6 +5,7 @@ import { PageLoader } from './components/ui/PageLoader';
 import { Layout } from './components/layout/Layout';
 import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
+const RouteErrorBoundary = lazy(() => import('./components/RouteErrorBoundary').then(m => ({ default: m.RouteErrorBoundary })));
 
 // Lazy load pages for high performance
 const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
@@ -199,6 +200,7 @@ function App() {
       <Suspense fallback={<PageLoader />}>
         <main id="main-content">
         <Routes>
+          <Route errorElement={<RouteErrorBoundary />}>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -221,7 +223,6 @@ function App() {
             <Route path="/design-system" element={<DesignSystemPage />} />
           )}
 
-          {/* Protected App Routes */}
           {/* Protected App Routes */}
           <Route
             element={
@@ -267,6 +268,7 @@ function App() {
             
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />
+          </Route>
           </Route>
 
           <Route path="*" element={<NotFound />} />

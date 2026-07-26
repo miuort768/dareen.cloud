@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Megaphone, Plus } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api, safeArray } from '../lib/api';
@@ -21,12 +22,10 @@ interface Announcement {
 export const Announcements = () => {
     useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
     const showNotification = useShowNotification();
-    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const queryClient = useQueryClient();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
-    // Form State
     const [formData, setFormData] = useState<{
         title: string;
         content: string;
@@ -39,59 +38,46 @@ export const Announcements = () => {
         isActive: true
     });
 
-    useEffect(() => {
-        fetchAnnouncements();
-    }, []);
-
-    const fetchAnnouncements = async () => {
-        try {
-            setIsLoading(true);
+    const { data: announcements = [], isLoading } = useQuery({
+        queryKey: ['announcements'],
+        queryFn: async () => {
             const data = await api.get<Announcement[]>('/announcements');
-            setAnnouncements(safeArray<Announcement>(data));
-        } catch (error) {
-            console.error('Error fetching announcements:', error);
-            setAnnouncements([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            return safeArray<Announcement>(data);
+        },
+    });
 
-    const handleSave = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const payload = {
-                ...formData,
-                date: new Date().toISOString()
-            };
-
-            if (editingAnnouncement) {
-                await api.put(`/announcements/${editingAnnouncement.id}`, payload);
-                showNotification('تم تحديث الإعلان بنجاح', 'success');
-            } else {
-                await api.post('/announcements', payload);
-                showNotification('تم نشر الإعلان بنجاح', 'success');
-            }
-
+    const saveMutation = useMutation({
+        mutationFn: async ({ payload, id }: { payload: Record<string, unknown>; id?: string }) => {
+            if (id) return api.put(`/announcements/${id}`, payload);
+            return api.post('/announcements', payload);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['announcements'] });
             setIsModalOpen(false);
             setEditingAnnouncement(null);
             setFormData({ title: '', content: '', type: 'general', isActive: true });
-            fetchAnnouncements();
-        } catch (e) {
-            console.error(e);
-            showNotification('فشل حفظ الإعلان', 'error');
-        }
+            showNotification(editingAnnouncement ? 'تم تحديث الإعلان بنجاح' : 'تم نشر الإعلان بنجاح', 'success');
+        },
+        onError: () => showNotification('فشل حفظ الإعلان', 'error'),
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => api.delete(`/announcements/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['announcements'] });
+            showNotification('تم حذف الإعلان', 'success');
+        },
+        onError: () => showNotification('فشل حذف الإعلان', 'error'),
+    });
+
+    const handleSave = (e: React.FormEvent) => {
+        e.preventDefault();
+        saveMutation.mutate({ payload: { ...formData, date: new Date().toISOString() }, id: editingAnnouncement?.id });
     };
 
     const handleDelete = async (id: string) => {
         if (!await confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
-        try {
-            await api.delete(`/announcements/${id}`);
-            showNotification('تم حذف الإعلان', 'success');
-            fetchAnnouncements();
-        } catch (e) {
-            console.error(e);
-            showNotification('فشل حذف الإعلان', 'error');
-        }
+        deleteMutation.mutate(id);
     };
 
     const openEdit = (ann: Announcement) => {
