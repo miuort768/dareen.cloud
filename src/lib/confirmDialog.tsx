@@ -23,8 +23,8 @@ function createDialogRoot() {
 }
 
 function destroyDialogRoot(dialogRoot: { container: HTMLDivElement; root: ReactDOM.Root }) {
-    dialogRoot.root.unmount();
-    document.body.removeChild(dialogRoot.container);
+    try { dialogRoot.root.unmount(); } catch { /* already unmounted */ }
+    try { if (dialogRoot.container.parentNode) dialogRoot.container.parentNode.removeChild(dialogRoot.container); } catch { /* already removed */ }
 }
 
 export function alert(opts: ConfirmProps | string): Promise<void> {
@@ -37,6 +37,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
             const [isOpen, setIsOpen] = useState(false);
             const containerRef = useRef<HTMLDivElement>(null);
             const previousFocus = useRef<HTMLElement | null>(null);
+            const isClosing = useRef(false);
 
             useEffect(() => {
                 previousFocus.current = document.activeElement as HTMLElement;
@@ -54,6 +55,8 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
             }, [isOpen]);
 
             const handleClose = useCallback(() => {
+                if (isClosing.current) return;
+                isClosing.current = true;
                 setIsOpen(false);
                 setTimeout(() => { destroyDialogRoot({ container, root }); resolve(); }, 200);
             }, []);
@@ -78,8 +81,8 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
             const title = options.title || 'إرشادات المنتدى';
 
             return (
-                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
-                    <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
+                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0 pointer-events-none")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
+                    <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0 pointer-events-none")} onClick={handleClose} />
                     <div className={cn(
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
@@ -127,6 +130,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
             const [isOpen, setIsOpen] = useState(false);
             const containerRef = useRef<HTMLDivElement>(null);
             const previousFocus = useRef<HTMLElement | null>(null);
+            const isClosing = useRef(false);
 
             useEffect(() => {
                 previousFocus.current = document.activeElement as HTMLElement;
@@ -144,11 +148,15 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
             }, [isOpen]);
 
             const handleClose = useCallback(() => {
+                if (isClosing.current) return;
+                isClosing.current = true;
                 setIsOpen(false);
                 setTimeout(() => { destroyDialogRoot({ container, root }); resolve(false); }, 200);
             }, []);
 
             const handleConfirm = useCallback(() => {
+                if (isClosing.current) return;
+                isClosing.current = true;
                 setIsOpen(false);
                 setTimeout(() => { destroyDialogRoot({ container, root }); resolve(true); }, 200);
             }, []);
@@ -174,8 +182,8 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
             const title = options.title || 'تأكيد العملية';
 
             return (
-                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
-                    <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0")} onClick={handleClose} />
+                <div ref={containerRef} className={cn("fixed inset-0 z-[100] flex items-center justify-center p-6", isOpen ? "opacity-100" : "opacity-0 pointer-events-none")} dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
+                    <div className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200", isOpen ? "opacity-100" : "opacity-0 pointer-events-none")} onClick={handleClose} />
                     <div className={cn(
                         "relative bg-card w-full max-w-sm rounded-card shadow-2xl transition-all duration-200",
                         isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"

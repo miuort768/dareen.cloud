@@ -26,18 +26,20 @@ export const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      const openModals = document.querySelectorAll('[role="dialog"]');
+      if (openModals.length === 0) document.body.style.overflow = 'hidden';
       previousFocus.current = document.activeElement as HTMLElement;
       setTimeout(() => {
         const first = containerRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
         first?.focus();
       }, 50);
     } else {
-      document.body.style.overflow = '';
+      const remaining = document.querySelectorAll('[role="dialog"]');
+      if (remaining.length <= 1) document.body.style.overflow = '';
       previousFocus.current?.focus();
     }
     return () => {
-      document.body.style.overflow = '';
+      if (!document.querySelector('[role="dialog"]')) document.body.style.overflow = '';
     };
   }, [isOpen]);
 

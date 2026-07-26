@@ -65,7 +65,7 @@ export const Header = memo(() => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-[9999]",
+            "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-40",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
             "header-nav backdrop-blur-md shadow-sm shadow-black/10",
             "px-4 md:px-6 max-w-full",

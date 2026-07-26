@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Plus, AlertTriangle, Clock, X, CheckCircle2, BookOpen } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
@@ -193,6 +193,7 @@ export const TrialSessions = () => {
         )}
 
         {/* Add/Edit Modal */}
+        <AnimatePresence>
         {showModal && (
           <TrialSessionFormModal
             editingId={editingId}
@@ -204,11 +205,13 @@ export const TrialSessions = () => {
             onClose={() => { setShowModal(false); setEditingId(null); resetForm(); }}
           />
         )}
+        </AnimatePresence>
 
         {/* Confirm Delete */}
+        <AnimatePresence>
         {confirmId && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card shadow-soft w-full max-w-sm border border-border/50 rounded-card overflow-hidden">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-card shadow-soft w-full max-w-sm border border-border/50 rounded-card overflow-hidden">
               <div className="bg-error px-5 py-4 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-card flex items-center justify-center bg-error-soft">
                   <AlertTriangle size={20} className="text-error" />
@@ -225,6 +228,7 @@ export const TrialSessions = () => {
             </motion.div>
           </motion.div>
         )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );

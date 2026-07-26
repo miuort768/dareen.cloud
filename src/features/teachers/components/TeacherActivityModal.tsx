@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Calendar, Trash2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
@@ -13,12 +13,12 @@ interface TeacherActivityModalProps {
 }
 
 export const TeacherActivityModal = ({ isOpen, onClose, teacherName, sessions, isTeacherView, onDeleteSession }: TeacherActivityModalProps) => {
-    if (!isOpen) return null;
-
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
+        <AnimatePresence>
+        {isOpen && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose}></div>
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-card border border-border/50 shadow-soft w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-card">
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="relative bg-card border border-border/50 shadow-soft w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-card">
                 <div className="bg-primary px-5 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-card flex items-center justify-center bg-primary-soft">
@@ -77,5 +77,7 @@ export const TeacherActivityModal = ({ isOpen, onClose, teacherName, sessions, i
                 </div>
             </motion.div>
         </motion.div>
+        )}
+        </AnimatePresence>
     );
 };

@@ -124,7 +124,7 @@ export const InstallPWA = () => {
 
     if (showIOSGuide) {
         return (
-            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 p-4" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') handleDismiss(); }}>
+            <div className="fixed inset-0 z-[150] flex items-end justify-center bg-black/40 p-4" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') handleDismiss(); }}>
                 <div className="bg-card border-2 border-border shadow-elevation-3 w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
                     <div className="bg-warning border-b-2 border-border px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -187,7 +187,7 @@ export const InstallPWA = () => {
     }
 
     return (
-        <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
+        <div className={`fixed z-[120] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
             isDesktop ? 'bottom-4 start-4' : 'bottom-4 end-3 start-3'
         }`}>
             <div className={`bg-success border border-white/10 flex items-center gap-3 p-2.5 rounded-[20px] ${

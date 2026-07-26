@@ -121,7 +121,7 @@ function App() {
   // Safety timeout: if loading takes > 30s, show a retry screen
   useEffect(() => {
     if (isLoading || isSettingsLoading) {
-      const t = setTimeout(() => setLoadTimeout(true), 30000);
+      const t = setTimeout(() => setLoadTimeout(true), 12000);
       return () => clearTimeout(t);
     }
     setLoadTimeout(false);

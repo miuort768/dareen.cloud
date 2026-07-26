@@ -181,7 +181,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
             </button>
 
             {isOpen && (
-                <div id="notification-panel" className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-card border-2 border-border rounded-none shadow-[var(--shadow-panel)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
+                <div id="notification-panel" className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:end-0 md:mt-3 w-auto md:w-[400px] bg-card border-2 border-border rounded-none shadow-[var(--shadow-panel)] z-[200] animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="absolute -top-[10px] end-4 md:end-8 w-4 h-4 bg-card border-t-2 border-e-2 border-border rotate-45 hidden md:block" />
                     
                     {/* Header */}
