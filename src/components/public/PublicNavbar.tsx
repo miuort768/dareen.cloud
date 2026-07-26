@@ -51,11 +51,11 @@ export const PublicNavbar = () => {
     }, [isDropdownOpen]);
 
     return (
-        <header className="fixed top-2 md:top-4 end-0 start-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-card shadow-[var(--shadow-navbar)] rounded-full md:rounded-[2rem] border border-border px-4 md:px-6 py-2 md:py-3 relative desktop-light">
-                <div className="flex justify-between items-center h-12 md:h-14">
+        <header className="fixed top-2 md:top-4 end-0 start-0 z-50 mx-auto w-[95%] md:w-[92%] lg:max-w-[90%] transition-all duration-500">
+            <nav className="bg-card shadow-[var(--shadow-navbar)] rounded-full md:rounded-[2rem] border border-border px-3 md:px-4 lg:px-6 py-2 md:py-3 relative desktop-light">
+                <div className="flex justify-between items-center h-12 md:h-14 min-w-0">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center gap-3 ps-2 group">
+                    <Link to="/" className="flex items-center gap-3 ps-2 group shrink-0">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-primary-light rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
                              <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-primary via-primary to-primary rounded-xl flex items-center justify-center text-on-primary shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
@@ -71,7 +71,7 @@ export const PublicNavbar = () => {
                             <p className="site-title text-sm md:text-base font-black leading-tight text-primary dark:text-main md:dark:text-primary">
                                 دارين السابعة
                             </p>
-                            <span className="hidden md:inline-flex items-center gap-1.5 text-xs text-primary dark:text-main md:dark:text-primary font-bold mt-0.5 italic">
+                            <span className="hidden lg:inline-flex items-center gap-1.5 text-xs text-primary dark:text-main md:dark:text-primary font-bold mt-0.5 italic">
                                 <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary dark:text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M2 10 C10 2 18 2 20 10 C22 18 30 18 38 10" />
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
@@ -89,12 +89,12 @@ export const PublicNavbar = () => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-primary-soft dark:bg-primary-soft px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm">
+                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft dark:bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm min-w-0 shrink">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`px-6 py-2 rounded-full font-bold text-sm transition-colors duration-150 ${isActive(item.path)
+                                className={`px-3 lg:px-5 xl:px-6 py-2 rounded-full font-bold text-xs lg:text-sm transition-colors duration-150 whitespace-nowrap ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg shadow-primary/30'
                                     : 'text-main hover:bg-primary hover:text-on-primary dark:text-main dark:hover:bg-primary dark:hover:text-on-primary'
                                     }`}
@@ -105,12 +105,12 @@ export const PublicNavbar = () => {
                     </div>
 
                     {/* Right Side: Auth & Notifications */}
-                    <div className="flex items-center gap-2 md:gap-4">
+                    <div className="flex items-center gap-1 md:gap-2 lg:gap-4 shrink-0">
                         {/* Dark Mode Toggle Removed from here */}
 
 
                         {isAuthenticated && isDesktop && (
-                            <div className="border-e border-border dark:border-border pe-4 h-8 items-center flex">
+                            <div className="hidden lg:flex border-e border-border dark:border-border pe-3 xl:pe-4 h-8 items-center">
                                 <NotificationDropdown />
                             </div>
                         )}
@@ -133,8 +133,8 @@ export const PublicNavbar = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
-                                    <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                                    <span className="hidden lg:block font-bold text-xs xl:text-sm">{currentUser?.name.split(' ')[0]}</span>
+                                    <ChevronDown className={`w-3 h-3 lg:w-4 lg:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
                                 <div id="user-dropdown" className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
@@ -162,7 +162,7 @@ export const PublicNavbar = () => {
                         ) : (
                                 <Link
                                     to="/login"
-                                    className="hidden md:flex bg-gradient-to-r from-primary to-primary text-on-primary px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                    className="hidden md:flex bg-gradient-to-r from-primary to-primary text-on-primary px-4 lg:px-6 xl:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs lg:text-sm whitespace-nowrap"
                                 >
                                 تسجيل الدخول
                             </Link>
