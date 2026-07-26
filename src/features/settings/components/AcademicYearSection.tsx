@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Plus, Trash2 } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, SecondaryBtn, DangerBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
+import { safeGet } from '../../../lib/api';
 
 export const AcademicYearSection = ({
     localSemesterName, setLocalSemesterName,
@@ -21,9 +22,10 @@ export const AcademicYearSection = ({
 
     useEffect(() => {
         settingsService.getSettingsBatch().then(data => {
-            setCurrentAcademicYear(data.system.academic_year || '2024-2025');
-            setSemesterStart(data.system.semester_start_date || '');
-            setSemesterEnd(data.system.semester_end_date || '');
+            const sys = safeGet<Record<string, string>>(data, 'system') || {};
+            setCurrentAcademicYear(sys.academic_year || '2024-2025');
+            setSemesterStart(sys.semester_start_date || '');
+            setSemesterEnd(sys.semester_end_date || '');
         }).catch((e) => console.warn(e));
     }, []);
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { PageLoader } from '../components/ui/PageLoader';
 import { TaskCard, EmptyTaskState } from './TaskCard';
@@ -29,7 +29,7 @@ export const Tasks = () => {
         try {
             setLoading(true);
             const data = await api.get<Task[]>('/tasks');
-            setTasks(data.map(t => ({ ...t, status: t.status || 'pending' })));
+            setTasks(safeArray<Task>(data).map(t => ({ ...t, status: t.status || 'pending' })));
         } catch (error) {
             console.error("Error fetching tasks:", error);
         } finally {

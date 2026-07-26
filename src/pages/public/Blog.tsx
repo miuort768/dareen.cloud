@@ -5,7 +5,7 @@ import { Image } from '../../shared/components/ui';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
-import { blogPosts as staticPosts } from '../../data/blogPosts';
+import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
 import { MessageCircle, Send, Download, Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -128,7 +128,7 @@ export const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await api.get<any>('/blog?page=1&limit=12');
+        const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[]; totalPages?: number } | BlogPost[]>('/blog?page=1&limit=12');
         const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
         setPosts(fetchedPosts.length > 0 ? fetchedPosts : staticPosts);
         setTotalPages(res?.totalPages || 1);
@@ -144,7 +144,7 @@ export const Blog = () => {
     setLoadingMore(true);
     try {
       const nextPage = page + 1;
-      const res = await api.get<any>(`/blog?page=${nextPage}&limit=12`);
+      const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[] } | BlogPost[]>(`/blog?page=${nextPage}&limit=12`);
       const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
       setPosts(prev => [...prev, ...fetchedPosts]);
       setPage(nextPage);

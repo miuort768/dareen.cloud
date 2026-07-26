@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BookOpen, Eye, Calendar, ArrowLeft } from 'lucide-react';
-import { api } from '../../../lib/api';
+import { api, safeArray } from '../../../lib/api';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -21,7 +21,7 @@ export const RecentArticles = () => {
 
     useEffect(() => {
         api.get<Article[]>('/blog?all=true')
-            .then(data => setArticles(data.slice(0, 5)))
+            .then(data => setArticles(safeArray<Article>(data).slice(0, 5)))
             .catch((e) => console.warn(e))
             .finally(() => setLoading(false));
     }, []);

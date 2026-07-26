@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FileText, Image, Download } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, ToggleRow, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
+import { safeGet } from '../../../lib/api';
 
 export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: string) => void }) => {
     const [reportHeader, setReportHeader] = useState('');
@@ -13,11 +14,12 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
 
     useEffect(() => {
         settingsService.getSettingsBatch().then(data => {
-            setReportHeader(data.system.report_header || '');
-            setReportFooter(data.system.report_footer || '');
-            setShowLogo(data.system.report_show_logo !== 'false');
-            setDefaultFormat((data.system.report_default_format as 'pdf' | 'excel') || 'pdf');
-            setPageSize(data.system.report_page_size || 'A4');
+            const sys = safeGet<Record<string, string>>(data, 'system') || {};
+            setReportHeader(sys.report_header || '');
+            setReportFooter(sys.report_footer || '');
+            setShowLogo(sys.report_show_logo !== 'false');
+            setDefaultFormat((sys.report_default_format as 'pdf' | 'excel') || 'pdf');
+            setPageSize(sys.report_page_size || 'A4');
         }).catch((e) => console.warn(e));
     }, []);
 

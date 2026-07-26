@@ -42,7 +42,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     login: async (username: string, password?: string) => {
         try {
-            const { token, user } = await api.post<{ token: string; user: User }>('/auth/login', { username, password });
+            const res = await api.post<{ token: string; user: User }>('/auth/login', { username, password });
+            const token = res?.token;
+            const user = res?.user;
+            if (!token || !user) return false;
             localStorage.setItem('auth_token', token);
             localStorage.setItem('app_current_user', JSON.stringify(user));
             localStorage.setItem('app_isAuthenticated', 'true');

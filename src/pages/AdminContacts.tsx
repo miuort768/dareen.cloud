@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen, Inbox } from 'lucide-react';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIsLoading } from '../context/AppContext';
@@ -33,7 +33,7 @@ export const AdminContacts = () => {
                 setError(null);
                 const data = await api.get<ContactMsg[]>('/contact');
                 if (abort.signal.aborted) return;
-                setMessages(data);
+                setMessages(safeArray<ContactMsg>(data));
             } catch (err) {
                 if (abort.signal.aborted) return;
                 const msg = err instanceof Error ? err.message : 'حدث خطأ في تحميل الرسائل';

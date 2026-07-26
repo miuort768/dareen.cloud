@@ -27,7 +27,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
     }
 
     return (
-        <div className="hidden lg:block overflow-hidden bg-card border border-border/50 shadow-soft rounded-card">
+        <div className="hidden lg:block overflow-x-auto bg-card border border-border/50 shadow-soft rounded-card">
             <table className="w-full text-start border-collapse">
                 <thead>
                     <tr className="bg-primary">

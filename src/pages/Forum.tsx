@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { MessageSquare } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { useSearchParams } from 'react-router-dom';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import type { Comment, Post } from '../features/forum/types';
@@ -27,7 +27,7 @@ export const Forum = () => {
         try {
             setLoading(true);
             const data = await api.get<Post[]>('/forum');
-            setPosts(data);
+            setPosts(safeArray<Post>(data));
         } catch (e) {
             console.error(e);
             showNotification('فشل تحميل المنشورات', 'error');

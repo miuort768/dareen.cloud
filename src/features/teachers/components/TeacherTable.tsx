@@ -28,7 +28,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
     return (
         <div className="w-full" dir="rtl">
             {/* Desktop View */}
-            <div className="hidden lg:block bg-card border border-border/50 shadow-soft rounded-card overflow-hidden">
+            <div className="hidden lg:block bg-card border border-border/50 shadow-soft rounded-card overflow-x-auto">
                 <div className="overflow-x-auto">
                     <table className="w-full text-start border-collapse">
                         <thead>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 import { User } from 'lucide-react';
-import { api } from '../../../lib/api';
+import { api, safeArray } from '../../../lib/api';
 import { useCurrentUser } from '../../../context/AppContext';
 import { EvaluationsHeader } from '../components/EvaluationsHeader';
 import { EvaluationCard } from '../components/EvaluationCard';
@@ -30,7 +30,7 @@ export const Evaluations = () => {
             if (currentUser?.role === 'parent') {
                 const myChildren = await api.get<Student[]>('/parents/my-children');
                 if (!mountedRef.current) return;
-                setStudents(myChildren);
+                setStudents(safeArray<Student>(myChildren));
                 const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`).catch(e => { console.error(`Failed evals for ${c.id}:`, e); return [] as Evaluation[]; }));
                 const allEvalsResults = await Promise.all(evalsPromises);
                 if (!mountedRef.current) return;
@@ -38,7 +38,7 @@ export const Evaluations = () => {
             } else {
                 const studentsRes = await api.get<Student[]>('/students');
                 if (!mountedRef.current) return;
-                setStudents(studentsRes);
+                setStudents(safeArray<Student>(studentsRes));
                 let evalsUrl = '/evaluations';
                 if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
                 const evalsRes = await api.get<Evaluation[]>(evalsUrl);

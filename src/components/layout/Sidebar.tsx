@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     GraduationCap, LayoutDashboard, Users, Wallet, UserCheck, CalendarDays,
@@ -37,9 +37,6 @@ export const Sidebar = memo(() => {
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.setItem('sidebar_collapsed', String(collapsed));
-    }, [collapsed]);
 
     const handleLogout = async () => {
         if (!await confirm('هل أنت متأكد من تسجيل الخروج؟')) return;

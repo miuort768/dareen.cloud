@@ -58,7 +58,7 @@ interface ActiveTimersProps {
     variant?: 'desktop' | 'mobile';
 }
 
-export const ParentActiveTimers = ({ activeTimers, children, formatTime, variant = 'desktop' }: ActiveTimersProps) => (
+export const ParentActiveTimers = ({ activeTimers, children, formatTime }: ActiveTimersProps) => (
     <div className="space-y-3">
         {activeTimers.map((session) => {
             const child = children.find(c => c.id === session.studentId);

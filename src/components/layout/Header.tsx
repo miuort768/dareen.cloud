@@ -1,4 +1,4 @@
-import { Sun, Moon, User, MessageSquare, Bell } from 'lucide-react';
+import { Sun, Moon, User, MessageSquare } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';

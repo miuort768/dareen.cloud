@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Megaphone, Plus } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { useShowNotification } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import { AnnouncementCard } from './AnnouncementCard';
@@ -47,7 +47,7 @@ export const Announcements = () => {
         try {
             setIsLoading(true);
             const data = await api.get<Announcement[]>('/announcements');
-            setAnnouncements(data || []);
+            setAnnouncements(safeArray<Announcement>(data));
         } catch (error) {
             console.error('Error fetching announcements:', error);
             setAnnouncements([]);

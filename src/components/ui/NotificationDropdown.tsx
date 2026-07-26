@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useNotificationsEnabled, useCurrentUser, useShowNotification } from '../../context/AppContext';
 import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -23,8 +23,6 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const navigate = useNavigate();
-    const location = useLocation();
-    const isChatPage = location.pathname === '/chat' || location.pathname.startsWith('/chat/');
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const lastNotifIdRef = useRef<string | null>(null);

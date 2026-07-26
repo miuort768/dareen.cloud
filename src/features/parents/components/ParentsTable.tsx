@@ -28,7 +28,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
             
             {/* ── Desktop View ── */}
-            <div className="hidden md:block bg-card border border-border/50 shadow-soft overflow-hidden rounded-card">
+            <div className="hidden md:block bg-card border border-border/50 shadow-soft overflow-x-auto rounded-card">
                 <table className="w-full text-start border-collapse">
                     <thead>
                         <tr className="bg-primary">

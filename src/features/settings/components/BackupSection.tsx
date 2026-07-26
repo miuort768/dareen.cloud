@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Shield, Download, Upload, History, RotateCcw, Clock } from 'lucide-react';
 import { SectionCard, SectionTitle, PrimaryBtn, SecondaryBtn, DangerBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
+import { safeArray } from '../../../lib/api';
 
 export const BackupSection = ({
     handleExportBackup, handleImportBackup, triggerReset, isSaving, triggerArchive,
@@ -17,7 +18,7 @@ export const BackupSection = ({
             setLoading(true);
             try {
                 const res = await settingsService.getBackupHistory();
-                setBackupHistory(res.data as { id: number; type: string; status: string; size: number; createdAt: string }[]);
+                setBackupHistory(safeArray<{ id: number; type: string; status: string; size: number; createdAt: string }>(res.data));
             } catch (e) { console.error(e); }
             finally { setLoading(false); }
         };

@@ -2,7 +2,6 @@ import { UserPlus, FilePlus, Calendar, Megaphone, Users, BookOpen, TrendingUp, A
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { StatCard } from '../../../shared/components/ui';
-import { cn } from '../../../lib/utils';
 import { QuickLink } from './AdminQuickLink';
 
 interface AdminHomeTabProps {

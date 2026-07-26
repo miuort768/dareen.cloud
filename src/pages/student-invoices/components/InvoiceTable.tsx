@@ -55,7 +55,7 @@ const ActionButton = ({ icon: Icon, onClick, title, hoverClass }: { icon: React.
 
 export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, setPreviewInvoice, setDeletingId }: InvoiceTableProps) => (
   <>
-    <SectionCard className="hidden md:block overflow-hidden">
+    <SectionCard className="hidden md:block overflow-x-auto">
       <table className="w-full text-start text-sm border-collapse">
         <thead>
           <tr className="bg-gradient-to-l from-primary to-primary-hover">

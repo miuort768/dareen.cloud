@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { UserCheck, AlarmClock, Snowflake } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, ToggleRow, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
+import { safeGet } from '../../../lib/api';
 
 export const AttendanceSettingsSection = ({
     localBackdateLock, setLocalBackdateLock,
@@ -19,9 +20,10 @@ export const AttendanceSettingsSection = ({
 
     useEffect(() => {
         settingsService.getSettingsBatch().then(data => {
-            setLateThreshold(data.system.late_threshold_minutes || '15');
-            setAbsenceAlertThreshold(data.system.absence_alert_threshold || '3');
-            setAutoRemind(data.system.auto_remind !== 'false');
+            const sys = safeGet<Record<string, string>>(data, 'system') || {};
+            setLateThreshold(sys.late_threshold_minutes || '15');
+            setAbsenceAlertThreshold(sys.absence_alert_threshold || '3');
+            setAutoRemind(sys.auto_remind !== 'false');
         }).catch((e) => console.warn(e));
     }, []);
 

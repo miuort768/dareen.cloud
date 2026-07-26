@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { SUBJECTS } from '../data/subjects';
 
@@ -38,7 +38,7 @@ export const AdminJobs = () => {
                 setLoading(true);
                 const data = await api.get<JobApp[]>('/jobs');
                 if (!mountedRef.current) return;
-                setApps(data.map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })));
+                setApps(safeArray<JobApp>(data).map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })));
             } catch (err) {
                 console.error(err);
             } finally {

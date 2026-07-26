@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useShowNotification } from '../context/AppContext';
-import { api } from '../lib/api';
+import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { useSettingsStore } from '../store/settingsStore';
 import { BlogHeader } from './admin-blog/BlogHeader';
@@ -38,7 +38,7 @@ export const AdminBlog = () => {
         try {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog?all=true');
-            setPosts(data.map(post => {
+            setPosts(safeArray<BlogPost>(data).map(post => {
                 const raw = post as BlogPostRaw;
                 return {
                     ...post,

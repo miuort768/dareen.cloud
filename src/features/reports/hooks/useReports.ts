@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { reportsService } from '../services/reportsService';
+import { safeArray } from '../../../lib/api';
 import type { ReportData, ReportType } from '../types';
 
 export const useReports = () => {
@@ -32,38 +33,42 @@ export const useReports = () => {
         const currentMonth = new Date().toISOString().slice(0, 7);
 
         // General
-        const totalStudents = data.students.length;
-        const totalEnrollments = data.students.reduce((sum, s) => sum + (s.enrollments?.length || 0), 0);
+        const students = safeArray(data.students);
+        const sessions = safeArray(data.sessions);
+        const invoices = safeArray(data.invoices);
+
+        const totalStudents = students.length;
+        const totalEnrollments = students.reduce((sum, s) => sum + (s.enrollments?.length || 0), 0);
 
         // Attendance
-        const totalSessions = data.sessions.length;
-        const completedSessions = data.sessions.filter(s => s.status === 'completed').length;
-        const cancelledSessions = data.sessions.filter(s => s.status === 'cancelled').length;
+        const totalSessions = sessions.length;
+        const completedSessions = sessions.filter(s => s.status === 'completed').length;
+        const cancelledSessions = sessions.filter(s => s.status === 'cancelled').length;
         const attendanceRate = totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0;
 
         // Financial
-        const totalRevenue = data.sessions
+        const totalRevenue = sessions
             .filter(s => s.status === 'completed')
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
-        const totalExpenses = data.invoices
+        const totalExpenses = invoices
             .filter(inv => inv.status === 'مدفوعة')
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
-        const monthRevenue = data.sessions
+        const monthRevenue = sessions
             .filter(s => s.status === 'completed' && s.date?.startsWith(currentMonth))
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
-        const monthExpenses = data.invoices
+        const monthExpenses = invoices
             .filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
 
         // Months
         const uniqueMonths = Array.from(new Set([
-            ...data.sessions.map(s => s.date?.slice(0, 7)),
-            ...data.invoices.map(inv => inv.date?.slice(0, 7))
+            ...sessions.map(s => s.date?.slice(0, 7)),
+            ...invoices.map(inv => inv.date?.slice(0, 7))
         ].filter(Boolean))).sort().reverse();
 
         // Chart Data
         const monthlySessionsData = uniqueMonths.slice(0, 6).reverse().map(month => {
-            const monthSessions = data.sessions.filter(s => s.date?.startsWith(month));
+            const monthSessions = sessions.filter(s => s.date?.startsWith(month));
             return {
                 month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
                 completed: monthSessions.filter(s => s.status === 'completed').length,
@@ -73,7 +78,7 @@ export const useReports = () => {
         });
 
         // Distributions
-        const subjectDistribution = data.students
+        const subjectDistribution = students
             .flatMap(s => s.enrollments || [])
             .reduce((acc, e) => {
                 acc[e.subject] = (acc[e.subject] || 0) + 1;
@@ -85,7 +90,7 @@ export const useReports = () => {
             value: count
         }));
 
-        const gradeDistribution = data.students.reduce((acc, s) => {
+        const gradeDistribution = students.reduce((acc, s) => {
             acc[s.grade] = (acc[s.grade] || 0) + 1;
             return acc;
         }, {} as Record<string, number>);
@@ -96,7 +101,7 @@ export const useReports = () => {
         }));
 
         // Teacher Performance
-        const teacherPerformance = data.sessions.reduce((acc, s) => {
+        const teacherPerformance = sessions.reduce((acc, s) => {
             if (!acc[s.teacherName]) {
                 acc[s.teacherName] = { total: 0, completed: 0, cancelled: 0 };
             }
@@ -113,7 +118,7 @@ export const useReports = () => {
         }));
 
         // Student Progress
-        const studentProgressData = data.students.map(student => {
+        const studentProgressData = students.map(student => {
             const tSessions = student.enrollments?.reduce((sum, e) => sum + e.sessionsTotal, 0) || 0;
             const uSessions = student.enrollments?.reduce((sum, e) => sum + e.sessionsUsed, 0) || 0;
             const progress = tSessions > 0 ? Math.round((uSessions / tSessions) * 100) : 0;

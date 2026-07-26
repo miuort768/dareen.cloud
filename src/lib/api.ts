@@ -208,3 +208,35 @@ class ApiClient {
 }
 
 export const api = new ApiClient();
+
+/**
+ * Safely extract an array from any API response shape.
+ * Handles: bare arrays, { data: [...] }, { posts: [...] }, { results: [...] }, etc.
+ */
+export function safeArray<T = unknown>(res: unknown, ...keys: string[]): T[] {
+    if (Array.isArray(res)) return res as T[];
+    if (res && typeof res === 'object') {
+        for (const key of keys) {
+            const val = (res as Record<string, unknown>)[key];
+            if (Array.isArray(val)) return val as T[];
+        }
+        // Fallback: first array property on the object
+        for (const val of Object.values(res as Record<string, unknown>)) {
+            if (Array.isArray(val)) return val as T[];
+        }
+    }
+    return [];
+}
+
+/**
+ * Safely extract a nested object property (e.g. res.system.report_header).
+ * Returns undefined instead of throwing if any part of the chain is missing.
+ */
+export function safeGet<T = unknown>(obj: unknown, ...path: string[]): T | undefined {
+    let current: unknown = obj;
+    for (const key of path) {
+        if (current === null || current === undefined || typeof current !== 'object') return undefined;
+        current = (current as Record<string, unknown>)[key];
+    }
+    return current as T | undefined;
+}
