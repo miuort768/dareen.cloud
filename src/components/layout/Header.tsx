@@ -144,6 +144,8 @@ export const Header = memo(() => {
                     </div>
                 )}
 
+                <div className="w-px h-8 bg-on-primary/20 shrink-0" />
+
                 <Link to={userLink} className="shrink-0">
                     <Avatar className="w-9 h-9 border-2 border-success/30 dark:border-success/40">
                         {currentUser?.avatar ? (
