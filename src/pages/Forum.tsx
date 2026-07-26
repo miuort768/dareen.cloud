@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MessageSquare } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { useSearchParams } from 'react-router-dom';
@@ -16,27 +17,17 @@ export const Forum = () => {
     const [searchParams] = useSearchParams();
     const highlightedPostId = searchParams.get('postId');
 
-    const [posts, setPosts] = useState<Post[]>([]);
+    const queryClient = useQueryClient();
+    const { data: posts = [], isLoading: loading } = useQuery<Post[]>({
+        queryKey: ['forum'],
+        queryFn: () => api.get<Post[]>('/forum'),
+        select: (data) => safeArray<Post>(data),
+    });
+
     const [newPostContent, setNewPostContent] = useState('');
-    const [loading, setLoading] = useState(true);
     const [commentTexts, setCommentTexts] = useState<Record<string, string>>({});
     const [viewingComments, setViewingComments] = useState<Record<string, boolean>>({});
     const [showMenuPostId, setShowMenuPostId] = useState<string | null>(null);
-
-    const fetchPosts = useCallback(async () => {
-        try {
-            setLoading(true);
-            const data = await api.get<Post[]>('/forum');
-            setPosts(safeArray<Post>(data));
-        } catch (e) {
-            console.error(e);
-            showNotification('فشل تحميل المنشورات', 'error');
-        } finally {
-            setLoading(false);
-        }
-    }, [showNotification]);
-
-    useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
     useEffect(() => {
         if (highlightedPostId && !loading) {
@@ -51,7 +42,7 @@ export const Forum = () => {
             const data = await api.post<Record<string, unknown>>('/forum', { content: newPostContent });
             showNotification(data.message || 'تم إنشاء المنشور', 'success');
             setNewPostContent('');
-            fetchPosts();
+            queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);
             showNotification('فشل النشر', 'error');
@@ -61,7 +52,7 @@ export const Forum = () => {
     const handleVote = async (postId: string, type: 'upvote' | 'downvote') => {
         try {
             const data = await api.post<{ upvotes: number; downvotes: number }>(`/forum/${postId}/vote`, { type });
-            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
+            queryClient.setQueryData(['forum'], (old: Post[] = []) => old.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
         } catch (e) {
             console.error(e);
             showNotification('فشل التصويت على هذا المنشور', 'error');
@@ -72,7 +63,7 @@ export const Forum = () => {
         try {
             await api.patch(`/forum/${postId}/status`, { status });
             showNotification('تم تحديث حالة المنشور', 'success');
-            fetchPosts();
+            queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);
             showNotification('فشل تحديث الحالة', 'error');
@@ -84,7 +75,7 @@ export const Forum = () => {
         try {
             await api.delete(`/forum/${postId}`);
             showNotification('تم حذف المنشور', 'success');
-            fetchPosts();
+            queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);
             showNotification('فشل الحذف', 'error');
@@ -95,7 +86,7 @@ export const Forum = () => {
         if (!viewingComments[postId]) {
             try {
                 const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-                setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
+                queryClient.setQueryData(['forum'], (old: Post[] = []) => old.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
             } catch (e) {
                 console.error(e);
                 showNotification('فشل تحميل المنشورات', 'error');
@@ -111,8 +102,7 @@ export const Forum = () => {
             await api.post(`/forum/${postId}/comments`, { content: text });
             setCommentTexts((prev: Record<string, string>) => ({ ...prev, [postId]: '' }));
             showNotification('تم إضافة التعليق', 'success');
-            const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
+            queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);
             showNotification('فشل إضافة التعليق', 'error');
@@ -124,8 +114,7 @@ export const Forum = () => {
         try {
             await api.delete(`/forum/comments/${commentId}`);
             showNotification('تم حذف التعليق', 'success');
-            const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
+            queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);
             showNotification('فشل الحذف', 'error');

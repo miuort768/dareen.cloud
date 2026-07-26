@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';
@@ -20,26 +21,15 @@ export interface Task {
 
 export const Tasks = () => {
     useEffect(() => { document.title = 'المهام | دارين السابعة للتعليم والتدريب'; }, []);
-    const [tasks, setTasks] = useState<Task[]>([]);
     const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');
     const [searchTerm, setSearchTerm] = useState('');
-    const [loading, setLoading] = useState(true);
 
-    const fetchTasks = async () => {
-        try {
-            setLoading(true);
-            const data = await api.get<Task[]>('/tasks');
-            setTasks(safeArray<Task>(data).map(t => ({ ...t, status: t.status || 'pending' })));
-        } catch (error) {
-            console.error("Error fetching tasks:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchTasks();
-    }, []);
+    const queryClient = useQueryClient();
+    const { data: tasks = [], isLoading: loading } = useQuery<Task[]>({
+        queryKey: ['tasks'],
+        queryFn: () => api.get<Task[]>('/tasks'),
+        select: (data) => safeArray<Task>(data).map(t => ({ ...t, status: t.status || 'pending' })),
+    });
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [newTask, setNewTask] = useState<{
@@ -59,8 +49,8 @@ export const Tasks = () => {
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const addedTask = await api.post<Task>('/tasks', { ...newTask, status: 'pending' });
-            setTasks([addedTask, ...tasks]);
+            await api.post<Task>('/tasks', { ...newTask, status: 'pending' });
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
             setShowAddForm(false);
             setNewTask({
                 title: '',
@@ -77,9 +67,12 @@ export const Tasks = () => {
     const updateTaskStatus = async (id: string, newStatus: Task['status']) => {
         try {
             await api.patch(`/tasks/${id}`, { status: newStatus });
-            setTasks(tasks.map(t => t.id === id ? { ...t, status: newStatus } : t));
+            queryClient.setQueryData<Task[]>(['tasks'], (old) =>
+                (old || []).map(t => t.id === id ? { ...t, status: newStatus } : t)
+            );
         } catch (error) {
             console.error("Error updating status:", error);
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
         }
     };
 
@@ -87,7 +80,7 @@ export const Tasks = () => {
         if (!await confirm('هل أنت متأكد من حذف هذه المهمة؟')) return;
         try {
             await api.delete(`/tasks/${id}`);
-            setTasks(tasks.filter(t => t.id !== id));
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
         } catch (error) {
             console.error("Error deleting task:", error);
         }

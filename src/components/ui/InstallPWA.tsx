@@ -69,7 +69,7 @@ export const InstallPWA = () => {
             clearTimeout(timer);
             window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
         };
-    }, []);
+    }, [isDashboard]);
 
     const handleInstall = async () => {
         if (platform === 'ios-safari' || platform === 'mac-safari') {

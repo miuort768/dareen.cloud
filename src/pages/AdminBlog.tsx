@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useShowNotification } from '../context/AppContext';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
@@ -7,13 +8,26 @@ import { BlogHeader } from './admin-blog/BlogHeader';
 import { BlogSearchBar } from './admin-blog/BlogSearchBar';
 import { BlogForm } from './admin-blog/BlogForm';
 import { BlogGrid } from './admin-blog/BlogGrid';
-import type { BlogPost, BlogPostRaw } from './admin-blog/types';
+import type { BlogPost } from './admin-blog/types';
 
 export const AdminBlog = () => {
     useEffect(() => { document.title = 'المدونة | دارين السابعة للتعليم والتدريب'; }, []);
     const showNotification = useShowNotification();
-    const [posts, setPosts] = useState<BlogPost[]>([]);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
+    const { data: posts = [], isLoading: loading } = useQuery<BlogPost[]>({
+        queryKey: ['blog'],
+        queryFn: () => api.get('/blog?all=true'),
+        select: (data) => safeArray<BlogPost>(data).map(post => {
+            const raw = post as Record<string, unknown>;
+            return {
+                ...post,
+                fileSize: post.fileSize || (raw.file_size as string),
+                showButtons: post.showButtons ?? (raw.show_buttons === 1 || raw.show_buttons === true),
+                downloadButtonText: post.downloadButtonText || (raw.download_button_text as string),
+                watchButtonText: post.watchButtonText || (raw.watch_button_text as string),
+            };
+        }),
+    });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('');
     const [contentPart1, setContentPart1] = useState('');
@@ -33,30 +47,6 @@ export const AdminBlog = () => {
         if (savedWhatsapp) setLibraryWhatsapp(savedWhatsapp);
         if (savedTelegram) setLibraryTelegram(savedTelegram);
     }, [savedWhatsapp, savedTelegram]);
-
-    const fetchPosts = useCallback(async () => {
-        try {
-            setLoading(true);
-            const data = await api.get<BlogPost[]>('/blog?all=true');
-            setPosts(safeArray<BlogPost>(data).map(post => {
-                const raw = post as BlogPostRaw;
-                return {
-                    ...post,
-                    fileSize: post.fileSize || raw.file_size,
-                    showButtons: post.showButtons ?? (raw.show_buttons === 1 || raw.show_buttons === true),
-                    downloadButtonText: post.downloadButtonText || raw.download_button_text,
-                    watchButtonText: post.watchButtonText || raw.watch_button_text,
-                };
-            }));
-            setLoading(false);
-        } catch (e) {
-            console.error(e);
-            showNotification('حدث خطأ في تحميل المقالات', 'error');
-            setLoading(false);
-        }
-    }, [showNotification]);
-
-    useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
     const handleOpenModal = (post: BlogPost | null = null) => {
         if (post) {
@@ -85,7 +75,7 @@ export const AdminBlog = () => {
         try {
             await api.delete(`/blog/${id}`);
             showNotification('تم حذف المقال بنجاح', 'success');
-            setPosts(posts.filter(p => p.id !== id));
+            queryClient.invalidateQueries({ queryKey: ['blog'] });
         } catch (e) {
             console.error(e);
             showNotification('حدث خطأ في الحذف', 'error');
@@ -109,7 +99,7 @@ export const AdminBlog = () => {
                 showNotification('تم نشر المقال بنجاح', 'success');
             }
             setIsModalOpen(false);
-            fetchPosts();
+            queryClient.invalidateQueries({ queryKey: ['blog'] });
         } catch (err) {
             showNotification(err instanceof Error ? err.message : 'حدث خطأ في الحفظ', 'error');
         } finally {

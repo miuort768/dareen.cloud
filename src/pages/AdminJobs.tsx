@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api, safeArray } from '../lib/api';
@@ -24,30 +25,14 @@ interface JobApp {
 
 export const AdminJobs = () => {
     useEffect(() => { document.title = 'الوظائف | دارين السابعة للتعليم والتدريب'; }, []);
-    const [apps, setApps] = useState<JobApp[]>([]);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
+    const { data: apps = [], isLoading: loading } = useQuery<JobApp[]>({
+        queryKey: ['jobs'],
+        queryFn: () => api.get('/jobs'),
+        select: (data) => safeArray<JobApp>(data).map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })),
+    });
     const [search, setSearch] = useState('');
     const [subjectFilter, setSubjectFilter] = useState('');
-    const mountedRef = useRef(true);
-
-    useEffect(() => {
-        mountedRef.current = true;
-        const fetchApps = async () => {
-            if (!mountedRef.current) return;
-            try {
-                setLoading(true);
-                const data = await api.get<JobApp[]>('/jobs');
-                if (!mountedRef.current) return;
-                setApps(safeArray<JobApp>(data).map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })));
-            } catch (err) {
-                console.error(err);
-            } finally {
-                if (mountedRef.current) setLoading(false);
-            }
-        };
-        fetchApps();
-        return () => { mountedRef.current = false; };
-    }, []);
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء.', {
@@ -60,7 +45,7 @@ export const AdminJobs = () => {
         if (!confirmed) return;
         try {
             await api.delete(`/jobs/${id}`);
-            setApps(apps.filter(a => a.id !== id));
+            queryClient.invalidateQueries({ queryKey: ['jobs'] });
         } catch (err) {
             console.error(err);
         }
@@ -68,8 +53,8 @@ export const AdminJobs = () => {
 
     const handleContacted = async (id: string) => {
         try {
-            const res = await api.patch<{ contacted: boolean }>(`/jobs/${id}/contacted`);
-            setApps(apps.map(a => a.id === id ? { ...a, contacted: res.contacted ? 1 : 0 } : a));
+            await api.patch<{ contacted: boolean }>(`/jobs/${id}/contacted`);
+            queryClient.invalidateQueries({ queryKey: ['jobs'] });
         } catch (err) {
             console.error(err);
         }

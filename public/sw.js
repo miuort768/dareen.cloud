@@ -1,4 +1,4 @@
-const CACHE = 'dareen-v7';
+const CACHE = 'dareen-v8';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -19,7 +19,16 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    ).then(async () => {
+      const cache = await caches.open(CACHE);
+      const keys = await cache.keys();
+      if (keys.length > 100) {
+        for (let i = 0; i < keys.length - 100; i++) {
+          await cache.delete(keys[i]);
+        }
+      }
+      self.clients.claim();
+    })
   );
 });
 
@@ -35,7 +44,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font' || request.destination === 'image') {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
@@ -62,19 +71,15 @@ self.addEventListener('notificationclick', (event) => {
   event.waitUntil(clients.openWindow(event.notification.data.url));
 });
 
-async function cacheFirst(request) {
+async function staleWhileRevalidate(request) {
   const cached = await caches.match(request);
-  if (cached) return cached;
-  try {
-    const response = await fetch(request);
+  const fetchPromise = fetch(request).then(response => {
     if (response.ok) {
-      const cache = await caches.open(CACHE);
-      cache.put(request, response.clone());
+      caches.open(CACHE).then(c => c.put(request, response.clone()));
     }
     return response;
-  } catch {
-    return new Response('', { status: 503 });
-  }
+  }).catch(() => cached);
+  return cached || fetchPromise;
 }
 
 async function networkFirst(request) {

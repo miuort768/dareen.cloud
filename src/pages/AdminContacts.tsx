@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen, Inbox } from 'lucide-react';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
@@ -17,34 +18,16 @@ interface ContactMsg {
 
 export const AdminContacts = () => {
     useEffect(() => { document.title = 'رسائل التواصل | دارين السابعة للتعليم والتدريب'; }, []);
-    const [messages, setMessages] = useState<ContactMsg[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [search, setSearch] = useState('');
+    const queryClient = useQueryClient();
     const authLoading = useIsLoading();
-
-    useEffect(() => {
-        if (authLoading) return;
-
-        const abort = new AbortController();
-        (async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                const data = await api.get<ContactMsg[]>('/contact');
-                if (abort.signal.aborted) return;
-                setMessages(safeArray<ContactMsg>(data));
-            } catch (err) {
-                if (abort.signal.aborted) return;
-                const msg = err instanceof Error ? err.message : 'حدث خطأ في تحميل الرسائل';
-                setError(msg);
-                console.error(err);
-            } finally {
-                if (!abort.signal.aborted) setLoading(false);
-            }
-        })();
-        return () => abort.abort();
-    }, [authLoading]);
+    const { data: messages = [], isLoading: loading, error: queryError } = useQuery<ContactMsg[], Error>({
+        queryKey: ['contacts'],
+        queryFn: () => api.get('/contact'),
+        select: (data) => safeArray<ContactMsg>(data),
+        enabled: !authLoading,
+    });
+    const error = queryError?.message || null;
+    const [search, setSearch] = useState('');
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف هذه الرسالة؟ لا يمكن التراجع عن هذا الإجراء.', {
@@ -57,7 +40,7 @@ export const AdminContacts = () => {
         if (!confirmed) return;
         try {
             await api.delete(`/contact/${id}`);
-            setMessages(messages.filter(m => m.id !== id));
+            queryClient.invalidateQueries({ queryKey: ['contacts'] });
         } catch (err) {
             console.error(err);
         }
