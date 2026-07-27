@@ -13,9 +13,9 @@ interface TeacherEnrollmentListProps {
 
 export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName, onLogAttendance, onUnenroll, isTeacherView }: TeacherEnrollmentListProps) => (
     <div className="space-y-4">
-        <div className="flex items-center gap-3 pb-2 border-b border-border/50">
-            <div className="bg-card border border-border/50 px-3 py-1 rounded-card">
-                <span className="text-xs text-primary">{enrolledStudents.length}</span>
+        <div className="flex items-center gap-3 pb-2 border-b border-border">
+            <div className="bg-primary-soft px-3 py-1 rounded-lg">
+                <span className="text-xs text-primary font-bold">{enrolledStudents.length}</span>
             </div>
             <h4 className="text-xs text-muted">الطلاب المسجلون</h4>
         </div>
@@ -31,7 +31,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
 
                 return (
                     <div key={student.id} className={cn(
-                        "p-3 bg-card border border-border/50 rounded-card transition-all group",
+                        "p-3 bg-surface border border-border rounded-2xl transition-all group",
                         (enrollment as Enrollment).isFrozen && "opacity-50 grayscale",
                         isLow ? "border-error" : "hover:border-primary/30"
                     )}>
@@ -39,17 +39,17 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                             <div>
                                 <div className="flex items-center gap-2 mb-1">
                                     <h5 className="font-medium text-sm text-main">{student.name}</h5>
-                                    {isLow && <span className="text-xs text-error bg-error/10 px-1.5 py-0.5 animate-pulse rounded-card">رصيد منخفض</span>}
+                                    {isLow && <span className="text-xs text-error bg-error-soft px-1.5 py-0.5 animate-pulse rounded-lg">رصيد منخفض</span>}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-xs text-muted bg-card border border-border/50 px-1.5 py-0.5 rounded-card">{student.grade}</span>
+                                    <span className="text-xs text-muted bg-card border border-border px-1.5 py-0.5 rounded-lg">{student.grade}</span>
                                     <span className="text-xs text-muted">{enrollment.subject}</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={() => onLogAttendance(student, enrollment as Enrollment)}
-                                    className="w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-success rounded-card transition-all"
+                                    className="min-w-[28px] min-h-[28px] w-7 h-7 flex items-center justify-center text-success hover:bg-success hover:text-on-success rounded-lg transition-all"
                                     title="تسجيل حضور"
                                     aria-label="تسجيل حضور"
                                 >
@@ -58,7 +58,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                                 {!isTeacherView && (
                                     <button
                                         onClick={() => onUnenroll(student, teacherName)}
-                                        className="w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-error rounded-card transition-all"
+                                        className="min-w-[28px] min-h-[28px] w-7 h-7 flex items-center justify-center text-error hover:bg-error hover:text-on-error rounded-lg transition-all"
                                         title="إلغاء التسجيل"
                                         aria-label="إلغاء التسجيل"
                                     >
@@ -74,12 +74,12 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                                     <div
                                         key={idx}
                                         className={cn(
-                                            "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded-card transition-all",
+                                            "w-4 h-4 border flex items-center justify-center text-xs font-mono rounded-md transition-all",
                                             idx < actualUsed
-                                                ? "bg-success border-success text-on-success shadow-soft"
+                                                ? "bg-success border-success text-on-success"
                                                 : idx === actualUsed
-                                                    ? "bg-card border-primary text-primary"
-                                                    : "bg-card border-border/50 text-muted"
+                                                    ? "bg-surface border-primary text-primary"
+                                                    : "bg-surface border-border text-muted"
                                         )}
                                     >
                                         {idx < actualUsed ? <CheckCircle2 size={10} /> : idx + 1}
@@ -87,7 +87,7 @@ export const TeacherEnrollmentList = ({ enrolledStudents, teacherId, teacherName
                                 ))}
                             </div>
 
-                            <div className="pt-3 border-t border-border/50 flex items-center justify-between">
+                            <div className="pt-3 border-t border-border flex items-center justify-between">
                                 <div className="flex-1 max-w-[120px]">
                                     <div className="flex justify-between text-xs text-muted mb-1">
                                         <span>الإنجاز</span>

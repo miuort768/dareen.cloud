@@ -36,19 +36,16 @@ export const TeacherDetails = ({
     const [showCard, setShowCard] = useState(false);
     const [showActivityModal, setShowActivityModal] = useState(false);
 
-    // Filter students enrolled with this teacher
     const enrolledStudents = students.filter(s =>
         s.enrollments?.some((e: Enrollment) =>
             (e.teacherId && e.teacherId === teacher.id) || e.teacher === teacher.name
         )
     );
 
-    // Filter sessions for this teacher
     const teacherSessions = sessions
         .filter(s => (s.teacherId && s.teacherId === teacher.id) || s.teacherName === teacher.name)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    // Performance Calculations
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
@@ -69,29 +66,29 @@ export const TeacherDetails = ({
 
     return (
         <div className={cn(
-            "bg-card border border-border/50 shadow-soft rounded-card flex flex-col h-fit overflow-hidden",
+            "bg-card border border-border rounded-2xl flex flex-col h-fit overflow-hidden",
             "lg:static lg:sticky lg:top-4"
         )} dir="rtl">
             {/* Header Section */}
             <div className="bg-primary px-5 py-5 md:px-7 md:py-6">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-card flex items-center justify-center bg-primary-soft">
-                            <span className="font-bold text-xl text-primary">{teacher.name.charAt(0)}</span>
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/15">
+                            <span className="font-bold text-xl text-on-primary">{teacher.name.charAt(0)}</span>
                         </div>
                         <div className="min-w-0">
-                            <h3 className="text-card-title font-bold font-heading text-main truncate">{teacher.name}</h3>
-                            <span className="text-xs text-on-primary/70 px-2 py-0.5 bg-error text-on-error rounded-xl">{teacher.subject}</span>
+                            <h3 className="text-sm font-bold text-on-primary truncate">{teacher.name}</h3>
+                            <span className="text-[10px] text-on-error bg-error-soft px-2 py-0.5 rounded-lg">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
                         {!isTeacherView && (
                             <>
-                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-warning hover:text-on-warning text-main rounded-card transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
-                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-success hover:text-on-success text-main rounded-card transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
+                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
+                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
                             </>
                         )}
-                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-error hover:text-on-error text-main rounded-card transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
+                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
                     </div>
                 </div>
             </div>
@@ -104,10 +101,10 @@ export const TeacherDetails = ({
                 <div className="pt-4">
                     <button
                         onClick={() => setShowActivityModal(true)}
-                        className="w-full py-4 bg-primary-soft border-2 border-primary rounded-card flex items-center justify-between px-6 hover:border-primary-hover transition-all group"
+                        className="w-full py-4 bg-primary-soft border border-primary/20 rounded-2xl flex items-center justify-between px-6 hover:border-primary transition-all group"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-card bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
+                            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
                                 <Clock size={18} className="text-on-primary" />
                             </div>
                             <div className="text-start">

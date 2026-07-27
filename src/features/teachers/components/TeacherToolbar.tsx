@@ -16,14 +16,14 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
     return (
         <div className="space-y-2">
             <div className="relative">
-                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
+                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                 <input
                     type="text"
                     aria-label="بحث عن معلمة"
                     placeholder="بحث بالاسم أو التخصص..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full bg-background border border-border text-main text-xs font-bold ps-9 pe-3 py-2.5 outline-none focus:border-primary rounded-xl transition-colors placeholder:text-dim"
+                    className="w-full bg-surface border border-border text-main text-xs font-bold ps-9 pe-3 py-2.5 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl transition-all placeholder:text-muted"
                 />
             </div>
             <div className="flex items-center justify-between">
@@ -40,7 +40,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     {showAddForm ? 'إلغاء' : 'إضافة معلمة'}
                 </button>
                 <div className="flex items-center gap-1">
-                    <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-background border border-border text-dim rounded-lg active:scale-95 transition-transform" aria-label="استيراد">
+                    <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-surface border border-border text-muted rounded-lg active:scale-95 transition-transform" aria-label="استيراد">
                         <Upload size={12} />
                     </button>
                     <button onClick={onExportExcel} className="w-8 h-8 flex items-center justify-center bg-success-soft border border-success/20 text-success rounded-lg active:scale-95 transition-transform" aria-label="تصدير Excel">

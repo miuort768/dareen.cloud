@@ -7,7 +7,7 @@ import { useTeachers } from '../hooks/useTeachers';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import { confirm } from '../../../lib/confirmDialog';
-import { PageLoader } from '../../../components/ui/PageLoader';
+import { Skeleton } from '../../../shared/components/ui/Skeleton';
 import { downloadExport } from '../../../lib/download';
 import { TeacherStats } from '../components/TeacherStats';
 import { TeacherToolbar } from '../components/TeacherToolbar';
@@ -146,11 +146,33 @@ export const Teachers = () => {
         onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['students'] }); queryClient.invalidateQueries({ queryKey: ['sessions'] }); showNotification('تم إزالة الطالب بنجاح', 'success'); }
     });
 
-    if (loading) return <PageLoader />;
+    if (loading) return (
+        <div className="bg-background min-h-screen pb-24" dir="rtl">
+            <div className="relative z-10 max-w-page mx-auto px-4 md:px-6 pt-6 md:pt-10 space-y-3">
+                <div className="bg-card border border-border rounded-2xl p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Skeleton className="w-9 h-9 rounded-xl" />
+                            <div><Skeleton className="h-4 w-28 mb-1.5" /><Skeleton className="h-3 w-12" /></div>
+                        </div>
+                        <Skeleton className="h-8 w-20 rounded-lg" />
+                    </div>
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="flex items-center gap-2.5 p-3 rounded-2xl bg-card border border-border">
+                            <Skeleton className="w-9 h-9 rounded-xl shrink-0" />
+                            <div><Skeleton className="h-3 w-14 mb-1" /><Skeleton className="h-4 w-8" /></div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-            className="bg-surface min-h-screen pb-24" dir="rtl">
+            className="bg-background min-h-screen pb-24" dir="rtl">
             <div className="relative z-10 max-w-page mx-auto px-4 md:px-6 pt-6 md:pt-10">
                 <TeachersPageHeader totalTeachers={teachers.length} showAddForm={showAddForm}
                     onToggleForm={() => { setShowAddForm(!showAddForm); if (showAddForm) setEditId(null); }} />

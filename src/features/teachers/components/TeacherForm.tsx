@@ -67,26 +67,26 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
     };
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden" dir="rtl">
+        <div className="bg-card border border-border shadow-elevation-2 rounded-2xl overflow-hidden" dir="rtl">
             <div className="bg-primary px-5 md:px-7 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-card flex items-center justify-center bg-primary-soft">
-                        {editId ? <Edit3 size={18} className="text-primary" /> : <Plus size={18} className="text-primary" />}
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/15">
+                        {editId ? <Edit3 size={18} className="text-on-primary" /> : <Plus size={18} className="text-on-primary" />}
                     </div>
                     <div>
-                        <h3 className="text-card-title font-bold font-heading text-on-primary">{editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
+                        <h3 className="text-sm font-bold text-on-primary">{editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
                         <p className="text-xs text-on-primary/70 mt-0.5">{editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}</p>
                     </div>
                 </div>
-                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-on-primary rounded-card transition-all" aria-label="إغلاق">
+                <button type="button" onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" aria-label="إغلاق">
                     <X size={18} />
                 </button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Basic Info Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border/50">
-                        <div className="w-6 h-6 flex items-center justify-center rounded-card bg-info-soft">
+                    <div className="flex items-center gap-3 pb-2 border-b border-border">
+                        <div className="w-6 h-6 flex items-center justify-center rounded-lg bg-info-soft">
                             <Info size={12} className="text-info" />
                         </div>
                         <h4 className="text-xs text-muted">بيانات التعريف الأساسية</h4>
@@ -103,8 +103,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
 
                 {/* Currency Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-3 pb-2 border-b border-border/50">
-                        <div className="w-6 h-6 flex items-center justify-center rounded-card bg-success-soft">
+                    <div className="flex items-center gap-3 pb-2 border-b border-border">
+                        <div className="w-6 h-6 flex items-center justify-center rounded-lg bg-success-soft">
                             <DollarSign size={12} className="text-success" />
                         </div>
                         <h4 className="text-xs text-muted">عملة السعر</h4>
@@ -118,7 +118,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                     id="teacher-currency"
                                     value={formData.currency}
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
-                                    className="w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
+                                    className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
                                 >
                                     <option value="KWD">د.ك (KWD)</option>
                                     <option value="SAR">﷼ (SAR)</option>
@@ -135,14 +135,14 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-5 bg-card border border-border/50 rounded-card">
+                <div className="p-5 bg-surface border border-border rounded-2xl">
                     <label 
                         onClick={() => setEnableLogin(!enableLogin)}
                         className="flex items-center gap-3 cursor-pointer mb-6"
                     >
                         <div className={cn(
                             "w-4 h-4 rounded border flex items-center justify-center transition-all",
-                            enableLogin ? "bg-primary border-primary" : "bg-card border-border/50"
+                            enableLogin ? "bg-primary border-primary" : "bg-surface border-border"
                         )}>
                             {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-sm" />}
                         </div>
@@ -162,7 +162,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                         id="teacher-username"
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono text-main transition-all"
                                         placeholder="اسم المستخدم"
                                     />
                                 </div>
@@ -179,7 +179,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pe-4 ps-10 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono tracking-widest text-main transition-all"
+                                        className="w-full pe-4 ps-10 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-mono tracking-widest text-main transition-all"
                                         placeholder="كلمة المرور"
                                     />
                                 </div>
@@ -188,10 +188,10 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     )}
                 </div>
 
-                <div className="flex items-center justify-end pt-4 border-t border-border/50">
+                <div className="flex items-center justify-end pt-4 border-t border-border">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold hover:bg-primary-hover rounded-card flex items-center gap-2 shadow-soft active:scale-95 transition-all"
+                        className="px-8 py-3 bg-primary text-on-primary text-xs font-bold hover:bg-primary-hover rounded-xl flex items-center gap-2 active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
@@ -217,7 +217,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     className={cn(
-                        "w-full px-4 py-2.5 bg-card border border-border/60 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all",
+                        "w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all",
                         Icon && "ps-10",
                         dir === 'ltr' && "font-mono"
                     )}

@@ -8,15 +8,15 @@ interface TeachersPageHeaderProps {
 }
 
 export const TeachersPageHeader = ({ totalTeachers, showAddForm, onToggleForm }: TeachersPageHeaderProps) => (
-    <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
+    <div className="bg-card border border-border rounded-2xl p-3 md:p-4">
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center ring-1 ring-primary/20">
                     <Users size={17} className="text-primary" />
                 </div>
                 <div>
                     <h1 className="text-sm font-bold text-main leading-tight">إدارة المعلمات</h1>
-                    <p className="text-[10px] text-dim">{totalTeachers} معلمة نشطة</p>
+                    <p className="text-[10px] text-muted">{totalTeachers} معلمة نشطة</p>
                 </div>
             </div>
             <button onClick={onToggleForm}
