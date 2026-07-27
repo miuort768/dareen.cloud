@@ -19,7 +19,7 @@ const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: Reac
             <input
                 {...props}
                 className={cn(
-                    "w-full pe-4 ps-12 py-3 bg-card border border-border/50 outline-none text-xs font-normal transition-all focus:border-primary rounded-xl",
+                    "w-full pe-4 ps-12 py-3 bg-surface border border-border outline-none text-xs font-normal transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl",
                     props.className
                 )}
             />
@@ -34,7 +34,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     onSubmit
 }) => {
     return (
-        <div className="bg-card border border-border/50 shadow-soft relative overflow-hidden rounded-card">
+        <div className="bg-card border border-border shadow-elevation-2 relative overflow-hidden rounded-2xl">
             {/* Header */}
             <div className="bg-primary p-6 md:p-8">
                 <div className="flex items-center gap-3">
@@ -65,10 +65,10 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />}
                     </div>
 
-                    <div className="pt-6 border-t border-border/50 flex justify-end">
+                    <div className="pt-6 border-t border-border flex justify-end">
                         <button
                             type="submit"
-                            className="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-on-primary px-10 py-4 font-bold text-micro uppercase tracking-label transition-all shadow-soft active:scale-95 rounded-xl"
+                            className="group flex items-center gap-3 bg-primary hover:bg-primary-hover text-on-primary px-10 py-4 font-bold text-micro transition-all active:scale-95 rounded-xl"
                         >
                             <Save size={14} className="group-hover:rotate-12 transition-transform" />
                             {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

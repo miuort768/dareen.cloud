@@ -18,14 +18,14 @@ export const Parents = () => {
 
     if (state.loading) {
         return (
-            <div className="space-y-4 p-4 md:p-8 animate-pulse bg-background dark:bg-background min-h-full">
-                <div className="h-24 bg-card rounded-card shadow-soft" />
+            <div className="space-y-4 p-4 md:p-8 animate-pulse bg-background min-h-full">
+                <div className="h-24 bg-card rounded-2xl" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
-                        <div key={`skel-${i}`} className="h-28 bg-card rounded-card shadow-soft" />
+                        <div key={`skel-${i}`} className="h-28 bg-card rounded-2xl" />
                     ))}
                 </div>
-                <div className="h-96 bg-card rounded-card shadow-soft" />
+                <div className="h-96 bg-card rounded-2xl" />
             </div>
         );
     }
@@ -81,7 +81,7 @@ export const Parents = () => {
                     <div>
                         {!state.showDetails ? (
                             <div className="space-y-6">
-                                <div className="p-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl shadow-sm border border-white/20 dark:border-border/30 flex flex-col md:flex-row items-stretch md:items-center gap-4 rounded-2xl">
+                                <div className="p-3 bg-card border border-border flex flex-col md:flex-row items-stretch md:items-center gap-4 rounded-2xl">
                                     <div className="flex-1 relative group">
                                         <div className="absolute start-0 top-0 bottom-0 w-12 flex items-center justify-center text-primary opacity-50 z-10">
                                             <Search size={15} />
@@ -92,7 +92,7 @@ export const Parents = () => {
                                             placeholder="ابحث باسم ولي الأمر..."
                                             value={state.searchTerm}
                                             onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                            className="w-full ps-14 pe-4 py-3 bg-primary-soft dark:bg-card text-main placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:bg-white dark:focus:bg-primary-active"
+                                            className="w-full ps-14 pe-4 py-3 bg-surface text-main placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:ring-2 focus:ring-primary/10"
                                         />
                                     </div>
                                     <div className="hidden lg:flex items-center gap-3 px-5 border-s border-border">
@@ -100,7 +100,7 @@ export const Parents = () => {
                                             <Users size={14} className="text-primary" />
                                         </div>
                                         <div>
-                                            <p className="text-micro font-bold text-dim">إجمالي أولياء الأمور</p>
+                                            <p className="text-micro font-bold text-muted">إجمالي أولياء الأمور</p>
                                             <p className="text-micro font-bold text-primary">{state.filteredParents.length} / {state.totalParents}</p>
                                         </div>
                                     </div>
@@ -147,14 +147,14 @@ export const Parents = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
                         >
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.2 }}
-                                className="bg-card border border-border/50 shadow-xl w-full max-w-sm overflow-hidden rounded-card"
+                                className="bg-card border border-border shadow-elevation-2 w-full max-w-sm overflow-hidden rounded-2xl"
                             >
                                 <div className="bg-gradient-to-r from-error to-error-hover h-1.5 w-full" />
                                 <div className="p-8">
@@ -162,7 +162,7 @@ export const Parents = () => {
                                         <AlertCircle size={32} />
                                     </div>
                                     <h3 className="font-medium text-lg text-main mb-3 text-center uppercase tracking-tighter">تأكيد عملية الحذف</h3>
-                                    <p className="text-xs font-normal text-dim leading-relaxed mb-8 text-center uppercase tracking-widest">{state.confirmModal.message}</p>
+                                    <p className="text-xs font-normal text-muted leading-relaxed mb-8 text-center">{state.confirmModal.message}</p>
 
                                     <div className="flex gap-2">
                                         <button
@@ -181,7 +181,7 @@ export const Parents = () => {
                                         </button>
                                         <button
                                             onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                            className="flex-1 py-4 bg-surface dark:bg-surface text-muted font-medium text-micro hover:bg-surface transition-all uppercase tracking-label rounded-xl"
+                                            className="flex-1 py-4 bg-surface text-muted font-medium text-micro hover:bg-surface transition-all rounded-xl"
                                         >
                                             إلغاء
                                         </button>

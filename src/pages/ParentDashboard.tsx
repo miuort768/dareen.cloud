@@ -5,7 +5,7 @@ import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext'
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
-import { PageLoader } from '../components/ui/PageLoader';
+import { Skeleton } from '../shared/components/ui';
 import { ParentDesktopView } from './parent-dashboard/DesktopView';
 import { ParentMobileView } from './parent-dashboard/MobileView';
 import { ParentBottomNav } from './parent-dashboard/BottomNav';
@@ -165,7 +165,17 @@ export const ParentDashboard = () => {
     const rank = getRankByPoints(points, STUDENT_RANKS);
 
     if (isLoading) {
-        return <PageLoader />;
+        return (
+            <div className="min-h-screen bg-background p-4 md:p-8">
+                <div className="space-y-4">
+                    <Skeleton className="h-20 w-full rounded-2xl" />
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-2xl" />)}
+                    </div>
+                    <Skeleton className="h-64 w-full rounded-2xl" />
+                </div>
+            </div>
+        );
     }
 
     const viewProps = {

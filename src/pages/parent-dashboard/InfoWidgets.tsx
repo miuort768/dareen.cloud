@@ -26,7 +26,7 @@ export const ParentNotesSection = ({ children }: NotesSectionProps) => {
                         </div>
                         <div className="space-y-2">
                             {child.enrollments.filter((en) => en.nextSessionNotes).map((en, idx) => (
-                                <div key={`note-${idx}`} className="bg-warning/10 dark:bg-warning/10 p-3 rounded-xl border border-warning/30">
+                                <div key={`note-${idx}`} className="bg-warning/10 p-3 rounded-xl border border-warning/30">
                                     <div className="flex justify-between items-center mb-1">
                                         <span className="text-xs font-medium text-warning">{en.subject}</span>
                                         <span className="text-xs font-normal text-muted">{en.teacher}</span>
@@ -59,9 +59,9 @@ export const ParentMobileNotesSection = ({ children }: NotesSectionProps) => {
                         </div>
                         <div className="space-y-2 ms-4">
                             {child.enrollments.filter((en) => en.nextSessionNotes).map((en, idx) => (
-                                <div key={`note-${idx}`} className="bg-primary/10 dark:bg-primary/10 p-3 rounded-xl border border-primary/30">
+                                <div key={`note-${idx}`} className="bg-primary/10 p-3 rounded-xl border border-primary/30">
                                     <div className="flex justify-between items-center mb-1">
-                                        <span className="text-xs font-bold text-primary dark:text-primary">{en.subject}</span>
+                                        <span className="text-xs font-bold text-primary">{en.subject}</span>
                                         <span className="text-micro text-muted">{en.teacher}</span>
                                     </div>
                                     <p className="text-micro text-main leading-relaxed">{en.nextSessionNotes}</p>

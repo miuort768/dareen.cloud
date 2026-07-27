@@ -23,7 +23,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
     onClose
 }) => {
     return (
-        <div className="bg-card border border-border/50 flex flex-col overflow-hidden shadow-soft rounded-card">
+        <div className="bg-card border border-border flex flex-col overflow-hidden shadow-elevation-1 rounded-2xl">
             
             {/* Header Section */}
             <div className="relative p-4 sm:p-8 bg-primary border-b border-white/5">
@@ -37,7 +37,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 </button>
 
                 <div className="relative z-10 flex flex-col items-center">
-                        <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-card flex items-center justify-center shadow-lg mb-4">
+                        <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
                         <User size={40} className="text-on-primary" />
                     </div>
                     <h3 className="font-bold text-xl text-on-primary uppercase tracking-tighter mb-1">{parent.name}</h3>
@@ -80,7 +80,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
                     {/* Children List */}
                     <div className="space-y-6">
-                        <div className="flex items-center justify-between border-b border-border/50 pb-3">
+                        <div className="flex items-center justify-between border-b border-border pb-3">
                             <div className="flex items-center gap-2">
                                 <div className="w-1.5 h-6 bg-primary rounded-full" />
                                 <h4 className="text-xs font-bold text-main uppercase tracking-label">الأبناء المسجلين</h4>
@@ -92,18 +92,18 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
 
                         <div className="space-y-4">
                             {details.children.length > 0 ? details.children.map(child => (
-                                <div key={child.id} className="p-5 bg-background border border-border/50 group hover:bg-card transition-all shadow-soft rounded-card">
+                                <div key={child.id} className="p-5 bg-surface border border-border group hover:bg-card transition-all rounded-2xl">
                                     <div className="flex justify-between items-center mb-4">
                                         <div>
                                             <p className="font-bold text-sm text-main uppercase tracking-tight">{child.name}</p>
                                             <p className="text-micro font-medium text-info uppercase tracking-widest mt-0.5">{child.grade}</p>
                                         </div>
-                                        <div className="w-9 h-9 bg-card border border-border/50 flex items-center justify-center text-xs font-medium text-dim rounded-xl">
+                                        <div className="w-9 h-9 bg-surface border border-border flex items-center justify-center text-xs font-medium text-muted rounded-xl">
                                             {child.name.charAt(0)}
                                         </div>
                                     </div>
                                     {child.enrollments && child.enrollments.length > 0 && (
-                                        <div className="space-y-3 pt-4 border-t border-border/50">
+                                        <div className="space-y-3 pt-4 border-t border-border">
                                             {child.enrollments.map((en, idx) => (
                                                 <div key={idx} className="flex items-center justify-between text-xs font-normal">
                                                     <div className="flex items-center gap-2">
@@ -125,9 +125,9 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                     )}
                                 </div>
                             )) : (
-                                <div className="text-center py-16 border border-dashed border-border rounded-card">
-                                    <Users size={40} className="mx-auto text-dim dark:text-main mb-3" />
-                                    <p className="text-dim dark:text-main text-xs font-medium uppercase tracking-widest">لا يوجد أبناء مرتبـطين</p>
+                                <div className="text-center py-16 border border-dashed border-border rounded-2xl">
+                                    <Users size={40} className="mx-auto text-muted mb-3" />
+                                    <p className="text-muted text-xs font-medium">لا يوجد أبناء مرتبـطين</p>
                                 </div>
                             )}
                         </div>
@@ -135,7 +135,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
 
                     {/* Schedule Section */}
                     <div className="space-y-6">
-                        <div className="flex items-center gap-2 border-b border-border/50 pb-3">
+                        <div className="flex items-center gap-2 border-b border-border pb-3">
                             <div className="w-1.5 h-6 bg-warning rounded-full" />
                             <h4 className="text-xs font-bold text-main uppercase tracking-label">الجدول العائلي الموحد</h4>
                         </div>
@@ -152,7 +152,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                 }, {} as Record<string, { student: string, subject: string, times: FamilyScheduleItem[] }>);
 
                                 return Object.values(grouped).map((group, idx) => (
-                                    <div key={idx} className="p-4 bg-card border border-border/50 shadow-soft hover:border-primary/30 transition-colors rounded-card">
+                                    <div key={idx} className="p-4 bg-card border border-border hover:border-primary/30 transition-colors rounded-2xl">
                                         <div className="flex items-center justify-between mb-4">
                                             <div>
                                                 <p className="font-bold text-xs text-main uppercase tracking-tight leading-none">{group.subject}</p>
@@ -162,9 +162,9 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                                 <Clock size={14} className="text-primary" />
                                             </div>
                                         </div>
-                                        <div className="flex flex-wrap gap-2 pt-3 border-t border-border/50">
+                                        <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
                                             {group.times.map((t, i) => (
-                                                <div key={`parent-${i}`} className="flex items-center gap-3 px-3 py-2 bg-background border border-border/50 text-micro font-medium rounded-xl">
+                                                <div key={`parent-${i}`} className="flex items-center gap-3 px-3 py-2 bg-surface border border-border text-micro font-medium rounded-xl">
                                                     <span className="text-muted uppercase">{t.day}</span>
                                                     <span className="w-1 h-1 bg-primary rounded-full" />
                                                     <span className="text-primary font-mono">{t.hour} {t.period === 'am' ? 'صباحاً' : 'مساءً'}</span>

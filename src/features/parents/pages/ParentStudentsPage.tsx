@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { api } from '../../../lib/api';
-import { PageLoader } from '../../../components/ui/PageLoader';
+import { Skeleton } from '../../../shared/components/ui';
 import { ParentsStudentHeader } from '../components/ParentsStudentHeader';
 import { ParentStudentCard } from '../components/ParentStudentCard';
 import { SessionsModal } from '../components/SessionsModal';
@@ -96,14 +96,23 @@ export const ParentStudents = () => {
         (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
-    if (isLoading) return <PageLoader />;
+    if (isLoading) return (
+        <div className="bg-background min-h-screen pb-24" dir="rtl">
+            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
+                <Skeleton className="h-16 w-full rounded-2xl" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}
+                </div>
+            </div>
+        </div>
+    );
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-primary-light dark:bg-background min-h-screen pb-24"
+            className="bg-background min-h-screen pb-24"
             dir="rtl"
         >
             <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
@@ -122,10 +131,10 @@ export const ParentStudents = () => {
                         />
                     ))}
                     {filteredStudents.length === 0 && (
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-card text-center border border-dashed border-border dark:border-border rounded-2xl">
-                            <Users size={48} className="mx-auto text-dim dark:text-main mb-4" />
-                            <h3 className="text-lg font-medium text-muted dark:text-muted uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
-                            <p className="text-xs text-muted dark:text-muted font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-card text-center border border-dashed border-border rounded-2xl">
+                            <Users size={48} className="mx-auto text-muted mb-4" />
+                            <h3 className="text-lg font-medium text-muted">لا يوجد أبناء مسجلين</h3>
+                            <p className="text-xs text-muted font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
                         </motion.div>
                     )}
                 </div>

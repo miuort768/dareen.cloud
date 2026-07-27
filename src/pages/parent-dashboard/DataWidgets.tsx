@@ -111,7 +111,7 @@ export const ParentTodaySchedule = ({ todayTasks, variant = 'desktop' }: TodaySc
                                 <p className="text-micro font-medium text-muted">{task.studentName}</p>
                             </div>
                         </div>
-                        <div className="text-end font-bold text-micro text-dim">{task.time}</div>
+                        <div className="text-end font-bold text-micro text-muted">{task.time}</div>
                     </GlassCard>
                 </motion.div>
             ))}
@@ -124,7 +124,7 @@ export const ParentTodaySchedule = ({ todayTasks, variant = 'desktop' }: TodaySc
                     <div className="py-8 text-center">
                         <Calendar size={36} className="mx-auto text-muted mb-3" />
                         <p className="text-muted font-bold text-sm">لا توجد حصص اليوم</p>
-                        <p className="text-dim text-micro mt-1">يوم هادئ بلا حصص!</p>
+                        <p className="text-muted text-micro mt-1">يوم هادئ بلا حصص!</p>
                     </div>
                 )
             )}

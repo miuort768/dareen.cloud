@@ -39,7 +39,7 @@ export const ParentDesktopView = ({
                             </div>
                         </div>
                         <button onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                            className="w-10 h-10 rounded-xl bg-white/50 dark:bg-white/10 text-dim hover:text-error flex items-center justify-center border border-white/20 dark:border-white/5 transition-all">
+                            className="w-10 h-10 rounded-xl bg-white/15 text-muted hover:text-error flex items-center justify-center border border-white/20 transition-all">
                             <LogOut size={18} />
                         </button>
                     </GlassCard>

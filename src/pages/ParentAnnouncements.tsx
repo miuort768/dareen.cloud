@@ -18,13 +18,13 @@ import { useAdminPhone } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
-import { PageLoader } from '../components/ui/PageLoader';
+import { Skeleton } from '../shared/components/ui';
 
 const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; label: string; color: string; bg: string; border: string }> = {
     urgent: { icon: AlertTriangle, label: '����', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
     holiday: { icon: Umbrella, label: '�����', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
     event: { icon: Grid, label: '������', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
-    general: { icon: Bell, label: '����', color: 'var(--text-dim)', bg: 'var(--bg-card)', border: 'var(--border)' },
+    general: { icon: Bell, label: '����', color: 'var(--text-muted)', bg: 'var(--bg-card)', border: 'var(--border)' },
 };
 
 interface Announcement {
@@ -63,13 +63,21 @@ export const ParentAnnouncements = () => {
     const getTypeConfig = (type: string) => TYPE_CONFIG[type] || TYPE_CONFIG.general;
 
     if (isLoading) {
-        return <PageLoader />;
+        return (
+            <div className="min-h-full pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
+                <Skeleton className="h-28 w-full rounded-2xl" />
+                <Skeleton className="h-12 w-full rounded-xl" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-48 rounded-2xl" />)}
+                </div>
+            </div>
+        );
     }
 
     return (
         <div className="min-h-full pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
 
-            <div className="bg-card rounded-card shadow-soft border border-border/50 px-4 md:px-6 py-6 md:py-8">
+            <div className="bg-card rounded-2xl border border-border px-4 md:px-6 py-6 md:py-8">
                 <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary-soft">
                         <Bell size={20} className="text-primary" />
@@ -86,14 +94,14 @@ export const ParentAnnouncements = () => {
 
             <div className="space-y-3">
                 <div className="relative">
-                    <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim" size={18} />
+                    <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={18} />
                     <input
                         type="text"
                         aria-label="بحث عن إعلان"
                         placeholder="بحث عن إعلان..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full ps-12 pe-6 py-3.5 bg-card border border-border/50 rounded-xl shadow-soft text-sm font-bold focus:outline-none focus:border-primary transition-all placeholder:text-muted text-main"
+                        className="w-full ps-12 pe-6 py-3.5 bg-surface border border-border rounded-xl text-sm font-bold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted text-main"
                     />
                 </div>
 
@@ -146,14 +154,14 @@ export const ParentAnnouncements = () => {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                                 key={ann.id}
-                                className="bg-card rounded-card p-5 md:p-6 shadow-soft border border-border/50 relative overflow-hidden flex flex-col"
+                                className="bg-card rounded-2xl p-5 md:p-6 border border-border relative overflow-hidden flex flex-col"
                             >
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-2 text-muted text-micro font-bold">
                                         <Clock size={12} />
                                         {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                                     </div>
-                                    <span className="px-3 py-1 rounded-lg text-micro font-bold flex items-center gap-1.5 shadow-soft" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
+                                    <span className="px-3 py-1 rounded-lg text-micro font-bold flex items-center gap-1.5" style={{ backgroundColor: config.bg, color: config.color, borderColor: config.border }}>
                                         {ann.type === 'urgent' && <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
                                         {config.label}
                                     </span>
@@ -163,17 +171,17 @@ export const ParentAnnouncements = () => {
                                     <h3 className="text-sm md:text-lg font-bold text-main leading-tight">
                                         {ann.title}
                                     </h3>
-                                    <p className="text-xs md:text-xs text-dim dark:text-muted font-bold leading-relaxed line-clamp-4">
+                                    <p className="text-xs md:text-xs text-muted font-bold leading-relaxed line-clamp-4">
                                         {ann.content}
                                     </p>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-divider">
+                                <div className="flex items-center justify-between pt-4 border-t border-border">
                                     <div className="flex items-center gap-2">
                                         <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
                                             <ShieldCheck size={14} className="text-primary" />
                                         </div>
-                                        <span className="text-micro font-bold text-dim dark:text-muted">����� ����������</span>
+                                        <span className="text-micro font-bold text-muted">����� ����������</span>
                                     </div>
                                     
                                     <a 
@@ -191,7 +199,7 @@ export const ParentAnnouncements = () => {
                 </AnimatePresence>
 
                 {filteredAnnouncements.length === 0 && (
-                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-card rounded-card border border-dashed border-border/50 p-8">
+                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-card rounded-2xl border border-dashed border-border p-8">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 bg-primary-soft">
                             <Bell size={22} className="text-primary" />
                         </div>
@@ -209,10 +217,10 @@ const FilterButton = ({ label, active, onClick, icon: Icon, activeColor, activeT
     <button
         onClick={onClick}
         className={cn(
-            "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border shadow-soft active:scale-95",
+            "flex items-center justify-between px-4 py-3.5 rounded-xl text-micro md:text-xs font-bold transition-all border active:scale-95",
             active 
                 ? `${activeTextColor} border-transparent` 
-                : "bg-card text-muted border-border/50 hover:bg-surface"
+                : "bg-card text-muted border-border hover:bg-surface"
         )}
         style={active ? { backgroundColor: activeColor, borderColor: activeColor } : {}}
     >
