@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Users, Search, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -13,46 +13,64 @@ import { PrimaryBtn, StatItem } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
+import { LeadsSkeleton } from './leads/components/LeadsSkeleton';
+import { useUIStore } from '../store/uiStore';
 
-const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
-    <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
-        dir="rtl"
-    >
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card w-full max-w-sm shadow-soft rounded-card overflow-hidden border border-border/50">
-            <div className="bg-error px-5 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center rounded-card bg-error-soft">
-                        <AlertTriangle size={18} className="text-error" />
+const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => {
+    const cancelRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        cancelRef.current?.focus();
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onCancel();
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [onCancel]);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+            dir="rtl"
+        >
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-card w-full max-w-sm shadow-elevation-2 rounded-xl overflow-hidden border border-border/50">
+                <div className="bg-error px-5 py-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-error-soft">
+                            <AlertTriangle size={18} className="text-error" />
+                        </div>
+                        <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                     </div>
-                    <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                    <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-error/70 rounded-xl transition-all" aria-label="إغلاق"><X size={16} /></button>
                 </div>
-                <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-error/70 rounded-card transition-all" aria-label="إغلاق"><X size={16} /></button>
-            </div>
-            <div className="p-5">
-                <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
-                <p className="text-xs text-muted leading-relaxed">
-                    سيتم نقل العميل <span className="text-error font-bold">المفقود</span> إلى قائمة العملاء المفقودين ولن يظهر مرة أخرى.
-                </p>
-            </div>
-            <div className="flex gap-2 p-5 pt-0">
-                <button type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-card transition-all active:scale-[0.98]">إلغاء</button>
-                <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-card transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
-            </div>
+                <div className="p-5">
+                    <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
+                    <p className="text-xs text-muted leading-relaxed">
+                        سيتم نقل العميل <span className="text-error font-bold">المفقود</span> إلى قائمة العملاء المفقودين ولن يظهر مرة أخرى.
+                    </p>
+                </div>
+                <div className="flex gap-2 p-5 pt-0">
+                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                    <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
+                </div>
+            </motion.div>
         </motion.div>
-    </motion.div>
-);
+    );
+};
 
 export const Leads = () => {
     useEffect(() => { document.title = 'العملاء المحتملون | دارين السابعة للتعليم والتدريب'; }, []);
     const queryClient = useQueryClient();
+    const showNotification = useUIStore((s) => s.showNotification);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<LeadStatus | 'all'>('all');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [showLost, setShowLost] = useState(false);
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
+    const [selectedLeads, setSelectedLeads] = useState<Set<string>>(new Set());
     const formRef = useRef<HTMLFormElement>(null);
 
     const { data: leads = [], isLoading, isError: isLeadsError } = useQuery({ queryKey: ['leads'], queryFn: crmService.getAll });
@@ -76,8 +94,9 @@ export const Leads = () => {
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
             setIsAddModalOpen(false);
             formRef.current?.reset();
+            showNotification('تمت إضافة العميل بنجاح', 'success');
         },
-        onError: (err: Error & { response?: { data?: { error?: string } } }) => { alert('حدث خطأ أثناء الإضافة: ' + (err?.response?.data?.error || err.message)); }
+        onError: (err: Error & { response?: { data?: { error?: string } } }) => { showNotification(err?.response?.data?.error || err.message, 'error'); }
     });
 
     const updateMutation = useMutation({
@@ -85,8 +104,9 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
+            showNotification('تم تحديث العميل بنجاح', 'success');
         },
-        onError: (err: Error) => { alert('حدث خطأ أثناء التحديث: ' + err.message); }
+        onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
 
     const deleteMutation = useMutation({
@@ -94,8 +114,9 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
+            showNotification('تم حذف العميل', 'success');
         },
-        onError: (err: Error) => { alert('حدث خطأ أثناء الحذف: ' + err.message); }
+        onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
 
     const filteredLeads = useMemo(() =>
@@ -122,7 +143,7 @@ export const Leads = () => {
         lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' }
     };
 
-    if (isLoading) return <PageLoader />;
+    if (isLoading) return <LeadsSkeleton />;
 
     if (isLeadsError) {
         return (
@@ -181,27 +202,52 @@ export const Leads = () => {
                 </div>
 
                 {/* Search & Filter */}
-                <div className="bg-card border border-border/50 shadow-soft rounded-card mb-6 p-4">
-                    <div className="flex flex-col md:flex-row gap-3">
-                        <div className="relative flex-1">
+                <div className="mb-6 space-y-3">
+                    <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
+                        <div className="relative">
                             <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." aria-label="بحث عن عميل" className="w-full bg-card border border-border/60 rounded-xl px-9 py-2.5 outline-none text-xs text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." aria-label="بحث عن عميل" className="w-full bg-surface border border-border/60 rounded-xl px-9 py-2.5 outline-none text-sm text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
-                        <div className="flex items-center gap-2 w-full md:w-auto">
-                            <Filter size={14} className="text-muted hidden md:block shrink-0" />
-                            <div className="relative w-full md:w-auto">
-                                <select aria-label="تصفية حسب الحالة" className="w-full md:w-auto appearance-none bg-card border border-border/60 rounded-xl px-3 py-2.5 text-xs outline-none cursor-pointer focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-main" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
-                                    <option value="all" className="text-main">كل الحالات</option>
-                                    {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
-                                </select>
-                                <ChevronDown className="absolute start-2 top-1/2 -translate-y-1/2 pointer-events-none text-muted" size={12} />
-                            </div>
-                        </div>
+                    </div>
+                    {/* Status Chips */}
+                    <div className="flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
+                        <button
+                            onClick={() => setFilterStatus('all')}
+                            className={cn(
+                                "shrink-0 px-3 py-1.5 text-xs font-bold rounded-full border transition-all",
+                                filterStatus === 'all'
+                                    ? "bg-main text-on-primary border-main"
+                                    : "bg-card text-muted border-border/60 hover:border-border hover:text-main"
+                            )}
+                        >
+                            الكل
+                        </button>
+                        {Object.entries(statusConfig).map(([key, value]) => (
+                            <button
+                                key={key}
+                                onClick={() => setFilterStatus(key as LeadStatus | 'all')}
+                                className={cn(
+                                    "shrink-0 px-3 py-1.5 text-xs font-bold rounded-full border transition-all",
+                                    filterStatus === key
+                                        ? `${value.bg} ${value.color} border-current`
+                                        : "bg-card text-muted border-border/60 hover:border-border hover:text-main"
+                                )}
+                            >
+                                {value.label}
+                            </button>
+                        ))}
                     </div>
                 </div>
 
                 {/* Table (desktop) / Cards (mobile) OR Add form */}
                 <div>
+                    {/* Search result count */}
+                    {!isAddModalOpen && (searchTerm || filterStatus !== 'all') && (
+                        <p className="text-xs text-muted mb-3 px-1">
+                            تم العثور على <span className="font-bold text-main">{filteredLeads.length}</span> عميل
+                        </p>
+                    )}
+
                     {isAddModalOpen ? (
                         <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
                     ) : (
@@ -212,7 +258,9 @@ export const Leads = () => {
                     )}
                 </div>
 
-                {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
+                <AnimatePresence>
+                    {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
+                </AnimatePresence>
             </div>
         </motion.div>
     );
