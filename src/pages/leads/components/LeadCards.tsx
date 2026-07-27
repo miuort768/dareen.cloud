@@ -7,6 +7,7 @@ interface LeadCardsProps {
     statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }>;
     updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void };
     handleMarkLost: (id: string) => void;
+    onLeadClick: (lead: Lead) => void;
 }
 
 const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
@@ -29,7 +30,7 @@ const getLeadAge = (createdAt: string) => {
     return { text: `منذ ${diffDays} يوم`, color: 'text-error' };
 };
 
-export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost }: LeadCardsProps) => {
+export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost, onLeadClick }: LeadCardsProps) => {
     return (
         <div className="lg:hidden space-y-3">
             {filteredLeads.length === 0 ? (
@@ -43,6 +44,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
             ) : filteredLeads.map((lead) => (
                 <div
                     key={lead.id}
+                    onClick={() => onLeadClick(lead)}
                     className="bg-card border border-border/50 shadow-soft rounded-card active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
                 >
                     {/* Card header */}

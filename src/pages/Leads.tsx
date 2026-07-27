@@ -14,6 +14,7 @@ import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton';
+import { LeadDrawer } from './leads/components/LeadDrawer';
 import { useUIStore } from '../store/uiStore';
 
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => {
@@ -71,6 +72,8 @@ export const Leads = () => {
     const [showLost, setShowLost] = useState(false);
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
     const [selectedLeads, setSelectedLeads] = useState<Set<string>>(new Set());
+    const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
     const { data: leads = [], isLoading, isError: isLeadsError } = useQuery({ queryKey: ['leads'], queryFn: crmService.getAll });
@@ -132,6 +135,10 @@ export const Leads = () => {
     const handleConfirmDelete = () => {
         if (confirmLeadId) deleteMutation.mutate(confirmLeadId);
         setConfirmLeadId(null);
+    };
+    const handleOpenDrawer = (lead: Lead) => {
+        setSelectedLead(lead);
+        setIsDrawerOpen(true);
     };
 
     const statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }> = {
@@ -252,8 +259,8 @@ export const Leads = () => {
                         <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
                     ) : (
                         <>
-                            <LeadTable filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
-                            <LeadCards filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} />
+                            <LeadTable filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
+                            <LeadCards filteredLeads={filteredLeads} statusConfig={statusConfig} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
                         </>
                     )}
                 </div>
@@ -261,6 +268,14 @@ export const Leads = () => {
                 <AnimatePresence>
                     {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
                 </AnimatePresence>
+
+                <LeadDrawer
+                    lead={selectedLead}
+                    isOpen={isDrawerOpen}
+                    onClose={() => { setIsDrawerOpen(false); setSelectedLead(null); }}
+                    statusConfig={statusConfig}
+                    updateMutation={updateMutation}
+                />
             </div>
         </motion.div>
     );

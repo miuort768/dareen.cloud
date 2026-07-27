@@ -9,6 +9,7 @@ interface LeadTableProps {
     statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }>;
     updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void };
     handleMarkLost: (id: string) => void;
+    onLeadClick: (lead: Lead) => void;
 }
 
 const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
@@ -31,7 +32,7 @@ const getLeadAge = (createdAt: string) => {
     return { text: `منذ ${diffDays} يوم`, color: 'text-error' };
 };
 
-export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, handleMarkLost }: LeadTableProps) => {
+export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, handleMarkLost, onLeadClick }: LeadTableProps) => {
     if (filteredLeads.length === 0) {
         return (
             <div className="hidden lg:block bg-card border border-border/50 shadow-soft rounded-card">
@@ -66,6 +67,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                 itemContent={(index, lead) => (
                     <div>
                         <div
+                            onClick={() => onLeadClick(lead)}
                             className="flex items-center px-5 py-3.5 hover:bg-hover transition-colors cursor-pointer border-b border-border/50"
                         >
                             <div className="w-1/5 flex items-center gap-3">
