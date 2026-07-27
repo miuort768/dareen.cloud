@@ -109,13 +109,13 @@ export const Evaluations = () => {
     if (currentUser?.role === 'teacher') return <Navigate to="/" replace />;
 
     if (isLoading) return (
-        <div className="space-y-3 p-4 bg-surface min-h-full">
-            {[...Array(6)].map((_, i) => <div key={`eval-${i}`} className="h-36 bg-surface border border-border/30 animate-pulse rounded-2xl" />)}
+        <div className="space-y-3 p-4 bg-background min-h-full">
+            {[...Array(6)].map((_, i) => <div key={`eval-${i}`} className="h-36 bg-surface border border-border animate-pulse rounded-2xl" />)}
         </div>
     );
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-background" dir="rtl">
             <div className="relative z-10 max-w-page mx-auto px-2 space-y-3">
                 <EvaluationsHeader
                     totalXP={totalXP}
@@ -141,7 +141,7 @@ export const Evaluations = () => {
                                     <User size={20} className="text-primary" />
                                 </div>
                                 <h3 className="text-xs font-bold text-main mb-1">{searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}</h3>
-                                <p className="text-[10px] text-dim">{searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}</p>
+                                <p className="text-[10px] text-muted">{searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}</p>
                             </div>
                         )}
                     </div>

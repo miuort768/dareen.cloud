@@ -21,22 +21,22 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
     const totalStudentXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0);
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group rounded-card">
-            <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-border')}>
+        <div className="bg-card border border-border shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300 flex flex-col overflow-hidden group rounded-2xl">
+            <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg : 'bg-border')}>
                 <div className={cn("h-full w-full", lastRating?.bg ?? 'bg-surface')} />
             </div>
 
             <div className="p-4 flex items-center gap-3 border-b border-border">
-                <div className="w-11 h-11 flex items-center justify-center shrink-0 bg-primary/10 rounded-xl">
+                <div className="w-11 h-11 flex items-center justify-center shrink-0 bg-primary-soft rounded-xl ring-1 ring-primary/20">
                     <User size={18} className="text-primary" />
                 </div>
                 <div className="min-w-0 flex-1">
                     <h4 className="font-medium text-sm text-main truncate">{student.name}</h4>
-                    <p className="text-micro font-normal text-muted uppercase tracking-widest truncate flex items-center gap-1">
+                    <p className="text-micro font-normal text-muted truncate flex items-center gap-1">
                         <BookOpen size={8} className="shrink-0" />{student.grade}</p>
                 </div>
                 <div className="shrink-0 text-center">
-                    <span className="text-micro font-bold px-2 py-0.5 bg-warning-light dark:bg-warning/20 text-warning dark:text-warning rounded-lg">{totalStudentXP} XP</span>
+                    <span className="text-micro font-bold px-2 py-0.5 bg-warning-soft text-warning rounded-lg">{totalStudentXP} XP</span>
                 </div>
             </div>
 
@@ -44,15 +44,15 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                 {lastEval ? (
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                            <span className="text-micro font-medium text-muted uppercase tracking-widest">آخر تقييم</span>
+                            <span className="text-micro font-bold text-muted">آخر تقييم</span>
                             {lastRating && (
-                                <span className={cn("flex items-center gap-1 text-micro font-normal px-2 py-0.5", lastRating.pill)}>
+                                <span className={cn("flex items-center gap-1 text-micro font-bold px-2 py-0.5", lastRating.pill)}>
                                     <lastRating.icon size={9} />
                                     {lastEval.rating}
                                 </span>
                             )}
                         </div>
-                        <div className="bg-background p-3 border border-border/50 rounded-xl">
+                        <div className="bg-surface p-3 border border-border rounded-xl">
                             <p className="text-micro font-normal text-muted italic line-clamp-2 leading-relaxed">
                                 &ldquo;{(lastEval.notes) || 'بدون ملاحظات'}&rdquo;
                             </p>
@@ -65,27 +65,27 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
                     </div>
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
-                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-card bg-primary/5 border border-dashed border-primary/30">
+                        <div className="w-12 h-12 flex items-center justify-center mb-2 rounded-2xl bg-primary-soft border border-dashed border-primary/30">
                             <Award size={20} className="text-primary/40" />
                         </div>
-                        <p className="text-micro font-medium text-muted uppercase tracking-widest">لم يتم التقييم بعد</p>
+                        <p className="text-micro font-bold text-muted">لم يتم التقييم بعد</p>
                     </div>
                 )}
             </div>
 
             {!isParent && (
                 <div className="px-4 pb-4 grid grid-cols-2 gap-2">
-                    <button onClick={() => onAddEvaluation(student.id)} className="bg-primary hover:bg-primary-hover text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 shadow-soft active:scale-95 rounded-xl">
+                    <button onClick={() => onAddEvaluation(student.id)} className="bg-primary hover:bg-primary-hover text-on-primary py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 rounded-xl">
                         <Plus size={12} /> أضف تقييم
                     </button>
-                    <button onClick={() => onViewHistory(student)} className="bg-surface hover:bg-surface text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="bg-surface hover:bg-background text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl border border-border">
                         <History size={12} /> السجل ({studentEvals.length})
                     </button>
                 </div>
             )}
             {isParent && (
                 <div className="px-4 pb-4">
-                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface hover:bg-surface text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl">
+                    <button onClick={() => onViewHistory(student)} className="w-full bg-surface hover:bg-background text-main py-2.5 text-micro font-bold transition-all flex items-center justify-center gap-1.5 rounded-xl border border-border">
                         <History size={12} /> عرض السجل الكامل ({studentEvals.length})
                     </button>
                 </div>
