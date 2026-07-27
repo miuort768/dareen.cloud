@@ -13,12 +13,12 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
     };
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60  animate-in fade-in duration-300">
-            <div className="bg-card w-full max-w-md border-4 border-border shadow-[var(--shadow-card-offset)] relative overflow-hidden group">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="bg-card w-full max-w-md border-4 border-border shadow-elevation-3 relative overflow-hidden group">
                 
                 {/* Header Actions - Hidden on Print */}
                 <div className="p-4 flex justify-between items-center border-b-2 border-border print:hidden">
-                    <h3 className="font-medium text-xs uppercase tracking-label text-dim italic">Student ID Card</h3>
+                    <h3 className="font-medium text-xs uppercase tracking-label text-muted italic">Student ID Card</h3>
                     <div className="flex gap-2">
                         <button onClick={handlePrint} className="p-2 bg-success-soft text-success hover:bg-success hover:text-on-success transition-colors border-2 border-success" aria-label="طباعة">
                             <Printer size={18} />
@@ -32,7 +32,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                 {/* THE CARD CONTENT */}
                 <div className="p-4 md:p-8 relative print:p-0">
                     {/* Background Pattern */}
-                    <div className="absolute top-0 start-0 w-48 h-48 bg-surface border-s-8 border-t-8 border-border -ms-16 -mt-16 rotate-45 pointer-events-none"></div>
+                    <div className="absolute top-0 start-0 w-48 h-48 bg-surface border-s-8 border-t-8 border-border -ms-16 -mt-16 rotate-45 pointer-events-none rounded-2xl"></div>
                     
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">
@@ -43,7 +43,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                             </div>
                             <h2 className="text-xl font-medium text-main leading-none">بطاقة تعريف طالب</h2>
                         </div>
-                        <div className="w-16 h-16 bg-primary border-4 border-white/20 flex items-center justify-center shadow-sm">
+                        <div className="w-16 h-16 bg-primary border-4 border-white/20 flex items-center justify-center shadow-sm rounded-xl">
                             <GraduationCap size={32} className="text-inverse" />
                         </div>
                     </div>
@@ -51,25 +51,25 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     {/* Main Info Section */}
                     <div className="flex flex-col md:flex-row gap-4 md:gap-8 relative z-10">
                         {/* Student Photo Placeholder / Icon */}
-                        <div className="w-32 h-40 bg-hover border-4 border-border flex items-center justify-center relative shadow-inner">
-                            <User size={64} className="text-dim" />
+                        <div className="w-32 h-40 bg-surface border-4 border-border flex items-center justify-center relative shadow-inner rounded-xl">
+                             <User size={64} className="text-muted" />
                             <div className="absolute bottom-0 end-0 w-full h-1 bg-primary"></div>
                         </div>
 
                         {/* Details */}
                         <div className="flex-1 space-y-4 text-start" dir="rtl">
                             <div className="space-y-1">
-                                <label className="text-micro font-medium text-dim uppercase tracking-widest block">الاسم الكامل</label>
+                                <label className="text-micro font-medium text-muted uppercase tracking-widest block">الاسم الكامل</label>
                                 <p className="text-lg font-medium text-main tracking-tighter">{student.name}</p>
                             </div>
                             
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className="text-micro font-medium text-dim uppercase tracking-widest block">الصف الدراسي</label>
+                                    <label className="text-micro font-medium text-muted uppercase tracking-widest block">الصف الدراسي</label>
                                     <p className="text-sm font-normal text-muted">{student.grade}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-micro font-medium text-dim uppercase tracking-widest block">كود الطالب</label>
+                                    <label className="text-micro font-medium text-muted uppercase tracking-widest block">كود الطالب</label>
                                     <p className="text-sm font-normal text-muted">#{student.id.slice(0, 6).toUpperCase()}</p>
                                 </div>
                             </div>
@@ -86,10 +86,10 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     {/* Footer / QR Code */}
                     <div className="mt-10 pt-6 border-t-2 border-dashed border-border flex items-center justify-between relative z-10">
                         <div className="space-y-1 text-start" dir="rtl">
-                            <p className="text-micro font-medium text-dim uppercase">نظام إدارة دارين السابعة</p>
+                            <p className="text-micro font-medium text-muted uppercase">نظام إدارة دارين السابعة</p>
                             <p className="text-micro text-muted font-normal">يُرجى إبراز هذه البطاقة عند طلبها داخل المعهد</p>
                         </div>
-                        <div className="p-2 bg-card border-2 border-border">
+                        <div className="p-2 bg-card border-2 border-border rounded-xl">
                             <QRCodeSVG 
                                 value={`dareen-student://${student.id}`}
                                 size={48}

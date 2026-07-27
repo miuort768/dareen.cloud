@@ -10,14 +10,14 @@ interface StudentsFiltersProps {
 }
 
 export const StudentsFilters = ({ filterGrade, uniqueGrades, onGradeChange, filterCurriculum, uniqueCurriculums, onCurriculumChange }: StudentsFiltersProps) => (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-card border border-border/50 rounded-xl">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-card border border-border rounded-2xl">
         <div className="flex items-center gap-2 flex-1">
-            <GraduationCap size={14} className="text-dim shrink-0" />
+            <GraduationCap size={14} className="text-muted shrink-0" />
             <select
                 value={filterGrade}
                 aria-label="تصفية حسب المرحلة الدراسية"
                 onChange={e => onGradeChange(e.target.value)}
-                className="flex-1 bg-background border border-border text-main text-xs font-bold px-2.5 py-2 outline-none focus:border-primary rounded-lg"
+                className="flex-1 bg-surface border border-border text-main text-xs font-bold px-2.5 py-2 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl"
             >
                 <option value="">المرحلة (الكل)</option>
                 {uniqueGrades.map(g => (
@@ -26,12 +26,12 @@ export const StudentsFilters = ({ filterGrade, uniqueGrades, onGradeChange, filt
             </select>
         </div>
         <div className="flex items-center gap-2 flex-1">
-            <BookOpen size={14} className="text-dim shrink-0" />
+            <BookOpen size={14} className="text-muted shrink-0" />
             <select
                 value={filterCurriculum}
                 aria-label="تصفية حسب المنهج"
                 onChange={e => onCurriculumChange(e.target.value)}
-                className="flex-1 bg-background border border-border text-main text-xs font-bold px-2.5 py-2 outline-none focus:border-primary rounded-lg"
+                className="flex-1 bg-surface border border-border text-main text-xs font-bold px-2.5 py-2 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl"
             >
                 <option value="">المنهج (الكل)</option>
                 {uniqueCurriculums.map(c => (

@@ -45,12 +45,12 @@ export const StudentDetails = ({
     const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
 
     return (
-        <div className="flex flex-col bg-card border border-border shadow-sm overflow-hidden mb-12">
+        <div className="flex flex-col bg-card border border-border shadow-elevation-1 overflow-hidden mb-12">
             {/* Header Section */}
             <div className="relative p-6 bg-surface border-b border-border" dir="rtl">
                 <button
                     onClick={onClose}
-                    className="absolute end-4 top-4 text-dim hover:text-error p-2 hover:bg-error-soft transition-all"
+                    className="absolute end-4 top-4 text-muted hover:text-error p-2 hover:bg-error-soft transition-all rounded-xl"
                     aria-label="إغلاق"
                 >
                     <X size={18} />
@@ -68,7 +68,7 @@ export const StudentDetails = ({
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-micro font-normal text-info bg-info-soft px-1.5 py-0.5 uppercase">{student.grade}</span>
                             <span className="text-micro font-normal text-success bg-success-soft px-1.5 py-0.5">{points} XP</span>
-                            <button onClick={() => setShowCard(true)} className="text-micro font-normal text-dim hover:text-info flex items-center gap-1">
+                            <button onClick={() => setShowCard(true)} className="text-micro font-normal text-muted hover:text-info flex items-center gap-1">
                                 <UserCircle2 size={12} />
                                 بطاقة الطالب
                             </button>
@@ -79,20 +79,20 @@ export const StudentDetails = ({
 
             <div className="p-4 space-y-5 overflow-y-auto flex-1 custom-scrollbar" dir="rtl">
                 {/* Points & Rank Panel */}
-                <div className="p-4 bg-card border border-border shadow-sm">
+                <div className="p-4 bg-card border border-border shadow-elevation-1">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-info-soft text-info flex items-center justify-center">
                                 <Trophy size={18} />
                             </div>
                             <div>
-                                <p className="text-micro font-normal text-dim uppercase">الرتبة الحالية</p>
+                                <p className="text-micro font-normal text-muted uppercase">الرتبة الحالية</p>
                                 <p className="text-sm font-medium text-main">{rank.name}</p>
                             </div>
                         </div>
                         {next && (
                             <div className="text-end">
-                                <p className="text-micro font-normal text-dim uppercase">التالي</p>
+                                <p className="text-micro font-normal text-muted uppercase">التالي</p>
                                 <p className="text-xs font-normal text-info">{next.name}</p>
                             </div>
                         )}
@@ -107,7 +107,7 @@ export const StudentDetails = ({
                                     className="h-full bg-primary"
                                 />
                             </div>
-                            <div className="flex justify-between text-micro font-normal text-dim uppercase">
+                            <div className="flex justify-between text-micro font-normal text-muted uppercase">
                                 <span>متبقي {pointsNeeded} XP</span>
                                 <span className="font-mono">{points} / {next.minPoints}</span>
                             </div>
@@ -117,12 +117,12 @@ export const StudentDetails = ({
 
                 {/* Account Details */}
                 <div className="grid grid-cols-2 gap-3">
-<div className="p-3 bg-surface border border-transparent">
-                        <p className="text-micro font-normal text-dim uppercase mb-1">اسم المستخدم</p>
+<div className="p-3 bg-surface border border-border rounded-xl">
+                        <p className="text-micro font-normal text-muted uppercase mb-1">اسم المستخدم</p>
                         <p className="text-xs font-normal text-info font-mono">@{student.username || '—'}</p>
                     </div>
-                    <div className="p-3 bg-surface border border-transparent">
-                        <p className="text-micro font-normal text-dim uppercase mb-1">حالة المصادقة</p>
+                    <div className="p-3 bg-surface border border-border rounded-xl">
+                        <p className="text-micro font-normal text-muted uppercase mb-1">حالة المصادقة</p>
                         <div className="flex items-center gap-1.5">
                             <div className={cn("w-1.5 h-1.5", student.username ? "bg-success" : "bg-error")} />
                             <p className="text-micro font-normal text-muted">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
@@ -133,7 +133,7 @@ export const StudentDetails = ({
                 {/* Enrollments */}
                 <div className="space-y-6">
                     <div className="flex items-center justify-between border-b border-border pb-2">
-                        <h4 className="text-micro font-normal text-dim uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
+                        <h4 className="text-micro font-normal text-muted uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
                         <span className="text-micro font-normal bg-surface text-muted px-2 py-0.5">{student.enrollments.length} برامج</span>
                     </div>
 
@@ -146,7 +146,7 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={`detail-${i}`} className={cn(
-                                    "p-3 bg-card border border-border shadow-sm relative",
+                                    "p-3 bg-card border border-border shadow-elevation-1 relative",
                                     en.isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-error" : ""
                                 )}>
@@ -157,8 +157,8 @@ export const StudentDetails = ({
                                                 {isLow && <span className="text-micro font-normal text-error bg-error-soft px-1 animate-pulse">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="w-4 h-4 bg-hover flex items-center justify-center">
-                                                    <User size={8} className="text-dim" />
+                                                    <div className="w-4 h-4 bg-hover flex items-center justify-center rounded">
+                                                     <User size={8} className="text-muted" />
                                                 </div>
                                                 <span className="text-micro font-normal text-muted">{en.teacher}</span>
                                             </div>
@@ -181,12 +181,12 @@ export const StudentDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                    "w-4 h-4 border flex items-center justify-center text-micro font-normal font-mono transition-all",
-                                                    idx < actualUsed 
-                                                        ? "bg-success border-success text-inverse" 
-                                                        : idx === actualUsed 
-                                                            ? "bg-card border-info text-info shadow-sm" 
-                                                            : "bg-surface border-border text-dim"
+                                                    "w-4 h-4 border flex items-center justify-center text-micro font-normal font-mono transition-all rounded",
+                                                     idx < actualUsed 
+                                                         ? "bg-success border-success text-inverse" 
+                                                         : idx === actualUsed 
+                                                             ? "bg-card border-info text-info shadow-sm" 
+                                                             : "bg-surface border-border text-muted"
                                                     )}
                                                 >
                                                     {idx < actualUsed ? <CheckCircle2 size={10} /> : idx + 1}
@@ -196,7 +196,7 @@ export const StudentDetails = ({
 
                                         <div className="pt-3 border-t border-border flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-micro font-normal text-dim uppercase mb-1">
+                                                <div className="flex justify-between text-micro font-normal text-muted uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span>{progressPercent}%</span>
                                                 </div>
@@ -204,12 +204,12 @@ export const StudentDetails = ({
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="text-center px-2 border-s border-border">
-                                                    <p className="text-micro font-normal text-dim uppercase leading-none mb-0.5">الرصيد</p>
+                                                    <p className="text-micro font-normal text-muted uppercase leading-none mb-0.5">الرصيد</p>
                                                     <p className={cn("text-xs font-medium font-mono", isLow ? "text-error" : "text-success")}>{remaining}</p>
                                                 </div>
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                                    className="w-6 h-6 bg-primary text-on-primary text-micro font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm"
+                                                    className="w-6 h-6 bg-primary text-on-primary text-micro font-medium flex items-center justify-center hover:bg-primary-hover active:scale-90 transition-all shadow-sm rounded-xl"
                                                     aria-label="إضافة حصص"
                                                     aria-expanded={addingSessionsIndex === i}
                                                 >

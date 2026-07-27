@@ -20,13 +20,13 @@ export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, a
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             {statConfig.map((stat, i) => (
-                <div key={stat.label} className={cn("flex items-center gap-2.5 p-3 bg-card border border-border/50 rounded-xl")}>
-                    <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ring-1", stat.bg, stat.ring)}>
+                <div key={stat.label} className={cn("flex items-center gap-2.5 p-3 bg-card border border-border rounded-2xl")}>
+                    <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ring-1", stat.bg, stat.ring)}>
                         <stat.icon size={16} strokeWidth={1.5} className={stat.text} />
                     </div>
                     <div className="min-w-0">
-                        <p className="text-[10px] font-bold text-dim truncate">{stat.label}</p>
-                        <p className="text-sm font-bold text-main tabular-nums">{values[i]}</p>
+                        <p className="text-[10px] font-bold text-muted truncate">{stat.label}</p>
+                        <p className="text-sm font-bold text-main tabular-nums font-dash">{values[i]}</p>
                     </div>
                 </div>
             ))}

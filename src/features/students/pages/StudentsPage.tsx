@@ -7,7 +7,7 @@ import { api } from '../../../lib/api';
 import { AlertCircle, TrendingUp } from 'lucide-react';
 
 // Shared Components
-import { PageLoader } from '../../../components/ui/PageLoader';
+import { Skeleton } from '../../../shared/components/ui';
 import { SendNotificationModal } from '../../../shared/components/SendNotificationModal';
 import { ConfirmModal } from '../../../shared/components/ConfirmModal';
 // Feature Components
@@ -180,17 +180,28 @@ export const Students = () => {
     };
 
     if (loading) {
-        return <PageLoader />;
+        return (
+            <div className="min-h-full pb-24 overflow-x-hidden relative bg-background" dir="rtl">
+                <div className="relative z-10 max-w-page mx-auto px-2 space-y-4">
+                    <Skeleton className="h-28 w-full rounded-2xl" />
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-20 rounded-2xl" />)}
+                    </div>
+                    <Skeleton className="h-10 w-full rounded-2xl" />
+                    <Skeleton className="h-96 w-full rounded-2xl" />
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-surface dark:bg-background" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-background" dir="rtl">
             <div className="relative z-10 max-w-page mx-auto px-2 space-y-4">
 
                 <StudentsPageHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} totalStudents={allStudents.length} onAdd={() => { setEditId(null); setShowAddForm(true); }} />
 
                 {showAddForm && (
-                    <div className="bg-card border border-border shadow-sm p-4 md:p-6 rounded-2xl">
+                    <div className="bg-card border border-border shadow-elevation-1 p-4 md:p-6 rounded-2xl">
                         <StudentForm
                             initialData={editId ? allStudents.find(s => s.id === editId) : null}
                             teachers={teachers}
@@ -208,16 +219,16 @@ export const Students = () => {
                         </div>
                         <div className="flex gap-2">
                             <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-error text-on-error text-micro font-bold hover:bg-error-hover transition-all rounded-2xl">تأكيد الحذف</button>
-                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-card dark:bg-hover text-main text-micro font-bold border border-border transition-all rounded-2xl">إلغاء</button>
+                            <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-surface text-main text-micro font-bold border border-border transition-all rounded-2xl">إلغاء</button>
                         </div>
                     </div>
                 )}
 
                 <StudentsFilters filterGrade={filterGrade} uniqueGrades={uniqueGrades} onGradeChange={setFilterGrade} filterCurriculum={filterCurriculum} uniqueCurriculums={uniqueCurriculums} onCurriculumChange={setFilterCurriculum} />
 
-                <div className="p-5 md:p-6 bg-card border border-border shadow-sm rounded-2xl">
+                <div className="p-5 md:p-6 bg-card border border-border shadow-elevation-1 rounded-2xl">
                     <div className="flex items-center gap-3 mb-5">
-                        <div className="w-8 h-8 flex items-center justify-center shadow-sm bg-success-soft text-success">
+                        <div className="w-8 h-8 flex items-center justify-center ring-1 ring-success/20 bg-success-soft text-success rounded-xl">
                             <TrendingUp size={16} />
                         </div>
                         <h2 className="text-sm font-bold text-main">إحصائيات الطلاب</h2>

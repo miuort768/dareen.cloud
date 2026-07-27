@@ -28,7 +28,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
     return (
         <div className="space-y-3 md:space-y-4">
             {/* Total Points Card - Compact Style */}
-            <div className="bg-primary p-3 md:p-4 shadow-sm relative overflow-hidden group rounded-2xl">
+                <div className="bg-primary p-3 md:p-4 relative overflow-hidden group rounded-2xl">
                 <div className="absolute top-0 start-0 w-16 h-16 bg-white/10 blur-2xl -translate-y-8 translate-x-8 transition-transform group-hover:scale-110"></div>
                 <div className="flex items-center justify-between relative z-10">
                     <div>
@@ -48,8 +48,8 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {/* Badges Collection */}
-                <div className="bg-card border border-border p-3 md:p-4 shadow-sm rounded-2xl">
-                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-dim mb-3 flex items-center gap-1.5">
+                <div className="bg-card border border-border p-3 md:p-4 rounded-2xl">
+                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-muted mb-3 flex items-center gap-1.5">
                         <Award size={12} className="text-primary" /> الأوسمة المكتسبة
                     </h3>
                     <div className="grid grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
@@ -57,11 +57,11 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                             <div 
                                 key={idx} 
                                 className={cn(
-                                    "flex flex-col items-center gap-1 p-1.5 border transition-all hover:bg-surface dark:hover:bg-hover cursor-help",
+                                    "flex flex-col items-center gap-1 p-1.5 border transition-all hover:bg-surface cursor-help rounded-xl",
                                     badge.color === 'blue' ? "bg-primary-soft border-primary-soft text-primary" :
-                                    badge.color === 'amber' ? "bg-warning-soft border-warning-soft text-warning dark:bg-warning-soft" :
-                                    badge.color === 'emerald' ? "bg-success-soft border-success-soft text-success dark:bg-success-soft" :
-                                    "bg-error-soft border-error-soft text-error dark:bg-error-soft"
+                                    badge.color === 'amber' ? "bg-warning-soft border-warning-soft text-warning" :
+                                    badge.color === 'emerald' ? "bg-success-soft border-success-soft text-success" :
+                                    "bg-error-soft border-error-soft text-error"
                                 )}
                                 title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
                             >
@@ -69,7 +69,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                                 <span className="text-micro font-medium uppercase text-center leading-none">{badge.name}</span>
                             </div>
                         )) : (
-                            <div className="col-span-4 py-4 text-center bg-surface dark:bg-hover border border-dashed border-border opacity-40 rounded-lg">
+                            <div className="col-span-4 py-4 text-center bg-surface border border-dashed border-border opacity-40 rounded-xl">
                                 <p className="text-micro font-medium uppercase tracking-widest">لا توجد أوسمة</p>
                             </div>
                         )}
@@ -77,16 +77,16 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                 </div>
 
                 {/* Recent Points History */}
-                <div className="bg-card border border-border p-3 md:p-4 shadow-sm flex flex-col">
-                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-dim mb-3 flex items-center gap-1.5">
+                <div className="bg-card border border-border p-3 md:p-4 flex flex-col rounded-2xl">
+                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-muted mb-3 flex items-center gap-1.5">
                         <History size={12} className="text-primary" /> سجل النشاط الأخير
                     </h3>
                     <div className="flex-1 space-y-1.5 overflow-y-auto max-h-[150px] md:max-h-[200px] custom-scrollbar ps-1">
                         {pointLogs.length > 0 ? pointLogs.map((log) => (
-                            <div key={log.id} className="flex items-center justify-between p-2 bg-surface dark:bg-hover border border-border transition-colors hover:border-primary dark:hover:border-primary rounded-xl">
+                            <div key={log.id} className="flex items-center justify-between p-2 bg-surface border border-border transition-colors hover:border-primary rounded-xl">
                                 <div className="min-w-0">
                                     <p className="text-micro md:text-micro font-medium text-main truncate">{log.action}</p>
-                                    <p className="text-micro text-dim font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
+                                    <p className="text-micro text-muted font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
                                 </div>
                                 <span className={cn(
                                     "font-medium text-micro md:text-micro shrink-0 me-1.5",
@@ -96,7 +96,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                                 </span>
                             </div>
                         )) : (
-                            <p className="text-center py-6 text-micro font-normal text-dim uppercase tracking-widest">لا توجد سجلات</p>
+                            <p className="text-center py-6 text-micro font-normal text-muted uppercase tracking-widest">لا توجد سجلات</p>
                         )}
                     </div>
                 </div>

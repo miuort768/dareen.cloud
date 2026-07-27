@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, Calendar, Clock } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
@@ -58,8 +58,8 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
     }, [onClose]);
 
     return (
-        <div ref={containerRef} className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60" role="dialog" aria-modal="true" aria-label="سجل الجلسات">
-            <div className="bg-card w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm animate-in fade-in zoom-in duration-300">
+        <div ref={containerRef} className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="سجل الجلسات">
+            <div className="bg-card w-full max-w-4xl max-h-[90vh] flex flex-col shadow-elevation-2 animate-in fade-in zoom-in duration-300 rounded-2xl overflow-hidden">
                 {/* Header */}
                 <div className="p-4 border-b border-border flex items-center justify-between" dir="rtl">
                     <div className="flex items-center gap-3">
@@ -67,8 +67,8 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                             <Clock size={18} />
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-surface dark:hover:bg-hover transition-colors" aria-label="إغلاق">
-                        <X size={24} className="text-dim" />
+                    <button onClick={onClose} className="p-2 hover:bg-surface transition-colors rounded-xl" aria-label="إغلاق">
+                        <X size={24} className="text-muted" />
                     </button>
                 </div>
 
@@ -78,26 +78,26 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                             {[1, 2, 3, 4, 5].map(i => <Skeleton key={`skel-${i}`} className="h-16 w-full" />)}
                         </div>
                     ) : sessions.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center h-64 text-dim">
+                        <div className="flex flex-col items-center justify-center h-64 text-muted">
                             <Calendar size={48} className="mb-4 opacity-50" />
                             <p className="font-normal">لا يوجد سجل حصص لهذا الطالب</p>
                         </div>
                     ) : (
                         <div className="bg-card border border-border overflow-hidden">
                             <table className="w-full text-sm text-start">
-                                <thead className="bg-surface dark:bg-hover text-dim font-normal">
+                                <thead className="bg-surface text-muted font-normal">
                                     <tr>
-                                        <th className="p-4 dark:text-muted">التاريخ</th>
-                                        <th className="p-4 dark:text-muted">اليوم</th>
-                                        <th className="p-4 dark:text-muted">المادة</th>
-                                        <th className="p-4 dark:text-muted">المعلم</th>
-                                        <th className="p-4 dark:text-muted">الوقت</th>
-                                        <th className="p-4 dark:text-muted">الحالة</th>
+                                        <th className="p-4 text-muted">التاريخ</th>
+                                        <th className="p-4 text-muted">اليوم</th>
+                                        <th className="p-4 text-muted">المادة</th>
+                                        <th className="p-4 text-muted">المعلم</th>
+                                        <th className="p-4 text-muted">الوقت</th>
+                                        <th className="p-4 text-muted">الحالة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                     {sessions.map(session => (
-                                        <tr key={session.id} className="hover:bg-surface dark:hover:bg-hover transition-colors">
+                                        <tr key={session.id} className="hover:bg-surface transition-colors">
                                             <td className="p-4 font-mono font-normal">{new Date(session.date).toLocaleDateString('ar-EG')}</td>
                                             <td className="p-4 font-normal">{session.day}</td>
                                             <td className="p-4 font-normal text-main">{session.subject}</td>

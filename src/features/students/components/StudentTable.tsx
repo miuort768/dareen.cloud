@@ -72,7 +72,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                 const totalUsed = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsUsed || 0), 0);
                 return (
                     <span className="text-xs font-normal text-muted font-mono">
-                        {totalUsed} <span className="text-dim">/</span> {totalExpected}
+                        {totalUsed} <span className="text-muted">/</span> {totalExpected}
                     </span>
                 );
             },
@@ -99,9 +99,9 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
             className: 'text-center',
             render: (student) => (
                 <div className="flex items-center justify-center gap-2">
-                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-hover hover:text-success transition-all" title="تعديل" aria-label="تعديل"><Edit size={14} /></button>
-                    <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-warning-soft hover:text-warning transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={14} /></button>
-                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-dim hover:bg-error-soft hover:text-error transition-all" title="حذف" aria-label="حذف"><Trash size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-success-soft hover:text-success transition-all rounded-xl" title="تعديل" aria-label="تعديل"><Edit size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-warning-soft hover:text-warning transition-all rounded-xl" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:bg-error-soft hover:text-error transition-all rounded-xl" title="حذف" aria-label="حذف"><Trash size={14} /></button>
                 </div>
             ),
         },
@@ -131,27 +131,27 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                         </div>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
-                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-success rounded-lg active:bg-hover transition-colors" aria-label="تعديل"><Edit size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-warning rounded-lg active:bg-hover transition-colors" aria-label="إرسال إشعار"><Bell size={14} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-dim hover:text-error rounded-lg active:bg-hover transition-colors" aria-label="حذف"><Trash size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 flex items-center justify-center text-muted hover:text-success rounded-xl active:bg-hover transition-colors" aria-label="تعديل"><Edit size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onNotify(student); }} className="w-8 h-8 flex items-center justify-center text-muted hover:text-warning rounded-xl active:bg-hover transition-colors" aria-label="إرسال إشعار"><Bell size={14} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 flex items-center justify-center text-muted hover:text-error rounded-xl active:bg-hover transition-colors" aria-label="حذف"><Trash size={14} /></button>
                     </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                    <div className="text-center p-2 bg-primary-soft/50 rounded-lg">
-                        <span className="text-[9px] font-bold text-dim block">العقود</span>
+                    <div className="text-center p-2 bg-primary-soft/50 rounded-xl">
+                        <span className="text-[9px] font-bold text-muted block">العقود</span>
                         <span className="text-xs font-bold text-primary">{student.enrollments?.length || 0}</span>
                     </div>
-                    <div className="text-center p-2 bg-success-soft/50 rounded-lg">
-                        <span className="text-[9px] font-bold text-dim block">المستخدم</span>
+                    <div className="text-center p-2 bg-success-soft/50 rounded-xl">
+                        <span className="text-[9px] font-bold text-muted block">المستخدم</span>
                         <span className="text-xs font-bold text-success">{totalUsed}</span>
                     </div>
-                    <div className="text-center p-2 bg-warning-soft/50 rounded-lg">
-                        <span className="text-[9px] font-bold text-dim block">الرصيد</span>
+                    <div className="text-center p-2 bg-warning-soft/50 rounded-xl">
+                        <span className="text-[9px] font-bold text-muted block">الرصيد</span>
                         <span className={cn('text-xs font-bold', hasLowBalance ? 'text-error' : 'text-warning')}>{totalExpected - totalUsed}</span>
                     </div>
                 </div>
                 <div>
-                    <div className="flex justify-between text-[10px] text-dim mb-1">
+                    <div className="flex justify-between text-[10px] text-muted mb-1">
                         <span>معدل الاستهلاك</span>
                         <span className="font-bold tabular-nums">{progress}%</span>
                     </div>
@@ -164,8 +164,8 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
     if (students.length === 0) {
         return (
             <div className="py-16 text-center">
-                <GraduationCap size={40} className="mx-auto mb-3 text-dim/30" />
-                <p className="text-xs font-bold text-dim">لا توجد بيانات طلاب حالياً</p>
+                <GraduationCap size={40} className="mx-auto mb-3 text-muted/30" />
+                <p className="text-xs font-bold text-muted">لا توجد بيانات طلاب حالياً</p>
             </div>
         );
     }

@@ -53,16 +53,16 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     };
 
     return (
-        <div className="bg-card border border-border shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-card border border-border shadow-elevation-2 overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
             <div className="bg-primary px-4 md:px-6 py-6 md:py-8 flex items-center justify-between gap-4 md:gap-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-primary text-on-primary flex items-center justify-center shadow-sm">
+                    <div className="w-12 h-12 bg-white/15 text-on-primary flex items-center justify-center shadow-sm">
                         {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
                     </div>
                     <div>
                         <h3 className="text-xl font-bold text-on-primary tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
-                        <p className="text-micro text-dim font-normal uppercase tracking-widest mt-1">
+                        <p className="text-micro text-on-primary/80 font-normal mt-1">
                             {initialData ? 'أرشفة وتحديث السجل' : 'فتح سجل أكاديمي جديد'}
                         </p>
                     </div>
@@ -71,7 +71,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <button 
                         type="button" 
                         onClick={onCancel}
-                        className="w-10 h-10 flex items-center justify-center text-dim hover:bg-white/10 transition-all"
+                        className="w-10 h-10 flex items-center justify-center text-on-primary/70 hover:bg-white/15 transition-all"
                     >
                         <X size={20} />
                     </button>
@@ -82,7 +82,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3 pb-3 border-b border-border">
-                        <div className="w-8 h-8 flex items-center justify-center bg-info-soft dark:bg-info-soft">
+                        <div className="w-8 h-8 flex items-center justify-center bg-info-soft ring-1 ring-info/20 rounded-xl">
                             <Info size={16} className="text-primary" />
                         </div>
                         <h4 className="text-xs font-bold text-main uppercase tracking-tight">بيانات التعريف الأساسية</h4>
@@ -100,9 +100,9 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-6 bg-surface dark:bg-hover border border-transparent">
+                <div className="p-6 bg-surface border border-border rounded-2xl">
                     <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 flex items-center justify-center bg-success-soft dark:bg-success-soft">
+                        <div className="w-8 h-8 flex items-center justify-center bg-success-soft">
                             <Shield size={16} className="text-success" />
                         </div>
                         <h4 className="text-xs font-bold text-main uppercase tracking-tight">إدارة الوصول للمنصة</h4>
@@ -110,28 +110,28 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label htmlFor="student-username" className="text-micro font-normal text-dim uppercase ms-1">اسم المستخدم</label>
+                            <label htmlFor="student-username" className="text-micro font-normal text-muted uppercase ms-1">اسم المستخدم</label>
                             <div className="relative">
-                                <UserIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
+                                <UserIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                                 <input
                                     id="student-username"
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono text-main dark:text-main"
+                                    className="w-full pe-4 ps-10 py-2 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-normal font-mono text-main rounded-xl transition-colors"
                                     placeholder="اسم مستخدم فريد"
                                 />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="student-password" className="text-micro font-normal text-dim uppercase ms-1">كلمة المرور</label>
+                            <label htmlFor="student-password" className="text-micro font-normal text-muted uppercase ms-1">كلمة المرور</label>
                             <div className="relative">
-                                <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={14} />
+                                <Key className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
                                 <input
                                     id="student-password"
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full pe-4 ps-10 py-2 bg-card border border-border focus:outline-none focus:border-primary text-xs font-normal font-mono tracking-widest text-main dark:text-main"
+                                    className="w-full pe-4 ps-10 py-2 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-xs font-normal font-mono tracking-widest text-main rounded-xl transition-colors"
                                     placeholder={initialData ? "••••••••" : "كلمة مرور قوية"}
                                 />
                             </div>
@@ -142,14 +142,14 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 {/* Notes Section */}
                 <div className="space-y-2">
                     <div className="flex items-center gap-3 mb-2">
-                        <FileText size={14} className="text-dim" />
-                        <label htmlFor="student-notes" className="text-micro font-normal text-dim uppercase">ملاحظات أكاديمية</label>
+                        <FileText size={14} className="text-muted" />
+                        <label htmlFor="student-notes" className="text-micro font-normal text-muted uppercase">ملاحظات أكاديمية</label>
                     </div>
                             <textarea
                                 id="student-notes"
                                 value={formData.notes}
                                 onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                                className="w-full px-6 py-4 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary text-main dark:text-main text-xs font-normal min-h-[120px] transition-all"
+                                className="w-full px-6 py-4 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs font-normal min-h-[120px] transition-all rounded-xl"
                                 placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
                             />
                 </div>
@@ -157,7 +157,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="flex items-center justify-end pt-6 border-t border-border">
                     <button
                         type="submit"
-                        className="px-10 py-3 bg-primary text-on-primary text-xs font-bold uppercase tracking-widest hover:bg-primary-hover flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-10 py-3 bg-primary text-on-primary text-xs font-bold hover:bg-primary-hover flex items-center gap-2 shadow-sm active:scale-95 transition-all rounded-xl"
                     >
                         <Save size={16} />
                         {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}
@@ -172,18 +172,18 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
     const selectId = `student-select-${label.replace(/\s+/g, '-')}`;
     return (
         <div className="space-y-2">
-            <label htmlFor={selectId} className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
+            <label htmlFor={selectId} className="text-micro font-normal text-muted uppercase ms-1">{label}</label>
             <div className="relative group">
-                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors z-10" size={14} />}
+                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors z-10" size={14} />}
                 <select
                     id={selectId}
                     required={required}
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     className={cn(
-                        "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal appearance-none",
+                        "w-full px-4 py-2 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs font-normal appearance-none rounded-xl transition-colors",
                         Icon && "ps-10",
-                        !value && "text-dim"
+                        !value && "text-muted"
                     )}
                 >
                     <option value="" disabled>{placeholder || 'اختر...'}</option>
@@ -200,9 +200,9 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
     const inputId = `student-form-${label.replace(/\s+/g, '-')}`;
     return (
         <div className="space-y-2">
-            <label htmlFor={inputId} className="text-micro font-normal text-dim uppercase ms-1">{label}</label>
+            <label htmlFor={inputId} className="text-micro font-normal text-muted uppercase ms-1">{label}</label>
             <div className="relative group">
-                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-primary transition-colors" size={14} />}
+                {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" size={14} />}
                 <input
                     id={inputId}
                     required={required}
@@ -211,7 +211,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     className={cn(
-                        "w-full px-4 py-2 bg-surface dark:bg-hover border border-border focus:outline-none focus:border-primary dark:text-main text-xs font-normal transition-all",
+                        "w-full px-4 py-2 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs font-normal transition-all rounded-xl",
                         Icon && "ps-10",
                         dir === 'ltr' && "font-mono"
                     )}
