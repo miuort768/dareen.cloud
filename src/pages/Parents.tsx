@@ -37,7 +37,7 @@ export const Parents = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-white dark:bg-background"
+            className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-background"
             dir="rtl"
         >
             <div className="relative z-10 max-w-page mx-auto px-2">

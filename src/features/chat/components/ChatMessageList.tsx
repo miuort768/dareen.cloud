@@ -80,7 +80,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                     const isMe = String(msg.senderId) === String(currentUserId);
                     return (
                         <div className={cn("flex w-full mb-1 px-3 md:px-10 lg:px-20", index === 0 && "pt-4", isMe ? "justify-start" : "justify-end")}>
-                            <div className={cn("max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-sm relative", isMe ? "bg-success-light dark:bg-success rounded-[7.5px] rounded-tr-none ms-2" : "bg-white dark:bg-card rounded-[7.5px] rounded-tl-none me-2")}>
+                            <div className={cn("max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-sm relative", isMe ? "bg-success-light dark:bg-success rounded-[7.5px] rounded-tr-none ms-2" : "bg-card rounded-[7.5px] rounded-tl-none me-2")}>
                                 {isGroup && !isMe && (
                                     <span className="block text-xs font-normal text-primary mb-0.5 text-start">{msg.senderName}</span>
                                 )}
@@ -102,7 +102,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                 {showScrollBottom && (
                     <motion.button key="scroll-bottom-btn" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-20 end-6 w-10 h-10 bg-white dark:bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover">
+                        className="absolute bottom-20 end-6 w-10 h-10 bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover">
                         <ArrowDown size={20} />
                     </motion.button>
                 )}

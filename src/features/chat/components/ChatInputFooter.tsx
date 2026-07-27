@@ -41,7 +41,7 @@ export const ChatInputFooter = ({ newMessage, onMessageChange, onSend, isSending
                     onChange={(e) => handleChange(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onSend(e as unknown as React.FormEvent); const target = e.target as HTMLTextAreaElement; target.style.height = 'auto'; } }}
                     placeholder="اكتب رسالة"
-                    className="w-full bg-white dark:bg-card text-main text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-success shadow-sm max-h-32 resize-none text-start scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
+                    className="w-full bg-card text-main text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-success shadow-sm max-h-32 resize-none text-start scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
                 />
             </div>
             <div className="flex items-center justify-center shrink-0">

@@ -75,7 +75,7 @@ export const ChatWindowHeader = ({
                         <AnimatePresence>
                             {showMoreMenu && (
                                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                                    className="absolute top-full end-0 mt-2 w-48 bg-white dark:bg-card shadow-sm z-[100] py-2 rounded-md">
+                                    className="absolute top-full end-0 mt-2 w-48 bg-card shadow-sm z-[100] py-2 rounded-md">
                                     <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
                                         className="w-full text-start px-4 py-3 text-sm text-muted hover:bg-hover dark:hover:bg-hover transition-colors">
                                         معلومات المحادثة

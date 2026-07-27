@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Shield, Plus, X, Save, Trash2, Settings, Users } from 'lucide-react';
 import { rolesService } from '../services/rolesService';
 import type { Role, Permission } from '../services/rolesService';
+import { Checkbox } from '../../../components/ui/checkbox';
 
 const loadData = async () => {
     const [roles, permissions] = await Promise.all([
@@ -208,11 +209,10 @@ export const RolesPage = () => {
                                             key={p.id}
                                             className="flex items-center gap-2 p-2 rounded-card cursor-pointer hover:bg-surface transition-colors"
                                         >
-                                            <input
-                                                type="checkbox"
+                                            <Checkbox
                                                 checked={selectedPerms.includes(p.id)}
-                                                onChange={() => togglePerm(p.id)}
-                                                className="w-4 h-4 accent-primary"
+                                                onCheckedChange={() => togglePerm(p.id)}
+                                                aria-label={p.label}
                                             />
                                             <span className="text-sm text-main">{p.label}</span>
                                         </label>

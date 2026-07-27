@@ -69,7 +69,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {/* New Chat / Group Flow Modal */}
             {showNewChatModal && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') handleClose(); }}>
-                    <div className="bg-white dark:bg-card w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-sm overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
+                    <div className="bg-card w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-sm overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
                     
                     {/* Header - WhatsApp Style */}
                     <div className="bg-success text-on-success p-4 flex items-center gap-4 shrink-0 transition-all">
@@ -262,7 +262,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {/* Delete Confirmation UI */}
             {showDeleteConfirm && (
                 <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') { setShowDeleteConfirm(false); setItemToDelete(null); } }}>
-                    <div className="bg-white dark:bg-card w-full max-w-sm shadow-sm rounded-lg p-6">
+                    <div className="bg-card w-full max-w-sm shadow-sm rounded-lg p-6">
                         <h3 className="text-xl font-normal text-error mb-4 text-start">
                             {deleteType === 'all_conversations' ? 'حذف كافة المحادثات؟' : 'هل تريد الحذف؟'}
                         </h3>

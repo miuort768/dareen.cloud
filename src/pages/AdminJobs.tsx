@@ -73,7 +73,7 @@ export const AdminJobs = () => {
     });
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl" style={{ '--color-primary': '51 27 136' } as React.CSSProperties}>
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="mx-4 md:mx-6 mb-6 bg-card border border-border shadow-soft rounded-card p-6 md:p-8">
                 <div className="flex flex-col items-center gap-5">
                     <div className="w-14 h-14 rounded-card bg-primary-soft flex items-center justify-center">

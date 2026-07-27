@@ -122,7 +122,7 @@ export const ParentStudents = () => {
                         />
                     ))}
                     {filteredStudents.length === 0 && (
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-white dark:bg-card text-center border border-dashed border-border dark:border-border rounded-2xl">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="col-span-full py-20 bg-card text-center border border-dashed border-border dark:border-border rounded-2xl">
                             <Users size={48} className="mx-auto text-dim dark:text-main mb-4" />
                             <h3 className="text-lg font-medium text-muted dark:text-muted uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
                             <p className="text-xs text-muted dark:text-muted font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>

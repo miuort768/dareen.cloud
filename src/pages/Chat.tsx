@@ -157,9 +157,9 @@ export const Chat = () => {
                 selectedConv ? "bottom-0" : "bottom-[70px]"
             )}
         >
-            <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
+            <div className="relative overflow-hidden bg-background px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-border shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shrink-0 bg-white/5 ">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-success/30 shrink-0 bg-surface">
                         <Image src="/chat-avatar.webp" alt="الشعار" className="w-full h-full" onError={(e) => { (e.target as HTMLImageElement).src = '/chat-avatar.jpg'; }} />
                     </div>
                     <div>
@@ -195,11 +195,11 @@ export const Chat = () => {
                         markAsRead={markAsRead}
                     />
                 ) : (
-                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-background dark:bg-background relative border-e border-border dark:border-white/5">
+                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-background relative border-e border-border">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
                         
                         <div className="z-10 text-center">
-                            <div className="w-20 h-20 bg-white/5 dark:bg-white/5  border border-border dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
+                            <div className="w-20 h-20 bg-surface border border-border flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
                                 <Image src="/logo.png" alt="دارين" className="w-12 h-12" imgClassName="object-contain" />
                             </div>
                             <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
