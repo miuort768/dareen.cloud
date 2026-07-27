@@ -7,7 +7,6 @@ import { crmService } from '../features/crm/services/crmService';
 import { socketService } from '../lib/socket';
 import { SOCKET_EVENTS } from '../lib/socket-events';
 import type { Lead, LeadStatus } from '../features/crm/types';
-import { PageLoader } from '../components/ui/PageLoader';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { PrimaryBtn, StatItem } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
@@ -37,11 +36,11 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
             className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
             dir="rtl"
         >
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-card w-full max-w-sm shadow-elevation-2 rounded-xl overflow-hidden border border-border/50">
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-card w-full max-w-sm shadow-elevation-2 rounded-2xl overflow-hidden border border-border">
                 <div className="bg-error px-5 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-error-soft">
-                            <AlertTriangle size={18} className="text-error" />
+                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/15">
+                            <AlertTriangle size={18} className="text-on-error" />
                         </div>
                         <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                     </div>
@@ -55,7 +54,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                 </div>
                 <div className="flex gap-2 p-5 pt-0">
                     <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                    <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] shadow-soft">تأكيد الحذف</button>
+                    <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98]">تأكيد الحذف</button>
                 </div>
             </motion.div>
         </motion.div>
@@ -71,7 +70,6 @@ export const Leads = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [showLost, setShowLost] = useState(false);
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
-    const [selectedLeads, setSelectedLeads] = useState<Set<string>>(new Set());
     const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
@@ -142,20 +140,20 @@ export const Leads = () => {
     };
 
     const statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }> = {
-        new: { label: 'جديد', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
-        contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
-        interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success-light dark:bg-success/20' },
-        trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary-soft dark:bg-card' },
-        converted: { label: 'محول', color: 'text-info', bg: 'bg-info-light dark:bg-info/20' },
-        lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' }
+        new: { label: 'جديد', color: 'text-info', bg: 'bg-info-soft' },
+        contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning-soft' },
+        interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success-soft' },
+        trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary-soft' },
+        converted: { label: 'محول', color: 'text-info', bg: 'bg-info-soft' },
+        lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error-soft' }
     };
 
     if (isLoading) return <LeadsSkeleton />;
 
     if (isLeadsError) {
         return (
-            <div className="bg-surface dark:bg-background min-h-screen pb-24" dir="rtl">
-            <div className="relative z-10 mx-auto px-2 md:px-4 max-w-page">
+            <div className="bg-background min-h-screen pb-24" dir="rtl">
+                <div className="relative z-10 mx-auto px-2 md:px-4 max-w-page">
                     <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>
@@ -172,15 +170,15 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-2 max-w-page">
                 {/* Header */}
-                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4 mt-4">
+                <div className="bg-card border border-border rounded-2xl p-3 md:p-4 mb-4 mt-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center">
+                            <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center ring-1 ring-success/20">
                                 <Users size={17} className="text-success" />
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">العملاء المتوقعون</h1>
-                                <p className="text-[10px] text-dim">{filteredLeads.length} عميل نشط</p>
+                                <p className="text-[10px] text-muted">{filteredLeads.length} عميل نشط</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-1.5">
@@ -188,7 +186,7 @@ export const Leads = () => {
                                 "h-8 px-2.5 flex items-center justify-center gap-1 text-[10px] font-bold transition-all rounded-lg border",
                                 showLost
                                     ? "bg-error-soft text-error border-error/20"
-                                    : "bg-background border-border text-dim"
+                                    : "bg-surface border-border text-muted"
                             )}>
                                 {showLost ? <Eye size={11} /> : <EyeOff size={11} />}
                                 <span>{showLost ? 'عرض' : 'المفقودين'}</span>
@@ -210,10 +208,10 @@ export const Leads = () => {
 
                 {/* Search & Filter */}
                 <div className="mb-6 space-y-3">
-                    <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
+                    <div className="bg-card border border-border rounded-2xl p-4">
                         <div className="relative">
                             <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." aria-label="بحث عن عميل" className="w-full bg-surface border border-border/60 rounded-xl px-9 py-2.5 outline-none text-sm text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                            <input type="text" placeholder="بحث عن عميل أو رقم هاتف..." aria-label="بحث عن عميل" className="w-full bg-surface border border-border rounded-xl px-9 py-2.5 outline-none text-sm text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                     </div>
                     {/* Status Chips */}
@@ -223,8 +221,8 @@ export const Leads = () => {
                             className={cn(
                                 "shrink-0 px-3 py-1.5 text-xs font-bold rounded-full border transition-all",
                                 filterStatus === 'all'
-                                    ? "bg-main text-on-primary border-main"
-                                    : "bg-card text-muted border-border/60 hover:border-border hover:text-main"
+                                    ? "bg-primary text-on-primary border-primary"
+                                    : "bg-card text-muted border-border hover:border-border hover:text-main"
                             )}
                         >
                             الكل
@@ -237,7 +235,7 @@ export const Leads = () => {
                                     "shrink-0 px-3 py-1.5 text-xs font-bold rounded-full border transition-all",
                                     filterStatus === key
                                         ? `${value.bg} ${value.color} border-current`
-                                        : "bg-card text-muted border-border/60 hover:border-border hover:text-main"
+                                        : "bg-card text-muted border-border hover:border-border hover:text-main"
                                 )}
                             >
                                 {value.label}

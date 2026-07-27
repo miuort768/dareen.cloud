@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Phone, MessageSquare, CheckCircle2, Edit3, Clock, UserPlus, Tag, Calendar, AlertTriangle, ChevronDown } from 'lucide-react';
+import { X, Phone, MessageSquare, CheckCircle2, Edit3, Clock, UserPlus, Tag, Calendar, AlertTriangle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
@@ -13,9 +13,9 @@ interface LeadDrawerProps {
 }
 
 const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
-    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' },
-    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
-    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface dark:bg-card' },
+    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
+    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
+    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
 
 const getLeadAge = (createdAt: string) => {
@@ -64,7 +64,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
         label: 'تم إنشاء العميل',
         date: lead.createdAt,
         icon: UserPlus,
-        color: 'text-info bg-info-light dark:bg-info/20',
+        color: 'text-info bg-info-soft',
     });
 
     if (lead.lastContact) {
@@ -74,7 +74,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
             label: 'آخر اتصال',
             date: lead.lastContact,
             icon: Phone,
-            color: 'text-success bg-success-light dark:bg-success/20',
+            color: 'text-success bg-success-soft',
         });
     }
 
@@ -85,7 +85,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
             label: 'تم الاتصال بالعميل',
             date: lead.createdAt,
             icon: Phone,
-            color: 'text-warning bg-warning-light dark:bg-warning/20',
+            color: 'text-warning bg-warning-soft',
         });
     }
 
@@ -96,7 +96,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
             label: 'أبدى اهتمامًا',
             date: lead.createdAt,
             icon: Tag,
-            color: 'text-success bg-success-light dark:bg-success/20',
+            color: 'text-success bg-success-soft',
         });
     }
 
@@ -118,7 +118,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
             label: 'تم التحويل إلى مشترك',
             date: lead.createdAt,
             icon: CheckCircle2,
-            color: 'text-success bg-success-light dark:bg-success/20',
+            color: 'text-success bg-success-soft',
         });
     }
 
@@ -129,7 +129,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
             label: 'تم رفض العميل',
             date: lead.createdAt,
             icon: AlertTriangle,
-            color: 'text-error bg-error-light dark:bg-error/20',
+            color: 'text-error bg-error-soft',
         });
     }
 
@@ -137,8 +137,7 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
 };
 
 export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation }: LeadDrawerProps) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const drawerRef = useRef<HTMLDivElement>(null);
+    const [isEditing] = useState(false);
     const closeRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
@@ -176,19 +175,18 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
 
                     {/* Drawer */}
                     <motion.div
-                        ref={drawerRef}
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed inset-y-0 start-0 z-[200] w-full max-w-md bg-card border-e border-border/50 shadow-elevation-3 flex flex-col"
+                        className="fixed inset-y-0 start-0 z-[200] w-full max-w-md bg-card border-e border-border shadow-elevation-3 flex flex-col"
                         dir="rtl"
                     >
                         {/* Header */}
-                        <div className="shrink-0 px-5 py-4 border-b border-border/50">
+                        <div className="shrink-0 px-5 py-4 border-b border-border">
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm bg-primary-soft text-primary ring-1 ring-primary/20">
                                         {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
                                     <div>
@@ -196,7 +194,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                         <div className="flex items-center gap-2 mt-0.5">
                                             <span className={cn("text-[10px] font-medium", age.color)}>{age.text}</span>
                                             {lead.source && (
-                                                <span className="text-[10px] font-medium text-info bg-info-light dark:bg-info/20 px-1.5 py-0.5 rounded">
+                                                <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">
                                                     {lead.source}
                                                 </span>
                                             )}
@@ -237,11 +235,11 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                         {/* Content */}
                         <div className="flex-1 overflow-y-auto custom-scrollbar">
                             {/* Info Section */}
-                            <div className="px-5 py-4 border-b border-border/50">
+                            <div className="px-5 py-4 border-b border-border">
                                 <h3 className="text-xs font-bold text-muted mb-3">البيانات</h3>
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-success-soft flex items-center justify-center shrink-0">
+                                        <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20">
                                             <Phone size={14} className="text-success" />
                                         </div>
                                         <div className="min-w-0">
@@ -250,7 +248,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-info-soft flex items-center justify-center shrink-0">
+                                        <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20">
                                             <Tag size={14} className="text-info" />
                                         </div>
                                         <div className="min-w-0">
@@ -260,7 +258,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                     </div>
                                     {lead.curriculum && (
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-lg bg-warning-soft flex items-center justify-center shrink-0">
+                                            <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20">
                                                 <Tag size={14} className="text-warning" />
                                             </div>
                                             <div className="min-w-0">
@@ -271,7 +269,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                     )}
                                     {lead.parentName && (
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                            <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20">
                                                 <UserPlus size={14} className="text-primary" />
                                             </div>
                                             <div className="min-w-0">
@@ -285,9 +283,9 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
 
                             {/* Notes */}
                             {lead.notes && (
-                                <div className="px-5 py-4 border-b border-border/50">
+                                <div className="px-5 py-4 border-b border-border">
                                     <h3 className="text-xs font-bold text-muted mb-2">ملاحظات</h3>
-                                    <p className="text-sm text-main leading-relaxed bg-warning-light dark:bg-warning/10 p-3 rounded-xl">
+                                    <p className="text-sm text-main leading-relaxed bg-warning-soft border border-warning/20 p-3 rounded-xl">
                                         {lead.notes}
                                     </p>
                                 </div>
@@ -303,10 +301,10 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                             <div key={event.id} className="flex gap-3 relative">
                                                 {/* Line */}
                                                 {idx < timeline.length - 1 && (
-                                                    <div className="absolute top-8 start-[15px] w-px h-full bg-border/50" />
+                                                    <div className="absolute top-8 start-[15px] w-px h-full bg-border" />
                                                 )}
                                                 {/* Icon */}
-                                                <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center shrink-0 relative z-10", event.color)}>
+                                                <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center shrink-0 relative z-10 ring-1 ring-black/5", event.color)}>
                                                     <Icon size={14} />
                                                 </div>
                                                 {/* Content */}
@@ -322,25 +320,25 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                         </div>
 
                         {/* Footer Actions */}
-                        <div className="shrink-0 border-t border-border/50 px-5 py-3">
+                        <div className="shrink-0 border-t border-border px-5 py-3">
                             <div className="grid grid-cols-4 gap-2">
                                 <button
                                     onClick={() => window.open(`tel:${lead.phone}`)}
-                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all"
+                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success-soft text-success hover:bg-success/10 transition-all"
                                 >
                                     <Phone size={16} />
                                     <span className="text-[10px] font-bold">اتصال</span>
                                 </button>
                                 <button
                                     onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')}
-                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all"
+                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success-soft text-success hover:bg-success/10 transition-all"
                                 >
                                     <MessageSquare size={16} />
                                     <span className="text-[10px] font-bold">واتساب</span>
                                 </button>
                                 <button
                                     onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }}
-                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all"
+                                    className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info-soft text-info hover:bg-info/10 transition-all"
                                 >
                                     <CheckCircle2 size={16} />
                                     <span className="text-[10px] font-bold">تحويل</span>

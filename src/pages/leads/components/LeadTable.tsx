@@ -13,9 +13,9 @@ interface LeadTableProps {
 }
 
 const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
-    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' },
-    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
-    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface dark:bg-card' },
+    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
+    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
+    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
 
 const getLeadAge = (createdAt: string) => {
@@ -35,40 +35,40 @@ const getLeadAge = (createdAt: string) => {
 export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, handleMarkLost, onLeadClick }: LeadTableProps) => {
     if (filteredLeads.length === 0) {
         return (
-            <div className="hidden lg:block bg-card border border-border/50 shadow-soft rounded-card">
+            <div className="hidden lg:block bg-card border border-border rounded-2xl">
                 <div className="py-16 text-center">
-                    <div className="w-16 h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4">
                         <Users size={28} className="text-primary" />
                     </div>
                     <p className="text-sm font-bold text-muted">لا توجد نتائج بحث</p>
-                    <p className="text-xs text-dim mt-1.5">لا يوجد عملاء متطابقون مع معايير البحث</p>
+                    <p className="text-xs text-muted mt-1.5">لا يوجد عملاء متطابقون مع معايير البحث</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="hidden lg:block overflow-x-auto bg-card border border-border/50 shadow-soft rounded-card">
+        <div className="hidden lg:block overflow-x-auto bg-card border border-border rounded-2xl">
             <table className="w-full text-start border-collapse">
                 <thead>
-                    <tr className="bg-surface border-b-2 border-primary">
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main">العميل</th>
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main">التواصل</th>
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main">المادة</th>
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main">الحالة</th>
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main text-center">الأولوية</th>
-                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-main text-center">إجراءات</th>
+                    <tr className="bg-surface border-b border-border">
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted">العميل</th>
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted">التواصل</th>
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted">المادة</th>
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted">الحالة</th>
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted text-center">الأولوية</th>
+                        <th className="px-5 py-3 font-bold text-xs tracking-wider text-muted text-center">إجراءات</th>
                     </tr>
                 </thead>
             </table>
             <Virtuoso
-                style={{ height: Math.min(filteredLeads.length * 60 + 100, 600) }}
+                style={{ height: Math.min(filteredLeads.length * 56 + 100, 600) }}
                 data={filteredLeads}
                 itemContent={(index, lead) => (
                     <div>
                         <div
                             onClick={() => onLeadClick(lead)}
-                            className="flex items-center px-5 py-3.5 hover:bg-hover transition-colors cursor-pointer border-b border-border/50"
+                            className="flex items-center px-5 py-3 hover:bg-hover transition-colors cursor-pointer border-b border-border/50"
                         >
                             <div className="w-1/5 flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs bg-primary-soft text-primary">
@@ -83,7 +83,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                             </span>
                                         )}
                                         {lead.source && (
-                                            <span className="text-[10px] font-medium text-info bg-info-light dark:bg-info/20 px-1.5 py-0.5 rounded">
+                                            <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">
                                                 {lead.source}
                                             </span>
                                         )}
@@ -96,7 +96,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                 </span>
                             </div>
                             <div className="w-1/6">
-                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface text-xs text-muted border border-border/50 rounded-lg">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface text-xs text-muted border border-border rounded-lg">
                                     <Tag size={11} className="text-info" /> {lead.subject}
                                 </span>
                             </div>
@@ -134,16 +134,16 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                             "min-w-[32px] min-h-[32px] w-8 h-8 flex items-center justify-center transition-all rounded-xl",
                                             lead.status === 'converted'
                                                 ? "bg-success text-on-success"
-                                                : "bg-success/10 text-success hover:bg-success/20"
+                                                : "bg-success-soft text-success hover:bg-success/10"
                                         )}
                                         title="تم التحويل / مشترك" aria-label="تم التحويل"
                                     >
                                         <CheckCircle2 size={14} />
                                     </button>
-                                    <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="min-w-[32px] min-h-[32px] w-8 h-8 bg-success/10 text-success flex items-center justify-center hover:bg-success/20 transition-all rounded-xl" title="اتصال" aria-label="اتصال">
+                                    <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="min-w-[32px] min-h-[32px] w-8 h-8 bg-success-soft text-success flex items-center justify-center hover:bg-success/10 transition-all rounded-xl" title="اتصال" aria-label="اتصال">
                                         <PhoneCall size={14} />
                                     </button>
-                                    <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="min-w-[32px] min-h-[32px] w-8 h-8 bg-success/10 text-success flex items-center justify-center hover:bg-success/20 transition-all rounded-xl" title="واتساب" aria-label="مراسلة عبر واتساب">
+                                    <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="min-w-[32px] min-h-[32px] w-8 h-8 bg-success-soft text-success flex items-center justify-center hover:bg-success/10 transition-all rounded-xl" title="واتساب" aria-label="مراسلة عبر واتساب">
                                         <MessageSquare size={14} />
                                     </button>
                                     <button
@@ -152,7 +152,7 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                             "min-w-[32px] min-h-[32px] w-8 h-8 flex items-center justify-center transition-all rounded-xl",
                                             lead.status === 'lost'
                                                 ? "bg-error text-on-error"
-                                                : "bg-error/10 text-error hover:bg-error/20"
+                                                : "bg-error-soft text-error hover:bg-error/10"
                                         )}
                                         title="رفض / ملغي" aria-label="رفض العميل"
                                     >

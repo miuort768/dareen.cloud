@@ -11,9 +11,9 @@ interface LeadCardsProps {
 }
 
 const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
-    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-light dark:bg-error/20' },
-    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-light dark:bg-warning/20' },
-    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface dark:bg-card' },
+    high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
+    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
+    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
 
 const getLeadAge = (createdAt: string) => {
@@ -34,18 +34,18 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
     return (
         <div className="lg:hidden space-y-3">
             {filteredLeads.length === 0 ? (
-                <div className="bg-card border border-border/50 shadow-soft rounded-card py-16 text-center">
-                    <div className="w-16 h-16 rounded-card bg-primary-soft flex items-center justify-center mx-auto mb-4">
+                <div className="bg-card border border-border rounded-2xl py-16 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4">
                         <Users size={28} className="text-primary" />
                     </div>
                     <p className="text-sm font-bold text-muted">لا توجد نتائج بحث</p>
-                    <p className="text-xs text-dim mt-1.5">لا يوجد عملاء متطابقون مع معايير البحث</p>
+                    <p className="text-xs text-muted mt-1.5">لا يوجد عملاء متطابقون مع معايير البحث</p>
                 </div>
             ) : filteredLeads.map((lead) => (
                 <div
                     key={lead.id}
                     onClick={() => onLeadClick(lead)}
-                    className="bg-card border border-border/50 shadow-soft rounded-card active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
+                    className="bg-card border border-border rounded-2xl active:scale-[0.98] transition-all cursor-pointer overflow-hidden"
                 >
                     {/* Card header */}
                     <div className="flex items-center justify-between px-4 pt-4 pb-2">
@@ -64,7 +64,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                         </span>
                                     )}
                                     {lead.source && (
-                                        <span className="text-[10px] font-medium text-info bg-info-light dark:bg-info/20 px-1.5 py-0.5 rounded">
+                                        <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">
                                             {lead.source}
                                         </span>
                                     )}
@@ -103,7 +103,7 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                     )}
 
                     {/* Card footer */}
-                    <div className="border-t border-border/50 px-4 py-3">
+                    <div className="border-t border-border px-4 py-3">
                         <div className="flex items-center justify-between gap-2">
                             <select
                                 className={cn(
@@ -120,31 +120,31 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                                 ))}
                             </select>
                             <div className="flex items-center gap-1.5">
-                                <button 
+                                <button
                                     onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }}
                                     className={cn(
                                         "min-w-[36px] min-h-[36px] w-9 h-9 flex items-center justify-center transition-all rounded-xl",
                                         lead.status === 'converted'
                                             ? "bg-success text-on-success"
-                                            : "bg-success/10 text-success hover:bg-success/20"
+                                            : "bg-success-soft text-success hover:bg-success/10"
                                     )}
                                     title="تم التحويل" aria-label="تم التحويل"
                                 >
                                     <CheckCircle2 size={14} />
                                 </button>
-                                <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="min-w-[36px] min-h-[36px] w-9 h-9 bg-success/10 text-success flex items-center justify-center hover:bg-success/20 transition-all rounded-xl" title="اتصال" aria-label="اتصال">
+                                <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} className="min-w-[36px] min-h-[36px] w-9 h-9 bg-success-soft text-success flex items-center justify-center hover:bg-success/10 transition-all rounded-xl" title="اتصال" aria-label="اتصال">
                                     <PhoneCall size={14} />
                                 </button>
-                                <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="min-w-[36px] min-h-[36px] w-9 h-9 bg-success/10 text-success flex items-center justify-center hover:bg-success/20 transition-all rounded-xl" title="واتساب" aria-label="مراسلة عبر واتساب">
+                                <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="min-w-[36px] min-h-[36px] w-9 h-9 bg-success-soft text-success flex items-center justify-center hover:bg-success/10 transition-all rounded-xl" title="واتساب" aria-label="مراسلة عبر واتساب">
                                     <MessageSquare size={14} />
                                 </button>
-                                <button 
+                                <button
                                     onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }}
                                     className={cn(
                                         "min-w-[36px] min-h-[36px] w-9 h-9 flex items-center justify-center transition-all rounded-xl",
                                         lead.status === 'lost'
                                             ? "bg-error text-on-error"
-                                            : "bg-error/10 text-error hover:bg-error/20"
+                                            : "bg-error-soft text-error hover:bg-error/10"
                                     )}
                                     title="رفض" aria-label="رفض العميل"
                                 >
