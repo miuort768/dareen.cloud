@@ -1,8 +1,7 @@
 import { memo } from 'react';
 import type { SystemHealth } from '../../services/executiveService';
 import { HardDrive, Database, Server, Cpu, CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
-import { ProgressBar } from '../../../../shared/components/ui';
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const STATUS_ICONS: Record<string, typeof CheckCircle> = {
     healthy: CheckCircle,
@@ -10,13 +9,13 @@ const STATUS_ICONS: Record<string, typeof CheckCircle> = {
     critical: XCircle,
 };
 
-const STATUS_STYLES: Record<string, { text: string; bg: string; bgLight: string; bgBadge: string }> = {
-    healthy: { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success-soft', bgBadge: 'bg-success-soft' },
-    warning: { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning-soft', bgBadge: 'bg-warning-soft' },
-    critical: { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error-soft', bgBadge: 'bg-error-soft' },
+const STATUS_STYLES: Record<string, { text: string; bg: string; badge: string }> = {
+    healthy: { text: 'text-success', bg: 'bg-success-soft', badge: 'bg-success-soft text-success border-success/20' },
+    warning: { text: 'text-warning', bg: 'bg-warning-soft', badge: 'bg-warning-soft text-warning border-warning/20' },
+    critical: { text: 'text-error', bg: 'bg-error-soft', badge: 'bg-error-soft text-error border-error/20' },
 };
 
-const DEFAULT_STYLE = { text: 'text-muted', bg: 'bg-muted', bgLight: 'bg-muted/10', bgBadge: 'bg-muted/15' };
+const DEFAULT_STYLE = { text: 'text-muted', bg: 'bg-surface', badge: 'bg-surface text-muted border-border' };
 
 interface StatusRowProps {
     icon: typeof Server;
@@ -32,27 +31,30 @@ const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, p
     const styles = STATUS_STYLES[status] || DEFAULT_STYLE;
 
     return (
-        <div className="flex items-center justify-between py-2.5 px-3 rounded-xl transition-all hover:bg-surface/30">
+        <div className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-surface transition-colors">
             <div className="flex items-center gap-2.5 min-w-0">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${styles.bgLight}`}>
-                    <Icon size={15} className={styles.text} />
+                <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", styles.bg)}>
+                    <Icon size={14} className={styles.text} />
                 </div>
                 <div className="min-w-0">
-                    <p className="text-sm font-medium text-main">{label}</p>
-                    {detail && <p className="text-micro text-muted mt-0.5">{detail}</p>}
+                    <p className="text-[11px] font-bold text-main">{label}</p>
+                    {detail && <p className="text-[9px] text-muted mt-0.5">{detail}</p>}
                 </div>
             </div>
             <div className="flex items-center gap-2.5">
-                    {progress !== undefined && (
+                {progress !== undefined && (
                     <div className="flex items-center gap-2">
-                        <ProgressBar value={Math.min(100, progress)} variant={progress > 80 ? 'error' : progress > 60 ? 'warning' : 'success'} className="w-16" trackClassName="bg-border/30" />
-                        {progressLabel && <span className={`text-micro font-medium tabular-nums ${styles.text}`}>{progressLabel}</span>}
+                        <div className="w-16 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                            <div
+                                className={cn("h-full rounded-full transition-all duration-700", progress > 80 ? "bg-error" : progress > 60 ? "bg-warning" : "bg-success")}
+                                style={{ width: `${Math.min(100, progress)}%` }}
+                            />
+                        </div>
+                        {progressLabel && <span className={cn("text-[9px] font-bold tabular-nums", styles.text)}>{progressLabel}</span>}
                     </div>
                 )}
-                <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-micro font-semibold ${styles.bgBadge} ${styles.text}`}
-                >
-                    <StatusIcon size={10} />
+                <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold border", styles.badge)}>
+                    <StatusIcon size={9} />
                     {status === 'healthy' ? 'سليم' : status === 'warning' ? 'تحذير' : 'خطأ'}
                 </span>
             </div>
@@ -68,14 +70,12 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
         if (health.database?.status === 'error') return 'critical';
         return 'warning';
     };
-    const dbStatus = getDbStatus();
 
     const getRedisStatus = () => {
         if (health.redis?.status === 'connected') return 'healthy';
         if (health.redis?.fallbacks > 0) return 'warning';
         return 'critical';
     };
-    const redisStatus = getRedisStatus();
 
     const memPercent = health.memory?.usagePercent || 0;
     const memStatus = memPercent > 90 ? 'critical' : memPercent > 75 ? 'warning' : 'healthy';
@@ -86,24 +86,28 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
     const uptimeHours = health.uptime ? Math.round(health.uptime / 3600) : 0;
 
     return (
-        <Card>
-            <CardContent className="p-5">
-            <div className="flex items-center gap-2 mb-2">
-                <Activity size={16} className="text-muted" />
-                <h3 className="text-xs text-muted">حالة النظام</h3>
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
+            <div className="flex items-center gap-2 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-info-soft flex items-center justify-center">
+                    <Activity size={16} className="text-info" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-main">حالة النظام</h3>
+                    <p className="text-[10px] text-muted">البنية التحتية</p>
+                </div>
             </div>
 
             <div className="space-y-0">
                 <StatusRow
                     icon={Database}
                     label="قاعدة البيانات"
-                    status={dbStatus}
+                    status={getDbStatus()}
                     detail={health.database?.latency > 0 ? `${health.database.latency}ms` : undefined}
                 />
                 <StatusRow
                     icon={HardDrive}
                     label="Redis"
-                    status={redisStatus}
+                    status={getRedisStatus()}
                     detail={health.redis?.fallbacks > 0 ? `تجاوز ${health.redis.fallbacks}` : undefined}
                 />
                 <StatusRow
@@ -122,10 +126,10 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                 />
             </div>
 
-            <div className="mt-3 pt-3 border-t border-border/30 flex items-center justify-between text-micro text-muted">
+            <div className="mt-3 pt-3 border-t border-border/50 flex items-center justify-between text-[9px] text-muted">
                 <span>مدة التشغيل: {uptimeHours}h</span>
                 <span>Node: {health.node || 'N/A'}</span>
             </div>
-        </CardContent></Card>
+        </div>
     );
 });

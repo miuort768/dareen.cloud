@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 type InsightType = 'positive' | 'negative' | 'neutral';
 
@@ -54,10 +54,10 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
     return insights;
 }
 
-const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; textClass: string; bgClass: string; iconBgClass: string }> = {
-    positive: { icon: TrendingUp, textClass: 'text-success', bgClass: 'bg-success-soft', iconBgClass: 'bg-success-soft' },
-    negative: { icon: TrendingDown, textClass: 'text-error', bgClass: 'bg-error-soft', iconBgClass: 'bg-error-soft' },
-    neutral: { icon: Target, textClass: 'text-info', bgClass: 'bg-info-soft', iconBgClass: 'bg-info-soft' },
+const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; textClass: string; bgClass: string; iconBg: string }> = {
+    positive: { icon: TrendingUp, textClass: 'text-success', bgClass: 'bg-success/10 border-success/20', iconBg: 'bg-success-soft' },
+    negative: { icon: TrendingDown, textClass: 'text-error', bgClass: 'bg-error/10 border-error/20', iconBg: 'bg-error-soft' },
+    neutral: { icon: Target, textClass: 'text-info', bgClass: 'bg-info/10 border-info/20', iconBg: 'bg-info-soft' },
 };
 
 export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
@@ -65,16 +65,25 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
     const insights = buildInsights(stats);
 
     return (
-        <Card>
-            <CardContent className="p-5">
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
             <div className="flex items-center gap-2 mb-4">
-                <Lightbulb size={16} className="text-primary" />
-                <h3 className="text-xs text-muted">تحليلات ذكية</h3>
+                <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
+                    <Lightbulb size={16} className="text-warning" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-main">تحليلات ذكية</h3>
+                    <p className="text-[10px] text-muted">رؤى وتوصيات</p>
+                </div>
             </div>
 
             <div className="space-y-2">
                 {insights.length === 0 && (
-                    <p className="text-xs text-muted text-center py-4">لا توجد تحليلات متاحة</p>
+                    <div className="text-center py-8">
+                        <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface flex items-center justify-center">
+                            <Lightbulb size={16} className="text-muted/50" />
+                        </div>
+                        <p className="text-xs font-bold text-muted">لا توجد تحليلات</p>
+                    </div>
                 )}
                 {insights.map((insight, i) => {
                     const cfg = TYPE_CONFIG[insight.type];
@@ -82,18 +91,16 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                     return (
                         <div
                             key={`insight-${i}`}
-                            className={`flex items-start gap-3 p-3 rounded-xl transition-all duration-200 border border-transparent hover:border-border/20 group ${cfg.bgClass}`}
+                            className={cn("flex items-start gap-2.5 p-3 rounded-xl border transition-colors", cfg.bgClass)}
                         >
-                            <div
-                                className={`w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 ${cfg.iconBgClass}`}
-                            >
-                                <Icon size={14} className={cfg.textClass} />
+                            <div className={cn("w-7 h-7 rounded-lg flex items-center justify-center shrink-0", cfg.iconBg)}>
+                                <Icon size={12} className={cfg.textClass} />
                             </div>
-                            <p className="text-sm text-main leading-relaxed">{insight.text}</p>
+                            <p className="text-[11px] text-main leading-relaxed">{insight.text}</p>
                         </div>
                     );
                 })}
             </div>
-        </CardContent></Card>
+        </div>
     );
 });

@@ -1,27 +1,32 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlusCircle, UserPlus, FileText, Settings, Shield, BookOpen, Zap } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const QUICK_ACTIONS = [
-    { label: 'إضافة طالب', icon: UserPlus, colorClass: 'text-chart-1', bgClass: 'bg-card', iconBgClass: 'bg-chart-1/15', path: '/students/add' },
-    { label: 'تسجيل جلسة', icon: PlusCircle, colorClass: 'text-chart-2', bgClass: 'bg-card', iconBgClass: 'bg-chart-2/15', path: '/sessions/add' },
-    { label: 'رفع ملف', icon: BookOpen, colorClass: 'text-chart-4', bgClass: 'bg-card', iconBgClass: 'bg-chart-4/15', path: '/study-material/upload' },
-    { label: 'التقارير', icon: FileText, colorClass: 'text-chart-5', bgClass: 'bg-card', iconBgClass: 'bg-chart-5/15', path: '/reports' },
-    { label: 'نسخ احتياطي', icon: Shield, colorClass: 'text-chart-3', bgClass: 'bg-card', iconBgClass: 'bg-chart-3/15', path: '/settings' },
-    { label: 'الإعدادات', icon: Settings, colorClass: 'text-muted', bgClass: 'bg-card', iconBgClass: 'bg-muted/15', path: '/settings' },
+    { label: 'إضافة طالب', icon: UserPlus, color: 'text-primary', bg: 'bg-primary-soft', path: '/students/add' },
+    { label: 'تسجيل جلسة', icon: PlusCircle, color: 'text-success', bg: 'bg-success-soft', path: '/sessions/add' },
+    { label: 'رفع ملف', icon: BookOpen, color: 'text-info', bg: 'bg-info-soft', path: '/study-material/upload' },
+    { label: 'التقارير', icon: FileText, color: 'text-warning', bg: 'bg-warning-soft', path: '/reports' },
+    { label: 'نسخ احتياطي', icon: Shield, color: 'text-primary', bg: 'bg-primary-soft', path: '/settings' },
+    { label: 'الإعدادات', icon: Settings, color: 'text-muted', bg: 'bg-surface', path: '/settings' },
 ];
 
 export const QuickActionsGrid = memo(function QuickActionsGrid() {
     const navigate = useNavigate();
 
     return (
-        <Card>
-            <CardContent className="p-5">
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
             <div className="flex items-center gap-2 mb-4">
-                <Zap size={16} className="text-muted" />
-                <h3 className="text-xs text-muted">إجراءات سريعة</h3>
+                <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                    <Zap size={16} className="text-primary" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-main">إجراءات سريعة</h3>
+                    <p className="text-[10px] text-muted">الوصول المباشر</p>
+                </div>
             </div>
+
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                 {QUICK_ACTIONS.map((action) => {
                     const Icon = action.icon;
@@ -29,19 +34,22 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                         <button
                             key={action.label}
                             onClick={() => navigate(action.path)}
-                            className="group relative flex flex-col items-center gap-2 py-4 px-2 rounded-2xl transition-all duration-300 hover:shadow-soft cursor-pointer border border-border/30 hover:border-border/60 bg-surface/50 hover:bg-surface"
+                            className="group flex flex-col items-center gap-2 py-4 px-2 rounded-2xl border border-border/50 hover:border-border bg-surface/50 hover:bg-surface transition-all duration-200 cursor-pointer"
                             title={action.label}
                         >
-                            <div
-                                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 ${action.iconBgClass}`}
-                            >
-                                <Icon size={20} className={action.colorClass} />
+                            <div className={cn(
+                                "w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-200 group-hover:scale-110",
+                                action.bg
+                            )}>
+                                <Icon size={18} className={action.color} />
                             </div>
-                            <span className="text-micro font-medium leading-tight text-muted group-hover:text-main transition-colors duration-200">{action.label}</span>
+                            <span className="text-[10px] font-bold leading-tight text-muted group-hover:text-main transition-colors">
+                                {action.label}
+                            </span>
                         </button>
                     );
                 })}
             </div>
-        </CardContent></Card>
+        </div>
     );
 });
