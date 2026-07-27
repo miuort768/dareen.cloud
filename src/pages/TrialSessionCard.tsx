@@ -18,6 +18,13 @@ const statusTextColor: Record<string, string> = {
     converted: 'text-info',
 };
 
+const statusBg: Record<string, string> = {
+    pending: 'bg-warning-soft',
+    completed: 'bg-success-soft',
+    cancelled: 'bg-error-soft',
+    converted: 'bg-info-soft',
+};
+
 const statusLabels: Record<string, string> = {
     pending: 'قيد الانتظار',
     completed: 'تم',
@@ -29,35 +36,35 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, isCo
     <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden"
+        className="bg-card border border-border rounded-2xl overflow-hidden font-dash"
     >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-card flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary ring-1 ring-primary/20">
                     {t.studentName?.charAt(0) || 'ط'}
                 </div>
                 <div>
                     <h3 className="text-xs font-bold text-main leading-tight">{t.studentName}</h3>
-                    <span className={cn("text-xs", statusTextColor[t.status] || statusTextColor.pending)}>{statusLabels[t.status]}</span>
+                    <span className={cn("text-[10px] font-bold px-1.5 py-0.5 rounded-full", statusBg[t.status], statusTextColor[t.status])}>{statusLabels[t.status]}</span>
                 </div>
             </div>
             <div className="flex items-center gap-1">
                 {t.status === 'pending' && (
-                    <button onClick={() => onConvert(t.id)} disabled={isConverting} className="w-7 h-7 flex items-center justify-center bg-info/10 text-info hover:bg-info/20 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل إلى طالب" aria-label="تحويل إلى طالب"><ArrowLeftRight size={13} /></button>
+                    <button onClick={() => onConvert(t.id)} disabled={isConverting} className="w-8 h-8 flex items-center justify-center bg-info-soft text-info hover:bg-info/10 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل إلى طالب" aria-label="تحويل إلى طالب"><ArrowLeftRight size={14} /></button>
                 )}
-                <button onClick={() => onEdit(t)} className="w-7 h-7 flex items-center justify-center bg-hover text-dim hover:bg-border/40 transition-all rounded-xl" aria-label="تعديل"><X size={13} className="rotate-45" /></button>
-                <button onClick={() => onDelete(t.id)} className="w-7 h-7 flex items-center justify-center bg-error/10 text-error hover:bg-error/20 transition-all rounded-xl" aria-label="حذف"><Trash size={13} /></button>
+                <button onClick={() => onEdit(t)} className="w-8 h-8 flex items-center justify-center bg-surface text-muted hover:bg-hover transition-all rounded-xl" aria-label="تعديل"><X size={14} className="rotate-45" /></button>
+                <button onClick={() => onDelete(t.id)} className="w-8 h-8 flex items-center justify-center bg-error-soft text-error hover:bg-error/10 transition-all rounded-xl" aria-label="حذف"><Trash size={14} /></button>
             </div>
         </div>
         <div className="px-4 py-3">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                 <div className="flex items-center gap-1.5 text-xs text-muted">
-                    <Phone size={11} className="text-primary shrink-0" />
-                    <span className="truncate">{t.parentPhone}</span>
+                    <Phone size={11} className="text-success shrink-0" />
+                    <span className="truncate font-mono">{t.parentPhone}</span>
                 </div>
                 {t.subject && (
                     <div className="flex items-center gap-1.5 text-xs text-muted">
-                        <BookOpen size={11} className="text-primary shrink-0" />
+                        <BookOpen size={11} className="text-info shrink-0" />
                         <span className="truncate">{t.subject}</span>
                     </div>
                 )}
@@ -68,7 +75,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, isCo
                     </div>
                 )}
                 <div className="flex items-center gap-1.5 text-xs text-muted">
-                    <Calendar size={11} className="text-success shrink-0" />
+                    <Calendar size={11} className="text-primary shrink-0" />
                     <span>{t.date}</span>
                 </div>
                 {t.time && (
